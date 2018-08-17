@@ -2,7 +2,7 @@
 
 ### Overview
 
-The *Cancer Predisposition Sequencing Report (CPSR)* is a computational workflow that interprets germline variants identified from next-generation sequencing in the context of cancer predisposition. The workflow is integrated with the framework that underlies the [Personal Cancer Genome Reporter](https://github.com/sigven). While PCGR is **intended for reporting and analysis of somatic variants only**, *CPSR* is intended for reporting and ranking of variants in protein-genes that are implicated in cancer predisposition and inherited cancer syndromes.
+The *Cancer Predisposition Sequencing Report (CPSR)* is a computational workflow that interprets germline variants identified from next-generation sequencing in the context of cancer predisposition. The workflow is integrated with the framework that underlies the [Personal Cancer Genome Reporter](https://github.com/sigven). While PCGR is **intended for reporting and analysis of somatic variants only**, *CPSR* is intended for reporting and ranking of germline variants in protein-coding genes that are implicated in cancer predisposition and inherited cancer syndromes.
 
 *CPSR* accepts a query file encoded in the [VCF](https://samtools.github.io/hts-specs/VCFv4.2.pdf) format (i.e. analyzing SNVs and InDels). The software reports, for a selected set of known (configurable) cancer predisposition genes, two main sets of variants:
 
@@ -51,7 +51,7 @@ Both variant sets (**previously reported/classified** and **unclassified**) can 
 
 #### STEP 0: Install PCGR
 
-Make sure you have a working installation of the latest PCGR release (0.6.3) (walk through [steps 0-3](https://github.com/sigven/pcgr#getting-started)).
+Make sure you have a working installation of the latest PCGR release (0.6.3) and latest data bundle (walk through [steps 0-2](https://github.com/sigven/pcgr#getting-started)).
 
 #### STEP 1: Download the latest release
 
@@ -63,7 +63,7 @@ A few elements of the workflow can be figured using the *cpsr* configuration fil
 
 The initial step of the workflow performs [VCF validation](https://github.com/EBIvariation/vcf-validator) on the input VCF file. This procedure is very strict, and often causes the workflow to return an error due to various violations of the VCF specification. If the user trusts that the most critical parts of the input VCF is properly encoded,  a setting in the configuration file (`vcf_validation = false`) can be used to turn off VCF validation.
 
-An exhaustive, pre-defined list of cancer predisposition genes can also be configured.
+An exhaustive, pre-defined list of 212 cancer predisposition genes can also be configured.
 
 #### STEP 3: Run example
 
@@ -71,13 +71,13 @@ Run the workflow with **cpsr.py**, which takes the following arguments and optio
 
 	usage: cpsr.py [-h] [--input_vcf INPUT_VCF] [--force_overwrite]
 					 [--version] [--basic]
-					 pcgr_base_dir output_dir {grch37,grch38}
+					 data_dir output_dir {grch37,grch38}
 					 configuration_file sample_id
 
 	Cancer Predisposition Sequencing Report (CPSR)
 
 	positional arguments:
-	pcgr_base_dir         Directory that contains the PCGR data bundle
+	data_dir         Directory that contains the PCGR data bundle
 				    directory, e.g. ~/pcgr-0.6.0
 	output_dir            Output directory
 	{grch37,grch38}       Genome assembly build: grch37 or grch38
@@ -102,10 +102,10 @@ Run the workflow with **cpsr.py**, which takes the following arguments and optio
 
 The *cpsr* software bundle contains an example VCF file. It also contains a configuration file (*cpsr.toml*). Analysis of the example VCF can be performed by the following command:
 
-`python ~/cpsr-0.2.0/cpsr.py --input_vcf ~/cpsr-0.2.0/example.vcf.gz`
-` ~/pcgr-0.6.0 ~/cpsr-0.2.0 grch37 ~/cpsr-0.2.0/cpsr_config.toml example`
+`python ~/cpsr-0.1.0/cpsr.py --input_vcf ~/cpsr-0.1.0/example.vcf.gz`
+` ~/pcgr-0.6.3 ~/cpsr-0.1.0 grch37 ~/cpsr-0.1.0/cpsr_config.toml example`
 
-Note that the example command also refers to the PCGR directory (*pcgr-0.6.0*), which needs to be present (see **STEP 0: Install PCGR**)
+Note that the example command also refers to the PCGR directory (*pcgr-0.6.3*), which contains the data bundle that are necessary for both *PCGR* and *CPSR*
 
 This command will run the Docker-based *cpsr* workflow and produce the following output files in the _cpsr_ folder:
 
