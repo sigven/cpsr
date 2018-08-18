@@ -38,6 +38,7 @@ Both variant sets (**previously reported/classified** and **unclassified**) can 
 
 ### News
 
+*COMING SOON: 0.1.0 release (accompanied by PCGR 0.6.3 release)*
 
 ### Getting started
 
