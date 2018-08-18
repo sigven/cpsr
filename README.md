@@ -104,7 +104,7 @@ This command will run the Docker-based *cpsr* workflow and produce the following
   1. __example.cpsr.grch37.pass.vcf.gz (.tbi)__ - Bgzipped VCF file with functional/clinical annotations
   2. __example.cpsr.grch37.pass.tsv.gz__ - Compressed TSV file (generated with [vcf2tsv](https://github.com/sigven/vcf2tsv)) with functional/clinical annotations
   3. __example.cpsr.grch37.html__ - Interactive HTML report with clinically relevant variants in cancer predisposition genes
-  4. __example.cpsr.grch37.json__ - JSON dump of HTML report content
+  4. __example.cpsr.grch37.json.gz__ - Compressed JSON dump of HTML report content
 
 
 ### Contact
