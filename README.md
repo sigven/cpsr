@@ -21,7 +21,7 @@ Both variant sets (**previously reported/classified** and **unclassified**) can 
 
 ### Example report
 
-* [Cancer predisposition sequencing report](http://folk.uio.no/sigven/example.cpsr.html)
+* [Cancer predisposition sequencing report](http://folk.uio.no/sigven/example.cpsr.grch37.html)
 
 ### Annotation resources included in _cpsr - 0.1.0_
 
@@ -93,7 +93,9 @@ Run the workflow with **cpsr.py**, which takes the following arguments and optio
 
 
 
-The *cpsr* software bundle contains an example VCF file. It also contains a configuration file (*cpsr.toml*). Analysis of the example VCF can be performed by the following command:
+The *cpsr* software bundle contains an example VCF file. It also contains a configuration file (*cpsr.toml*). **NOTE: The example file contains a significant number of known pathogenic and likely pathogenic variants. This is for demonstration purposes only, and NOT a realistic situation in a regular sample.**
+
+Analysis of the example VCF can be performed by the following command:
 
 `python ~/cpsr-0.1.0/cpsr.py --input_vcf ~/cpsr-0.1.0/example.vcf.gz`
 ` ~/pcgr-0.6.3 ~/cpsr-0.1.0 grch37 ~/cpsr-0.1.0/cpsr.toml example`
