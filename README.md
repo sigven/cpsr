@@ -2,9 +2,9 @@
 
 ### Overview
 
-The *Cancer Predisposition Sequencing Report (CPSR)* is a computational workflow that interprets germline variants identified from next-generation sequencing in the context of cancer predisposition. The workflow is integrated with the framework that underlies the [Personal Cancer Genome Reporter](https://github.com/sigven). While PCGR is **intended for reporting and analysis of somatic variants only**, *CPSR* is intended for reporting and ranking of germline variants in protein-coding genes that are implicated in cancer predisposition and inherited cancer syndromes.
+The *Cancer Predisposition Sequencing Report (CPSR)* is a computational workflow that **interprets germline variants** identified from next-generation sequencing **in the context of cancer predisposition**. The workflow is integrated with the framework that underlies the [Personal Cancer Genome Reporter (PCGR)](https://github.com/sigven), utilizing the Docker environment for encapsulation of code and software dependencies. While *PCGR* is intended for reporting and analysis of somatic variants detected in a tumor, *CPSR* is intended for reporting and ranking of germline variants in protein-coding genes that are implicated in cancer predisposition and inherited cancer syndromes.
 
-*CPSR* accepts a query file encoded in the [VCF](https://samtools.github.io/hts-specs/VCFv4.2.pdf) format (i.e. analyzing SNVs and InDels). The software reports, for a selected set of known (configurable) cancer predisposition genes, two main sets of variants:
+*CPSR* accepts a query file encoded in the [VCF](https://samtools.github.io/hts-specs/VCFv4.2.pdf) format (i.e. analyzing SNVs and InDels). The software performs extensive variant annotation and produces an interactive HTML report, in which the user can investigate two main sets of variants (in a selected set of configurable cancer predisposition genes):
 
 1. Germline variants that are **previously reported** as pathogenic/likely pathogenic/uncertain significance in ClinVar (with no conflicting interpretations). This set is organized into three tiers:
 	* Tier 1 - Pathogenic variants
@@ -23,7 +23,7 @@ Both variant sets (**previously reported/classified** and **unclassified**) can 
 
 * [Cancer predisposition sequencing report](http://folk.uio.no/sigven/example.cpsr.html)
 
-### Annotation resources included in _cpsr - 0.3.0_
+### Annotation resources included in _cpsr - 0.1.0_
 
 * [VEP v93](http://www.ensembl.org/info/docs/tools/vep/index.html) - Variant Effect Predictor release 93 (GENCODE v19/v28 as the gene reference dataset)
 * [dBNSFP v3.5](https://sites.google.com/site/jpopgen/dbNSFP) - Database of non-synonymous functional predictions (August 2017)
@@ -37,15 +37,7 @@ Both variant sets (**previously reported/classified** and **unclassified**) can 
 * [TSGene v2.0](http://bioinfo.mc.vanderbilt.edu/TSGene/) - Tumor suppressor/oncogene database (November 2015)
 
 ### News
-* August 17th 2018 - 0.3.0 release
-	* VEP update (v93)
-	* PCGR data bundle update (ClinVar, UniProt)
-	* Addition of VEP LofTee module (prediction of loss-of-function variants)
-	* Bug fixes
-* May 9th 2018 - 0.2.0 release
-	* PCGR data bundle update
-	* Minor fixes, added genome assembly to output files
-* April 24th 2018 - 0.1.0 release
+
 
 ### Getting started
 
@@ -103,9 +95,9 @@ Run the workflow with **cpsr.py**, which takes the following arguments and optio
 The *cpsr* software bundle contains an example VCF file. It also contains a configuration file (*cpsr.toml*). Analysis of the example VCF can be performed by the following command:
 
 `python ~/cpsr-0.1.0/cpsr.py --input_vcf ~/cpsr-0.1.0/example.vcf.gz`
-` ~/pcgr-0.6.3 ~/cpsr-0.1.0 grch37 ~/cpsr-0.1.0/cpsr_config.toml example`
+` ~/pcgr-0.6.3 ~/cpsr-0.1.0 grch37 ~/cpsr-0.1.0/cpsr.toml example`
 
-Note that the example command also refers to the PCGR directory (*pcgr-0.6.3*), which contains the data bundle that are necessary for both *PCGR* and *CPSR*
+Note that the example command also refers to the PCGR directory (*pcgr-0.6.3*), which contains the data bundle that are necessary for both *PCGR* and *CPSR*.
 
 This command will run the Docker-based *cpsr* workflow and produce the following output files in the _cpsr_ folder:
 
