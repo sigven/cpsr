@@ -4,20 +4,17 @@
 
 The *Cancer Predisposition Sequencing Report (CPSR)* is a computational workflow that **interprets germline variants** identified from next-generation sequencing **in the context of cancer predisposition**. The workflow is integrated with the framework that underlies the [Personal Cancer Genome Reporter (PCGR)](https://github.com/sigven), utilizing the Docker environment for encapsulation of code and software dependencies. While *PCGR* is intended for reporting and analysis of somatic variants detected in a tumor, *CPSR* is intended for reporting and ranking of germline variants in protein-coding genes that are implicated in cancer predisposition and inherited cancer syndromes.
 
-*CPSR* accepts a query file encoded in the [VCF](https://samtools.github.io/hts-specs/VCFv4.2.pdf) format (i.e. analyzing SNVs and InDels). The software performs extensive variant annotation and produces an interactive HTML report, in which the user can investigate two main sets of variants (in a selected set of configurable cancer predisposition genes):
+*CPSR* accepts a query file with raw germline variant calls encoded in the [VCF](https://samtools.github.io/hts-specs/VCFv4.2.pdf) format (i.e. analyzing SNVs/InDels). The software performs extensive variant annotation and produces an interactive HTML report, in which the user can investigate two main sets of variants (in a selected set of configurable cancer predisposition genes):
 
-1. Germline variants that are **previously reported** as pathogenic/likely pathogenic/uncertain significance in ClinVar (with no conflicting interpretations). This set is organized into three tiers:
-	* Tier 1 - Pathogenic variants
-	* Tier 2 - Likely pathogenic variants
-	* Tier 3 - Variants of uncertain significance (VUS)
+1. Germline variants that are **previously reported** as pathogenic or likely pathogenic in ClinVar (with no conflicting interpretations)
 
-
-2. **Unclassified** (i.e. **not reported** in [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/)) protein-coding germline variants that are either:
-	* *Novel* (i.e. not reported in [gnomAD](http://gnomad.broadinstitute.org/) or [1000 Genomes Project](http://www.internationalgenome.org/) global population datasets), or
-	* *Rare* (i.e. minor allele frequency (MAF) < 0.001 in the [gnomAD](http://gnomad.broadinstitute.org/) or [1000 Genomes Project](http://www.internationalgenome.org/) global population datasets)
+2. **Unclassified variants** constitute the set of germline variants that are either:
+	* Registered as *variant of uncertain significance (VUS)* in [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/), or
+	* *Is a novel protein-coding variant* (i.e. not reported in [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/), and not found in [gnomAD](http://gnomad.broadinstitute.org/) or [1000 Genomes Project](http://www.internationalgenome.org/) global population datasets), or
+	* *Is a rare protein-coding variant* (i.e. minor allele frequency (MAF) < 0.001 in the [gnomAD](http://gnomad.broadinstitute.org/) or [1000 Genomes Project](http://www.internationalgenome.org/) global population datasets)
 		* *The upper MAF threshold (e.g. 0.001) for listing of unclassified variants can be configured by the user*
 
-Both variant sets (**previously reported/classified** and **unclassified**) can be interactively explored and ranked further through different types of filters (associated phenotypes, genes, variant consequences, population MAF etc.)
+Both variant sets (**classified** and **unclassified**) can be interactively explored and ranked further through different types of filters (associated phenotypes, genes, variant consequences, population MAF etc.)
 
 ### Example report
 
@@ -103,7 +100,7 @@ This command will run the Docker-based *cpsr* workflow and produce the following
 
   1. __example.cpsr.grch37.pass.vcf.gz (.tbi)__ - Bgzipped VCF file with functional/clinical annotations
   2. __example.cpsr.grch37.pass.tsv.gz__ - Compressed TSV file (generated with [vcf2tsv](https://github.com/sigven/vcf2tsv)) with functional/clinical annotations
-  3. __example.cpsr.grch37.html__ - Interactive HTML report with clinically relevant variants in cancer predisposition genes
+  3. __example.cpsr.grch37.html__ - Interactive HTML report with clinically relevant variants in cancer predisposition genes organized into tiers
   4. __example.cpsr.grch37.json.gz__ - Compressed JSON dump of HTML report content
 
 

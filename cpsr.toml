@@ -1,4 +1,4 @@
-# pcgr_predispose configuration options (TOML).
+# cpsr configuration options (TOML).
 
 [cancer_predisposition_genes]
 ABCB11 = true
