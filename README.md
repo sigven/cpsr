@@ -11,7 +11,7 @@ The *Cancer Predisposition Sequencing Report (CPSR)* is a computational workflow
 2. **Unclassified variants** constitute the set of germline variants that are either:
 	* Registered as *variant of uncertain significance (VUS)* in [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/), or
 	* *Is a novel protein-coding variant* (i.e. not reported in [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/), and not found in [gnomAD](http://gnomad.broadinstitute.org/) or [1000 Genomes Project](http://www.internationalgenome.org/) user-defined population datasets), or
-	* *Is a rare protein-coding variant* (i.e. minor allele frequency (MAF) < 0.001 in user-defined [gnomAD](http://gnomad.broadinstitute.org/) or [1000 Genomes Project](http://www.internationalgenome.org/) population datasets)
+	* *Is a rare protein-coding variant* (e.g. minor allele frequency (MAF) < 0.001 in user-defined [gnomAD](http://gnomad.broadinstitute.org/) or [1000 Genomes Project](http://www.internationalgenome.org/) population datasets)
 		* *The upper MAF threshold (e.g. 0.001) for listing of unclassified variants can be configured by the user*
 
 Both variant sets (**classified** and **unclassified**) can be interactively explored and ranked further through different types of filters (associated phenotypes, genes, variant consequences, population MAF etc.)

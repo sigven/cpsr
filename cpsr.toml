@@ -1,4 +1,4 @@
-# cpsr configuration options (TOML).
+# pcgr_predispose configuration options (TOML).
 
 [cancer_predisposition_genes]
 ABCB11 = true
@@ -216,6 +216,24 @@ XRCC2 = true
 maf_tgp = 0.001
 maf_gnomad = 0.001
 
+[popgen]
+## choose population source in gnomAD and 1000 Genomes Project, defaults to the global set
+
+## For gnomaAD, this can by any of the following values (three-letter codes):
+## "afr" - African/American (12,020 individuals (7,652 WES / 4,368 WGS))
+## "amr" - Admixed American (17,210 individuals (16,791 WES / 419 WGS))
+## "eas" - East Asian (9,435 individuals (8,624 WES / 811 WGS))
+## "sas" - Sout Asian (15,391 individuals (15,391 WES / 0 WGS))
+## "asj" - Ashkenazi Jewish (5,076 individuals (4,925 WES / 151 WGS))
+## "nfe" - Non-Finnish European (63,369 individuals (55,860 WES / 7,509 WGS))
+## "fin" - Finnish (12,897 individuals (11,150 WES / 1,747 WGS))
+## "oth" - Other (3,234 individuals (2,743 WES / 491 WGS))
+## "global" - All populations (138,632 individuals (123,136 WES / 15,496 WGS))
+pop_gnomad = "nfe"
+
+## For 1000 Genomes Project this can be any of "afr","amr","sas","eas","eur","global"
+pop_tgp = "eur"
+
 [visual]
 # Choose visual theme of report, any of: "default", "cerulean", "journal", "flatly", "readable", "spacelab", "united", "cosmo", "lumen", "paper", "sandstone", "simplex", or "yeti" (https://bootswatch.com/)
 report_theme = "default"
@@ -224,6 +242,18 @@ report_theme = "default"
 ## list VCF info tags that should be present in JSON output
 ## tags should be comma separated, i.e. custom_tags = "MUTECT2_FILTER,STRELKA_FILTER"
 custom_tags = ""
+
+[dbnsfp]
+## CPSR performs a ranking of unclassified/novel variants according to its likelihood of being pathogenic, adopting the
+## same implementations of ACMG-AMP guidelines as outlined by Huang et al., 2018 (Cell)
+##
+## One criteria relates to whether insilico predictions can support a pathogenic versus benign nature
+## The user can here configure the minimum number of algorithms that must have called a variant as 'damaging'
+## and the maximum number of algorithms that called the variant as 'tolerated' in order for it to have a consensus
+## call as 'damaging' (and vice versa for consensus calls as 'tolerated')
+
+min_majority = 5
+max_minority = 1
 
 [other]
 vcf_validation = false

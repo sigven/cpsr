@@ -13,7 +13,7 @@ import toml
 
 pcgr_version = '0.6.3'
 cpsr_version = '0.1.0'
-db_version = 'PCGR_DB_VERSION = 20180825'
+db_version = 'PCGR_DB_VERSION = 20180903'
 vep_version = '93'
 global vep_assembly
 
@@ -383,7 +383,7 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
       print()
       logger = getlogger('cpsr-vcfanno')
       logger.info("STEP 2: Annotation for cancer predisposition with pcgr-vcfanno (ClinVar, dbNSFP, UniProtKB, CiVIC)")
-      pcgr_vcfanno_command = str(docker_command_run2) + os.path.join(python_scripts_dir, "pcgr_vcfanno.py") + " --num_processes "  + str(config_options['other']['n_vcfanno_proc']) + " --dbnsfp --clinvar --civic --uniprot --pcgr_onco_xref " + str(vep_vcf) + ".gz " + str(vep_vcfanno_vcf) + " " + os.path.join(data_dir, "data", str(genome_assembly)) + docker_command_run_end
+      pcgr_vcfanno_command = str(docker_command_run2) + os.path.join(python_scripts_dir, "pcgr_vcfanno.py") + " --num_processes "  + str(config_options['other']['n_vcfanno_proc']) + " --dbnsfp --clinvar --cancer_hotspots --civic --uniprot --pcgr_onco_xref " + str(vep_vcf) + ".gz " + str(vep_vcfanno_vcf) + " " + os.path.join(data_dir, "data", str(genome_assembly)) + docker_command_run_end
       check_subprocess(pcgr_vcfanno_command)
       logger.info("Finished")
    
