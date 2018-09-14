@@ -13,7 +13,7 @@ import toml
 
 pcgr_version = '0.6.3'
 cpsr_version = '0.1.0'
-db_version = 'PCGR_DB_VERSION = 20180903'
+db_version = 'PCGR_DB_VERSION = 20180913'
 vep_version = '93'
 global vep_assembly
 
