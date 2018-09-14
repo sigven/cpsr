@@ -1,0 +1,210 @@
+gene_symbol	entrezgene	moi	gene_name	source	phenotype_syndrome_cui	phenotype_syndrome_term
+ABCB11	8647	Rec	ATP binding cassette subfamily B member 11	TCGA_PANCAN_2018	C0268311	NA
+ABRAXAS1	84142	NA	abraxas 1, BRCA1 A complex subunit	NCGC		NA
+ACD	65057	NA	ACD, shelterin complex subunit and telomerase recruitment factor	NCGC		NA
+AIP	9049	NA	aryl hydrocarbon receptor interacting protein	NCGC		NA
+AKT1	207	NA	AKT serine/threonine kinase 1	NCGC		NA
+ALK	238	Dom	ALK receptor tyrosine kinase	TCGA_PANCAN_2018,CGC_85,NCGC	C0027819	Neuroblastoma
+APC	324	Dom	APC, WNT signaling pathway regulator	TCGA_PANCAN_2018,CGC_85,NCGC	C2713442	Familial adenomatous polyposis 1
+APOBEC3B	9582	NA	apolipoprotein B mRNA editing enzyme catalytic subunit 3B	CGC_85		NA
+AR	367	NA	androgen receptor	CGC_85		NA
+ATM	472	Dom&Rec	ATM serine/threonine kinase	TCGA_PANCAN_2018,CGC_85,NCGC	C0004135	Ataxia-telangiectasia syndrome
+ATR	545	Dom	ATR serine/threonine kinase	TCGA_PANCAN_2018,CGC_85	C0265202;C3281203	Seckel syndrome; Cutaneous telangiectasia and cancer syndrome, familial
+AXIN1	8312	NA	axin 1	NCGC		NA
+AXIN2	8313	Dom	axin 2	TCGA_PANCAN_2018,CGC_85,NCGC	C1837750	Oligodontia-colorectal cancer syndrome
+BAP1	8314	Dom	BRCA1 associated protein 1	TCGA_PANCAN_2018,CGC_85,NCGC	C3280492	Tumor susceptibility linked to germline BAP1 mutations
+BARD1	580	NA	BRCA1 associated RING domain 1	CGC_85,NCGC		NA
+BLM	641	Rec	Bloom syndrome RecQ like helicase	TCGA_PANCAN_2018,CGC_85,NCGC	C0005859	Bloom syndrome
+BMPR1A	657	Dom	bone morphogenetic protein receptor type 1A	TCGA_PANCAN_2018,CGC_85,NCGC	C0345893	Juvenile polyposis syndrome
+BRAF	673	Dom	B-Raf proto-oncogene, serine/threonine kinase	TCGA_PANCAN_2018	C3150970;C3150971	Noonan syndrome 7; LEOPARD syndrome 3
+BRCA1	672	Dom	BRCA1, DNA repair associated	TCGA_PANCAN_2018,CGC_85,NCGC	C0677776	Hereditary breast and ovarian cancer syndrome
+BRCA2	675	Dom&Rec	BRCA2, DNA repair associated	TCGA_PANCAN_2018,CGC_85,NCGC	C0677776;C1838457	Hereditary breast and ovarian cancer syndrome; Fanconi anemia, complementation group D1
+BRIP1	83990	Dom&Rec	BRCA1 interacting protein C-terminal helicase 1	TCGA_PANCAN_2018,CGC_85,NCGC	C1836860	Fanconi anemia, complementation group J
+BUB1B	701	Rec	BUB1 mitotic checkpoint serine/threonine kinase B	TCGA_PANCAN_2018,CGC_85,NCGC	C1850343	Mosaic variegated aneuploidy syndrome
+CASR	846	NA	calcium sensing receptor	NCGC		NA
+CBL	867	Dom	Cbl proto-oncogene	TCGA_PANCAN_2018	C0028326	Noonan syndrome
+CDC73	79577	Dom	cell division cycle 73	TCGA_PANCAN_2018,CGC_85,NCGC	C1704981	Hyperparathyroidism 2
+CDH1	999	Dom	cadherin 1	TCGA_PANCAN_2018,CGC_85,NCGC	C1708349	Hereditary diffuse gastric cancer
+CDH10	1008	NA	cadherin 10	CGC_85		NA
+CDK4	1019	Dom	cyclin dependent kinase 4	TCGA_PANCAN_2018,CGC_85,NCGC	C1512419;C1836892	Hereditary cutaneous melanoma; Cutaneous malignant melanoma 3
+CDKN1B	1027	Dom&Rec	cyclin dependent kinase inhibitor 1B	TCGA_PANCAN_2018,CGC_85,NCGC	C1970712	Multiple endocrine neoplasia, type 4
+CDKN1C	1028	Dom	cyclin dependent kinase inhibitor 1C	TCGA_PANCAN_2018,NCGC	C0004903	Beckwith-Wiedemann syndrome
+CDKN2A	1029	Dom	cyclin dependent kinase inhibitor 2A	TCGA_PANCAN_2018,CGC_85,NCGC	C1512419	Hereditary cutaneous melanoma
+CEBPA	1050	Dom	CCAAT enhancer binding protein alpha	TCGA_PANCAN_2018,NCGC	C0023467	Acute myeloid leukemia
+CEP57	9702	NA	centrosomal protein 57	NCGC		NA
+CHEK2	11200	Dom	checkpoint kinase 2	TCGA_PANCAN_2018,CGC_85,NCGC	C0346153	Familial cancer of breast
+COL7A1	1294	Dom&Rec	collagen type VII alpha 1 chain	TCGA_PANCAN_2018	C0014527	Epidermolysis bullosa
+CTNNA1	1495	NA	catenin alpha 1	NCGC		NA
+CTNNB1	1499	NA	catenin beta 1	NCGC		NA
+CTR9	9646	Dom	CTR9 homolog, Paf1/RNA polymerase II complex component	TCGA_PANCAN_2018		NA
+CTRC	11330	NA	chymotrypsin C	NCGC		NA
+CXCR4	7852	NA	C-X-C motif chemokine receptor 4	CGC_85		NA
+CYLD	1540	Dom	CYLD lysine 63 deubiquitinase	TCGA_PANCAN_2018,CGC_85,NCGC	C1857941	Spiegler-Brooke syndrome
+DDB2	1643	Dom	damage specific DNA binding protein 2	TCGA_PANCAN_2018,CGC_85,NCGC	C1848411	Xeroderma pigmentosum, group E
+DICER1	23405	Dom	dicer 1, ribonuclease III	TCGA_PANCAN_2018,CGC_85,NCGC	C1266144;C3839822	Pleuropulmonary blastoma; DICER1 syndrome
+DIRAS3	9077	NA	DIRAS family GTPase 3	NCGC		NA
+DIS3L2	129563	Rec	DIS3 like 3'-5' exoribonuclease 2	TCGA_PANCAN_2018,NCGC	C0796113	Renal hamartomas nephroblastomatosis and fetal gigantism
+DKC1	1736	NA	dyskerin pseudouridine synthase 1	TCGA_PANCAN_2018	C1148551	Dyskeratosis congenita X-linked
+DOCK8	81704	Rec	dedicator of cytokinesis 8	TCGA_PANCAN_2018	C1968689	Hyperimmunoglobulin E recurrent infection syndrome, autosomal recessive
+DROSHA	29102	Dom	drosha ribonuclease III	TCGA_PANCAN_2018		NA
+DTX3L	151636	NA	deltex E3 ubiquitin ligase 3L	NCGC		NA
+EGFR	1956	Dom	epidermal growth factor receptor	TCGA_PANCAN_2018,CGC_85,NCGC		NA
+ELANE	1991	Dom	elastase, neutrophil expressed	TCGA_PANCAN_2018	C1859966	Severe congenital neutropenia autosomal dominant
+ENG	2022	NA	endoglin	NCGC		NA
+EPCAM	4072	Dom	epithelial cell adhesion molecule	TCGA_PANCAN_2018,NCGC	C2750471	Hereditary nonpolyposis colorectal cancer type 8
+ERBB4	2066	NA	erb-b2 receptor tyrosine kinase 4	CGC_85		NA
+ERCC1	2067	Rec	ERCC excision repair 1, endonuclease non-catalytic subunit	TCGA_PANCAN_2018,NCGC	C1853100	Cerebrooculofacioskeletal syndrome 4
+ERCC2	2068	Rec	ERCC excision repair 2, TFIIH core complex helicase subunit	TCGA_PANCAN_2018,CGC_85,NCGC	C0268138	Xeroderma pigmentosum, group D
+ERCC3	2071	Rec	ERCC excision repair 3, TFIIH core complex helicase subunit	TCGA_PANCAN_2018,CGC_85,NCGC	C0268136	Xeroderma Pigmentosum, Complementation Group B
+ERCC4	2072	Rec	ERCC excision repair 4, endonuclease catalytic subunit	TCGA_PANCAN_2018,CGC_85,NCGC	C0268140;C3808988	Xeroderma pigmentosum, group F; Fanconi anemia, complementation group Q
+ERCC5	2073	Rec	ERCC excision repair 5, endonuclease	TCGA_PANCAN_2018,CGC_85,NCGC	C0268141	Xeroderma pigmentosum, group G
+ETV6	2120	Dom	ETS variant 6	TCGA_PANCAN_2018,NCGC	C4015537	Thrombocytopenia 5
+EXT1	2131	Dom	exostosin glycosyltransferase 1	TCGA_PANCAN_2018,CGC_85,NCGC	C0008479	Chondrosarcoma
+EXT2	2132	Dom	exostosin glycosyltransferase 2	TCGA_PANCAN_2018,CGC_85,NCGC	C1851413	Multiple exostoses type 2
+EZH2	2146	NA	enhancer of zeste 2 polycomb repressive complex 2 subunit	NCGC		NA
+FAH	2184	Rec	fumarylacetoacetate hydrolase	TCGA_PANCAN_2018	C0268490	Tyrosinemia type I
+FANCA	2175	Rec	Fanconi anemia complementation group A	TCGA_PANCAN_2018,CGC_85,NCGC	C3469521	Fanconi anemia, complementation group A
+FANCB	2187	NA	Fanconi anemia complementation group B	NCGC		NA
+FANCC	2176	Rec	Fanconi anemia complementation group C	TCGA_PANCAN_2018,CGC_85,NCGC	C3468041	Fanconi anemia, complementation group C
+FANCD2	2177	Rec	Fanconi anemia complementation group D2	TCGA_PANCAN_2018,CGC_85,NCGC	C3160738	Fanconi anemia, complementation group D2
+FANCE	2178	Rec	Fanconi anemia complementation group E	TCGA_PANCAN_2018,CGC_85,NCGC	C3160739	Fanconi anemia, complementation group E
+FANCF	2188	Rec	Fanconi anemia complementation group F	TCGA_PANCAN_2018,CGC_85,NCGC	C3469526	Fanconi anemia, complementation group F
+FANCG	2189	Rec	Fanconi anemia complementation group G	TCGA_PANCAN_2018,CGC_85,NCGC	C3469527	Fanconi anemia, complementation group G
+FANCI	55215	Rec	Fanconi anemia complementation group I	TCGA_PANCAN_2018,NCGC	C1836861	Fanconi anemia, complementation group I
+FANCL	55120	Rec	Fanconi anemia complementation group L	TCGA_PANCAN_2018,NCGC	C3469528	Fanconi anemia, complementation group L
+FANCM	57697	Dom	Fanconi anemia complementation group M	TCGA_PANCAN_2018,NCGC		NA
+FAS	355	Dom	Fas cell surface death receptor	TCGA_PANCAN_2018	C1328840	Autoimmune lymphoproliferative syndrome
+FAT1	2195	NA	FAT atypical cadherin 1	CGC_85		NA
+FEN1	2237	NA	flap structure-specific endonuclease 1	CGC_85		NA
+FH	2271	Dom&Rec	fumarate hydratase	TCGA_PANCAN_2018,CGC_85,NCGC	C1708350	Multiple cutaneous leiomyomas
+FLCN	201163	Dom	folliculin	TCGA_PANCAN_2018,CGC_85,NCGC	CN221571	Birt-Hogg-Dub syndrome
+GALNT12	79695	NA	polypeptide N-acetylgalactosaminyltransferase 12	NCGC		NA
+GATA2	2624	Dom	GATA binding protein 2	TCGA_PANCAN_2018,NCGC	C3280030	Dendritic cell, monocyte, B lymphocyte, and natural killer lymphocyte deficiency
+GBA	2629	Rec	glucosylceramidase beta	TCGA_PANCAN_2018		NA
+GJB2	2706	Dom	gap junction protein beta 2	TCGA_PANCAN_2018	C0266004	Knuckle pads, deafness AND leukonychia syndrome
+GPC3	2719	NA	glypican 3	TCGA_PANCAN_2018,CGC_85,NCGC	C0796154	Simpson-Golabi-Behmel syndrome
+GREM1	26585	NA	gremlin 1, DAN family BMP antagonist	NCGC		NA
+HABP2	3026	NA	hyaluronan binding protein 2	NCGC		NA
+HFE	3077	Rec	homeostatic iron regulator	TCGA_PANCAN_2018	C0392514	Hereditary hemochromatosis
+HMBS	3145	Dom	hydroxymethylbilane synthase	TCGA_PANCAN_2018	C0162565	Acute intermittent porphyria
+HNF1A	6927	Rec	HNF1 homeobox A	TCGA_PANCAN_2018,CGC_85,NCGC	C1840646	Hepatic adenomas, familial
+HNF1B	6928	NA	HNF1 homeobox B	NCGC		NA
+HOXB13	10481	NA	homeobox B13	NCGC		NA
+HRAS	3265	Dom	HRas proto-oncogene, GTPase	TCGA_PANCAN_2018,CGC_85,NCGC	C0587248	Costello syndrome
+ITK	3702	Rec	IL2 inducible T cell kinase	TCGA_PANCAN_2018	C3552634	Lymphoproliferative syndrome 1
+JMJD1C	221037	Dom	jumonji domain containing 1C	TCGA_PANCAN_2018	C1334592	Malignant Intracranial Germ Cell Tumor
+KDR	3791	NA	kinase insert domain receptor	CGC_85		NA
+KIF1B	23095	NA	kinesin family member 1B	NCGC		NA
+KIT	3815	Dom	KIT proto-oncogene receptor tyrosine kinase	TCGA_PANCAN_2018,CGC_85,NCGC	C0238198	Gastrointestinal stroma tumor
+KRAS	3845	Dom	KRAS proto-oncogene, GTPase	TCGA_PANCAN_2018	C0265318;C1860991;C2674723	NA; Noonan syndrome 3; RAS-associated autoimmune leukoproliferative disorder
+LMO1	4004	Dom	LIM domain only 1	TCGA_PANCAN_2018,CGC_85	C4225207	Neuroblastoma, susceptibility to, 7
+LZTR1	8216	NA	leucine zipper like transcription regulator 1	CGC_85,NCGC		NA
+MAP2K1	5604	Dom	mitogen-activated protein kinase kinase 1	TCGA_PANCAN_2018		NA
+MAP2K2	5605	Dom	mitogen-activated protein kinase kinase 2	TCGA_PANCAN_2018		NA
+MAX	4149	Dom	MYC associated factor X	TCGA_PANCAN_2018,CGC_85,NCGC	C1708353	Hereditary Paraganglioma-Pheochromocytoma Syndromes
+MEN1	4221	Dom	menin 1	TCGA_PANCAN_2018,CGC_85,NCGC	C0025267	Multiple endocrine neoplasia, type 1
+MET	4233	Dom	MET proto-oncogene, receptor tyrosine kinase	TCGA_PANCAN_2018,NCGC	C0007134	Renal cell carcinoma, papillary, 1
+MITF	4286	Dom	melanogenesis associated transcription factor	TCGA_PANCAN_2018,NCGC	C1512419	Hereditary cutaneous melanoma
+MLH1	4292	Dom&Rec	mutL homolog 1	TCGA_PANCAN_2018,CGC_85,NCGC	C0009405;C0265325;C1333990	Hereditary nonpolyposis colon cancer; Turcot syndrome; Lynch syndrome
+MLH3	27030	NA	mutL homolog 3	NCGC		NA
+MPL	4352	Dom	MPL proto-oncogene, thrombopoietin receptor	TCGA_PANCAN_2018,CGC_85	C4273671	Inherited predisposition to essential thrombocythemia
+MRE11	4361	NA	MRE11 homolog, double strand break repair nuclease	NCGC		NA
+MSH2	4436	Dom&Rec	mutS homolog 2	TCGA_PANCAN_2018,CGC_85,NCGC	C0009405;C0265325;C1333990	Hereditary nonpolyposis colon cancer; Turcot syndrome; Lynch syndrome
+MSH3	4437	NA	mutS homolog 3	NCGC		NA
+MSH6	2956	Dom&Rec	mutS homolog 6	TCGA_PANCAN_2018,CGC_85,NCGC	C0009405;C0265325;C1333990	Hereditary nonpolyposis colon cancer; Turcot syndrome; Lynch syndrome
+MTAP	4507	Dom	methylthioadenosine phosphorylase	TCGA_PANCAN_2018	C1862177	Diaphyseal medullary stenosis with malignant fibrous histiocytoma
+MUTYH	4595	Rec	mutY DNA glycosylase	TCGA_PANCAN_2018,CGC_85,NCGC	C1837991	MYH-associated polyposis
+NBN	4683	Rec	nibrin	TCGA_PANCAN_2018,CGC_85,NCGC	C0398791	Microcephaly, normal intelligence and immunodeficiency
+NF1	4763	Dom	neurofibromin 1	TCGA_PANCAN_2018,CGC_85,NCGC	C0027831	Neurofibromatosis, type 1
+NF2	4771	Dom	neurofibromin 2	TCGA_PANCAN_2018,CGC_85,NCGC	C0027832	Neurofibromatosis, type 2
+NHP2	55651	Rec	NHP2 ribonucleoprotein	TCGA_PANCAN_2018	C3151441	Dyskeratosis congenita, autosomal recessive 2
+NOP10	55505	Rec	NOP10 ribonucleoprotein	TCGA_PANCAN_2018	C1857144	Dyskeratosis congenita autosomal recessive 1
+NRAS	4893	Dom	NRAS proto-oncogene, GTPase	TCGA_PANCAN_2018	C0265318;C0334082;C1842036;C2674723;C2750732;CN166718	NA; Epidermal nevus; Congenital giant melanocytic nevus; RAS-associated autoimmune leukoproliferative disorder; Noonan syndrome 6; Rasopathy
+NSD1	64324	NA	nuclear receptor binding SET domain protein 1	NCGC		NA
+NTHL1	4913	Rec	nth like DNA glycosylase 1	TCGA_PANCAN_2018,CGC_85,NCGC	C4225157	Familial adenomatous polyposis 3
+OGG1	4968	NA	8-oxoguanine DNA glycosylase	NCGC		NA
+PALB2	79728	Dom&Rec	partner and localizer of BRCA2	TCGA_PANCAN_2018,CGC_85,NCGC	C1835817	Fanconi anemia, complementation group N
+PAX5	5079	Dom	paired box 5	TCGA_PANCAN_2018,NCGC	C3809874	Leukemia, acute lymphoblastic, susceptibility to, 3
+PDGFRA	5156	Dom	platelet derived growth factor receptor alpha	TCGA_PANCAN_2018,CGC_85,NCGC	C0238198	Gastrointestinal stroma tumor
+PHOX2B	8929	Dom	paired like homeobox 2b	TCGA_PANCAN_2018,CGC_85,NCGC	C2751682	Neuroblastoma 2
+PIK3CA	5290	NA	phosphatidylinositol-4,5-bisphosphate 3-kinase catalytic subunit alpha	NCGC		NA
+PINK1	65018	NA	PTEN induced putative kinase 1	NCGC		NA
+PMS1	5378	Rec	PMS1 homolog 1, mismatch repair system component	TCGA_PANCAN_2018,CGC_85,NCGC	CN029768	Familial colorectal cancer
+PMS2	5395	Dom&Rec	PMS1 homolog 2, mismatch repair system component	TCGA_PANCAN_2018,CGC_85,NCGC	C0009405;C0265325;C1333990	Hereditary nonpolyposis colon cancer; Turcot syndrome; Lynch syndrome
+POLD1	5424	Dom	DNA polymerase delta 1, catalytic subunit	TCGA_PANCAN_2018,CGC_85,NCGC	CN237711	Polymerase proofreading-related adenomatous polyposis
+POLE	5426	Dom&Rec	DNA polymerase epsilon, catalytic subunit	TCGA_PANCAN_2018,CGC_85,NCGC	CN237711	Polymerase proofreading-related adenomatous polyposis
+POLH	5429	Rec	DNA polymerase eta	TCGA_PANCAN_2018	C1848410	Xeroderma pigmentosum, variant type
+POLQ	10721	NA	DNA polymerase theta	CGC_85		NA
+POT1	25913	Dom	protection of telomeres 1	TCGA_PANCAN_2018,NCGC	C4014476	Melanoma, cutaneous malignant, susceptibility to, 10
+PPM1D	8493	NA	protein phosphatase, Mg2+/Mn2+ dependent 1D	NCGC		NA
+PRDM9	56979	Dom	PR/SET domain 9	TCGA_PANCAN_2018		NA
+PRF1	5551	Rec	perforin 1	TCGA_PANCAN_2018,CGC_85,NCGC	C1863727	Hemophagocytic lymphohistiocytosis, familial, 2
+PRKAR1A	5573	Dom	protein kinase cAMP-dependent type I regulatory subunit alpha	TCGA_PANCAN_2018,CGC_85,NCGC	C0406810	Carney complex
+PRSS1	5644	Dom	serine protease 1	TCGA_PANCAN_2018,NCGC	C0238339	Hereditary pancreatitis
+PTCH1	5727	Dom	patched 1	TCGA_PANCAN_2018,CGC_85,NCGC	C0004779	Gorlin syndrome
+PTEN	5728	Dom	phosphatase and tensin homolog	TCGA_PANCAN_2018,CGC_85,NCGC	C1959582;CN072330	PTEN hamartoma tumor syndrome; Cowden syndrome 1
+PTPN11	5781	Dom	protein tyrosine phosphatase, non-receptor type 11	TCGA_PANCAN_2018,NCGC	C0028326	Noonan syndrome
+PTPN13	5783	NA	protein tyrosine phosphatase, non-receptor type 13	CGC_85		NA
+RAD50	10111	NA	RAD50 double strand break repair protein	NCGC		NA
+RAD51	5888	NA	RAD51 recombinase	NCGC		NA
+RAD51B	5890	NA	RAD51 paralog B	NCGC		NA
+RAD51C	5889	Dom&Rec	RAD51 paralog C	TCGA_PANCAN_2018,NCGC	C3150653	Fanconi anemia, complementation group O
+RAD51D	5892	Dom	RAD51 paralog D	TCGA_PANCAN_2018,NCGC	C3280345	Breast-ovarian cancer, familial 4
+RAF1	5894	Dom	Raf-1 proto-oncogene, serine/threonine kinase	TCGA_PANCAN_2018	C1969056;C1969057	LEOPARD syndrome 2; Noonan syndrome 5
+RB1	5925	Dom	RB transcriptional corepressor 1	TCGA_PANCAN_2018,CGC_85,NCGC	C0029463;C0035335	Osteosarcoma; Retinoblastoma
+RCC2	55920	NA	regulator of chromosome condensation 2	NCGC		NA
+RECQL	5965	Dom	RecQ like helicase	TCGA_PANCAN_2018		NA
+RECQL4	9401	Rec	RecQ like helicase 4	TCGA_PANCAN_2018,CGC_85,NCGC	C0032339	Rothmund-Thomson syndrome
+RET	5979	Dom	ret proto-oncogene	TCGA_PANCAN_2018,CGC_85,NCGC	C0025268;C0025269;C1833921	Multiple endocrine neoplasia, type 2a; Multiple endocrine neoplasia, type 2b; Familial medullary thyroid carcinoma
+RFWD3	55159	NA	ring finger and WD repeat domain 3	CGC_85		NA
+RHBDF2	79651	Dom	rhomboid 5 homolog 2	TCGA_PANCAN_2018,NCGC	C1835664	Howel-Evans syndrome
+RING1	6015	NA	ring finger protein 1	NCGC		NA
+RINT1	60561	NA	RAD50 interactor 1	NCGC		NA
+RMRP	6023	Rec	RNA component of mitochondrial RNA processing endoribonuclease	TCGA_PANCAN_2018	C0220748	Metaphyseal chondrodysplasia, McKusick type
+RUNX1	861	Dom	runt related transcription factor 1	TCGA_PANCAN_2018,NCGC	C1832388	Familial platelet disorder with associated myeloid malignancy
+SBDS	51119	Rec	SBDS, ribosome maturation factor	TCGA_PANCAN_2018,CGC_85,NCGC	C0272170	Shwachman syndrome
+SCG5	6447	NA	secretogranin V	NCGC		NA
+SDHA	6389	Dom&Rec	succinate dehydrogenase complex flavoprotein subunit A	TCGA_PANCAN_2018,CGC_85,NCGC	C3279992	Paragangliomas 5
+SDHAF2	54949	Dom	succinate dehydrogenase complex assembly factor 2	TCGA_PANCAN_2018,CGC_85,NCGC	C1708353	Hereditary Paraganglioma-Pheochromocytoma Syndromes
+SDHB	6390	Dom	succinate dehydrogenase complex iron sulfur subunit B	TCGA_PANCAN_2018,CGC_85,NCGC	C1708353;C1847319	Hereditary Paraganglioma-Pheochromocytoma Syndromes; Paraganglioma and gastric stromal sarcoma
+SDHC	6391	Dom	succinate dehydrogenase complex subunit C	TCGA_PANCAN_2018,CGC_85,NCGC	C1708353;C1847319	Hereditary Paraganglioma-Pheochromocytoma Syndromes; Paraganglioma and gastric stromal sarcoma
+SDHD	6392	Dom	succinate dehydrogenase complex subunit D	TCGA_PANCAN_2018,CGC_85,NCGC	C1708353;C1847319	Hereditary Paraganglioma-Pheochromocytoma Syndromes; Paraganglioma and gastric stromal sarcoma
+SERPINA1	5265	Rec	serpin family A member 1	TCGA_PANCAN_2018	C0221757	Alpha-1-antitrypsin deficiency
+SETBP1	26040	Dom	SET binding protein 1	TCGA_PANCAN_2018,CGC_85	C0265227	Schinzel-Giedion syndrome
+SH2B3	10019	Rec	SH2B adaptor protein 3	TCGA_PANCAN_2018		NA
+SH2D1A	4068	NA	SH2 domain containing 1A	TCGA_PANCAN_2018	C1868674	NA
+SHOC2	8036	Dom	SHOC2, leucine rich repeat scaffold protein	TCGA_PANCAN_2018	C1843181	Noonan syndrome-like disorder with loose anagen hair 1
+SLC25A13	10165	Rec	solute carrier family 25 member 13	TCGA_PANCAN_2018	C1863844	Citrullinemia type II
+SLX4	84464	NA	SLX4 structure-specific endonuclease subunit	NCGC		NA
+SMAD4	4089	Dom	SMAD family member 4	TCGA_PANCAN_2018,CGC_85,NCGC	C0345893	Juvenile polyposis syndrome
+SMARCA4	6597	Dom	SWI/SNF related, matrix associated, actin dependent regulator of chromatin, subfamily a, member 4	TCGA_PANCAN_2018,NCGC	C2750074	Rhabdoid tumor predisposition syndrome 2
+SMARCB1	6598	Dom	SWI/SNF related, matrix associated, actin dependent regulator of chromatin, subfamily b, member 1	TCGA_PANCAN_2018,CGC_85,NCGC	C1836327	Rhabdoid tumor predisposition syndrome 1
+SMARCE1	6605	Dom	SWI/SNF related, matrix associated, actin dependent regulator of chromatin, subfamily e, member 1	TCGA_PANCAN_2018,CGC_85,NCGC	C1333989	Meningioma, familial
+SOS1	6654	Dom	SOS Ras/Rac guanine nucleotide exchange factor 1	TCGA_PANCAN_2018	C0028326	Noonan syndrome
+SPINK1	6690	NA	serine peptidase inhibitor, Kazal type 1	NCGC		NA
+SPOP	8405	NA	speckle type BTB/POZ protein	CGC_85		NA
+SPRED1	161742	NA	sprouty related EVH1 domain containing 1	NCGC		NA
+SPRTN	83932	Rec	SprT-like N-terminal domain	TCGA_PANCAN_2018	C4015461	Ruijs-Aalfs syndrome
+SRY	6736	NA	sex determining region Y	TCGA_PANCAN_2018	C0206661	Gonadoblastoma
+STAT3	6774	Dom	signal transducer and activator of transcription 3	TCGA_PANCAN_2018,CGC_85	C2936739	Hyper IgE Syndrome, Autosomal Dominant
+STK11	6794	Dom	serine/threonine kinase 11	TCGA_PANCAN_2018,CGC_85,NCGC	C0031269	Peutz-Jeghers syndrome
+SUFU	51684	Dom	SUFU negative regulator of hedgehog signaling	TCGA_PANCAN_2018,CGC_85,NCGC	C0025149;C1333989	Medulloblastoma; Meningioma, familial
+TERF2IP	54386	NA	TERF2 interacting protein	NCGC		NA
+TERT	7015	Dom&Rec	telomerase reverse transcriptase	TCGA_PANCAN_2018,CGC_85,NCGC	C1851970	Dyskeratosis congenita autosomal dominant
+TGFBR1	7046	Dom	transforming growth factor beta receptor 1	TCGA_PANCAN_2018	C0546476	Multiple self healing squamous epithelioma
+TGFBR2	7048	NA	transforming growth factor beta receptor 2	CGC_85		NA
+TMEM127	55654	Dom	transmembrane protein 127	TCGA_PANCAN_2018,CGC_85,NCGC	C0031511	Pheochromocytoma
+TP53	7157	Dom	tumor protein p53	TCGA_PANCAN_2018,CGC_85,NCGC	C1835398	Li-Fraumeni syndrome 1
+TP63	8626	NA	tumor protein p63	CGC_85		NA
+TRIM37	4591	Rec	tripartite motif containing 37	TCGA_PANCAN_2018	C0524582	Mulibrey nanism syndrome
+TSC1	7248	Dom	TSC complex subunit 1	TCGA_PANCAN_2018,CGC_85,NCGC	C1854465	Tuberous sclerosis 1
+TSC2	7249	Dom	TSC complex subunit 2	TCGA_PANCAN_2018,CGC_85,NCGC	C1860707	Tuberous sclerosis 2
+TSHR	7253	Dom	thyroid stimulating hormone receptor	TCGA_PANCAN_2018,CGC_85	C1836706	Hyperthyroidism, nonautoimmune
+UROD	7389	Dom&Rec	uroporphyrinogen decarboxylase	TCGA_PANCAN_2018	C0268323	Familial porphyria cutanea tarda
+VHL	7428	Dom	von Hippel-Lindau tumor suppressor	TCGA_PANCAN_2018,CGC_85,NCGC	C0019562	Von Hippel-Lindau syndrome
+WAS	7454	NA	Wiskott-Aldrich syndrome	TCGA_PANCAN_2018,CGC_85	C1839163	Thrombocytopenia, X-linked
+WRN	7486	Rec	Werner syndrome RecQ like helicase	TCGA_PANCAN_2018,CGC_85,NCGC	C0043119	Werner syndrome
+WT1	7490	Dom	Wilms tumor 1	TCGA_PANCAN_2018,CGC_85,NCGC	CN033288	Wilms tumor 1
+XPA	7507	Rec	XPA, DNA damage recognition and repair factor	TCGA_PANCAN_2018,CGC_85,NCGC	C0268135	Xeroderma pigmentosum, type 1
+XPC	7508	Rec	XPC complex subunit, DNA damage recognition and repair factor	TCGA_PANCAN_2018,CGC_85,NCGC	C2752147	Xeroderma pigmentosum, group C
+XRCC2	7516	NA	X-ray repair cross complementing 2	NCGC		NA

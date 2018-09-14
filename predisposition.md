@@ -23,31 +23,6 @@ Cancer predisposition genes
 </tr>
 </thead>
 <tbody>
-</tbody>
-</table>
-
-<table style="width:49%;">
-<colgroup>
-<col width="6%" />
-<col width="6%" />
-<col width="6%" />
-<col width="6%" />
-<col width="6%" />
-<col width="6%" />
-<col width="6%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">Symbol</th>
-<th align="left">Entrez ID</th>
-<th align="left">MOI</th>
-<th align="left">Gene Name</th>
-<th align="left">Source</th>
-<th align="left">Phenotype_Syndrome_CUI</th>
-<th align="left">Phenotype_Syndrome_Term</th>
-</tr>
-</thead>
-<tbody>
 <tr class="odd">
 <td align="left">ABCB11</td>
 <td align="left">8647</td>
@@ -1931,3 +1906,9 @@ Cancer predisposition genes
 </tr>
 </tbody>
 </table>
+
+\**NCGC* - Norwegian Cancer Genomics Consortium
+
+\**TCGA\_PANCAN\_18* - The Cancer Genome Atlas (Germline paper 2018)
+
+\**CGC\_85* - Cancer Gene Census (COSMIC) - version 85
