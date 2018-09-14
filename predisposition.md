@@ -1,6 +1,12 @@
 Cancer predisposition genes
 ---------------------------
 
+Three different sources have been used to compile a list of 209 genes associated with cancer predisposition:
+
+-   *TCGA\_PANCAN\_18* - TCGCA Pancancer germline study - [Huang et al, Cell, 2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052)
+-   *CGC\_85* - Curated list - Cancer Gene Census (COSMIC) - version 85
+-   *NCGC* - Expert-curated list from [Norwegian Cancer Genomics Consortium](http://cancergenomics.no)
+
 <table style="width:49%;">
 <colgroup>
 <col width="6%" />
@@ -1906,9 +1912,3 @@ Cancer predisposition genes
 </tr>
 </tbody>
 </table>
-
-\**NCGC* - Norwegian Cancer Genomics Consortium
-
-\**TCGA\_PANCAN\_18* - The Cancer Genome Atlas (Germline paper 2018)
-
-\**CGC\_85* - Cancer Gene Census (COSMIC) - version 85
