@@ -4,7 +4,7 @@
 
 The *Cancer Predisposition Sequencing Report (CPSR)* is a computational workflow that **interprets germline variants** identified from next-generation sequencing **in the context of cancer predisposition**. The workflow is integrated with the framework that underlies the [Personal Cancer Genome Reporter (PCGR)](https://github.com/sigven), utilizing the Docker environment for encapsulation of code and software dependencies. While *PCGR* is intended for reporting and analysis of somatic variants detected in a tumor, *CPSR* is intended for reporting and ranking of germline variants in protein-coding genes that are implicated in cancer predisposition and inherited cancer syndromes.
 
-*CPSR* accepts a query file with raw germline variant calls encoded in the [VCF](https://samtools.github.io/hts-specs/VCFv4.2.pdf) format (i.e. analyzing SNVs/InDels). The software performs extensive variant annotation and produces an interactive HTML report, in which the user can investigate two main sets of variants (in a selected set of configurable cancer predisposition genes):
+*CPSR* accepts a query file with raw germline variant calls encoded in the [VCF](https://samtools.github.io/hts-specs/VCFv4.2.pdf) format (i.e. analyzing SNVs/InDels). The software performs extensive variant annotation and produces an interactive HTML report, in which the user can investigate two main sets of variants (in a selected set of [configurable cancer predisposition genes](predisposition.md)):
 
 1. Germline variants that are **previously reported** as pathogenic or likely pathogenic in ClinVar (with no conflicting interpretations)
 
@@ -14,7 +14,7 @@ The *Cancer Predisposition Sequencing Report (CPSR)* is a computational workflow
 	* *Is a rare protein-coding variant* (e.g. minor allele frequency (MAF) < 0.001 in user-defined [gnomAD](http://gnomad.broadinstitute.org/) or [1000 Genomes Project](http://www.internationalgenome.org/) population datasets)
 		* *The upper MAF threshold (e.g. 0.001) for listing of unclassified variants can be configured by the user*
 
-Both variant sets (**classified** and **unclassified**) can be interactively explored and ranked further through different types of filters (associated phenotypes, genes, variant consequences, population MAF etc.)
+Both variant sets (**classified** and **unclassified**) can be interactively explored and ranked further through different types of filters (associated phenotypes, genes, variant consequences, population MAF etc.). Importantly, the unclassified variants are assigned and ranked according to a *pathogenicity score*, which is based on the aggregation of scores according to previously established [ACMG critera](https://www.ncbi.nlm.nih.gov/pubmed/25741868) and also cancer-specific criteria, as specified and implemented in [Huang et al., *Cell*, 2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052).
 
 ### Example report
 
@@ -24,15 +24,15 @@ Both variant sets (**classified** and **unclassified**) can be interactively exp
 
 * [VEP v93](http://www.ensembl.org/info/docs/tools/vep/index.html) - Variant Effect Predictor release 93 (GENCODE v19/v28 as the gene reference dataset), includes [gnomAD r2](http://gnomad.broadinstitute.org/), [dbSNP b150](http://www.ncbi.nlm.nih.gov/SNP/), [1000 Genomes Project - phase3](ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/)
 * [dBNSFP v3.5](https://sites.google.com/site/jpopgen/dbNSFP) - Database of non-synonymous functional predictions (August 2017)
-* [ClinVar](http://www.ncbi.nlm.nih.gov/clinvar/) - Database of clinically related variants (August 2018)
+* [ClinVar](http://www.ncbi.nlm.nih.gov/clinvar/) - Database of clinically related variants (September 2018)
 * [DisGeNET](http://www.disgenet.org) - Database of gene-disease associations (v5.0, May 2017)
-* [UniProt/SwissProt KnowledgeBase 2018_07](http://www.uniprot.org) - Resource on protein sequence and functional information (July 2018)
+* [UniProt/SwissProt KnowledgeBase 2018_08](http://www.uniprot.org) - Resource on protein sequence and functional information (September 2018)
 * [Pfam v31](http://pfam.xfam.org) - Database of protein families and domains (March 2017)
 * [TSGene v2.0](http://bioinfo.mc.vanderbilt.edu/TSGene/) - Tumor suppressor/oncogene database (November 2015)
 
 ### News
 
-*COMING SOON: 0.1.0 release (accompanied by PCGR 0.6.3 release)*
+*COMING SOON: 0.1.0 release*
 
 ### Getting started
 
@@ -50,7 +50,7 @@ A few elements of the workflow can be figured using the *cpsr* configuration fil
 
 The initial step of the workflow performs [VCF validation](https://github.com/EBIvariation/vcf-validator) on the input VCF file. This procedure is very strict, and often causes the workflow to return an error due to various violations of the VCF specification. If the user trusts that the most critical parts of the input VCF is properly encoded,  a setting in the configuration file (`vcf_validation = false`) can be used to turn off VCF validation.
 
-An exhaustive, pre-defined list of 212 cancer predisposition genes can also be configured.
+An exhaustive, pre-defined list of 212 cancer predisposition/syndrome genes can also be configured.
 
 #### STEP 3: Run example
 
