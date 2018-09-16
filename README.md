@@ -16,6 +16,15 @@ The *Cancer Predisposition Sequencing Report (CPSR)* is a computational workflow
 
 Both variant sets (**classified** and **unclassified**) can be interactively explored and ranked further through different types of filters (associated phenotypes, genes, variant consequences, population MAF etc.). Importantly, the unclassified variants are assigned and ranked according to a *pathogenicity score*, which is based on the aggregation of scores according to previously established [ACMG critera](https://www.ncbi.nlm.nih.gov/pubmed/25741868) and also cancer-specific criteria, as specified and implemented in [Huang et al., *Cell*, 2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052).
 
+### Cancer predisposition genes
+We have compiled a comprehensive list of genes that are implicated in cancer predisposition and cancer syndromes. We combined three different sources:
+* A list of 152 genes that were curated and established within TCGA’s pan-cancer study ([Huang et al., *Cell*, 2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052))
+* A list of 107 protein-coding genes that has been manually curated in COSMIC’s [Cancer Gene Census]() v85,
+* A list of 148 protein-coding genes established by experts within the Norwegian Cancer Genomics Consortium (http://cancergenomics.no)
+
+The combination of the three sources resulted in a non-redundant set of 209 protein-coding genes of relevance for cancer predisposition. We want to make it explicit that this list of 209 genes is by no means regarded as an international consensus, but should rather be subject to continuous update by the international community that carry expertise on genetic risk factors for cancer.
+
+
 ### Example report
 
 * [Cancer predisposition sequencing report](http://folk.uio.no/sigven/example.cpsr.grch37.html)
@@ -50,7 +59,7 @@ A few elements of the workflow can be figured using the *cpsr* configuration fil
 
 The initial step of the workflow performs [VCF validation](https://github.com/EBIvariation/vcf-validator) on the input VCF file. This procedure is very strict, and often causes the workflow to return an error due to various violations of the VCF specification. If the user trusts that the most critical parts of the input VCF is properly encoded,  a setting in the configuration file (`vcf_validation = false`) can be used to turn off VCF validation.
 
-An exhaustive, pre-defined list of 212 cancer predisposition/syndrome genes can also be configured.
+An exhaustive, predefined list of 209 cancer predisposition/syndrome genes can also be configured.
 
 #### STEP 3: Run example
 
