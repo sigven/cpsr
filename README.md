@@ -17,7 +17,7 @@ The *Cancer Predisposition Sequencing Report (CPSR)* is a computational workflow
 
 3. Variants overlapping with previously identified hits in genome-wide association studies (GWAS) of cancer phenotypes (i.e. low to moderate risk conferring alleles), using [NHGRI-EBI Catalog of published genome-wide association studies]() as the underlying source.
 
-The (**classified** and **unclassified**) variant sets can be interactively explored and ranked further through different types of filters (associated phenotypes, genes, variant consequences, population MAF etc.). Importantly, the unclassified variants are assigned and ranked according to a *pathogenicity score*, which is based on the aggregation of scores according to previously established [ACMG critera](https://www.ncbi.nlm.nih.gov/pubmed/25741868) and also cancer-specific criteria, as specified and implemented in [Huang et al., *Cell*, 2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052) (see also *Related work* below).
+The (**classified** and **unclassified**) variant sets can be interactively explored and ranked further through different types of filters (associated phenotypes, genes, variant consequences, population MAF etc.). Importantly, the unclassified variants are assigned and ranked according to a *pathogenicity score*, which is based on the aggregation of scores according to previously established [ACMG critera](https://www.ncbi.nlm.nih.gov/pubmed/25741868) and also cancer-specific criteria, as outlined in [Huang et al., *Cell*, 2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052) (see also [*Related work*](https://github.com/sigven/cpsr#related-work) below).
 
 ### Cancer predisposition genes
 We have compiled a comprehensive list of genes that are implicated in cancer predisposition and cancer syndromes. Three different sources were combined:
@@ -71,16 +71,17 @@ An exhaustive, predefined list of 209 cancer predisposition/syndrome genes can a
 
 Run the workflow with **cpsr.py**, which takes the following arguments and options:
 
-	usage: cpsr.py [-h] [--input_vcf INPUT_VCF] [--force_overwrite]
-					 [--version] [--basic]
-					 data_dir output_dir {grch37,grch38}
-					 configuration_file sample_id
+	usage: cpsr.py [-h] [--input_vcf INPUT_VCF] [--force_overwrite] [--version]
+			[--basic] [--docker-uid DOCKER_USER_ID] [--no-docker]
+			pcgr_base_dir output_dir {grch37,grch38} configuration_file
+			sample_id
 
-	Cancer Predisposition Sequencing Report (CPSR)
+	Cancer Predisposition Sequencing Report (CPSR) - report of cancer-predisposing
+	germline variants
 
 	positional arguments:
-	data_dir         Directory that contains the PCGR data bundle
-				    directory, e.g. ~/pcgr-0.6.0
+	pcgr_base_dir         Directory that contains the PCGR data bundle
+				    directory, e.g. ~/pcgr-0.6.3
 	output_dir            Output directory
 	{grch37,grch38}       Genome assembly build: grch37 or grch38
 	configuration_file    Configuration file (TOML format)
@@ -99,6 +100,14 @@ Run the workflow with **cpsr.py**, which takes the following arguments and optio
 	--basic               Run functional variant annotation on VCF through
 				    VEP/vcfanno, omit report generation (STEP 4) (default:
 				    False)
+	--docker-uid DOCKER_USER_ID
+				    Docker user ID. Default is the host system user ID. If
+				    you are experiencing permission errors, try setting
+				    this up to root (`--docker-uid root`) (default: None)
+	--no-docker           Run the CPSR workflow in a non-Docker mode (see
+				    install_no_docker/ folder for instructions (default:
+				    False)
+
 
 
 
