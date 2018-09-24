@@ -13,7 +13,7 @@ import toml
 
 pcgr_version = '0.6.3'
 cpsr_version = '0.1.0'
-db_version = 'PCGR_DB_VERSION = 20180913'
+db_version = 'PCGR_DB_VERSION = 20180924'
 vep_version = '93'
 global vep_assembly
 
@@ -342,6 +342,17 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
    check_subprocess(vcf_validate_command)
    ## Log tumor type of query genome
    logger.info('Finished')
+
+
+   #if not input_bam_docker == 'None':
+      ##get chromosome names
+      #samtools idxstats sample_id sample_id.bam
+      #export MOSDEPTH_Q0=NO_COVERAGE
+      #export MOSDEPTH_Q1=LOW_COVERAGE
+      #export MOSDEPTH_Q2=CALLABLE
+      #export MOSDEPTH_Q3=HIGH_COVERAGE 
+      #LD_LIBRARY_PATH=/opt/vep/src/htslib mosdepth --quantize 0:1:10:100: --by pathogenic_codons_inherited_cancer.chr.bed sample_id sample_id.alignments.bam
+      #bedtools intersect -a sample_id.regions.bed.gz -b sample_id.quantized.bed.gz -wa -wb > tmp
    
    if not input_vcf_docker == 'None':
       
@@ -359,7 +370,7 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
       vep_vcfanno_annotated_pass_vcf = re.sub(r'\.vcfanno','.vcfanno.annotated.pass',vep_vcfanno_vcf) + '.gz'
 
       fasta_assembly = os.path.join(vep_dir, "homo_sapiens", str(vep_version) + "_" + str(vep_assembly), "Homo_sapiens." + str(vep_assembly) + ".dna.primary_assembly.fa.gz")
-      vep_options = "--vcf --check_ref --flag_pick_allele --force_overwrite --species homo_sapiens --assembly " + str(vep_assembly) + " --offline --fork " + str(config_options['other']['n_vep_forks']) + " --hgvs --dont_skip --failed 1 --af --af_1kg --af_gnomad --variant_class --regulatory --domains --symbol --protein --ccds --uniprot --appris --biotype --canonical --gencode_basic --cache --numbers --total_length --no_stats --allele_number --no_escape --xref_refseq --plugin LoF --dir " + str(vep_dir)
+      vep_options = "--vcf --quiet --check_ref --flag_pick_allele --force_overwrite --species homo_sapiens --assembly " + str(vep_assembly) + " --offline --fork " + str(config_options['other']['n_vep_forks']) + " --hgvs --dont_skip --failed 1 --af --af_1kg --af_gnomad --variant_class --regulatory --domains --symbol --protein --ccds --uniprot --appris --biotype --canonical --gencode_basic --cache --numbers --total_length --no_stats --allele_number --no_escape --xref_refseq --plugin LoF --dir " + str(vep_dir)
       if config_options['other']['vep_skip_intergenic'] == 1:
          vep_options = vep_options + " --no_intergenic"
       vep_main_command = str(docker_command_run1) + "vep --input_file " + str(input_vcf_cpsr_ready) + " --output_file " + str(vep_tmp_vcf) + " " + str(vep_options) + " --fasta " + str(fasta_assembly) + docker_command_run_end
@@ -369,8 +380,7 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
       logger = getlogger('cpsr-vep')
 
       print()
-      logger.info("STEP 1: Basic variant annotation with Variant Effect Predictor (" + str(vep_version) + ", GENCODE " + str(gencode_version) + ", " + str(genome_assembly) + ")")
-      #print(str(vep_main_command))
+      logger.info("STEP 1: Basic variant annotation with Variant Effect Predictor (" + str(vep_version) + ", GENCODE " + str(gencode_version) + ", " + str(genome_assembly) + ") including loss-of-function prediction")
       #return
 
       check_subprocess(vep_main_command)
@@ -382,8 +392,8 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
       ## vcfanno command
       print()
       logger = getlogger('cpsr-vcfanno')
-      logger.info("STEP 2: Annotation for cancer predisposition with pcgr-vcfanno (ClinVar, dbNSFP, UniProtKB, CiVIC)")
-      pcgr_vcfanno_command = str(docker_command_run2) + os.path.join(python_scripts_dir, "pcgr_vcfanno.py") + " --num_processes "  + str(config_options['other']['n_vcfanno_proc']) + " --dbnsfp --clinvar --cancer_hotspots --civic --uniprot --pcgr_onco_xref " + str(vep_vcf) + ".gz " + str(vep_vcfanno_vcf) + " " + os.path.join(data_dir, "data", str(genome_assembly)) + docker_command_run_end
+      logger.info("STEP 2: Annotation for cancer predisposition with cpsr-vcfanno (ClinVar, dbNSFP, UniProtKB, cancerhotspots.org, GWAS catalog)")
+      pcgr_vcfanno_command = str(docker_command_run2) + os.path.join(python_scripts_dir, "pcgr_vcfanno.py") + " --num_processes "  + str(config_options['other']['n_vcfanno_proc']) + " --dbnsfp --clinvar --cancer_hotspots --uniprot --pcgr_onco_xref --gwas " + str(vep_vcf) + ".gz " + str(vep_vcfanno_vcf) + " " + os.path.join(data_dir, "data", str(genome_assembly)) + docker_command_run_end
       check_subprocess(pcgr_vcfanno_command)
       logger.info("Finished")
    
