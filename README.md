@@ -4,30 +4,34 @@
 
 The *Cancer Predisposition Sequencing Report (CPSR)* is a computational workflow that **interprets germline variants** identified from next-generation sequencing **in the context of cancer predisposition**. The workflow is integrated with the framework that underlies the [Personal Cancer Genome Reporter (PCGR)](https://github.com/sigven), utilizing the Docker environment for encapsulation of code and software dependencies. While *PCGR* is intended for reporting and analysis of somatic variants detected in a tumor, *CPSR* is intended for reporting and ranking of germline variants in protein-coding genes that are implicated in cancer predisposition and inherited cancer syndromes.
 
-*CPSR* accepts a query file with raw germline variant calls encoded in the [VCF](https://samtools.github.io/hts-specs/VCFv4.2.pdf) format (i.e. analyzing SNVs/InDels). The software performs extensive variant annotation and produces an interactive HTML report, in which the user can investigate two main sets of variants (in a selected set of [configurable cancer predisposition genes](predisposition.md)):
+*CPSR* accepts a query file with raw germline variant calls encoded in the [VCF](https://samtools.github.io/hts-specs/VCFv4.2.pdf) format (i.e. analyzing SNVs/InDels). The software performs extensive variant annotation and produces an interactive HTML report, in which the user can investigate three main sets of variants:
 
-1. Germline variants that are **previously reported** as pathogenic or likely pathogenic in ClinVar (with no conflicting interpretations)
+1. Germline variants in a selected set of [configurable cancer predisposition genes](predisposition.md), that are **previously reported** as pathogenic or likely pathogenic in ClinVar (with no conflicting interpretations)
 
-2. **Unclassified variants** constitute the set of germline variants that are either:
+2. **Unclassified variants** constitute the set of germline variants within the configurable cancer predisposition gene list that are either:
 	* Registered as *variant of uncertain significance (VUS)* in [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/), or
 	* *Is a novel protein-coding variant* (i.e. not reported in [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/), and not found in [gnomAD](http://gnomad.broadinstitute.org/) or [1000 Genomes Project](http://www.internationalgenome.org/) user-defined population datasets), or
 	* *Is a rare protein-coding variant* (e.g. minor allele frequency (MAF) < 0.001 in user-defined [gnomAD](http://gnomad.broadinstitute.org/) or [1000 Genomes Project](http://www.internationalgenome.org/) population datasets)
 		* *The upper MAF threshold (e.g. 0.001) for listing of unclassified variants can be configured by the user*
 
-Both variant sets (**classified** and **unclassified**) can be interactively explored and ranked further through different types of filters (associated phenotypes, genes, variant consequences, population MAF etc.). Importantly, the unclassified variants are assigned and ranked according to a *pathogenicity score*, which is based on the aggregation of scores according to previously established [ACMG critera](https://www.ncbi.nlm.nih.gov/pubmed/25741868) and also cancer-specific criteria, as specified and implemented in [Huang et al., *Cell*, 2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052).
+
+3. Variants overlapping with previously identified hits in genome-wide association studies (GWAS) of cancer phenotypes (i.e. low to moderate risk conferring alleles), using [NHGRI-EBI Catalog of published genome-wide association studies]() as the underlying source.
+
+The (**classified** and **unclassified**) variant sets can be interactively explored and ranked further through different types of filters (associated phenotypes, genes, variant consequences, population MAF etc.). Importantly, the unclassified variants are assigned and ranked according to a *pathogenicity score*, which is based on the aggregation of scores according to previously established [ACMG critera](https://www.ncbi.nlm.nih.gov/pubmed/25741868) and also cancer-specific criteria, as specified and implemented in [Huang et al., *Cell*, 2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052) (see also *Related work* below).
 
 ### Cancer predisposition genes
-We have compiled a comprehensive list of genes that are implicated in cancer predisposition and cancer syndromes. We combined three different sources:
+We have compiled a comprehensive list of genes that are implicated in cancer predisposition and cancer syndromes. Three different sources were combined:
 * A list of 152 genes that were curated and established within TCGA’s pan-cancer study ([Huang et al., *Cell*, 2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052))
 * A list of 107 protein-coding genes that has been manually curated in COSMIC’s [Cancer Gene Census]() v85,
 * A list of 148 protein-coding genes established by experts within the Norwegian Cancer Genomics Consortium (http://cancergenomics.no)
 
-The combination of the three sources resulted in a non-redundant set of 209 protein-coding genes of relevance for cancer predisposition. We want to make it explicit that this list of 209 genes is by no means regarded as an international consensus, but should rather be subject to continuous update by the international community that carry expertise on genetic risk factors for cancer.
+The combination of the three sources resulted in a non-redundant set of 209 protein-coding genes of relevance for predisposition to tumor development. We want to make it explicit that this list of 209 genes is by no means regarded as an international consensus, but should rather be subject to continuous update by the international community that carry expertise on genetic risk factors for cancer.
 
 
 ### Example report
 
 * [Cancer predisposition sequencing report](http://folk.uio.no/sigven/example.cpsr.grch37.html)
+	* IMPORTANT NOTE: the example report is not a realistic scenario for a given case/patient, but primarily for demonstration of functionality (e.g. the huge number of pathogenic variants listed))
 
 ### Annotation resources included in _cpsr - 0.1.0_
 
@@ -38,6 +42,8 @@ The combination of the three sources resulted in a non-redundant set of 209 prot
 * [UniProt/SwissProt KnowledgeBase 2018_08](http://www.uniprot.org) - Resource on protein sequence and functional information (September 2018)
 * [Pfam v31](http://pfam.xfam.org) - Database of protein families and domains (March 2017)
 * [TSGene v2.0](http://bioinfo.mc.vanderbilt.edu/TSGene/) - Tumor suppressor/oncogene database (November 2015)
+* [NHGRI-EBI GWAS catalog](https://www.ebi.ac.uk/gwas//) - GWAS catalog for cancer phenotypes (April 2018)
+
 
 ### News
 
@@ -111,7 +117,11 @@ This command will run the Docker-based *cpsr* workflow and produce the following
   2. __example.cpsr.grch37.pass.tsv.gz__ - Compressed TSV file (generated with [vcf2tsv](https://github.com/sigven/vcf2tsv)) with functional/clinical annotations
   3. __example.cpsr.grch37.html__ - Interactive HTML report with clinically relevant variants in cancer predisposition genes organized into tiers
   4. __example.cpsr.grch37.json.gz__ - Compressed JSON dump of HTML report content
+  5. __example.cpsr.snvs_indels.tiers.grch37.tsv__ - TSV file with most important annotations of tier-structured SNVs/InDels
 
+### Related work
+
+* [CharGer - Characterization of Germline variants](https://github.com/ding-lab/CharGer)
 
 ### Contact
 
