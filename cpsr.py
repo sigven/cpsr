@@ -13,7 +13,7 @@ import toml
 
 pcgr_version = '0.6.3'
 cpsr_version = '0.1.0'
-db_version = 'PCGR_DB_VERSION = 20180924'
+db_version = 'PCGR_DB_VERSION = 20180928'
 vep_version = '93'
 global vep_assembly
 
@@ -365,7 +365,6 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
       input_vcf_cpsr_ready_uncompressed = os.path.join(output_dir, re.sub(r'(\.vcf$|\.vcf\.gz$)','.cpsr_ready.vcf',host_directories['input_vcf_basename_host']))
       vep_vcf = re.sub(r'(\.vcf$|\.vcf\.gz$)','.cpsr_vep.vcf',input_vcf_cpsr_ready)
       vep_vcfanno_vcf = re.sub(r'(\.vcf$|\.vcf\.gz$)','.cpsr_vep.vcfanno.vcf',input_vcf_cpsr_ready)
-      vep_tmp_vcf = vep_vcf + '.tmp'
       vep_vcfanno_annotated_vcf = re.sub(r'\.vcfanno','.vcfanno.annotated',vep_vcfanno_vcf) + '.gz'
       vep_vcfanno_annotated_pass_vcf = re.sub(r'\.vcfanno','.vcfanno.annotated.pass',vep_vcfanno_vcf) + '.gz'
 
@@ -373,8 +372,7 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
       vep_options = "--vcf --quiet --check_ref --flag_pick_allele --force_overwrite --species homo_sapiens --assembly " + str(vep_assembly) + " --offline --fork " + str(config_options['other']['n_vep_forks']) + " --hgvs --dont_skip --failed 1 --af --af_1kg --af_gnomad --variant_class --regulatory --domains --symbol --protein --ccds --uniprot --appris --biotype --canonical --gencode_basic --cache --numbers --total_length --no_stats --allele_number --no_escape --xref_refseq --plugin LoF --dir " + str(vep_dir)
       if config_options['other']['vep_skip_intergenic'] == 1:
          vep_options = vep_options + " --no_intergenic"
-      vep_main_command = str(docker_command_run1) + "vep --input_file " + str(input_vcf_cpsr_ready) + " --output_file " + str(vep_tmp_vcf) + " " + str(vep_options) + " --fasta " + str(fasta_assembly) + docker_command_run_end
-      vep_sed_command =  str(docker_command_run1) + "sed -r 's/:p\.[A-Z]{1}[a-z]{2}[0-9]+=//g' " + str(vep_tmp_vcf) + " > " + str(vep_vcf) + docker_command_run_end
+      vep_main_command = str(docker_command_run1) + "vep --input_file " + str(input_vcf_cpsr_ready) + " --output_file " + str(vep_vcf) + " " + str(vep_options) + " --fasta " + str(fasta_assembly) + docker_command_run_end
       vep_bgzip_command = str(docker_command_run1) + "bgzip -f " + str(vep_vcf) + docker_command_run_end
       vep_tabix_command = str(docker_command_run1) + "tabix -f -p vcf " + str(vep_vcf) + ".gz" + docker_command_run_end
       logger = getlogger('cpsr-vep')
@@ -384,7 +382,6 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
       #return
 
       check_subprocess(vep_main_command)
-      check_subprocess(vep_sed_command)
       check_subprocess(vep_bgzip_command)
       check_subprocess(vep_tabix_command)
       logger.info("Finished")
