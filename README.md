@@ -1,10 +1,10 @@
-## Cancer Predisposition Sequencing Report (CPSR)
+## Cancer Predisposition Sequencing Reporter (CPSR)
 
 ### Overview
 
-The *Cancer Predisposition Sequencing Report (CPSR)* is a computational workflow that **interprets germline variants** identified from next-generation sequencing **in the context of cancer predisposition**. The workflow is integrated with the framework that underlies the [Personal Cancer Genome Reporter (PCGR)](https://github.com/sigven), utilizing the Docker environment for encapsulation of code and software dependencies. While *PCGR* is intended for reporting and analysis of somatic variants detected in a tumor, *CPSR* is intended for reporting and ranking of germline variants in protein-coding genes that are implicated in cancer predisposition and inherited cancer syndromes.
+The *Cancer Predisposition Sequencing Reporter (CPSR)* is a computational workflow that **interprets germline variants** identified from next-generation sequencing **in the context of cancer predisposition**. The workflow is integrated with the framework that underlies the [Personal Cancer Genome Reporter (PCGR)](https://github.com/sigven), utilizing the Docker environment for encapsulation of code and software dependencies. While *PCGR* is intended for reporting and analysis of somatic variants detected in a tumor, *CPSR* is intended for reporting and ranking of germline variants in protein-coding genes that are implicated in cancer predisposition and inherited cancer syndromes.
 
-*CPSR* accepts a query file with raw germline variant calls encoded in the [VCF](https://samtools.github.io/hts-specs/VCFv4.2.pdf) format (i.e. analyzing SNVs/InDels). The software performs extensive variant annotation and produces an interactive HTML report, in which the user can investigate three main sets of variants:
+*CPSR* accepts a query file with raw germline variant calls encoded in the [VCF](https://samtools.github.io/hts-specs/VCFv4.2.pdf) format (i.e. analyzing SNVs/InDels). The software performs extensive variant annotation and produces an interactive HTML report, in which the user can investigate three main sets of variants identified in the query set:
 
 1. Germline variants in a selected set of [configurable cancer predisposition genes](predisposition.md), that are **previously reported** as pathogenic or likely pathogenic in ClinVar (with no conflicting interpretations)
 
@@ -17,9 +17,10 @@ The *Cancer Predisposition Sequencing Report (CPSR)* is a computational workflow
 
 3. Variants overlapping with previously identified hits in genome-wide association studies (GWAS) of cancer phenotypes (i.e. low to moderate risk conferring alleles), using [NHGRI-EBI Catalog of published genome-wide association studies]() as the underlying source.
 
-The (**classified** and **unclassified**) variant sets can be interactively explored and ranked further through different types of filters (associated phenotypes, genes, variant consequences, population MAF etc.). Importantly, the unclassified variants are assigned and ranked according to a *pathogenicity score*, which is based on the aggregation of scores according to previously established [ACMG critera](https://www.ncbi.nlm.nih.gov/pubmed/25741868) and also cancer-specific criteria, as outlined in [Huang et al., *Cell*, 2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052) (see also [*Related work*](https://github.com/sigven/cpsr#related-work) below).
+The (**classified** and **unclassified**) variant sets can be interactively explored and ranked further through different types of filters (associated phenotypes, genes, variant consequences, population MAF etc.). Importantly, the unclassified variants are assigned and ranked according to a *pathogenicity score*, which is based on the aggregation of scores according to previously established [ACMG criteria](https://www.ncbi.nlm.nih.gov/pubmed/25741868) and also cancer-specific criteria, as outlined in [Huang et al., *Cell*, 2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052) (see also [*Related work*](https://github.com/sigven/cpsr#related-work) below).
 
-### Cancer predisposition genes
+##### Cancer predisposition genes
+
 We have compiled a comprehensive list of genes that are implicated in cancer predisposition and cancer syndromes. Three different sources were combined:
 * A list of 152 genes that were curated and established within TCGA’s pan-cancer study ([Huang et al., *Cell*, 2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052))
 * A list of 107 protein-coding genes that has been manually curated in COSMIC’s [Cancer Gene Census]() v85,
@@ -35,29 +36,33 @@ The combination of the three sources resulted in a non-redundant set of 209 prot
 
 ### Annotation resources included in _cpsr - 0.1.0_
 
-* [VEP v93](http://www.ensembl.org/info/docs/tools/vep/index.html) - Variant Effect Predictor release 93 (GENCODE v19/v28 as the gene reference dataset), includes [gnomAD r2](http://gnomad.broadinstitute.org/), [dbSNP b150](http://www.ncbi.nlm.nih.gov/SNP/), [1000 Genomes Project - phase3](ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/)
+* [VEP v94](http://www.ensembl.org/info/docs/tools/vep/index.html) - Variant Effect Predictor release 93 (GENCODE version 28/19 (grch38/grch37) as the gene reference dataset), includes [gnomAD r2](http://gnomad.broadinstitute.org/), [dbSNP build 151/150](http://www.ncbi.nlm.nih.gov/SNP/), [1000 Genomes Project - phase3](ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/)
 * [dBNSFP v3.5](https://sites.google.com/site/jpopgen/dbNSFP) - Database of non-synonymous functional predictions (August 2017)
-* [ClinVar](http://www.ncbi.nlm.nih.gov/clinvar/) - Database of clinically related variants (September 2018)
+* [ClinVar](http://www.ncbi.nlm.nih.gov/clinvar/) - Database of clinically related variants (October 2018)
 * [DisGeNET](http://www.disgenet.org) - Database of gene-disease associations (v5.0, May 2017)
 * [UniProt/SwissProt KnowledgeBase 2018_08](http://www.uniprot.org) - Resource on protein sequence and functional information (September 2018)
-* [Pfam v31](http://pfam.xfam.org) - Database of protein families and domains (March 2017)
+* [Pfam v32](http://pfam.xfam.org) - Database of protein families and domains (September 2018)
 * [TSGene v2.0](http://bioinfo.mc.vanderbilt.edu/TSGene/) - Tumor suppressor/oncogene database (November 2015)
-* [NHGRI-EBI GWAS catalog](https://www.ebi.ac.uk/gwas//) - GWAS catalog for cancer phenotypes (April 2018)
+* [NHGRI-EBI GWAS catalog](https://www.ebi.ac.uk/gwas//) - GWAS catalog for cancer phenotypes (September 15th 2018)
 
+### Documentation
+
+*IN PROGRESS*
 
 ### News
 
-*COMING SOON: 0.1.0 release*
+* *October 5th 2018*: **0.1.0 pre-release**
+	* Initial release of CPSR - reporting of germline variants for cancer predisposition
 
 ### Getting started
 
-#### STEP 0: Install PCGR
+#### STEP 0: Install PCGR (dev version)
 
-Make sure you have a working installation of the latest PCGR release (0.6.3) and latest data bundle (walk through [steps 0-2](https://github.com/sigven/pcgr#getting-started)).
+Make sure you have a working installation of PCGR (**dev version**) and the accompanying dev data bundle(s) (walk through [steps 0-2](https://github.com/sigven/pcgr#getting-started)).
 
 #### STEP 1: Download the latest release
 
-Download the [latest release](https://github.com/sigven/releases/) of *cpsr* (run script and configuration file)
+Download the [pre-release](https://github.com/sigven/releases/v0.1.0) of *cpsr* (run script and configuration file)
 
 #### STEP 2: Configuration
 
@@ -76,12 +81,12 @@ Run the workflow with **cpsr.py**, which takes the following arguments and optio
 			pcgr_base_dir output_dir {grch37,grch38} configuration_file
 			sample_id
 
-	Cancer Predisposition Sequencing Report (CPSR) - report of cancer-predisposing
+	Cancer Predisposition Sequencing Reporter (CPSR) - report of cancer-predisposing
 	germline variants
 
 	positional arguments:
 	pcgr_base_dir         Directory that contains the PCGR data bundle
-				    directory, e.g. ~/pcgr-0.6.3
+				    directory, e.g. ~/pcgr-dev
 	output_dir            Output directory
 	{grch37,grch38}       Genome assembly build: grch37 or grch38
 	configuration_file    Configuration file (TOML format)
@@ -116,7 +121,7 @@ The *cpsr* software bundle contains an example VCF file. It also contains a conf
 Analysis of the example VCF can be performed by the following command:
 
 `python ~/cpsr-0.1.0/cpsr.py --input_vcf ~/cpsr-0.1.0/example.vcf.gz`
-` ~/pcgr-0.6.3 ~/cpsr-0.1.0 grch37 ~/cpsr-0.1.0/cpsr.toml example`
+` ~/pcgr-dev ~/cpsr-0.1.0 grch37 ~/cpsr-0.1.0/cpsr.toml example`
 
 Note that the example command also refers to the PCGR directory (*pcgr-0.6.3*), which contains the data bundle that are necessary for both *PCGR* and *CPSR*.
 

@@ -11,10 +11,10 @@ import getpass
 import platform
 import toml
 
-pcgr_version = '0.6.3'
+pcgr_version = 'dev'
 cpsr_version = '0.1.0'
-db_version = 'PCGR_DB_VERSION = 20180928'
-vep_version = '93'
+db_version = 'PCGR_DB_VERSION = 20181004'
+vep_version = '94'
 global vep_assembly
 
 
@@ -39,14 +39,14 @@ def __main__():
    overwrite = 0
    if args.force_overwrite is True:
       overwrite = 1
-   
+
+   logger = getlogger('cpsr-validate-config')
    if args.no_docker:
       docker_image_version = None
    else:
       # check that script and Docker image version correspond
       check_docker_command = 'docker images -q ' + str(docker_image_version)
       output = subprocess.check_output(str(check_docker_command), stderr=subprocess.STDOUT, shell=True)
-      logger = getlogger('cpsr-validate-config')
       if(len(output) == 0):
           err_msg = 'Docker image ' + str(docker_image_version) + ' does not exist, pull image from Dockerhub (docker pull ' + str(docker_image_version) + ')'
           error_message(err_msg,logger)
