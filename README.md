@@ -62,7 +62,7 @@ Make sure you have a working installation of PCGR (**dev version**) and the acco
 
 #### STEP 1: Download the latest release
 
-Download the [pre-release](https://github.com/sigven/releases/v0.1.0) of *cpsr* (run script and configuration file)
+Download the [pre-release](https://github.com/sigven/cpsr/releases/tag/v0.1.0) of *cpsr* (run script and configuration file)
 
 #### STEP 2: Configuration
 
