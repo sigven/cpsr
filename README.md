@@ -36,7 +36,7 @@ The combination of the three sources resulted in a non-redundant set of 209 prot
 
 ### Annotation resources included in _cpsr - 0.1.0_
 
-* [VEP v94](http://www.ensembl.org/info/docs/tools/vep/index.html) - Variant Effect Predictor release 93 (GENCODE version 28/19 (grch38/grch37) as the gene reference dataset), includes [gnomAD r2](http://gnomad.broadinstitute.org/), [dbSNP build 151/150](http://www.ncbi.nlm.nih.gov/SNP/), [1000 Genomes Project - phase3](ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/)
+* [VEP v94](http://www.ensembl.org/info/docs/tools/vep/index.html) - Variant Effect Predictor (GENCODE version 28/19 (grch38/grch37) as the gene reference dataset), includes [gnomAD r2](http://gnomad.broadinstitute.org/), [dbSNP build 151/150](http://www.ncbi.nlm.nih.gov/SNP/), [1000 Genomes Project - phase3](ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/)
 * [dBNSFP v3.5](https://sites.google.com/site/jpopgen/dbNSFP) - Database of non-synonymous functional predictions (August 2017)
 * [ClinVar](http://www.ncbi.nlm.nih.gov/clinvar/) - Database of clinically related variants (October 2018)
 * [DisGeNET](http://www.disgenet.org) - Database of gene-disease associations (v5.0, May 2017)
