@@ -51,6 +51,9 @@ The combination of the three sources resulted in a non-redundant set of 209 prot
 
 ### News
 
+* *October 27th 2017*: **0.1.1 pre-release**
+	* Added documentation of ACMG evidence items in report output
+	* GWAS hits are optionable to include
 * *October 5th 2018*: **0.1.0 pre-release**
 	* Initial release of CPSR - reporting of germline variants for cancer predisposition
 

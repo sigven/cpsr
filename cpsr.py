@@ -12,15 +12,15 @@ import platform
 import toml
 
 pcgr_version = 'dev'
-cpsr_version = '0.1.0'
-db_version = 'PCGR_DB_VERSION = 20181004'
+cpsr_version = '0.1.1'
+db_version = 'PCGR_DB_VERSION = 20181026'
 vep_version = '94'
 global vep_assembly
 
 
 def __main__():
    
-   parser = argparse.ArgumentParser(description='Cancer Predisposition Sequencing Report (CPSR) - report of cancer-predisposing germline variants',formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+   parser = argparse.ArgumentParser(description='Cancer Predisposition Sequencing Report (CPSR) - report of cancer-predisposing germline variants',formatter_class=argparse.ArgumentDefaultsHelpFormatter, usage="%(prog)s [options] <PCGR_DIR> <OUTPUT_DIR> <GENOME_ASSEMBLY> <CONFIG_FILE> <SAMPLE_ID>")
    parser.add_argument('--input_vcf', dest = "input_vcf", help='VCF input file with somatic query variants (SNVs/InDels).')
    parser.add_argument('--force_overwrite', action = "store_true", help='By default, the script will fail with an error if any output file already exists. You can force the overwrite of existing result files by using this flag')
    parser.add_argument('--version', action='version', version='%(prog)s ' + str(cpsr_version))
@@ -340,19 +340,7 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
    logger.info("STEP 0: Validate input data")
    vcf_validate_command = str(docker_command_run1) + "cpsr_validate_input.py " + str(data_dir) + " " + str(input_vcf_docker) + " " + str(input_conf_docker) + " " + str(genome_assembly) + docker_command_run_end
    check_subprocess(vcf_validate_command)
-   ## Log tumor type of query genome
    logger.info('Finished')
-
-
-   #if not input_bam_docker == 'None':
-      ##get chromosome names
-      #samtools idxstats sample_id sample_id.bam
-      #export MOSDEPTH_Q0=NO_COVERAGE
-      #export MOSDEPTH_Q1=LOW_COVERAGE
-      #export MOSDEPTH_Q2=CALLABLE
-      #export MOSDEPTH_Q3=HIGH_COVERAGE 
-      #LD_LIBRARY_PATH=/opt/vep/src/htslib mosdepth --quantize 0:1:10:100: --by pathogenic_codons_inherited_cancer.chr.bed sample_id sample_id.alignments.bam
-      #bedtools intersect -a sample_id.regions.bed.gz -b sample_id.quantized.bed.gz -wa -wb > tmp
    
    if not input_vcf_docker == 'None':
       
@@ -386,6 +374,7 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
       check_subprocess(vep_bgzip_command)
       check_subprocess(vep_tabix_command)
       logger.info("Finished")
+      #return
    
       ## vcfanno command
       print()
