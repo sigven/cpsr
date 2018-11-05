@@ -1,0 +1,39 @@
+sudo: required
+
+language: python
+python:
+  # We don't actually use the Travis Python (since we are on conda), but this keeps it organized.
+  - "3.6"
+
+before_install:
+  # Get and install anaconda (https://conda.io/docs/travis.html)
+  - wget -nv https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH=$HOME/miniconda/bin:$PATH
+  - hash -r
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update -q conda
+  - conda info -a  # Useful for debugging any issues with conda
+
+install:
+  - export PACKAGE_NAME=cpsr
+  # Setting up channels and install dependencies
+  - conda config --add channels defaults --add channels pcgr --add channels bioconda --add channels conda-forge
+  - conda install -q python=$TRAVIS_PYTHON_VERSION pip requests conda-build jinja2 anaconda-client
+  # Building package
+  - conda build conda_pkg/${PACKAGE_NAME}
+  - conda build conda_pkg/${PACKAGE_NAME}_dockerized
+  - conda install --use-local ${PACKAGE_NAME}
+
+script:
+  - cpsr.py --version
+
+deploy:
+  # Deploy to Anaconda.org
+  - provider: script
+    script:
+      conda convert --platform osx-64 $HOME/miniconda/conda-bld/linux-64/${PACKAGE_NAME}_dockerized-*.tar.bz2 --output-dir $HOME/miniconda/conda-bld/ &&
+      anaconda -t ${ANACONDA_TOKEN} upload -u pcgr $HOME/miniconda/conda-bld/**/${PACKAGE_NAME}*.tar.bz2
+    on:
+      tags: true
+    skip_cleanup: true
