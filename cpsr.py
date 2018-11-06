@@ -13,7 +13,7 @@ import toml
 
 pcgr_version = 'dev'
 cpsr_version = '0.1.1'
-db_version = 'PCGR_DB_VERSION = 20181026'
+db_version = 'PCGR_DB_VERSION = 20181105'
 vep_version = '94'
 global vep_assembly
 
@@ -107,6 +107,7 @@ def read_config_options(configuration_file, pcgr_dir, genome_assembly, logger):
                err_msg = 'Configuration value ' + str(user_options[section][var]) + ' for ' + str(var) + ' cannot be parsed properly (expecting \'default\', \'cerulean\', \'journal\', \'flatly\', \'readable\', \'spacelab\', \'united\', \'cosmo\', \'lumen\', \'paper\', \'sandstone\', \'simplex\',or \'yeti\')'
                error_message(err_msg, logger)
            
+   #print(str(cpsr_config_options))
    return cpsr_config_options
 
 
