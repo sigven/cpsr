@@ -34,7 +34,7 @@ The combination of the three sources resulted in a non-redundant set of 209 prot
 * [Cancer predisposition sequencing report](http://folk.uio.no/sigven/example.cpsr.grch37.html)
 	* IMPORTANT NOTE: the example report is not a realistic scenario for a given case/patient, but primarily for demonstration of functionality (e.g. the huge number of pathogenic variants listed))
 
-### Annotation resources included in _cpsr - 0.2.0_
+### Annotation resources included in _cpsr - 0.2.1_
 
 * [VEP v94](http://www.ensembl.org/info/docs/tools/vep/index.html) - Variant Effect Predictor (GENCODE version 28/19 (grch38/grch37) as the gene reference dataset), includes [gnomAD r2](http://gnomad.broadinstitute.org/), [dbSNP build 151/150](http://www.ncbi.nlm.nih.gov/SNP/), [1000 Genomes Project - phase3](ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/)
 * [dBNSFP v3.5](https://sites.google.com/site/jpopgen/dbNSFP) - Database of non-synonymous functional predictions (August 2017)
@@ -42,7 +42,7 @@ The combination of the three sources resulted in a non-redundant set of 209 prot
 * [DisGeNET](http://www.disgenet.org) - Database of gene-disease associations (v5.0, May 2017)
 * [UniProt/SwissProt KnowledgeBase 2018_09](http://www.uniprot.org) - Resource on protein sequence and functional information (October 2018)
 * [Pfam v32](http://pfam.xfam.org) - Database of protein families and domains (September 2018)
-* [CancerMine v5](https://zenodo.org/record/1336650#.W9QMdRMzaL4) - Literature-derived database of tumor suppressor genes/proto-oncogenes (October 2018)
+* [CancerMine v6](https://zenodo.org/record/1336650#.W9QMdRMzaL4) - Literature-derived database of tumor suppressor genes/proto-oncogenes (November 2018)
 * [NHGRI-EBI GWAS catalog](https://www.ebi.ac.uk/gwas//) - GWAS catalog for cancer phenotypes (October 21st 2018)
 
 ### Documentation
@@ -50,12 +50,14 @@ The combination of the three sources resulted in a non-redundant set of 209 prot
 *IN PROGRESS*
 
 ### News
+* *November 12th 2018*: **0.2.1 pre-release**
+  * Improved ACMG classification transparency
 * *November 6th 2018*: **0.2.0 pre-release**
-	* Adjustments of ACMG classification criteria
-		* Mechanisms of disease for cancer susceptibility genes (GoF vs. LoF) retrieved from [Maxwell et al., *Am J Hum Genet*, 2016](https://www.ncbi.nlm.nih.gov/pubmed/27153395)
-		* Exceptions for HFE/SERPINA1 wrt. high population MAF (*BA1*)
-		* Threshold for genes with "primarily truncations" set to 90% pathogenic truncations (*BP1*)
-		* Consider only pathogenic variants (not likely pathogenic) when checking for novel peptide changes at pathogenic loci (*PS1*/*PM5*)
+  * Adjustments of ACMG classification criteria
+	* Mechanisms of disease for cancer susceptibility genes (GoF vs. LoF) retrieved from [Maxwell et al., *Am J Hum Genet*, 2016](https://www.ncbi.nlm.nih.gov/pubmed/27153395)
+	* Exceptions for HFE/SERPINA1 wrt. high population MAF (*BA1*)
+	* Threshold for genes with "primarily truncations" set to 90% pathogenic truncations (*BP1*)
+	* Consider only pathogenic variants (not likely pathogenic) when checking for novel peptide changes at pathogenic loci (*PS1*/*PM5*)
 * *October 27th 2018*: **0.1.1 pre-release**
 	* Added documentation of ACMG evidence items in report output
 	* GWAS hits are optionable to include
