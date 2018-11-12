@@ -251,9 +251,9 @@ custom_tags = ""
 ## The user can here configure the minimum number of algorithms that must have called a variant as 'damaging'
 ## and the maximum number of algorithms that called the variant as 'tolerated' in order for it to have a consensus
 ## call as 'damaging' (and vice versa for consensus calls as 'tolerated')
-## min_majority should not exceed 8 and should not be less than 3, max_minority should not exceed 3, min_majority + max_minority should not exceed 8
+## min_majority should not exceed 8 and should not be less than 5, max_minority should not exceed 2, min_majority + max_minority should not exceed 8
 
-min_majority = 4
+min_majority = 5
 max_minority = 1
 
 [gwas]
