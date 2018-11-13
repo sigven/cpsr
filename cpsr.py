@@ -313,7 +313,6 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
       output_dir = '/workdir/output'
       vep_dir = '/usr/local/share/vep/data'
       r_scripts_dir = '/'
-      python_scripts_dir = ''
 
    else:
       if host_directories['input_vcf_basename_host'] != 'NA':
@@ -328,18 +327,14 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
       data_dir = host_directories['base_dir_host']
       output_dir = host_directories['output_dir_host']
       vep_dir = vepdb_dir_host
-
-      src_dir = os.path.join(host_directories['base_dir_host'], 'src')
-      python_scripts_dir = os.path.join(src_dir, 'pcgr')
-      os.environ['PYTHONPATH'] = os.path.join(python_scripts_dir, 'lib') + ((':' + os.environ['PYTHONPATH']) if 'PYTHONPATH' in os.environ else '')
-      r_scripts_dir = src_dir
+      r_scripts_dir = ''
 
    check_subprocess(docker_command_run1.replace("-u " + str(uid), "") + 'mkdir -p ' + output_dir + docker_command_run_end)
-   
+
    ## verify VCF and CNA segment file
    logger = getlogger('cpsr-validate-input')
    logger.info("STEP 0: Validate input data")
-   vcf_validate_command = docker_command_run1 + os.path.join(python_scripts_dir, "cpsr_validate_input.py") + " " + data_dir + " " + str(input_vcf_docker) + " " + str(input_conf_docker) + " " + str(genome_assembly)
+   vcf_validate_command = docker_command_run1 + "cpsr_validate_input.py" + " " + data_dir + " " + str(input_vcf_docker) + " " + str(input_conf_docker) + " " + str(genome_assembly)
    if not docker_image_version:
       vcf_validate_command += ' --output_dir ' + output_dir + docker_command_run_end
    else:
@@ -362,10 +357,17 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
       vep_vcfanno_annotated_pass_vcf = re.sub(r'\.vcfanno','.vcfanno.annotated.pass',vep_vcfanno_vcf) + '.gz'
 
       fasta_assembly = os.path.join(vep_dir, "homo_sapiens", str(vep_version) + "_" + str(vep_assembly), "Homo_sapiens." + str(vep_assembly) + ".dna.primary_assembly.fa.gz")
-      vep_options = "--vcf --quiet --check_ref --flag_pick_allele --pick_order canonical,appris,biotype,ccds,rank,tsl,length --force_overwrite --species homo_sapiens --assembly " + str(vep_assembly) + " --offline --fork " + str(config_options['other']['n_vep_forks']) + " --hgvs --dont_skip --failed 1 --af --af_1kg --af_gnomad --variant_class --regulatory --domains --symbol --protein --ccds --uniprot --appris --biotype --canonical --gencode_basic --cache --numbers --total_length --no_stats --allele_number --no_escape --xref_refseq --plugin LoF --dir " + str(vep_dir)
+
+      vep_options = "--vcf --quiet --check_ref --flag_pick_allele --pick_order canonical,appris,biotype,ccds,rank,tsl,length --force_overwrite --species homo_sapiens --assembly " + str(vep_assembly) + " --offline --fork " + str(config_options['other']['n_vep_forks']) + " --hgvs --dont_skip --failed 1 --af --af_1kg --af_gnomad --variant_class --regulatory --domains --symbol --protein --ccds --uniprot --appris --biotype --canonical --gencode_basic --cache --numbers --total_length --no_stats --allele_number --no_escape --xref_refseq --dir " + str(vep_dir)
       vep_options += " --cache_version " + str(vep_version)
       if config_options['other']['vep_skip_intergenic'] == 1:
          vep_options = vep_options + " --no_intergenic"
+      if not docker_image_version:
+         loftee_dir = os.path.join(os.environ['CONDA_PREFIX'], 'share', 'loftee')
+         assert os.path.isdir(loftee_dir), 'LoF VEP plugin is not found in ' + loftee_dir + '. Please make sure you installed pcgr conda package and have corresponding conda environment active.'
+         vep_options += " --plugin LoF,loftee_path:" + loftee_dir + " --dir_plugins " + loftee_dir
+      else:
+         vep_options += " --plugin LoF"
       vep_main_command = str(docker_command_run1) + "vep --input_file " + str(input_vcf_cpsr_ready) + " --output_file " + str(vep_vcf) + " " + str(vep_options) + " --fasta " + str(fasta_assembly) + docker_command_run_end
       vep_bgzip_command = str(docker_command_run1) + "bgzip -f " + str(vep_vcf) + docker_command_run_end
       vep_tabix_command = str(docker_command_run1) + "tabix -f -p vcf " + str(vep_vcf) + ".gz" + docker_command_run_end
@@ -385,14 +387,14 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
       print()
       logger = getlogger('cpsr-vcfanno')
       logger.info("STEP 2: Annotation for cancer predisposition with cpsr-vcfanno (ClinVar, dbNSFP, UniProtKB, cancerhotspots.org, GWAS catalog)")
-      pcgr_vcfanno_command = str(docker_command_run2) + os.path.join(python_scripts_dir, "pcgr_vcfanno.py") + " --num_processes "  + str(config_options['other']['n_vcfanno_proc']) + " --dbnsfp --clinvar --cancer_hotspots --uniprot --pcgr_onco_xref --gwas --rmsk " + str(vep_vcf) + ".gz " + str(vep_vcfanno_vcf) + " " + os.path.join(data_dir, "data", str(genome_assembly)) + docker_command_run_end
+      pcgr_vcfanno_command = str(docker_command_run2) + "pcgr_vcfanno.py --num_processes "  + str(config_options['other']['n_vcfanno_proc']) + " --dbnsfp --clinvar --cancer_hotspots --uniprot --pcgr_onco_xref --gwas --rmsk " + str(vep_vcf) + ".gz " + str(vep_vcfanno_vcf) + " " + os.path.join(data_dir, "data", str(genome_assembly)) + docker_command_run_end
       check_subprocess(pcgr_vcfanno_command)
       logger.info("Finished")
-   
+
       ## summarise command
       print()
       logger = getlogger("cpsr-summarise")
-      pcgr_summarise_command = str(docker_command_run2) + os.path.join(python_scripts_dir, "pcgr_summarise.py") + " " + str(vep_vcfanno_vcf) + ".gz " + os.path.join(data_dir, "data", str(genome_assembly)) + " --cpsr" + docker_command_run_end
+      pcgr_summarise_command = str(docker_command_run2) + "pcgr_summarise.py " + str(vep_vcfanno_vcf) + ".gz " + os.path.join(data_dir, "data", str(genome_assembly)) + " --cpsr" + docker_command_run_end
       logger.info("STEP 3: Cancer gene annotations with cpsr-summarise")
       check_subprocess(pcgr_summarise_command)
       
@@ -405,7 +407,7 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
       check_subprocess(create_output_vcf_command2)
       check_subprocess(create_output_vcf_command3)
       check_subprocess(create_output_vcf_command4)
-      cpsr_vcf2tsv_command = str(docker_command_run2) + os.path.join(python_scripts_dir, "vcf2tsv.py") + " " + str(output_pass_vcf) + " --compress " + str(output_pass_tsv) + docker_command_run_end
+      cpsr_vcf2tsv_command = str(docker_command_run2) + "vcf2tsv.py " + str(output_pass_vcf) + " --compress " + str(output_pass_tsv) + docker_command_run_end
       logger.info("Converting VCF to TSV with https://github.com/sigven/vcf2tsv")
       check_subprocess(cpsr_vcf2tsv_command)
       check_subprocess(clean_command)
@@ -419,12 +421,12 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
    if not basic: 
       logger = getlogger('cpsr-writer')
       logger.info("STEP 4: Generation of output files - Cancer predisposition sequencing report")
-      cpsr_report_command = (docker_command_run1 + os.path.join(r_scripts_dir, "cpsr.R") + " " + output_dir + " " + str(output_pass_tsv) + ".gz " +  str(sample_id)  + " " + str(input_conf_docker) + " " + str(cpsr_version) + " " + str(genome_assembly) + " " + os.path.join(data_dir, docker_command_run_end))
-      #print(pcgr_report_command)
+      cpsr_report_command = (docker_command_run1 + os.path.join(r_scripts_dir, "cpsr.R") + " " + output_dir + " " + str(output_pass_tsv) + ".gz " +  str(sample_id)  + " " + str(input_conf_docker) + " " + str(cpsr_version) + " " + str(genome_assembly) + " " + data_dir + docker_command_run_end)
+      #print(cpsr_report_command)
       check_subprocess(cpsr_report_command)
       logger.info("Finished")
    
-   
+
    
 if __name__=="__main__": __main__()
 
