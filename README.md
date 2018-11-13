@@ -71,7 +71,7 @@ Make sure you have a working installation of PCGR (**dev version**) and the acco
 
 #### STEP 1: Download the latest release
 
-Download the [pre-release](https://github.com/sigven/cpsr/releases/tag/v0.2.0) of *cpsr* (run script and configuration file)
+Download the [pre-release](https://github.com/sigven/cpsr/releases/tag/v0.2.1) of *cpsr* (run script and configuration file)
 
 #### STEP 2: Configuration
 
@@ -125,12 +125,12 @@ Run the workflow with **cpsr.py**, which takes the following arguments and optio
 
 
 
-The *cpsr* software bundle contains an example VCF file. It also contains a configuration file (*cpsr.toml*). 
+The *cpsr* software bundle contains an example VCF file. It also contains a configuration file (*cpsr.toml*).
 
 Analysis of the example VCF can be performed by the following command:
 
-`python ~/cpsr-0.2.0/cpsr.py --input_vcf ~/cpsr-0.2.0/example.vcf.gz`
-` ~/pcgr-dev ~/cpsr-0.2.0 grch37 ~/cpsr-0.2.0/cpsr.toml example`
+`python ~/cpsr-0.2.1/cpsr.py --input_vcf ~/cpsr-0.2.1/example.vcf.gz`
+` ~/pcgr-dev ~/cpsr-0.2.1 grch37 ~/cpsr-0.2.1/cpsr.toml example`
 
 Note that the example command also refers to the PCGR directory (*pcgr-dev*), which contains the data bundle that are necessary for both *PCGR* and *CPSR*.
 
