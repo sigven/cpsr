@@ -32,7 +32,6 @@ The combination of the three sources resulted in a non-redundant set of 209 prot
 ### Example report
 
 * [Cancer predisposition sequencing report](http://folk.uio.no/sigven/example.cpsr.grch37.html)
-	* IMPORTANT NOTE: the example report is not a realistic scenario for a given case/patient, but primarily for demonstration of functionality (e.g. the huge number of pathogenic variants listed))
 
 ### Annotation resources included in _cpsr - 0.2.1_
 
@@ -126,7 +125,7 @@ Run the workflow with **cpsr.py**, which takes the following arguments and optio
 
 
 
-The *cpsr* software bundle contains an example VCF file. It also contains a configuration file (*cpsr.toml*). **NOTE: The example file contains a significant number of known pathogenic and likely pathogenic variants. This is for demonstration purposes only, and NOT a realistic situation in a regular sample.**
+The *cpsr* software bundle contains an example VCF file. It also contains a configuration file (*cpsr.toml*). 
 
 Analysis of the example VCF can be performed by the following command:
 
