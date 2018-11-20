@@ -46,7 +46,7 @@ The combination of the three sources resulted in a non-redundant set of 209 prot
 
 ### Documentation
 
-*IN PROGRESS*
+[![Documentation Status](https://readthedocs.org/projects/cpsr/badge/?version=latest)](https://cpsr.readthedocs.io/en/latest/?badge=latest)
 
 ### News
 * *November 19th 2018*: **0.3.0 pre-release**
