@@ -12,8 +12,8 @@ import platform
 import toml
 
 pcgr_version = 'dev'
-cpsr_version = '0.2.1'
-db_version = 'PCGR_DB_VERSION = 20181112'
+cpsr_version = '0.3.0'
+db_version = 'PCGR_DB_VERSION = 20181119'
 vep_version = '94'
 global vep_assembly
 
@@ -349,8 +349,8 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
       output_vcf = os.path.join(output_dir, str(sample_id) + '.' + str(pcgr_model) + '.' + str(genome_assembly) + '.vcf.gz')
       output_pass_vcf = os.path.join(output_dir, str(sample_id) + '.' + str(pcgr_model) + '.' + str(genome_assembly) + '.pass.vcf.gz')
       output_pass_tsv = os.path.join(output_dir, str(sample_id) + '.' + str(pcgr_model) + '.' + str(genome_assembly) + '.pass.tsv')
-      input_vcf_cpsr_ready = os.path.join(output_dir, re.sub(r'(\.vcf$|\.vcf\.gz$)','.cpsr_ready.vcf.gz',host_directories['input_vcf_basename_host']))
-      input_vcf_cpsr_ready_uncompressed = os.path.join(output_dir, re.sub(r'(\.vcf$|\.vcf\.gz$)','.cpsr_ready.vcf',host_directories['input_vcf_basename_host']))
+      input_vcf_cpsr_ready = os.path.join(output_dir, re.sub(r'(\.vcf$|\.vcf\.gz$)','.cpsr_ready_target.vcf.gz',host_directories['input_vcf_basename_host']))
+      input_vcf_cpsr_ready_uncompressed = os.path.join(output_dir, re.sub(r'(\.vcf$|\.vcf\.gz$)','.cpsr_ready_target.vcf',host_directories['input_vcf_basename_host']))
       vep_vcf = re.sub(r'(\.vcf$|\.vcf\.gz$)','.cpsr_vep.vcf',input_vcf_cpsr_ready)
       vep_vcfanno_vcf = re.sub(r'(\.vcf$|\.vcf\.gz$)','.cpsr_vep.vcfanno.vcf',input_vcf_cpsr_ready)
       vep_vcfanno_annotated_vcf = re.sub(r'\.vcfanno','.vcfanno.annotated',vep_vcfanno_vcf) + '.gz'

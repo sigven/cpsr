@@ -1,0 +1,764 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Output &mdash; Cancer Predisposition Sequencing Reporter 2.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="CHANGELOG" href="CHANGELOG.html" />
+    <link rel="prev" title="Input" href="input.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Cancer Predisposition Sequencing Reporter
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Table of Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="annotation_resources.html">CPSR annotation resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="input.html">Input</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Output</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#interactive-html-report">Interactive HTML report</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#interactive-datatables">Interactive datatables</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#example-report">Example report</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#json">JSON</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#output-files-germline-snvs-indels">Output files - germline SNVs/InDels</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#variant-call-format-vcf">Variant call format - VCF</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#vep-consequence-annotations"><em>VEP consequence annotations</em></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gene-information"><em>Gene information</em></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#variant-effect-and-protein-coding-information"><em>Variant effect and protein-coding information</em></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#variant-frequencies-annotations-in-germline-databases"><em>Variant frequencies/annotations in germline databases</em></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#clinical-associations"><em>Clinical associations</em></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#tab-separated-values-tsv">Tab-separated values (TSV)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#annotated-list-of-all-snvs-indels">Annotated List of all SNVs/InDels</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CHANGELOG.html">CHANGELOG</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Cancer Predisposition Sequencing Reporter</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Output</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/output.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="output">
+<h1>Output<a class="headerlink" href="#output" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="interactive-html-report">
+<h2>Interactive HTML report<a class="headerlink" href="#interactive-html-report" title="Permalink to this headline">¶</a></h2>
+<p>An interactive and tier-structured HTML report that lists variants in in
+known cancer predisposition genes is provided with the following naming
+convention:</p>
+<p>&lt;<em>sample_id</em>&gt;.<strong>cpsr</strong>.&lt;<em>genome_assembly</em>&gt;.<strong>html</strong></p>
+<ul class="simple">
+<li>The <strong>sample_id</strong> is provided as input by the user, and reflects a
+unique identifier of the tumor-normal sample pair to be analyzed.</li>
+</ul>
+<p>The report is structured in five main sections, described in more detail
+below:</p>
+<ol class="arabic simple">
+<li><strong>Settings &amp; annotation sources</strong><ul>
+<li>Lists underlying tools and annotation sources (links and versions)</li>
+<li>Lists key configurations provided by user</li>
+</ul>
+</li>
+<li><strong>Introduction</strong><ul>
+<li>Describes the structure and organization of the report, as well as
+the predisposition genes that have been included for reporting</li>
+</ul>
+</li>
+<li><strong>Summary of findings</strong><ul>
+<li>Lists the top findings in Tier1/2/3</li>
+</ul>
+</li>
+<li><strong>Germline SNVs/InDels</strong><ul>
+<li>Comprehensive, interactive variant tables for each tier</li>
+<li>Tier 1<ul>
+<li>Pathogenic variants in ClinVar</li>
+</ul>
+</li>
+<li>Tier 2<ul>
+<li>Likely pathogenic variants in ClinVar</li>
+</ul>
+</li>
+<li>Tier 3<ul>
+<li>Variants of uncertain significance - color coded by <em>PATHRANK</em>
+- a categorical variable indicating the pathogenicity of each
+variant based on an accumulation of ACMG evidence levels</li>
+</ul>
+</li>
+<li>GWAS<ul>
+<li>Low-risk variants found in genome-wide association studies of
+cancer phenotypes (NHGRI-EBI Catalog)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>References</strong><ul>
+<li>Supporting scientific literature (Interpretation/implementation of
+ACMG critera etc.)</li>
+</ul>
+</li>
+</ol>
+<div class="section" id="interactive-datatables">
+<h3>Interactive datatables<a class="headerlink" href="#interactive-datatables" title="Permalink to this headline">¶</a></h3>
+<p>The interactive datatables contain a number of hyperlinked annotations
+similar to those defined for the annotated VCF file, including the
+following:</p>
+<ul class="simple">
+<li>SYMBOL - Gene symbol (Entrez/NCBI)</li>
+<li>PROTEIN_CHANGE - Amino acid change (VEP)</li>
+<li>GENE_NAME - gene name description (Entrez/NCBI)</li>
+<li>PROTEIN_DOMAIN - PFAM protein domain</li>
+<li>PROTEIN_FEATURE - UniProt feature overlapping variant site</li>
+<li>CDS_CHANGE - Coding sequence change</li>
+<li>CONSEQUENCE - VEP consequence (primary transcript)</li>
+<li>HGVSc - from VEP</li>
+<li>HGVSp - from VEP</li>
+<li>ONCOGENE - Known proto-oncogene</li>
+<li>TUMOR_SUPPRESSOR - known tumor suppressor gene</li>
+<li>ONCOSCORE - Literature-derived score for oncogenic potential (gene
+level)</li>
+<li>PREDICTED_EFFECT - Effect predictions from dbNSFP</li>
+<li>VEP_ALL_CONSEQUENCE - All VEP consequences (multiple transcripts)</li>
+<li>DBSNP - dbSNP rsID</li>
+<li>CLINVAR - ClinVar variant origin and associated phenotypes</li>
+<li>GENOMIC_CHANGE - Variant ID</li>
+<li>GENOME_VERSION - Genome assembly</li>
+</ul>
+</div>
+</div>
+<div class="section" id="example-report">
+<h2>Example report<a class="headerlink" href="#example-report" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="http://folk.uio.no/sigven/example.cpsr.grch37.html">Cancer predisposition sequencing
+report</a></li>
+</ul>
+<p>The HTML reports have been tested using the following browsers:</p>
+<ul class="simple">
+<li>Safari (10.0.3)</li>
+<li>Mozilla Firefox (52.0.2)</li>
+<li>Google Chrome (57.0.2987.110)</li>
+</ul>
+</div>
+<div class="section" id="json">
+<h2>JSON<a class="headerlink" href="#json" title="Permalink to this headline">¶</a></h2>
+<p>A JSON file that stores the HTML report content is provided. This file
+will easen the process of extracting particular parts of the report for
+further analysis. Presently, there is no detailed schema documented for
+the JSON structure.</p>
+</div>
+<div class="section" id="output-files-germline-snvs-indels">
+<h2>Output files - germline SNVs/InDels<a class="headerlink" href="#output-files-germline-snvs-indels" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="variant-call-format-vcf">
+<h3>Variant call format - VCF<a class="headerlink" href="#variant-call-format-vcf" title="Permalink to this headline">¶</a></h3>
+<p>A VCF file containing annotated, germline calls (single nucleotide
+variants and insertion/deletions) is generated with the following naming
+convention:</p>
+<p>&lt;<em>sample_id</em>&gt;.<strong>cpsr</strong>.&lt;<em>genome_assembly</em>&gt;.<strong>vcf.gz (.tbi)</strong></p>
+<p>Here, the <strong>sample_id</strong> is provided as input by the user, and reflects a
+unique identifier of the tumor-normal sample pair to be analyzed.
+Following common standards, the annotated VCF file is compressed with
+<a class="reference external" href="http://www.htslib.org/doc/tabix.html">bgzip</a> and indexed with
+<a class="reference external" href="http://www.htslib.org/doc/tabix.html">tabix</a>. Below follows a
+description of all annotations/tags present in the VCF INFO column after
+processing with the CPSR annotation pipeline:</p>
+<div class="section" id="vep-consequence-annotations">
+<h4><em>VEP consequence annotations</em><a class="headerlink" href="#vep-consequence-annotations" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>CSQ - Complete consequence annotations from VEP. Format:
+Allele|Consequence|IMPACT|SYMBOL|Gene|Feature_type|Feature|BIOTYPE|EXON|
+INTRON|HGVSc|HGVSp|cDNA_position|CDS_position|Protein_position|Amino_acids|
+Codons|Existing_variation|ALLELE_NUM|DISTANCE|STRAND|FLAGS|PICK|VARIANT_CLASS|
+SYMBOL_SOURCE|HGNC_ID|CANONICAL|APPRIS|CCDS|ENSP|SWISSPROT|TREMBL|UNIPARC|
+RefSeq|DOMAINS|HGVS_OFFSET|AF|AFR_AF|AMR_AF|EAS_AF|EUR_AF|SAS_AF|gnomAD_AF|
+gnomAD_AFR_AF|gnomAD_AMR_AF|gnomAD_ASJ_AF|gnomAD_EAS_AF|gnomAD_FIN_AF|
+gnomAD_NFE_AF|gnomAD_OTH_AF|gnomAD_SAS_AF|CLIN_SIG|SOMATIC|PHENO|
+MOTIF_NAME|MOTIF_POS|HIGH_INF_POS|MOTIF_SCORE_CHANGE</li>
+<li>Consequence - Impact modifier for the consequence type (picked by
+VEP’s –flag_pick_allele option)</li>
+<li>Gene - Ensembl stable ID of affected gene (picked by VEP’s
+–flag_pick_allele option)</li>
+<li>Feature_type - Type of feature. Currently one of Transcript,
+RegulatoryFeature, MotifFeature (picked by VEP’s –flag_pick_allele
+option)</li>
+<li>Feature - Ensembl stable ID of feature (picked by VEP’s
+–flag_pick_allele option)</li>
+<li>cDNA_position - Relative position of base pair in cDNA sequence
+(picked by VEP’s –flag_pick_allele option)</li>
+<li>CDS_position - Relative position of base pair in coding sequence
+(picked by VEP’s –flag_pick_allele option)</li>
+<li>CDS_CHANGE - Coding, transcript-specific sequence annotation (picked
+by VEP’s –flag_pick_allele option)</li>
+<li>AMINO_ACID_START - Protein position indicating absolute start of
+amino acid altered (fetched from Protein_position)</li>
+<li>AMINO_ACID_END - Protein position indicating absolute end of amino
+acid altered (fetched from Protein_position)</li>
+<li>Protein_position - Relative position of amino acid in protein (picked
+by VEP’s –flag_pick_allele option)</li>
+<li>Amino_acids - Only given if the variant affects the protein-coding
+sequence (picked by VEP’s –flag_pick_allele option)</li>
+<li>Codons - The alternative codons with the variant base in upper case
+(picked by VEP’s –flag_pick_allele option)</li>
+<li>IMPACT - Impact modifier for the consequence type (picked by VEP’s
+–flag_pick_allele option)</li>
+<li>VARIANT_CLASS - Sequence Ontology variant class (picked by VEP’s
+–flag_pick_allele option)</li>
+<li>SYMBOL - Gene symbol (picked by VEP’s –flag_pick_allele option)</li>
+<li>SYMBOL_SOURCE - The source of the gene symbol (picked by VEP’s
+–flag_pick_allele option)</li>
+<li>STRAND - The DNA strand (1 or -1) on which the transcript/feature
+lies (picked by VEP’s –flag_pick_allele option)</li>
+<li>ENSP - The Ensembl protein identifier of the affected transcript
+(picked by VEP’s –flag_pick_allele option)</li>
+<li>FLAGS - Transcript quality flags: cds_start_NF: CDS 5’, incomplete
+cds_end_NF: CDS 3’ incomplete (picked by VEP’s –flag_pick_allele
+option)</li>
+<li>SWISSPROT - Best match UniProtKB/Swiss-Prot accession of protein
+product (picked by VEP’s –flag_pick_allele option)</li>
+<li>TREMBL - Best match UniProtKB/TrEMBL accession of protein product
+(picked by VEP’s –flag_pick_allele option)</li>
+<li>UNIPARC - Best match UniParc accession of protein product (picked by
+VEP’s –flag_pick_allele option)</li>
+<li>HGVSc - The HGVS coding sequence name (picked by VEP’s
+–flag_pick_allele option)</li>
+<li>HGVSp - The HGVS protein sequence name (picked by VEP’s
+–flag_pick_allele option)</li>
+<li>HGVSp_short - The HGVS protein sequence name, short version (picked
+by VEP’s –flag_pick_allele option)</li>
+<li>HGVS_OFFSET - Indicates by how many bases the HGVS notations for this
+variant have been shifted (picked by VEP’s –flag_pick_allele option)</li>
+<li>MOTIF_NAME - The source and identifier of a transcription factor
+binding profile aligned at this position (picked by VEP’s
+–flag_pick_allele option)</li>
+<li>MOTIF_POS - The relative position of the variation in the aligned
+TFBP (picked by VEP’s –flag_pick_allele option)</li>
+<li>HIGH_INF_POS - A flag indicating if the variant falls in a high
+information position of a transcription factor binding profile (TFBP)
+(picked by VEP’s –flag_pick_allele option)</li>
+<li>MOTIF_SCORE_CHANGE - The difference in motif score of the reference
+and variant sequences for the TFBP (picked by VEP’s –flag_pick_allele
+option)</li>
+<li>CELL_TYPE - List of cell types and classifications for regulatory
+feature (picked by VEP’s –flag_pick_allele option)</li>
+<li>CANONICAL - A flag indicating if the transcript is denoted as the
+canonical transcript for this gene (picked by VEP’s –flag_pick_allele
+option)</li>
+<li>CCDS - The CCDS identifier for this transcript, where applicable
+(picked by VEP’s –flag_pick_allele option)</li>
+<li>INTRON - The intron number (out of total number) (picked by VEP’s
+–flag_pick_allele option)</li>
+<li>EXON - The exon number (out of total number) (picked by VEP’s
+–flag_pick_allele option)</li>
+<li>DOMAINS - The source and identifier of any overlapping protein
+domains (picked by VEP’s –flag_pick_allele option)</li>
+<li>DISTANCE - Shortest distance from variant to transcript (picked by
+VEP’s –flag_pick_allele option)</li>
+<li>BIOTYPE - Biotype of transcript or regulatory feature (picked by
+VEP’s –flag_pick_allele option)</li>
+<li>TSL - Transcript support level (picked by VEP’s –flag_pick_allele
+option)&gt;</li>
+<li>PUBMED - PubMed ID(s) of publications that cite existing variant -
+VEP</li>
+<li>PHENO - Indicates if existing variant is associated with a phenotype,
+disease or trait - VEP</li>
+<li>GENE_PHENO - Indicates if overlapped gene is associated with a
+phenotype, disease or trait - VEP</li>
+<li>ALLELE_NUM - Allele number from input; 0 is reference, 1 is first
+alternate etc - VEP</li>
+<li>REFSEQ_MATCH - The RefSeq transcript match status; contains a number
+of flags indicating whether this RefSeq transcript matches the
+underlying reference sequence and/or an Ensembl transcript (picked by
+VEP’s –flag_pick_allele option)</li>
+<li>PICK - Indicates if this block of consequence data was picked by
+VEP’s –flag_pick_allele option</li>
+<li>VEP_ALL_CONSEQUENCE - All transcript consequences
+(Consequence:SYMBOL:Feature_type:Feature:BIOTYPE) - VEP</li>
+</ul>
+</div>
+<div class="section" id="gene-information">
+<h4><em>Gene information</em><a class="headerlink" href="#gene-information" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>ENTREZ_ID - <a class="reference external" href="http://www.ncbi.nlm.nih.gov/gene">Entrez</a> gene
+identifier</li>
+<li>APPRIS - Principal isoform flags according to the <a class="reference external" href="http://appris.bioinfo.cnio.es/#/downloads">APPRIS principal
+isoform database</a></li>
+<li>UNIPROT_ID - <a class="reference external" href="http://www.uniprot.org">UniProt</a> identifier</li>
+<li>UNIPROT_ACC - <a class="reference external" href="http://www.uniprot.org">UniProt</a> accession(s)</li>
+<li>ENSEMBL_GENE_ID - Ensembl gene identifier for VEP’s picked transcript
+(<em>ENSGXXXXXXX</em>)</li>
+<li>ENSEMBL_TRANSCRIPT_ID - Ensembl transcript identifier for VEP’s
+picked transcript (<em>ENSTXXXXXX</em>)</li>
+<li>REFSEQ_MRNA - Corresponding RefSeq transcript(s) identifier for VEP’s
+picked transcript (<em>NM_XXXXX</em>)</li>
+<li>CORUM_ID - Associated protein complexes (identifiers) from
+<a class="reference external" href="http://mips.helmholtz-muenchen.de/corum/">CORUM</a></li>
+<li>DISGENET_CUI - Tumor types associated with gene, as found in
+DisGeNET. Tumor types are listed as unique
+<a class="reference external" href="https://www.ncbi.nlm.nih.gov/medgen/">MedGen</a> concept IDs
+(<em>CUIs</em>)</li>
+<li>TUMOR_SUPPRESSOR - Gene is predicted as tumor suppressor candidate
+according to
+(<a class="reference external" href="https://zenodo.org/record/1336650#.W9do9WJKiL4">CancerMine</a>)</li>
+<li>ONCOGENE - Gene is predicted as an oncogene according to
+(<a class="reference external" href="https://zenodo.org/record/1336650#.W9do9WJKiL4">CancerMine</a>)</li>
+<li>ONCOSCORE - Literature-derived score for cancer gene relevance
+<a class="reference external" href="http://bioconductor.org/packages/release/bioc/html/OncoScore.html">Bioconductor/OncoScore</a>,
+range from 0 (low oncogenic potential) to 1 (high oncogenic
+potential)</li>
+<li>CANCER_SUSCEPTIBILITY_CUI - MedGen concept unique identifier (CUI)
+for cancer phenotype</li>
+<li>CANCER_SYNDROME_CUI - MedGen concept unique identifier (CUI) for
+cancer syndrome</li>
+<li>CANCER_PREDISPOSITION_SOURCE - Data source for susceptibility gene
+(NCGC, CGC, TCGA_PANCAN)</li>
+<li>CANCER_PREDISPOSITION_MOI - Mechanism of inheritance for
+susceptibility gene (AR/AD)</li>
+<li>CANCER_PREDISPOSITION_MOD - Mechanism of disease for susceptibility
+gene (Lof/GoF)</li>
+</ul>
+</div>
+<div class="section" id="variant-effect-and-protein-coding-information">
+<h4><em>Variant effect and protein-coding information</em><a class="headerlink" href="#variant-effect-and-protein-coding-information" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>MUTATION_HOTSPOT - mutation hotspot codon in
+<a class="reference external" href="http://cancerhotspots.org/">cancerhotspots.org</a>. Format:
+gene_symbol | codon | q-value</li>
+<li>MUTATION_HOTSPOT_TRANSCRIPT - hotspot-associated transcripts (Ensembl
+transcript ID)</li>
+<li>MUTATION_HOTSPOT_CANCERTYPE - hotspot-associated cancer types (from
+cancerhotspots.org)</li>
+<li>UNIPROT_FEATURE - Overlapping protein annotations from <a class="reference external" href="http://www.uniprot.org">UniProt
+KB</a></li>
+<li>PFAM_DOMAIN - Pfam domain identifier (from VEP)</li>
+<li>EFFECT_PREDICTIONS - All predictions of effect of variant on protein
+function and pre-mRNA splicing from <a class="reference external" href="https://sites.google.com/site/jpopgen/dbNSFP">database of non-synonymous
+functional predictions - dbNSFP
+v3.5</a>. Predicted
+effects are provided by different sources/algorithms (separated by
+‘&amp;’):<ol class="arabic">
+<li><a class="reference external" href="http://provean.jcvi.org/index.php">SIFT</a> (Jan 2015)</li>
+<li><a class="reference external" href="http://www.genetics.wustl.edu/jflab/lrt_query.html">LRT</a>
+(2009)</li>
+<li><a class="reference external" href="http://www.mutationtaster.org/">MutationTaster</a> (data release
+Nov 2015)</li>
+<li><a class="reference external" href="http://mutationassessor.org/">MutationAssessor</a> (release 3)</li>
+<li><a class="reference external" href="http://fathmm.biocompute.org.uk">FATHMM</a> (v2.3)</li>
+<li><a class="reference external" href="http://provean.jcvi.org/index.php">PROVEAN</a> (v1.1 Jan 2015)</li>
+<li><a class="reference external" href="http://fathmm.biocompute.org.uk/fathmmMKL.htm">FATHMM_MKL</a></li>
+<li><a class="reference external" href="https://www.ncbi.nlm.nih.gov/pubmed/25552646">DBNSFP_CONSENSUS_SVM</a>
+(Ensembl/consensus prediction, based on support vector machines)</li>
+<li><a class="reference external" href="https://www.ncbi.nlm.nih.gov/pubmed/25552646">DBNSFP_CONSENSUS_LR</a>
+(Ensembl/consensus prediction, logistic regression based)</li>
+<li><a class="reference external" href="http://nar.oxfordjournals.org/content/42/22/13534">SPLICE_SITE_EFFECT_ADA</a>
+(Ensembl/consensus prediction of splice-altering SNVs, based on
+adaptive boosting)</li>
+<li><a class="reference external" href="http://nar.oxfordjournals.org/content/42/22/13534">SPLICE_SITE_EFFECT_RF</a>
+(Ensembl/consensus prediction of splice-altering SNVs, based on
+random forest)</li>
+<li><a class="reference external" href="http://bejerano.stanford.edu/MCAP">M-CAP</a></li>
+<li><a class="reference external" href="http://mutpred.mutdb.org">MutPred</a></li>
+<li><a class="reference external" href="http://mendel.stanford.edu/SidowLab/downloads/gerp/">GERP</a></li>
+</ol>
+</li>
+<li>SIFT_DBNSFP - predicted effect from SIFT (dbNSFP)</li>
+<li>PROVEAN_DBNSFP - predicted effect from PROVEAN (dbNSFP)</li>
+<li>MUTATIONTASTER_DBNSFP - predicted effect from MUTATIONTASTER (dbNSFP)</li>
+<li>MUTATIONASSESSOR_DBNSFP - predicted effect from MUTATIONASSESSOR
+(dbNSFP)</li>
+<li>M_CAP_DBNSFP - predicted effect from M-CAP (dbNSFP)</li>
+<li>MUTPRED_DBNSFP - score from MUTPRED (dbNSFP)</li>
+<li>FATHMM_DBNSFP - predicted effect from FATHMM (dbNSFP)</li>
+<li>FATHMM_MKL_DBNSFP - predicted effect from FATHMM-mkl (dbNSFP)</li>
+<li>META_LR_DBNSFP - predicted effect from ensemble prediction (logistic
+regression - dbNSFP)</li>
+<li>SPLICE_SITE_RF_DBNSFP - predicted effect of splice site disruption,
+using random forest (dbscSNV)</li>
+<li>SPLICE_SITE_ADA_DBNSFP - predicted effect of splice site disruption,
+using boosting (dbscSNV)</li>
+</ul>
+</div>
+<div class="section" id="variant-frequencies-annotations-in-germline-databases">
+<h4><em>Variant frequencies/annotations in germline databases</em><a class="headerlink" href="#variant-frequencies-annotations-in-germline-databases" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>AFR_AF_GNOMAD - African/American germline allele frequency (<a class="reference external" href="http://gnomad.broadinstitute.org/">Genome
+Aggregation Database release
+2</a>)</li>
+<li>AMR_AF_GNOMAD - American germline allele frequency (<a class="reference external" href="http://gnomad.broadinstitute.org/">Genome
+Aggregation Database release
+2</a>)</li>
+<li>GLOBAL_AF_GNOMAD - Adjusted global germline allele frequency (<a class="reference external" href="http://gnomad.broadinstitute.org/">Genome
+Aggregation Database release
+2</a>)</li>
+<li>SAS_AF_GNOMAD - South Asian germline allele frequency (<a class="reference external" href="http://gnomad.broadinstitute.org/">Genome
+Aggregation Database release
+2</a>)</li>
+<li>EAS_AF_GNOMAD - East Asian germline allele frequency (<a class="reference external" href="http://gnomad.broadinstitute.org/">Genome
+Aggregation Database release
+21</a>)</li>
+<li>FIN_AF_GNOMAD - Finnish germline allele frequency (<a class="reference external" href="http://gnomad.broadinstitute.org/">Genome
+Aggregation Database release
+2</a>)</li>
+<li>NFE_AF_GNOMAD - Non-Finnish European germline allele frequency
+(<a class="reference external" href="http://gnomad.broadinstitute.org/">Genome Aggregation Database release
+2</a>)</li>
+<li>OTH_AF_GNOMAD - Other germline allele frequency (<a class="reference external" href="http://gnomad.broadinstitute.org/">Genome Aggregation
+Database release 2</a>)</li>
+<li>ASJ_AF_GNOMAD - Ashkenazi Jewish allele frequency (<a class="reference external" href="http://gnomad.broadinstitute.org/">Genome
+Aggregation Database release
+2</a>)</li>
+<li>AFR_AF_1KG - <a class="reference external" href="http://www.1000genomes.org">1000G Project - phase 3</a>
+germline allele frequency for samples from AFR (African)</li>
+<li>AMR_AF_1KG - <a class="reference external" href="http://www.1000genomes.org">1000G Project - phase 3</a>
+germline allele frequency for samples from AMR (Ad Mixed American)</li>
+<li>EAS_AF_1KG - <a class="reference external" href="http://www.1000genomes.org">1000G Project - phase 3</a>
+germline allele frequency for samples from EAS (East Asian)</li>
+<li>EUR_AF_1KG - <a class="reference external" href="http://www.1000genomes.org">1000G Project - phase 3</a>
+germline allele frequency for samples from EUR (European)</li>
+<li>SAS_AF_1KG - <a class="reference external" href="http://www.1000genomes.org">1000G Project - phase 3</a>
+germline allele frequency for samples from SAS (South Asian)</li>
+<li>GLOBAL_AF_1KG - <a class="reference external" href="http://www.1000genomes.org">1000G Project - phase
+3</a> germline allele frequency for all
+1000G project samples (global)</li>
+<li>DBSNPRSID - <a class="reference external" href="http://www.ncbi.nlm.nih.gov/SNP/">dbSNP</a> reference
+ID, as provided by VEP</li>
+</ul>
+</div>
+<div class="section" id="clinical-associations">
+<h4><em>Clinical associations</em><a class="headerlink" href="#clinical-associations" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>CLINVAR_MSID - <a class="reference external" href="http://www.ncbi.nlm.nih.gov/clinvar">ClinVar</a>
+Measure Set/Variant ID</li>
+<li>CLINVAR_ALLELE_ID - <a class="reference external" href="http://www.ncbi.nlm.nih.gov/clinvar">ClinVar</a>
+allele ID</li>
+<li>CLINVAR_PMID - Associated Pubmed IDs for variant in
+<a class="reference external" href="http://www.ncbi.nlm.nih.gov/clinvar">ClinVar</a> - germline
+state-of-origin</li>
+<li>CLINVAR_HGVSP - Protein variant expression using HGVS nomenclature</li>
+<li>CLINVAR_PMID_SOMATIC - Associated Pubmed IDs for variant in
+<a class="reference external" href="http://www.ncbi.nlm.nih.gov/clinvar">ClinVar</a> - somatic
+state-of-origin</li>
+<li>CLINVAR_CLNSIG - Clinical significance for variant in
+<a class="reference external" href="http://www.ncbi.nlm.nih.gov/clinvar">ClinVar</a> - germline
+state-of-origin</li>
+<li>CLINVAR_CLNSIG_SOMATIC - Clinical significance for variant in
+<a class="reference external" href="http://www.ncbi.nlm.nih.gov/clinvar">ClinVar</a> - somatic
+state-of-origin</li>
+<li>CLINVAR_MEDGEN_CUI - Associated
+<a class="reference external" href="https://www.ncbi.nlm.nih.gov/medgen/">MedGen</a> concept identifiers
+(<em>CUIs</em>) - germline state-of-origin</li>
+<li>CLINVAR_MEDGEN_CUI_SOMATIC - Associated
+<a class="reference external" href="https://www.ncbi.nlm.nih.gov/medgen/">MedGen</a> concept identifiers
+(<em>CUIs</em>) - somatic state-of-origin</li>
+<li>CLINVAR_VARIANT_ORIGIN - Origin of variant (somatic, germline, de
+novo etc.) for variant in
+<a class="reference external" href="http://www.ncbi.nlm.nih.gov/clinvar">ClinVar</a></li>
+<li>GWAS_HIT - variant associated with cancer phenotype from genome-wide
+association study (NHGRI-EBI GWAS catalog)</li>
+</ul>
+</div>
+</div>
+<div class="section" id="tab-separated-values-tsv">
+<h3>Tab-separated values (TSV)<a class="headerlink" href="#tab-separated-values-tsv" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="annotated-list-of-all-snvs-indels">
+<h4>Annotated List of all SNVs/InDels<a class="headerlink" href="#annotated-list-of-all-snvs-indels" title="Permalink to this headline">¶</a></h4>
+<p>We provide a tab-separated values file with most important variant/gene
+annotations. The file has the following naming convention:</p>
+<p>&lt;<em>sample_id</em>&gt;.<strong>cpsr</strong>.&lt;<em>genome_assembly</em>&gt;.<strong>snvs_indels.tiers.tsv</strong></p>
+<p>The SNVs/InDels are organized into different <strong>tiers</strong> (as defined above
+for the HTML report)</p>
+<p>The following variables are included in the tiered TSV file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1. GENOMIC_CHANGE - Identifier for variant at the genome (VCF) level, e.g. 1:g.152382569A&gt;G
+      Format: (&lt;chrom&gt;:g.&lt;position&gt;&lt;ref_allele&gt;&gt;&lt;alt_allele&gt;)
+2. VAR_ID - Variant identifier
+3. GENOTYPE - Variant genotype (heterozygous/homozygous)
+4. GENOME_VERSION - Assembly version, e.g. GRCh37
+5. VCF_SAMPLE_ID - Sample identifier
+6. VARIANT_CLASS - Variant type, e.g. SNV/insertion/deletion
+7. CODING_STATUS - coding/noncoding (wrt. protein alteration and canonical splice site disruption)
+8. SYMBOL - Gene symbol
+9. GENE_NAME - Gene description
+10. CCDS - CCDS identifier
+11. ENTREZ_ID - Entrez gene identifier
+12. UNIPROT_ID - UniProt protein identifier
+13. ENSEMBL_GENE_ID - Ensembl gene identifier
+14. ENSEMBL_TRANSCRIPT_ID - Ensembl transcript identifier
+15. REFSEQ_MRNA - RefSeq mRNA identifier
+16. ONCOSCORE - Literature-derived score for cancer gene relevance
+17. ONCOGENE - Gene is predicted as an oncogene according to literature mining (CancerMine)
+18. TUMOR_SUPPRESSOR - Gene is predicted as tumor suppressor according to literature mining (CancerMine)
+19. MOD - Mechanism of disease for cancer predisposition gene (Lof/GoF/NA)
+20. PATH_TRUNCATION_RATE - Rate of pathogenic truncations in predisposition gene
+21. BENIGN_MISSENSE_RATE - Rate of benign missense mutations in predisposition gene
+22. CONSEQUENCE - Variant consequence
+23. PROTEIN_CHANGE - Protein change - one letter abbreviation (HGVSp)
+24. PROTEIN_DOMAIN - Protein domain description from PFAM
+25. HGVSp - The HGVS protein sequence name
+26. HGVSc - The HGVS coding sequence name
+27. CDS_CHANGE - Coding, transcript-specific sequence annotation
+28. MUTATION_HOTSPOT - Cancer mutation hotspot (cancerhotspots.org)
+29. RMSK_HIT - RepeatMasker hit
+30. PROTEIN_FEATURE - Protein feature (active sites etc.) from UniProt KnowledgeBase
+31. EFFECT_PREDICTIONS - Functional effect predictions from multiple algorithms (dbNSFP)
+32. LOSS_OF_FUNCTION - Loss-of-function variant, as predicted from VEP&#39;s LofTee plugin
+33. DBSNP - dbSNP identifier
+34. CLINVAR_CLINICAL_SIGNIFICANCE - clinical significance of ClinVar variant
+35. CLINVAR_MSID - measureset identifier of ClinVar variant
+36. CLINVAR_VARIANT_ORIGIN - variant origin (somatic/germline) of ClinVar variant
+37. CLINVAR_CONFLICTED - indicator of conflicting interpretations
+38. CLINVAR_PHENOTYPE - associated phenotype(s) for ClinVar variant
+39. VEP_ALL_CONSEQUENCE - all consequences from VEP
+40. PATHSCORE - Composite variant pathogenicity score
+41. PATHRANK - Categorical ranking of pathogenicity (HIGH,MODERATE,LOW,BENIGN)
+42. PATHDOC - Documentation for PATHSCORE/PATHRANK
+43. PVS1 - ACMG criteria: Null variant (nonsense, frameshift, canonical ±1 or 2 splice sites, initiation codon, single or multiexon deletion) - in a gene where LoF is a known mechanism of disease (Dom MoI)
+44. PSC1 - ACMG criteria: Null variant (nonsense, frameshift, canonical ±1 or 2 splice sites, initiation codon, single or multiexon deletion) - in a gene where LoF is a known mechanism of disease (Rec MoI)
+45. PS1 - ACMG criteria: Same amino acid change as a previously established pathogenic variant regardless of nucleotide change
+46. PMC1 - ACMG criteria: Null variant in a gene where LoF is not a known mechanism of disease
+47. PM1 - ACMG criteria: Variant located in mutation hotspot (cancerhotspots.org)
+48. PM2 - ACMG criteria: Absence or extremely low frequency (MAF &lt; 0.0005) in 1000 Genomes Project, or gnomAD
+49. PM4 - ACMG criteria: Protein length changes due to inframe indels or nonstop variant in non-repetitive regions of genes that harbor variants with a Dom MoI.
+50. PM5 - ACMG criteria: Novel missense change at an amino acid residue where a different missense change determined to be pathogenic has been seen before
+51. PP2 - ACMG criteria: Missense variant in a gene that has a relatively low rate of benign missense variation (&lt;20%) and where missense variants are a common mechanism of disease (&gt;50% of pathogenic variants)
+52. PPC1 - ACMG criteria: Protein length changes due to inframe indels or nonstop variant in non-repetitive regions of genes that harbor variants with a Rec MoI.
+53. PP3 - ACMG criteria: Multiple lines of computational evidence support a deleterious effect on the gene or gene product (conservation, evolutionary, splicing impact, etc. - from dbNSFP)
+54. BP4 - ACMG criteria: Multiple lines of computational evidence support a benign effect on the gene or gene product (conservation, evolutionary, splicing impact, etc. - from dbNSFP).
+55. BMC1 - ACMG criteria: Peptide change is at the same location of a known benign change
+56. BSC1 - ACMG criteria: Peptide change is known to be benign
+57. BA1 - ACMG criteria: Common population frequency (MAF &gt; 0.05) in 1000 Genomes Project, or gnomAD
+58. BP1 - ACMG criteria: Missense variant in a gene for which primarily truncating variants (&gt;90%) are known to cause disease
+59. N_INSILICO_CALLED - Number of algorithms with effect prediction (damaging/tolerated) from dbNSFP
+60. N_INSILICO_DAMAGING - Number of algorithms with damaging prediction from dbNSFP
+61. N_INSILICO_TOLERATED - Number of algorithms with tolerated prediction from dbNSFP
+62. N_INSILICO_SPLICING_NEUTRAL - Number of algorithms with splicing neutral prediction from dbscSNV
+63. N_INSILICO_SPLICING_AFFECTED - Number of algorithms with splicing affected prediction from dbscSNV
+64. GLOBAL_AF_GNOMAD - Global MAF in gnomAD
+65. &lt;CUSTOM_POPULATION_GNOMAD&gt; - Population specific MAF in gnomAD (population configured by user)
+66. GLOBAL_AF_1KG - Global MAF in 1000 Genomes Project
+67. &lt;CUSTOM_POPULAION_1KG&gt; - Population-specific MAF in 1000 Genomes Project (population configured by user)
+68. TIER - CPSR tier level
+69. TIER_DESCRIPTION - Description of CPSR tier
+</pre></div>
+</div>
+<p><strong>NOTE</strong>: The user has the possibility to append the TSV file with data
+from other tags in the input VCF of interest (i.e.&nbsp;using the
+<em>custom_tags</em> option in the TOML configuration file)</p>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="CHANGELOG.html" class="btn btn-neutral float-right" title="CHANGELOG" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="input.html" class="btn btn-neutral" title="Input" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Sigve Nakken.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'2.1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>  
+
+  <style>
+    /* Sidebar header (and topbar for mobile) */
+    .wy-side-nav-search, .wy-nav-top {
+      background: #0B6121;
+    }
+    /* Sidebar */
+    /*.wy-nav-side {*/
+    /*  background: #ff0000;*/
+    /*}*/
+  </style>
+
+
+</body>
+</html>

@@ -213,8 +213,8 @@ XRCC2 = true
 
 [maf_limits]
 ## choose upper MAF thresholds for report of unclassified variants
-maf_tgp = 0.001
-maf_gnomad = 0.001
+maf_tgp = 0.01
+maf_gnomad = 0.01
 
 [popgen]
 ## choose population source in gnomAD and 1000 Genomes Project, defaults to the global set
@@ -259,7 +259,7 @@ max_minority = 1
 [gwas]
 gwas_hits = false
 ## Required p-value for reporting of GWAS hits
-p_value_min = 1e-6
+p_value_min = 5e-8
 
 [other]
 vcf_validation = false

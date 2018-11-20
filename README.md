@@ -15,7 +15,7 @@ The *Cancer Predisposition Sequencing Reporter (CPSR)* is a computational workfl
 		* *The upper MAF threshold (e.g. 0.001) for listing of unclassified variants can be configured by the user*
 
 
-3. Variants overlapping with previously identified hits in genome-wide association studies (GWAS) of cancer phenotypes (i.e. low to moderate risk conferring alleles), using [NHGRI-EBI Catalog of published genome-wide association studies]() as the underlying source.
+3. Variants overlapping with previously identified hits in genome-wide association studies (GWAS) of cancer phenotypes (i.e. low to moderate risk conferring alleles), using [NHGRI-EBI Catalog of published genome-wide association studies](https://www.ebi.ac.uk/gwas/) as the underlying source.
 
 The (**classified** and **unclassified**) variant sets can be interactively explored and ranked further through different types of filters (associated phenotypes, genes, variant consequences, population MAF etc.). Importantly, the unclassified variants are assigned and ranked according to a *pathogenicity score*, which is based on the aggregation of scores according to previously established [ACMG criteria](https://www.ncbi.nlm.nih.gov/pubmed/25741868) and also cancer-specific criteria, as outlined and specified in several previous studies ([Huang et al., *Cell*, 2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052); [Maxwell et al., *Am J Hum Genet.*, 2016](https://www.ncbi.nlm.nih.gov/pubmed/27153395); [Amendola et al., *Am J Hum Genet.*,  2016](https://www.ncbi.nlm.nih.gov/pubmed/27181684)). See also [*Related work*](https://github.com/sigven/cpsr#related-work) below).
 
@@ -23,7 +23,7 @@ The (**classified** and **unclassified**) variant sets can be interactively expl
 
 We have compiled a comprehensive list of genes that are implicated in cancer predisposition and cancer syndromes. Three different sources were combined:
 * A list of 152 genes that were curated and established within TCGA’s pan-cancer study ([Huang et al., *Cell*, 2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052))
-* A list of 107 protein-coding genes that has been manually curated in COSMIC’s [Cancer Gene Census]() v86,
+* A list of 107 protein-coding genes that has been manually curated in COSMIC’s [Cancer Gene Census v86](https://cancer.sanger.ac.uk/census),
 * A list of 148 protein-coding genes established by experts within the Norwegian Cancer Genomics Consortium (http://cancergenomics.no)
 
 The combination of the three sources resulted in a non-redundant set of 209 protein-coding genes of relevance for predisposition to tumor development. We want to make it explicit that this list of 209 genes is by no means regarded as an international consensus, but should rather be subject to continuous update by the international community that carry expertise on genetic risk factors for cancer.
@@ -33,22 +33,24 @@ The combination of the three sources resulted in a non-redundant set of 209 prot
 
 * [Cancer predisposition sequencing report](http://folk.uio.no/sigven/example.cpsr.grch37.html)
 
-### Annotation resources included in _cpsr - 0.2.1_
+### Annotation resources included in _cpsr - 0.3.0_
 
 * [VEP v94](http://www.ensembl.org/info/docs/tools/vep/index.html) - Variant Effect Predictor (GENCODE version 28/19 (grch38/grch37) as the gene reference dataset), includes [gnomAD r2](http://gnomad.broadinstitute.org/), [dbSNP build 151/150](http://www.ncbi.nlm.nih.gov/SNP/), [1000 Genomes Project - phase3](ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/)
 * [dBNSFP v3.5](https://sites.google.com/site/jpopgen/dbNSFP) - Database of non-synonymous functional predictions (August 2017)
 * [ClinVar](http://www.ncbi.nlm.nih.gov/clinvar/) - Database of clinically related variants (November 2018)
 * [DisGeNET](http://www.disgenet.org) - Database of gene-disease associations (v5.0, May 2017)
-* [UniProt/SwissProt KnowledgeBase 2018_09](http://www.uniprot.org) - Resource on protein sequence and functional information (October 2018)
+* [UniProt/SwissProt KnowledgeBase 2018_010](http://www.uniprot.org) - Resource on protein sequence and functional information (November 2018)
 * [Pfam v32](http://pfam.xfam.org) - Database of protein families and domains (September 2018)
 * [CancerMine v6](https://zenodo.org/record/1336650#.W9QMdRMzaL4) - Literature-derived database of tumor suppressor genes/proto-oncogenes (November 2018)
-* [NHGRI-EBI GWAS catalog](https://www.ebi.ac.uk/gwas//) - GWAS catalog for cancer phenotypes (October 21st 2018)
+* [NHGRI-EBI GWAS catalog](https://www.ebi.ac.uk/gwas//) - GWAS catalog for cancer phenotypes (October 29th 2018)
 
 ### Documentation
 
 *IN PROGRESS*
 
 ### News
+* *November 19th 2018*: **0.3.0 pre-release**
+  * Bug fixing and bundle update
 * *November 12th 2018*: **0.2.1 pre-release**
   * Improved ACMG classification transparency
 * *November 6th 2018*: **0.2.0 pre-release**
@@ -71,7 +73,7 @@ Make sure you have a working installation of PCGR (**dev version**) and the acco
 
 #### STEP 1: Download the latest release
 
-Download the [pre-release](https://github.com/sigven/cpsr/releases/tag/v0.2.1) of *cpsr* (run script and configuration file)
+Download the [pre-release](https://github.com/sigven/cpsr/releases/tag/v0.3.0) of *cpsr* (run script and configuration file)
 
 #### STEP 2: Configuration
 
@@ -129,8 +131,8 @@ The *cpsr* software bundle contains an example VCF file. It also contains a conf
 
 Analysis of the example VCF can be performed by the following command:
 
-`python ~/cpsr-0.2.1/cpsr.py --input_vcf ~/cpsr-0.2.1/example.vcf.gz`
-` ~/pcgr-dev ~/cpsr-0.2.1 grch37 ~/cpsr-0.2.1/cpsr.toml example`
+`python ~/cpsr-0.3.0/cpsr.py --input_vcf ~/cpsr-0.3.0/example.vcf.gz`
+` ~/pcgr-dev ~/cpsr-0.3.0 grch37 ~/cpsr-0.3.0/cpsr.toml example`
 
 Note that the example command also refers to the PCGR directory (*pcgr-dev*), which contains the data bundle that are necessary for both *PCGR* and *CPSR*.
 
