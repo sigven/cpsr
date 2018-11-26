@@ -6,6 +6,7 @@ pandoc --from=markdown --to=rst --output=about.rst about.md
 pandoc --from=markdown --to=rst --output=output.rst output.md
 pandoc --from=markdown --to=rst --output=input.rst input.md
 pandoc --from=markdown --to=rst --output=CHANGELOG.rst CHANGELOG.md
+pandoc --from=markdown --to=rst --output=variant_classification.rst variant_classification.md
 #pandoc --from=markdown --to=rst --output=index.rst index.md
 
 make html

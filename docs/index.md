@@ -15,7 +15,7 @@ Welcome to CPSR's documentation!
    annotation_resources
    input
    output
-      tier_systems
+      variant_classification
 
 Indices and tables
 ==================

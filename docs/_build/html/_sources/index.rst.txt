@@ -11,4 +11,5 @@ Welcome to Cancer Predisposition Sequencing Reporter's documentation!
    annotation_resources
    input
    output
+   variant_classification
    CHANGELOG
