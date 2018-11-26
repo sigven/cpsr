@@ -23,6 +23,7 @@ The (**classified** and **unclassified**) variant sets can be interactively expl
 #### Cancer predisposition genes
 
 We have compiled a comprehensive list of genes that are implicated in cancer predisposition and cancer syndromes. Three different sources were combined:
+
 * A list of 152 genes that were curated and established within TCGA’s pan-cancer study ([Huang et al., *Cell*, 2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052))
 * A list of 107 protein-coding genes that has been manually curated in COSMIC’s [Cancer Gene Census v86](https://cancer.sanger.ac.uk/census)
 * A list of 148 protein-coding genes established by experts within the Norwegian Cancer Genomics Consortium (http://cancergenomics.no)
@@ -39,7 +40,7 @@ The Cancer Predisposition Sequencing Reporter has been developed by scientists a
 
 ### Docker-based technology
 
-The PCGR workflow is developed using the [Docker technology](https://www.docker.com/what-docker). The software is thus packaged into isolated containers, in which the installation of all software libraries/tools and required dependencies have been taken care of. In addition to the bundled software, in the form of a Docker image, the workflow only needs to be attached with an [annotation data bundle for precision oncology](annotation_resources.html).
+The CPSR workflow is developed using the [Docker technology](https://www.docker.com/what-docker). The software is thus packaged into isolated containers, in which the installation of all software libraries/tools and required dependencies have been taken care of. In addition to the bundled software, in the form of a Docker image, the workflow needs to be attached with an [annotation data bundle ](annotation_resources.html).
 
 ![](docker-logo50.png)
 

@@ -59,9 +59,9 @@ The interactive datatables contain a number of hyperlinked annotations similar t
 
 The HTML reports have been tested using the following browsers:
 
-* Safari (10.0.3)
+* Safari (12.0.1)
 * Mozilla Firefox (52.0.2)
-* Google Chrome (57.0.2987.110)
+* Google Chrome (70.0.3538.102)
 
 ### JSON
 
