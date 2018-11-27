@@ -48,7 +48,7 @@ The initial step of the workflow performs [VCF validation](https://github.com/EB
 
 An exhaustive, predefined list of 209 cancer predisposition/syndrome genes can also be configured.
 
-See section on [Input](input.md) for more details wrt. configuration.
+See section on [Input](input.html) for more details wrt. configuration.
 
 ### STEP 5: Run example
 

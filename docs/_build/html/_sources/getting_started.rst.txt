@@ -96,7 +96,8 @@ input VCF is properly encoded, a setting in the configuration file
 An exhaustive, predefined list of 209 cancer predisposition/syndrome
 genes can also be configured.
 
-See section on `Input <input.md>`__ for more details wrt. configuration.
+See section on `Input <input.html>`__ for more details wrt.
+configuration.
 
 STEP 5: Run example
 ~~~~~~~~~~~~~~~~~~~
