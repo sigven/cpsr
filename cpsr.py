@@ -436,7 +436,7 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
       if config_options['other']['vep_skip_intergenic'] == 1:
          vep_options = vep_options + " --no_intergenic"
       if not docker_image_version:
-         conda_prefix = os.environ.get('CONDA_PREFIX') or os.path.dirname(os.path.dirname(sys.executable))
+         conda_prefix = os.path.dirname(os.path.dirname(sys.executable))
          loftee_dir = os.path.join(conda_prefix, 'share', 'loftee')
          assert os.path.isdir(loftee_dir), 'LoF VEP plugin is not found in ' + loftee_dir + '. Please make sure you installed pcgr conda package and have corresponding conda environment active.'
          vep_options += " --plugin LoF,loftee_path:" + loftee_dir + " --dir_plugins " + loftee_dir
