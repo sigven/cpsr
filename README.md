@@ -24,7 +24,7 @@ The cancer predisposition report can show variants found in a number of well-kno
 	* A list of 107 protein-coding genes that has been manually curated in COSMIC’s [Cancer Gene Census v88](https://cancer.sanger.ac.uk/census),
 	* A list of 148 protein-coding genes established by experts within the Norwegian Cancer Genomics Consortium (http://cancergenomics.no)
 
-	The combination of the three sources resulted in a non-redundant set of [209 protein-coding genes]() of relevance for predisposition to tumor development.
+	The combination of the three sources resulted in a non-redundant set of [209 protein-coding genes](https://github.com/sigven/cpsr/blob/master/predisposition.md) of relevance for predisposition to tumor development.
 
   * **Panels 1 - 33** are collected from cancer predisposition panels assembled within the [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk/):
 	  * [1 = Adult solid tumours cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/245/)
