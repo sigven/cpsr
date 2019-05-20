@@ -1,8 +1,8 @@
 About
 -----
 
-What is the Cancer Predisposition Sequencing Preporter (CPSR)?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+What is the Cancer Predisposition Sequencing Reporter (CPSR)?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The *Cancer Predisposition Sequencing Reporter (CPSR)* is a
 computational workflow that **interprets germline variants** identified
