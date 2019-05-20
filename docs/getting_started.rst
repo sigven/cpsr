@@ -44,18 +44,18 @@ STEP 1: Installation of Docker
 STEP 2: Download run script/data bundle, and pull Docker image
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-1. Download and unpack the `CPSR pre-release
-   (0.3.0) <https://github.com/sigven/cpsr/releases/tag/v0.3.0>`__
-2. Pull the PCGR Docker image (*dev version*):
-   ``docker pull sigven/pcgr:dev``
+1. Download and unpack the latest `CPSR release
+   (0.4.0) <https://github.com/sigven/cpsr/releases/tag/v0.4.0>`__
+2. Pull the latest PCGR Docker image (*0.8.0*):
+   ``docker pull sigven/pcgr:0.8.0``
 3. Download and unpack the latest PCGR data bundles
 
    -  `grch37 data bundle -
-      20181119 <https://drive.google.com/open?id=1OL5C994HDaeadASz7KzMhPoXfdSiyhNy>`__
-      (approx 9Gb)
+      20190519 <https://drive.google.com/open?id=1vIESS8NxiITUnrqZoWOdNk1YsklH8f1C>`__
+      (approx 15Gb)
    -  `grch38 data bundle -
-      20181119 <https://drive.google.com/open?id=1CZNc87E0K5AK2RDSNU57FqLp0H1skpUh>`__
-      (approx 14Gb)
+      20190519 <https://drive.google.com/open?id=1eoMgc2AzK1w1jrX2LSLEas4YJPiQJx1B>`__
+      (approx 16Gb)
    -  *Unpacking*:
       ``gzip -dc pcgr.databundle.grch37.YYYYMMDD.tgz | tar xvf -``
 
@@ -74,29 +74,25 @@ The CPSR workflow accepts one type of input file
    `tabix <http://www.htslib.org/doc/tabix.html>`__
 -  If the input VCF contains multi-allelic sites, these will be subject
    to `decomposition <http://genome.sph.umich.edu/wiki/Vt#Decompose>`__
+
 -  Variants used for reporting should be designated as ‘PASS’ in the VCF
-   FILTER column (non-PASS variants are ignored in the report)
+   FILTER column (non-PASS variants are simply ignored in the report)
 
 STEP 4: Configuration
 ~~~~~~~~~~~~~~~~~~~~~
 
 A few elements of the workflow can be figured using the *cpsr*
 configuration file, encoded in
-`TOML <https://github.com/toml-lang/toml>`__ (an easy to read file
-format).
+`TOML <https://github.com/toml-lang/toml>`__. The following can be
+configured:
 
-The initial step of the workflow performs `VCF
-validation <https://github.com/EBIvariation/vcf-validator>`__ on the
-input VCF file. This procedure is very strict, and often causes the
-workflow to return an error due to various violations of the VCF
-specification. If the user trusts that the most critical parts of the
-input VCF is properly encoded, a setting in the configuration file
-(``vcf_validation = false``) can be used to turn off VCF validation.
+-  Choice of gnomAD control population
+-  Upper MAF limit for variants considered for inclusion in the report
+-  Inclusion of GWAS hits
+-  Inclusion of secondary findings
+-  VEP/\ *vcfanno* options
 
-An exhaustive, predefined list of 209 cancer predisposition/syndrome
-genes can also be configured.
-
-See section on `Input <input.html>`__ for more details wrt.
+See section on `Input <input.html>`__ for more details wrt. default
 configuration.
 
 STEP 5: Run example
@@ -107,66 +103,93 @@ and options:
 
 ::
 
-   usage: cpsr.py [-h] [--input_vcf INPUT_VCF] [--force_overwrite] [--version]
-           [--basic] [--docker-uid DOCKER_USER_ID] [--no-docker]
-           pcgr_base_dir output_dir {grch37,grch38} configuration_file
-           sample_id
+       usage: cpsr.py [options] <QUERY_VCF> <PCGR_DIR> <OUTPUT_DIR> <GENOME_ASSEMBLY> <PANEL_IDENTIFIER> <CONFIG_FILE> <SAMPLE_ID>
 
-   Cancer Predisposition Sequencing Reporter (CPSR) - report of cancer-predisposing
-   germline variants
+       Cancer Predisposition Sequencing Report (CPSR) - report of cancer-predisposing germline variants
 
-   positional arguments:
-   pcgr_base_dir         Directory that contains the PCGR data bundle
-                   directory, e.g. ~/pcgr-dev
-   output_dir            Output directory
-   {grch37,grch38}       Genome assembly build: grch37 or grch38
-   configuration_file    Configuration file (TOML format)
-   sample_id             Sample identifier - prefix for output files
+       positional arguments:
+       query_vcf             VCF input file with germline query variants (SNVs/InDels).
+       pcgr_base_dir         Directory that contains the PCGR data bundle directory, e.g. ~/pcgr-0.8.0
+       output_dir            Output directory
+       {grch37,grch38}       Genome assembly build: grch37 or grch38
+       virtual_panel_id      Identifier for choice of virtual cancer predisposition gene panel,
+                       choose any between the following identifiers:
+                       0 = CPSR cancer predisposition panel (n = 209, TCGA + Cancer Gene Census + NCGC)
+                       1 = Adult solid tumours cancer susceptibility (Genomics England PanelApp)
+                       2 = Adult solid tumours for rare disease (Genomics England PanelApp)
+                       3 = Bladder cancer pertinent cancer susceptibility (Genomics England PanelApp)
+                       4 = Brain cancer pertinent cancer susceptibility (Genomics England PanelApp)
+                       5 = Breast cancer pertinent cancer susceptibility (Genomics England PanelApp)
+                       6 = Adult solid tumours for rare disease (Genomics England PanelApp)
+                       7 = Colorectal cancer pertinent cancer susceptibility (Genomics England PanelApp)
+                       8 = Endometrial cancer pertinent cancer susceptibility (Genomics England PanelApp)
+                       9 = Familial Tumours Syndromes of the central & peripheral Nervous system (Genomics England PanelApp)
+                       10 = Familial breast cancer (Genomics England PanelApp)
+                       11 = Familial melanoma (Genomics England PanelApp)
+                       12 = Familial prostate cancer (Genomics England PanelApp)
+                       13 = Familial rhabdomyosarcoma (Genomics England PanelApp)
+                       14 = Haematological malignancies cancer susceptibility (Genomics England PanelApp)
+                       15 = Head and neck cancer pertinent cancer susceptibility (Genomics England PanelApp)
+                       16 = Inherited colorectal cancer (with or without polyposis) (Genomics England PanelApp)
+                       17 = Inherited non-medullary thyroid cancer (Genomics England PanelApp)
+                       18 = Inherited ovarian cancer (without breast cancer) (Genomics England PanelApp)
+                       19 = Inherited pancreatic cancer (Genomics England PanelApp)
+                       20 = Inherited renal cancer (Genomics England PanelApp)
+                       21 = Inherited phaeochromocytoma and paraganglioma (Genomics England PanelApp)
+                       22 = Melanoma pertinent cancer susceptibility (Genomics England PanelApp)
+                       23 = Multiple endocrine tumours (Genomics England PanelApp)
+                       24 = Neuroendocrine cancer pertinent cancer susceptibility (Genomics England PanelApp)
+                       25 = Ovarian cancer pertinent cancer susceptibility (Genomics England PanelApp)
+                       26 = Parathyroid Cancer (Genomics England PanelApp)
+                       27 = Prostate cancer pertinent cancer susceptibility (Genomics England PanelApp)
+                       28 = Renal cancer pertinent cancer susceptibility (Genomics England PanelApp)
+                       29 = Rhabdoid tumour predisposition (Genomics England PanelApp)
+                       30 = Sarcoma cancer susceptibility (Genomics England PanelApp)
+                       31 = Thyroid cancer pertinent cancer susceptibility (Genomics England PanelApp)
+                       32 = Tumour predisposition - childhood onset (Genomics England PanelApp)
+                       33 = Upper gastrointestinal cancer pertinent cancer susceptibility (Genomics England PanelApp)
 
-   optional arguments:
-   -h, --help            show this help message and exit
-   --input_vcf INPUT_VCF
-                   VCF input file with somatic query variants
-                   (SNVs/InDels). (default: None)
-   --force_overwrite     By default, the script will fail with an error if any
-                   output file already exists. You can force the
-                   overwrite of existing result files by using this flag
-                   (default: False)
-   --version             show program's version number and exit
-   --basic               Run functional variant annotation on VCF through
-                   VEP/vcfanno, omit report generation (STEP 4) (default:
-                   False)
-   --docker-uid DOCKER_USER_ID
-                   Docker user ID. Default is the host system user ID. If
-                   you are experiencing permission errors, try setting
-                   this up to root (`--docker-uid root`) (default: None)
-   --no-docker           Run the CPSR workflow in a non-Docker mode (see
-                   install_no_docker/ folder for instructions (default:
-                   False)
+       configuration_file    Configuration file (TOML format)
+       sample_id             Sample identifier - prefix for output files
 
-The *cpsr* software bundle contains an example VCF file. It also
-contains a configuration file (*cpsr.toml*).
+       optional arguments:
+       -h, --help            show this help message and exit
+       --force_overwrite     By default, the script will fail with an error if any output file already exists.
+                       You can force the overwrite of existing result files by using this flag
+       --version             show program's version number and exit
+       --basic               Run functional variant annotation on VCF through VEP/vcfanno, omit report generation (STEP 4)
+       --no_vcf_validate     Skip validation of input VCF with Ensembl's vcf-validator
+       --docker-uid DOCKER_USER_ID
+                       Docker user ID. Default is the host system user ID. If you are experiencing permission errors,
+                       try setting this up to root (`--docker-uid root`)
+       --no-docker           Run the CPSR workflow in a non-Docker mode (see install_no_docker/ folder for instructions
 
-Analysis of the example VCF can be performed by the following command:
+The *cpsr* software bundle contains an example VCF file. It also comes
+with a basic configuration file (*cpsr.toml*).
 
-``python ~/cpsr-0.3.0/cpsr.py --input_vcf ~/cpsr-0.3.0/example.vcf.gz``
-``~/pcgr-dev ~/cpsr-0.3.0 grch37 ~/cpsr-0.3.0/cpsr.toml example``
+Report generation with the example VCF, using the `Adult solid tumours
+cancer
+susceptibility <https://panelapp.genomicsengland.co.uk/panels/245/>`__
+virtual gene panel, can be performed through the following command:
+
+``python ~/cpsr-0.4.0/cpsr.py ~/cpsr-0.4.0/example.vcf.gz``
+``~/pcgr-0.8.0 ~/cpsr-0.4.0 grch37 1 ~/cpsr-0.4.0/cpsr.toml example``
 
 Note that the example command also refers to the PCGR directory
-(*pcgr-dev*), which contains the data bundle that are necessary for both
-*PCGR* and *CPSR*.
+(*pcgr-0.8.0*), which contains the data bundle that are necessary for
+both *PCGR* and *CPSR*.
 
-This command will run the Docker-based *cpsr* workflow and produce the
-following output files in the *cpsr* folder:
+The command above will run the Docker-based *cpsr* workflow and produce
+the following output files in the *cpsr* folder:
 
 1. **example.cpsr.grch37.pass.vcf.gz (.tbi)** - Bgzipped VCF file with
    functional/clinical annotations
 2. **example.cpsr.grch37.pass.tsv.gz** - Compressed TSV file (generated
    with `vcf2tsv <https://github.com/sigven/vcf2tsv>`__) with
    functional/clinical annotations
-3. **example.cpsr.grch37.html** - Interactive HTML report with
-   clinically relevant variants in cancer predisposition genes organized
-   into tiers
+3. **example.cpsr.grch37.html** - Interactive HTML report with variants
+   in cancer predisposition genes classified into five levels of
+   pathogenicity
 4. **example.cpsr.grch37.json.gz** - Compressed JSON dump of HTML report
    content
 5. **example.cpsr.snvs_indels.tiers.grch37.tsv** - TSV file with most

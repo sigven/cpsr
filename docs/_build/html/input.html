@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Input &mdash; Cancer Predisposition Sequencing Reporter 2.1.0 documentation</title>
+  <title>Input &mdash; Cancer Predisposition Sequencing Reporter 0.4.0 documentation</title>
   
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                2.1.0
+                0.4.0
               </div>
             
           
@@ -189,242 +189,31 @@ that coincide with those produced by CPSR.</p>
 <h2>CPSR configuration file<a class="headerlink" href="#cpsr-configuration-file" title="Permalink to this headline">¶</a></h2>
 <p>The cancer predisposition sequencing report can be flexibly configured
 in a TOML-formatted configuration file. The default TOML configuration
-file, with descriptive comments wrt. usage are shown below:</p>
+file, are shown below:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># CPSR configuration options (TOML).</span>
 
-<span class="p">[</span><span class="n">cancer_predisposition_genes</span><span class="p">]</span>
-<span class="n">ABCB11</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">ABRAXAS1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">ACD</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">AIP</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">AKT1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">ALK</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">APC</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">APOBEC3B</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">AR</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">ATM</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">ATR</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">AXIN1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">AXIN2</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">BAP1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">BARD1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">BLM</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">BMPR1A</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">BRAF</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">BRCA1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">BRCA2</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">BRIP1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">BUB1B</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">CASR</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">CBL</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">CDC73</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">CDH1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">CDH10</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">CDK4</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">CDKN1B</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">CDKN1C</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">CDKN2A</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">CEBPA</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">CEP57</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">CHEK2</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">COL7A1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">CTNNA1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">CTNNB1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">CTR9</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">CTRC</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">CXCR4</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">CYLD</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">DDB2</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">DICER1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">DIRAS3</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">DIS3L2</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">DKC1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">DOCK8</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">DROSHA</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">DTX3L</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">EGFR</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">ELANE</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">ENG</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">EPCAM</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">ERBB4</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">ERCC1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">ERCC2</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">ERCC3</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">ERCC4</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">ERCC5</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">ETV6</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">EXT1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">EXT2</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">EZH2</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">FAH</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">FANCA</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">FANCB</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">FANCC</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">FANCD2</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">FANCE</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">FANCF</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">FANCG</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">FANCI</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">FANCL</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">FANCM</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">FAT1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">FEN1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">FH</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">FLCN</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">GALNT12</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">GATA2</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">GBA</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">GJB2</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">GPC3</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">GREM1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">HABP2</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">HFE</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">HMBS</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">HNF1A</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">HNF1B</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">HOXB13</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">HRAS</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">ITK</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">JMJD1C</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">KDR</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">KIF1B</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">KIT</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">KRAS</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">LMO1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">LZTR1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">MAP2K1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">MAP2K2</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">MAX</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">MEN1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">MET</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">MITF</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">MLH1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">MLH3</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">MPL</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">MRE11</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">MSH2</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">MSH3</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">MSH6</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">MTAP</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">MUTYH</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">NBN</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">NF1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">NF2</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">NHP2</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">NOP10</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">NRAS</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">NSD1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">NTHL1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">OGG1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">PALB2</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">PAX5</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">PDGFRA</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">PHOX2B</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">PIK3CA</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">PINK1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">PMS1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">PMS2</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">POLD1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">POLE</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">POLH</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">POLQ</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">POT1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">PPM1D</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">PRDM9</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">PRF1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">PRKAR1A</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">PRSS1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">PTCH1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">PTEN</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">PTPN11</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">PTPN13</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">RAD50</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">RAD51</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">RAD51B</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">RAD51C</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">RAD51D</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">RAF1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">RB1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">RCC2</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">RECQL</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">RECQL4</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">RET</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">RFWD3</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">RHBDF2</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">RING1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">RINT1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">RMRP</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">RUNX1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">SBDS</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">SCG5</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">SDHA</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">SDHAF2</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">SDHB</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">SDHC</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">SDHD</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">SERPINA1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">SETBP1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">SH2B3</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">SH2D1A</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">SHOC2</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">SLC25A13</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">SLX4</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">SMAD4</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">SMARCA4</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">SMARCB1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">SMARCE1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">SOS1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">SPINK1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">SPOP</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">SPRED1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">SPRTN</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">SRY</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">STAT3</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">STK11</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">SUFU</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">TERF2IP</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">TERT</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">TGFBR1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">TGFBR2</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">TMEM127</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">TNFRSF6</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">TP53</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">TP63</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">TRIM37</span>  <span class="o">=</span> <span class="n">true</span>
-<span class="n">TSC1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">TSC2</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">TSHR</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">UROD</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">VHL</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">WAS</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">WRN</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">WT1</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">XPA</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">XPC</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">XRCC2</span> <span class="o">=</span> <span class="n">true</span>
+<span class="p">[</span><span class="n">secondary_findings</span><span class="p">]</span>
+<span class="c1">## Include variants found in ACMG-recommended list for incidental findings</span>
+<span class="c1">## https://www.ncbi.nlm.nih.gov/clinvar/docs/acmg/</span>
+<span class="n">show_sf</span> <span class="o">=</span> <span class="n">true</span>
 
 <span class="p">[</span><span class="n">maf_limits</span><span class="p">]</span>
-<span class="c1">## choose upper MAF thresholds for report of unclassified variants</span>
-<span class="n">maf_tgp</span> <span class="o">=</span> <span class="mf">0.001</span>
-<span class="n">maf_gnomad</span> <span class="o">=</span> <span class="mf">0.001</span>
+<span class="c1">## choose upper MAF threshold in gnomAD&#39;s superpopulation (global) for report of unclassified variants</span>
+<span class="n">maf_gnomad</span> <span class="o">=</span> <span class="mf">0.05</span>
 
 <span class="p">[</span><span class="n">popgen</span><span class="p">]</span>
-<span class="c1">## choose population source in gnomAD and 1000 Genomes Project, defaults to the global set</span>
+<span class="c1">## choose population source in gnomAD (non-cancer subset for use as control), defaults to the global set</span>
 
 <span class="c1">## For gnomaAD, this can by any of the following values (three-letter codes):</span>
 <span class="c1">## &quot;afr&quot; - African/American (12,020 individuals (7,652 WES / 4,368 WGS))</span>
 <span class="c1">## &quot;amr&quot; - Admixed American (17,210 individuals (16,791 WES / 419 WGS))</span>
 <span class="c1">## &quot;eas&quot; - East Asian (9,435 individuals (8,624 WES / 811 WGS))</span>
 <span class="c1">## &quot;sas&quot; - Sout Asian (15,391 individuals (15,391 WES / 0 WGS))</span>
-<span class="c1">## &quot;asj&quot; - Ashkenazi Jewish (5,076 individuals (4,925 WES / 151 WGS))</span>
 <span class="c1">## &quot;nfe&quot; - Non-Finnish European (63,369 individuals (55,860 WES / 7,509 WGS))</span>
 <span class="c1">## &quot;fin&quot; - Finnish (12,897 individuals (11,150 WES / 1,747 WGS))</span>
 <span class="c1">## &quot;oth&quot; - Other (3,234 individuals (2,743 WES / 491 WGS))</span>
 <span class="c1">## &quot;global&quot; - All populations (138,632 individuals (123,136 WES / 15,496 WGS))</span>
 <span class="n">pop_gnomad</span> <span class="o">=</span> <span class="s2">&quot;global&quot;</span>
-
-<span class="c1">## For 1000 Genomes Project this can be any of &quot;afr&quot;,&quot;amr&quot;,&quot;sas&quot;,&quot;eas&quot;,&quot;eur&quot;,&quot;global&quot;</span>
-<span class="n">pop_tgp</span> <span class="o">=</span> <span class="s2">&quot;global&quot;</span>
 
 <span class="p">[</span><span class="n">visual</span><span class="p">]</span>
 <span class="c1"># Choose visual theme of report, any of: &quot;default&quot;, &quot;cerulean&quot;, &quot;journal&quot;, &quot;flatly&quot;, &quot;readable&quot;, &quot;spacelab&quot;, &quot;united&quot;, &quot;cosmo&quot;, &quot;lumen&quot;, &quot;paper&quot;, &quot;sandstone&quot;, &quot;simplex&quot;, or &quot;yeti&quot; (https://bootswatch.com/)</span>
@@ -435,31 +224,18 @@ file, with descriptive comments wrt. usage are shown below:</p>
 <span class="c1">## tags should be comma separated, i.e. custom_tags = &quot;GATK_FILTER,VARSCAN_FILTER&quot;</span>
 <span class="n">custom_tags</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
-<span class="p">[</span><span class="n">dbnsfp</span><span class="p">]</span>
-<span class="c1">## CPSR performs a ranking of unclassified/novel variants according to its likelihood of being pathogenic, adopting the</span>
-<span class="c1">## same implementations of ACMG-AMP guidelines as outlined by Huang et al., 2018 (Cell)</span>
-<span class="c1">##</span>
-<span class="c1">## One criteria relates to whether insilico predictions can support a pathogenic versus benign nature</span>
-<span class="c1">## The user can here configure the minimum number of algorithms that must have called a variant</span>
-<span class="c1">## as &#39;damaging&#39;, and the maximum number of algorithms that called the variant as &#39;tolerated&#39;</span>
-<span class="c1">## in order for it to have a consensus call as &#39;damaging&#39; (and vice versa for consensus calls</span>
-<span class="c1">## as &#39;tolerated&#39;)</span>
-<span class="c1">## min_majority should not exceed 8 and should not be less than 5, max_minority should not exceed 2,</span>
-<span class="c1">## min_majority + max_minority should not exceed 8</span>
-
-<span class="n">min_majority</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="n">max_minority</span> <span class="o">=</span> <span class="mi">1</span>
-
 <span class="p">[</span><span class="n">gwas</span><span class="p">]</span>
 <span class="n">gwas_hits</span> <span class="o">=</span> <span class="n">false</span>
 <span class="c1">## Required p-value for reporting of GWAS hits</span>
 <span class="n">p_value_min</span> <span class="o">=</span> <span class="mf">5e-8</span>
 
 <span class="p">[</span><span class="n">other</span><span class="p">]</span>
-<span class="n">vcf_validation</span> <span class="o">=</span> <span class="n">true</span>
 <span class="n">n_vcfanno_proc</span> <span class="o">=</span> <span class="mi">4</span>
 <span class="n">n_vep_forks</span> <span class="o">=</span> <span class="mi">4</span>
 <span class="n">vep_skip_intergenic</span> <span class="o">=</span> <span class="n">false</span>
+<span class="c1">## choice of how VEP chooses the primary transcript pr. gene</span>
+<span class="c1">## https://www.ensembl.org/info/docs/tools/vep/script/vep_other.html#pick_options</span>
+<span class="n">vep_pick_order</span> <span class="o">=</span> <span class="s2">&quot;canonical,appris,tsl,biotype,ccds,rank,length&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -485,7 +261,7 @@ file, with descriptive comments wrt. usage are shown below:</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Sigve Nakken.
+        &copy; Copyright 2018-2019, Sigve Nakken.
 
     </p>
   </div>
@@ -507,7 +283,7 @@ file, with descriptive comments wrt. usage are shown below:</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'2.1.0',
+            VERSION:'0.4.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
