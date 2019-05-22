@@ -65,7 +65,7 @@ The cancer predisposition report can show variants found in a number of well-kno
 
 * [Cancer predisposition sequencing report](http://folk.uio.no/sigven/example.cpsr.grch37.html)
 
-### Annotation resources included in _cpsr - 0.4.0_
+### Annotation resources included in _cpsr - 0.4.1_
 
 * [VEP](http://www.ensembl.org/info/docs/tools/vep/index.html) - Variant Effect Predictor v96 (GENCODE v30/v19 as the gene reference dataset), includes [gnomAD r2.1](http://gnomad.broadinstitute.org/), [dbSNP build 151/150](http://www.ncbi.nlm.nih.gov/SNP/), [1000 Genomes Project - phase3](ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/)
 * [ClinVar](http://www.ncbi.nlm.nih.gov/clinvar/) - Database of variants with clinical significance (May 2019)
@@ -83,6 +83,8 @@ The cancer predisposition report can show variants found in a number of well-kno
 [![Documentation Status](https://readthedocs.org/projects/cpsr/badge/?version=latest)](https://cpsr.readthedocs.io/en/latest/?badge=latest)
 
 ### News
+* *May 22nd 2019*: **0.4.1 release**
+  * Minor bugfixes (PCGR update)
 * *May 20th 2019*: **0.4.0 release**
   * Major upgrade
 	  * Re-implementation of classification scheme for novel variants (*ACMG*)
@@ -113,7 +115,7 @@ Make sure you have a working installation of PCGR (**version 0.8.0**) and the ac
 
 #### STEP 1: Download the latest release
 
-Download the [0.4.0 release](https://github.com/sigven/cpsr/releases/tag/v0.4.0) of *cpsr* (run script and configuration file)
+Download the [0.4.1 release](https://github.com/sigven/cpsr/releases/tag/v0.4.1) of *cpsr* (run script and configuration file)
 
 #### STEP 2: Configuration
 
@@ -199,8 +201,8 @@ The *cpsr* software bundle contains an example VCF file. It also contains a conf
 
 Report generation with the example VCF, using the [Adult solid tumours cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/245/) virtual gene panel, can be performed through the following command:
 
-`python ~/cpsr-0.4.0/cpsr.py ~/cpsr-0.4.0/example.vcf.gz ~/pcgr-0.8.0`
-`~/cpsr-0.4.0 grch37 1 ~/cpsr-0.4.0/cpsr.toml example`
+`python ~/cpsr-0.4.1/cpsr.py ~/cpsr-0.4.1/example.vcf.gz ~/pcgr-0.8.0`
+`~/cpsr-0.4.1 grch37 1 ~/cpsr-0.4.1/cpsr.toml example`
 
 Note that the example command also refers to the PCGR directory (*pcgr-0.8.0*), which contains the data bundle that are necessary for both *PCGR* and *CPSR*.
 

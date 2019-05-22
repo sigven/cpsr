@@ -45,9 +45,9 @@ STEP 2: Download run script/data bundle, and pull Docker image
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1. Download and unpack the latest `CPSR release
-   (0.4.0) <https://github.com/sigven/cpsr/releases/tag/v0.4.0>`__
-2. Pull the latest PCGR Docker image (*0.8.0*):
-   ``docker pull sigven/pcgr:0.8.0``
+   (0.4.1) <https://github.com/sigven/cpsr/releases/tag/v0.4.1>`__
+2. Pull the latest PCGR Docker image (*0.8.1*):
+   ``docker pull sigven/pcgr:0.8.1``
 3. Download and unpack the latest PCGR data bundles
 
    -  `grch37 data bundle -
@@ -109,7 +109,7 @@ and options:
 
        positional arguments:
        query_vcf             VCF input file with germline query variants (SNVs/InDels).
-       pcgr_base_dir         Directory that contains the PCGR data bundle directory, e.g. ~/pcgr-0.8.0
+       pcgr_base_dir         Directory that contains the PCGR data bundle directory, e.g. ~/pcgr-0.8.1
        output_dir            Output directory
        {grch37,grch38}       Genome assembly build: grch37 or grch38
        virtual_panel_id      Identifier for choice of virtual cancer predisposition gene panel,
@@ -172,11 +172,11 @@ cancer
 susceptibility <https://panelapp.genomicsengland.co.uk/panels/245/>`__
 virtual gene panel, can be performed through the following command:
 
-``python ~/cpsr-0.4.0/cpsr.py ~/cpsr-0.4.0/example.vcf.gz``
-``~/pcgr-0.8.0 ~/cpsr-0.4.0 grch37 1 ~/cpsr-0.4.0/cpsr.toml example``
+``python ~/cpsr-0.4.1/cpsr.py ~/cpsr-0.4.1/example.vcf.gz``
+``~/pcgr-0.8.1 ~/cpsr-0.4.1 grch37 1 ~/cpsr-0.4.1/cpsr.toml example``
 
 Note that the example command also refers to the PCGR directory
-(*pcgr-0.8.0*), which contains the data bundle that are necessary for
+(*pcgr-0.8.1*), which contains the data bundle that are necessary for
 both *PCGR* and *CPSR*.
 
 The command above will run the Docker-based *cpsr* workflow and produce

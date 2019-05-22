@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Getting started &mdash; Cancer Predisposition Sequencing Reporter 0.4.0 documentation</title>
+  <title>Getting started &mdash; Cancer Predisposition Sequencing Reporter 0.4.1 documentation</title>
   
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                0.4.0
+                0.4.1
               </div>
             
           
@@ -209,11 +209,11 @@ X</a></li>
 <div class="section" id="step-2-download-run-script-data-bundle-and-pull-docker-image">
 <h2>STEP 2: Download run script/data bundle, and pull Docker image<a class="headerlink" href="#step-2-download-run-script-data-bundle-and-pull-docker-image" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic">
-<li><p class="first">Download and unpack the latest <a class="reference external" href="https://github.com/sigven/cpsr/releases/tag/v0.4.0">CPSR release
-(0.4.0)</a></p>
+<li><p class="first">Download and unpack the latest <a class="reference external" href="https://github.com/sigven/cpsr/releases/tag/v0.4.1">CPSR release
+(0.4.1)</a></p>
 </li>
-<li><p class="first">Pull the latest PCGR Docker image (<em>0.8.0</em>):
-<code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">pull</span> <span class="pre">sigven/pcgr:0.8.0</span></code></p>
+<li><p class="first">Pull the latest PCGR Docker image (<em>0.8.1</em>):
+<code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">pull</span> <span class="pre">sigven/pcgr:0.8.1</span></code></p>
 </li>
 <li><p class="first">Download and unpack the latest PCGR data bundles</p>
 <ul class="simple">
@@ -271,7 +271,7 @@ Cancer Predisposition Sequencing Report (CPSR) - report of cancer-predisposing g
 
 positional arguments:
 query_vcf             VCF input file with germline query variants (SNVs/InDels).
-pcgr_base_dir         Directory that contains the PCGR data bundle directory, e.g. ~/pcgr-0.8.0
+pcgr_base_dir         Directory that contains the PCGR data bundle directory, e.g. ~/pcgr-0.8.1
 output_dir            Output directory
 {grch37,grch38}       Genome assembly build: grch37 or grch38
 virtual_panel_id      Identifier for choice of virtual cancer predisposition gene panel,
@@ -333,10 +333,10 @@ with a basic configuration file (<em>cpsr.toml</em>).</p>
 cancer
 susceptibility</a>
 virtual gene panel, can be performed through the following command:</p>
-<p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">~/cpsr-0.4.0/cpsr.py</span> <span class="pre">~/cpsr-0.4.0/example.vcf.gz</span></code>
-<code class="docutils literal notranslate"><span class="pre">~/pcgr-0.8.0</span> <span class="pre">~/cpsr-0.4.0</span> <span class="pre">grch37</span> <span class="pre">1</span> <span class="pre">~/cpsr-0.4.0/cpsr.toml</span> <span class="pre">example</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">~/cpsr-0.4.1/cpsr.py</span> <span class="pre">~/cpsr-0.4.1/example.vcf.gz</span></code>
+<code class="docutils literal notranslate"><span class="pre">~/pcgr-0.8.1</span> <span class="pre">~/cpsr-0.4.1</span> <span class="pre">grch37</span> <span class="pre">1</span> <span class="pre">~/cpsr-0.4.1/cpsr.toml</span> <span class="pre">example</span></code></p>
 <p>Note that the example command also refers to the PCGR directory
-(<em>pcgr-0.8.0</em>), which contains the data bundle that are necessary for
+(<em>pcgr-0.8.1</em>), which contains the data bundle that are necessary for
 both <em>PCGR</em> and <em>CPSR</em>.</p>
 <p>The command above will run the Docker-based <em>cpsr</em> workflow and produce
 the following output files in the <em>cpsr</em> folder:</p>
@@ -399,7 +399,7 @@ important annotations of tier-structured SNVs/InDels</li>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.4.0',
+            VERSION:'0.4.1',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

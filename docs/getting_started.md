@@ -21,8 +21,8 @@ An installation of Python (version _3.6_) is required to run CPSR. Check that Py
 
 ### STEP 2: Download run script/data bundle, and pull Docker image
 
-1. Download and unpack the latest [CPSR release (0.4.0)](https://github.com/sigven/cpsr/releases/tag/v0.4.0)
-2. Pull the latest PCGR Docker image (*0.8.0*): `docker pull sigven/pcgr:0.8.0`
+1. Download and unpack the latest [CPSR release (0.4.1)](https://github.com/sigven/cpsr/releases/tag/v0.4.1)
+2. Pull the latest PCGR Docker image (*0.8.1*): `docker pull sigven/pcgr:0.8.1`
 3. Download and unpack the latest PCGR data bundles
 	* [grch37 data bundle - 20190519](https://drive.google.com/open?id=1vIESS8NxiITUnrqZoWOdNk1YsklH8f1C) (approx 15Gb)
 	* [grch38 data bundle - 20190519](https://drive.google.com/open?id=1eoMgc2AzK1w1jrX2LSLEas4YJPiQJx1B) (approx 16Gb)
@@ -63,7 +63,7 @@ Run the workflow with **cpsr.py**, which takes the following arguments and optio
 
 		positional arguments:
 		query_vcf             VCF input file with germline query variants (SNVs/InDels).
-		pcgr_base_dir         Directory that contains the PCGR data bundle directory, e.g. ~/pcgr-0.8.0
+		pcgr_base_dir         Directory that contains the PCGR data bundle directory, e.g. ~/pcgr-0.8.1
 		output_dir            Output directory
 		{grch37,grch38}       Genome assembly build: grch37 or grch38
 		virtual_panel_id      Identifier for choice of virtual cancer predisposition gene panel,
@@ -123,10 +123,10 @@ The *cpsr* software bundle contains an example VCF file. It also comes with a ba
 
 Report generation with the example VCF, using the [Adult solid tumours cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/245/) virtual gene panel, can be performed through the following command:
 
-`python ~/cpsr-0.4.0/cpsr.py ~/cpsr-0.4.0/example.vcf.gz`
-` ~/pcgr-0.8.0 ~/cpsr-0.4.0 grch37 1 ~/cpsr-0.4.0/cpsr.toml example`
+`python ~/cpsr-0.4.1/cpsr.py ~/cpsr-0.4.1/example.vcf.gz`
+` ~/pcgr-0.8.1 ~/cpsr-0.4.1 grch37 1 ~/cpsr-0.4.1/cpsr.toml example`
 
-Note that the example command also refers to the PCGR directory (*pcgr-0.8.0*), which contains the data bundle that are necessary for both *PCGR* and *CPSR*.
+Note that the example command also refers to the PCGR directory (*pcgr-0.8.1*), which contains the data bundle that are necessary for both *PCGR* and *CPSR*.
 
 The command above will run the Docker-based *cpsr* workflow and produce the following output files in the _cpsr_ folder:
 
