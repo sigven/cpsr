@@ -2,7 +2,7 @@
 
 ### Overview
 
-The *Cancer Predisposition Sequencing Reporter (CPSR)* is a computational workflow that **interprets germline variants** identified from next-generation sequencing **in the context of cancer predisposition**. The workflow is integrated with the framework that underlies the [Personal Cancer Genome Reporter (PCGR)](https://github.com/sigven), utilizing the Docker environment for encapsulation of code and software dependencies. While *PCGR* is intended for reporting and analysis of somatic variants detected in a tumor, *CPSR* is intended for reporting and ranking of germline variants in protein-coding genes that are implicated in cancer predisposition and inherited cancer syndromes.
+The *Cancer Predisposition Sequencing Reporter (CPSR)* is a computational workflow that **interprets germline variants** identified from next-generation sequencing **in the context of cancer predisposition**. The workflow is integrated with the framework that underlies the [Personal Cancer Genome Reporter (PCGR)](https://github.com/sigven/pcgr), utilizing the Docker environment for encapsulation of code and software dependencies. While *PCGR* is intended for reporting and analysis of somatic variants detected in a tumor, *CPSR* is intended for reporting and ranking of germline variants in protein-coding genes that are implicated in cancer predisposition and inherited cancer syndromes.
 
 *CPSR* accepts a query file with raw germline variant calls encoded in the [VCF](https://samtools.github.io/hts-specs/VCFv4.2.pdf) format (i.e. analyzing SNVs/InDels). Furthermore, through the use several different _virtual cancer predisposition gene panels_ harvested from the [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk/), the user can flexibly put a restriction on which genes and findings are displayed in the cancer predisposition report.
 
@@ -95,7 +95,7 @@ The cancer predisposition report can show variants found in a number of well-kno
   * Bug fixing and bundle update
 * *November 12th 2018*: **0.2.1 pre-release**
   * Improved ACMG classification transparency
-* *November 6th 2018*: **0.2.0 pre-release**
+<!--* *November 6th 2018*: **0.2.0 pre-release**
   * Adjustments of ACMG classification criteria
 	* Mechanisms of disease for cancer susceptibility genes (GoF vs. LoF) retrieved from [Maxwell et al., *Am J Hum Genet*, 2016](https://www.ncbi.nlm.nih.gov/pubmed/27153395)
 	* Exceptions for HFE/SERPINA1 wrt. high population MAF (*BA1*)
@@ -106,6 +106,7 @@ The cancer predisposition report can show variants found in a number of well-kno
 	* GWAS hits are optionable to include
 * *October 5th 2018*: **0.1.0 pre-release**
 	* Initial release of CPSR - reporting of germline variants for cancer predisposition
+-->
 
 ### Getting started
 
