@@ -109,9 +109,9 @@ The cancer predisposition report can show variants found in a number of well-kno
 
 ### Getting started
 
-#### STEP 0: Install PCGR (version 0.8.0)
+#### STEP 0: Install PCGR (version 0.8.1)
 
-Make sure you have a working installation of PCGR (**version 0.8.0**) and the accompanying data bundle(s) (walk through [steps 0-2](https://github.com/sigven/pcgr#getting-started)).
+Make sure you have a working installation of PCGR (**version 0.8.1**) and the accompanying data bundle(s) (walk through [steps 0-2](https://github.com/sigven/pcgr#getting-started)).
 
 #### STEP 1: Download the latest release
 
@@ -139,7 +139,7 @@ Run the workflow with **cpsr.py**, which takes the following arguments and optio
 
 	positional arguments:
 	query_vcf             VCF input file with germline query variants (SNVs/InDels).
-	pcgr_base_dir         Directory that contains the PCGR data bundle directory, e.g. ~/pcgr-0.8.0
+	pcgr_base_dir         Directory that contains the PCGR data bundle directory, e.g. ~/pcgr-0.8.1
 	output_dir            Output directory
 	{grch37,grch38}       Genome assembly build: grch37 or grch38
 	virtual_panel_id      Identifier for choice of virtual cancer predisposition gene panels,
@@ -201,10 +201,10 @@ The *cpsr* software bundle contains an example VCF file. It also contains a conf
 
 Report generation with the example VCF, using the [Adult solid tumours cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/245/) virtual gene panel, can be performed through the following command:
 
-`python ~/cpsr-0.4.1/cpsr.py ~/cpsr-0.4.1/example.vcf.gz ~/pcgr-0.8.0`
+`python ~/cpsr-0.4.1/cpsr.py ~/cpsr-0.4.1/example.vcf.gz ~/pcgr-0.8.1`
 `~/cpsr-0.4.1 grch37 1 ~/cpsr-0.4.1/cpsr.toml example`
 
-Note that the example command also refers to the PCGR directory (*pcgr-0.8.0*), which contains the data bundle that are necessary for both *PCGR* and *CPSR*.
+Note that the example command also refers to the PCGR directory (*pcgr-0.8.1*), which contains the data bundle that are necessary for both *PCGR* and *CPSR*.
 
 This command will run the Docker-based *cpsr* workflow and produce the following output files in the _cpsr_ folder:
 
