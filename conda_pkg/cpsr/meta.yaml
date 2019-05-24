@@ -13,7 +13,7 @@ build:
 
 requirements:
   run:
-    - pcgr >=v0.8.0.1
+    - pcgr >=v0.8.1.1
 
 test:
   commands:
