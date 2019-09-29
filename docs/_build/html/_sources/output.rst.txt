@@ -40,6 +40,12 @@ below:
       -  Likely Benign
       -  Benign
 
+   -  Genomic biomarkers
+
+      -  Reported clinical evidence items from [CIViC] that overlap with
+         variants in the query set are reported in four distinct tabs
+         (Predictive / Prognostic / Diagnostic / Predisposing)
+
    -  Secondary Findings
 
       -  Pathogenic variants in the `ACMG recommended list of genes for
@@ -592,7 +598,8 @@ annotations. The file has the following naming convention:
 The SNVs/InDels are organized into different **tiers** (as defined above
 for the HTML report)
 
-The following variables are included in the tiered TSV file:
+The following variables are included in the tiered TSV file (VCF tags
+issued by the user will be appended at the end):
 
 ::
 
@@ -673,8 +680,9 @@ The following variables are included in the tiered TSV file:
    74. ACMG_BSC1 - Peptide change is reported as benign (ClinVar)
    75. ACMG_BP1 - Missense variant in a gene for which primarily truncating variants are known to cause disease (ClinVar)
    76. CPSR_CLASSIFICATION - CPSR tier level
-   77. CPSR_CLASSIFICATION_CODE - Combination of CPSR classification codes assigned to the variant (ACMG)
-   78. CPSR_CLASSIFICATION_DOC - Verbal description of CPSR classification codes assignted to the variant (ACMG)
+   77. CPSR_CLASSIFICATION_SCORE - Aggregated CPSR pathogenicity score
+   78. CPSR_CLASSIFICATION_CODE - Combination of CPSR classification codes assigned to the variant (ACMG)
+   79. CPSR_CLASSIFICATION_DOC - Verbal description of CPSR classification codes assignted to the variant (ACMG)
 
 **NOTE**: The user has the possibility to append the TSV file with data
 from other tags in the input VCF of interest (i.e. using the

@@ -72,7 +72,7 @@ gene panels (0 - 33)**:
       2018 <https://www.ncbi.nlm.nih.gov/pubmed/29625052>`__)
    -  A list of 107 protein-coding genes that has been manually curated
       in COSMIC’s `Cancer Gene Census
-      v88 <https://cancer.sanger.ac.uk/census>`__,
+      v90 <https://cancer.sanger.ac.uk/census>`__,
    -  A list of 148 protein-coding genes established by experts within
       the Norwegian Cancer Genomics Consortium
       (http://cancergenomics.no)
@@ -82,77 +82,81 @@ gene panels (0 - 33)**:
    genes <https://github.com/sigven/cpsr/blob/master/predisposition.md>`__
    of relevance for predisposition to tumor development.
 
--  **Panels 1 - 33** are collected from cancer predisposition panels
-   assembled within the `Genomics England
-   PanelApp <https://panelapp.genomicsengland.co.uk/>`__:
+   -  **Panels 1 - 35** are panels for inherited cancer syndromes and
+      cancer predisposition assembled within the `Genomics England
+      PanelApp <https://panelapp.genomicsengland.co.uk/>`__:
 
-   -  `1 = Adult solid tumours cancer
-      susceptibility <https://panelapp.genomicsengland.co.uk/panels/245/>`__
-   -  `2 = Adult solid tumours for rare
-      disease <https://panelapp.genomicsengland.co.uk/panels/391/>`__
-   -  `3 = Bladder cancer pertinent cancer
-      susceptibility <https://panelapp.genomicsengland.co.uk/panels/208/>`__
-   -  `4 = Brain cancer pertinent cancer
-      susceptibility <https://panelapp.genomicsengland.co.uk/panels/166/>`__
-   -  `5 = Breast cancer pertinent cancer
-      susceptibility <https://panelapp.genomicsengland.co.uk/panels/55/>`__
-   -  `6 = Childhood solid tumours cancer
-      susceptibility <https://panelapp.genomicsengland.co.uk/panels/259/>`__
-   -  `7 = Colorectal cancer pertinent cancer
-      susceptibility <https://panelapp.genomicsengland.co.uk/panels/244/>`__
-   -  `8 = Endometrial cancer pertinent cancer
-      susceptibility <https://panelapp.genomicsengland.co.uk/panels/271/>`__
-   -  `9 = Familial Tumours Syndromes of the central & peripheral
-      Nervous
-      system <https://panelapp.genomicsengland.co.uk/panels/167/>`__
-   -  `10 = Familial breast
-      cancer <https://panelapp.genomicsengland.co.uk/panels/158/>`__
-   -  `11 = Familial
-      melanoma <https://panelapp.genomicsengland.co.uk/panels/522/>`__
-   -  `12 = Familial prostate
-      cancer <https://panelapp.genomicsengland.co.uk/panels/318/>`__
-   -  `13 = Familial
-      rhabdomyosarcoma <https://panelapp.genomicsengland.co.uk/panels/290/>`__
-   -  `14 = Haematological malignancies cancer
-      susceptibility <https://panelapp.genomicsengland.co.uk/panels/59/>`__
-   -  `15 = Head and neck cancer pertinent cancer
-      susceptibility <https://panelapp.genomicsengland.co.uk/panels/115/>`__
-   -  `16 = Inherited colorectal cancer (with or without
-      polyposis) <https://panelapp.genomicsengland.co.uk/panels/254/>`__
-   -  `17 = Inherited non-medullary thyroid
-      cancer <https://panelapp.genomicsengland.co.uk/panels/171/>`__
-   -  `18 = Inherited ovarian cancer (without breast
-      cancer) <https://panelapp.genomicsengland.co.uk/panels/143/>`__
-   -  `19 = Inherited pancreatic
-      cancer <https://panelapp.genomicsengland.co.uk/panels/524/>`__
-   -  `20 = Inherited renal
-      cancer <https://panelapp.genomicsengland.co.uk/panels/521/>`__
-   -  `21 = Inherited phaeochromocytoma and
-      paraganglioma <https://panelapp.genomicsengland.co.uk/panels/97/>`__
-   -  `22 = Melanoma pertinent cancer
-      susceptibility <https://panelapp.genomicsengland.co.uk/panels/133/>`__
-   -  `23 = Multiple endocrine
-      tumours <https://panelapp.genomicsengland.co.uk/panels/36/>`__
-   -  `24 = Neuroendocrine cancer pertinent cancer
-      susceptibility <https://panelapp.genomicsengland.co.uk/panels/183/>`__
-   -  `25 = Ovarian cancer pertinent cancer
-      susceptibility <https://panelapp.genomicsengland.co.uk/panels/117/>`__
-   -  `26 = Parathyroid
-      Cancer <https://panelapp.genomicsengland.co.uk/panels/86/>`__
-   -  `27 = Prostate cancer pertinent cancer
-      susceptibility <https://panelapp.genomicsengland.co.uk/panels/17/>`__
-   -  `28 = Renal cancer pertinent cancer
-      susceptibility <https://panelapp.genomicsengland.co.uk/panels/154/>`__
-   -  `29 = Rhabdoid tumour
-      predisposition <https://panelapp.genomicsengland.co.uk/panels/600/>`__
-   -  `30 = Sarcoma cancer
-      susceptibility <https://panelapp.genomicsengland.co.uk/panels/217/>`__
-   -  `31 = Thyroid cancer pertinent cancer
-      susceptibility <https://panelapp.genomicsengland.co.uk/panels/421/>`__
-   -  `32 = Tumour predisposition - childhood
-      onset <https://panelapp.genomicsengland.co.uk/panels/243/>`__
-   -  `33 = Upper gastrointestinal cancer pertinent cancer
-      susceptibility <https://panelapp.genomicsengland.co.uk/panels/273/>`__
+      -  `1 = Adult solid tumours cancer
+         susceptibility <https://panelapp.genomicsengland.co.uk/panels/245/>`__
+      -  `2 = Adult solid tumours for rare
+         disease <https://panelapp.genomicsengland.co.uk/panels/391/>`__
+      -  `3 = Bladder cancer pertinent cancer
+         susceptibility <https://panelapp.genomicsengland.co.uk/panels/208/>`__
+      -  `4 = Brain cancer pertinent cancer
+         susceptibility <https://panelapp.genomicsengland.co.uk/panels/166/>`__
+      -  `5 = Breast cancer pertinent cancer
+         susceptibility <https://panelapp.genomicsengland.co.uk/panels/55/>`__
+      -  `6 = Childhood solid tumours cancer
+         susceptibility <https://panelapp.genomicsengland.co.uk/panels/259/>`__
+      -  `7 = Colorectal cancer pertinent cancer
+         susceptibility <https://panelapp.genomicsengland.co.uk/panels/244/>`__
+      -  `8 = Endometrial cancer pertinent cancer
+         susceptibility <https://panelapp.genomicsengland.co.uk/panels/271/>`__
+      -  `9 = Familial Tumours Syndromes of the central & peripheral
+         Nervous
+         system <https://panelapp.genomicsengland.co.uk/panels/167/>`__
+      -  `10 = Familial breast
+         cancer <https://panelapp.genomicsengland.co.uk/panels/158/>`__
+      -  `11 = Familial
+         melanoma <https://panelapp.genomicsengland.co.uk/panels/522/>`__
+      -  `12 = Familial prostate
+         cancer <https://panelapp.genomicsengland.co.uk/panels/318/>`__
+      -  `13 = Familial
+         rhabdomyosarcoma <https://panelapp.genomicsengland.co.uk/panels/290/>`__
+      -  `14 = GI tract
+         tumours <https://panelapp.genomicsengland.co.uk/panels/254/>`__
+      -  `15 = Haematological malignancies cancer
+         susceptibility <https://panelapp.genomicsengland.co.uk/panels/59/>`__
+      -  `16 = Head and neck cancer pertinent cancer
+         susceptibility <https://panelapp.genomicsengland.co.uk/panels/115/>`__
+      -  `17 = Inherited non-medullary thyroid
+         cancer <https://panelapp.genomicsengland.co.uk/panels/171/>`__
+      -  `18 = Inherited ovarian cancer (without breast
+         cancer) <https://panelapp.genomicsengland.co.uk/panels/143/>`__
+      -  `19 = Inherited pancreatic
+         cancer <https://panelapp.genomicsengland.co.uk/panels/524/>`__
+      -  `20 = Inherited renal
+         cancer <https://panelapp.genomicsengland.co.uk/panels/521/>`__
+      -  `21 = Inherited phaeochromocytoma and
+         paraganglioma <https://panelapp.genomicsengland.co.uk/panels/97/>`__
+      -  `22 = Melanoma pertinent cancer
+         susceptibility <https://panelapp.genomicsengland.co.uk/panels/133/>`__
+      -  `23 = Multiple endocrine
+         tumours <https://panelapp.genomicsengland.co.uk/panels/36/>`__
+      -  `24 = Multiple monogenic benign skin
+         tumours <https://panelapp.genomicsengland.co.uk/panels/558/>`__
+      -  `25 = Neuroendocrine cancer pertinent cancer
+         susceptibility <https://panelapp.genomicsengland.co.uk/panels/183/>`__
+      -  `26 - Neurofibromatosis Type
+         1 <https://panelapp.genomicsengland.co.uk/panels/255/>`__
+      -  `27 = Ovarian cancer pertinent cancer
+         susceptibility <https://panelapp.genomicsengland.co.uk/panels/117/>`__
+      -  `28 = Parathyroid
+         Cancer <https://panelapp.genomicsengland.co.uk/panels/86/>`__
+      -  `29 = Prostate cancer pertinent cancer
+         susceptibility <https://panelapp.genomicsengland.co.uk/panels/17/>`__
+      -  `30 = Renal cancer pertinent cancer
+         susceptibility <https://panelapp.genomicsengland.co.uk/panels/154/>`__
+      -  `31 = Rhabdoid tumour
+         predisposition <https://panelapp.genomicsengland.co.uk/panels/600/>`__
+      -  `32 = Sarcoma cancer
+         susceptibility <https://panelapp.genomicsengland.co.uk/panels/217/>`__
+      -  `33 = Thyroid cancer pertinent cancer
+         susceptibility <https://panelapp.genomicsengland.co.uk/panels/421/>`__
+      -  `34 = Tumour predisposition - childhood
+         onset <https://panelapp.genomicsengland.co.uk/panels/243/>`__
+      -  `35 = Upper gastrointestinal cancer pertinent cancer
+         susceptibility <https://panelapp.genomicsengland.co.uk/panels/273/>`__
 
 Example report
 ~~~~~~~~~~~~~~

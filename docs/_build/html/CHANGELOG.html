@@ -8,11 +8,9 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>CHANGELOG &mdash; Cancer Predisposition Sequencing Reporter 0.4.1 documentation</title>
+  <title>CHANGELOG &mdash; Cancer Predisposition Sequencing Reporter 0.5.0 documentation</title>
   
 
-  
-  
   
   
 
@@ -24,21 +22,29 @@
 
   
 
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="author" title="About these documents" href="about.html" />
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Variant classification (ACMG)" href="variant_classification.html" /> 
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="author" title="About these documents"
+              href="about.html"/>
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Cancer Predisposition Sequencing Reporter 0.5.0 documentation" href="index.html"/>
+        <link rel="prev" title="Variant classification (ACMG)" href="variant_classification.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav">
+<body class="wy-body-for-nav" role="document">
 
-   
   <div class="wy-grid-for-nav">
 
     
@@ -58,7 +64,7 @@
             
             
               <div class="version">
-                0.4.1
+                0.5.0
               </div>
             
           
@@ -79,10 +85,7 @@
           
             
             
-              
-            
-            
-              <p class="caption"><span class="caption-text">Table of Contents</span></p>
+                <p class="caption"><span class="caption-text">Table of Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
@@ -90,7 +93,14 @@
 <li class="toctree-l1"><a class="reference internal" href="input.html">Input</a></li>
 <li class="toctree-l1"><a class="reference internal" href="output.html">Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="variant_classification.html">Variant classification (ACMG)</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">CHANGELOG</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">CHANGELOG</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#september-23rd-2019">0.5.0 - September 23rd 2019</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#fixed">Fixed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#added">Added</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
             
@@ -102,54 +112,34 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Cancer Predisposition Sequencing Reporter</a>
-        
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Cancer Predisposition Sequencing Reporter</a>
       </nav>
 
 
+      
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
           
 
-
-
-
-
-
-
-
-
-
-
-
+ 
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
-
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="index.html">Docs</a> &raquo;</li>
-        
-      <li>CHANGELOG</li>
-    
-    
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>CHANGELOG</li>
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="_sources/CHANGELOG.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -157,18 +147,43 @@
             
   <div class="section" id="changelog">
 <h1>CHANGELOG<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="september-23rd-2019">
+<h2>0.5.0 - September 23rd 2019<a class="headerlink" href="#september-23rd-2019" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="fixed">
+<h3>Fixed<a class="headerlink" href="#fixed" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Bug in implementation of ACMG criteria; genes without a known
+loss-of-function mechanism were handled inappropriately</li>
+<li>Bug in assignment of heterozygous/homozygous states (input VCF)</li>
+<li>Bug in implementation of ACMG_PS1 - Same amino acid change as
+previously pathogenic variant</li>
+<li>Improved consequence prioritisation for variants with transcript
+consequences in multiple, distinct cancer predisposition genes</li>
+<li>Upper MAF threshold (as given by user) only applied for unclassified
+(i.e.&nbsp;non-ClinVar variants)</li>
+<li>Handling of non-coding variants (synonymous, upstream_variants) in
+the report, no longer excluded</li>
+</ul>
+</div>
+<div class="section" id="added">
+<h3>Added<a class="headerlink" href="#added" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Section on <em>genomic biomarkers</em>; indicating which variants in the
+query VCF that overlaps with existing germline biomarkers (CIViC)</li>
+</ul>
+</div>
+</div>
 </div>
 
 
            </div>
-           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="variant_classification.html" class="btn btn-neutral" title="Variant classification (ACMG)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="variant_classification.html" class="btn btn-neutral" title="Variant classification (ACMG)" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -181,7 +196,7 @@
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -199,12 +214,10 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.4.1',
-            LANGUAGE:'None',
+            VERSION:'0.5.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
+            HAS_SOURCE:  true
         };
     </script>
       <script type="text/javascript" src="_static/jquery.js"></script>
@@ -213,13 +226,19 @@
 
   
 
-  <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
 
+  
+  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
+          SphinxRtdTheme.StickyNav.enable();
       });
-  </script>  
+  </script>
+    
 
   <style>
     /* Sidebar header (and topbar for mobile) */

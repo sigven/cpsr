@@ -72,7 +72,7 @@ been adopted by the one outlined in
 17. ACMG_PVS1_9 (**2**)- Donor/acceptor variant - not last intron -
     within pathogenic range - LoF not established for gene
 18. ACMG_PVS1_10 (**2**) - Donor variant at located at the +3, +4 or +5
-    position of the intron - within the pathogenic range (i.e. <9
+    position of the intron - within the pathogenic range (i.e. <9
     alleles in ExAC))
 19. ACMG_PS1 (**4**) - Same amino acid change as a previously
     established pathogenic variant (ClinVar) regardless of nucleotide

@@ -8,11 +8,9 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Input &mdash; Cancer Predisposition Sequencing Reporter 0.4.1 documentation</title>
+  <title>Input &mdash; Cancer Predisposition Sequencing Reporter 0.5.0 documentation</title>
   
 
-  
-  
   
   
 
@@ -24,22 +22,30 @@
 
   
 
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="author" title="About these documents" href="about.html" />
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Output" href="output.html" />
-    <link rel="prev" title="CPSR annotation resources" href="annotation_resources.html" /> 
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="author" title="About these documents"
+              href="about.html"/>
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Cancer Predisposition Sequencing Reporter 0.5.0 documentation" href="index.html"/>
+        <link rel="next" title="Output" href="output.html"/>
+        <link rel="prev" title="CPSR annotation resources" href="annotation_resources.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav">
+<body class="wy-body-for-nav" role="document">
 
-   
   <div class="wy-grid-for-nav">
 
     
@@ -59,7 +65,7 @@
             
             
               <div class="version">
-                0.4.1
+                0.5.0
               </div>
             
           
@@ -80,10 +86,7 @@
           
             
             
-              
-            
-            
-              <p class="caption"><span class="caption-text">Table of Contents</span></p>
+                <p class="caption"><span class="caption-text">Table of Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
@@ -107,54 +110,34 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Cancer Predisposition Sequencing Reporter</a>
-        
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Cancer Predisposition Sequencing Reporter</a>
       </nav>
 
 
+      
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
           
 
-
-
-
-
-
-
-
-
-
-
-
+ 
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
-
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="index.html">Docs</a> &raquo;</li>
-        
-      <li>Input</li>
-    
-    
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Input</li>
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="_sources/input.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -190,7 +173,7 @@ that coincide with those produced by CPSR.</p>
 <p>The cancer predisposition sequencing report can be flexibly configured
 in a TOML-formatted configuration file. The default TOML configuration
 file, are shown below:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># CPSR configuration options (TOML).</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># CPSR configuration options (TOML).</span>
 
 <span class="p">[</span><span class="n">secondary_findings</span><span class="p">]</span>
 <span class="c1">## Include variants found in ACMG-recommended list for incidental findings</span>
@@ -198,7 +181,8 @@ file, are shown below:</p>
 <span class="n">show_sf</span> <span class="o">=</span> <span class="n">true</span>
 
 <span class="p">[</span><span class="n">maf_limits</span><span class="p">]</span>
-<span class="c1">## choose upper MAF threshold in gnomAD&#39;s superpopulation (global) for report of unclassified variants</span>
+<span class="c1">## choose upper MAF threshold in gnomAD&#39;s superpopulation (global) for report of unclassified (non-ClinVar)</span>
+<span class="c1">## variants</span>
 <span class="n">maf_gnomad</span> <span class="o">=</span> <span class="mf">0.05</span>
 
 <span class="p">[</span><span class="n">popgen</span><span class="p">]</span>
@@ -224,6 +208,10 @@ file, are shown below:</p>
 <span class="c1">## tags should be comma separated, i.e. custom_tags = &quot;GATK_FILTER,VARSCAN_FILTER&quot;</span>
 <span class="n">custom_tags</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
+<span class="p">[</span><span class="n">classification</span><span class="p">]</span>
+<span class="c1">## for variants with an existing classification (ClinVar), keep CPSR score and classification in output TSV file</span>
+<span class="n">clinvar_cpsr</span> <span class="o">=</span> <span class="n">false</span>
+
 <span class="p">[</span><span class="n">gwas</span><span class="p">]</span>
 <span class="n">gwas_hits</span> <span class="o">=</span> <span class="n">false</span>
 <span class="c1">## Required p-value for reporting of GWAS hits</span>
@@ -235,7 +223,7 @@ file, are shown below:</p>
 <span class="n">vep_skip_intergenic</span> <span class="o">=</span> <span class="n">false</span>
 <span class="c1">## choice of how VEP chooses the primary transcript pr. gene</span>
 <span class="c1">## https://www.ensembl.org/info/docs/tools/vep/script/vep_other.html#pick_options</span>
-<span class="n">vep_pick_order</span> <span class="o">=</span> <span class="s2">&quot;canonical,appris,tsl,biotype,ccds,rank,length&quot;</span>
+<span class="n">vep_pick_order</span> <span class="o">=</span> <span class="s2">&quot;canonical,appris,tsl,biotype,ccds,rank,length,mane&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -243,16 +231,15 @@ file, are shown below:</p>
 
 
            </div>
-           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="output.html" class="btn btn-neutral float-right" title="Output" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="output.html" class="btn btn-neutral float-right" title="Output" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="annotation_resources.html" class="btn btn-neutral" title="CPSR annotation resources" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="annotation_resources.html" class="btn btn-neutral" title="CPSR annotation resources" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -265,7 +252,7 @@ file, are shown below:</p>
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -283,12 +270,10 @@ file, are shown below:</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.4.1',
-            LANGUAGE:'None',
+            VERSION:'0.5.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
+            HAS_SOURCE:  true
         };
     </script>
       <script type="text/javascript" src="_static/jquery.js"></script>
@@ -297,13 +282,19 @@ file, are shown below:</p>
 
   
 
-  <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
 
+  
+  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
+          SphinxRtdTheme.StickyNav.enable();
       });
-  </script>  
+  </script>
+    
 
   <style>
     /* Sidebar header (and topbar for mobile) */

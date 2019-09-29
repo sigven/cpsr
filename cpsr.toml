@@ -7,7 +7,7 @@ show_sf = true
 
 [maf_limits]
 ## choose upper MAF threshold for variants to include in report
-maf_gnomad = 0.05
+maf_gnomad = 0.9
 
 [popgen]
 ## choose population source in gnomAD, defaults to the global set
@@ -30,15 +30,20 @@ report_theme = "default"
 [custom_tags]
 ## list VCF info tags that should be present in JSON output
 ## tags should be comma separated, i.e. custom_tags = "GATK_FILTER,VARSCAN_FILTER"
+#custom_tags = "CharGer_Classification,CharGer_Negative_Evidence,CharGer_Consequence,CharGer_HGVSp,CharGer_Positive_Evidence,CharGer_Feature"
 custom_tags = ""
+
+[classification]
+## for variants with an existing classification in ClinVar, include CPSR classification/score in the output TSV file
+clinvar_cpsr = true
 
 [gwas]
 gwas_hits = true
 ## Required p-value for reporting of GWAS hits
-p_value_min = 5e-8
+p_value_min = 5e-6
 
 [other]
 n_vcfanno_proc = 4
 n_vep_forks = 4
 vep_skip_intergenic = false
-vep_pick_order = "canonical,appris,tsl,biotype,ccds,rank,length"
+vep_pick_order = "canonical,appris,tsl,biotype,ccds,rank,length,mane"

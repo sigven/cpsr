@@ -12,10 +12,50 @@ import platform
 import toml
 from argparse import RawTextHelpFormatter
 
-pcgr_version = '0.8.1'
-cpsr_version = '0.4.1'
-db_version = 'PCGR_DB_VERSION = 20190519'
-vep_version = '96'
+pcgr_version = '0.8.2'
+cpsr_version = '0.5.0'
+db_version = 'PCGR_DB_VERSION = 20190927'
+vep_version = '97'
+
+gen_england_panels = {
+		0: "CPSR cancer predisposition panel (n = 209, TCGA + Cancer Gene Census + NCGC)",
+      1: "Adult solid tumours cancer susceptibility (Genomics England PanelApp)",
+      2: "Adult solid tumours for rare disease (Genomics England PanelApp)",
+      3: "Bladder cancer pertinent cancer susceptibility (Genomics England PanelApp)",
+      4: "Brain cancer pertinent cancer susceptibility (Genomics England PanelApp)",
+      5: "Breast cancer pertinent cancer susceptibility (Genomics England PanelApp)",
+      6: "Childhood solid tumours cancer susceptibility (Genomics England PanelApp)",
+      7: "Colorectal cancer pertinent cancer susceptibility (Genomics England PanelApp)",
+      8: "Endometrial cancer pertinent cancer susceptibility (Genomics England PanelApp)",
+      9: "Familial Tumours Syndromes of the central & peripheral Nervous system (Genomics England PanelApp)",
+      10: "Familial breast cancer (Genomics England PanelApp)",
+      11: "Familial melanoma (Genomics England PanelApp)",
+      12: "Familial prostate cancer (Genomics England PanelApp)",
+      13: "Familial rhabdomyosarcoma (Genomics England PanelApp)",
+      14: "GI tract tumours (Genomics England PanelApp)",
+      15: "Haematological malignancies cancer susceptibility (Genomics England PanelApp)",
+      16: "Head and neck cancer pertinent cancer susceptibility (Genomics England PanelApp)",
+      17: "Inherited non-medullary thyroid cancer (Genomics England PanelApp)",
+      18: "Inherited ovarian cancer (without breast cancer) (Genomics England PanelApp)",
+      19: "Inherited pancreatic cancer (Genomics England PanelApp)",
+      20: "Inherited renal cancer (Genomics England PanelApp)",
+      21: "Inherited phaeochromocytoma and paraganglioma (Genomics England PanelApp)",
+      22: "Melanoma pertinent cancer susceptibility (Genomics England PanelApp)",
+      23: "Multiple endocrine tumours (Genomics England PanelApp)",
+      24: "Multiple monogenic benign skin tumours (Genomics England PanelApp)",
+      25: "Neuroendocrine cancer pertinent cancer susceptibility (Genomics England PanelApp)",
+      26: "Neurofibromatosis Type 1 (Genomics England PanelApp)",
+      27: "Ovarian cancer pertinent cancer susceptibility (Genomics England PanelApp)",
+      28: "Parathyroid Cancer (Genomics England PanelApp)",
+      29: "Prostate cancer pertinent cancer susceptibility (Genomics England PanelApp)",
+      30: "Renal cancer pertinent cancer susceptibility (Genomics England PanelApp)",
+      31: "Rhabdoid tumour predisposition (Genomics England PanelApp)",
+      32: "Sarcoma cancer susceptibility (Genomics England PanelApp)",
+      33: "Thyroid cancer pertinent cancer susceptibility (Genomics England PanelApp)",
+      34: "Tumour predisposition - childhood onset (Genomics England PanelApp)",
+      35: "Upper gastrointestinal cancer pertinent cancer susceptibility (Genomics England PanelApp)"
+	}
+
 global vep_assembly
 
 def __main__():
@@ -26,7 +66,7 @@ def __main__():
    panels = panels + "3 = Bladder cancer pertinent cancer susceptibility (Genomics England PanelApp)\n"
    panels = panels + "4 = Brain cancer pertinent cancer susceptibility (Genomics England PanelApp)\n"
    panels = panels + "5 = Breast cancer pertinent cancer susceptibility (Genomics England PanelApp)\n"
-   panels = panels + "6 = Adult solid tumours for rare disease (Genomics England PanelApp)\n"
+   panels = panels + "6 = Childhood solid tumours cancer susceptibility (Genomics England PanelApp)\n"
    panels = panels + "7 = Colorectal cancer pertinent cancer susceptibility (Genomics England PanelApp)\n"
    panels = panels + "8 = Endometrial cancer pertinent cancer susceptibility (Genomics England PanelApp)\n"
    panels = panels + "9 = Familial Tumours Syndromes of the central & peripheral Nervous system (Genomics England PanelApp)\n"
@@ -34,9 +74,9 @@ def __main__():
    panels = panels + "11 = Familial melanoma (Genomics England PanelApp)\n"
    panels = panels + "12 = Familial prostate cancer (Genomics England PanelApp)\n"
    panels = panels + "13 = Familial rhabdomyosarcoma (Genomics England PanelApp)\n"
-   panels = panels + "14 = Haematological malignancies cancer susceptibility (Genomics England PanelApp)\n"
-   panels = panels + "15 = Head and neck cancer pertinent cancer susceptibility (Genomics England PanelApp)\n"
-   panels = panels + "16 = Inherited colorectal cancer (with or without polyposis) (Genomics England PanelApp)\n"
+   panels = panels + "14 = GI tract tumours (Genomics England PanelApp)\n"
+   panels = panels + "15 = Haematological malignancies cancer susceptibility (Genomics England PanelApp)\n"
+   panels = panels + "16 = Head and neck cancer pertinent cancer susceptibility (Genomics England PanelApp)\n"
    panels = panels + "17 = Inherited non-medullary thyroid cancer (Genomics England PanelApp)\n"
    panels = panels + "18 = Inherited ovarian cancer (without breast cancer) (Genomics England PanelApp)\n"
    panels = panels + "19 = Inherited pancreatic cancer (Genomics England PanelApp)\n"
@@ -44,28 +84,31 @@ def __main__():
    panels = panels + "21 = Inherited phaeochromocytoma and paraganglioma (Genomics England PanelApp)\n"
    panels = panels + "22 = Melanoma pertinent cancer susceptibility (Genomics England PanelApp)\n"
    panels = panels + "23 = Multiple endocrine tumours (Genomics England PanelApp)\n"
-   panels = panels + "24 = Neuroendocrine cancer pertinent cancer susceptibility (Genomics England PanelApp)\n"
-   panels = panels + "25 = Ovarian cancer pertinent cancer susceptibility (Genomics England PanelApp)\n"
-   panels = panels + "26 = Parathyroid Cancer (Genomics England PanelApp)\n"
-   panels = panels + "27 = Prostate cancer pertinent cancer susceptibility (Genomics England PanelApp)\n"
-   panels = panels + "28 = Renal cancer pertinent cancer susceptibility (Genomics England PanelApp)\n"
-   panels = panels + "29 = Rhabdoid tumour predisposition (Genomics England PanelApp)\n"
-   panels = panels + "30 = Sarcoma cancer susceptibility (Genomics England PanelApp)\n"
-   panels = panels + "31 = Thyroid cancer pertinent cancer susceptibility (Genomics England PanelApp)\n"
-   panels = panels + "32 = Tumour predisposition - childhood onset (Genomics England PanelApp)\n"
-   panels = panels + "33 = Upper gastrointestinal cancer pertinent cancer susceptibility (Genomics England PanelApp)\n\n"
+   panels = panels + "24 = Multiple monogenic benign skin tumours (Genomics England PanelApp)"
+   panels = panels + "25 = Neuroendocrine cancer pertinent cancer susceptibility (Genomics England PanelApp)\n"
+   panels = panels + "26 = Neurofibromatosis Type 1 (Genomics England PanelApp)"
+   panels = panels + "27 = Ovarian cancer pertinent cancer susceptibility (Genomics England PanelApp)\n"
+   panels = panels + "28 = Parathyroid Cancer (Genomics England PanelApp)\n"
+   panels = panels + "29 = Prostate cancer pertinent cancer susceptibility (Genomics England PanelApp)\n"
+   panels = panels + "30 = Renal cancer pertinent cancer susceptibility (Genomics England PanelApp)\n"
+   panels = panels + "31 = Rhabdoid tumour predisposition (Genomics England PanelApp)\n"
+   panels = panels + "32 = Sarcoma cancer susceptibility (Genomics England PanelApp)\n"
+   panels = panels + "33 = Thyroid cancer pertinent cancer susceptibility (Genomics England PanelApp)\n"
+   panels = panels + "34 = Tumour predisposition - childhood onset (Genomics England PanelApp)\n"
+   panels = panels + "35 = Upper gastrointestinal cancer pertinent cancer susceptibility (Genomics England PanelApp)\n\n"
    
    #parser = ArgumentParser(description='test', formatter_class=RawTextHelpFormatter)
    parser = argparse.ArgumentParser(description='Cancer Predisposition Sequencing Reporter (CPSR) - report of cancer-predisposing germline variants',formatter_class=RawTextHelpFormatter, usage="%(prog)s [options] <QUERY_VCF> <PCGR_DIR> <OUTPUT_DIR> <GENOME_ASSEMBLY> <PANEL_IDENTIFIER> <CONFIG_FILE> <SAMPLE_ID>")
-   #parser.add_argument('--query_bam', dest="query_bam",help='Sequence alignment file (BAM) used for variant calling')
    parser.add_argument('--force_overwrite', action = "store_true", help='By default, the script will fail with an error if any output file already exists.\n You can force the overwrite of existing result files by using this flag')
    parser.add_argument('--version', action='version', version='%(prog)s ' + str(cpsr_version))
    parser.add_argument('--basic',action="store_true",help="Run functional variant annotation on VCF through VEP/vcfanno, omit report generation (STEP 4)")
    parser.add_argument('--no_vcf_validate', action = "store_true",help="Skip validation of input VCF with Ensembl's vcf-validator")
+   parser.add_argument('--diagnostic_grade_only', action="store_true",help="For Genomics England virtual predisposition panels - consider genes with a GREEN status only")
    parser.add_argument('--docker-uid', dest='docker_user_id', help='Docker user ID. Default is the host system user ID. If you are experiencing permission errors,\n try setting this up to root (`--docker-uid root`)')
    parser.add_argument('--no-docker', action='store_true', dest='no_docker', default=False, help='Run the CPSR workflow in a non-Docker mode (see install_no_docker/ folder for instructions')
+   parser.add_argument('--debug',action='store_true',default=False, help='Print full docker commands to log')
    parser.add_argument('query_vcf', help='VCF input file with germline query variants (SNVs/InDels).')
-   parser.add_argument('pcgr_base_dir',help='Directory that contains the PCGR data bundle directory, e.g. ~/pcgr-0.8.0a')
+   parser.add_argument('pcgr_base_dir',help='Directory that contains the PCGR data bundle directory, e.g. ~/pcgr-0.8.2')
    parser.add_argument('output_dir',help='Output directory')
    parser.add_argument('genome_assembly',choices = ['grch37','grch38'], help='Genome assembly build: grch37 or grch38')
    parser.add_argument('virtual_panel_id', type=int, default=0, help="Identifier for choice of virtual cancer predisposition gene panels,\n choose any between the following identifiers:\n" + str(panels))
@@ -76,6 +119,9 @@ def __main__():
    args = parser.parse_args()
    
    overwrite = 0
+   diagnostic_grade_only = 0
+   if args.diagnostic_grade_only is True:
+      diagnostic_grade_only = 1
    if args.force_overwrite is True:
       overwrite = 1
 
@@ -100,7 +146,7 @@ def __main__():
    logger = getlogger('pcgr-check-files')
    host_directories = verify_input_files(args.query_vcf, args.configuration_file, config_options, args.pcgr_base_dir, args.output_dir, args.sample_id, args.genome_assembly, overwrite, logger)
 
-   run_cpsr(host_directories, docker_image_version, config_options, args.sample_id, args.virtual_panel_id, args.genome_assembly, cpsr_version, args.no_vcf_validate, args.basic, docker_user_id=args.docker_user_id)
+   run_cpsr(host_directories, docker_image_version, config_options, args.sample_id, args.virtual_panel_id, args.genome_assembly, cpsr_version, args.no_vcf_validate, diagnostic_grade_only, args.basic, debug = args.debug, docker_user_id=args.docker_user_id)
 
 
 def read_config_options(configuration_file, pcgr_dir, genome_assembly, logger):
@@ -147,14 +193,14 @@ def read_config_options(configuration_file, pcgr_dir, genome_assembly, logger):
                error_message(err_msg, logger)
             if var == 'vep_pick_order':
                values = str(user_options['other'][var]).split(',')
-               permitted_sources = ['canonical','appris','tsl','biotype','ccds','rank','length']
+               permitted_sources = ['canonical','appris','tsl','biotype','ccds','rank','length','mane']
                num_permitted_sources = 0
                for v in values:
                   if v in permitted_sources:
                      num_permitted_sources += 1
                
-               if num_permitted_sources < 7:
-                  err_msg = "Configuration value vep_pick_order = " + str(user_options['other']['vep_pick_order']) + " is formatted incorrectly should be a comma-separated string of the following values: canonical,appris,tsl,biotype,ccds,rank,length"
+               if num_permitted_sources != 8:
+                  err_msg = "Configuration value vep_pick_order = " + str(user_options['other']['vep_pick_order']) + " is formatted incorrectly should be a comma-separated string of the following values: canonical,appris,tsl,biotype,ccds,rank,length,mane"
                   error_message(err_msg, logger)
 
             cpsr_config_options[section][var] = user_options[section][var]
@@ -311,7 +357,7 @@ def getlogger(logger_name):
    
    return logger
 
-def run_cpsr(host_directories, docker_image_version, config_options, sample_id, virtual_panel_id, genome_assembly, cpsr_version, no_vcf_validate, basic, docker_user_id=None):
+def run_cpsr(host_directories, docker_image_version, config_options, sample_id, virtual_panel_id, genome_assembly, cpsr_version, no_vcf_validate, diagnostic_grade_only, basic, debug = True, docker_user_id=None):
    """
    Main function to run the cpsr workflow using Docker
    """
@@ -321,7 +367,7 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
    output_pass_vcf = 'None'
    output_pass_tsv = 'None'
    uid = ''
-   gencode_version = 'release 30'
+   gencode_version = 'release 31'
    vep_assembly = 'GRCh38'
    if genome_assembly == 'grch37':
       gencode_version = 'release 19'
@@ -362,12 +408,12 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
       if host_directories['input_conf_basename_host'] != 'NA':
          input_conf_docker = '/workdir/input_conf/' + str(host_directories['input_conf_basename_host'])
 
-      docker_command_run1 = "docker run --rm -t -u " + str(uid) + " -v=" +  str(databundle_volume_mapping) + " -v=" + str(vep_volume_mapping) + " -v=" + str(input_conf_volume_mapping) + " -v=" + str(output_volume_mapping)
+      docker_command_run1 = "docker run --rm -u " + str(uid) + " -v=" +  str(databundle_volume_mapping) + " -v=" + str(vep_volume_mapping) + " -v=" + str(input_conf_volume_mapping) + " -v=" + str(output_volume_mapping)
       if host_directories['input_vcf_dir_host'] != 'NA':
          docker_command_run1 = docker_command_run1  + " -v=" + str(input_vcf_volume_mapping)
 
       docker_command_run1 = docker_command_run1 + " -w=/workdir/output " + str(docker_image_version) + " sh -c \""
-      docker_command_run2 = "docker run --rm -t -u " + str(uid) + " -v=" + str(databundle_volume_mapping) + " -v=" + str(output_volume_mapping) + " -w=/workdir/output " + str(docker_image_version) + " sh -c \""
+      docker_command_run2 = "docker run --rm -u " + str(uid) + " -v=" + str(databundle_volume_mapping) + " -v=" + str(output_volume_mapping) + " -w=/workdir/output " + str(docker_image_version) + " sh -c \""
       docker_command_run_end = '\"'
 
       data_dir = '/data'
@@ -395,7 +441,8 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
    logger = getlogger("cpsr-start")
    logger.info("--- Cancer Predisposition Sequencing Reporter workflow ----")
    logger.info("Sample name: " + str(sample_id))
-   logger.info("Virtual panel id: " + str(virtual_panel_id))
+   logger.info("Virtual gene panel: " + str(gen_england_panels[virtual_panel_id]))
+   logger.info("Diagnostic-grade genes in virtual panels: " + str(diagnostic_grade_only))
    logger.info("Genome assembly: " + str(genome_assembly))
    print()
 
@@ -403,11 +450,13 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
    ## verify VCF and CNA segment file
    logger = getlogger('cpsr-validate-input')
    logger.info("STEP 0: Validate input data")
-   vcf_validate_command = docker_command_run1 + "cpsr_validate_input.py" + " " + data_dir + " " + str(input_vcf_docker) + " " + str(input_conf_docker) + " " + str(vcf_validation) + " " + str(genome_assembly) + " " + str(virtual_panel_id)
+   vcf_validate_command = docker_command_run1 + "cpsr_validate_input.py" + " " + data_dir + " " + str(input_vcf_docker) + " " + str(input_conf_docker) + " " + str(vcf_validation) + " " + str(genome_assembly) + " " + str(virtual_panel_id) + " " + str(diagnostic_grade_only)
    if not docker_image_version:
       vcf_validate_command += ' --output_dir ' + output_dir + docker_command_run_end
    else:
       vcf_validate_command += docker_command_run_end
+   if debug is True:
+      logger.info(vcf_validate_command)
    check_subprocess(vcf_validate_command)
    logger.info('Finished')
    
@@ -426,31 +475,34 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
       vep_vcfanno_annotated_pass_vcf = re.sub(r'\.vcfanno','.vcfanno.annotated.pass',vep_vcfanno_vcf) + '.gz'
 
       fasta_assembly = os.path.join(vep_dir, "homo_sapiens", str(vep_version) + "_" + str(vep_assembly), "Homo_sapiens." + str(vep_assembly) + ".dna.primary_assembly.fa.gz")
-      #pick_order = "biotype,canonical,appris,tsl,ccds,rank,length"
+      ancestor_assembly = os.path.join(vep_dir, "homo_sapiens", str(vep_version) + "_" + str(vep_assembly), "human_ancestor.fa.gz")
       vep_flags = "--vcf --quiet --check_ref --flag_pick_allele_gene --hgvs --dont_skip --failed 1 --af --af_1kg --af_gnomad " + \
          "--variant_class --domains --symbol --protein --ccds --uniprot --appris --biotype --canonical --gencode_basic --cache " + \
          "--numbers --total_length --no_stats --allele_number --no_escape --xref_refseq"
       vep_options = "--pick_order " + str(config_options['other']['vep_pick_order']) + " --force_overwrite --buffer_size 1000 --species homo_sapiens --assembly " + \
          str(vep_assembly) + " --offline --fork " + str(config_options['other']['n_vep_forks']) + " " + str(vep_flags) + " --dir " + str(vep_dir)
       vep_options += " --cache_version " + str(vep_version)
+      loftee_dir = '/opt/vep/src/ensembl-vep/modules'
       if config_options['other']['vep_skip_intergenic'] == 1:
          vep_options = vep_options + " --no_intergenic"
       if not docker_image_version:
          conda_prefix = os.path.dirname(os.path.dirname(sys.executable))
          loftee_dir = os.path.join(conda_prefix, 'share', 'loftee')
          assert os.path.isdir(loftee_dir), 'LoF VEP plugin is not found in ' + loftee_dir + '. Please make sure you installed pcgr conda package and have corresponding conda environment active.'
-         vep_options += " --plugin LoF,loftee_path:" + loftee_dir + " --dir_plugins " + loftee_dir
+         vep_options += " --plugin LoF,loftee_path:" + loftee_dir + ",human_ancestor_fa:" + str(ancestor_assembly) + ",use_gerp_end_trunc:0 --dir_plugins " + loftee_dir
       else:
-         vep_options += " --plugin LoF"
+         vep_options += " --plugin LoF,loftee_path:" + loftee_dir + ",human_ancestor_fa:" + str(ancestor_assembly)  + ",use_gerp_end_trunc:0 --dir_plugins " + loftee_dir
       vep_main_command = str(docker_command_run1) + "vep --input_file " + str(input_vcf_cpsr_ready) + " --output_file " + str(vep_vcf) + " " + str(vep_options) + " --fasta " + str(fasta_assembly) + docker_command_run_end
       vep_bgzip_command = str(docker_command_run1) + "bgzip -f " + str(vep_vcf) + docker_command_run_end
       vep_tabix_command = str(docker_command_run1) + "tabix -f -p vcf " + str(vep_vcf) + ".gz" + docker_command_run_end
+
       logger = getlogger('cpsr-vep')
 
       print()
       logger.info("STEP 1: Basic variant annotation with Variant Effect Predictor (" + str(vep_version) + ", GENCODE " + str(gencode_version) + ", " + str(genome_assembly) + ") including loss-of-function prediction")
       #return
-
+      if debug is True:
+         logger.info(vep_main_command)
       check_subprocess(vep_main_command)
       check_subprocess(vep_bgzip_command)
       check_subprocess(vep_tabix_command)
@@ -460,9 +512,12 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
       ## vcfanno command
       print()
       logger = getlogger('cpsr-vcfanno')
-      logger.info("STEP 2: Annotation for cancer predisposition with cpsr-vcfanno (ClinVar, dbNSFP, UniProtKB, cancerhotspots.org, GWAS catalog, gnomAD non-cancer subset)")
+      logger.info("STEP 2: Annotation for cancer predisposition with cpsr-vcfanno (ClinVar, CIViC, dbNSFP, UniProtKB, cancerhotspots.org, GWAS catalog, gnomAD non-cancer subset)")
       pcgr_vcfanno_command = str(docker_command_run2) + "pcgr_vcfanno.py --num_processes "  + str(config_options['other']['n_vcfanno_proc']) + \
-         " --dbnsfp --clinvar --cancer_hotspots --uniprot --gnomad_cpsr --pcgr_onco_xref --gwas --rmsk " + str(vep_vcf) + ".gz " + str(vep_vcfanno_vcf) + " " + os.path.join(data_dir, "data", str(genome_assembly)) + docker_command_run_end
+         " --dbnsfp --clinvar --cancer_hotspots --civic --uniprot --gnomad_cpsr --pcgr_onco_xref --gwas --rmsk " + str(vep_vcf) + ".gz " + str(vep_vcfanno_vcf) + " " + os.path.join(data_dir, "data", str(genome_assembly)) + docker_command_run_end
+      
+      if debug is True:
+         logger.info(pcgr_vcfanno_command)
       check_subprocess(pcgr_vcfanno_command)
       logger.info("Finished")
       #return()
@@ -472,6 +527,8 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
       logger = getlogger("cpsr-summarise")
       pcgr_summarise_command = str(docker_command_run2) + "pcgr_summarise.py " + str(vep_vcfanno_vcf) + ".gz 0 " + os.path.join(data_dir, "data", str(genome_assembly)) + " --cpsr" + docker_command_run_end
       logger.info("STEP 3: Cancer gene annotations with cpsr-summarise")
+      if debug is True:
+         logger.info(pcgr_summarise_command)
       check_subprocess(pcgr_summarise_command)
       
       create_output_vcf_command1 = str(docker_command_run2) + 'mv ' + str(vep_vcfanno_annotated_vcf) + ' ' + str(output_vcf) + docker_command_run_end
@@ -485,6 +542,8 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
       check_subprocess(create_output_vcf_command4)
       cpsr_vcf2tsv_command = str(docker_command_run2) + "vcf2tsv.py " + str(output_pass_vcf) + " --compress " + str(output_pass_tsv) + docker_command_run_end
       logger.info("Converting VCF to TSV with https://github.com/sigven/vcf2tsv")
+      if debug is True:
+         logger.info(cpsr_vcf2tsv_command)
       check_subprocess(cpsr_vcf2tsv_command)
       check_subprocess(clean_command)
       logger.info("Finished")
@@ -499,7 +558,9 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
       logger.info("STEP 4: Generation of output files - Cancer predisposition sequencing report")
       cpsr_report_command = (docker_command_run1 + os.path.join(r_scripts_dir, "cpsr.R") + " " + output_dir + " " + \
          str(output_pass_tsv) + ".gz " +  str(sample_id)  + " " + str(input_conf_docker) + " " + str(cpsr_version) + \
-         " " + str(genome_assembly) + " " + str(virtual_panel_id) + " " + data_dir + docker_command_run_end)
+         " " + str(genome_assembly) + " " + str(virtual_panel_id) + " " + str(diagnostic_grade_only) + " " + data_dir + docker_command_run_end)
+      if debug is True:
+         logger.info(cpsr_report_command)
       check_subprocess(cpsr_report_command)
       logger.info("Finished")
    

@@ -8,11 +8,9 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Output &mdash; Cancer Predisposition Sequencing Reporter 0.4.1 documentation</title>
+  <title>Output &mdash; Cancer Predisposition Sequencing Reporter 0.5.0 documentation</title>
   
 
-  
-  
   
   
 
@@ -24,22 +22,30 @@
 
   
 
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="author" title="About these documents" href="about.html" />
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Variant classification (ACMG)" href="variant_classification.html" />
-    <link rel="prev" title="Input" href="input.html" /> 
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="author" title="About these documents"
+              href="about.html"/>
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Cancer Predisposition Sequencing Reporter 0.5.0 documentation" href="index.html"/>
+        <link rel="next" title="Variant classification (ACMG)" href="variant_classification.html"/>
+        <link rel="prev" title="Input" href="input.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav">
+<body class="wy-body-for-nav" role="document">
 
-   
   <div class="wy-grid-for-nav">
 
     
@@ -59,7 +65,7 @@
             
             
               <div class="version">
-                0.4.1
+                0.5.0
               </div>
             
           
@@ -80,10 +86,7 @@
           
             
             
-              
-            
-            
-              <p class="caption"><span class="caption-text">Table of Contents</span></p>
+                <p class="caption"><span class="caption-text">Table of Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
@@ -126,54 +129,34 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Cancer Predisposition Sequencing Reporter</a>
-        
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Cancer Predisposition Sequencing Reporter</a>
       </nav>
 
 
+      
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
           
 
-
-
-
-
-
-
-
-
-
-
-
+ 
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
-
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="index.html">Docs</a> &raquo;</li>
-        
-      <li>Output</li>
-    
-    
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Output</li>
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="_sources/output.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -216,6 +199,12 @@ geneset, interactive variant tables are shown for each level
 <li>Variants of Uncertain Significance (VUS)</li>
 <li>Likely Benign</li>
 <li>Benign</li>
+</ul>
+</li>
+<li>Genomic biomarkers<ul>
+<li>Reported clinical evidence items from [CIViC] that overlap with
+variants in the query set are reported in four distinct tabs
+(Predictive / Prognostic / Diagnostic / Predisposing)</li>
 </ul>
 </li>
 <li>Secondary Findings<ul>
@@ -771,8 +760,9 @@ annotations. The file has the following naming convention:</p>
 <p>&lt;<em>sample_id</em>&gt;.<strong>cpsr</strong>.&lt;<em>genome_assembly</em>&gt;.<strong>snvs_indels.tiers.tsv</strong></p>
 <p>The SNVs/InDels are organized into different <strong>tiers</strong> (as defined above
 for the HTML report)</p>
-<p>The following variables are included in the tiered TSV file:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">1.</span> <span class="n">GENOMIC_CHANGE</span> <span class="o">-</span> <span class="n">Identifier</span> <span class="k">for</span> <span class="n">variant</span> <span class="n">at</span> <span class="n">the</span> <span class="n">genome</span> <span class="p">(</span><span class="n">VCF</span><span class="p">)</span> <span class="n">level</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="o">.</span> <span class="mi">1</span><span class="p">:</span><span class="n">g</span><span class="o">.</span><span class="mi">152382569</span><span class="n">A</span><span class="o">&gt;</span><span class="n">G</span>
+<p>The following variables are included in the tiered TSV file (VCF tags
+issued by the user will be appended at the end):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mf">1.</span> <span class="n">GENOMIC_CHANGE</span> <span class="o">-</span> <span class="n">Identifier</span> <span class="k">for</span> <span class="n">variant</span> <span class="n">at</span> <span class="n">the</span> <span class="n">genome</span> <span class="p">(</span><span class="n">VCF</span><span class="p">)</span> <span class="n">level</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="o">.</span> <span class="mi">1</span><span class="p">:</span><span class="n">g</span><span class="o">.</span><span class="mi">152382569</span><span class="n">A</span><span class="o">&gt;</span><span class="n">G</span>
       <span class="n">Format</span><span class="p">:</span> <span class="p">(</span><span class="o">&lt;</span><span class="n">chrom</span><span class="o">&gt;</span><span class="p">:</span><span class="n">g</span><span class="o">.&lt;</span><span class="n">position</span><span class="o">&gt;&lt;</span><span class="n">ref_allele</span><span class="o">&gt;&gt;&lt;</span><span class="n">alt_allele</span><span class="o">&gt;</span><span class="p">)</span>
 <span class="mf">2.</span> <span class="n">VAR_ID</span> <span class="o">-</span> <span class="n">Variant</span> <span class="n">identifier</span>
 <span class="mf">3.</span> <span class="n">GENOTYPE</span> <span class="o">-</span> <span class="n">Variant</span> <span class="n">genotype</span> <span class="p">(</span><span class="n">heterozygous</span><span class="o">/</span><span class="n">homozygous</span><span class="p">)</span>
@@ -849,8 +839,9 @@ for the HTML report)</p>
 <span class="mf">74.</span> <span class="n">ACMG_BSC1</span> <span class="o">-</span> <span class="n">Peptide</span> <span class="n">change</span> <span class="ow">is</span> <span class="n">reported</span> <span class="k">as</span> <span class="n">benign</span> <span class="p">(</span><span class="n">ClinVar</span><span class="p">)</span>
 <span class="mf">75.</span> <span class="n">ACMG_BP1</span> <span class="o">-</span> <span class="n">Missense</span> <span class="n">variant</span> <span class="ow">in</span> <span class="n">a</span> <span class="n">gene</span> <span class="k">for</span> <span class="n">which</span> <span class="n">primarily</span> <span class="n">truncating</span> <span class="n">variants</span> <span class="n">are</span> <span class="n">known</span> <span class="n">to</span> <span class="n">cause</span> <span class="n">disease</span> <span class="p">(</span><span class="n">ClinVar</span><span class="p">)</span>
 <span class="mf">76.</span> <span class="n">CPSR_CLASSIFICATION</span> <span class="o">-</span> <span class="n">CPSR</span> <span class="n">tier</span> <span class="n">level</span>
-<span class="mf">77.</span> <span class="n">CPSR_CLASSIFICATION_CODE</span> <span class="o">-</span> <span class="n">Combination</span> <span class="n">of</span> <span class="n">CPSR</span> <span class="n">classification</span> <span class="n">codes</span> <span class="n">assigned</span> <span class="n">to</span> <span class="n">the</span> <span class="n">variant</span> <span class="p">(</span><span class="n">ACMG</span><span class="p">)</span>
-<span class="mf">78.</span> <span class="n">CPSR_CLASSIFICATION_DOC</span> <span class="o">-</span> <span class="n">Verbal</span> <span class="n">description</span> <span class="n">of</span> <span class="n">CPSR</span> <span class="n">classification</span> <span class="n">codes</span> <span class="n">assignted</span> <span class="n">to</span> <span class="n">the</span> <span class="n">variant</span> <span class="p">(</span><span class="n">ACMG</span><span class="p">)</span>
+<span class="mf">77.</span> <span class="n">CPSR_CLASSIFICATION_SCORE</span> <span class="o">-</span> <span class="n">Aggregated</span> <span class="n">CPSR</span> <span class="n">pathogenicity</span> <span class="n">score</span>
+<span class="mf">78.</span> <span class="n">CPSR_CLASSIFICATION_CODE</span> <span class="o">-</span> <span class="n">Combination</span> <span class="n">of</span> <span class="n">CPSR</span> <span class="n">classification</span> <span class="n">codes</span> <span class="n">assigned</span> <span class="n">to</span> <span class="n">the</span> <span class="n">variant</span> <span class="p">(</span><span class="n">ACMG</span><span class="p">)</span>
+<span class="mf">79.</span> <span class="n">CPSR_CLASSIFICATION_DOC</span> <span class="o">-</span> <span class="n">Verbal</span> <span class="n">description</span> <span class="n">of</span> <span class="n">CPSR</span> <span class="n">classification</span> <span class="n">codes</span> <span class="n">assignted</span> <span class="n">to</span> <span class="n">the</span> <span class="n">variant</span> <span class="p">(</span><span class="n">ACMG</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><strong>NOTE</strong>: The user has the possibility to append the TSV file with data
@@ -863,16 +854,15 @@ from other tags in the input VCF of interest (i.e.&nbsp;using the
 
 
            </div>
-           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="variant_classification.html" class="btn btn-neutral float-right" title="Variant classification (ACMG)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="variant_classification.html" class="btn btn-neutral float-right" title="Variant classification (ACMG)" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="input.html" class="btn btn-neutral" title="Input" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="input.html" class="btn btn-neutral" title="Input" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -885,7 +875,7 @@ from other tags in the input VCF of interest (i.e.&nbsp;using the
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -903,12 +893,10 @@ from other tags in the input VCF of interest (i.e.&nbsp;using the
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.4.1',
-            LANGUAGE:'None',
+            VERSION:'0.5.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
+            HAS_SOURCE:  true
         };
     </script>
       <script type="text/javascript" src="_static/jquery.js"></script>
@@ -917,13 +905,19 @@ from other tags in the input VCF of interest (i.e.&nbsp;using the
 
   
 
-  <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
 
+  
+  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
+          SphinxRtdTheme.StickyNav.enable();
       });
-  </script>  
+  </script>
+    
 
   <style>
     /* Sidebar header (and topbar for mobile) */

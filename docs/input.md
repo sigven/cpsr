@@ -25,7 +25,8 @@ The cancer predisposition sequencing report can be flexibly configured in a TOML
 	show_sf = true
 
 	[maf_limits]
-	## choose upper MAF threshold in gnomAD's superpopulation (global) for report of unclassified variants
+	## choose upper MAF threshold in gnomAD's superpopulation (global) for report of unclassified (non-ClinVar)
+	## variants
 	maf_gnomad = 0.05
 
 	[popgen]
@@ -51,6 +52,10 @@ The cancer predisposition sequencing report can be flexibly configured in a TOML
 	## tags should be comma separated, i.e. custom_tags = "GATK_FILTER,VARSCAN_FILTER"
 	custom_tags = ""
 
+	[classification]
+	## for variants with an existing classification (ClinVar), keep CPSR score and classification in output TSV file
+	clinvar_cpsr = false
+
 	[gwas]
 	gwas_hits = false
 	## Required p-value for reporting of GWAS hits
@@ -62,4 +67,4 @@ The cancer predisposition sequencing report can be flexibly configured in a TOML
 	vep_skip_intergenic = false
 	## choice of how VEP chooses the primary transcript pr. gene
 	## https://www.ensembl.org/info/docs/tools/vep/script/vep_other.html#pick_options
-	vep_pick_order = "canonical,appris,tsl,biotype,ccds,rank,length"
+	vep_pick_order = "canonical,appris,tsl,biotype,ccds,rank,length,mane"
