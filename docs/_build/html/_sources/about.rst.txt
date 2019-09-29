@@ -62,7 +62,7 @@ Cancer predisposition genes
 The cancer predisposition report can show variants found in a number of
 well-known cancer predisposition genes, and the specific set of genes
 can be customized by the user by choosing any of the following **virtual
-gene panels (0 - 33)**:
+gene panels (0 - 35)**:
 
 -  **Panel 0 (default)** is a comprehensive gene panel assembled through
    known sources on cancer predisposition:

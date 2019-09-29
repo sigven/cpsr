@@ -17,7 +17,7 @@ The variant sets can be interactively explored and filtered further through diff
 
 ##### Cancer predisposition genes
 
-The cancer predisposition report can show variants found in a number of well-known cancer predisposition genes, and the specific set of genes can be customized by the user by choosing any of the following __virtual gene panels (0 - 33)__:
+The cancer predisposition report can show variants found in a number of well-known cancer predisposition genes, and the specific set of genes can be customized by the user by choosing any of the following __virtual gene panels (0 - 35)__:
 
   * **Panel 0 (default)** is a comprehensive gene panel assembled through known sources on cancer predisposition:
 	* A list of 152 genes that were curated and established within TCGA’s pan-cancer study ([Huang et al., *Cell*, 2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052))
