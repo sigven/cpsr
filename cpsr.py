@@ -16,6 +16,7 @@ pcgr_version = '0.8.4'
 cpsr_version = '0.5.2'
 db_version = 'PCGR_DB_VERSION = 20191116'
 vep_version = '98'
+global debug
 
 gen_england_panels = {
 		0: "CPSR exploratory cancer predisposition panel (n = 213, TCGA + Cancer Gene Census + NCGC)",
@@ -132,6 +133,9 @@ def __main__():
       diagnostic_grade_only = 1
    if args.force_overwrite is True:
       overwrite = 1
+   
+   global debug
+   debug = args.debug
 
    logger = getlogger('cpsr-validate-arguments')
 
@@ -375,13 +379,9 @@ def verify_input_files(input_vcf, target_bed, configuration_file, cpsr_config_op
    
 
 def check_subprocess(command):
-   try:
-      output = subprocess.check_output(str(command), stderr=subprocess.STDOUT, shell=True)
-      if len(output) > 0:
-         print (str(output.decode()).rstrip())
-   except subprocess.CalledProcessError as e:
-      print (e.output.decode())
-      exit(0)
+   if debug:
+      logger.info(command)
+   subprocess.run(str(command), shell=True)
 
 def getlogger(logger_name):
    logger = logging.getLogger(logger_name)
@@ -514,8 +514,6 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
       vcf_validate_command += ' --output_dir ' + output_dir + docker_command_run_end
    else:
       vcf_validate_command += docker_command_run_end
-   if debug is True:
-      logger.info(vcf_validate_command)
    check_subprocess(vcf_validate_command)
    logger.info('Finished')
    
@@ -536,7 +534,7 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
 
       fasta_assembly = os.path.join(vep_dir, "homo_sapiens", str(vep_version) + "_" + str(vep_assembly), "Homo_sapiens." + str(vep_assembly) + ".dna.primary_assembly.fa.gz")
       ancestor_assembly = os.path.join(vep_dir, "homo_sapiens", str(vep_version) + "_" + str(vep_assembly), "human_ancestor.fa.gz")
-      vep_flags = "--vcf --quiet --check_ref --flag_pick_allele_gene --hgvs --dont_skip --failed 1 --af --af_1kg --af_gnomad " + \
+      vep_flags = "--vcf --check_ref --flag_pick_allele_gene --hgvs --dont_skip --failed 1 --af --af_1kg --af_gnomad " + \
          "--variant_class --domains --symbol --protein --ccds --uniprot --appris --biotype --canonical --gencode_basic --cache " + \
          "--numbers --total_length --no_stats --allele_number --no_escape --xref_refseq"
       vep_options = "--pick_order " + str(config_options['other']['vep_pick_order']) + " --force_overwrite --buffer_size 1000 --species homo_sapiens --assembly " + \
@@ -561,8 +559,6 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
       print()
       logger.info("STEP 1: Basic variant annotation with Variant Effect Predictor (" + str(vep_version) + ", GENCODE " + str(gencode_version) + ", " + str(genome_assembly) + ") including loss-of-function prediction")
       #return
-      if debug is True:
-         logger.info(vep_main_command)
       check_subprocess(vep_main_command)
       check_subprocess(vep_bgzip_command)
       check_subprocess(vep_tabix_command)
@@ -576,8 +572,6 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
       pcgr_vcfanno_command = str(docker_command_run2) + "pcgr_vcfanno.py --num_processes "  + str(config_options['other']['n_vcfanno_proc']) + \
          " --dbnsfp --clinvar --cancer_hotspots --civic --uniprot --gnomad_cpsr --pcgr_onco_xref --gwas --rmsk " + str(vep_vcf) + ".gz " + str(vep_vcfanno_vcf) + " " + os.path.join(data_dir, "data", str(genome_assembly)) + docker_command_run_end
       
-      if debug is True:
-         logger.info(pcgr_vcfanno_command)
       check_subprocess(pcgr_vcfanno_command)
       logger.info("Finished")
       #return()
@@ -587,8 +581,6 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
       logger = getlogger("cpsr-summarise")
       pcgr_summarise_command = str(docker_command_run2) + "pcgr_summarise.py " + str(vep_vcfanno_vcf) + ".gz 0 " + os.path.join(data_dir, "data", str(genome_assembly)) + " --cpsr" + docker_command_run_end
       logger.info("STEP 3: Cancer gene annotations with cpsr-summarise")
-      if debug is True:
-         logger.info(pcgr_summarise_command)
       check_subprocess(pcgr_summarise_command)
       
       create_output_vcf_command1 = str(docker_command_run2) + 'mv ' + str(vep_vcfanno_annotated_vcf) + ' ' + str(output_vcf) + docker_command_run_end
@@ -602,10 +594,9 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
       check_subprocess(create_output_vcf_command4)
       cpsr_vcf2tsv_command = str(docker_command_run2) + "vcf2tsv.py " + str(output_pass_vcf) + " --compress " + str(output_pass_tsv) + docker_command_run_end
       logger.info("Converting VCF to TSV with https://github.com/sigven/vcf2tsv")
-      if debug is True:
-         logger.info(cpsr_vcf2tsv_command)
       check_subprocess(cpsr_vcf2tsv_command)
-      check_subprocess(clean_command)
+      if not debug:
+         check_subprocess(clean_command)
       logger.info("Finished")
 
       #return
@@ -617,10 +608,8 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
       logger = getlogger('cpsr-writer')
       logger.info("STEP 4: Generation of output files - Cancer predisposition sequencing report")
       cpsr_report_command = (docker_command_run1 + os.path.join(r_scripts_dir, "cpsr.R") + " " + output_dir + " " + \
-         str(output_pass_tsv) + ".gz " +  str(sample_id)  + " " + str(input_conf_docker) + " " + str(pcgr_version) + " " + str(cpsr_version) + \
-         " " + str(genome_assembly) + " " + str(virtual_panel_id) + " " + str(custom_bed_cpsr_ready) + " " + str(diagnostic_grade_only) + " " + data_dir + docker_command_run_end)
-      if debug is True:
-         logger.info(cpsr_report_command)
+         str(output_pass_tsv) + ".gz " +  str(sample_id)  + " " + str(input_conf_docker) + " " + str(cpsr_version) + " " + str(cpsr_version) + \
+         " " + str(genome_assembly) + " " + str(virtual_panel_id) + " " + str(diagnostic_grade_only) + " " + str(diagnostic_grade_only) + " " + data_dir + docker_command_run_end)
       check_subprocess(cpsr_report_command)
       logger.info("Finished")
    
