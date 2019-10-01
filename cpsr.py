@@ -378,7 +378,7 @@ def verify_input_files(input_vcf, target_bed, configuration_file, cpsr_config_op
    return host_directories
    
 
-def check_subprocess(command):
+def check_subprocess(logger, command):
    if debug:
       logger.info(command)
    subprocess.run(str(command), shell=True)
@@ -489,7 +489,7 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
       vep_dir = vepdb_dir_host
       r_scripts_dir = ''
 
-   check_subprocess(docker_command_run1.replace("-u " + str(uid), "") + 'mkdir -p ' + output_dir + docker_command_run_end)
+   check_subprocess(logger, docker_command_run1.replace("-u " + str(uid), "") + 'mkdir -p ' + output_dir + docker_command_run_end)
 
    diagnostic_grade = "OFF"
    if diagnostic_grade_only == 1:
@@ -514,7 +514,7 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
       vcf_validate_command += ' --output_dir ' + output_dir + docker_command_run_end
    else:
       vcf_validate_command += docker_command_run_end
-   check_subprocess(vcf_validate_command)
+   check_subprocess(logger, vcf_validate_command)
    logger.info('Finished')
    
    if not input_vcf_docker == 'None':
@@ -559,9 +559,9 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
       print()
       logger.info("STEP 1: Basic variant annotation with Variant Effect Predictor (" + str(vep_version) + ", GENCODE " + str(gencode_version) + ", " + str(genome_assembly) + ") including loss-of-function prediction")
       #return
-      check_subprocess(vep_main_command)
-      check_subprocess(vep_bgzip_command)
-      check_subprocess(vep_tabix_command)
+      check_subprocess(logger, vep_main_command)
+      check_subprocess(logger, vep_bgzip_command)
+      check_subprocess(logger, vep_tabix_command)
       logger.info("Finished")
       #return
    
@@ -572,7 +572,7 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
       pcgr_vcfanno_command = str(docker_command_run2) + "pcgr_vcfanno.py --num_processes "  + str(config_options['other']['n_vcfanno_proc']) + \
          " --dbnsfp --clinvar --cancer_hotspots --civic --uniprot --gnomad_cpsr --pcgr_onco_xref --gwas --rmsk " + str(vep_vcf) + ".gz " + str(vep_vcfanno_vcf) + " " + os.path.join(data_dir, "data", str(genome_assembly)) + docker_command_run_end
       
-      check_subprocess(pcgr_vcfanno_command)
+      check_subprocess(logger, pcgr_vcfanno_command)
       logger.info("Finished")
       #return()
 
@@ -581,22 +581,22 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
       logger = getlogger("cpsr-summarise")
       pcgr_summarise_command = str(docker_command_run2) + "pcgr_summarise.py " + str(vep_vcfanno_vcf) + ".gz 0 " + os.path.join(data_dir, "data", str(genome_assembly)) + " --cpsr" + docker_command_run_end
       logger.info("STEP 3: Cancer gene annotations with cpsr-summarise")
-      check_subprocess(pcgr_summarise_command)
+      check_subprocess(logger, pcgr_summarise_command)
       
       create_output_vcf_command1 = str(docker_command_run2) + 'mv ' + str(vep_vcfanno_annotated_vcf) + ' ' + str(output_vcf) + docker_command_run_end
       create_output_vcf_command2 = str(docker_command_run2) + 'mv ' + str(vep_vcfanno_annotated_vcf) + '.tbi ' + str(output_vcf) + '.tbi' + docker_command_run_end
       create_output_vcf_command3 = str(docker_command_run2) + 'mv ' + str(vep_vcfanno_annotated_pass_vcf) + ' ' + str(output_pass_vcf) + docker_command_run_end
       create_output_vcf_command4 = str(docker_command_run2) + 'mv ' + str(vep_vcfanno_annotated_pass_vcf) + '.tbi ' + str(output_pass_vcf) + '.tbi' + docker_command_run_end
       clean_command = str(docker_command_run2) + 'rm -f ' + str(vep_vcf) + '* ' + str(vep_vcfanno_annotated_vcf) + ' ' + str(vep_vcfanno_annotated_pass_vcf) + '* ' + str(vep_vcfanno_vcf) + '* ' +  str(input_vcf_cpsr_ready_uncompressed) + "* " + docker_command_run_end
-      check_subprocess(create_output_vcf_command1)
-      check_subprocess(create_output_vcf_command2)
-      check_subprocess(create_output_vcf_command3)
-      check_subprocess(create_output_vcf_command4)
+      check_subprocess(logger, create_output_vcf_command1)
+      check_subprocess(logger, create_output_vcf_command2)
+      check_subprocess(logger, create_output_vcf_command3)
+      check_subprocess(logger, create_output_vcf_command4)
       cpsr_vcf2tsv_command = str(docker_command_run2) + "vcf2tsv.py " + str(output_pass_vcf) + " --compress " + str(output_pass_tsv) + docker_command_run_end
       logger.info("Converting VCF to TSV with https://github.com/sigven/vcf2tsv")
-      check_subprocess(cpsr_vcf2tsv_command)
+      check_subprocess(logger, cpsr_vcf2tsv_command)
       if not debug:
-         check_subprocess(clean_command)
+         check_subprocess(logger, clean_command)
       logger.info("Finished")
 
       #return
@@ -610,7 +610,7 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
       cpsr_report_command = (docker_command_run1 + os.path.join(r_scripts_dir, "cpsr.R") + " " + output_dir + " " + \
          str(output_pass_tsv) + ".gz " +  str(sample_id)  + " " + str(input_conf_docker) + " " + str(cpsr_version) + " " + str(cpsr_version) + \
          " " + str(genome_assembly) + " " + str(virtual_panel_id) + " " + str(diagnostic_grade_only) + " " + str(diagnostic_grade_only) + " " + data_dir + docker_command_run_end)
-      check_subprocess(cpsr_report_command)
+      check_subprocess(logger, cpsr_report_command)
       logger.info("Finished")
    
 
