@@ -85,6 +85,8 @@ The cancer predisposition report can show variants found in a number of well-kno
 [![Documentation Status](https://readthedocs.org/projects/cpsr/badge/?version=latest)](https://cpsr.readthedocs.io/en/latest/?badge=latest)
 
 ### News
+* *October 4th 2019*: 
+  * By mistake, the recently updated grch38 data bundle (20190927) is missing a critical part for CPSR processing. Please download the missing files using [this link](https://drive.google.com/open?id=13mOn1WXEXz_XO3N57LC415gPO0kz3oRA), and put the contents underneath `data/grch38/gnomad_cpsr/`
 * *September 29th 2019*: **0.5.0 release**
   * Updated software (VEP 97.3, LOFTEE 1.0.3)
   * Data bundle
