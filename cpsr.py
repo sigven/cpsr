@@ -510,6 +510,8 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
    logger = getlogger('cpsr-validate-input')
    logger.info("STEP 0: Validate input data")
    vcf_validate_command = docker_command_run1 + "cpsr_validate_input.py" + " " + data_dir + " " + str(input_vcf_docker) + " " + str(input_bed_docker) + " " + str(input_conf_docker) + " " + str(vcf_validation) + " " + str(genome_assembly) + " " + str(virtual_panel_id) + " " + str(diagnostic_grade_only)
+   if debug:
+      vcf_validate_command  += ' --debug'
    if not docker_image_version:
       vcf_validate_command += ' --output_dir ' + output_dir + docker_command_run_end
    else:
@@ -580,9 +582,11 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
       print()
       logger = getlogger("cpsr-summarise")
       pcgr_summarise_command = str(docker_command_run2) + "pcgr_summarise.py " + str(vep_vcfanno_vcf) + ".gz 0 " + os.path.join(data_dir, "data", str(genome_assembly)) + " --cpsr" + docker_command_run_end
+      if debug:
+         pcgr_summarise_command  += ' --debug'
       logger.info("STEP 3: Cancer gene annotations with cpsr-summarise")
       check_subprocess(logger, pcgr_summarise_command)
-      
+
       create_output_vcf_command1 = str(docker_command_run2) + 'mv ' + str(vep_vcfanno_annotated_vcf) + ' ' + str(output_vcf) + docker_command_run_end
       create_output_vcf_command2 = str(docker_command_run2) + 'mv ' + str(vep_vcfanno_annotated_vcf) + '.tbi ' + str(output_vcf) + '.tbi' + docker_command_run_end
       create_output_vcf_command3 = str(docker_command_run2) + 'mv ' + str(vep_vcfanno_annotated_pass_vcf) + ' ' + str(output_pass_vcf) + docker_command_run_end
