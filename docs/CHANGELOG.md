@@ -1,6 +1,12 @@
 
 ## CHANGELOG
 
+#### 0.5.1 - October 14th 2019
+
+##### Fixed
+  * Bug in cpsr_validate_input.py [GitHub Issue](https://github.com/sigven/cpsr/issues/18)
+  * Bug when there are zero variants with a 'PASS' status in VCF - omitting report generation
+
 #### 0.5.0 - September 23rd 2019
 
 ##### Fixed

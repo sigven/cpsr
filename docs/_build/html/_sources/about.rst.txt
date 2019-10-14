@@ -54,7 +54,7 @@ Genet Med., 2017 <https://www.ncbi.nlm.nih.gov/pubmed/28492532>`__;
 2016 <https://www.ncbi.nlm.nih.gov/pubmed/27153395>`__; `Amendola et
 al., Am J Hum Genet.,
 2016 <https://www.ncbi.nlm.nih.gov/pubmed/27181684>`__). See also
-`Related work <https://github.com/sigven/cpsr#related-work>`__ below).
+`Related work <https://github.com/sigven/cpsr#related-work>`__
 
 Cancer predisposition genes
 '''''''''''''''''''''''''''
@@ -62,7 +62,7 @@ Cancer predisposition genes
 The cancer predisposition report can show variants found in a number of
 well-known cancer predisposition genes, and the specific set of genes
 can be customized by the user by choosing any of the following **virtual
-gene panels (0 - 35)**:
+gene panels (0 - 36)**:
 
 -  **Panel 0 (default)** is a comprehensive gene panel assembled through
    known sources on cancer predisposition:
@@ -73,16 +73,16 @@ gene panels (0 - 35)**:
    -  A list of 107 protein-coding genes that has been manually curated
       in COSMIC’s `Cancer Gene Census
       v90 <https://cancer.sanger.ac.uk/census>`__,
-   -  A list of 148 protein-coding genes established by experts within
+   -  A list of 152 protein-coding genes established by experts within
       the Norwegian Cancer Genomics Consortium
       (http://cancergenomics.no)
 
    The combination of the three sources resulted in a non-redundant set
-   of `209 protein-coding
+   of `213 protein-coding
    genes <https://github.com/sigven/cpsr/blob/master/predisposition.md>`__
    of relevance for predisposition to tumor development.
 
-   -  **Panels 1 - 35** are panels for inherited cancer syndromes and
+   -  **Panels 1 - 36** are panels for inherited cancer syndromes and
       cancer predisposition assembled within the `Genomics England
       PanelApp <https://panelapp.genomicsengland.co.uk/>`__:
 
@@ -151,11 +151,13 @@ gene panels (0 - 35)**:
          predisposition <https://panelapp.genomicsengland.co.uk/panels/600/>`__
       -  `32 = Sarcoma cancer
          susceptibility <https://panelapp.genomicsengland.co.uk/panels/217/>`__
-      -  `33 = Thyroid cancer pertinent cancer
+      -  `33 = Sarcoma
+         susceptibility <https://panelapp.genomicsengland.co.uk/panels/734/>`__
+      -  `34 = Thyroid cancer pertinent cancer
          susceptibility <https://panelapp.genomicsengland.co.uk/panels/421/>`__
-      -  `34 = Tumour predisposition - childhood
+      -  `35 = Tumour predisposition - childhood
          onset <https://panelapp.genomicsengland.co.uk/panels/243/>`__
-      -  `35 = Upper gastrointestinal cancer pertinent cancer
+      -  `36 = Upper gastrointestinal cancer pertinent cancer
          susceptibility <https://panelapp.genomicsengland.co.uk/panels/273/>`__
 
 Example report

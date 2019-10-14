@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Getting started &mdash; Cancer Predisposition Sequencing Reporter 0.5.0 documentation</title>
+  <title>Getting started &mdash; Cancer Predisposition Sequencing Reporter 0.5.1 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Cancer Predisposition Sequencing Reporter 0.5.0 documentation" href="index.html"/>
+    <link rel="top" title="Cancer Predisposition Sequencing Reporter 0.5.1 documentation" href="index.html"/>
         <link rel="next" title="CPSR annotation resources" href="annotation_resources.html"/>
         <link rel="prev" title="About" href="about.html"/> 
 
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.5.0
+                0.5.1
               </div>
             
           
@@ -192,19 +192,19 @@ X</a></li>
 <div class="section" id="step-2-download-run-script-data-bundle-and-pull-docker-image">
 <h2>STEP 2: Download run script/data bundle, and pull Docker image<a class="headerlink" href="#step-2-download-run-script-data-bundle-and-pull-docker-image" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic">
-<li><p class="first">Download and unpack the latest <a class="reference external" href="https://github.com/sigven/cpsr/releases/tag/v0.5.0">CPSR release
-(0.5.0)</a></p>
+<li><p class="first">Download and unpack the latest <a class="reference external" href="https://github.com/sigven/cpsr/releases/tag/v0.5.1">CPSR release
+(0.5.1)</a></p>
 </li>
-<li><p class="first">Pull the latest PCGR Docker image (<em>0.8.2</em>):
-<code class="docutils literal"><span class="pre">docker</span> <span class="pre">pull</span> <span class="pre">sigven/pcgr:0.8.2</span></code></p>
+<li><p class="first">Pull the latest PCGR Docker image (<em>0.8.3</em>):
+<code class="docutils literal"><span class="pre">docker</span> <span class="pre">pull</span> <span class="pre">sigven/pcgr:0.8.3</span></code></p>
 </li>
 <li><p class="first">Download and unpack the latest PCGR data bundles</p>
 <ul class="simple">
-<li><a class="reference external" href="https://drive.google.com/open?id=1cBwhrE1XtzSRFXVz-7HBeswFSTlbYONu">grch37 data bundle -
-20190927</a>
+<li><a class="reference external" href="https://drive.google.com/open?id=17DUuy4Z_zid6YIvT8SSYqVzrpzZcoS1i">grch37 data bundle -
+20191013</a>
 (approx 16Gb)</li>
-<li><a class="reference external" href="https://drive.google.com/open?id=1dUFBjWv5Uohov4ELC-FBLdtmHsiDeT1Z">grch38 data bundle -
-20190927</a>
+<li><a class="reference external" href="https://drive.google.com/open?id=1tuKOmExGRCwte4rrP7yKogCxnq6I4fiH">grch38 data bundle -
+20191013</a>
 (approx 17Gb)</li>
 <li><em>Unpacking</em>:
 <code class="docutils literal"><span class="pre">gzip</span> <span class="pre">-dc</span> <span class="pre">pcgr.databundle.grch37.YYYYMMDD.tgz</span> <span class="pre">|</span> <span class="pre">tar</span> <span class="pre">xvf</span> <span class="pre">-</span></code></li>
@@ -253,7 +253,7 @@ Cancer Predisposition Sequencing Reporter (CPSR) - report of cancer-predisposing
 
 positional arguments:
   query_vcf             VCF input file with germline query variants (SNVs/InDels).
-  pcgr_base_dir         Directory that contains the PCGR data bundle directory, e.g. ~/pcgr-0.8.2
+  pcgr_base_dir         Directory that contains the PCGR data bundle directory, e.g. ~/pcgr-0.8.3
   output_dir            Output directory
   {grch37,grch38}       Genome assembly build: grch37 or grch38
   virtual_panel_id      Identifier for choice of virtual cancer predisposition gene panels,
@@ -289,9 +289,10 @@ positional arguments:
                     30 = Renal cancer pertinent cancer susceptibility (Genomics England PanelApp)
                     31 = Rhabdoid tumour predisposition (Genomics England PanelApp)
                     32 = Sarcoma cancer susceptibility (Genomics England PanelApp)
-                    33 = Thyroid cancer pertinent cancer susceptibility (Genomics England PanelApp)
-                    34 = Tumour predisposition - childhood onset (Genomics England PanelApp)
-                    35 = Upper gastrointestinal cancer pertinent cancer susceptibility (Genomics England PanelApp)
+                    33 = Sarcoma susceptibility (Genomics England PanelApApp)
+                    34 = Thyroid cancer pertinent cancer susceptibility (Genomics England PanelApp)
+                    35 = Tumour predisposition - childhood onset (Genomics England PanelApp)
+                    36 = Upper gastrointestinal cancer pertinent cancer susceptibility (Genomics England PanelApp)
 
   configuration_file    Configuration file (TOML format)
   sample_id             Sample identifier - prefix for output files
@@ -317,10 +318,10 @@ with a basic configuration file (<em>cpsr.toml</em>).</p>
 cancer
 susceptibility</a>
 virtual gene panel, can be performed through the following command:</p>
-<p><code class="docutils literal"><span class="pre">python</span> <span class="pre">~/cpsr-0.5.0/cpsr.py</span> <span class="pre">~/cpsr-0.5.0/example.vcf.gz</span></code>
-<code class="docutils literal"><span class="pre">~/pcgr-0.8.2</span> <span class="pre">~/cpsr-0.5.0</span> <span class="pre">grch37</span> <span class="pre">1</span> <span class="pre">~/cpsr-0.5.0/cpsr.toml</span> <span class="pre">example</span></code></p>
+<p><code class="docutils literal"><span class="pre">python</span> <span class="pre">~/cpsr-0.5.1/cpsr.py</span> <span class="pre">~/cpsr-0.5.1/example.vcf.gz</span></code>
+<code class="docutils literal"><span class="pre">~/pcgr-0.8.3</span> <span class="pre">~/cpsr-0.5.1</span> <span class="pre">grch37</span> <span class="pre">1</span> <span class="pre">~/cpsr-0.5.1/cpsr.toml</span> <span class="pre">example</span></code></p>
 <p>Note that the example command also refers to the PCGR directory
-(<em>pcgr-0.8.2</em>), which contains the data bundle that are necessary for
+(<em>pcgr-0.8.3</em>), which contains the data bundle that are necessary for
 both <em>PCGR</em> and <em>CPSR</em>.</p>
 <p>The command above will run the Docker-based <em>cpsr</em> workflow and produce
 the following output files in the <em>cpsr</em> folder:</p>
@@ -382,7 +383,7 @@ important annotations of tier-structured SNVs/InDels</li>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.5.0',
+            VERSION:'0.5.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

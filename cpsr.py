@@ -12,13 +12,13 @@ import platform
 import toml
 from argparse import RawTextHelpFormatter
 
-pcgr_version = '0.8.2'
-cpsr_version = '0.5.0'
-db_version = 'PCGR_DB_VERSION = 20190927'
-vep_version = '97'
+pcgr_version = '0.8.3'
+cpsr_version = '0.5.1'
+db_version = 'PCGR_DB_VERSION = 20191013'
+vep_version = '98'
 
 gen_england_panels = {
-		0: "CPSR cancer predisposition panel (n = 209, TCGA + Cancer Gene Census + NCGC)",
+		0: "CPSR exploratory cancer predisposition panel (n = 213, TCGA + Cancer Gene Census + NCGC)",
       1: "Adult solid tumours cancer susceptibility (Genomics England PanelApp)",
       2: "Adult solid tumours for rare disease (Genomics England PanelApp)",
       3: "Bladder cancer pertinent cancer susceptibility (Genomics England PanelApp)",
@@ -51,16 +51,17 @@ gen_england_panels = {
       30: "Renal cancer pertinent cancer susceptibility (Genomics England PanelApp)",
       31: "Rhabdoid tumour predisposition (Genomics England PanelApp)",
       32: "Sarcoma cancer susceptibility (Genomics England PanelApp)",
-      33: "Thyroid cancer pertinent cancer susceptibility (Genomics England PanelApp)",
-      34: "Tumour predisposition - childhood onset (Genomics England PanelApp)",
-      35: "Upper gastrointestinal cancer pertinent cancer susceptibility (Genomics England PanelApp)"
+      33: "Sarcoma susceptbility (Genomics England PanelApp)",
+      34: "Thyroid cancer pertinent cancer susceptibility (Genomics England PanelApp)",
+      35: "Tumour predisposition - childhood onset (Genomics England PanelApp)",
+      36: "Upper gastrointestinal cancer pertinent cancer susceptibility (Genomics England PanelApp)"
 	}
 
 global vep_assembly
 
 def __main__():
 
-   panels = "0 = CPSR cancer predisposition panel (n = 209, TCGA + Cancer Gene Census + NCGC)\n"
+   panels = "0 = CPSR exploratory cancer predisposition panel (n = 213, TCGA + Cancer Gene Census + NCGC)\n"
    panels = panels + "1 = Adult solid tumours cancer susceptibility (Genomics England PanelApp)\n"
    panels = panels + "2 = Adult solid tumours for rare disease (Genomics England PanelApp)\n"
    panels = panels + "3 = Bladder cancer pertinent cancer susceptibility (Genomics England PanelApp)\n"
@@ -93,12 +94,13 @@ def __main__():
    panels = panels + "30 = Renal cancer pertinent cancer susceptibility (Genomics England PanelApp)\n"
    panels = panels + "31 = Rhabdoid tumour predisposition (Genomics England PanelApp)\n"
    panels = panels + "32 = Sarcoma cancer susceptibility (Genomics England PanelApp)\n"
-   panels = panels + "33 = Thyroid cancer pertinent cancer susceptibility (Genomics England PanelApp)\n"
-   panels = panels + "34 = Tumour predisposition - childhood onset (Genomics England PanelApp)\n"
-   panels = panels + "35 = Upper gastrointestinal cancer pertinent cancer susceptibility (Genomics England PanelApp)\n\n"
+   panels = panels + "33 = Sarcoma susceptibility (Genomics England PanelApp)\n"
+   panels = panels + "34 = Thyroid cancer pertinent cancer susceptibility (Genomics England PanelApp)\n"
+   panels = panels + "35 = Tumour predisposition - childhood onset (Genomics England PanelApp)\n"
+   panels = panels + "36 = Upper gastrointestinal cancer pertinent cancer susceptibility (Genomics England PanelApp)\n\n"
    
    #parser = ArgumentParser(description='test', formatter_class=RawTextHelpFormatter)
-   parser = argparse.ArgumentParser(description='Cancer Predisposition Sequencing Reporter (CPSR) - report of cancer-predisposing germline variants',formatter_class=RawTextHelpFormatter, usage="%(prog)s [options] <QUERY_VCF> <PCGR_DIR> <OUTPUT_DIR> <GENOME_ASSEMBLY> <PANEL_IDENTIFIER> <CONFIG_FILE> <SAMPLE_ID>")
+   parser = argparse.ArgumentParser(description='Cancer Predisposition Sequencing Reporter (CPSR) - report of cancer-predisposing germline variants',formatter_class=RawTextHelpFormatter, usage="%(prog)s -h [options] <QUERY_VCF> <PCGR_DIR> <OUTPUT_DIR> <GENOME_ASSEMBLY> <PANEL_IDENTIFIER> <CONFIG_FILE> <SAMPLE_ID>")
    parser.add_argument('--force_overwrite', action = "store_true", help='By default, the script will fail with an error if any output file already exists.\n You can force the overwrite of existing result files by using this flag')
    parser.add_argument('--version', action='version', version='%(prog)s ' + str(cpsr_version))
    parser.add_argument('--basic',action="store_true",help="Run functional variant annotation on VCF through VEP/vcfanno, omit report generation (STEP 4)")
@@ -108,7 +110,7 @@ def __main__():
    parser.add_argument('--no-docker', action='store_true', dest='no_docker', default=False, help='Run the CPSR workflow in a non-Docker mode (see install_no_docker/ folder for instructions')
    parser.add_argument('--debug',action='store_true',default=False, help='Print full docker commands to log')
    parser.add_argument('query_vcf', help='VCF input file with germline query variants (SNVs/InDels).')
-   parser.add_argument('pcgr_base_dir',help='Directory that contains the PCGR data bundle directory, e.g. ~/pcgr-0.8.2')
+   parser.add_argument('pcgr_base_dir',help='Directory that contains the PCGR data bundle directory, e.g. ~/pcgr-0.8.3')
    parser.add_argument('output_dir',help='Output directory')
    parser.add_argument('genome_assembly',choices = ['grch37','grch38'], help='Genome assembly build: grch37 or grch38')
    parser.add_argument('virtual_panel_id', type=int, default=0, help="Identifier for choice of virtual cancer predisposition gene panels,\n choose any between the following identifiers:\n" + str(panels))
@@ -438,11 +440,15 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
 
    check_subprocess(docker_command_run1.replace("-u " + str(uid), "") + 'mkdir -p ' + output_dir + docker_command_run_end)
 
+   diagnostic_grade = "OFF"
+   if diagnostic_grade_only == 1:
+      diagnostic_grade = "ON"
+
    logger = getlogger("cpsr-start")
    logger.info("--- Cancer Predisposition Sequencing Reporter workflow ----")
    logger.info("Sample name: " + str(sample_id))
    logger.info("Virtual gene panel: " + str(gen_england_panels[virtual_panel_id]))
-   logger.info("Diagnostic-grade genes in virtual panels: " + str(diagnostic_grade_only))
+   logger.info("Diagnostic-grade genes in virtual panels: " + str(diagnostic_grade))
    logger.info("Genome assembly: " + str(genome_assembly))
    print()
 

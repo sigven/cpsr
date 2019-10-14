@@ -95,6 +95,7 @@ following:
 -  CONSEQUENCE - VEP consequence (primary transcript)
 -  HGVSc - from VEP
 -  HGVSp - from VEP
+-  NCBI_REFSEQ - Transcript accession ID(s) (NCBI RefSeq)
 -  ONCOGENE - Known proto-oncogene
 -  TUMOR_SUPPRESSOR - known tumor suppressor gene
 -  PREDICTED_EFFECT - Effect predictions from dbNSFP

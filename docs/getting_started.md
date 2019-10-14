@@ -21,11 +21,11 @@ An installation of Python (version _3.6_) is required to run CPSR. Check that Py
 
 ### STEP 2: Download run script/data bundle, and pull Docker image
 
-1. Download and unpack the latest [CPSR release (0.5.0)](https://github.com/sigven/cpsr/releases/tag/v0.5.0)
-2. Pull the latest PCGR Docker image (*0.8.2*): `docker pull sigven/pcgr:0.8.2`
+1. Download and unpack the latest [CPSR release (0.5.1)](https://github.com/sigven/cpsr/releases/tag/v0.5.1)
+2. Pull the latest PCGR Docker image (*0.8.3*): `docker pull sigven/pcgr:0.8.3`
 3. Download and unpack the latest PCGR data bundles
-	* [grch37 data bundle - 20190927](https://drive.google.com/open?id=1cBwhrE1XtzSRFXVz-7HBeswFSTlbYONu) (approx 16Gb)
-	* [grch38 data bundle - 20190927](https://drive.google.com/open?id=1dUFBjWv5Uohov4ELC-FBLdtmHsiDeT1Z) (approx 17Gb)
+	* [grch37 data bundle - 20191013](https://drive.google.com/open?id=17DUuy4Z_zid6YIvT8SSYqVzrpzZcoS1i) (approx 16Gb)
+	* [grch38 data bundle - 20191013](https://drive.google.com/open?id=1tuKOmExGRCwte4rrP7yKogCxnq6I4fiH) (approx 17Gb)
 	* *Unpacking*: `gzip -dc pcgr.databundle.grch37.YYYYMMDD.tgz | tar xvf -`
 
  	A _data/_ folder should now have been produced
@@ -62,7 +62,7 @@ See section on [Input](input.html) for more details wrt. default configuration.
 
 	positional arguments:
 	  query_vcf             VCF input file with germline query variants (SNVs/InDels).
-	  pcgr_base_dir         Directory that contains the PCGR data bundle directory, e.g. ~/pcgr-0.8.2
+	  pcgr_base_dir         Directory that contains the PCGR data bundle directory, e.g. ~/pcgr-0.8.3
 	  output_dir            Output directory
 	  {grch37,grch38}       Genome assembly build: grch37 or grch38
 	  virtual_panel_id      Identifier for choice of virtual cancer predisposition gene panels,
@@ -98,9 +98,10 @@ See section on [Input](input.html) for more details wrt. default configuration.
 					    30 = Renal cancer pertinent cancer susceptibility (Genomics England PanelApp)
 					    31 = Rhabdoid tumour predisposition (Genomics England PanelApp)
 					    32 = Sarcoma cancer susceptibility (Genomics England PanelApp)
-					    33 = Thyroid cancer pertinent cancer susceptibility (Genomics England PanelApp)
-					    34 = Tumour predisposition - childhood onset (Genomics England PanelApp)
-					    35 = Upper gastrointestinal cancer pertinent cancer susceptibility (Genomics England PanelApp)
+					    33 = Sarcoma susceptibility (Genomics England PanelApApp)
+					    34 = Thyroid cancer pertinent cancer susceptibility (Genomics England PanelApp)
+					    35 = Tumour predisposition - childhood onset (Genomics England PanelApp)
+					    36 = Upper gastrointestinal cancer pertinent cancer susceptibility (Genomics England PanelApp)
 
 	  configuration_file    Configuration file (TOML format)
 	  sample_id             Sample identifier - prefix for output files
@@ -124,10 +125,10 @@ The *cpsr* software bundle contains an example VCF file. It also comes with a ba
 
 Report generation with the example VCF, using the [Adult solid tumours cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/245/) virtual gene panel, can be performed through the following command:
 
-`python ~/cpsr-0.5.0/cpsr.py ~/cpsr-0.5.0/example.vcf.gz`
-` ~/pcgr-0.8.2 ~/cpsr-0.5.0 grch37 1 ~/cpsr-0.5.0/cpsr.toml example`
+`python ~/cpsr-0.5.1/cpsr.py ~/cpsr-0.5.1/example.vcf.gz`
+` ~/pcgr-0.8.3 ~/cpsr-0.5.1 grch37 1 ~/cpsr-0.5.1/cpsr.toml example`
 
-Note that the example command also refers to the PCGR directory (*pcgr-0.8.2*), which contains the data bundle that are necessary for both *PCGR* and *CPSR*.
+Note that the example command also refers to the PCGR directory (*pcgr-0.8.3*), which contains the data bundle that are necessary for both *PCGR* and *CPSR*.
 
 The command above will run the Docker-based *cpsr* workflow and produce the following output files in the _cpsr_ folder:
 

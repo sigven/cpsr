@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>CHANGELOG &mdash; Cancer Predisposition Sequencing Reporter 0.5.0 documentation</title>
+  <title>CHANGELOG &mdash; Cancer Predisposition Sequencing Reporter 0.5.1 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Cancer Predisposition Sequencing Reporter 0.5.0 documentation" href="index.html"/>
+    <link rel="top" title="Cancer Predisposition Sequencing Reporter 0.5.1 documentation" href="index.html"/>
         <link rel="prev" title="Variant classification (ACMG)" href="variant_classification.html"/> 
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.5.0
+                0.5.1
               </div>
             
           
@@ -94,8 +94,12 @@
 <li class="toctree-l1"><a class="reference internal" href="output.html">Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="variant_classification.html">Variant classification (ACMG)</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">CHANGELOG</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#september-23rd-2019">0.5.0 - September 23rd 2019</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#october-14th-2019">0.5.1 - October 14th 2019</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#fixed">Fixed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#september-23rd-2019">0.5.0 - September 23rd 2019</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#fixed-1">Fixed</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#added">Added</a></li>
 </ul>
 </li>
@@ -147,10 +151,22 @@
             
   <div class="section" id="changelog">
 <h1>CHANGELOG<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="september-23rd-2019">
-<h2>0.5.0 - September 23rd 2019<a class="headerlink" href="#september-23rd-2019" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="october-14th-2019">
+<h2>0.5.1 - October 14th 2019<a class="headerlink" href="#october-14th-2019" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="fixed">
 <h3>Fixed<a class="headerlink" href="#fixed" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Bug in cpsr_validate_input.py <a class="reference external" href="https://github.com/sigven/cpsr/issues/18">GitHub
+Issue</a></li>
+<li>Bug when there are zero variants with a ‘PASS’ status in VCF -
+omitting report generation</li>
+</ul>
+</div>
+</div>
+<div class="section" id="september-23rd-2019">
+<h2>0.5.0 - September 23rd 2019<a class="headerlink" href="#september-23rd-2019" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="fixed-1">
+<span id="id1"></span><h3>Fixed<a class="headerlink" href="#fixed-1" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Bug in implementation of ACMG criteria; genes without a known
 loss-of-function mechanism were handled inappropriately</li>
@@ -214,7 +230,7 @@ query VCF that overlaps with existing germline biomarkers (CIViC)</li>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.5.0',
+            VERSION:'0.5.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

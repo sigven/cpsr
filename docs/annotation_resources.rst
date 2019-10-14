@@ -4,7 +4,7 @@ CPSR annotation resources
 Basic variant consequence annotation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
--  `VEP v97.3 <http://www.ensembl.org/info/docs/tools/vep/index.html>`__
+-  `VEP v98.2 <http://www.ensembl.org/info/docs/tools/vep/index.html>`__
    - Variant Effect Predictor (`GENCODE
    v31 <https://www.gencodegenes.org/human/>`__ as gene reference
    database (v19 for grch37))
@@ -29,9 +29,9 @@ Variant databases of clinical utility
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 -  `ClinVar <http://www.ncbi.nlm.nih.gov/clinvar/>`__ - database of
-   clinically related variants (September 2019)
+   clinically related variants (October 2019)
 -  `CIViC <https://civicdb.org>`__ - clinical interpretations of
-   variants in cancer (September 27th 2019)
+   variants in cancer (October 13th 2019)
 
 Protein domains/functional features
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -45,11 +45,11 @@ Protein domains/functional features
 Cancer gene knowledge bases
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
--  `CancerMine <https://zenodo.org/record/3386384#.XYiwdPwzbUI>`__ -
+-  `CancerMine <https://zenodo.org/record/3472758#.XZjCqeczaL4>`__ -
    Literature-mined database of tumor suppressor genes/proto-oncogenes
-   (v16, September 2019)
+   (v17, October 2019)
 -  `GenomicsEngland PanelApp <https://panelapp.genomicsengland.co.uk>`__
-   - cancer phenotype panels as of September 27th 2019
+   - cancer phenotype panels as of October 11th 2019
 
 Phenotype ontologies
 ~~~~~~~~~~~~~~~~~~~~
