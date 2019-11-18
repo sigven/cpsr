@@ -6,18 +6,19 @@ The *Cancer Predisposition Sequencing Reporter (CPSR)* is a computational workfl
 
 *CPSR* accepts a query file with raw germline variant calls encoded in the [VCF](https://samtools.github.io/hts-specs/VCFv4.2.pdf) format (i.e. analyzing SNVs/InDels). Furthermore, through the use several different _virtual cancer predisposition gene panels_ harvested from the [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk/), the user can flexibly put a restriction on which genes and findings are displayed in the cancer predisposition report.
 
-The software performs extensive variant annotation on the selected geneset and produces an interactive HTML report, in which the user can investigate four types of variants:
+The software performs extensive variant annotation on the selected geneset and produces an interactive HTML report, in which the user can investigate:
 
-1. __ClinVar variants__ - pre-classified variants according to a five-level tier scheme (Pathogenic to Benign)
-2. __Non-ClinVar variants__ - classified by CPSR according to a five-level tier scheme (Pathogenic to Benign)
-3. __Secondary findings (optional)__ - pathogenic ClinVar variants in the ACMG recommended list for reporting of incidental findings
-4. __GWAS hits (optional)__ - variants overlapping with previously identified hits in genome-wide association studies (GWAS) of cancer phenotypes (i.e. low to moderate risk conferring alleles), using [NHGRI-EBI Catalog of published genome-wide association studies](https://www.ebi.ac.uk/gwas/) as the underlying source.
+* __ClinVar variants__ - pre-classified variants according to a five-level tier scheme in ClinVar (Pathogenic to Benign)
+* __Non-ClinVar variants__ - classified by CPSR through ACMG criteria (variant frequency levels and functional effects) into to a five-level tier scheme (Pathogenic to Benign)
+* __Genomic biomarkers__ - cancer predisposition variants with reported implications for prognosis, diagnosis or therapeutic regimens
+* __Secondary findings (optional)__ - pathogenic ClinVar variants in the [ACMG recommended list for reporting of incidental findings](https://www.ncbi.nlm.nih.gov/clinvar/docs/acmg/)
+* __GWAS hits (optional)__ - variants overlapping with previously identified hits in genome-wide association studies (GWAS) of cancer phenotypes (i.e. low to moderate risk conferring alleles), using [NHGRI-EBI Catalog of published genome-wide association studies](https://www.ebi.ac.uk/gwas/) as the underlying source.
 
 The variant sets can be interactively explored and filtered further through different types of filters (phenotypes, genes, variant consequences, population MAF etc.). Importantly, the unclassified non-ClinVar variants are assigned a *pathogenicity level* based on the aggregation of scores according to previously established [ACMG criteria](https://www.ncbi.nlm.nih.gov/pubmed/25741868). The ACMG criteria includes cancer-specific criteria, as outlined and specified in several previous studies ([Huang et al., *Cell*, 2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052); [Nykamp et al., *Genet Med.*, 2017](https://www.ncbi.nlm.nih.gov/pubmed/28492532); [Maxwell et al., *Am J Hum Genet.*, 2016](https://www.ncbi.nlm.nih.gov/pubmed/27153395); [Amendola et al., *Am J Hum Genet.*,  2016](https://www.ncbi.nlm.nih.gov/pubmed/27181684)). See also [*Related work*](https://github.com/sigven/cpsr#related-work)
 
 ##### Cancer predisposition genes
 
-The cancer predisposition report can show variants found in a number of well-known cancer predisposition genes, and the specific set of genes can be customized by the user by choosing any of the following __virtual gene panels (0 - 36)__:
+The cancer predisposition report can show variants found in a number of well-known cancer predisposition genes, and the specific set of genes can be customized by the user by choosing any of the following __virtual gene panels (0 - 38)__:
 
   * **Panel 0 (default)** is a comprehensive gene panel assembled through known sources on cancer predisposition:
 	* A list of 152 genes that were curated and established within TCGA’s pan-cancer study ([Huang et al., *Cell*, 2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052))
@@ -26,7 +27,7 @@ The cancer predisposition report can show variants found in a number of well-kno
 
 	The combination of the three sources resulted in a non-redundant set of [213 protein-coding genes](https://github.com/sigven/cpsr/blob/master/predisposition.md) of relevance for predisposition to tumor development.
 
-	* **Panels 1 - 36** are panels for inherited cancer syndromes and cancer predisposition assembled within the [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk/):
+	* **Panels 1 - 38** are panels for inherited cancer syndromes and cancer predisposition assembled within the [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk/):
    	  * [1 = Adult solid tumours cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/245/)
    	  * [2 = Adult solid tumours for rare disease](https://panelapp.genomicsengland.co.uk/panels/391/)
    	  * [3 = Bladder cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/208/)
@@ -41,28 +42,30 @@ The cancer predisposition report can show variants found in a number of well-kno
    	  * [12 = Familial prostate cancer](https://panelapp.genomicsengland.co.uk/panels/318/)
    	  * [13 = Familial rhabdomyosarcoma](https://panelapp.genomicsengland.co.uk/panels/290/)
    	  * [14 = GI tract tumours](https://panelapp.genomicsengland.co.uk/panels/254/)
-   	  * [15 = Haematological malignancies cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/59/)
-   	  * [16 = Head and neck cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/115/)
-   	  * [17 = Inherited non-medullary thyroid cancer](https://panelapp.genomicsengland.co.uk/panels/171/)
-   	  * [18 = Inherited ovarian cancer (without breast cancer)](https://panelapp.genomicsengland.co.uk/panels/143/)
-   	  * [19 = Inherited pancreatic cancer](https://panelapp.genomicsengland.co.uk/panels/524/)
-   	  * [20 = Inherited renal cancer](https://panelapp.genomicsengland.co.uk/panels/521/)
-   	  * [21 = Inherited phaeochromocytoma and paraganglioma](https://panelapp.genomicsengland.co.uk/panels/97/)
-   	  * [22 = Melanoma pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/133/)
-   	  * [23 = Multiple endocrine tumours](https://panelapp.genomicsengland.co.uk/panels/36/)
-   	  * [24 = Multiple monogenic benign skin tumours](https://panelapp.genomicsengland.co.uk/panels/558/)
-   	  * [25 = Neuroendocrine cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/183/)
-   	  * [26 - Neurofibromatosis Type 1](https://panelapp.genomicsengland.co.uk/panels/255/)
-   	  * [27 = Ovarian cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/117/)
-   	  * [28 = Parathyroid Cancer](https://panelapp.genomicsengland.co.uk/panels/86/)
-   	  * [29 = Prostate cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/17/)
-   	  * [30 = Renal cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/154/)
-   	  * [31 = Rhabdoid tumour predisposition](https://panelapp.genomicsengland.co.uk/panels/600/)
-   	  * [32 = Sarcoma cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/217/)
-	  * [33 = Sarcoma susceptibility](https://panelapp.genomicsengland.co.uk/panels/734/)
- 	  * [34 = Thyroid cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/421/)
- 	  * [35 = Tumour predisposition - childhood onset](https://panelapp.genomicsengland.co.uk/panels/243/)
- 	  * [36 = Upper gastrointestinal cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/273/)
+	  * [15 = Genodermatoses with malignancies](https://panelapp.genomicsengland.co.uk/panels/201/)
+   	  * [16 = Haematological malignancies cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/59/)
+	  * [17 = Haematological malignancies for rare disease](https://panelapp.genomicsengland.co.uk/panels/407/)
+   	  * [18 = Head and neck cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/115/)
+   	  * [19 = Inherited non-medullary thyroid cancer](https://panelapp.genomicsengland.co.uk/panels/171/)
+   	  * [20 = Inherited ovarian cancer (without breast cancer)](https://panelapp.genomicsengland.co.uk/panels/143/)
+   	  * [21 = Inherited pancreatic cancer](https://panelapp.genomicsengland.co.uk/panels/524/)
+   	  * [22 = Inherited renal cancer](https://panelapp.genomicsengland.co.uk/panels/521/)
+   	  * [23 = Inherited phaeochromocytoma and paraganglioma](https://panelapp.genomicsengland.co.uk/panels/97/)
+   	  * [24 = Melanoma pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/133/)
+   	  * [25 = Multiple endocrine tumours](https://panelapp.genomicsengland.co.uk/panels/36/)
+   	  * [26 = Multiple monogenic benign skin tumours](https://panelapp.genomicsengland.co.uk/panels/558/)
+   	  * [27 = Neuroendocrine cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/183/)
+   	  * [28 - Neurofibromatosis Type 1](https://panelapp.genomicsengland.co.uk/panels/255/)
+   	  * [29 = Ovarian cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/117/)
+   	  * [30 = Parathyroid Cancer](https://panelapp.genomicsengland.co.uk/panels/86/)
+   	  * [31 = Prostate cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/17/)
+   	  * [32 = Renal cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/154/)
+   	  * [33 = Rhabdoid tumour predisposition](https://panelapp.genomicsengland.co.uk/panels/600/)
+   	  * [34 = Sarcoma cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/217/)
+	  * [35 = Sarcoma susceptibility](https://panelapp.genomicsengland.co.uk/panels/734/)
+ 	  * [36 = Thyroid cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/421/)
+ 	  * [37 = Tumour predisposition - childhood onset](https://panelapp.genomicsengland.co.uk/panels/243/)
+ 	  * [38 = Upper gastrointestinal cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/273/)
 
 
 ### Example report

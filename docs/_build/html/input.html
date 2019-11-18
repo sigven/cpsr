@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Input &mdash; Cancer Predisposition Sequencing Reporter 0.5.1 documentation</title>
+  <title>Input &mdash; Cancer Predisposition Sequencing Reporter 0.5.2 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Cancer Predisposition Sequencing Reporter 0.5.1 documentation" href="index.html"/>
+    <link rel="top" title="Cancer Predisposition Sequencing Reporter 0.5.2 documentation" href="index.html"/>
         <link rel="next" title="Output" href="output.html"/>
         <link rel="prev" title="CPSR annotation resources" href="annotation_resources.html"/> 
 
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.5.1
+                0.5.2
               </div>
             
           
@@ -97,7 +97,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="output.html">Output</a></li>
-<li class="toctree-l1"><a class="reference internal" href="variant_classification.html">Variant classification (ACMG)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="variant_classification.html">Variant classification (ACMG/AMP)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CHANGELOG.html">CHANGELOG</a></li>
 </ul>
 
@@ -183,7 +183,7 @@ file, are shown below:</p>
 <span class="p">[</span><span class="n">maf_limits</span><span class="p">]</span>
 <span class="c1">## choose upper MAF threshold in gnomAD&#39;s superpopulation (global) for report of unclassified (non-ClinVar)</span>
 <span class="c1">## variants</span>
-<span class="n">maf_gnomad</span> <span class="o">=</span> <span class="mf">0.05</span>
+<span class="n">maf_gnomad</span> <span class="o">=</span> <span class="mf">0.9</span>
 
 <span class="p">[</span><span class="n">popgen</span><span class="p">]</span>
 <span class="c1">## choose population source in gnomAD (non-cancer subset for use as control), defaults to the global set</span>
@@ -195,7 +195,6 @@ file, are shown below:</p>
 <span class="c1">## &quot;sas&quot; - Sout Asian (15,391 individuals (15,391 WES / 0 WGS))</span>
 <span class="c1">## &quot;nfe&quot; - Non-Finnish European (63,369 individuals (55,860 WES / 7,509 WGS))</span>
 <span class="c1">## &quot;fin&quot; - Finnish (12,897 individuals (11,150 WES / 1,747 WGS))</span>
-<span class="c1">## &quot;oth&quot; - Other (3,234 individuals (2,743 WES / 491 WGS))</span>
 <span class="c1">## &quot;global&quot; - All populations (138,632 individuals (123,136 WES / 15,496 WGS))</span>
 <span class="n">pop_gnomad</span> <span class="o">=</span> <span class="s2">&quot;global&quot;</span>
 
@@ -270,7 +269,7 @@ file, are shown below:</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.5.1',
+            VERSION:'0.5.2',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

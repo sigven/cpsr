@@ -27,7 +27,7 @@ The cancer predisposition sequencing report can be flexibly configured in a TOML
 	[maf_limits]
 	## choose upper MAF threshold in gnomAD's superpopulation (global) for report of unclassified (non-ClinVar)
 	## variants
-	maf_gnomad = 0.05
+	maf_gnomad = 0.9
 
 	[popgen]
 	## choose population source in gnomAD (non-cancer subset for use as control), defaults to the global set
@@ -39,7 +39,6 @@ The cancer predisposition sequencing report can be flexibly configured in a TOML
 	## "sas" - Sout Asian (15,391 individuals (15,391 WES / 0 WGS))
 	## "nfe" - Non-Finnish European (63,369 individuals (55,860 WES / 7,509 WGS))
 	## "fin" - Finnish (12,897 individuals (11,150 WES / 1,747 WGS))
-	## "oth" - Other (3,234 individuals (2,743 WES / 491 WGS))
 	## "global" - All populations (138,632 individuals (123,136 WES / 15,496 WGS))
 	pop_gnomad = "global"
 

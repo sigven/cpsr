@@ -45,16 +45,16 @@ STEP 2: Download run script/data bundle, and pull Docker image
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1. Download and unpack the latest `CPSR release
-   (0.5.1) <https://github.com/sigven/cpsr/releases/tag/v0.5.1>`__
-2. Pull the latest PCGR Docker image (*0.8.3*):
-   ``docker pull sigven/pcgr:0.8.3``
+   (0.5.2) <https://github.com/sigven/cpsr/releases/tag/v0.5.2>`__
+2. Pull the latest PCGR Docker image (*0.8.4*):
+   ``docker pull sigven/pcgr:0.8.4``
 3. Download and unpack the latest PCGR data bundles
 
    -  `grch37 data bundle -
-      20191013 <https://drive.google.com/open?id=17DUuy4Z_zid6YIvT8SSYqVzrpzZcoS1i>`__
+      20191116 <https://drive.google.com/file/d/1TdYagetk-l__aYBsaZJHJvYFStDnIEcq>`__
       (approx 16Gb)
    -  `grch38 data bundle -
-      20191013 <https://drive.google.com/open?id=1tuKOmExGRCwte4rrP7yKogCxnq6I4fiH>`__
+      20191116 <https://drive.google.com/file/d/1wpVqlgY5jBKkQaTAxzgf0rgxKxOEJgj->`__
       (approx 17Gb)
    -  *Unpacking*:
       ``gzip -dc pcgr.databundle.grch37.YYYYMMDD.tgz | tar xvf -``
@@ -101,69 +101,75 @@ STEP 5: Run example
 
 ::
 
-   Run the workflow with **cpsr.py**, which takes the following arguments and options:
-
    Cancer Predisposition Sequencing Reporter (CPSR) - report of cancer-predisposing germline variants
 
    positional arguments:
-     query_vcf             VCF input file with germline query variants (SNVs/InDels).
-     pcgr_base_dir         Directory that contains the PCGR data bundle directory, e.g. ~/pcgr-0.8.3
-     output_dir            Output directory
-     {grch37,grch38}       Genome assembly build: grch37 or grch38
-     virtual_panel_id      Identifier for choice of virtual cancer predisposition gene panels,
-                       choose any between the following identifiers:
-                       0 = CPSR cancer predisposition panel (n = 209, TCGA + Cancer Gene Census + NCGC)
-                       1 = Adult solid tumours cancer susceptibility (Genomics England PanelApp)
-                       2 = Adult solid tumours for rare disease (Genomics England PanelApp)
-                       3 = Bladder cancer pertinent cancer susceptibility (Genomics England PanelApp)
-                       4 = Brain cancer pertinent cancer susceptibility (Genomics England PanelApp)
-                       5 = Breast cancer pertinent cancer susceptibility (Genomics England PanelApp)
-                       6 = Childhood solid tumours cancer susceptibility (Genomics England PanelApp)
-                       7 = Colorectal cancer pertinent cancer susceptibility (Genomics England PanelApp)
-                       8 = Endometrial cancer pertinent cancer susceptibility (Genomics England PanelApp)
-                       9 = Familial Tumours Syndromes of the central & peripheral Nervous system (Genomics England PanelApp)
-                       10 = Familial breast cancer (Genomics England PanelApp)
-                       11 = Familial melanoma (Genomics England PanelApp)
-                       12 = Familial prostate cancer (Genomics England PanelApp)
-                       13 = Familial rhabdomyosarcoma (Genomics England PanelApp)
-                       14 = GI tract tumours (Genomics England PanelApp)
-                       15 = Haematological malignancies cancer susceptibility (Genomics England PanelApp)
-                       16 = Head and neck cancer pertinent cancer susceptibility (Genomics England PanelApp)
-                       17 = Inherited non-medullary thyroid cancer (Genomics England PanelApp)
-                       18 = Inherited ovarian cancer (without breast cancer) (Genomics England PanelApp)
-                       19 = Inherited pancreatic cancer (Genomics England PanelApp)
-                       20 = Inherited renal cancer (Genomics England PanelApp)
-                       21 = Inherited phaeochromocytoma and paraganglioma (Genomics England PanelApp)
-                       22 = Melanoma pertinent cancer susceptibility (Genomics England PanelApp)
-                       23 = Multiple endocrine tumours (Genomics England PanelApp)
-                       24 = Multiple monogenic benign skin tumours (Genomics England PanelApp)25 = Neuroendocrine cancer pertinent cancer susceptibility (Genomics England PanelApp)
-                       26 = Neurofibromatosis Type 1 (Genomics England PanelApp)27 = Ovarian cancer pertinent cancer susceptibility (Genomics England PanelApp)
-                       28 = Parathyroid Cancer (Genomics England PanelApp)
-                       29 = Prostate cancer pertinent cancer susceptibility (Genomics England PanelApp)
-                       30 = Renal cancer pertinent cancer susceptibility (Genomics England PanelApp)
-                       31 = Rhabdoid tumour predisposition (Genomics England PanelApp)
-                       32 = Sarcoma cancer susceptibility (Genomics England PanelApp)
-                       33 = Sarcoma susceptibility (Genomics England PanelApApp)
-                       34 = Thyroid cancer pertinent cancer susceptibility (Genomics England PanelApp)
-                       35 = Tumour predisposition - childhood onset (Genomics England PanelApp)
-                       36 = Upper gastrointestinal cancer pertinent cancer susceptibility (Genomics England PanelApp)
-
-     configuration_file    Configuration file (TOML format)
-     sample_id             Sample identifier - prefix for output files
+   query_vcf             VCF input file with germline query variants (SNVs/InDels).
+   pcgr_base_dir         Directory that contains the PCGR data bundle directory, e.g. ~/pcgr-0.8.4
+   output_dir            Output directory
+   {grch37,grch38}       Genome assembly build: grch37 or grch38
+   configuration_file    Configuration file (TOML format)
+   sample_id             Sample identifier - prefix for output files
 
    optional arguments:
-     -h, --help            show this help message and exit
-     --force_overwrite     By default, the script will fail with an error if any output file already exists.
-                       You can force the overwrite of existing result files by using this flag
-     --version             show program's version number and exit
-     --basic               Run functional variant annotation on VCF through VEP/vcfanno, omit report generation (STEP 4)
-     --no_vcf_validate     Skip validation of input VCF with Ensembl's vcf-validator
-     --diagnostic_grade_only
-                       For Genomics England virtual predisposition panels - consider genes with a GREEN status only
-     --docker-uid DOCKER_USER_ID
-                       Docker user ID. Default is the host system user ID. If you are experiencing permission errors,
-                       try setting this up to root (`--docker-uid root`)
-     --no-docker           Run the CPSR workflow in a non-Docker mode (see install_no_docker/ folder for instructions
+   -h, --help            show this help message and exit
+   --force_overwrite     By default, the script will fail with an error if any output file already exists.
+                   You can force the overwrite of existing result files by using this flag
+   --version             show program's version number and exit
+   --basic               Run functional variant annotation on VCF through VEP/vcfanno, omit report generation (STEP 4)
+   --panel_id VIRTUAL_PANEL_ID
+                   Identifier for choice of predefined virtual cancer predisposition gene panels,
+                   choose any between the following identifiers:
+                   0 = CPSR exploratory cancer predisposition panel (n = 213, TCGA + Cancer Gene Census + NCGC)
+                   1 = Adult solid tumours cancer susceptibility (Genomics England PanelApp)
+                   2 = Adult solid tumours for rare disease (Genomics England PanelApp)
+                   3 = Bladder cancer pertinent cancer susceptibility (Genomics England PanelApp)
+                   4 = Brain cancer pertinent cancer susceptibility (Genomics England PanelApp)
+                   5 = Breast cancer pertinent cancer susceptibility (Genomics England PanelApp)
+                   6 = Childhood solid tumours cancer susceptibility (Genomics England PanelApp)
+                   7 = Colorectal cancer pertinent cancer susceptibility (Genomics England PanelApp)
+                   8 = Endometrial cancer pertinent cancer susceptibility (Genomics England PanelApp)
+                   9 = Familial Tumours Syndromes of the central & peripheral Nervous system (Genomics England PanelApp)
+                   10 = Familial breast cancer (Genomics England PanelApp)
+                   11 = Familial melanoma (Genomics England PanelApp)
+                   12 = Familial prostate cancer (Genomics England PanelApp)
+                   13 = Familial rhabdomyosarcoma (Genomics England PanelApp)
+                   14 = GI tract tumours (Genomics England PanelApp)
+                   15 = Genodermatoses with malignancies (Genomics England PanelApp)
+                   16 = Haematological malignancies cancer susceptibility (Genomics England PanelApp)
+                   17 = Haematological malignancies for rare disease (Genomics England PanelApp)
+                   18 = Head and neck cancer pertinent cancer susceptibility (Genomics England PanelApp)
+                   19 = Inherited non-medullary thyroid cancer (Genomics England PanelApp)
+                   20 = Inherited ovarian cancer (without breast cancer) (Genomics England PanelApp)
+                   21 = Inherited pancreatic cancer (Genomics England PanelApp)
+                   22 = Inherited renal cancer (Genomics England PanelApp)
+                   23 = Inherited phaeochromocytoma and paraganglioma (Genomics England PanelApp)
+                   24 = Melanoma pertinent cancer susceptibility (Genomics England PanelApp)
+                   25 = Multiple endocrine tumours (Genomics England PanelApp)
+                   26 = Multiple monogenic benign skin tumours (Genomics England PanelApp)
+                   27 = Neuroendocrine cancer pertinent cancer susceptibility (Genomics England PanelApp)
+                   28 = Neurofibromatosis Type 1 (Genomics England PanelApp)
+                   29 = Ovarian cancer pertinent cancer susceptibility (Genomics England PanelApp)
+                   30 = Parathyroid Cancer (Genomics England PanelApp)
+                   31 = Prostate cancer pertinent cancer susceptibility (Genomics England PanelApp)
+                   32 = Renal cancer pertinent cancer susceptibility (Genomics England PanelApp)
+                   33 = Rhabdoid tumour predisposition (Genomics England PanelApp)
+                   34 = Sarcoma cancer susceptibility (Genomics England PanelApp)
+                   35 = Sarcoma susceptibility (Genomics England PanelApp)
+                   36 = Thyroid cancer pertinent cancer susceptibility (Genomics England PanelApp)
+                   37 = Tumour predisposition - childhood onset (Genomics England PanelApp)
+                   38 = Upper gastrointestinal cancer pertinent cancer susceptibility (Genomics England PanelApp)
+
+   --custom_panel TARGET_BED
+                   Define custom screening panel through a four-column BED file (chrom,start,stop,genesymbol). Alternative to predefined panels provided with --panel_id
+   --no_vcf_validate     Skip validation of input VCF with Ensembl's vcf-validator
+   --diagnostic_grade_only
+                   For panel_id's 1-38 (Genomics England PanelApp) - consider genes with a GREEN status only
+   --docker-uid DOCKER_USER_ID
+                   Docker user ID. Default is the host system user ID. If you are experiencing permission errors,
+                   try setting this up to root (`--docker-uid root`)
+   --no-docker           Run the CPSR workflow in a non-Docker mode
+   --debug               Print full docker commands to log
 
 The *cpsr* software bundle contains an example VCF file. It also comes
 with a basic configuration file (*cpsr.toml*).
@@ -173,11 +179,11 @@ cancer
 susceptibility <https://panelapp.genomicsengland.co.uk/panels/245/>`__
 virtual gene panel, can be performed through the following command:
 
-``python ~/cpsr-0.5.1/cpsr.py ~/cpsr-0.5.1/example.vcf.gz``
-``~/pcgr-0.8.3 ~/cpsr-0.5.1 grch37 1 ~/cpsr-0.5.1/cpsr.toml example``
+``python ~/cpsr-0.5.2/cpsr.py ~/cpsr-0.5.2/example.vcf.gz``
+``~/pcgr-0.8.4 ~/cpsr-0.5.2 grch37 --panel_id 1 ~/cpsr-0.5.2/cpsr.toml example``
 
 Note that the example command also refers to the PCGR directory
-(*pcgr-0.8.3*), which contains the data bundle that are necessary for
+(*pcgr-0.8.4*), which contains the data bundle that are necessary for
 both *PCGR* and *CPSR*.
 
 The command above will run the Docker-based *cpsr* workflow and produce

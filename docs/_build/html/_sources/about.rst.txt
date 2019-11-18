@@ -26,15 +26,19 @@ displayed in the cancer predisposition report.
 
 The software performs extensive variant annotation on the selected
 geneset and produces an interactive HTML report, in which the user can
-investigate four types of variants:
+investigate:
 
-1. **ClinVar variants** - pre-classified variants according to a
+-  **ClinVar variants** - pre-classified variants according to a
+   five-level tier scheme in ClinVar (Pathogenic to Benign)
+-  **Non-ClinVar variants** - classified by CPSR through ACMG criteria
+   (variant frequency levels and functional effects) into to a
    five-level tier scheme (Pathogenic to Benign)
-2. **Non-ClinVar variants** - classified by CPSR according to a
-   five-level tier scheme (Pathogenic to Benign)
-3. **Secondary findings (optional)** - pathogenic ClinVar variants in
-   the ACMG recommended list for reporting of incidental findings
-4. **GWAS hits (optional)** - variants overlapping with previously
+-  **Genomic biomarkers** - cancer predisposition variants with reported
+   implications for prognosis, diagnosis or therapeutic regimens
+-  **Secondary findings (optional)** - pathogenic ClinVar variants in
+   the `ACMG recommended list for reporting of incidental
+   findings <https://www.ncbi.nlm.nih.gov/clinvar/docs/acmg/>`__
+-  **GWAS hits (optional)** - variants overlapping with previously
    identified hits in genome-wide association studies (GWAS) of cancer
    phenotypes (i.e. low to moderate risk conferring alleles), using
    `NHGRI-EBI Catalog of published genome-wide association
@@ -62,7 +66,7 @@ Cancer predisposition genes
 The cancer predisposition report can show variants found in a number of
 well-known cancer predisposition genes, and the specific set of genes
 can be customized by the user by choosing any of the following **virtual
-gene panels (0 - 36)**:
+gene panels (0 - 38)**:
 
 -  **Panel 0 (default)** is a comprehensive gene panel assembled through
    known sources on cancer predisposition:
@@ -82,7 +86,7 @@ gene panels (0 - 36)**:
    genes <https://github.com/sigven/cpsr/blob/master/predisposition.md>`__
    of relevance for predisposition to tumor development.
 
-   -  **Panels 1 - 36** are panels for inherited cancer syndromes and
+   -  **Panels 1 - 38** are panels for inherited cancer syndromes and
       cancer predisposition assembled within the `Genomics England
       PanelApp <https://panelapp.genomicsengland.co.uk/>`__:
 
@@ -115,49 +119,53 @@ gene panels (0 - 36)**:
          rhabdomyosarcoma <https://panelapp.genomicsengland.co.uk/panels/290/>`__
       -  `14 = GI tract
          tumours <https://panelapp.genomicsengland.co.uk/panels/254/>`__
-      -  `15 = Haematological malignancies cancer
+      -  `15 = Genodermatoses with
+         malignancies <https://panelapp.genomicsengland.co.uk/panels/201/>`__
+      -  `16 = Haematological malignancies cancer
          susceptibility <https://panelapp.genomicsengland.co.uk/panels/59/>`__
-      -  `16 = Head and neck cancer pertinent cancer
+      -  `17 = Haematological malignancies for rare
+         disease <https://panelapp.genomicsengland.co.uk/panels/407/>`__
+      -  `18 = Head and neck cancer pertinent cancer
          susceptibility <https://panelapp.genomicsengland.co.uk/panels/115/>`__
-      -  `17 = Inherited non-medullary thyroid
+      -  `19 = Inherited non-medullary thyroid
          cancer <https://panelapp.genomicsengland.co.uk/panels/171/>`__
-      -  `18 = Inherited ovarian cancer (without breast
+      -  `20 = Inherited ovarian cancer (without breast
          cancer) <https://panelapp.genomicsengland.co.uk/panels/143/>`__
-      -  `19 = Inherited pancreatic
+      -  `21 = Inherited pancreatic
          cancer <https://panelapp.genomicsengland.co.uk/panels/524/>`__
-      -  `20 = Inherited renal
+      -  `22 = Inherited renal
          cancer <https://panelapp.genomicsengland.co.uk/panels/521/>`__
-      -  `21 = Inherited phaeochromocytoma and
+      -  `23 = Inherited phaeochromocytoma and
          paraganglioma <https://panelapp.genomicsengland.co.uk/panels/97/>`__
-      -  `22 = Melanoma pertinent cancer
+      -  `24 = Melanoma pertinent cancer
          susceptibility <https://panelapp.genomicsengland.co.uk/panels/133/>`__
-      -  `23 = Multiple endocrine
+      -  `25 = Multiple endocrine
          tumours <https://panelapp.genomicsengland.co.uk/panels/36/>`__
-      -  `24 = Multiple monogenic benign skin
+      -  `26 = Multiple monogenic benign skin
          tumours <https://panelapp.genomicsengland.co.uk/panels/558/>`__
-      -  `25 = Neuroendocrine cancer pertinent cancer
+      -  `27 = Neuroendocrine cancer pertinent cancer
          susceptibility <https://panelapp.genomicsengland.co.uk/panels/183/>`__
-      -  `26 - Neurofibromatosis Type
+      -  `28 - Neurofibromatosis Type
          1 <https://panelapp.genomicsengland.co.uk/panels/255/>`__
-      -  `27 = Ovarian cancer pertinent cancer
+      -  `29 = Ovarian cancer pertinent cancer
          susceptibility <https://panelapp.genomicsengland.co.uk/panels/117/>`__
-      -  `28 = Parathyroid
+      -  `30 = Parathyroid
          Cancer <https://panelapp.genomicsengland.co.uk/panels/86/>`__
-      -  `29 = Prostate cancer pertinent cancer
+      -  `31 = Prostate cancer pertinent cancer
          susceptibility <https://panelapp.genomicsengland.co.uk/panels/17/>`__
-      -  `30 = Renal cancer pertinent cancer
+      -  `32 = Renal cancer pertinent cancer
          susceptibility <https://panelapp.genomicsengland.co.uk/panels/154/>`__
-      -  `31 = Rhabdoid tumour
+      -  `33 = Rhabdoid tumour
          predisposition <https://panelapp.genomicsengland.co.uk/panels/600/>`__
-      -  `32 = Sarcoma cancer
+      -  `34 = Sarcoma cancer
          susceptibility <https://panelapp.genomicsengland.co.uk/panels/217/>`__
-      -  `33 = Sarcoma
+      -  `35 = Sarcoma
          susceptibility <https://panelapp.genomicsengland.co.uk/panels/734/>`__
-      -  `34 = Thyroid cancer pertinent cancer
+      -  `36 = Thyroid cancer pertinent cancer
          susceptibility <https://panelapp.genomicsengland.co.uk/panels/421/>`__
-      -  `35 = Tumour predisposition - childhood
+      -  `37 = Tumour predisposition - childhood
          onset <https://panelapp.genomicsengland.co.uk/panels/243/>`__
-      -  `36 = Upper gastrointestinal cancer pertinent cancer
+      -  `38 = Upper gastrointestinal cancer pertinent cancer
          susceptibility <https://panelapp.genomicsengland.co.uk/panels/273/>`__
 
 Example report

@@ -1,11 +1,16 @@
-Variant classification (ACMG)
------------------------------
+Variant classification (ACMG/AMP)
+---------------------------------
 
-All coding, non-ClinVar variants in the set of cancer predisposition
-genes have been classified according to a five-level pathogenicity
-scheme (coined CPSR_CLASSIFICATION). The scheme has the same five levels
-as those employed by ClinVar, e.g. pathogenic/likely
-pathogenic/VUS/likely benign/benign.
+All coding, non-ClinVar variants in the set of genes subject to
+screening have been classified according to a standard, five-level
+pathogenicity scheme (coined CPSR_CLASSIFICATION). The scheme has the
+same five levels as those employed by ClinVar, i.e.
+
+-  pathogenic (**P**)
+-  likely pathogenic (**LP**)
+-  variant of uncertain significance (**VUS**)
+-  likely benign (**LB**)
+-  benign (**B**)
 
 The classification performed by CPSR is rule-based, implementing most of
 the ACMG criteria related to variant effect and population frequency,
@@ -18,34 +23,30 @@ cancer predisposition genes (mode of inheritance, loss-of-funcion
 mechanism etc.) is largely harvested from `Maxwell et al., Am J Hum
 Genet, 2016 <https://www.ncbi.nlm.nih.gov/pubmed/27153395>`__.
 
-The ACMG criteria listed below form the basis for the value assigned to
-the CPSR_CLASSIFICATION variable. Specifically, the score in parenthesis
-indicates how much each evidence item contributes to either of the two
-pathogenicity poles (positive values indicate pathogenic support,
-negative values indicate benign support). Evidence score along each pole
-(‘B’ and ‘P’) are aggregated, and if there is conflicting or little
-evidence it will be classified as a VUS. This classification scheme has
-been adopted by the one outlined in
+The refined ACMG/AMP criteria listed below form the basis for the tier
+assigned to the CPSR_CLASSIFICATION variable. Specifically, the score in
+parenthesis indicates how much each evidence item contributes to either
+of the two pathogenicity poles (positive values indicate pathogenic
+support, negative values indicate benign support). Evidence score along
+each pole (‘B’ and ‘P’) are aggregated, and if there is conflicting or
+little evidence it will be classified as a VUS. This classification
+scheme has been adopted by the one outlined in
 `SherLoc <https://www.ncbi.nlm.nih.gov/pubmed/28492532>`__.
 
 1.  ACMG_BA1_AD (**-5**) - Very high MAF (> 0.5% in gnomAD non-cancer
-    pop subset) - min AN = 12,000, min AC = 12 - Dominant mechanism of
-    disease
+    pop subset) - min AN = 12,000 - Dominant mechanism of disease
 2.  ACMG_BS1_1_AD (**-3**)- High MAF (> 0.1% in gnomAD non-cancer pop
-    subset) - min AN = 12,000, min AC = 12 - Dominant mechanism of
-    disease
-3.  ACMG_BS1_2_AD - (**-1**) Somewhat high AF (> 8 alleles in gnomAD
+    subset) - min AN = 12,000 - Dominant mechanism of disease
+3.  ACMG_BS1_2_AD - (**-1**) Somewhat high MAF (> 0.005% in gnomAD
     non-cancer pop subset) - Dominant mechanism of disease
 4.  ACMG_BA1_AR (**-5**) - Very high MAF (> 1% in gnomAD non-cancer pop
-    subset) - min AN = 12,000, min AC = 12 - Recessive mechanism of
-    disease
+    subset) - min AN = 12,000 - Recessive mechanism of disease
 5.  ACMG_BS1_1_AR (**-3**)- High MAF (> 0.3% in gnomAD non-cancer pop
-    subset) - min AN = 12,000, min AC = 12 - Recessive mechanism of
-    disease
-6.  ACMG_BS1_2_AR (**-1**)- Somewhat high AF (> 8 alleles in gnomAD
+    subset) - min AN = 12,000 - Recessive mechanism of disease
+6.  ACMG_BS1_2_AR (**-1**)- Somewhat high MAF (> 0.005% in gnomAD
     non-cancer pop subset) - Recessive mechanism of disease
-7.  ACMG_PM2_1 (**0.5**)- Allele count within pathogenic range (8 or
-    fewer alleles in the population-specific non-cancer gnomAD subset)
+7.  ACMG_PM2_1 (**0.5**)- Allele count within pathogenic range (MAF <=
+    0.005% in the population-specific non-cancer gnomAD subset)
 8.  ACMG_PM2_2 (**1**)- Alternate allele absent in the
     population-specific non-cancer gnomAD subset
 9.  ACMG_PVS1_1 (**5**) - Null variant (frameshift/nonsense) - predicted
@@ -72,13 +73,12 @@ been adopted by the one outlined in
 17. ACMG_PVS1_9 (**2**)- Donor/acceptor variant - not last intron -
     within pathogenic range - LoF not established for gene
 18. ACMG_PVS1_10 (**2**) - Donor variant at located at the +3, +4 or +5
-    position of the intron - within the pathogenic range (i.e. <9
-    alleles in ExAC))
+    position of the intron - within the pathogenic range
 19. ACMG_PS1 (**4**) - Same amino acid change as a previously
     established pathogenic variant (ClinVar) regardless of nucleotide
     change
 20. ACMG_PP2 (**0.5**) - Missense variant in a gene that has a
-    relatively low rate of benign missense variation (<20%) and where
+    relatively low rate of benign missense variation (<30%) and where
     missense variants are a common mechanism of disease (>50% P/LP
     (ClinVar))
 21. ACMG_PM1 (**2**) - Missense variant in a somatic mutation hotspot as
@@ -92,14 +92,23 @@ been adopted by the one outlined in
 24. ACMG_PM5 (**1.5**) - Novel missense change at an amino acid residue
     where a different missense change determined to be pathogenic has
     been seen before (ClinVar)
-25. ACMG_PP3 (**0.5**)- Multiple lines of computational evidence support
-    a deleterious effect on the gene or gene product (conservation,
-    evolutionary, splicing impact, etc. - from dbNSFP
-26. ACMG_BP4 (**-1**)- Multiple lines of computational evidence support
-    a benign effect on the gene or gene product (conservation,
+25. ACMG_PP3 (**0.5**)- Multiple lines (>=5) of computational evidence
+    support a deleterious effect on the gene or gene product
+    (conservation, evolutionary, splicing impact, etc. - from dbNSFP
+26. ACMG_BP4 (**-1**)- Multiple lines (>=5) of computational evidence
+    support a benign effect on the gene or gene product (conservation,
     evolutionary, splicing impact, etc. - from dbNSFP
 27. ACMG_BMC1 (**0**)- Peptide change is at the same location of a known
     benign change (ClinVar)
 28. ACMG_BSC1 (**-3**)- Peptide change is reported as benign (ClinVar)
 29. ACMG_BP1 (**-0.5**)- Missense variant in a gene for which primarily
-    truncating variants are known to cause disease (ClinVar)
+    truncating variants (>90% of pathogenic variants) are known to cause
+    disease (ClinVar)
+
+Currently, the **CPSR_CLASSIFICATION** is determined based on the
+following ranges of pathogenicity scores:
+
+|image0|
+
+.. |image0| image:: cpsr_classification.png
+

@@ -6,7 +6,7 @@
 show_sf = true
 
 [maf_limits]
-## choose upper MAF threshold for variants to include in report
+## choose upper MAF threshold (global) for variants to be included in report
 maf_gnomad = 0.9
 
 [popgen]
@@ -19,7 +19,6 @@ maf_gnomad = 0.9
 ## "asj" - Ashkenazi Jewish
 ## "nfe" - Non-Finnish European
 ## "fin" - Finnish
-## "oth" - Other
 ## "global" - All populations combined
 pop_gnomad = "nfe"
 
@@ -30,8 +29,13 @@ report_theme = "default"
 [custom_tags]
 ## list VCF info tags that should be present in JSON output
 ## tags should be comma separated, i.e. custom_tags = "GATK_FILTER,VARSCAN_FILTER"
-#custom_tags = "CharGer_Classification,CharGer_Negative_Evidence,CharGer_Consequence,CharGer_HGVSp,CharGer_Positive_Evidence,CharGer_Feature"
 custom_tags = ""
+
+[custom_panel]
+## edit metadata (name, version, url) of relevance for custom-provided gene panel (provided by option --custom_panel)
+name = "Custom gene panel"
+version = "1.0"
+url = ""
 
 [classification]
 ## for variants with an existing classification in ClinVar, include CPSR classification/score in the output TSV file

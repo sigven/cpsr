@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>CHANGELOG &mdash; Cancer Predisposition Sequencing Reporter 0.5.1 documentation</title>
+  <title>CHANGELOG &mdash; Cancer Predisposition Sequencing Reporter 0.5.2 documentation</title>
   
 
   
@@ -35,8 +35,8 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Cancer Predisposition Sequencing Reporter 0.5.1 documentation" href="index.html"/>
-        <link rel="prev" title="Variant classification (ACMG)" href="variant_classification.html"/> 
+    <link rel="top" title="Cancer Predisposition Sequencing Reporter 0.5.2 documentation" href="index.html"/>
+        <link rel="prev" title="Variant classification (ACMG/AMP)" href="variant_classification.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.5.1
+                0.5.2
               </div>
             
           
@@ -92,15 +92,20 @@
 <li class="toctree-l1"><a class="reference internal" href="annotation_resources.html">CPSR annotation resources</a></li>
 <li class="toctree-l1"><a class="reference internal" href="input.html">Input</a></li>
 <li class="toctree-l1"><a class="reference internal" href="output.html">Output</a></li>
-<li class="toctree-l1"><a class="reference internal" href="variant_classification.html">Variant classification (ACMG)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="variant_classification.html">Variant classification (ACMG/AMP)</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">CHANGELOG</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#november-18th-2019">0.5.2 - November 18th 2019</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#changed">Changed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#added">Added</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#october-14th-2019">0.5.1 - October 14th 2019</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#fixed">Fixed</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#september-23rd-2019">0.5.0 - September 23rd 2019</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#fixed-1">Fixed</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#added">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#added-1">Added</a></li>
 </ul>
 </li>
 </ul>
@@ -151,12 +156,33 @@
             
   <div class="section" id="changelog">
 <h1>CHANGELOG<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="november-18th-2019">
+<h2>0.5.2 - November 18th 2019<a class="headerlink" href="#november-18th-2019" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="changed">
+<h3>Changed<a class="headerlink" href="#changed" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Definition of pathogenic range (wrt to variant frequency) takes into
+account population- and position-specific allele numbers - no longer
+defined only by allele counts (i.e.&nbsp;<em>AC</em>) but by <em>AC</em> and <em>AN</em></li>
+<li>Moved virtual panel identifier from positional argument to optional
+argument (<code class="docutils literal"><span class="pre">--panel_id</span></code>) in <code class="docutils literal"><span class="pre">cpsr.py</span></code></li>
+</ul>
+</div>
+<div class="section" id="added">
+<h3>Added<a class="headerlink" href="#added" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Ability to analyze custom panels, provided through option
+<code class="docutils literal"><span class="pre">--custom_panel</span></code>. Needs to be defined as BED file with four
+columns, i.e.&nbsp;chromosome, start, stop, genesymbol</li>
+</ul>
+</div>
+</div>
 <div class="section" id="october-14th-2019">
 <h2>0.5.1 - October 14th 2019<a class="headerlink" href="#october-14th-2019" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="fixed">
 <h3>Fixed<a class="headerlink" href="#fixed" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Bug in cpsr_validate_input.py <a class="reference external" href="https://github.com/sigven/cpsr/issues/18">GitHub
+<li>Bug in <code class="docutils literal"><span class="pre">cpsr_validate_input.py</span></code>, <a class="reference external" href="https://github.com/sigven/cpsr/issues/18">GitHub
 Issue</a></li>
 <li>Bug when there are zero variants with a ‘PASS’ status in VCF -
 omitting report generation</li>
@@ -181,8 +207,8 @@ consequences in multiple, distinct cancer predisposition genes</li>
 the report, no longer excluded</li>
 </ul>
 </div>
-<div class="section" id="added">
-<h3>Added<a class="headerlink" href="#added" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="added-1">
+<span id="id2"></span><h3>Added<a class="headerlink" href="#added-1" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Section on <em>genomic biomarkers</em>; indicating which variants in the
 query VCF that overlaps with existing germline biomarkers (CIViC)</li>
@@ -199,7 +225,7 @@ query VCF that overlaps with existing germline biomarkers (CIViC)</li>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="variant_classification.html" class="btn btn-neutral" title="Variant classification (ACMG)" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="variant_classification.html" class="btn btn-neutral" title="Variant classification (ACMG/AMP)" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -230,7 +256,7 @@ query VCF that overlaps with existing germline biomarkers (CIViC)</li>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.5.1',
+            VERSION:'0.5.2',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

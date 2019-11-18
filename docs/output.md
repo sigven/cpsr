@@ -351,13 +351,13 @@ The following variables are included in the tiered TSV file (VCF tags issued by 
 	43. N_INSILICO_SPLICING_AFFECTED - Number of algorithms with splicing affected prediction from dbscSNV
 	45. GLOBAL_AF_GNOMAD - Global MAF in gnomAD
 	46. <CUSTOM_POPULATION_GNOMAD> - Population specific MAF in gnomAD control (non-cancer, population configured by user)
-	47. ACMG_BA1_AD - Very high MAF (> 0.5% in gnomAD non-cancer pop subset) - min AN = 12,000, min AC = 12 - Dominant mechanism of disease
-	48. ACMG_BS1_1_AD - High MAF (> 0.1% in gnomAD non-cancer pop subset) - min AN = 12,000, min AC = 12 - Dominant mechanism of disease
-	49. ACMG_BS1_2_AD - Somewhat high AF (> 8 alleles in gnomAD non-cancer pop subset) - Dominant mechanism of disease
-	50. ACMG_BA1_AR - Very high MAF (> 1% in gnomAD non-cancer pop subset) - min AN = 12,000, min AC = 12 - Recessive mechanism of disease
-	51. ACMG_BS1_1_AR - High MAF (> 0.3% in gnomAD non-cancer pop subset) - min AN = 12,000, min AC = 12 - Recessive mechanism of disease
-	52. ACMG_BS1_2_AR - Somewhat high AF (> 8 alleles in gnomAD non-cancer pop subset) - Recessive mechanism of disease
-	53. ACMG_PM2_1 - Allele count within pathogenic range (8 or fewer alleles in the population-specific non-cancer gnomAD subset)
+	47. ACMG_BA1_AD - Very high MAF (> 0.5% in gnomAD non-cancer pop subset) - min AN = 12,000 - Dominant mechanism of disease
+	48. ACMG_BS1_1_AD - High MAF (> 0.1% in gnomAD non-cancer pop subset) - min AN = 12,000 - Dominant mechanism of disease
+	49. ACMG_BS1_2_AD - Somewhat high MAF (> 0.005% in gnomAD non-cancer pop subset) - Dominant mechanism of disease
+	50. ACMG_BA1_AR - Very high MAF (> 1% in gnomAD non-cancer pop subset) - min AN = 12,000 - Recessive mechanism of disease
+	51. ACMG_BS1_1_AR - High MAF (> 0.3% in gnomAD non-cancer pop subset) - min AN = 12,000 - Recessive mechanism of disease
+	52. ACMG_BS1_2_AR - Somewhat high MAF (> 0.005% in gnomAD non-cancer pop subset) - Recessive mechanism of disease
+	53. ACMG_PM2_1 - Allele count within pathogenic range (MAF <= 0.005% in the population-specific non-cancer gnomAD subset)
 	54. ACMG_PM2_2 - Alternate allele absent in the population-specific non-cancer gnomAD subset
 	55. ACMG_PVS1_1 - Null variant (frameshift/nonsense) - predicted as LoF by LOFTEE - within pathogenic range - LoF established for gene
 	56. ACMG_PVS1_2 - Null variant (frameshift/nonsense) - not predicted as LoF by LOFTEE - within pathogenic range - LoF established for gene
@@ -375,12 +375,12 @@ The following variables are included in the tiered TSV file (VCF tags issued by 
 	68. ACMG_PM4 - Protein length changes due to inframe indels or nonstop variant in non-repetitive regions of genes that harbor variants with a dominant mode of inheritance.
 	69. ACMG_PPC1 - Protein length changes due to inframe indels or nonstop variant in non-repetitive regions of genes that harbor variants with a recessive mode of inheritance.
 	70. ACMG_PM5 - Novel missense change at an amino acid residue where a different missense change determined to be pathogenic has been seen before (ClinVar)
-	71. ACMG_PP3 - Multiple lines of computational evidence support a deleterious effect on the gene or gene product (conservation, evolutionary, splicing impact, etc. - from dbNSFP
-	72. ACMG_BP4 - Multiple lines of computational evidence support a benign effect on the gene or gene product (conservation, evolutionary, splicing impact, etc. - from dbNSFP
+	71. ACMG_PP3 - Multiple lines (>=5) of computational evidence support a deleterious effect on the gene or gene product (conservation, evolutionary, splicing impact) with maximum two contradictory predictions - from dbNSFP
+	72. ACMG_BP4 - Multiple lines (>=5) of computational evidence support a benign effect on the gene or gene product (conservation, evolutionary, splicing impact) with maximum two contradictory prediction - from dbNSFP
 	73. ACMG_BMC1 - Peptide change is at the same location of a known benign change (ClinVar)
 	74. ACMG_BSC1 - Peptide change is reported as benign (ClinVar)
 	75. ACMG_BP1 - Missense variant in a gene for which primarily truncating variants are known to cause disease (ClinVar)
-	76. CPSR_CLASSIFICATION - CPSR tier level
+	76. CPSR_CLASSIFICATION - CPSR tier level (P/LP/VUS/LB/B)
 	77. CPSR_CLASSIFICATION_SCORE - Aggregated CPSR pathogenicity score
 	78. CPSR_CLASSIFICATION_CODE - Combination of CPSR classification codes assigned to the variant (ACMG)
 	79. CPSR_CLASSIFICATION_DOC - Verbal description of CPSR classification codes assignted to the variant (ACMG)

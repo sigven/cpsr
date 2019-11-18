@@ -12,9 +12,9 @@ import platform
 import toml
 from argparse import RawTextHelpFormatter
 
-pcgr_version = '0.8.3'
-cpsr_version = '0.5.1'
-db_version = 'PCGR_DB_VERSION = 20191013'
+pcgr_version = '0.8.4'
+cpsr_version = '0.5.2'
+db_version = 'PCGR_DB_VERSION = 20191116'
 vep_version = '98'
 
 gen_england_panels = {
@@ -33,28 +33,30 @@ gen_england_panels = {
       12: "Familial prostate cancer (Genomics England PanelApp)",
       13: "Familial rhabdomyosarcoma (Genomics England PanelApp)",
       14: "GI tract tumours (Genomics England PanelApp)",
-      15: "Haematological malignancies cancer susceptibility (Genomics England PanelApp)",
-      16: "Head and neck cancer pertinent cancer susceptibility (Genomics England PanelApp)",
-      17: "Inherited non-medullary thyroid cancer (Genomics England PanelApp)",
-      18: "Inherited ovarian cancer (without breast cancer) (Genomics England PanelApp)",
-      19: "Inherited pancreatic cancer (Genomics England PanelApp)",
-      20: "Inherited renal cancer (Genomics England PanelApp)",
-      21: "Inherited phaeochromocytoma and paraganglioma (Genomics England PanelApp)",
-      22: "Melanoma pertinent cancer susceptibility (Genomics England PanelApp)",
-      23: "Multiple endocrine tumours (Genomics England PanelApp)",
-      24: "Multiple monogenic benign skin tumours (Genomics England PanelApp)",
-      25: "Neuroendocrine cancer pertinent cancer susceptibility (Genomics England PanelApp)",
-      26: "Neurofibromatosis Type 1 (Genomics England PanelApp)",
-      27: "Ovarian cancer pertinent cancer susceptibility (Genomics England PanelApp)",
-      28: "Parathyroid Cancer (Genomics England PanelApp)",
-      29: "Prostate cancer pertinent cancer susceptibility (Genomics England PanelApp)",
-      30: "Renal cancer pertinent cancer susceptibility (Genomics England PanelApp)",
-      31: "Rhabdoid tumour predisposition (Genomics England PanelApp)",
-      32: "Sarcoma cancer susceptibility (Genomics England PanelApp)",
-      33: "Sarcoma susceptbility (Genomics England PanelApp)",
-      34: "Thyroid cancer pertinent cancer susceptibility (Genomics England PanelApp)",
-      35: "Tumour predisposition - childhood onset (Genomics England PanelApp)",
-      36: "Upper gastrointestinal cancer pertinent cancer susceptibility (Genomics England PanelApp)"
+      15: "Genodermatoses with malignancies (Genomics England PanelApp)",
+      16: "Haematological malignancies cancer susceptibility (Genomics England PanelApp)",
+      17: "Haematological malignancies for rare disease (Genomics England PanelApp)",
+      18: "Head and neck cancer pertinent cancer susceptibility (Genomics England PanelApp)",
+      19: "Inherited non-medullary thyroid cancer (Genomics England PanelApp)",
+      20: "Inherited ovarian cancer (without breast cancer) (Genomics England PanelApp)",
+      21: "Inherited pancreatic cancer (Genomics England PanelApp)",
+      22: "Inherited renal cancer (Genomics England PanelApp)",
+      23: "Inherited phaeochromocytoma and paraganglioma (Genomics England PanelApp)",
+      24: "Melanoma pertinent cancer susceptibility (Genomics England PanelApp)",
+      25: "Multiple endocrine tumours (Genomics England PanelApp)",
+      26: "Multiple monogenic benign skin tumours (Genomics England PanelApp)",
+      27: "Neuroendocrine cancer pertinent cancer susceptibility (Genomics England PanelApp)",
+      28: "Neurofibromatosis Type 1 (Genomics England PanelApp)",
+      29: "Ovarian cancer pertinent cancer susceptibility (Genomics England PanelApp)",
+      30: "Parathyroid Cancer (Genomics England PanelApp)",
+      31: "Prostate cancer pertinent cancer susceptibility (Genomics England PanelApp)",
+      32: "Renal cancer pertinent cancer susceptibility (Genomics England PanelApp)",
+      33: "Rhabdoid tumour predisposition (Genomics England PanelApp)",
+      34: "Sarcoma cancer susceptibility (Genomics England PanelApp)",
+      35: "Sarcoma susceptbility (Genomics England PanelApp)",
+      36: "Thyroid cancer pertinent cancer susceptibility (Genomics England PanelApp)",
+      37: "Tumour predisposition - childhood onset (Genomics England PanelApp)",
+      38: "Upper gastrointestinal cancer pertinent cancer susceptibility (Genomics England PanelApp)"
 	}
 
 global vep_assembly
@@ -76,44 +78,48 @@ def __main__():
    panels = panels + "12 = Familial prostate cancer (Genomics England PanelApp)\n"
    panels = panels + "13 = Familial rhabdomyosarcoma (Genomics England PanelApp)\n"
    panels = panels + "14 = GI tract tumours (Genomics England PanelApp)\n"
-   panels = panels + "15 = Haematological malignancies cancer susceptibility (Genomics England PanelApp)\n"
-   panels = panels + "16 = Head and neck cancer pertinent cancer susceptibility (Genomics England PanelApp)\n"
-   panels = panels + "17 = Inherited non-medullary thyroid cancer (Genomics England PanelApp)\n"
-   panels = panels + "18 = Inherited ovarian cancer (without breast cancer) (Genomics England PanelApp)\n"
-   panels = panels + "19 = Inherited pancreatic cancer (Genomics England PanelApp)\n"
-   panels = panels + "20 = Inherited renal cancer (Genomics England PanelApp)\n"
-   panels = panels + "21 = Inherited phaeochromocytoma and paraganglioma (Genomics England PanelApp)\n"
-   panels = panels + "22 = Melanoma pertinent cancer susceptibility (Genomics England PanelApp)\n"
-   panels = panels + "23 = Multiple endocrine tumours (Genomics England PanelApp)\n"
-   panels = panels + "24 = Multiple monogenic benign skin tumours (Genomics England PanelApp)"
-   panels = panels + "25 = Neuroendocrine cancer pertinent cancer susceptibility (Genomics England PanelApp)\n"
-   panels = panels + "26 = Neurofibromatosis Type 1 (Genomics England PanelApp)"
-   panels = panels + "27 = Ovarian cancer pertinent cancer susceptibility (Genomics England PanelApp)\n"
-   panels = panels + "28 = Parathyroid Cancer (Genomics England PanelApp)\n"
-   panels = panels + "29 = Prostate cancer pertinent cancer susceptibility (Genomics England PanelApp)\n"
-   panels = panels + "30 = Renal cancer pertinent cancer susceptibility (Genomics England PanelApp)\n"
-   panels = panels + "31 = Rhabdoid tumour predisposition (Genomics England PanelApp)\n"
-   panels = panels + "32 = Sarcoma cancer susceptibility (Genomics England PanelApp)\n"
-   panels = panels + "33 = Sarcoma susceptibility (Genomics England PanelApp)\n"
-   panels = panels + "34 = Thyroid cancer pertinent cancer susceptibility (Genomics England PanelApp)\n"
-   panels = panels + "35 = Tumour predisposition - childhood onset (Genomics England PanelApp)\n"
-   panels = panels + "36 = Upper gastrointestinal cancer pertinent cancer susceptibility (Genomics England PanelApp)\n\n"
+   panels = panels + "15 = Genodermatoses with malignancies (Genomics England PanelApp)\n"
+   panels = panels + "16 = Haematological malignancies cancer susceptibility (Genomics England PanelApp)\n"
+   panels = panels + "17 = Haematological malignancies for rare disease (Genomics England PanelApp)\n"
+   panels = panels + "18 = Head and neck cancer pertinent cancer susceptibility (Genomics England PanelApp)\n"
+   panels = panels + "19 = Inherited non-medullary thyroid cancer (Genomics England PanelApp)\n"
+   panels = panels + "20 = Inherited ovarian cancer (without breast cancer) (Genomics England PanelApp)\n"
+   panels = panels + "21 = Inherited pancreatic cancer (Genomics England PanelApp)\n"
+   panels = panels + "22 = Inherited renal cancer (Genomics England PanelApp)\n"
+   panels = panels + "23 = Inherited phaeochromocytoma and paraganglioma (Genomics England PanelApp)\n"
+   panels = panels + "24 = Melanoma pertinent cancer susceptibility (Genomics England PanelApp)\n"
+   panels = panels + "25 = Multiple endocrine tumours (Genomics England PanelApp)\n"
+   panels = panels + "26 = Multiple monogenic benign skin tumours (Genomics England PanelApp)\n"
+   panels = panels + "27 = Neuroendocrine cancer pertinent cancer susceptibility (Genomics England PanelApp)\n"
+   panels = panels + "28 = Neurofibromatosis Type 1 (Genomics England PanelApp)\n"
+   panels = panels + "29 = Ovarian cancer pertinent cancer susceptibility (Genomics England PanelApp)\n"
+   panels = panels + "30 = Parathyroid Cancer (Genomics England PanelApp)\n"
+   panels = panels + "31 = Prostate cancer pertinent cancer susceptibility (Genomics England PanelApp)\n"
+   panels = panels + "32 = Renal cancer pertinent cancer susceptibility (Genomics England PanelApp)\n"
+   panels = panels + "33 = Rhabdoid tumour predisposition (Genomics England PanelApp)\n"
+   panels = panels + "34 = Sarcoma cancer susceptibility (Genomics England PanelApp)\n"
+   panels = panels + "35 = Sarcoma susceptibility (Genomics England PanelApp)\n"
+   panels = panels + "36 = Thyroid cancer pertinent cancer susceptibility (Genomics England PanelApp)\n"
+   panels = panels + "37 = Tumour predisposition - childhood onset (Genomics England PanelApp)\n"
+   panels = panels + "38 = Upper gastrointestinal cancer pertinent cancer susceptibility (Genomics England PanelApp)\n\n"
    
    #parser = ArgumentParser(description='test', formatter_class=RawTextHelpFormatter)
-   parser = argparse.ArgumentParser(description='Cancer Predisposition Sequencing Reporter (CPSR) - report of cancer-predisposing germline variants',formatter_class=RawTextHelpFormatter, usage="%(prog)s -h [options] <QUERY_VCF> <PCGR_DIR> <OUTPUT_DIR> <GENOME_ASSEMBLY> <PANEL_IDENTIFIER> <CONFIG_FILE> <SAMPLE_ID>")
+   parser = argparse.ArgumentParser(description='Cancer Predisposition Sequencing Reporter (CPSR) - report of cancer-predisposing germline variants',formatter_class=RawTextHelpFormatter, usage="%(prog)s -h [options] <QUERY_VCF> <PCGR_DIR> <OUTPUT_DIR> <GENOME_ASSEMBLY> <CONFIG_FILE> <SAMPLE_ID>")
    parser.add_argument('--force_overwrite', action = "store_true", help='By default, the script will fail with an error if any output file already exists.\n You can force the overwrite of existing result files by using this flag')
    parser.add_argument('--version', action='version', version='%(prog)s ' + str(cpsr_version))
    parser.add_argument('--basic',action="store_true",help="Run functional variant annotation on VCF through VEP/vcfanno, omit report generation (STEP 4)")
+   parser.add_argument('--panel_id',dest = "virtual_panel_id",type = int, default = -1, help="Identifier for choice of predefined virtual cancer predisposition gene panels,\n choose any between the following identifiers:\n" + str(panels))
+   parser.add_argument('--custom_panel',dest = "target_bed",help="Define custom screening panel through a four-column BED file (chrom,start,stop,genesymbol), alternative to predefined panels provided with --panel_id)")
    parser.add_argument('--no_vcf_validate', action = "store_true",help="Skip validation of input VCF with Ensembl's vcf-validator")
-   parser.add_argument('--diagnostic_grade_only', action="store_true",help="For Genomics England virtual predisposition panels - consider genes with a GREEN status only")
+   parser.add_argument('--diagnostic_grade_only', action="store_true",help="For panel_id's 1-38 (Genomics England PanelApp) - consider genes with a GREEN status only")
    parser.add_argument('--docker-uid', dest='docker_user_id', help='Docker user ID. Default is the host system user ID. If you are experiencing permission errors,\n try setting this up to root (`--docker-uid root`)')
-   parser.add_argument('--no-docker', action='store_true', dest='no_docker', default=False, help='Run the CPSR workflow in a non-Docker mode (see install_no_docker/ folder for instructions')
+   parser.add_argument('--no-docker', action='store_true', dest='no_docker', default=False, help='Run the CPSR workflow in a non-Docker mode')
    parser.add_argument('--debug',action='store_true',default=False, help='Print full docker commands to log')
    parser.add_argument('query_vcf', help='VCF input file with germline query variants (SNVs/InDels).')
    parser.add_argument('pcgr_base_dir',help='Directory that contains the PCGR data bundle directory, e.g. ~/pcgr-0.8.3')
    parser.add_argument('output_dir',help='Output directory')
    parser.add_argument('genome_assembly',choices = ['grch37','grch38'], help='Genome assembly build: grch37 or grch38')
-   parser.add_argument('virtual_panel_id', type=int, default=0, help="Identifier for choice of virtual cancer predisposition gene panels,\n choose any between the following identifiers:\n" + str(panels))
+   #parser.add_argument('virtual_panel_id', type=int, default=0, help="Identifier for choice of virtual cancer predisposition gene panels,\n choose any between the following identifiers:\n" + str(panels))
    parser.add_argument('configuration_file',help='Configuration file (TOML format)')
    parser.add_argument('sample_id',help="Sample identifier - prefix for output files")
    
@@ -127,7 +133,21 @@ def __main__():
    if args.force_overwrite is True:
       overwrite = 1
 
-   logger = getlogger('cpsr-validate-config')
+   logger = getlogger('cpsr-validate-arguments')
+
+   if args.virtual_panel_id == -1 and not args.target_bed:
+      err_msg = 'Provide valid virtual panel identifier through --panel_id (0 - 38) or provide custom panel (BED file) through --custom_panel'
+      error_message(err_msg,logger)
+
+   if (args.virtual_panel_id < 0 or args.virtual_panel_id > 38) and not args.target_bed:
+      err_msg = 'Option --panel_id must have values between 0 and 38'
+      error_message(err_msg,logger)
+   else:
+      if args.target_bed and args.virtual_panel_id >= 0 and args.virtual_panel_id <= 38:
+         err_msg =  "--panel_id cannot be used in conjunction with --custom_panel"
+         error_message(err_msg, logger)
+
+
    if args.no_docker:
       docker_image_version = None
    else:
@@ -145,10 +165,19 @@ def __main__():
       err_msg = "PCGR configuration file " + str(args.configuration_file) + " does not exist - exiting"
       error_message(err_msg,logger)
 
-   logger = getlogger('pcgr-check-files')
-   host_directories = verify_input_files(args.query_vcf, args.configuration_file, config_options, args.pcgr_base_dir, args.output_dir, args.sample_id, args.genome_assembly, overwrite, logger)
+   #logger = getlogger('pcgr-check-files')
 
-   run_cpsr(host_directories, docker_image_version, config_options, args.sample_id, args.virtual_panel_id, args.genome_assembly, cpsr_version, args.no_vcf_validate, diagnostic_grade_only, args.basic, debug = args.debug, docker_user_id=args.docker_user_id)
+   virtual_panel_id = -1
+   if args.virtual_panel_id != -1:
+      virtual_panel_id = args.virtual_panel_id
+   if args.target_bed:
+      logger.info('Custom panel BED file provided')
+         #virtual_panel_id = -1
+   
+   host_directories = verify_input_files(args.query_vcf, args.target_bed, args.configuration_file, config_options, args.pcgr_base_dir, args.output_dir, args.sample_id, args.genome_assembly, overwrite, logger)
+   print()
+
+   run_cpsr(host_directories, docker_image_version, config_options, args.sample_id, virtual_panel_id, args.genome_assembly, cpsr_version, args.no_vcf_validate, diagnostic_grade_only, args.basic, debug = args.debug, docker_user_id=args.docker_user_id)
 
 
 def read_config_options(configuration_file, pcgr_dir, genome_assembly, logger):
@@ -221,7 +250,7 @@ def pcgr_warn_message(message, logger):
    logger.warning(message)
    logger.warning('')
 
-def verify_input_files(input_vcf, configuration_file, cpsr_config_options, base_pcgr_dir, output_dir, sample_id, genome_assembly, overwrite, logger):
+def verify_input_files(input_vcf, target_bed, configuration_file, cpsr_config_options, base_pcgr_dir, output_dir, sample_id, genome_assembly, overwrite, logger):
    """
    Function that checks the input files and directories provided by the user and checks for their existence
    """
@@ -233,11 +262,8 @@ def verify_input_files(input_vcf, configuration_file, cpsr_config_options, base_
    output_dir_full = "NA"
    input_vcf_basename = "NA"
    input_conf_basename = "NA"
-   
-   ## check that either input vcf or cna segments exist
-   # if input_vcf is None:
-   #    err_msg = "Please specifiy a VCF input file (--input_vcf)"
-   #    error_message(err_msg,logger)
+   input_bed_basename = "NA"
+   input_bed_dir = "NA"
    
    ## check the existence of given output folder
    output_dir_full = os.path.abspath(output_dir)
@@ -245,6 +271,21 @@ def verify_input_files(input_vcf, configuration_file, cpsr_config_options, base_
       err_msg = "Output directory (" + str(output_dir_full) + ") does not exist"
       error_message(err_msg,logger)
    
+
+   ## check if input BED exist
+   if not target_bed is None:
+      if not os.path.exists(os.path.abspath(target_bed)):
+         err_msg = "Input file (" + str(target_bed) + ") does not exist"
+         error_message(err_msg,logger)
+
+      if not os.path.abspath(target_bed).endswith('.bed'):
+         err_msg = "Custom BED file (" + os.path.abspath(target_bed) + ") does not have the correct file extension (.bed)"
+         error_message(err_msg,logger)
+      
+      
+      input_bed_basename = os.path.basename(str(target_bed))
+      input_bed_dir = os.path.dirname(os.path.abspath(target_bed))
+
    ## check if input vcf exist
    if not input_vcf is None:
       if not os.path.exists(os.path.abspath(input_vcf)):
@@ -322,11 +363,13 @@ def verify_input_files(input_vcf, configuration_file, cpsr_config_options, base_
    host_directories = {}
    host_directories['input_vcf_dir_host'] = input_vcf_dir
    host_directories['input_conf_dir_host'] = input_conf_dir
+   host_directories['input_bed_dir_host'] = input_bed_dir
    host_directories['db_dir_host'] = db_assembly_dir
    host_directories['base_dir_host'] = base_dir
    host_directories['output_dir_host'] = output_dir_full
    host_directories['input_vcf_basename_host'] = input_vcf_basename
    host_directories['input_conf_basename_host'] = input_conf_basename
+   host_directories['input_bed_basename_host'] = input_bed_basename
 
    return host_directories
    
@@ -396,12 +439,14 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
 
    input_vcf_docker = 'None'
    input_conf_docker = 'None'
+   input_bed_docker = 'None'
    
    if docker_image_version:
 
       vep_volume_mapping = str(vepdb_dir_host) + ":/usr/local/share/vep/data"
       databundle_volume_mapping = str(host_directories['base_dir_host']) + ":/data"
       input_vcf_volume_mapping = str(host_directories['input_vcf_dir_host']) + ":/workdir/input_vcf"
+      input_bed_volume_mapping = str(host_directories['input_bed_dir_host']) + ":/workdir/input_bed"
       input_conf_volume_mapping = str(host_directories['input_conf_dir_host']) + ":/workdir/input_conf"
       output_volume_mapping = str(host_directories['output_dir_host']) + ":/workdir/output"
 
@@ -409,10 +454,14 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
          input_vcf_docker = '/workdir/input_vcf/' + str(host_directories['input_vcf_basename_host'])
       if host_directories['input_conf_basename_host'] != 'NA':
          input_conf_docker = '/workdir/input_conf/' + str(host_directories['input_conf_basename_host'])
+      if host_directories['input_bed_basename_host'] != 'NA':
+         input_bed_docker = '/workdir/input_bed/' + str(host_directories['input_bed_basename_host'])
 
       docker_command_run1 = "docker run --rm -u " + str(uid) + " -v=" +  str(databundle_volume_mapping) + " -v=" + str(vep_volume_mapping) + " -v=" + str(input_conf_volume_mapping) + " -v=" + str(output_volume_mapping)
       if host_directories['input_vcf_dir_host'] != 'NA':
          docker_command_run1 = docker_command_run1  + " -v=" + str(input_vcf_volume_mapping)
+      if host_directories['input_bed_dir_host'] != 'NA':
+         docker_command_run1 = docker_command_run1  + " -v=" + str(input_bed_volume_mapping)
 
       docker_command_run1 = docker_command_run1 + " -w=/workdir/output " + str(docker_image_version) + " sh -c \""
       docker_command_run2 = "docker run --rm -u " + str(uid) + " -v=" + str(databundle_volume_mapping) + " -v=" + str(output_volume_mapping) + " -w=/workdir/output " + str(docker_image_version) + " sh -c \""
@@ -428,6 +477,8 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
          input_vcf_docker = os.path.join(host_directories['input_vcf_dir_host'], host_directories['input_vcf_basename_host'])
       if host_directories['input_conf_basename_host'] != 'NA':
          input_conf_docker = os.path.join(host_directories['input_conf_dir_host'], host_directories['input_conf_basename_host'])
+      if host_directories['input_bed_basename_host'] != 'NA':
+         input_bed_docker = os.path.join(host_directories['input_bed_dir_host'], host_directories['input_bed_basename_host'])
 
       docker_command_run1 = ''
       docker_command_run2 = ''
@@ -447,16 +498,18 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
    logger = getlogger("cpsr-start")
    logger.info("--- Cancer Predisposition Sequencing Reporter workflow ----")
    logger.info("Sample name: " + str(sample_id))
-   logger.info("Virtual gene panel: " + str(gen_england_panels[virtual_panel_id]))
-   logger.info("Diagnostic-grade genes in virtual panels: " + str(diagnostic_grade))
+   if not input_bed_docker == 'None':
+      logger.info("Virtual gene panel: custom BED")
+   else:
+      logger.info("Virtual gene panel: " + str(gen_england_panels[virtual_panel_id]))
+      logger.info("Diagnostic-grade genes in virtual panels: " + str(diagnostic_grade))
    logger.info("Genome assembly: " + str(genome_assembly))
    print()
-
 
    ## verify VCF and CNA segment file
    logger = getlogger('cpsr-validate-input')
    logger.info("STEP 0: Validate input data")
-   vcf_validate_command = docker_command_run1 + "cpsr_validate_input.py" + " " + data_dir + " " + str(input_vcf_docker) + " " + str(input_conf_docker) + " " + str(vcf_validation) + " " + str(genome_assembly) + " " + str(virtual_panel_id) + " " + str(diagnostic_grade_only)
+   vcf_validate_command = docker_command_run1 + "cpsr_validate_input.py" + " " + data_dir + " " + str(input_vcf_docker) + " " + str(input_bed_docker) + " " + str(input_conf_docker) + " " + str(vcf_validation) + " " + str(genome_assembly) + " " + str(virtual_panel_id) + " " + str(diagnostic_grade_only)
    if not docker_image_version:
       vcf_validate_command += ' --output_dir ' + output_dir + docker_command_run_end
    else:
@@ -479,6 +532,7 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
       vep_vcfanno_vcf = re.sub(r'(\.vcf$|\.vcf\.gz$)','.cpsr_vep.vcfanno.vcf',input_vcf_cpsr_ready)
       vep_vcfanno_annotated_vcf = re.sub(r'\.vcfanno','.vcfanno.annotated',vep_vcfanno_vcf) + '.gz'
       vep_vcfanno_annotated_pass_vcf = re.sub(r'\.vcfanno','.vcfanno.annotated.pass',vep_vcfanno_vcf) + '.gz'
+      custom_bed_cpsr_ready = os.path.join(output_dir, re.sub(r'(\.bed$)','.cpsr_ready.bed', host_directories['input_bed_basename_host']))
 
       fasta_assembly = os.path.join(vep_dir, "homo_sapiens", str(vep_version) + "_" + str(vep_assembly), "Homo_sapiens." + str(vep_assembly) + ".dna.primary_assembly.fa.gz")
       ancestor_assembly = os.path.join(vep_dir, "homo_sapiens", str(vep_version) + "_" + str(vep_assembly), "human_ancestor.fa.gz")
@@ -563,8 +617,8 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
       logger = getlogger('cpsr-writer')
       logger.info("STEP 4: Generation of output files - Cancer predisposition sequencing report")
       cpsr_report_command = (docker_command_run1 + os.path.join(r_scripts_dir, "cpsr.R") + " " + output_dir + " " + \
-         str(output_pass_tsv) + ".gz " +  str(sample_id)  + " " + str(input_conf_docker) + " " + str(cpsr_version) + \
-         " " + str(genome_assembly) + " " + str(virtual_panel_id) + " " + str(diagnostic_grade_only) + " " + data_dir + docker_command_run_end)
+         str(output_pass_tsv) + ".gz " +  str(sample_id)  + " " + str(input_conf_docker) + " " + str(pcgr_version) + " " + str(cpsr_version) + \
+         " " + str(genome_assembly) + " " + str(virtual_panel_id) + " " + str(custom_bed_cpsr_ready) + " " + str(diagnostic_grade_only) + " " + data_dir + docker_command_run_end)
       if debug is True:
          logger.info(cpsr_report_command)
       check_subprocess(cpsr_report_command)
