@@ -13,7 +13,7 @@ build:
 
 requirements:
   run:
-    - pcgr >=v0.8.3
+    - pcgr >=v0.8.4
     - r-upsetr
     - r-ggpubr
 
