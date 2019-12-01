@@ -612,8 +612,8 @@ def run_cpsr(host_directories, docker_image_version, config_options, sample_id, 
       logger = getlogger('cpsr-writer')
       logger.info("STEP 4: Generation of output files - Cancer predisposition sequencing report")
       cpsr_report_command = (docker_command_run1 + os.path.join(r_scripts_dir, "cpsr.R") + " " + output_dir + " " + \
-         str(output_pass_tsv) + ".gz " +  str(sample_id)  + " " + str(input_conf_docker) + " " + str(cpsr_version) + " " + str(cpsr_version) + \
-         " " + str(genome_assembly) + " " + str(virtual_panel_id) + " " + str(diagnostic_grade_only) + " " + str(diagnostic_grade_only) + " " + data_dir + docker_command_run_end)
+         str(output_pass_tsv) + ".gz " +  str(sample_id)  + " " + str(input_conf_docker) + " " + str(pcgr_version) + " " + str(cpsr_version) + \
+         " " + str(genome_assembly) + " " + str(virtual_panel_id) + " " + str(custom_bed_cpsr_ready) + " " + str(diagnostic_grade_only) + " " + data_dir + docker_command_run_end)
       check_subprocess(logger, cpsr_report_command)
       logger.info("Finished")
    
