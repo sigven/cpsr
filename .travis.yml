@@ -18,13 +18,14 @@ before_install:
 
 install:
   - export PACKAGE_NAME=cpsr
+  - [[ ! -z $TRAVIS_TAG ]] && export VERSION=$TRAVIS_TAG || export VERSION=dev-0
   # Setting up channels and install dependencies
   - conda config --add channels bioconda --add channels conda-forge --add channels pcgr --add channels local
   - conda install -q python=$TRAVIS_PYTHON_VERSION pip requests conda-build jinja2 anaconda-client
   # Building package
   - conda build conda_pkg/${PACKAGE_NAME}
   - conda build conda_pkg/${PACKAGE_NAME}_dockerized
-  - conda install --use-local ${PACKAGE_NAME}
+  - conda install "${PACKAGE_NAME}==${VERSION}"
   # Pulling reference data
   - wget https://raw.githubusercontent.com/circulosmeos/gdown.pl/master/gdown.pl
   - perl gdown.pl "https://drive.google.com/uc?id=1TdYagetk-l__aYBsaZJHJvYFStDnIEcq" grch37.tar.gz
