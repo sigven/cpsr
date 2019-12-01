@@ -88,6 +88,10 @@ The cancer predisposition report can show variants found in a number of well-kno
 
 [![Documentation Status](https://readthedocs.org/projects/cpsr/badge/?version=latest)](https://cpsr.readthedocs.io/en/latest/?badge=latest)
 
+**IMPORTANT**: If you use CPSR, please cite the following preprint:
+
+Sigve Nakken, Vladislav Saveliev, Oliver Hofmann, Pål Møller, Ola Myklebost, and Eivind Hovig. __Cancer Predisposition Sequencing Reporter: a flexible variant report engine for germline screening in cancer__ (2019). _bioRxiv_. doi:[10.1101/846089](https://doi.org/10.1101/846089)
+
 ### News
 * *November 18th 2019*: **0.5.2 release**
   * Updated bundle (ClinVar, CancerMine, UniProtKB, Genomics England PanelApp)
@@ -204,7 +208,7 @@ Report generation with the example VCF, using the [Adult solid tumours cancer su
 `python ~/cpsr-0.5.2/cpsr.py ~/cpsr-0.5.2/example.vcf.gz ~/pcgr-0.8.4`
 `~/cpsr-0.5.2 grch37 --panel_id 1 ~/cpsr-0.5.2/cpsr.toml example`
 
-Note that the example command also refers to the PCGR directory (*pcgr-0.8.43*), which contains the data bundle that are necessary for both *PCGR* and *CPSR*.
+Note that the example command also refers to the PCGR directory (*pcgr-0.8.4*), which contains the data bundle that are necessary for both *PCGR* and *CPSR*.
 
 This command will run the Docker-based *cpsr* workflow and produce the following output files in the _cpsr_ folder:
 
