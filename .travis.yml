@@ -19,7 +19,7 @@ before_install:
 install:
   - export PACKAGE_NAME=cpsr
   # Setting up channels and install dependencies
-  - conda config --add channels pcgr --add channels bioconda --add channels conda-forge
+  - conda config --add channels bioconda --add channels conda-forge --add channels pcgr --add channels local
   - conda install -q python=$TRAVIS_PYTHON_VERSION pip requests conda-build jinja2 anaconda-client
   # Building package
   - conda build conda_pkg/${PACKAGE_NAME}
