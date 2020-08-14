@@ -1,0 +1,71 @@
+---
+title: "Cancer Predisposition Genes"
+author: "Sigve Nakken"
+date: "13/08/2020"
+output:
+  md_document:
+    variant: gfm
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(magrittr)
+predisposition_genes <- readRDS(file="data-raw/cancer_predisposition/cancer_predisposition_genes.20200813.rds")
+gene_info <- readRDS(file="data-raw/ncbi_gene/gene_info.rds")
+umls_map <- readRDS(file="data-raw/medgen/concept_summary_data.rds") %>%
+  dplyr::filter(main_term == T) %>%
+  dplyr::select(-c(main_term,source))
+
+
+predisp_genes_display <- as.data.frame(
+  predisposition_genes %>% 
+    tidyr::separate_rows(predisp_syndrome_cui,sep="&") %>% 
+    tidyr::separate_rows(predisp_source,sep="&") %>% 
+    tidyr::separate_rows(predisp_cancer_cui,sep="&") %>%
+    dplyr::mutate(predisp_syndrome_cui = stringr::str_trim(predisp_syndrome_cui)) %>% 
+    dplyr::mutate(cui = paste0(predisp_syndrome_cui,'&',predisp_cancer_cui)) %>% 
+    dplyr::mutate(cui = stringr::str_replace_all(cui,"NA&|&NA|NA","")) %>% 
+    dplyr::mutate(cui = dplyr::if_else(nchar(cui) == 0,as.character(NA),as.character(cui))) %>%
+    tidyr::separate_rows(cui,sep="&") %>%
+    dplyr::select(-c(predisp_cancer_cui,predisp_syndrome_cui,n_trunc_path,n_nontrunc_path,n_nontrunc_benign)) %>%
+    dplyr::rename(mod = mechanism_of_disease) %>%
+    dplyr::left_join(dplyr::select(gene_info,entrezgene,name)) %>%
+    dplyr::rename(gene_symbol = symbol, gene_name = name) %>% 
+    dplyr::left_join(umls_map) %>% 
+    dplyr::rename(phenotype_syndrome_cui = cui, phenotype_syndrome_term = cui_name, source = predisp_source) %>%
+    dplyr::group_by(gene_symbol,entrezgene,moi,mod,phenotype_syndrome_cui,gene_name,phenotype_syndrome_term) %>%
+    dplyr::summarise(source = paste(unique(source),collapse=",")) %>%
+    dplyr::ungroup() %>%
+    dplyr::filter(stringr::str_detect(source,"TCGA_PANCAN_2018|NCGC|OTHER|CGC_91")) %>%
+    dplyr::group_by(gene_symbol,entrezgene,moi,mod,gene_name,source) %>% 
+    dplyr::summarise(phenotype_syndrome_cui = paste(phenotype_syndrome_cui,collapse=";"), 
+                     phenotype_syndrome_term = paste(phenotype_syndrome_term,collapse="; ")) %>%
+    dplyr::distinct())
+```
+
+## Cancer predisposition genes
+
+We aggregated data from multiple curated sources to compile an exploratory track of __n = `r nrow(predisp_genes_display)`__ protein-coding genes with associations to cancer predisposition/cancer syndromes:
+
+* *TCGA_PANCAN_18* - TCGCA Pancancer germline study - [Huang et al, Cell, 2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052)
+* *CGC_91* - Curated list - [Cancer Gene Census (COSMIC)](https://cancer.sanger.ac.uk/census) - version 91
+* *NCGC* - Expert-curated list from [Norwegian Cancer Genomics Consortium](http://cancergenomics.no)
+* *OTHER* - Other potential cancer-relevant genes, as contributed by the CPSR user community
+
+Data with respect to mechanisms of inheritance (<i>MoI</i> - autosomal recessive (AR) vs. autosomal dominant (AD) etc.) and whether mechanisms of disease are associated with loss-of-function (<i>LoF</i>) or gain-of-function (<i>GoF</i>) were primarily retrieved from [Maxwell et al., Am J Hum Genet, 2016](https://www.ncbi.nlm.nih.gov/pubmed/27153395), and [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk/)
+
+We want to make it explicit that this lis by no means regarded as an international consensus, but should rather be subject to continuous update by the international community that carry expertise on genetic risk factors for cancer.
+
+```{r genes, results='asis', echo=F}
+cat('| Symbol | Entrez ID |  MOI  | Mechanism of Disease | Gene Name | Source | Phenotype_Syndrome_CUI | Phenotype_Syndrome_Term |\n')
+cat('| :---   | :---      | :---  | :---| :---      | :---   | :---                   | :---                    |\n')  
+i <- 1
+while(i <= nrow(predisp_genes_display)){
+  g <- predisp_genes_display[i,]
+  cat('|',g$gene_symbol,'|',g$entrezgene,'|',g$moi,'|',g$mod ,'|', g$gene_name,'|',g$source,'|',g$phenotype_syndrome_cui,'|',g$phenotype_syndrome_term,'|')
+  cat('\n')
+  i <- i + 1
+  
+}
+```
+

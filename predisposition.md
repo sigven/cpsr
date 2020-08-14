@@ -1,2132 +1,246 @@
-Cancer predisposition genes
----------------------------
+## Cancer predisposition genes
 
-In order to establish a list of cancer predisposition genes, we considered both established, manually curated sources, and also empirical data (pathogenic gene variants) associated with hereditary cancer phenotypes.
+We aggregated data from multiple curated sources to compile an
+exploratory track of **n = 216** protein-coding genes with associations
+to cancer predisposition/cancer syndromes:
 
-Initially, we used three manually curated sources to compile a list of 209 protein-coding genes with associations to cancer predisposition/cancer syndromes:
+  - *TCGA\_PANCAN\_18* - TCGCA Pancancer germline study - [Huang et al,
+    Cell, 2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052)
+  - *CGC\_91* - Curated list - [Cancer Gene Census
+    (COSMIC)](https://cancer.sanger.ac.uk/census) - version 91
+  - *NCGC* - Expert-curated list from [Norwegian Cancer Genomics
+    Consortium](http://cancergenomics.no)
+  - *OTHER* - Other potential cancer-relevant genes, as contributed by
+    the CPSR user community
 
--   *TCGA\_PANCAN\_18* - TCGCA Pancancer germline study - [Huang et al, Cell, 2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052)
--   *CGC\_86* - Curated list - [Cancer Gene Census (COSMIC)](https://cancer.sanger.ac.uk/census) - version 86
--   *NCGC* - Expert-curated list from [Norwegian Cancer Genomics Consortium](http://cancergenomics.no)
+Data with respect to mechanisms of inheritance (<i>MoI</i> - autosomal
+recessive (AR) vs. autosomal dominant (AD) etc.) and whether mechanisms
+of disease are associated with loss-of-function (<i>LoF</i>) or
+gain-of-function (<i>GoF</i>) were primarily retrieved from [Maxwell et
+al., Am J Hum
+Genet, 2016](https://www.ncbi.nlm.nih.gov/pubmed/27153395), and
+[Genomics England PanelApp](https://panelapp.genomicsengland.co.uk/)
 
-Data with respect to mechanisms of inheritance (<i>MoI</i> - autosomal recessive (AR) vs. autosomal dominant (AD) etc.) and whether mechanisms of disease are associated with loss-of-function (<i>LoF</i>) or gain-of-function (<i>GoF</i>) were primarily retrieved from [Maxwell et al., Am J Hum Genet, 2016](https://www.ncbi.nlm.nih.gov/pubmed/27153395).
+We want to make it explicit that this lis by no means regarded as an
+international consensus, but should rather be subject to continuous
+update by the international community that carry expertise on genetic
+risk factors for cancer.
 
-<!-- Next, we considered the tree of [Medical Subject Headings (MeSH)](https://www.nlm.nih.gov/mesh/intro_trees.html) in [MedGen](https://www.ncbi.nlm.nih.gov/medgen/), and curated a list of hereditary cancer phenotypes, using *[Inherited cancer-predisposing syndrome](https://www.ncbi.nlm.nih.gov/medgen/798871)* and *[Hereditary Cancer](https://www.ncbi.nlm.nih.gov/medgen/232504)* as the main starting points. For this curated list of inherited cancer phenotypes, we queried ClinVar for protein-coding genes with class4/class5 variants. This resulted in a list of 166 protein-coding genes. Finally, limiting this to the ones that were also listed in the non-redundant set from three manually curated sources, our final list contained 144 protein-coding genes. -->
-We want to make it explicit that this list of 209 genes is by no means regarded as an international consensus, but should rather be subject to continuous update by the international community that carry expertise on genetic risk factors for cancer.
-
-<table style="width:56%;">
-<colgroup>
-<col width="6%" />
-<col width="6%" />
-<col width="6%" />
-<col width="6%" />
-<col width="6%" />
-<col width="6%" />
-<col width="6%" />
-<col width="6%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">Symbol</th>
-<th align="left">Entrez ID</th>
-<th align="left">MOI</th>
-<th align="left">LoF</th>
-<th align="left">Gene Name</th>
-<th align="left">Source</th>
-<th align="left">Phenotype_Syndrome_CUI</th>
-<th align="left">Phenotype_Syndrome_Term</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">ABCB11</td>
-<td align="left">8647</td>
-<td align="left">AR</td>
-<td align="left">LoF</td>
-<td align="left">ATP binding cassette subfamily B member 11</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left">C2931132</td>
-<td align="left">Crigler-Najjar syndrome, type II</td>
-</tr>
-<tr class="even">
-<td align="left">ABRAXAS1</td>
-<td align="left">84142</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">abraxas 1, BRCA1 A complex subunit</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">ACD</td>
-<td align="left">65057</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">ACD, shelterin complex subunit and telomerase recruitment factor</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">AIP</td>
-<td align="left">9049</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">aryl hydrocarbon receptor interacting protein</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">AKT1</td>
-<td align="left">207</td>
-<td align="left">AD</td>
-<td align="left">GoF</td>
-<td align="left">AKT serine/threonine kinase 1</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">ALK</td>
-<td align="left">238</td>
-<td align="left">AD</td>
-<td align="left">GoF</td>
-<td align="left">ALK receptor tyrosine kinase</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C0027819</td>
-<td align="left">Neuroblastoma</td>
-</tr>
-<tr class="odd">
-<td align="left">APC</td>
-<td align="left">324</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">APC, WNT signaling pathway regulator</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C2713442</td>
-<td align="left">Familial adenomatous polyposis 1</td>
-</tr>
-<tr class="even">
-<td align="left">APOBEC3B</td>
-<td align="left">9582</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">apolipoprotein B mRNA editing enzyme catalytic subunit 3B</td>
-<td align="left">CGC_86</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">AR</td>
-<td align="left">367</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">androgen receptor</td>
-<td align="left">CGC_86</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">ATM</td>
-<td align="left">472</td>
-<td align="left">AD/AR</td>
-<td align="left">LoF</td>
-<td align="left">ATM serine/threonine kinase</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C0004135</td>
-<td align="left">Ataxia-telangiectasia syndrome</td>
-</tr>
-<tr class="odd">
-<td align="left">ATR</td>
-<td align="left">545</td>
-<td align="left">AD/AR</td>
-<td align="left">LoF</td>
-<td align="left">ATR serine/threonine kinase</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86</td>
-<td align="left">C0265202;C3281203</td>
-<td align="left">Seckel syndrome; Cutaneous telangiectasia and cancer syndrome, familial</td>
-</tr>
-<tr class="even">
-<td align="left">AXIN1</td>
-<td align="left">8312</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">axin 1</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">AXIN2</td>
-<td align="left">8313</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">axin 2</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C1837750</td>
-<td align="left">Oligodontia-colorectal cancer syndrome</td>
-</tr>
-<tr class="even">
-<td align="left">BAP1</td>
-<td align="left">8314</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">BRCA1 associated protein 1</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C3280492;CN235077</td>
-<td align="left">Tumor susceptibility linked to germline BAP1 mutations; BAP1 Cancer Syndrome</td>
-</tr>
-<tr class="odd">
-<td align="left">BARD1</td>
-<td align="left">580</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">BRCA1 associated RING domain 1</td>
-<td align="left">CGC_86,NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">BLM</td>
-<td align="left">641</td>
-<td align="left">AD/AR</td>
-<td align="left">LoF</td>
-<td align="left">Bloom syndrome RecQ like helicase</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C0005859</td>
-<td align="left">Bloom syndrome</td>
-</tr>
-<tr class="odd">
-<td align="left">BMPR1A</td>
-<td align="left">657</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">bone morphogenetic protein receptor type 1A</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C0345893</td>
-<td align="left">Juvenile polyposis syndrome</td>
-</tr>
-<tr class="even">
-<td align="left">BRAF</td>
-<td align="left">673</td>
-<td align="left">AD</td>
-<td align="left">NA</td>
-<td align="left">B-Raf proto-oncogene, serine/threonine kinase</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left">C3150970;C3150971</td>
-<td align="left">Noonan syndrome 7; LEOPARD syndrome 3</td>
-</tr>
-<tr class="odd">
-<td align="left">BRCA1</td>
-<td align="left">672</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">BRCA1, DNA repair associated</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C0677776</td>
-<td align="left">Hereditary breast and ovarian cancer syndrome</td>
-</tr>
-<tr class="even">
-<td align="left">BRCA2</td>
-<td align="left">675</td>
-<td align="left">AD/AR</td>
-<td align="left">LoF</td>
-<td align="left">BRCA2, DNA repair associated</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C0677776;C1838457</td>
-<td align="left">Hereditary breast and ovarian cancer syndrome; Fanconi anemia, complementation group D1</td>
-</tr>
-<tr class="odd">
-<td align="left">BRIP1</td>
-<td align="left">83990</td>
-<td align="left">AD/AR</td>
-<td align="left">LoF</td>
-<td align="left">BRCA1 interacting protein C-terminal helicase 1</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C1836860</td>
-<td align="left">Fanconi anemia, complementation group J</td>
-</tr>
-<tr class="even">
-<td align="left">BUB1B</td>
-<td align="left">701</td>
-<td align="left">AR</td>
-<td align="left">LoF</td>
-<td align="left">BUB1 mitotic checkpoint serine/threonine kinase B</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C1850343</td>
-<td align="left">Mosaic variegated aneuploidy syndrome</td>
-</tr>
-<tr class="odd">
-<td align="left">CASR</td>
-<td align="left">846</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">calcium sensing receptor</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">CBL</td>
-<td align="left">867</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">Cbl proto-oncogene</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left">C0028326</td>
-<td align="left">Noonan syndrome</td>
-</tr>
-<tr class="odd">
-<td align="left">CDC73</td>
-<td align="left">79577</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">cell division cycle 73</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C1704981</td>
-<td align="left">Hyperparathyroidism 2</td>
-</tr>
-<tr class="even">
-<td align="left">CDH1</td>
-<td align="left">999</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">cadherin 1</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C1708349</td>
-<td align="left">Hereditary diffuse gastric cancer</td>
-</tr>
-<tr class="odd">
-<td align="left">CDH10</td>
-<td align="left">1008</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">cadherin 10</td>
-<td align="left">CGC_86</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">CDK4</td>
-<td align="left">1019</td>
-<td align="left">AD</td>
-<td align="left">GoF</td>
-<td align="left">cyclin dependent kinase 4</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C1512419;C1836892</td>
-<td align="left">Hereditary cutaneous melanoma; Cutaneous malignant melanoma 3</td>
-</tr>
-<tr class="odd">
-<td align="left">CDKN1B</td>
-<td align="left">1027</td>
-<td align="left">AD/AR</td>
-<td align="left">LoF</td>
-<td align="left">cyclin dependent kinase inhibitor 1B</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C1970712</td>
-<td align="left">Multiple endocrine neoplasia, type 4</td>
-</tr>
-<tr class="even">
-<td align="left">CDKN1C</td>
-<td align="left">1028</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">cyclin dependent kinase inhibitor 1C</td>
-<td align="left">TCGA_PANCAN_2018,NCGC</td>
-<td align="left">C0004903</td>
-<td align="left">Beckwith-Wiedemann syndrome</td>
-</tr>
-<tr class="odd">
-<td align="left">CDKN2A</td>
-<td align="left">1029</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">cyclin dependent kinase inhibitor 2A</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C1512419</td>
-<td align="left">Hereditary cutaneous melanoma</td>
-</tr>
-<tr class="even">
-<td align="left">CEBPA</td>
-<td align="left">1050</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">CCAAT enhancer binding protein alpha</td>
-<td align="left">TCGA_PANCAN_2018,NCGC</td>
-<td align="left">C0023467</td>
-<td align="left">Acute myeloid leukemia</td>
-</tr>
-<tr class="odd">
-<td align="left">CEP57</td>
-<td align="left">9702</td>
-<td align="left">AR</td>
-<td align="left">LoF</td>
-<td align="left">centrosomal protein 57</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">CHEK2</td>
-<td align="left">11200</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">checkpoint kinase 2</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C0346153</td>
-<td align="left">Familial cancer of breast</td>
-</tr>
-<tr class="odd">
-<td align="left">COL7A1</td>
-<td align="left">1294</td>
-<td align="left">AD/AR</td>
-<td align="left">LoF</td>
-<td align="left">collagen type VII alpha 1 chain</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left">C0014527</td>
-<td align="left">Epidermolysis bullosa</td>
-</tr>
-<tr class="even">
-<td align="left">CTNNA1</td>
-<td align="left">1495</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">catenin alpha 1</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">CTNNB1</td>
-<td align="left">1499</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">catenin beta 1</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">CTR9</td>
-<td align="left">9646</td>
-<td align="left">AD</td>
-<td align="left">NA</td>
-<td align="left">CTR9 homolog, Paf1/RNA polymerase II complex component</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">CTRC</td>
-<td align="left">11330</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">chymotrypsin C</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">CXCR4</td>
-<td align="left">7852</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">C-X-C motif chemokine receptor 4</td>
-<td align="left">CGC_86</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">CYLD</td>
-<td align="left">1540</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">CYLD lysine 63 deubiquitinase</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C1857941</td>
-<td align="left">Spiegler-Brooke syndrome</td>
-</tr>
-<tr class="even">
-<td align="left">DDB2</td>
-<td align="left">1643</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">damage specific DNA binding protein 2</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C1848411</td>
-<td align="left">Xeroderma pigmentosum, group E</td>
-</tr>
-<tr class="odd">
-<td align="left">DICER1</td>
-<td align="left">23405</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">dicer 1, ribonuclease III</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C1266144;C3839822</td>
-<td align="left">Pleuropulmonary blastoma; DICER1 syndrome</td>
-</tr>
-<tr class="even">
-<td align="left">DIRAS3</td>
-<td align="left">9077</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">DIRAS family GTPase 3</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">DIS3L2</td>
-<td align="left">129563</td>
-<td align="left">AR</td>
-<td align="left">LoF</td>
-<td align="left">DIS3 like 3'-5' exoribonuclease 2</td>
-<td align="left">TCGA_PANCAN_2018,NCGC</td>
-<td align="left">C0796113</td>
-<td align="left">Renal hamartomas nephroblastomatosis and fetal gigantism</td>
-</tr>
-<tr class="even">
-<td align="left">DKC1</td>
-<td align="left">1736</td>
-<td align="left">XLR</td>
-<td align="left">LoF</td>
-<td align="left">dyskerin pseudouridine synthase 1</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left">C1148551</td>
-<td align="left">Dyskeratosis congenita X-linked</td>
-</tr>
-<tr class="odd">
-<td align="left">DOCK8</td>
-<td align="left">81704</td>
-<td align="left">AR</td>
-<td align="left">LoF</td>
-<td align="left">dedicator of cytokinesis 8</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left">C1968689</td>
-<td align="left">Hyperimmunoglobulin E recurrent infection syndrome, autosomal recessive</td>
-</tr>
-<tr class="even">
-<td align="left">DROSHA</td>
-<td align="left">29102</td>
-<td align="left">AD</td>
-<td align="left">NA</td>
-<td align="left">drosha ribonuclease III</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">DTX3L</td>
-<td align="left">151636</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">deltex E3 ubiquitin ligase 3L</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">EGFR</td>
-<td align="left">1956</td>
-<td align="left">AD</td>
-<td align="left">GoF</td>
-<td align="left">epidermal growth factor receptor</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">ELANE</td>
-<td align="left">1991</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">elastase, neutrophil expressed</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left">C1859966</td>
-<td align="left">Severe congenital neutropenia autosomal dominant</td>
-</tr>
-<tr class="even">
-<td align="left">ENG</td>
-<td align="left">2022</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">endoglin</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">EPCAM</td>
-<td align="left">4072</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">epithelial cell adhesion molecule</td>
-<td align="left">TCGA_PANCAN_2018,NCGC</td>
-<td align="left">C2750471</td>
-<td align="left">Hereditary nonpolyposis colorectal cancer type 8</td>
-</tr>
-<tr class="even">
-<td align="left">ERBB4</td>
-<td align="left">2066</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">erb-b2 receptor tyrosine kinase 4</td>
-<td align="left">CGC_86</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">ERCC1</td>
-<td align="left">2067</td>
-<td align="left">AR</td>
-<td align="left">NA</td>
-<td align="left">ERCC excision repair 1, endonuclease non-catalytic subunit</td>
-<td align="left">TCGA_PANCAN_2018,NCGC</td>
-<td align="left">C1853100</td>
-<td align="left">Cerebrooculofacioskeletal syndrome 4</td>
-</tr>
-<tr class="even">
-<td align="left">ERCC2</td>
-<td align="left">2068</td>
-<td align="left">AR</td>
-<td align="left">LoF</td>
-<td align="left">ERCC excision repair 2, TFIIH core complex helicase subunit</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C0268138</td>
-<td align="left">Xeroderma pigmentosum, group D</td>
-</tr>
-<tr class="odd">
-<td align="left">ERCC3</td>
-<td align="left">2071</td>
-<td align="left">AR</td>
-<td align="left">LoF</td>
-<td align="left">ERCC excision repair 3, TFIIH core complex helicase subunit</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C0268136</td>
-<td align="left">Xeroderma Pigmentosum, Complementation Group B</td>
-</tr>
-<tr class="even">
-<td align="left">ERCC4</td>
-<td align="left">2072</td>
-<td align="left">AR</td>
-<td align="left">LoF</td>
-<td align="left">ERCC excision repair 4, endonuclease catalytic subunit</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C0268140;C3808988</td>
-<td align="left">Xeroderma pigmentosum, group F; Fanconi anemia, complementation group Q</td>
-</tr>
-<tr class="odd">
-<td align="left">ERCC5</td>
-<td align="left">2073</td>
-<td align="left">AR</td>
-<td align="left">LoF</td>
-<td align="left">ERCC excision repair 5, endonuclease</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C0268141</td>
-<td align="left">Xeroderma pigmentosum, group G</td>
-</tr>
-<tr class="even">
-<td align="left">ETV6</td>
-<td align="left">2120</td>
-<td align="left">AD</td>
-<td align="left">NA</td>
-<td align="left">ETS variant 6</td>
-<td align="left">TCGA_PANCAN_2018,NCGC</td>
-<td align="left">C4015537</td>
-<td align="left">Thrombocytopenia 5</td>
-</tr>
-<tr class="odd">
-<td align="left">EXT1</td>
-<td align="left">2131</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">exostosin glycosyltransferase 1</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C0008479</td>
-<td align="left">Chondrosarcoma</td>
-</tr>
-<tr class="even">
-<td align="left">EXT2</td>
-<td align="left">2132</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">exostosin glycosyltransferase 2</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C1851413</td>
-<td align="left">Multiple exostoses type 2</td>
-</tr>
-<tr class="odd">
-<td align="left">EZH2</td>
-<td align="left">2146</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">enhancer of zeste 2 polycomb repressive complex 2 subunit</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">FAH</td>
-<td align="left">2184</td>
-<td align="left">AR</td>
-<td align="left">LoF</td>
-<td align="left">fumarylacetoacetate hydrolase</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">FANCA</td>
-<td align="left">2175</td>
-<td align="left">AR</td>
-<td align="left">LoF</td>
-<td align="left">Fanconi anemia complementation group A</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C3469521</td>
-<td align="left">Fanconi anemia, complementation group A</td>
-</tr>
-<tr class="even">
-<td align="left">FANCB</td>
-<td align="left">2187</td>
-<td align="left">XLR</td>
-<td align="left">LoF</td>
-<td align="left">Fanconi anemia complementation group B</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">FANCC</td>
-<td align="left">2176</td>
-<td align="left">AD/AR</td>
-<td align="left">LoF</td>
-<td align="left">Fanconi anemia complementation group C</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C3468041</td>
-<td align="left">Fanconi anemia, complementation group C</td>
-</tr>
-<tr class="even">
-<td align="left">FANCD2</td>
-<td align="left">2177</td>
-<td align="left">AR</td>
-<td align="left">LoF</td>
-<td align="left">Fanconi anemia complementation group D2</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C3160738</td>
-<td align="left">Fanconi anemia, complementation group D2</td>
-</tr>
-<tr class="odd">
-<td align="left">FANCE</td>
-<td align="left">2178</td>
-<td align="left">AR</td>
-<td align="left">LoF</td>
-<td align="left">Fanconi anemia complementation group E</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C3160739</td>
-<td align="left">Fanconi anemia, complementation group E</td>
-</tr>
-<tr class="even">
-<td align="left">FANCF</td>
-<td align="left">2188</td>
-<td align="left">AR</td>
-<td align="left">LoF</td>
-<td align="left">Fanconi anemia complementation group F</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C3469526</td>
-<td align="left">Fanconi anemia, complementation group F</td>
-</tr>
-<tr class="odd">
-<td align="left">FANCG</td>
-<td align="left">2189</td>
-<td align="left">AR</td>
-<td align="left">LoF</td>
-<td align="left">Fanconi anemia complementation group G</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C3469527</td>
-<td align="left">Fanconi anemia, complementation group G</td>
-</tr>
-<tr class="even">
-<td align="left">FANCI</td>
-<td align="left">55215</td>
-<td align="left">AR</td>
-<td align="left">LoF</td>
-<td align="left">Fanconi anemia complementation group I</td>
-<td align="left">TCGA_PANCAN_2018,NCGC</td>
-<td align="left">C1836861</td>
-<td align="left">Fanconi anemia, complementation group I</td>
-</tr>
-<tr class="odd">
-<td align="left">FANCL</td>
-<td align="left">55120</td>
-<td align="left">AR</td>
-<td align="left">LoF</td>
-<td align="left">Fanconi anemia complementation group L</td>
-<td align="left">TCGA_PANCAN_2018,NCGC</td>
-<td align="left">C3469528</td>
-<td align="left">Fanconi anemia, complementation group L</td>
-</tr>
-<tr class="even">
-<td align="left">FANCM</td>
-<td align="left">57697</td>
-<td align="left">AD/AR</td>
-<td align="left">LoF</td>
-<td align="left">Fanconi anemia complementation group M</td>
-<td align="left">TCGA_PANCAN_2018,NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">FAS</td>
-<td align="left">355</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">Fas cell surface death receptor</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left">C1328840</td>
-<td align="left">Autoimmune lymphoproliferative syndrome</td>
-</tr>
-<tr class="even">
-<td align="left">FAT1</td>
-<td align="left">2195</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">FAT atypical cadherin 1</td>
-<td align="left">CGC_86</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">FEN1</td>
-<td align="left">2237</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">flap structure-specific endonuclease 1</td>
-<td align="left">CGC_86</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">FH</td>
-<td align="left">2271</td>
-<td align="left">AD/AR</td>
-<td align="left">LoF</td>
-<td align="left">fumarate hydratase</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C1708350</td>
-<td align="left">Multiple cutaneous leiomyomas</td>
-</tr>
-<tr class="odd">
-<td align="left">FLCN</td>
-<td align="left">201163</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">folliculin</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">CN221571</td>
-<td align="left">Birt-Hogg-Dub syndrome</td>
-</tr>
-<tr class="even">
-<td align="left">GALNT12</td>
-<td align="left">79695</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">polypeptide N-acetylgalactosaminyltransferase 12</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">GATA2</td>
-<td align="left">2624</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">GATA binding protein 2</td>
-<td align="left">TCGA_PANCAN_2018,NCGC</td>
-<td align="left">C3280030</td>
-<td align="left">Dendritic cell, monocyte, B lymphocyte, and natural killer lymphocyte deficiency</td>
-</tr>
-<tr class="even">
-<td align="left">GBA</td>
-<td align="left">2629</td>
-<td align="left">AR</td>
-<td align="left">LoF</td>
-<td align="left">glucosylceramidase beta</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">GJB2</td>
-<td align="left">2706</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">gap junction protein beta 2</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">GPC3</td>
-<td align="left">2719</td>
-<td align="left">XLR</td>
-<td align="left">LoF</td>
-<td align="left">glypican 3</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C0796154</td>
-<td align="left">Simpson-Golabi-Behmel syndrome</td>
-</tr>
-<tr class="odd">
-<td align="left">GREM1</td>
-<td align="left">26585</td>
-<td align="left">AD</td>
-<td align="left">GoF</td>
-<td align="left">gremlin 1, DAN family BMP antagonist</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">HABP2</td>
-<td align="left">3026</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">hyaluronan binding protein 2</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">HFE</td>
-<td align="left">3077</td>
-<td align="left">AR</td>
-<td align="left">LoF</td>
-<td align="left">homeostatic iron regulator</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left">C0392514</td>
-<td align="left">Hereditary hemochromatosis</td>
-</tr>
-<tr class="even">
-<td align="left">HMBS</td>
-<td align="left">3145</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">hydroxymethylbilane synthase</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">HNF1A</td>
-<td align="left">6927</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">HNF1 homeobox A</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C1840646</td>
-<td align="left">Hepatic adenomas, familial</td>
-</tr>
-<tr class="even">
-<td align="left">HNF1B</td>
-<td align="left">6928</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">HNF1 homeobox B</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">HOXB13</td>
-<td align="left">10481</td>
-<td align="left">AD</td>
-<td align="left">NA</td>
-<td align="left">homeobox B13</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">HRAS</td>
-<td align="left">3265</td>
-<td align="left">AD</td>
-<td align="left">GoF</td>
-<td align="left">HRas proto-oncogene, GTPase</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C0587248</td>
-<td align="left">Costello syndrome</td>
-</tr>
-<tr class="odd">
-<td align="left">ITK</td>
-<td align="left">3702</td>
-<td align="left">AR</td>
-<td align="left">LoF</td>
-<td align="left">IL2 inducible T cell kinase</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left">C3552634</td>
-<td align="left">Lymphoproliferative syndrome 1</td>
-</tr>
-<tr class="even">
-<td align="left">JMJD1C</td>
-<td align="left">221037</td>
-<td align="left">AD</td>
-<td align="left">NA</td>
-<td align="left">jumonji domain containing 1C</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">KDR</td>
-<td align="left">3791</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">kinase insert domain receptor</td>
-<td align="left">CGC_86</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">KIF1B</td>
-<td align="left">23095</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">kinesin family member 1B</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">KIT</td>
-<td align="left">3815</td>
-<td align="left">AD</td>
-<td align="left">GoF</td>
-<td align="left">KIT proto-oncogene receptor tyrosine kinase</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C0238198</td>
-<td align="left">Gastrointestinal stroma tumor</td>
-</tr>
-<tr class="even">
-<td align="left">KRAS</td>
-<td align="left">3845</td>
-<td align="left">AD</td>
-<td align="left">NA</td>
-<td align="left">KRAS proto-oncogene, GTPase</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left">C1860991;C2674723</td>
-<td align="left">Noonan syndrome 3; RAS-associated autoimmune leukoproliferative disorder</td>
-</tr>
-<tr class="odd">
-<td align="left">LMO1</td>
-<td align="left">4004</td>
-<td align="left">AD</td>
-<td align="left">NA</td>
-<td align="left">LIM domain only 1</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86</td>
-<td align="left">C4225207</td>
-<td align="left">Neuroblastoma, susceptibility to, 7</td>
-</tr>
-<tr class="even">
-<td align="left">LZTR1</td>
-<td align="left">8216</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">leucine zipper like transcription regulator 1</td>
-<td align="left">CGC_86,NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">MAP2K1</td>
-<td align="left">5604</td>
-<td align="left">AD</td>
-<td align="left">NA</td>
-<td align="left">mitogen-activated protein kinase kinase 1</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">MAP2K2</td>
-<td align="left">5605</td>
-<td align="left">AD</td>
-<td align="left">NA</td>
-<td align="left">mitogen-activated protein kinase kinase 2</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">MAX</td>
-<td align="left">4149</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">MYC associated factor X</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C1708353</td>
-<td align="left">Hereditary Paraganglioma-Pheochromocytoma Syndromes</td>
-</tr>
-<tr class="even">
-<td align="left">MEN1</td>
-<td align="left">4221</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">menin 1</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C0025267</td>
-<td align="left">Multiple endocrine neoplasia, type 1</td>
-</tr>
-<tr class="odd">
-<td align="left">MET</td>
-<td align="left">4233</td>
-<td align="left">AD</td>
-<td align="left">GoF</td>
-<td align="left">MET proto-oncogene, receptor tyrosine kinase</td>
-<td align="left">TCGA_PANCAN_2018,NCGC</td>
-<td align="left">C0007134</td>
-<td align="left">Renal cell carcinoma, papillary, 1</td>
-</tr>
-<tr class="even">
-<td align="left">MITF</td>
-<td align="left">4286</td>
-<td align="left">AD</td>
-<td align="left">GoF</td>
-<td align="left">melanogenesis associated transcription factor</td>
-<td align="left">TCGA_PANCAN_2018,NCGC</td>
-<td align="left">C1512419</td>
-<td align="left">Hereditary cutaneous melanoma</td>
-</tr>
-<tr class="odd">
-<td align="left">MLH1</td>
-<td align="left">4292</td>
-<td align="left">AD/AR</td>
-<td align="left">LoF</td>
-<td align="left">mutL homolog 1</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C0009405;C0265325;C1333990</td>
-<td align="left">Hereditary nonpolyposis colon cancer; Turcot syndrome; Lynch syndrome</td>
-</tr>
-<tr class="even">
-<td align="left">MLH3</td>
-<td align="left">27030</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">mutL homolog 3</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">MPL</td>
-<td align="left">4352</td>
-<td align="left">AD</td>
-<td align="left">NA</td>
-<td align="left">MPL proto-oncogene, thrombopoietin receptor</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86</td>
-<td align="left">C4273671</td>
-<td align="left">Inherited predisposition to essential thrombocythemia</td>
-</tr>
-<tr class="even">
-<td align="left">MRE11</td>
-<td align="left">4361</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">MRE11 homolog, double strand break repair nuclease</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">MSH2</td>
-<td align="left">4436</td>
-<td align="left">AD/AR</td>
-<td align="left">LoF</td>
-<td align="left">mutS homolog 2</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C0009405;C0265325;C1333990</td>
-<td align="left">Hereditary nonpolyposis colon cancer; Turcot syndrome; Lynch syndrome</td>
-</tr>
-<tr class="even">
-<td align="left">MSH3</td>
-<td align="left">4437</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">mutS homolog 3</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">MSH6</td>
-<td align="left">2956</td>
-<td align="left">AD/AR</td>
-<td align="left">LoF</td>
-<td align="left">mutS homolog 6</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C0009405;C0265325;C1333990</td>
-<td align="left">Hereditary nonpolyposis colon cancer; Turcot syndrome; Lynch syndrome</td>
-</tr>
-<tr class="even">
-<td align="left">MTAP</td>
-<td align="left">4507</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">methylthioadenosine phosphorylase</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left">C1862177</td>
-<td align="left">Diaphyseal medullary stenosis with malignant fibrous histiocytoma</td>
-</tr>
-<tr class="odd">
-<td align="left">MUTYH</td>
-<td align="left">4595</td>
-<td align="left">AR</td>
-<td align="left">LoF</td>
-<td align="left">mutY DNA glycosylase</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C1837991</td>
-<td align="left">MYH-associated polyposis</td>
-</tr>
-<tr class="even">
-<td align="left">NBN</td>
-<td align="left">4683</td>
-<td align="left">AD/AR</td>
-<td align="left">LoF</td>
-<td align="left">nibrin</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C0398791</td>
-<td align="left">Microcephaly, normal intelligence and immunodeficiency</td>
-</tr>
-<tr class="odd">
-<td align="left">NF1</td>
-<td align="left">4763</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">neurofibromin 1</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C0027831</td>
-<td align="left">Neurofibromatosis, type 1</td>
-</tr>
-<tr class="even">
-<td align="left">NF2</td>
-<td align="left">4771</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">neurofibromin 2</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C0027832</td>
-<td align="left">Neurofibromatosis, type 2</td>
-</tr>
-<tr class="odd">
-<td align="left">NHP2</td>
-<td align="left">55651</td>
-<td align="left">AR</td>
-<td align="left">NA</td>
-<td align="left">NHP2 ribonucleoprotein</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left">C3151441</td>
-<td align="left">Dyskeratosis congenita, autosomal recessive 2</td>
-</tr>
-<tr class="even">
-<td align="left">NOP10</td>
-<td align="left">55505</td>
-<td align="left">AR</td>
-<td align="left">NA</td>
-<td align="left">NOP10 ribonucleoprotein</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left">C1857144</td>
-<td align="left">Dyskeratosis congenita autosomal recessive 1</td>
-</tr>
-<tr class="odd">
-<td align="left">NRAS</td>
-<td align="left">4893</td>
-<td align="left">AD</td>
-<td align="left">NA</td>
-<td align="left">NRAS proto-oncogene, GTPase</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left">C0265318;C0334082;C1842036;C2674723;C2750732;CN166718</td>
-<td align="left">NA; Epidermal nevus; Congenital giant melanocytic nevus; RAS-associated autoimmune leukoproliferative disorder; Noonan syndrome 6; Rasopathy</td>
-</tr>
-<tr class="even">
-<td align="left">NSD1</td>
-<td align="left">64324</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">nuclear receptor binding SET domain protein 1</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">NTHL1</td>
-<td align="left">4913</td>
-<td align="left">AR</td>
-<td align="left">NA</td>
-<td align="left">nth like DNA glycosylase 1</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C4225157</td>
-<td align="left">Familial adenomatous polyposis 3</td>
-</tr>
-<tr class="even">
-<td align="left">OGG1</td>
-<td align="left">4968</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">8-oxoguanine DNA glycosylase</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">PALB2</td>
-<td align="left">79728</td>
-<td align="left">AD/AR</td>
-<td align="left">LoF</td>
-<td align="left">partner and localizer of BRCA2</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C1835817</td>
-<td align="left">Fanconi anemia, complementation group N</td>
-</tr>
-<tr class="even">
-<td align="left">PAX5</td>
-<td align="left">5079</td>
-<td align="left">AD</td>
-<td align="left">NA</td>
-<td align="left">paired box 5</td>
-<td align="left">TCGA_PANCAN_2018,NCGC</td>
-<td align="left">C3809874</td>
-<td align="left">Leukemia, acute lymphoblastic, susceptibility to, 3</td>
-</tr>
-<tr class="odd">
-<td align="left">PDGFRA</td>
-<td align="left">5156</td>
-<td align="left">AD</td>
-<td align="left">GoF</td>
-<td align="left">platelet derived growth factor receptor alpha</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C0238198</td>
-<td align="left">Gastrointestinal stroma tumor</td>
-</tr>
-<tr class="even">
-<td align="left">PHOX2B</td>
-<td align="left">8929</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">paired like homeobox 2b</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C2751682</td>
-<td align="left">Neuroblastoma 2</td>
-</tr>
-<tr class="odd">
-<td align="left">PIK3CA</td>
-<td align="left">5290</td>
-<td align="left">AD</td>
-<td align="left">GoF</td>
-<td align="left">phosphatidylinositol-4,5-bisphosphate 3-kinase catalytic subunit alpha</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">PINK1</td>
-<td align="left">65018</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">PTEN induced putative kinase 1</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">PMS1</td>
-<td align="left">5378</td>
-<td align="left">AR</td>
-<td align="left">NA</td>
-<td align="left">PMS1 homolog 1, mismatch repair system component</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">CN029768</td>
-<td align="left">Familial colorectal cancer</td>
-</tr>
-<tr class="even">
-<td align="left">PMS2</td>
-<td align="left">5395</td>
-<td align="left">AD/AR</td>
-<td align="left">LoF</td>
-<td align="left">PMS1 homolog 2, mismatch repair system component</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C0009405;C0265325;C1333990</td>
-<td align="left">Hereditary nonpolyposis colon cancer; Turcot syndrome; Lynch syndrome</td>
-</tr>
-<tr class="odd">
-<td align="left">POLD1</td>
-<td align="left">5424</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">DNA polymerase delta 1, catalytic subunit</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">CN237711</td>
-<td align="left">Polymerase proofreading-related adenomatous polyposis</td>
-</tr>
-<tr class="even">
-<td align="left">POLE</td>
-<td align="left">5426</td>
-<td align="left">AD/AR</td>
-<td align="left">LoF</td>
-<td align="left">DNA polymerase epsilon, catalytic subunit</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">CN237711</td>
-<td align="left">Polymerase proofreading-related adenomatous polyposis</td>
-</tr>
-<tr class="odd">
-<td align="left">POLH</td>
-<td align="left">5429</td>
-<td align="left">AR</td>
-<td align="left">LoF</td>
-<td align="left">DNA polymerase eta</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left">C1848410</td>
-<td align="left">Xeroderma pigmentosum, variant type</td>
-</tr>
-<tr class="even">
-<td align="left">POLQ</td>
-<td align="left">10721</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">DNA polymerase theta</td>
-<td align="left">CGC_86</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">POT1</td>
-<td align="left">25913</td>
-<td align="left">AD</td>
-<td align="left">NA</td>
-<td align="left">protection of telomeres 1</td>
-<td align="left">TCGA_PANCAN_2018,NCGC</td>
-<td align="left">C4014476</td>
-<td align="left">Melanoma, cutaneous malignant, susceptibility to, 10</td>
-</tr>
-<tr class="even">
-<td align="left">PPM1D</td>
-<td align="left">8493</td>
-<td align="left">Mosaic</td>
-<td align="left">LoF</td>
-<td align="left">protein phosphatase, Mg2+/Mn2+ dependent 1D</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">PRDM9</td>
-<td align="left">56979</td>
-<td align="left">AD</td>
-<td align="left">NA</td>
-<td align="left">PR/SET domain 9</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">PRF1</td>
-<td align="left">5551</td>
-<td align="left">AR</td>
-<td align="left">LoF</td>
-<td align="left">perforin 1</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C1863727</td>
-<td align="left">Hemophagocytic lymphohistiocytosis, familial, 2</td>
-</tr>
-<tr class="odd">
-<td align="left">PRKAR1A</td>
-<td align="left">5573</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">protein kinase cAMP-dependent type I regulatory subunit alpha</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C0406810</td>
-<td align="left">Carney complex</td>
-</tr>
-<tr class="even">
-<td align="left">PRSS1</td>
-<td align="left">5644</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">serine protease 1</td>
-<td align="left">TCGA_PANCAN_2018,NCGC</td>
-<td align="left">C0238339</td>
-<td align="left">Hereditary pancreatitis</td>
-</tr>
-<tr class="odd">
-<td align="left">PTCH1</td>
-<td align="left">5727</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">patched 1</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C0004779</td>
-<td align="left">Gorlin syndrome</td>
-</tr>
-<tr class="even">
-<td align="left">PTEN</td>
-<td align="left">5728</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">phosphatase and tensin homolog</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C1959582;CN072330</td>
-<td align="left">PTEN hamartoma tumor syndrome; Cowden syndrome 1</td>
-</tr>
-<tr class="odd">
-<td align="left">PTPN11</td>
-<td align="left">5781</td>
-<td align="left">AD</td>
-<td align="left">GoF</td>
-<td align="left">protein tyrosine phosphatase, non-receptor type 11</td>
-<td align="left">TCGA_PANCAN_2018,NCGC</td>
-<td align="left">C0028326</td>
-<td align="left">Noonan syndrome</td>
-</tr>
-<tr class="even">
-<td align="left">PTPN13</td>
-<td align="left">5783</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">protein tyrosine phosphatase, non-receptor type 13</td>
-<td align="left">CGC_86</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">RAD50</td>
-<td align="left">10111</td>
-<td align="left">AD/AR</td>
-<td align="left">LoF</td>
-<td align="left">RAD50 double strand break repair protein</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">RAD51</td>
-<td align="left">5888</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">RAD51 recombinase</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">RAD51B</td>
-<td align="left">5890</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">RAD51 paralog B</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">RAD51C</td>
-<td align="left">5889</td>
-<td align="left">AD/AR</td>
-<td align="left">LoF</td>
-<td align="left">RAD51 paralog C</td>
-<td align="left">TCGA_PANCAN_2018,NCGC</td>
-<td align="left">C3150653</td>
-<td align="left">Fanconi anemia, complementation group O</td>
-</tr>
-<tr class="odd">
-<td align="left">RAD51D</td>
-<td align="left">5892</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">RAD51 paralog D</td>
-<td align="left">TCGA_PANCAN_2018,NCGC</td>
-<td align="left">C3280345</td>
-<td align="left">Breast-ovarian cancer, familial 4</td>
-</tr>
-<tr class="even">
-<td align="left">RAF1</td>
-<td align="left">5894</td>
-<td align="left">AD</td>
-<td align="left">NA</td>
-<td align="left">Raf-1 proto-oncogene, serine/threonine kinase</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left">C1969056;C1969057</td>
-<td align="left">LEOPARD syndrome 2; Noonan syndrome 5</td>
-</tr>
-<tr class="odd">
-<td align="left">RB1</td>
-<td align="left">5925</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">RB transcriptional corepressor 1</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C0029463;C0035335</td>
-<td align="left">Osteosarcoma; Retinoblastoma</td>
-</tr>
-<tr class="even">
-<td align="left">RCC2</td>
-<td align="left">55920</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">regulator of chromosome condensation 2</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">RECQL</td>
-<td align="left">5965</td>
-<td align="left">AD</td>
-<td align="left">NA</td>
-<td align="left">RecQ like helicase</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">RECQL4</td>
-<td align="left">9401</td>
-<td align="left">AR</td>
-<td align="left">LoF</td>
-<td align="left">RecQ like helicase 4</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C0032339</td>
-<td align="left">Rothmund-Thomson syndrome</td>
-</tr>
-<tr class="odd">
-<td align="left">RET</td>
-<td align="left">5979</td>
-<td align="left">AD</td>
-<td align="left">GoF</td>
-<td align="left">ret proto-oncogene</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C0025268;C0025269;C1833921</td>
-<td align="left">Multiple endocrine neoplasia, type 2a; Multiple endocrine neoplasia, type 2b; Familial medullary thyroid carcinoma</td>
-</tr>
-<tr class="even">
-<td align="left">RFWD3</td>
-<td align="left">55159</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">ring finger and WD repeat domain 3</td>
-<td align="left">CGC_86</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">RHBDF2</td>
-<td align="left">79651</td>
-<td align="left">AD</td>
-<td align="left">GoF</td>
-<td align="left">rhomboid 5 homolog 2</td>
-<td align="left">TCGA_PANCAN_2018,NCGC</td>
-<td align="left">C1835664</td>
-<td align="left">Howel-Evans syndrome</td>
-</tr>
-<tr class="even">
-<td align="left">RING1</td>
-<td align="left">6015</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">ring finger protein 1</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">RINT1</td>
-<td align="left">60561</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">RAD50 interactor 1</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">RMRP</td>
-<td align="left">6023</td>
-<td align="left">AR</td>
-<td align="left">LoF</td>
-<td align="left">RNA component of mitochondrial RNA processing endoribonuclease</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left">C0220748</td>
-<td align="left">Metaphyseal chondrodysplasia, McKusick type</td>
-</tr>
-<tr class="odd">
-<td align="left">RUNX1</td>
-<td align="left">861</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">runt related transcription factor 1</td>
-<td align="left">TCGA_PANCAN_2018,NCGC</td>
-<td align="left">C1832388</td>
-<td align="left">Familial platelet disorder with associated myeloid malignancy</td>
-</tr>
-<tr class="even">
-<td align="left">SBDS</td>
-<td align="left">51119</td>
-<td align="left">AR</td>
-<td align="left">LoF</td>
-<td align="left">SBDS, ribosome maturation factor</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C0272170</td>
-<td align="left">Shwachman syndrome</td>
-</tr>
-<tr class="odd">
-<td align="left">SCG5</td>
-<td align="left">6447</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">secretogranin V</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">SDHA</td>
-<td align="left">6389</td>
-<td align="left">AD/AR</td>
-<td align="left">LoF</td>
-<td align="left">succinate dehydrogenase complex flavoprotein subunit A</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C3279992</td>
-<td align="left">Paragangliomas 5</td>
-</tr>
-<tr class="odd">
-<td align="left">SDHAF2</td>
-<td align="left">54949</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">succinate dehydrogenase complex assembly factor 2</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C1708353</td>
-<td align="left">Hereditary Paraganglioma-Pheochromocytoma Syndromes</td>
-</tr>
-<tr class="even">
-<td align="left">SDHB</td>
-<td align="left">6390</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">succinate dehydrogenase complex iron sulfur subunit B</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C1708353;C1847319</td>
-<td align="left">Hereditary Paraganglioma-Pheochromocytoma Syndromes; Paraganglioma and gastric stromal sarcoma</td>
-</tr>
-<tr class="odd">
-<td align="left">SDHC</td>
-<td align="left">6391</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">succinate dehydrogenase complex subunit C</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C1708353;C1847319</td>
-<td align="left">Hereditary Paraganglioma-Pheochromocytoma Syndromes; Paraganglioma and gastric stromal sarcoma</td>
-</tr>
-<tr class="even">
-<td align="left">SDHD</td>
-<td align="left">6392</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">succinate dehydrogenase complex subunit D</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C1708353;C1847319</td>
-<td align="left">Hereditary Paraganglioma-Pheochromocytoma Syndromes; Paraganglioma and gastric stromal sarcoma</td>
-</tr>
-<tr class="odd">
-<td align="left">SERPINA1</td>
-<td align="left">5265</td>
-<td align="left">AR</td>
-<td align="left">LoF</td>
-<td align="left">serpin family A member 1</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left">C0221757</td>
-<td align="left">Alpha-1-antitrypsin deficiency</td>
-</tr>
-<tr class="even">
-<td align="left">SETBP1</td>
-<td align="left">26040</td>
-<td align="left">AD</td>
-<td align="left">NA</td>
-<td align="left">SET binding protein 1</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86</td>
-<td align="left">C0265227</td>
-<td align="left">Schinzel-Giedion syndrome</td>
-</tr>
-<tr class="odd">
-<td align="left">SH2B3</td>
-<td align="left">10019</td>
-<td align="left">AR</td>
-<td align="left">NA</td>
-<td align="left">SH2B adaptor protein 3</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">SH2D1A</td>
-<td align="left">4068</td>
-<td align="left">XLR</td>
-<td align="left">LoF</td>
-<td align="left">SH2 domain containing 1A</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left">C1868674</td>
-<td align="left">Lymphoproliferative syndrome 1, X-linked</td>
-</tr>
-<tr class="odd">
-<td align="left">SHOC2</td>
-<td align="left">8036</td>
-<td align="left">AD</td>
-<td align="left">NA</td>
-<td align="left">SHOC2, leucine rich repeat scaffold protein</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left">C1843181</td>
-<td align="left">Noonan syndrome-like disorder with loose anagen hair 1</td>
-</tr>
-<tr class="even">
-<td align="left">SLC25A13</td>
-<td align="left">10165</td>
-<td align="left">AR</td>
-<td align="left">LoF</td>
-<td align="left">solute carrier family 25 member 13</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">SLX4</td>
-<td align="left">84464</td>
-<td align="left">AR</td>
-<td align="left">LoF</td>
-<td align="left">SLX4 structure-specific endonuclease subunit</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">SMAD4</td>
-<td align="left">4089</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">SMAD family member 4</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C0345893</td>
-<td align="left">Juvenile polyposis syndrome</td>
-</tr>
-<tr class="odd">
-<td align="left">SMARCA4</td>
-<td align="left">6597</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">SWI/SNF related, matrix associated, actin dependent regulator of chromatin, subfamily a, member 4</td>
-<td align="left">TCGA_PANCAN_2018,NCGC</td>
-<td align="left">C2750074</td>
-<td align="left">Rhabdoid tumor predisposition syndrome 2</td>
-</tr>
-<tr class="even">
-<td align="left">SMARCB1</td>
-<td align="left">6598</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">SWI/SNF related, matrix associated, actin dependent regulator of chromatin, subfamily b, member 1</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C1836327</td>
-<td align="left">Rhabdoid tumor predisposition syndrome 1</td>
-</tr>
-<tr class="odd">
-<td align="left">SMARCE1</td>
-<td align="left">6605</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">SWI/SNF related, matrix associated, actin dependent regulator of chromatin, subfamily e, member 1</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C1333989</td>
-<td align="left">Meningioma, familial</td>
-</tr>
-<tr class="even">
-<td align="left">SOS1</td>
-<td align="left">6654</td>
-<td align="left">AD</td>
-<td align="left">GoF</td>
-<td align="left">SOS Ras/Rac guanine nucleotide exchange factor 1</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left">C0028326</td>
-<td align="left">Noonan syndrome</td>
-</tr>
-<tr class="odd">
-<td align="left">SPINK1</td>
-<td align="left">6690</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">serine peptidase inhibitor, Kazal type 1</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">SPOP</td>
-<td align="left">8405</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">speckle type BTB/POZ protein</td>
-<td align="left">CGC_86</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">SPRED1</td>
-<td align="left">161742</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">sprouty related EVH1 domain containing 1</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">SPRTN</td>
-<td align="left">83932</td>
-<td align="left">AR</td>
-<td align="left">NA</td>
-<td align="left">SprT-like N-terminal domain</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left">C4015461</td>
-<td align="left">Ruijs-Aalfs syndrome</td>
-</tr>
-<tr class="odd">
-<td align="left">SRY</td>
-<td align="left">6736</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">sex determining region Y</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left">C0206661</td>
-<td align="left">Gonadoblastoma</td>
-</tr>
-<tr class="even">
-<td align="left">STAT3</td>
-<td align="left">6774</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">signal transducer and activator of transcription 3</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86</td>
-<td align="left">C2936739</td>
-<td align="left">Hyper IgE Syndrome, Autosomal Dominant</td>
-</tr>
-<tr class="odd">
-<td align="left">STK11</td>
-<td align="left">6794</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">serine/threonine kinase 11</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C0031269</td>
-<td align="left">Peutz-Jeghers syndrome</td>
-</tr>
-<tr class="even">
-<td align="left">SUFU</td>
-<td align="left">51684</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">SUFU negative regulator of hedgehog signaling</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C0025149;C1333989</td>
-<td align="left">Medulloblastoma; Meningioma, familial</td>
-</tr>
-<tr class="odd">
-<td align="left">TERF2IP</td>
-<td align="left">54386</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">TERF2 interacting protein</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">TERT</td>
-<td align="left">7015</td>
-<td align="left">AD/AR</td>
-<td align="left">LoF</td>
-<td align="left">telomerase reverse transcriptase</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C1851970</td>
-<td align="left">Dyskeratosis congenita autosomal dominant</td>
-</tr>
-<tr class="odd">
-<td align="left">TGFBR1</td>
-<td align="left">7046</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">transforming growth factor beta receptor 1</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left">C0546476</td>
-<td align="left">Multiple self healing squamous epithelioma</td>
-</tr>
-<tr class="even">
-<td align="left">TGFBR2</td>
-<td align="left">7048</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">transforming growth factor beta receptor 2</td>
-<td align="left">CGC_86</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">TMEM127</td>
-<td align="left">55654</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">transmembrane protein 127</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C0031511</td>
-<td align="left">Pheochromocytoma</td>
-</tr>
-<tr class="even">
-<td align="left">TP53</td>
-<td align="left">7157</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">tumor protein p53</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C1835398</td>
-<td align="left">Li-Fraumeni syndrome 1</td>
-</tr>
-<tr class="odd">
-<td align="left">TP63</td>
-<td align="left">8626</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">tumor protein p63</td>
-<td align="left">CGC_86</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">TRIM37</td>
-<td align="left">4591</td>
-<td align="left">AR</td>
-<td align="left">LoF</td>
-<td align="left">tripartite motif containing 37</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">TSC1</td>
-<td align="left">7248</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">TSC complex subunit 1</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C1854465</td>
-<td align="left">Tuberous sclerosis 1</td>
-</tr>
-<tr class="even">
-<td align="left">TSC2</td>
-<td align="left">7249</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">TSC complex subunit 2</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C1860707</td>
-<td align="left">Tuberous sclerosis 2</td>
-</tr>
-<tr class="odd">
-<td align="left">TSHR</td>
-<td align="left">7253</td>
-<td align="left">AD</td>
-<td align="left">NA</td>
-<td align="left">thyroid stimulating hormone receptor</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86</td>
-<td align="left">C1836706</td>
-<td align="left">Hyperthyroidism, nonautoimmune</td>
-</tr>
-<tr class="even">
-<td align="left">UROD</td>
-<td align="left">7389</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">uroporphyrinogen decarboxylase</td>
-<td align="left">TCGA_PANCAN_2018</td>
-<td align="left">C0268323</td>
-<td align="left">Familial porphyria cutanea tarda</td>
-</tr>
-<tr class="odd">
-<td align="left">VHL</td>
-<td align="left">7428</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">von Hippel-Lindau tumor suppressor</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C0019562</td>
-<td align="left">Von Hippel-Lindau syndrome</td>
-</tr>
-<tr class="even">
-<td align="left">WAS</td>
-<td align="left">7454</td>
-<td align="left">XLR</td>
-<td align="left">LoF</td>
-<td align="left">Wiskott-Aldrich syndrome</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86</td>
-<td align="left">C1839163</td>
-<td align="left">Thrombocytopenia, X-linked</td>
-</tr>
-<tr class="odd">
-<td align="left">WRN</td>
-<td align="left">7486</td>
-<td align="left">AR</td>
-<td align="left">LoF</td>
-<td align="left">Werner syndrome RecQ like helicase</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C0043119</td>
-<td align="left">Werner syndrome</td>
-</tr>
-<tr class="even">
-<td align="left">WT1</td>
-<td align="left">7490</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">Wilms tumor 1</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">CN033288</td>
-<td align="left">Wilms tumor 1</td>
-</tr>
-<tr class="odd">
-<td align="left">XPA</td>
-<td align="left">7507</td>
-<td align="left">AR</td>
-<td align="left">LoF</td>
-<td align="left">XPA, DNA damage recognition and repair factor</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C0268135</td>
-<td align="left">Xeroderma pigmentosum, type 1</td>
-</tr>
-<tr class="even">
-<td align="left">XPC</td>
-<td align="left">7508</td>
-<td align="left">AR</td>
-<td align="left">NA</td>
-<td align="left">XPC complex subunit, DNA damage recognition and repair factor</td>
-<td align="left">TCGA_PANCAN_2018,CGC_86,NCGC</td>
-<td align="left">C2752147</td>
-<td align="left">Xeroderma pigmentosum, group C</td>
-</tr>
-<tr class="odd">
-<td align="left">XRCC2</td>
-<td align="left">7516</td>
-<td align="left">AD</td>
-<td align="left">LoF</td>
-<td align="left">X-ray repair cross complementing 2</td>
-<td align="left">NCGC</td>
-<td align="left"></td>
-<td align="left">NA</td>
-</tr>
-</tbody>
-</table>
+| Symbol   | Entrez ID | MOI   | Mechanism of Disease | Gene Name                                                                                         | Source                                     | Phenotype\_Syndrome\_CUI                              | Phenotype\_Syndrome\_Term                                                                                                                                          |
+| :------- | :-------- | :---- | :------------------- | :------------------------------------------------------------------------------------------------ | :----------------------------------------- | :---------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ABCB11   | 8647      | AR    | LoF                  | ATP binding cassette subfamily B member 11                                                        | TCGA\_PANCAN\_2018                         | C2931132                                              | Crigler-Najjar syndrome, type II                                                                                                                                   |
+| ABRAXAS1 | 84142     | NA    | NA                   | abraxas 1, BRCA1 A complex subunit                                                                | NCGC                                       | NA                                                    | NA                                                                                                                                                                 |
+| ACD      | 65057     | AD/AR | NA                   | ACD shelterin complex subunit and telomerase recruitment factor                                   | NCGC,PANEL\_APP                            | NA                                                    | NA                                                                                                                                                                 |
+| AIP      | 9049      | AD    | LoF                  | aryl hydrocarbon receptor interacting protein                                                     | NCGC,PANEL\_APP                            | NA                                                    | NA                                                                                                                                                                 |
+| AKT1     | 207       | AD    | GoF                  | AKT serine/threonine kinase 1                                                                     | NCGC,PANEL\_APP                            | NA                                                    | NA                                                                                                                                                                 |
+| ALK      | 238       | AD    | GoF                  | ALK receptor tyrosine kinase                                                                      | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C0027819                                              | Neuroblastoma                                                                                                                                                      |
+| APC      | 324       | AD/AR | LoF                  | APC regulator of WNT signaling pathway                                                            | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C2713442                                              | Familial adenomatous polyposis 1                                                                                                                                   |
+| APOBEC3B | 9582      | AR    | NA                   | apolipoprotein B mRNA editing enzyme catalytic subunit 3B                                         | CGC\_91                                    | NA                                                    | NA                                                                                                                                                                 |
+| AR       | 367       | AD    | NA                   | androgen receptor                                                                                 | CGC\_91,PANEL\_APP                         | NA                                                    | NA                                                                                                                                                                 |
+| ATM      | 472       | AD/AR | LoF                  | ATM serine/threonine kinase                                                                       | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C0004135                                              | Ataxia-telangiectasia syndrome                                                                                                                                     |
+| ATR      | 545       | AD    | LoF                  | ATR serine/threonine kinase                                                                       | CGC\_91,PANEL\_APP,TCGA\_PANCAN\_2018      | C0265202;C3281203                                     | Seckel syndrome; Cutaneous telangiectasia and cancer syndrome, familial                                                                                            |
+| AXIN1    | 8312      | NA    | NA                   | axin 1                                                                                            | NCGC                                       | NA                                                    | NA                                                                                                                                                                 |
+| AXIN2    | 8313      | AD/AR | LoF                  | axin 2                                                                                            | CGC\_91,NCGC,TCGA\_PANCAN\_2018            | C1837750                                              | Oligodontia-colorectal cancer syndrome                                                                                                                             |
+| BAP1     | 8314      | AD/AR | LoF                  | BRCA1 associated protein 1                                                                        | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C3280492;CN235077                                     | Tumor susceptibility linked to germline BAP1 mutations; BAP1 Cancer Syndrome                                                                                       |
+| BARD1    | 580       | AR    | LoF                  | BRCA1 associated RING domain 1                                                                    | CGC\_91,NCGC,PANEL\_APP                    | NA                                                    | NA                                                                                                                                                                 |
+| BLM      | 641       | AR    | LoF                  | BLM RecQ like helicase                                                                            | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C0005859                                              | Bloom syndrome                                                                                                                                                     |
+| BMPR1A   | 657       | AD/AR | LoF                  | bone morphogenetic protein receptor type 1A                                                       | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C0345893                                              | Juvenile polyposis syndrome                                                                                                                                        |
+| BRAF     | 673       | AD    | NA                   | B-Raf proto-oncogene, serine/threonine kinase                                                     | PANEL\_APP,TCGA\_PANCAN\_2018              | C3150970;C3150971                                     | Noonan syndrome 7; LEOPARD syndrome 3                                                                                                                              |
+| BRCA1    | 672       | AD/AR | LoF                  | BRCA1 DNA repair associated                                                                       | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C0677776                                              | Hereditary breast and ovarian cancer syndrome                                                                                                                      |
+| BRCA2    | 675       | AD/AR | LoF                  | BRCA2 DNA repair associated                                                                       | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C0677776;C1838457                                     | Hereditary breast and ovarian cancer syndrome; Fanconi anemia, complementation group D1                                                                            |
+| BRIP1    | 83990     | AD/AR | LoF                  | BRCA1 interacting protein C-terminal helicase 1                                                   | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C1836860                                              | Fanconi anemia, complementation group J                                                                                                                            |
+| BUB1     | 699       | NA    | NA                   | BUB1 mitotic checkpoint serine/threonine kinase                                                   | NCGC                                       | NA                                                    | NA                                                                                                                                                                 |
+| BUB1B    | 701       | AR    | LoF                  | BUB1 mitotic checkpoint serine/threonine kinase B                                                 | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C1850343                                              | Mosaic variegated aneuploidy syndrome                                                                                                                              |
+| CASR     | 846       | NA    | NA                   | calcium sensing receptor                                                                          | NCGC,PANEL\_APP                            | NA                                                    | NA                                                                                                                                                                 |
+| CBL      | 867       | AD    | LoF                  | Cbl proto-oncogene                                                                                | PANEL\_APP,TCGA\_PANCAN\_2018              | C0028326                                              | Noonan syndrome                                                                                                                                                    |
+| CDC73    | 79577     | AD/AR | LoF                  | cell division cycle 73                                                                            | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C1704981                                              | Hyperparathyroidism 2                                                                                                                                              |
+| CDH1     | 999       | AD/AR | LoF                  | cadherin 1                                                                                        | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C1708349                                              | Hereditary diffuse gastric cancer                                                                                                                                  |
+| CDH10    | 1008      | NA    | NA                   | cadherin 10                                                                                       | CGC\_91                                    | NA                                                    | NA                                                                                                                                                                 |
+| CDK4     | 1019      | AD    | GoF                  | cyclin dependent kinase 4                                                                         | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C1512419;C1836892                                     | Hereditary cutaneous melanoma; Cutaneous malignant melanoma 3                                                                                                      |
+| CDKN1B   | 1027      | AD/AR | LoF                  | cyclin dependent kinase inhibitor 1B                                                              | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C1970712                                              | Multiple endocrine neoplasia, type 4                                                                                                                               |
+| CDKN1C   | 1028      | AD    | LoF                  | cyclin dependent kinase inhibitor 1C                                                              | NCGC,PANEL\_APP,TCGA\_PANCAN\_2018         | C0004903                                              | Beckwith-Wiedemann syndrome                                                                                                                                        |
+| CDKN2A   | 1029      | AD/AR | LoF                  | cyclin dependent kinase inhibitor 2A                                                              | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C1512419                                              | Hereditary cutaneous melanoma                                                                                                                                      |
+| CEBPA    | 1050      | AD    | LoF                  | CCAAT enhancer binding protein alpha                                                              | NCGC,PANEL\_APP,TCGA\_PANCAN\_2018         | C0023467                                              | Acute myeloid leukemia                                                                                                                                             |
+| CEP57    | 9702      | AR    | LoF                  | centrosomal protein 57                                                                            | NCGC                                       | NA                                                    | NA                                                                                                                                                                 |
+| CHEK1    | 1111      | NA    | NA                   | checkpoint kinase 1                                                                               | NCGC                                       | NA                                                    | NA                                                                                                                                                                 |
+| CHEK2    | 11200     | AD/AR | LoF                  | checkpoint kinase 2                                                                               | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C0346153                                              | Hereditary Breast Carcinoma                                                                                                                                        |
+| COL7A1   | 1294      | AD/AR | LoF                  | collagen type VII alpha 1 chain                                                                   | TCGA\_PANCAN\_2018                         | C0014527                                              | Epidermolysis bullosa                                                                                                                                              |
+| CTNNA1   | 1495      | AD    | LoF                  | catenin alpha 1                                                                                   | NCGC                                       | NA                                                    | NA                                                                                                                                                                 |
+| CTNNB1   | 1499      | AD    | NA                   | catenin beta 1                                                                                    | NCGC,PANEL\_APP                            | NA                                                    | NA                                                                                                                                                                 |
+| CTR9     | 9646      | AD    | NA                   | CTR9 homolog, Paf1/RNA polymerase II complex component                                            | PANEL\_APP,TCGA\_PANCAN\_2018              | NA                                                    | NA                                                                                                                                                                 |
+| CTRC     | 11330     | NA    | NA                   | chymotrypsin C                                                                                    | NCGC                                       | NA                                                    | NA                                                                                                                                                                 |
+| CXCR4    | 7852      | AD    | NA                   | C-X-C motif chemokine receptor 4                                                                  | CGC\_91                                    | NA                                                    | NA                                                                                                                                                                 |
+| CYLD     | 1540      | AD/AR | LoF                  | CYLD lysine 63 deubiquitinase                                                                     | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C1857941                                              | Brooke-Spiegler syndrome                                                                                                                                           |
+| DDB2     | 1643      | AD/AR | LoF                  | damage specific DNA binding protein 2                                                             | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C1848411                                              | Xeroderma pigmentosum, group E                                                                                                                                     |
+| DICER1   | 23405     | AD/AR | LoF                  | dicer 1, ribonuclease III                                                                         | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C1266144;C3839822                                     | Pleuropulmonary blastoma; DICER1-related pleuropulmonary blastoma cancer predisposition syndrome                                                                   |
+| DIRAS3   | 9077      | NA    | NA                   | DIRAS family GTPase 3                                                                             | NCGC,PANEL\_APP                            | NA                                                    | NA                                                                                                                                                                 |
+| DIS3L2   | 129563    | AR    | LoF                  | DIS3 like 3’-5’ exoribonuclease 2                                                                 | NCGC,PANEL\_APP,TCGA\_PANCAN\_2018         | C0796113                                              | Perlman syndrome                                                                                                                                                   |
+| DKC1     | 1736      | NA    | LoF                  | dyskerin pseudouridine synthase 1                                                                 | PANEL\_APP,TCGA\_PANCAN\_2018              | C1148551                                              | Dyskeratosis congenita, X-linked                                                                                                                                   |
+| DOCK8    | 81704     | AR    | LoF                  | dedicator of cytokinesis 8                                                                        | PANEL\_APP,TCGA\_PANCAN\_2018              | C1968689                                              | Hyper-Immunoglobulin E Syndrome, Autosomal Recessive                                                                                                               |
+| DROSHA   | 29102     | AD    | NA                   | drosha ribonuclease III                                                                           | TCGA\_PANCAN\_2018                         | NA                                                    | NA                                                                                                                                                                 |
+| DTX3L    | 151636    | NA    | NA                   | deltex E3 ubiquitin ligase 3L                                                                     | NCGC                                       | NA                                                    | NA                                                                                                                                                                 |
+| EGFR     | 1956      | AD    | GoF                  | epidermal growth factor receptor                                                                  | CGC\_91,NCGC,TCGA\_PANCAN\_2018            | NA                                                    | NA                                                                                                                                                                 |
+| ELANE    | 1991      | AD    | LoF                  | elastase, neutrophil expressed                                                                    | PANEL\_APP,TCGA\_PANCAN\_2018              | C1859966                                              | Neutropenia, severe congenital 1, autosomal dominant                                                                                                               |
+| ENG      | 2022      | AD    | NA                   | endoglin                                                                                          | NCGC,PANEL\_APP                            | NA                                                    | NA                                                                                                                                                                 |
+| EPCAM    | 4072      | AD    | LoF                  | epithelial cell adhesion molecule                                                                 | NCGC,PANEL\_APP,TCGA\_PANCAN\_2018         | C2750471                                              | Hereditary nonpolyposis colorectal cancer type 8                                                                                                                   |
+| ERBB4    | 2066      | AD    | NA                   | erb-b2 receptor tyrosine kinase 4                                                                 | CGC\_91                                    | NA                                                    | NA                                                                                                                                                                 |
+| ERCC1    | 2067      | AR    | NA                   | ERCC excision repair 1, endonuclease non-catalytic subunit                                        | NCGC,PANEL\_APP,TCGA\_PANCAN\_2018         | C1853100                                              | Cerebrooculofacioskeletal syndrome 4                                                                                                                               |
+| ERCC2    | 2068      | AR    | LoF                  | ERCC excision repair 2, TFIIH core complex helicase subunit                                       | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C0268138                                              | Xeroderma pigmentosum, group D                                                                                                                                     |
+| ERCC3    | 2071      | AR    | LoF                  | ERCC excision repair 3, TFIIH core complex helicase subunit                                       | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C0268136                                              | Xeroderma pigmentosum, complementation group b                                                                                                                     |
+| ERCC4    | 2072      | AR    | LoF                  | ERCC excision repair 4, endonuclease catalytic subunit                                            | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C0268140;C3808988                                     | Xeroderma pigmentosum, group F; Fanconi anemia, complementation group Q                                                                                            |
+| ERCC5    | 2073      | AR    | LoF                  | ERCC excision repair 5, endonuclease                                                              | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C0268141                                              | Xeroderma pigmentosum, group G                                                                                                                                     |
+| ETV6     | 2120      | AD    | NA                   | ETS variant transcription factor 6                                                                | NCGC,PANEL\_APP,TCGA\_PANCAN\_2018         | C4015537                                              | Thrombocytopenia 5                                                                                                                                                 |
+| EXT1     | 2131      | AD/AR | LoF                  | exostosin glycosyltransferase 1                                                                   | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C0008479                                              | Chondrosarcoma                                                                                                                                                     |
+| EXT2     | 2132      | AD/AR | LoF                  | exostosin glycosyltransferase 2                                                                   | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C1851413                                              | Multiple exostoses type 2                                                                                                                                          |
+| EZH2     | 2146      | AD    | LoF                  | enhancer of zeste 2 polycomb repressive complex 2 subunit                                         | NCGC,PANEL\_APP                            | NA                                                    | NA                                                                                                                                                                 |
+| FAH      | 2184      | AR    | LoF                  | fumarylacetoacetate hydrolase                                                                     | TCGA\_PANCAN\_2018                         | NA                                                    | NA                                                                                                                                                                 |
+| FANCA    | 2175      | AR    | LoF                  | FA complementation group A                                                                        | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C3469521                                              | Fanconi anemia, complementation group A                                                                                                                            |
+| FANCB    | 2187      | NA    | LoF                  | FA complementation group B                                                                        | NCGC,PANEL\_APP                            | NA                                                    | NA                                                                                                                                                                 |
+| FANCC    | 2176      | AR    | LoF                  | FA complementation group C                                                                        | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C3468041                                              | Fanconi anemia, complementation group C                                                                                                                            |
+| FANCD2   | 2177      | AR    | LoF                  | FA complementation group D2                                                                       | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C3160738                                              | Fanconi anemia, complementation group D2                                                                                                                           |
+| FANCE    | 2178      | AR    | LoF                  | FA complementation group E                                                                        | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C3160739                                              | Fanconi anemia, complementation group E                                                                                                                            |
+| FANCF    | 2188      | AR    | LoF                  | FA complementation group F                                                                        | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C3469526                                              | Fanconi anemia, complementation group F                                                                                                                            |
+| FANCG    | 2189      | AR    | LoF                  | FA complementation group G                                                                        | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C3469527                                              | Fanconi anemia, complementation group G                                                                                                                            |
+| FANCI    | 55215     | AR    | LoF                  | FA complementation group I                                                                        | NCGC,PANEL\_APP,TCGA\_PANCAN\_2018         | C1836861                                              | Fanconi anemia, complementation group I                                                                                                                            |
+| FANCL    | 55120     | AR    | LoF                  | FA complementation group L                                                                        | NCGC,PANEL\_APP,TCGA\_PANCAN\_2018         | C3469528                                              | Fanconi anemia, complementation group L                                                                                                                            |
+| FANCM    | 57697     | AD/AR | LoF                  | FA complementation group M                                                                        | NCGC,PANEL\_APP,TCGA\_PANCAN\_2018         | NA                                                    | NA                                                                                                                                                                 |
+| FAS      | 355       | AD    | LoF                  | Fas cell surface death receptor                                                                   | PANEL\_APP,TCGA\_PANCAN\_2018              | C1328840                                              | Autoimmune lymphoproliferative syndrome                                                                                                                            |
+| FAT1     | 2195      | NA    | NA                   | FAT atypical cadherin 1                                                                           | CGC\_91                                    | NA                                                    | NA                                                                                                                                                                 |
+| FEN1     | 2237      | NA    | NA                   | flap structure-specific endonuclease 1                                                            | CGC\_91                                    | NA                                                    | NA                                                                                                                                                                 |
+| FH       | 2271      | AD/AR | LoF                  | fumarate hydratase                                                                                | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C1708350                                              | Hereditary leiomyomatosis and renal cell cancer                                                                                                                    |
+| FLCN     | 201163    | AD/AR | LoF                  | folliculin                                                                                        | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | CN221571                                              | Birt-Hogg-Dub syndrome                                                                                                                                             |
+| FOXO4    | 4303      | NA    | NA                   | forkhead box O4                                                                                   | OTHER                                      | NA                                                    | NA                                                                                                                                                                 |
+| GALNT12  | 79695     | AD    | LoF                  | polypeptide N-acetylgalactosaminyltransferase 12                                                  | NCGC                                       | NA                                                    | NA                                                                                                                                                                 |
+| GATA2    | 2624      | AD    | LoF                  | GATA binding protein 2                                                                            | NCGC,PANEL\_APP,TCGA\_PANCAN\_2018         | C3280030                                              | Dendritic cell, monocyte, B lymphocyte, and natural killer lymphocyte deficiency                                                                                   |
+| GBA      | 2629      | AR    | LoF                  | glucosylceramidase beta                                                                           | PANEL\_APP,TCGA\_PANCAN\_2018              | NA                                                    | NA                                                                                                                                                                 |
+| GJB2     | 2706      | AD    | LoF                  | gap junction protein beta 2                                                                       | TCGA\_PANCAN\_2018                         | NA                                                    | NA                                                                                                                                                                 |
+| GPC3     | 2719      | NA    | LoF                  | glypican 3                                                                                        | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C0796154                                              | Simpson-Golabi-Behmel syndrome                                                                                                                                     |
+| GREM1    | 26585     | AD    | GoF                  | gremlin 1, DAN family BMP antagonist                                                              | NCGC,PANEL\_APP                            | NA                                                    | NA                                                                                                                                                                 |
+| HABP2    | 3026      | AD    | NA                   | hyaluronan binding protein 2                                                                      | NCGC,PANEL\_APP                            | NA                                                    | NA                                                                                                                                                                 |
+| HFE      | 3077      | AR    | LoF                  | homeostatic iron regulator                                                                        | TCGA\_PANCAN\_2018                         | C0392514                                              | Hereditary hemochromatosis                                                                                                                                         |
+| HMBS     | 3145      | AD    | LoF                  | hydroxymethylbilane synthase                                                                      | TCGA\_PANCAN\_2018                         | NA                                                    | NA                                                                                                                                                                 |
+| HNF1A    | 6927      | AR    | LoF                  | HNF1 homeobox A                                                                                   | CGC\_91,NCGC,TCGA\_PANCAN\_2018            | C1840646                                              | Hepatic adenomas, familial                                                                                                                                         |
+| HNF1B    | 6928      | NA    | NA                   | HNF1 homeobox B                                                                                   | NCGC                                       | NA                                                    | NA                                                                                                                                                                 |
+| HOXB13   | 10481     | AD    | NA                   | homeobox B13                                                                                      | NCGC,PANEL\_APP                            | NA                                                    | NA                                                                                                                                                                 |
+| HRAS     | 3265      | AD    | GoF                  | HRas proto-oncogene, GTPase                                                                       | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C0587248                                              | Costello syndrome                                                                                                                                                  |
+| ITK      | 3702      | AR    | LoF                  | IL2 inducible T cell kinase                                                                       | PANEL\_APP,TCGA\_PANCAN\_2018              | C3552634                                              | Lymphoproliferative syndrome 1                                                                                                                                     |
+| JMJD1C   | 221037    | AD    | NA                   | jumonji domain containing 1C                                                                      | TCGA\_PANCAN\_2018                         | NA                                                    | NA                                                                                                                                                                 |
+| KDR      | 3791      | AD    | NA                   | kinase insert domain receptor                                                                     | CGC\_91                                    | NA                                                    | NA                                                                                                                                                                 |
+| KIF1B    | 23095     | NA    | NA                   | kinesin family member 1B                                                                          | NCGC,PANEL\_APP                            | NA                                                    | NA                                                                                                                                                                 |
+| KIT      | 3815      | AD    | GoF                  | KIT proto-oncogene, receptor tyrosine kinase                                                      | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C0238198                                              | Gastrointestinal stromal tumor                                                                                                                                     |
+| KRAS     | 3845      | AD/AR | NA                   | KRAS proto-oncogene, GTPase                                                                       | PANEL\_APP,TCGA\_PANCAN\_2018              | C1860991;C2674723                                     | Noonan syndrome 3; RAS-associated autoimmune leukoproliferative disorder                                                                                           |
+| LMO1     | 4004      | AD    | NA                   | LIM domain only 1                                                                                 | CGC\_91,TCGA\_PANCAN\_2018                 | C4225207                                              | Neuroblastoma, susceptibility to, 7                                                                                                                                |
+| LZTR1    | 8216      | AD/AR | NA                   | leucine zipper like transcription regulator 1                                                     | CGC\_91,NCGC,PANEL\_APP                    | NA                                                    | NA                                                                                                                                                                 |
+| MAP2K1   | 5604      | AD    | NA                   | mitogen-activated protein kinase kinase 1                                                         | PANEL\_APP,TCGA\_PANCAN\_2018              | NA                                                    | NA                                                                                                                                                                 |
+| MAP2K2   | 5605      | AD    | NA                   | mitogen-activated protein kinase kinase 2                                                         | PANEL\_APP,TCGA\_PANCAN\_2018              | NA                                                    | NA                                                                                                                                                                 |
+| MAP3K1   | 4214      | NA    | NA                   | mitogen-activated protein kinase kinase kinase 1                                                  | NCGC                                       | NA                                                    | NA                                                                                                                                                                 |
+| MAX      | 4149      | AD/AR | LoF                  | MYC associated factor X                                                                           | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C1708353                                              | Hereditary Paraganglioma-Pheochromocytoma Syndromes                                                                                                                |
+| MEN1     | 4221      | AD/AR | LoF                  | menin 1                                                                                           | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C0025267                                              | Multiple endocrine neoplasia, type 1                                                                                                                               |
+| MET      | 4233      | AD    | GoF                  | MET proto-oncogene, receptor tyrosine kinase                                                      | NCGC,PANEL\_APP,TCGA\_PANCAN\_2018         | C0007134                                              | Renal cell carcinoma, papillary, 1                                                                                                                                 |
+| MITF     | 4286      | AD    | GoF                  | melanocyte inducing transcription factor                                                          | NCGC,PANEL\_APP,TCGA\_PANCAN\_2018         | C1512419                                              | Hereditary cutaneous melanoma                                                                                                                                      |
+| MLH1     | 4292      | AD/AR | LoF                  | mutL homolog 1                                                                                    | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C0009405;C0265325;C1333990                            | Hereditary nonpolyposis colon cancer; Turcot syndrome; Hereditary nonpolyposis colon cancer                                                                        |
+| MLH3     | 27030     | NA    | NA                   | mutL homolog 3                                                                                    | NCGC                                       | NA                                                    | NA                                                                                                                                                                 |
+| MPL      | 4352      | AD    | NA                   | MPL proto-oncogene, thrombopoietin receptor                                                       | CGC\_91,TCGA\_PANCAN\_2018                 | C4273671                                              | NA                                                                                                                                                                 |
+| MRE11    | 4361      | NA    | NA                   | MRE11 homolog, double strand break repair nuclease                                                | NCGC                                       | NA                                                    | NA                                                                                                                                                                 |
+| MSH2     | 4436      | AD/AR | LoF                  | mutS homolog 2                                                                                    | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C0009405;C0265325;C1333990                            | Hereditary nonpolyposis colon cancer; Turcot syndrome; Hereditary nonpolyposis colon cancer                                                                        |
+| MSH3     | 4437      | AR    | NA                   | mutS homolog 3                                                                                    | NCGC,PANEL\_APP                            | NA                                                    | NA                                                                                                                                                                 |
+| MSH6     | 2956      | AD/AR | LoF                  | mutS homolog 6                                                                                    | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C0009405;C0265325;C1333990                            | Hereditary nonpolyposis colon cancer; Turcot syndrome; Hereditary nonpolyposis colon cancer                                                                        |
+| MTAP     | 4507      | AD    | LoF                  | methylthioadenosine phosphorylase                                                                 | PANEL\_APP,TCGA\_PANCAN\_2018              | C1862177                                              | Diaphyseal medullary stenosis-bone malignancy syndrome                                                                                                             |
+| MUC1     | 4582      | AD    | NA                   | mucin 1, cell surface associated                                                                  | OTHER                                      | NA                                                    | NA                                                                                                                                                                 |
+| MUTYH    | 4595      | AR    | LoF                  | mutY DNA glycosylase                                                                              | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C1837991                                              | MYH-associated polyposis                                                                                                                                           |
+| NBN      | 4683      | AR    | LoF                  | nibrin                                                                                            | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C0398791                                              | Microcephaly, normal intelligence and immunodeficiency                                                                                                             |
+| NF1      | 4763      | AD/AR | LoF                  | neurofibromin 1                                                                                   | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C0027831                                              | Neurofibromatosis, type 1                                                                                                                                          |
+| NF2      | 4771      | AD/AR | LoF                  | neurofibromin 2                                                                                   | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C0027832                                              | Neurofibromatosis, type 2                                                                                                                                          |
+| NHP2     | 55651     | AR    | NA                   | NHP2 ribonucleoprotein                                                                            | PANEL\_APP,TCGA\_PANCAN\_2018              | C3151441                                              | Dyskeratosis congenita, autosomal recessive 2                                                                                                                      |
+| NOP10    | 55505     | AR    | NA                   | NOP10 ribonucleoprotein                                                                           | PANEL\_APP,TCGA\_PANCAN\_2018              | C1857144                                              | Dyskeratosis congenita autosomal recessive 1                                                                                                                       |
+| NOTCH3   | 4854      | AD    | NA                   | notch receptor 3                                                                                  | NCGC,PANEL\_APP                            | NA                                                    | NA                                                                                                                                                                 |
+| NRAS     | 4893      | AD    | NA                   | NRAS proto-oncogene, GTPase                                                                       | PANEL\_APP,TCGA\_PANCAN\_2018              | C0265318;C0334082;C1842036;C2674723;C2750732;CN166718 | Epidermal nevus syndrome; Epidermal nevus; Large congenital melanocytic nevus; RAS-associated autoimmune leukoproliferative disorder; Noonan syndrome 6; Rasopathy |
+| NSD1     | 64324     | AD    | LoF                  | nuclear receptor binding SET domain protein 1                                                     | NCGC,PANEL\_APP                            | NA                                                    | NA                                                                                                                                                                 |
+| NTHL1    | 4913      | AR    | NA                   | nth like DNA glycosylase 1                                                                        | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C4225157                                              | Familial adenomatous polyposis 3                                                                                                                                   |
+| OGG1     | 4968      | NA    | NA                   | 8-oxoguanine DNA glycosylase                                                                      | NCGC                                       | NA                                                    | NA                                                                                                                                                                 |
+| PALB2    | 79728     | AD/AR | LoF                  | partner and localizer of BRCA2                                                                    | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C1835817                                              | Fanconi anemia, complementation group N                                                                                                                            |
+| PAX5     | 5079      | AD    | NA                   | paired box 5                                                                                      | NCGC,PANEL\_APP,TCGA\_PANCAN\_2018         | C3809874                                              | Leukemia, acute lymphoblastic, susceptibility to, 3                                                                                                                |
+| PDGFRA   | 5156      | AD    | GoF                  | platelet derived growth factor receptor alpha                                                     | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C0238198                                              | Gastrointestinal stromal tumor                                                                                                                                     |
+| PHOX2B   | 8929      | AD/AR | LoF                  | paired like homeobox 2B                                                                           | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C2751682                                              | Neuroblastoma 2                                                                                                                                                    |
+| PIK3CA   | 5290      | AD    | GoF                  | phosphatidylinositol-4,5-bisphosphate 3-kinase catalytic subunit alpha                            | NCGC,PANEL\_APP                            | NA                                                    | NA                                                                                                                                                                 |
+| PINK1    | 65018     | NA    | NA                   | PTEN induced kinase 1                                                                             | NCGC                                       | NA                                                    | NA                                                                                                                                                                 |
+| PMS1     | 5378      | AR    | NA                   | PMS1 homolog 1, mismatch repair system component                                                  | CGC\_91,NCGC,TCGA\_PANCAN\_2018            | CN029768                                              | NA                                                                                                                                                                 |
+| PMS2     | 5395      | AD/AR | LoF                  | PMS1 homolog 2, mismatch repair system component                                                  | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C0009405;C0265325;C1333990                            | Hereditary nonpolyposis colon cancer; Turcot syndrome; Hereditary nonpolyposis colon cancer                                                                        |
+| POLD1    | 5424      | AD    | LoF                  | DNA polymerase delta 1, catalytic subunit                                                         | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | CN237711                                              | NA                                                                                                                                                                 |
+| POLE     | 5426      | AD/AR | LoF                  | DNA polymerase epsilon, catalytic subunit                                                         | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | CN237711                                              | NA                                                                                                                                                                 |
+| POLH     | 5429      | AR    | LoF                  | DNA polymerase eta                                                                                | PANEL\_APP,TCGA\_PANCAN\_2018              | C1848410                                              | Xeroderma pigmentosum variant type                                                                                                                                 |
+| POLQ     | 10721     | NA    | NA                   | DNA polymerase theta                                                                              | CGC\_91                                    | NA                                                    | NA                                                                                                                                                                 |
+| POT1     | 25913     | AD    | NA                   | protection of telomeres 1                                                                         | NCGC,PANEL\_APP,TCGA\_PANCAN\_2018         | C4014476                                              | Melanoma, cutaneous malignant, susceptibility to, 10                                                                                                               |
+| PPM1D    | 8493      | NA    | LoF                  | protein phosphatase, Mg2+/Mn2+ dependent 1D                                                       | NCGC,PANEL\_APP                            | NA                                                    | NA                                                                                                                                                                 |
+| PRDM9    | 56979     | AD    | NA                   | PR/SET domain 9                                                                                   | TCGA\_PANCAN\_2018                         | NA                                                    | NA                                                                                                                                                                 |
+| PRF1     | 5551      | AR    | LoF                  | perforin 1                                                                                        | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C1863727                                              | Familial hemophagocytic lymphohistiocytosis 2                                                                                                                      |
+| PRKAR1A  | 5573      | AD/AR | LoF                  | protein kinase cAMP-dependent type I regulatory subunit alpha                                     | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C0406810                                              | Carney complex                                                                                                                                                     |
+| PRSS1    | 5644      | AD    | LoF                  | serine protease 1                                                                                 | NCGC,PANEL\_APP,TCGA\_PANCAN\_2018         | C0238339                                              | Hereditary pancreatitis                                                                                                                                            |
+| PTCH1    | 5727      | AD/AR | LoF                  | patched 1                                                                                         | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C0004779                                              | Gorlin syndrome                                                                                                                                                    |
+| PTEN     | 5728      | AD/AR | LoF                  | phosphatase and tensin homolog                                                                    | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C1959582;CN072330                                     | PTEN hamartoma tumor syndrome; Cowden syndrome 1                                                                                                                   |
+| PTPN11   | 5781      | AD    | GoF                  | protein tyrosine phosphatase non-receptor type 11                                                 | NCGC,PANEL\_APP,TCGA\_PANCAN\_2018         | C0028326                                              | Noonan syndrome                                                                                                                                                    |
+| PTPN13   | 5783      | AR    | NA                   | protein tyrosine phosphatase non-receptor type 13                                                 | CGC\_91                                    | NA                                                    | NA                                                                                                                                                                 |
+| RAD50    | 10111     | AD/AR | LoF                  | RAD50 double strand break repair protein                                                          | NCGC                                       | NA                                                    | NA                                                                                                                                                                 |
+| RAD51    | 5888      | AD    | NA                   | RAD51 recombinase                                                                                 | NCGC,PANEL\_APP                            | NA                                                    | NA                                                                                                                                                                 |
+| RAD51B   | 5890      | NA    | NA                   | RAD51 paralog B                                                                                   | NCGC                                       | NA                                                    | NA                                                                                                                                                                 |
+| RAD51C   | 5889      | AD/AR | LoF                  | RAD51 paralog C                                                                                   | NCGC,PANEL\_APP,TCGA\_PANCAN\_2018         | C3150653                                              | Fanconi anemia, complementation group O                                                                                                                            |
+| RAD51D   | 5892      | AD    | LoF                  | RAD51 paralog D                                                                                   | NCGC,PANEL\_APP,TCGA\_PANCAN\_2018         | C3280345                                              | Breast-ovarian cancer, familial 4                                                                                                                                  |
+| RAF1     | 5894      | AD    | NA                   | Raf-1 proto-oncogene, serine/threonine kinase                                                     | PANEL\_APP,TCGA\_PANCAN\_2018              | C1969056;C1969057                                     | LEOPARD syndrome 2; Noonan syndrome 5                                                                                                                              |
+| RB1      | 5925      | AD/AR | LoF                  | RB transcriptional corepressor 1                                                                  | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C0029463;C0035335                                     | Osteosarcoma; Retinoblastoma                                                                                                                                       |
+| RCC2     | 55920     | NA    | NA                   | regulator of chromosome condensation 2                                                            | NCGC                                       | NA                                                    | NA                                                                                                                                                                 |
+| RECQL    | 5965      | AD    | NA                   | RecQ like helicase                                                                                | TCGA\_PANCAN\_2018                         | NA                                                    | NA                                                                                                                                                                 |
+| RECQL4   | 9401      | AR    | LoF                  | RecQ like helicase 4                                                                              | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C0032339                                              | Rothmund-Thomson syndrome                                                                                                                                          |
+| RET      | 5979      | AD    | GoF                  | ret proto-oncogene                                                                                | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C0025268;C0025269;C1833921                            | Multiple endocrine neoplasia, type 2a; Multiple endocrine neoplasia, type 2b; Familial medullary thyroid carcinoma                                                 |
+| RFWD3    | 55159     | NA    | NA                   | ring finger and WD repeat domain 3                                                                | CGC\_91                                    | NA                                                    | NA                                                                                                                                                                 |
+| RHBDF2   | 79651     | AD    | GoF                  | rhomboid 5 homolog 2                                                                              | NCGC,TCGA\_PANCAN\_2018                    | C1835664                                              | Palmoplantar keratoderma-esophageal carcinoma syndrome                                                                                                             |
+| RING1    | 6015      | NA    | NA                   | ring finger protein 1                                                                             | NCGC                                       | NA                                                    | NA                                                                                                                                                                 |
+| RINT1    | 60561     | NA    | NA                   | RAD50 interactor 1                                                                                | NCGC                                       | NA                                                    | NA                                                                                                                                                                 |
+| RMRP     | 6023      | AR    | LoF                  | RNA component of mitochondrial RNA processing endoribonuclease                                    | PANEL\_APP,TCGA\_PANCAN\_2018              | C0220748                                              | Metaphyseal chondrodysplasia, McKusick type                                                                                                                        |
+| RUNX1    | 861       | AD    | LoF                  | RUNX family transcription factor 1                                                                | NCGC,PANEL\_APP,TCGA\_PANCAN\_2018         | C1832388                                              | Familial platelet disorder with associated myeloid malignancy                                                                                                      |
+| SBDS     | 51119     | AR    | LoF                  | SBDS ribosome maturation factor                                                                   | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C0272170                                              | Shwachman syndrome                                                                                                                                                 |
+| SCG5     | 6447      | NA    | NA                   | secretogranin V                                                                                   | NCGC                                       | NA                                                    | NA                                                                                                                                                                 |
+| SDHA     | 6389      | AD/AR | LoF                  | succinate dehydrogenase complex flavoprotein subunit A                                            | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C3279992                                              | Paragangliomas 5                                                                                                                                                   |
+| SDHAF2   | 54949     | AD/AR | LoF                  | succinate dehydrogenase complex assembly factor 2                                                 | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C1708353                                              | Hereditary Paraganglioma-Pheochromocytoma Syndromes                                                                                                                |
+| SDHB     | 6390      | AD/AR | LoF                  | succinate dehydrogenase complex iron sulfur subunit B                                             | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C1708353;C1847319                                     | Hereditary Paraganglioma-Pheochromocytoma Syndromes; Carney-Stratakis syndrome                                                                                     |
+| SDHC     | 6391      | AD/AR | LoF                  | succinate dehydrogenase complex subunit C                                                         | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C1708353;C1847319                                     | Hereditary Paraganglioma-Pheochromocytoma Syndromes; Carney-Stratakis syndrome                                                                                     |
+| SDHD     | 6392      | AD/AR | LoF                  | succinate dehydrogenase complex subunit D                                                         | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C1708353;C1847319                                     | Hereditary Paraganglioma-Pheochromocytoma Syndromes; Carney-Stratakis syndrome                                                                                     |
+| SERPINA1 | 5265      | AR    | LoF                  | serpin family A member 1                                                                          | TCGA\_PANCAN\_2018                         | C0221757                                              | Alpha-1-antitrypsin deficiency                                                                                                                                     |
+| SETBP1   | 26040     | AD    | NA                   | SET binding protein 1                                                                             | CGC\_91,TCGA\_PANCAN\_2018                 | C0265227                                              | Schinzel-Giedion syndrome                                                                                                                                          |
+| SH2B3    | 10019     | AR    | NA                   | SH2B adaptor protein 3                                                                            | PANEL\_APP,TCGA\_PANCAN\_2018              | NA                                                    | NA                                                                                                                                                                 |
+| SH2D1A   | 4068      | NA    | LoF                  | SH2 domain containing 1A                                                                          | PANEL\_APP,TCGA\_PANCAN\_2018              | C1868674                                              | Lymphoproliferative syndrome 1, X-linked                                                                                                                           |
+| SHOC2    | 8036      | AD    | NA                   | SHOC2 leucine rich repeat scaffold protein                                                        | PANEL\_APP,TCGA\_PANCAN\_2018              | C1843181                                              | Noonan syndrome-like disorder with loose anagen hair                                                                                                               |
+| SLC25A13 | 10165     | AR    | LoF                  | solute carrier family 25 member 13                                                                | TCGA\_PANCAN\_2018                         | NA                                                    | NA                                                                                                                                                                 |
+| SLX4     | 84464     | AR    | LoF                  | SLX4 structure-specific endonuclease subunit                                                      | NCGC,PANEL\_APP                            | NA                                                    | NA                                                                                                                                                                 |
+| SMAD4    | 4089      | AD/AR | LoF                  | SMAD family member 4                                                                              | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C0345893                                              | Juvenile polyposis syndrome                                                                                                                                        |
+| SMARCA4  | 6597      | AD    | LoF                  | SWI/SNF related, matrix associated, actin dependent regulator of chromatin, subfamily a, member 4 | NCGC,PANEL\_APP,TCGA\_PANCAN\_2018         | C2750074                                              | Rhabdoid tumor predisposition syndrome 2                                                                                                                           |
+| SMARCB1  | 6598      | AD/AR | LoF                  | SWI/SNF related, matrix associated, actin dependent regulator of chromatin, subfamily b, member 1 | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C1836327                                              | Rhabdoid tumor predisposition syndrome 1                                                                                                                           |
+| SMARCE1  | 6605      | AD/AR | LoF                  | SWI/SNF related, matrix associated, actin dependent regulator of chromatin, subfamily e, member 1 | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C1333989                                              | Hereditary Meningioma                                                                                                                                              |
+| SOS1     | 6654      | AD    | GoF                  | SOS Ras/Rac guanine nucleotide exchange factor 1                                                  | PANEL\_APP,TCGA\_PANCAN\_2018              | C0028326                                              | Noonan syndrome                                                                                                                                                    |
+| SPINK1   | 6690      | NA    | NA                   | serine peptidase inhibitor Kazal type 1                                                           | NCGC                                       | NA                                                    | NA                                                                                                                                                                 |
+| SPOP     | 8405      | AR    | NA                   | speckle type BTB/POZ protein                                                                      | CGC\_91,PANEL\_APP                         | NA                                                    | NA                                                                                                                                                                 |
+| SPRED1   | 161742    | AD    | NA                   | sprouty related EVH1 domain containing 1                                                          | NCGC,PANEL\_APP                            | NA                                                    | NA                                                                                                                                                                 |
+| SPRTN    | 83932     | AR    | NA                   | SprT-like N-terminal domain                                                                       | TCGA\_PANCAN\_2018                         | C4015461                                              | Ruijs-Aalfs syndrome                                                                                                                                               |
+| SRY      | 6736      | NA    | NA                   | sex determining region Y                                                                          | TCGA\_PANCAN\_2018                         | C0206661                                              | Gonadoblastoma                                                                                                                                                     |
+| STAT3    | 6774      | AD    | LoF                  | signal transducer and activator of transcription 3                                                | CGC\_91,PANEL\_APP,TCGA\_PANCAN\_2018      | C2936739                                              | STAT3 Deficiency                                                                                                                                                   |
+| STK11    | 6794      | AD/AR | LoF                  | serine/threonine kinase 11                                                                        | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C0031269                                              | Peutz-Jeghers syndrome                                                                                                                                             |
+| SUFU     | 51684     | AD/AR | LoF                  | SUFU negative regulator of hedgehog signaling                                                     | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C0025149;C1333989                                     | Medulloblastoma; Hereditary Meningioma                                                                                                                             |
+| TCF7L2   | 6934      | NA    | NA                   | transcription factor 7 like 2                                                                     | OTHER                                      | NA                                                    | NA                                                                                                                                                                 |
+| TERF2IP  | 54386     | NA    | NA                   | TERF2 interacting protein                                                                         | NCGC,PANEL\_APP                            | NA                                                    | NA                                                                                                                                                                 |
+| TERT     | 7015      | AD/AR | LoF                  | telomerase reverse transcriptase                                                                  | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C1851970                                              | Autosomal dominant dyskeratosis congenita                                                                                                                          |
+| TGFBR1   | 7046      | AD    | LoF                  | transforming growth factor beta receptor 1                                                        | TCGA\_PANCAN\_2018                         | C0546476                                              | Hereditary keratoacanthoma                                                                                                                                         |
+| TGFBR2   | 7048      | AR    | LoF                  | transforming growth factor beta receptor 2                                                        | CGC\_91                                    | NA                                                    | NA                                                                                                                                                                 |
+| TMEM127  | 55654     | AD/AR | LoF                  | transmembrane protein 127                                                                         | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C0031511                                              | Pheochromocytoma                                                                                                                                                   |
+| TP53     | 7157      | AD/AR | LoF                  | tumor protein p53                                                                                 | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C1835398                                              | Li-Fraumeni syndrome 1                                                                                                                                             |
+| TP63     | 8626      | NA    | NA                   | tumor protein p63                                                                                 | CGC\_91                                    | NA                                                    | NA                                                                                                                                                                 |
+| TRIM37   | 4591      | AR    | LoF                  | tripartite motif containing 37                                                                    | PANEL\_APP,TCGA\_PANCAN\_2018              | NA                                                    | NA                                                                                                                                                                 |
+| TSC1     | 7248      | AD/AR | LoF                  | TSC complex subunit 1                                                                             | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C1854465                                              | Tuberous sclerosis 1                                                                                                                                               |
+| TSC2     | 7249      | AD/AR | LoF                  | TSC complex subunit 2                                                                             | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C1860707                                              | Tuberous sclerosis 2                                                                                                                                               |
+| TSHR     | 7253      | AD    | NA                   | thyroid stimulating hormone receptor                                                              | CGC\_91,TCGA\_PANCAN\_2018                 | C1836706                                              | Hyperthyroidism, nonautoimmune                                                                                                                                     |
+| UROD     | 7389      | AD/AR | LoF                  | uroporphyrinogen decarboxylase                                                                    | TCGA\_PANCAN\_2018                         | C0268323                                              | Familial porphyria cutanea tarda                                                                                                                                   |
+| VHL      | 7428      | AD/AR | LoF                  | von Hippel-Lindau tumor suppressor                                                                | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C0019562                                              | Von Hippel-Lindau syndrome                                                                                                                                         |
+| WAS      | 7454      | NA    | LoF                  | WASP actin nucleation promoting factor                                                            | CGC\_91,PANEL\_APP,TCGA\_PANCAN\_2018      | C1839163                                              | X-linked thrombocytopenia with normal platelets                                                                                                                    |
+| WRN      | 7486      | AR    | LoF                  | WRN RecQ like helicase                                                                            | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C0043119                                              | Werner syndrome                                                                                                                                                    |
+| WT1      | 7490      | AD/AR | LoF                  | WT1 transcription factor                                                                          | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | CN033288                                              | Wilms tumor 1                                                                                                                                                      |
+| XPA      | 7507      | AR    | LoF                  | XPA, DNA damage recognition and repair factor                                                     | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C0268135                                              | Xeroderma pigmentosum group A                                                                                                                                      |
+| XPC      | 7508      | AR    | LoF                  | XPC complex subunit, DNA damage recognition and repair factor                                     | CGC\_91,NCGC,PANEL\_APP,TCGA\_PANCAN\_2018 | C2752147                                              | Xeroderma pigmentosum, group C                                                                                                                                     |
+| XRCC2    | 7516      | AR    | LoF                  | X-ray repair cross complementing 2                                                                | NCGC,PANEL\_APP                            | NA                                                    | NA                                                                                                                                                                 |
