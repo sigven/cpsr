@@ -1,61 +1,58 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Getting started &mdash; Cancer Predisposition Sequencing Reporter 0.5.2 documentation</title>
+  <title>Getting started &mdash; Cancer Predisposition Sequencing Reporter 0.6.0rc documentation</title>
   
 
   
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
   
 
   
-
-  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-
-  
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="author" title="About these documents"
-              href="about.html"/>
-        <link rel="index" title="Index"
-              href="genindex.html"/>
-        <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Cancer Predisposition Sequencing Reporter 0.5.2 documentation" href="index.html"/>
-        <link rel="next" title="CPSR annotation resources" href="annotation_resources.html"/>
-        <link rel="prev" title="About" href="about.html"/> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
+    
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="CPSR annotation resources" href="annotation_resources.html" />
+    <link rel="prev" title="About" href="about.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
+   
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
-            <a href="index.html" class="icon icon-home"> Cancer Predisposition Sequencing Reporter
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> Cancer Predisposition Sequencing Reporter
           
 
           
@@ -65,7 +62,7 @@
             
             
               <div class="version">
-                0.5.2
+                0.6.0rc
               </div>
             
           
@@ -82,20 +79,22 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
             
-                <p class="caption"><span class="caption-text">Table of Contents</span></p>
+              
+            
+            
+              <p class="caption"><span class="caption-text">Table of Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Getting started</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#step-0-python">STEP 0: Python</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#step-1-installation-of-docker">STEP 1: Installation of Docker</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#step-2-download-run-script-data-bundle-and-pull-docker-image">STEP 2: Download run script/data bundle, and pull Docker image</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#step-3-input-preprocessing">STEP 3: Input preprocessing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#step-4-configuration">STEP 4: Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#step-5-run-example">STEP 5: Run example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-0-install-pcgr-version-0-9-0rc">STEP 0: Install PCGR (version 0.9.0rc)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-1-download-the-latest-release">STEP 1: Download the latest release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-2-configuration">STEP 2: Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-3-run-example">STEP 3: Run example</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="annotation_resources.html">CPSR annotation resources</a></li>
@@ -108,40 +107,61 @@
             
           
         </div>
+        
       </div>
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">Cancer Predisposition Sequencing Reporter</a>
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Cancer Predisposition Sequencing Reporter</a>
+        
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
-    <li>Getting started</li>
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Getting started</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
             <a href="_sources/getting_started.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -149,216 +169,173 @@
             
   <div class="section" id="getting-started">
 <h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="step-0-python">
-<h2>STEP 0: Python<a class="headerlink" href="#step-0-python" title="Permalink to this headline">¶</a></h2>
-<p>An installation of Python (version <em>3.6</em>) is required to run CPSR. Check
-that Python is installed by typing <code class="docutils literal"><span class="pre">python</span> <span class="pre">--version</span></code> in your terminal
-window. In addition, a <a class="reference external" href="https://github.com/uiri/toml">Python library</a>
-for parsing configuration files encoded with
-<a class="reference external" href="https://github.com/toml-lang/toml">TOML</a> is needed. To install,
-simply run the following command:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">toml</span>
-</pre></div>
+<div class="section" id="step-0-install-pcgr-version-0-9-0rc">
+<h2>STEP 0: Install PCGR (version 0.9.0rc)<a class="headerlink" href="#step-0-install-pcgr-version-0-9-0rc" title="Permalink to this headline">¶</a></h2>
+<p>Make sure you have a working installation of PCGR (<strong>version 0.9.0rc</strong>)
+and the accompanying data bundle(s) (walk through <a class="reference external" href="https://github.com/sigven/pcgr#getting-started">steps
+0-2</a>).</p>
 </div>
+<div class="section" id="step-1-download-the-latest-release">
+<h2>STEP 1: Download the latest release<a class="headerlink" href="#step-1-download-the-latest-release" title="Permalink to this headline">¶</a></h2>
+<p>Download the <a class="reference external" href="https://github.com/sigven/cpsr/releases/tag/v0.6.0rc">0.6.0rc
+release</a> of
+<em>cpsr</em> (run script and configuration file)</p>
 </div>
-<div class="section" id="step-1-installation-of-docker">
-<h2>STEP 1: Installation of Docker<a class="headerlink" href="#step-1-installation-of-docker" title="Permalink to this headline">¶</a></h2>
-<ol class="arabic simple">
-<li><a class="reference external" href="https://docs.docker.com/engine/installation/">Install the Docker
-engine</a> on your
-preferred platform<ul>
-<li>installing <a class="reference external" href="https://docs.docker.com/engine/installation/linux/">Docker on
-Linux</a></li>
-<li>installing <a class="reference external" href="https://docs.docker.com/engine/installation/mac/">Docker on Mac
-OS</a></li>
-<li>NOTE: We have not yet been able to perform enough testing on the
-Windows platform, and we have received feedback that particular
-versions of Docker/Windows do not work with CPSR (an example being
-<a class="reference external" href="https://github.com/docker/toolbox/issues/607">mounting of data
-volumes</a>)</li>
-</ul>
-</li>
-<li>Test that Docker is running, e.g.&nbsp;by typing <code class="docutils literal"><span class="pre">docker</span> <span class="pre">ps</span></code> or
-<code class="docutils literal"><span class="pre">docker</span> <span class="pre">images</span></code> in the terminal window</li>
-<li>Adjust the computing resources dedicated to the Docker, i.e.:<ul>
-<li>Memory: minimum 5GB</li>
-<li>CPUs: minimum 4</li>
-<li><a class="reference external" href="https://docs.docker.com/docker-for-mac/#advanced">How to - Mac OS
-X</a></li>
-</ul>
-</li>
-</ol>
-</div>
-<div class="section" id="step-2-download-run-script-data-bundle-and-pull-docker-image">
-<h2>STEP 2: Download run script/data bundle, and pull Docker image<a class="headerlink" href="#step-2-download-run-script-data-bundle-and-pull-docker-image" title="Permalink to this headline">¶</a></h2>
-<ol class="arabic">
-<li><p class="first">Download and unpack the latest <a class="reference external" href="https://github.com/sigven/cpsr/releases/tag/v0.5.2">CPSR release
-(0.5.2)</a></p>
-</li>
-<li><p class="first">Pull the latest PCGR Docker image (<em>0.8.4</em>):
-<code class="docutils literal"><span class="pre">docker</span> <span class="pre">pull</span> <span class="pre">sigven/pcgr:0.8.4</span></code></p>
-</li>
-<li><p class="first">Download and unpack the latest PCGR data bundles</p>
-<ul class="simple">
-<li><a class="reference external" href="https://drive.google.com/file/d/1TdYagetk-l__aYBsaZJHJvYFStDnIEcq">grch37 data bundle -
-20191116</a>
-(approx 16Gb)</li>
-<li><a class="reference external" href="https://drive.google.com/file/d/1wpVqlgY5jBKkQaTAxzgf0rgxKxOEJgj-">grch38 data bundle -
-20191116</a>
-(approx 17Gb)</li>
-<li><em>Unpacking</em>:
-<code class="docutils literal"><span class="pre">gzip</span> <span class="pre">-dc</span> <span class="pre">pcgr.databundle.grch37.YYYYMMDD.tgz</span> <span class="pre">|</span> <span class="pre">tar</span> <span class="pre">xvf</span> <span class="pre">-</span></code></li>
-</ul>
-<p>A <em>data/</em> folder should now have been produced</p>
-</li>
-</ol>
-</div>
-<div class="section" id="step-3-input-preprocessing">
-<h2>STEP 3: Input preprocessing<a class="headerlink" href="#step-3-input-preprocessing" title="Permalink to this headline">¶</a></h2>
-<p>The CPSR workflow accepts one type of input file</p>
-<ul class="simple">
-<li>An unannotated, single-sample VCF file (&gt;= v4.2) with germline DNA
-variants (SNVs/InDels)</li>
-<li>We <strong>strongly</strong> recommend that the input VCF is compressed and
-indexed using <a class="reference external" href="http://www.htslib.org/doc/tabix.html">bgzip</a> and
-<a class="reference external" href="http://www.htslib.org/doc/tabix.html">tabix</a></li>
-<li>If the input VCF contains multi-allelic sites, these will be subject
-to <a class="reference external" href="http://genome.sph.umich.edu/wiki/Vt#Decompose">decomposition</a></li>
-<li>Variants used for reporting should be designated as ‘PASS’ in the VCF
-FILTER column (non-PASS variants are simply ignored in the report)</li>
-</ul>
-</div>
-<div class="section" id="step-4-configuration">
-<h2>STEP 4: Configuration<a class="headerlink" href="#step-4-configuration" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="step-2-configuration">
+<h2>STEP 2: Configuration<a class="headerlink" href="#step-2-configuration" title="Permalink to this headline">¶</a></h2>
 <p>A few elements of the workflow can be figured using the <em>cpsr</em>
 configuration file, encoded in
 <a class="reference external" href="https://github.com/toml-lang/toml">TOML</a>. The following can be
 configured:</p>
 <ul class="simple">
-<li>Choice of gnomAD control population</li>
-<li>Upper MAF limit for variants considered for inclusion in the report</li>
-<li>Inclusion of GWAS hits</li>
-<li>Inclusion of secondary findings</li>
-<li>Inclusion of ACMG classifications for ClinVar variants</li>
-<li>VEP/<em>vcfanno</em> options</li>
+<li><p>Choice of gnomAD control population</p></li>
+<li><p>VEP/<em>vcfanno</em> options</p></li>
+<li><p>Metadata regarding custom panel</p></li>
 </ul>
-<p>See section on <a class="reference external" href="input.html">Input</a> for more details wrt. default
-configuration.</p>
+<p>See section on
+<a class="reference external" href="https://cpsr.readthedocs.io/en/latest/input.html">Input</a> for more
+details wrt. default configuration.</p>
 </div>
-<div class="section" id="step-5-run-example">
-<h2>STEP 5: Run example<a class="headerlink" href="#step-5-run-example" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>Cancer Predisposition Sequencing Reporter (CPSR) - report of cancer-predisposing germline variants
+<div class="section" id="step-3-run-example">
+<h2>STEP 3: Run example<a class="headerlink" href="#step-3-run-example" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>usage: cpsr.py -h [options]  --query_vcf INPUT_VCF --pcgr_dir PCGR_DIR --output_dir OUTPUT_DIR --genome_assembly GENOME_ASSEMBLY --conf CONFIG_FILE --sample_id SAMPLE_ID
 
-positional arguments:
-query_vcf             VCF input file with germline query variants (SNVs/InDels).
-pcgr_base_dir         Directory that contains the PCGR data bundle directory, e.g. ~/pcgr-0.8.4
-output_dir            Output directory
-{grch37,grch38}       Genome assembly build: grch37 or grch38
-configuration_file    Configuration file (TOML format)
-sample_id             Sample identifier - prefix for output files
+Cancer Predisposition Sequencing Reporter - report of clinically significant cancer-predisposing germline variants
 
-optional arguments:
--h, --help            show this help message and exit
+Required arguments:
+--query_vcf QUERY_VCF
+                VCF input file with germline query variants (SNVs/InDels).
+--pcgr_dir PCGR_DIR   Directory that contains the PCGR data bundle directory, e.g. ~/pcgr-0.9.0rc
+--output_dir OUTPUT_DIR
+                Output directory
+--genome_assembly {grch37,grch38}
+                Genome assembly build: grch37 or grch38
+--conf CONFIGURATION_FILE
+                Configuration file in TOML format
+--sample_id SAMPLE_ID
+                Sample identifier - prefix for output files
+
+Optional arguments:
 --force_overwrite     By default, the script will fail with an error if any output file already exists.
-                You can force the overwrite of existing result files by using this flag
+                You can force the overwrite of existing result files by using this flag, default: False
 --version             show program&#39;s version number and exit
---basic               Run functional variant annotation on VCF through VEP/vcfanno, omit report generation (STEP 4)
+--basic               Run functional variant annotation on VCF through VEP/vcfanno, omit Tier assignment/report generation (STEP 4), default: False
 --panel_id VIRTUAL_PANEL_ID
-                Identifier for choice of predefined virtual cancer predisposition gene panels,
-                choose any between the following identifiers:
-                0 = CPSR exploratory cancer predisposition panel (n = 213, TCGA + Cancer Gene Census + NCGC)
-                1 = Adult solid tumours cancer susceptibility (Genomics England PanelApp)
-                2 = Adult solid tumours for rare disease (Genomics England PanelApp)
-                3 = Bladder cancer pertinent cancer susceptibility (Genomics England PanelApp)
-                4 = Brain cancer pertinent cancer susceptibility (Genomics England PanelApp)
-                5 = Breast cancer pertinent cancer susceptibility (Genomics England PanelApp)
-                6 = Childhood solid tumours cancer susceptibility (Genomics England PanelApp)
-                7 = Colorectal cancer pertinent cancer susceptibility (Genomics England PanelApp)
-                8 = Endometrial cancer pertinent cancer susceptibility (Genomics England PanelApp)
-                9 = Familial Tumours Syndromes of the central &amp; peripheral Nervous system (Genomics England PanelApp)
-                10 = Familial breast cancer (Genomics England PanelApp)
-                11 = Familial melanoma (Genomics England PanelApp)
-                12 = Familial prostate cancer (Genomics England PanelApp)
-                13 = Familial rhabdomyosarcoma (Genomics England PanelApp)
-                14 = GI tract tumours (Genomics England PanelApp)
-                15 = Genodermatoses with malignancies (Genomics England PanelApp)
-                16 = Haematological malignancies cancer susceptibility (Genomics England PanelApp)
-                17 = Haematological malignancies for rare disease (Genomics England PanelApp)
-                18 = Head and neck cancer pertinent cancer susceptibility (Genomics England PanelApp)
-                19 = Inherited non-medullary thyroid cancer (Genomics England PanelApp)
-                20 = Inherited ovarian cancer (without breast cancer) (Genomics England PanelApp)
-                21 = Inherited pancreatic cancer (Genomics England PanelApp)
-                22 = Inherited renal cancer (Genomics England PanelApp)
-                23 = Inherited phaeochromocytoma and paraganglioma (Genomics England PanelApp)
-                24 = Melanoma pertinent cancer susceptibility (Genomics England PanelApp)
-                25 = Multiple endocrine tumours (Genomics England PanelApp)
-                26 = Multiple monogenic benign skin tumours (Genomics England PanelApp)
-                27 = Neuroendocrine cancer pertinent cancer susceptibility (Genomics England PanelApp)
-                28 = Neurofibromatosis Type 1 (Genomics England PanelApp)
-                29 = Ovarian cancer pertinent cancer susceptibility (Genomics England PanelApp)
-                30 = Parathyroid Cancer (Genomics England PanelApp)
-                31 = Prostate cancer pertinent cancer susceptibility (Genomics England PanelApp)
-                32 = Renal cancer pertinent cancer susceptibility (Genomics England PanelApp)
-                33 = Rhabdoid tumour predisposition (Genomics England PanelApp)
-                34 = Sarcoma cancer susceptibility (Genomics England PanelApp)
-                35 = Sarcoma susceptibility (Genomics England PanelApp)
-                36 = Thyroid cancer pertinent cancer susceptibility (Genomics England PanelApp)
-                37 = Tumour predisposition - childhood onset (Genomics England PanelApp)
-                38 = Upper gastrointestinal cancer pertinent cancer susceptibility (Genomics England PanelApp)
+            Identifier for choice of predefined virtual cancer predisposition gene panels,
+            choose any between the following identifiers:
+            0 = CPSR exploratory cancer predisposition panel (n = 216, TCGA + Cancer Gene Census + NCGC + Other)
+            1 = Adult solid tumours cancer susceptibility (Genomics England PanelApp)
+            2 = Adult solid tumours for rare disease (Genomics England PanelApp)
+            3 = Bladder cancer pertinent cancer susceptibility (Genomics England PanelApp)
+            4 = Brain cancer pertinent cancer susceptibility (Genomics England PanelApp)
+            5 = Breast cancer pertinent cancer susceptibility (Genomics England PanelApp)
+            6 = Childhood solid tumours cancer susceptibility (Genomics England PanelApp)
+            7 = Colorectal cancer pertinent cancer susceptibility (Genomics England PanelApp)
+            8 = Endometrial cancer pertinent cancer susceptibility (Genomics England PanelApp)
+            9 = Familial Tumours Syndromes of the central &amp; peripheral Nervous system (Genomics England PanelApp)
+            10 = Familial breast cancer (Genomics England PanelApp)
+            11 = Familial melanoma (Genomics England PanelApp)
+            12 = Familial prostate cancer (Genomics England PanelApp)
+            13 = Familial rhabdomyosarcoma (Genomics England PanelApp)
+            14 = GI tract tumours (Genomics England PanelApp)
+            15 = Genodermatoses with malignancies (Genomics England PanelApp)
+            16 = Haematological malignancies cancer susceptibility (Genomics England PanelApp)
+            17 = Haematological malignancies for rare disease (Genomics England PanelApp)
+            18 = Head and neck cancer pertinent cancer susceptibility (Genomics England PanelApp)
+            19 = Inherited MMR deficiency (Lynch syndrome) - Genomics England PanelApp
+            20 = Inherited non-medullary thyroid cancer (Genomics England PanelApp)
+            21 = Inherited ovarian cancer (without breast cancer) (Genomics England PanelApp)
+            22 = Inherited pancreatic cancer (Genomics England PanelApp)
+            23 = Inherited polyposis (Genomics England PanelApp)
+            24 = Inherited predisposition to acute myeloid leukaemia (AML) - Genomics England PanelApp
+            25 = Inherited predisposition to GIST (Genomics England PanelApp)
+            26 = Inherited renal cancer (Genomics England PanelApp)
+            27 = Inherited phaeochromocytoma and paraganglioma (Genomics England PanelApp)
+            28 = Melanoma pertinent cancer susceptibility (Genomics England PanelApp)
+            29 = Multiple endocrine tumours (Genomics England PanelApp)
+            30 = Multiple monogenic benign skin tumours (Genomics England PanelApp)
+            31 = Neuroendocrine cancer pertinent cancer susceptibility (Genomics England PanelApp)
+            32 = Neurofibromatosis Type 1 (Genomics England PanelApp)
+            33 = Ovarian cancer pertinent cancer susceptibility (Genomics England PanelApp)
+            34 = Parathyroid Cancer (Genomics England PanelApp)
+            35 = Prostate cancer pertinent cancer susceptibility (Genomics England PanelApp)
+            36 = Renal cancer pertinent cancer susceptibility (Genomics England PanelApp)
+            37 = Rhabdoid tumour predisposition (Genomics England PanelApp)
+            38 = Sarcoma cancer susceptibility (Genomics England PanelApp)
+            39 = Sarcoma susceptibility (Genomics England PanelApp)
+            40 = Thyroid cancer pertinent cancer susceptibility (Genomics England PanelApp)
+            41 = Tumour predisposition - childhood onset (Genomics England PanelApp)
+            42 = Upper gastrointestinal cancer pertinent cancer susceptibility (Genomics England PanelApp)
 
---custom_panel TARGET_BED
-                Define custom screening panel through a four-column BED file (chrom,start,stop,genesymbol). Alternative to predefined panels provided with --panel_id
---no_vcf_validate     Skip validation of input VCF with Ensembl&#39;s vcf-validator
---diagnostic_grade_only
-                For panel_id&#39;s 1-38 (Genomics England PanelApp) - consider genes with a GREEN status only
+--custom_list CUSTOM_LIST   Provide custom list of genes from virtual panel 0 (single-column txt file with gene symbols), alternative to predefined panels provided with --panel_id)
+--no_vcf_validate     Skip validation of input VCF with Ensembl&#39;s vcf-validator, default: False
+--diagnostic_grade_only     For panel_id&#39;s 1-42 (Genomics England PanelApp) - consider genes with a GREEN status only, default: False
 --docker-uid DOCKER_USER_ID
-                Docker user ID. Default is the host system user ID. If you are experiencing permission errors,
-                try setting this up to root (`--docker-uid root`)
---no-docker           Run the CPSR workflow in a non-Docker mode
---debug               Print full docker commands to log
+    Docker user ID. Default is the host system user ID. If you are experiencing permission errors, try setting this up to root (`--docker-uid root`), default: None
+--no-docker           Run the CPSR workflow in a non-Docker mode, default: False
+--ignore_noncoding    Do not list non-coding variants in HTML report
+--incidental_findings   Include variants found in ACMG-recommended list for incidental findings (v2.0)
+--gwas_findings       Report overlap with low to moderate cancer risk variants (tag SNPs) identified from genome-wide association studies
+--classify_all        Provide CPSR variant classifications (TIER 1-5) also for variants with exising ClinVar classifications in output TSV
+--maf_upper_threshold MAF_UPPER_THRESHOLD
+    Upper MAF limit (gnomAD global population frequency) for variants to be included in the report
+--debug               Print full docker commands to log, default: False
 </pre></div>
 </div>
-<p>The <em>cpsr</em> software bundle contains an example VCF file. It also comes
-with a basic configuration file (<em>cpsr.toml</em>).</p>
+<p>The <em>cpsr</em> software bundle contains an example VCF file. It also
+contains a configuration file (<em>cpsr.toml</em>).</p>
 <p>Report generation with the example VCF, using the <a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/245/">Adult solid tumours
 cancer
 susceptibility</a>
 virtual gene panel, can be performed through the following command:</p>
-<p><code class="docutils literal"><span class="pre">python</span> <span class="pre">~/cpsr-0.5.2/cpsr.py</span> <span class="pre">~/cpsr-0.5.2/example.vcf.gz</span></code>
-<code class="docutils literal"><span class="pre">~/pcgr-0.8.4</span> <span class="pre">~/cpsr-0.5.2</span> <span class="pre">grch37</span> <span class="pre">--panel_id</span> <span class="pre">1</span> <span class="pre">~/cpsr-0.5.2/cpsr.toml</span> <span class="pre">example</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">~/</span><span class="n">cpsr</span><span class="o">-</span><span class="mf">0.6</span><span class="o">.</span><span class="mi">0</span><span class="n">rc</span><span class="o">/</span><span class="n">cpsr</span><span class="o">.</span><span class="n">py</span>
+ <span class="o">--</span><span class="n">query_vcf</span> <span class="o">~/</span><span class="n">cpsr</span><span class="o">-</span><span class="mf">0.6</span><span class="o">.</span><span class="mi">0</span><span class="n">rc</span><span class="o">/</span><span class="n">example</span><span class="o">.</span><span class="n">vcf</span><span class="o">.</span><span class="n">gz</span>
+ <span class="o">--</span><span class="n">pcgr_dir</span> <span class="o">~/</span><span class="n">pcgr</span><span class="o">-</span><span class="mf">0.9</span><span class="o">.</span><span class="mi">0</span><span class="n">rc</span>
+ <span class="o">--</span><span class="n">output_dir</span> <span class="o">~/</span><span class="n">cpsr</span><span class="o">-</span><span class="mf">0.6</span><span class="o">.</span><span class="mi">0</span><span class="n">rc</span>
+ <span class="o">--</span><span class="n">genome_assembly</span> <span class="n">grch37</span>
+ <span class="o">--</span><span class="n">panel_id</span> <span class="mi">1</span>
+ <span class="o">--</span><span class="n">conf</span> <span class="o">~/</span><span class="n">cpsr</span><span class="o">-</span><span class="mf">0.6</span><span class="o">.</span><span class="mi">0</span><span class="n">rc</span><span class="o">/</span><span class="n">cpsr</span><span class="o">.</span><span class="n">toml</span>
+ <span class="o">--</span><span class="n">sample_id</span> <span class="n">example</span>
+ <span class="o">--</span><span class="n">incidental_findings</span>
+ <span class="o">--</span><span class="n">classify_all</span>
+ <span class="o">--</span><span class="n">maf_upper_threshold</span> <span class="mf">0.2</span>
+ <span class="o">--</span><span class="n">no_vcf_validate</span>
+</pre></div>
+</div>
 <p>Note that the example command also refers to the PCGR directory
-(<em>pcgr-0.8.4</em>), which contains the data bundle that are necessary for
+(<em>pcgr-0.9.0rc</em>), which contains the data bundle that are necessary for
 both <em>PCGR</em> and <em>CPSR</em>.</p>
-<p>The command above will run the Docker-based <em>cpsr</em> workflow and produce
-the following output files in the <em>cpsr</em> folder:</p>
+<p>This command will run the Docker-based <em>cpsr</em> workflow and produce the
+following output files in the <em>cpsr</em> folder:</p>
 <ol class="arabic simple">
-<li><strong>example.cpsr.grch37.pass.vcf.gz (.tbi)</strong> - Bgzipped VCF file with
-functional/clinical annotations</li>
-<li><strong>example.cpsr.grch37.pass.tsv.gz</strong> - Compressed TSV file (generated
-with <a class="reference external" href="https://github.com/sigven/vcf2tsv">vcf2tsv</a>) with
-functional/clinical annotations</li>
-<li><strong>example.cpsr.grch37.html</strong> - Interactive HTML report with variants
-in cancer predisposition genes classified into five levels of
-pathogenicity</li>
-<li><strong>example.cpsr.grch37.json.gz</strong> - Compressed JSON dump of HTML report
-content</li>
-<li><strong>example.cpsr.snvs_indels.tiers.grch37.tsv</strong> - TSV file with most
-important annotations of tier-structured SNVs/InDels</li>
+<li><p><strong>example.cpsr.grch37.pass.vcf.gz (.tbi)</strong> - Bgzipped VCF file with
+relevant annotations appended by CPSR</p></li>
+<li><p><strong>example.cpsr.grch37.pass.tsv.gz</strong> - Compressed TSV file (generated
+with <a class="reference external" href="https://github.com/sigven/vcf2tsv">vcf2tsv</a>) of VCF content
+with relevant annotations appended by CPSR</p></li>
+<li><p><strong>example.cpsr.grch37.html</strong> - Interactive HTML report with
+clinically relevant variants in cancer predisposition genes organized
+into tiers</p></li>
+<li><p><strong>example.cpsr.grch37.json.gz</strong> - Compressed JSON dump of HTML report
+content</p></li>
+<li><p><strong>example.cpsr.grch37.snvs_indels.tiers.tsv</strong> - TSV file with most
+important annotations of tier-structured SNVs/InDels</p></li>
 </ol>
 </div>
 </div>
 
 
            </div>
+           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="annotation_resources.html" class="btn btn-neutral float-right" title="CPSR annotation resources" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="annotation_resources.html" class="btn btn-neutral float-right" title="CPSR annotation resources" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="about.html" class="btn btn-neutral" title="About" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="about.html" class="btn btn-neutral float-left" title="About" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -367,11 +344,19 @@ important annotations of tier-structured SNVs/InDels</li>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018-2019, Sigve Nakken.
+        
+        &copy; Copyright 2018-2020, Sigve Nakken
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -383,36 +368,15 @@ important annotations of tier-structured SNVs/InDels</li>
   </div>
   
 
-
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'0.5.2',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
-
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
+
+  
+  
+    
     
 
   <style>

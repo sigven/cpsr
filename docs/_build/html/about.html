@@ -1,61 +1,58 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>About &mdash; Cancer Predisposition Sequencing Reporter 0.5.2 documentation</title>
+  <title>About &mdash; Cancer Predisposition Sequencing Reporter 0.6.0rc documentation</title>
   
 
   
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
   
 
   
-
-  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-
-  
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="author" title="About these documents"
-              href="#"/>
-        <link rel="index" title="Index"
-              href="genindex.html"/>
-        <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Cancer Predisposition Sequencing Reporter 0.5.2 documentation" href="index.html"/>
-        <link rel="next" title="Getting started" href="getting_started.html"/>
-        <link rel="prev" title="Welcome to Cancer Predisposition Sequencing Reporter’s documentation!" href="index.html"/> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
+    
+    <link rel="author" title="About these documents" href="#" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Getting started" href="getting_started.html" />
+    <link rel="prev" title="Welcome to Cancer Predisposition Sequencing Reporter’s documentation!" href="index.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
+   
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
-            <a href="index.html" class="icon icon-home"> Cancer Predisposition Sequencing Reporter
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> Cancer Predisposition Sequencing Reporter
           
 
           
@@ -65,7 +62,7 @@
             
             
               <div class="version">
-                0.5.2
+                0.6.0rc
               </div>
             
           
@@ -82,11 +79,15 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
             
-                <p class="caption"><span class="caption-text">Table of Contents</span></p>
+              
+            
+            
+              <p class="caption"><span class="caption-text">Table of Contents</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">About</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#what-is-the-cancer-predisposition-sequencing-reporter-cpsr">What is the Cancer Predisposition Sequencing Reporter (CPSR)?</a><ul>
@@ -109,40 +110,61 @@
             
           
         </div>
+        
       </div>
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">Cancer Predisposition Sequencing Reporter</a>
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Cancer Predisposition Sequencing Reporter</a>
+        
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
-    <li>About</li>
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>About</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
             <a href="_sources/about.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -165,30 +187,35 @@ in protein-coding genes that are implicated in cancer predisposition and
 inherited cancer syndromes.</p>
 <p><em>CPSR</em> accepts a query file with raw germline variant calls encoded in
 the <a class="reference external" href="https://samtools.github.io/hts-specs/VCFv4.2.pdf">VCF</a> format
-(i.e.&nbsp;analyzing SNVs/InDels). Furthermore, through the use several
+(i.e. analyzing SNVs/InDels). Furthermore, through the use several
 different <em>virtual cancer predisposition gene panels</em> harvested from the
 <a class="reference external" href="https://panelapp.genomicsengland.co.uk/">Genomics England PanelApp</a>,
 the user can flexibly put a restriction on which genes and findings are
 displayed in the cancer predisposition report.</p>
+<p>Snapshots of sections in the cancer predisposition genome report:</p>
+<div class="figure align-default" id="id1">
+<img alt="CPSR views" src="_images/cpsr_views.png" />
+<p class="caption"><span class="caption-text">CPSR views</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</div>
 <p>The software performs extensive variant annotation on the selected
 geneset and produces an interactive HTML report, in which the user can
 investigate:</p>
 <ul class="simple">
-<li><strong>ClinVar variants</strong> - pre-classified variants according to a
-five-level tier scheme in ClinVar (Pathogenic to Benign)</li>
-<li><strong>Non-ClinVar variants</strong> - classified by CPSR through ACMG criteria
+<li><p><strong>ClinVar variants</strong> - pre-classified variants according to a
+five-level tier scheme in ClinVar (Pathogenic to Benign)</p></li>
+<li><p><strong>Non-ClinVar variants</strong> - classified by CPSR through ACMG criteria
 (variant frequency levels and functional effects) into to a
-five-level tier scheme (Pathogenic to Benign)</li>
-<li><strong>Genomic biomarkers</strong> - cancer predisposition variants with reported
-implications for prognosis, diagnosis or therapeutic regimens</li>
-<li><strong>Secondary findings (optional)</strong> - pathogenic ClinVar variants in
+five-level tier scheme (Pathogenic to Benign)</p></li>
+<li><p><strong>Genomic biomarkers</strong> - cancer predisposition variants with reported
+implications for prognosis, diagnosis or therapeutic regimens</p></li>
+<li><p><strong>Secondary findings (optional)</strong> - pathogenic ClinVar variants in
 the <a class="reference external" href="https://www.ncbi.nlm.nih.gov/clinvar/docs/acmg/">ACMG recommended list for reporting of incidental
-findings</a></li>
-<li><strong>GWAS hits (optional)</strong> - variants overlapping with previously
+findings</a></p></li>
+<li><p><strong>GWAS hits (optional)</strong> - variants overlapping with previously
 identified hits in genome-wide association studies (GWAS) of cancer
-phenotypes (i.e.&nbsp;low to moderate risk conferring alleles), using
+phenotypes (i.e. low to moderate risk conferring alleles), using
 <a class="reference external" href="https://www.ebi.ac.uk/gwas/">NHGRI-EBI Catalog of published genome-wide association
-studies</a> as the underlying source.</li>
+studies</a> as the underlying source.</p></li>
 </ul>
 <p>The variant sets can be interactively explored and filtered further
 through different types of filters (phenotypes, genes, variant
@@ -210,106 +237,117 @@ al., Am J Hum Genet.,
 <p>The cancer predisposition report can show variants found in a number of
 well-known cancer predisposition genes, and the specific set of genes
 can be customized by the user by choosing any of the following <strong>virtual
-gene panels (0 - 38)</strong>:</p>
+gene panels (0 - 42)</strong>:</p>
 <ul>
-<li><p class="first"><strong>Panel 0 (default)</strong> is a comprehensive gene panel assembled through
-known sources on cancer predisposition:</p>
+<li><p><strong>Panel 0 (default)</strong> is a comprehensive, research-based gene panel
+assembled through known sources on cancer predisposition:</p>
 <ul class="simple">
-<li>A list of 152 genes that were curated and established within
+<li><p>A list of 152 genes that were curated and established within
 TCGA’s pan-cancer study (<a class="reference external" href="https://www.ncbi.nlm.nih.gov/pubmed/29625052">Huang et al., Cell,
-2018</a>)</li>
-<li>A list of 107 protein-coding genes that has been manually curated
+2018</a>)</p></li>
+<li><p>A list of 107 protein-coding genes that has been manually curated
 in COSMIC’s <a class="reference external" href="https://cancer.sanger.ac.uk/census">Cancer Gene Census
-v90</a>,</li>
-<li>A list of 152 protein-coding genes established by experts within
+v91</a>,</p></li>
+<li><p>A list of 148 protein-coding genes established by experts within
 the Norwegian Cancer Genomics Consortium
-(<a class="reference external" href="http://cancergenomics.no">http://cancergenomics.no</a>)</li>
+(<a class="reference external" href="http://cancergenomics.no">http://cancergenomics.no</a>)</p></li>
+<li><p>Additional genes deemed relevant for cancer predisposition
+(contributed by the CPSR user community)</p></li>
 </ul>
-<p>The combination of the three sources resulted in a non-redundant set
-of <a class="reference external" href="https://github.com/sigven/cpsr/blob/master/predisposition.md">213 protein-coding
+<p>The combination of the above sources resulted in a non-redundant set
+of <a class="reference external" href="https://github.com/sigven/cpsr/blob/master/predisposition.md">216 protein-coding
 genes</a>
-of relevance for predisposition to tumor development.</p>
+which carry variants that may predispose to tumor development.</p>
 <ul class="simple">
-<li><strong>Panels 1 - 38</strong> are panels for inherited cancer syndromes and
+<li><p><strong>Panels 1 - 42</strong> are panels for inherited cancer syndromes and
 cancer predisposition assembled within the <a class="reference external" href="https://panelapp.genomicsengland.co.uk/">Genomics England
-PanelApp</a>:<ul>
-<li><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/245/">1 = Adult solid tumours cancer
-susceptibility</a></li>
-<li><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/391/">2 = Adult solid tumours for rare
-disease</a></li>
-<li><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/208/">3 = Bladder cancer pertinent cancer
-susceptibility</a></li>
-<li><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/166/">4 = Brain cancer pertinent cancer
-susceptibility</a></li>
-<li><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/55/">5 = Breast cancer pertinent cancer
-susceptibility</a></li>
-<li><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/259/">6 = Childhood solid tumours cancer
-susceptibility</a></li>
-<li><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/244/">7 = Colorectal cancer pertinent cancer
-susceptibility</a></li>
-<li><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/271/">8 = Endometrial cancer pertinent cancer
-susceptibility</a></li>
-<li><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/167/">9 = Familial Tumours Syndromes of the central &amp; peripheral
+PanelApp</a>:</p>
+<ul>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/245/">1 = Adult solid tumours cancer
+susceptibility</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/391/">2 = Adult solid tumours for rare
+disease</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/208/">3 = Bladder cancer pertinent cancer
+susceptibility</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/166/">4 = Brain cancer pertinent cancer
+susceptibility</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/55/">5 = Breast cancer pertinent cancer
+susceptibility</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/259/">6 = Childhood solid tumours cancer
+susceptibility</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/244/">7 = Colorectal cancer pertinent cancer
+susceptibility</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/271/">8 = Endometrial cancer pertinent cancer
+susceptibility</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/167/">9 = Familial Tumours Syndromes of the central &amp; peripheral
 Nervous
-system</a></li>
-<li><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/158/">10 = Familial breast
-cancer</a></li>
-<li><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/522/">11 = Familial
-melanoma</a></li>
-<li><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/318/">12 = Familial prostate
-cancer</a></li>
-<li><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/290/">13 = Familial
-rhabdomyosarcoma</a></li>
-<li><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/254/">14 = GI tract
-tumours</a></li>
-<li><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/201/">15 = Genodermatoses with
-malignancies</a></li>
-<li><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/59/">16 = Haematological malignancies cancer
-susceptibility</a></li>
-<li><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/407/">17 = Haematological malignancies for rare
-disease</a></li>
-<li><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/115/">18 = Head and neck cancer pertinent cancer
-susceptibility</a></li>
-<li><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/171/">19 = Inherited non-medullary thyroid
-cancer</a></li>
-<li><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/143/">20 = Inherited ovarian cancer (without breast
-cancer)</a></li>
-<li><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/524/">21 = Inherited pancreatic
-cancer</a></li>
-<li><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/521/">22 = Inherited renal
-cancer</a></li>
-<li><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/97/">23 = Inherited phaeochromocytoma and
-paraganglioma</a></li>
-<li><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/133/">24 = Melanoma pertinent cancer
-susceptibility</a></li>
-<li><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/36/">25 = Multiple endocrine
-tumours</a></li>
-<li><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/558/">26 = Multiple monogenic benign skin
-tumours</a></li>
-<li><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/183/">27 = Neuroendocrine cancer pertinent cancer
-susceptibility</a></li>
-<li><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/255/">28 - Neurofibromatosis Type
-1</a></li>
-<li><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/117/">29 = Ovarian cancer pertinent cancer
-susceptibility</a></li>
-<li><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/86/">30 = Parathyroid
-Cancer</a></li>
-<li><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/17/">31 = Prostate cancer pertinent cancer
-susceptibility</a></li>
-<li><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/154/">32 = Renal cancer pertinent cancer
-susceptibility</a></li>
-<li><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/600/">33 = Rhabdoid tumour
-predisposition</a></li>
-<li><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/217/">34 = Sarcoma cancer
-susceptibility</a></li>
-<li><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/734/">35 = Sarcoma
-susceptibility</a></li>
-<li><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/421/">36 = Thyroid cancer pertinent cancer
-susceptibility</a></li>
-<li><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/243/">37 = Tumour predisposition - childhood
-onset</a></li>
-<li><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/273/">38 = Upper gastrointestinal cancer pertinent cancer
-susceptibility</a></li>
+system</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/158/">10 = Familial breast
+cancer</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/522/">11 = Familial
+melanoma</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/318/">12 = Familial prostate
+cancer</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/290/">13 = Familial
+rhabdomyosarcoma</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/254/">14 = GI tract
+tumours</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/201/">15 = Genodermatoses with
+malignancies</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/59/">16 = Haematological malignancies cancer
+susceptibility</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/407/">17 = Haematological malignancies for rare
+disease</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/115/">18 = Head and neck cancer pertinent cancer
+susceptibility</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/503/">19 = Inherited MMR deficiency (Lynch
+syndrome)</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/171/">20 = Inherited non-medullary thyroid
+cancer</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/143/">21 = Inherited ovarian cancer (without breast
+cancer)</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/524/">22 = Inherited pancreatic
+cancer</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/504/">23 = Inherited
+polyposis</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/525/">24 = Inherited predisposition to acute myeloid leukaemia
+(AML)</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/523/">25 = Inherited predisposition to
+GIST</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/521/">26 = Inherited renal
+cancer</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/97/">27 = Inherited phaeochromocytoma and
+paraganglioma</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/133/">28 = Melanoma pertinent cancer
+susceptibility</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/36/">29 = Multiple endocrine
+tumours</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/558/">30 = Multiple monogenic benign skin
+tumours</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/183/">31 = Neuroendocrine cancer pertinent cancer
+susceptibility</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/255/">32 - Neurofibromatosis Type
+1</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/117/">33 = Ovarian cancer pertinent cancer
+susceptibility</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/86/">34 = Parathyroid
+Cancer</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/17/">35 = Prostate cancer pertinent cancer
+susceptibility</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/154/">36 = Renal cancer pertinent cancer
+susceptibility</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/600/">37 = Rhabdoid tumour
+predisposition</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/217/">38 = Sarcoma cancer
+susceptibility</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/734/">39 = Sarcoma
+susceptibility</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/421/">40 = Thyroid cancer pertinent cancer
+susceptibility</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/243/">41 = Tumour predisposition - childhood
+onset</a></p></li>
+<li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/273/">42 = Upper gastrointestinal cancer pertinent cancer
+susceptibility</a></p></li>
 </ul>
 </li>
 </ul>
@@ -320,8 +358,8 @@ susceptibility</a></li>
 <div class="section" id="example-report">
 <h2>Example report<a class="headerlink" href="#example-report" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><a class="reference external" href="http://folk.uio.no/sigven/example.cpsr.grch37.html">Cancer predisposition sequencing
-report</a></li>
+<li><p><a class="reference external" href="http://insilico.hpc.uio.no/pcgr/example_reports/cpsr/0.6.0rc/SAMPLE-001.cpsr.grch37.html">Cancer predisposition genome
+report</a></p></li>
 </ul>
 </div>
 <div class="section" id="docker-based-technology">
@@ -333,7 +371,7 @@ software libraries/tools and required dependencies have been taken care
 of. In addition to the bundled software, in the form of a Docker image,
 the workflow needs to be attached with an <a class="reference external" href="annotation_resources.html">annotation data
 bundle</a>.</p>
-<p><img alt="image0" src="_images/docker-logo50.png" /></p>
+<p><img alt="image1" src="_images/docker-logo50.png" /></p>
 </div>
 <div class="section" id="contact">
 <h2>Contact<a class="headerlink" href="#contact" title="Permalink to this headline">¶</a></h2>
@@ -343,15 +381,16 @@ bundle</a>.</p>
 
 
            </div>
+           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="getting_started.html" class="btn btn-neutral float-right" title="Getting started" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="getting_started.html" class="btn btn-neutral float-right" title="Getting started" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="index.html" class="btn btn-neutral" title="Welcome to Cancer Predisposition Sequencing Reporter’s documentation!" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to Cancer Predisposition Sequencing Reporter’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -360,11 +399,19 @@ bundle</a>.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018-2019, Sigve Nakken.
+        
+        &copy; Copyright 2018-2020, Sigve Nakken
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -376,36 +423,15 @@ bundle</a>.</p>
   </div>
   
 
-
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'0.5.2',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
-
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
+
+  
+  
+    
     
 
   <style>

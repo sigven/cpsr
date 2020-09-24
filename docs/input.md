@@ -19,16 +19,6 @@ The cancer predisposition sequencing report can be flexibly configured in a TOML
 
 	# CPSR configuration options (TOML).
 
-	[secondary_findings]
-	## Include variants found in ACMG-recommended list for incidental findings
-	## https://www.ncbi.nlm.nih.gov/clinvar/docs/acmg/
-	show_sf = true
-
-	[maf_limits]
-	## choose upper MAF threshold in gnomAD's superpopulation (global) for report of unclassified (non-ClinVar)
-	## variants
-	maf_gnomad = 0.9
-
 	[popgen]
 	## choose population source in gnomAD (non-cancer subset for use as control), defaults to the global set
 
@@ -51,14 +41,16 @@ The cancer predisposition sequencing report can be flexibly configured in a TOML
 	## tags should be comma separated, i.e. custom_tags = "GATK_FILTER,VARSCAN_FILTER"
 	custom_tags = ""
 
-	[classification]
-	## for variants with an existing classification (ClinVar), keep CPSR score and classification in output TSV file
-	clinvar_cpsr = false
+	[custom_panel]
+	## edit metadata (name, version, url) of relevance for custom-provided gene panel (provided by option --custom_panel)
+	name = "Custom gene panel"
+	version = "1.0"
+	url = ""
 
 	[gwas]
-	gwas_hits = false
 	## Required p-value for reporting of GWAS hits
-	p_value_min = 5e-8
+	p_value_min = 5e-6
+
 
 	[other]
 	n_vcfanno_proc = 4

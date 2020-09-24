@@ -1,61 +1,58 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Variant classification (ACMG/AMP) &mdash; Cancer Predisposition Sequencing Reporter 0.5.2 documentation</title>
+  <title>Variant classification (ACMG/AMP) &mdash; Cancer Predisposition Sequencing Reporter 0.6.0rc documentation</title>
   
 
   
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
   
 
   
-
-  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-
-  
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="author" title="About these documents"
-              href="about.html"/>
-        <link rel="index" title="Index"
-              href="genindex.html"/>
-        <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Cancer Predisposition Sequencing Reporter 0.5.2 documentation" href="index.html"/>
-        <link rel="next" title="CHANGELOG" href="CHANGELOG.html"/>
-        <link rel="prev" title="Output" href="output.html"/> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
+    
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="CHANGELOG" href="CHANGELOG.html" />
+    <link rel="prev" title="Output" href="output.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
+   
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
-            <a href="index.html" class="icon icon-home"> Cancer Predisposition Sequencing Reporter
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> Cancer Predisposition Sequencing Reporter
           
 
           
@@ -65,7 +62,7 @@
             
             
               <div class="version">
-                0.5.2
+                0.6.0rc
               </div>
             
           
@@ -82,11 +79,15 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
             
-                <p class="caption"><span class="caption-text">Table of Contents</span></p>
+              
+            
+            
+              <p class="caption"><span class="caption-text">Table of Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
@@ -100,40 +101,61 @@
             
           
         </div>
+        
       </div>
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">Cancer Predisposition Sequencing Reporter</a>
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Cancer Predisposition Sequencing Reporter</a>
+        
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
-    <li>Variant classification (ACMG/AMP)</li>
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Variant classification (ACMG/AMP)</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
             <a href="_sources/variant_classification.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -146,11 +168,11 @@ screening have been classified according to a standard, five-level
 pathogenicity scheme (coined CPSR_CLASSIFICATION). The scheme has the
 same five levels as those employed by ClinVar, i.e.</p>
 <ul class="simple">
-<li>pathogenic (<strong>P</strong>)</li>
-<li>likely pathogenic (<strong>LP</strong>)</li>
-<li>variant of uncertain significance (<strong>VUS</strong>)</li>
-<li>likely benign (<strong>LB</strong>)</li>
-<li>benign (<strong>B</strong>)</li>
+<li><p>pathogenic (<strong>P</strong>)</p></li>
+<li><p>likely pathogenic (<strong>LP</strong>)</p></li>
+<li><p>variant of uncertain significance (<strong>VUS</strong>)</p></li>
+<li><p>likely benign (<strong>LB</strong>)</p></li>
+<li><p>benign (<strong>B</strong>)</p></li>
 </ul>
 <p>The classification performed by CPSR is rule-based, implementing most of
 the ACMG criteria related to variant effect and population frequency,
@@ -171,95 +193,101 @@ each pole (‘B’ and ‘P’) are aggregated, and if there is conflicting or
 little evidence it will be classified as a VUS. This classification
 scheme has been adopted by the one outlined in
 <a class="reference external" href="https://www.ncbi.nlm.nih.gov/pubmed/28492532">SherLoc</a>.</p>
-<ol class="arabic simple">
-<li>ACMG_BA1_AD (<strong>-5</strong>) - Very high MAF (&gt; 0.5% in gnomAD non-cancer
-pop subset) - min AN = 12,000 - Dominant mechanism of disease</li>
-<li>ACMG_BS1_1_AD (<strong>-3</strong>)- High MAF (&gt; 0.1% in gnomAD non-cancer pop
-subset) - min AN = 12,000 - Dominant mechanism of disease</li>
-<li>ACMG_BS1_2_AD - (<strong>-1</strong>) Somewhat high MAF (&gt; 0.005% in gnomAD
-non-cancer pop subset) - Dominant mechanism of disease</li>
-<li>ACMG_BA1_AR (<strong>-5</strong>) - Very high MAF (&gt; 1% in gnomAD non-cancer pop
-subset) - min AN = 12,000 - Recessive mechanism of disease</li>
-<li>ACMG_BS1_1_AR (<strong>-3</strong>)- High MAF (&gt; 0.3% in gnomAD non-cancer pop
-subset) - min AN = 12,000 - Recessive mechanism of disease</li>
-<li>ACMG_BS1_2_AR (<strong>-1</strong>)- Somewhat high MAF (&gt; 0.005% in gnomAD
-non-cancer pop subset) - Recessive mechanism of disease</li>
-<li>ACMG_PM2_1 (<strong>0.5</strong>)- Allele count within pathogenic range (MAF &lt;=
-0.005% in the population-specific non-cancer gnomAD subset)</li>
-<li>ACMG_PM2_2 (<strong>1</strong>)- Alternate allele absent in the
-population-specific non-cancer gnomAD subset</li>
-<li>ACMG_PVS1_1 (<strong>5</strong>) - Null variant (frameshift/nonsense) - predicted
+<ol class="arabic">
+<li><p>ACMG_BA1_AD (<strong>-5</strong>) - Very high MAF (&gt; 0.5% in gnomAD non-cancer
+pop subset) - min AN = 12,000 - Dominant mechanism of disease</p></li>
+<li><p>ACMG_BS1_1_AD (<strong>-3</strong>)- High MAF (&gt; 0.1% in gnomAD non-cancer pop
+subset) - min AN = 12,000 - Dominant mechanism of disease</p></li>
+<li><p>ACMG_BS1_2_AD (<strong>-1</strong>) Somewhat high MAF (&gt; 0.005% in gnomAD
+non-cancer pop subset) - Dominant mechanism of disease</p></li>
+<li><p>ACMG_BA1_AR (<strong>-5</strong>) - Very high MAF (&gt; 1% in gnomAD non-cancer pop
+subset) - min AN = 12,000 - Recessive mechanism of disease</p></li>
+<li><p>ACMG_BS1_1_AR (<strong>-3</strong>)- High MAF (&gt; 0.3% in gnomAD non-cancer pop
+subset) - min AN = 12,000 - Recessive mechanism of disease</p></li>
+<li><p>ACMG_BS1_2_AR (<strong>-1</strong>)- Somewhat high MAF (&gt; 0.005% in gnomAD
+non-cancer pop subset) - Recessive mechanism of disease</p></li>
+<li><p>ACMG_BP3 (<strong>-2.5</strong>) - Non-coding variant in the UTR or promoter
+region</p></li>
+<li><p>ACMG_BP7 (<strong>-2.5</strong>) - Silent and intronic changes outside of the
+consensus splice site</p></li>
+<li><p>ACMG_BP4 (<strong>-1</strong>)- Multiple lines (&gt;=5) of computational evidence
+support a benign effect on the gene or gene product (conservation,
+evolutionary, splicing impact, etc. - from dbNSFP</p></li>
+<li><p>ACMG_BMC1 (<strong>0</strong>)- Peptide change is at the same location of a known
+benign change (ClinVar)</p></li>
+<li><p>ACMG_BSC1 (<strong>-3</strong>)- Peptide change is reported as benign (ClinVar)</p></li>
+<li><p>ACMG_BP1 (<strong>-0.5</strong>)- Missense variant in a gene for which primarily
+truncating variants (&gt;90% of pathogenic variants) are known to cause
+disease (ClinVar)</p></li>
+<li><p>ACMG_PM2_1 (<strong>0.5</strong>)- Allele count within pathogenic range (MAF &lt;=
+0.005% in the population-specific non-cancer gnomAD subset)</p></li>
+<li><p>ACMG_PM2_2 (<strong>1</strong>)- Alternate allele absent in the
+population-specific non-cancer gnomAD subset</p></li>
+<li><p>ACMG_PVS1_1 (<strong>5</strong>) - Null variant (frameshift/nonsense) - predicted
 as LoF by LOFTEE - within pathogenic range - LoF established for
-gene</li>
-<li>ACMG_PVS1_2 (<strong>2.5</strong>)- Null variant (frameshift/nonsense) - not
+gene</p></li>
+<li><p>ACMG_PVS1_2 (<strong>2.5</strong>)- Null variant (frameshift/nonsense) - not
 predicted as LoF by LOFTEE - within pathogenic range - LoF
-established for gene</li>
-<li>ACMG_PVS1_3 (<strong>2</strong>) - Null variant (frameshift/nonsense) - predicted
+established for gene</p></li>
+<li><p>ACMG_PVS1_3 (<strong>2</strong>) - Null variant (frameshift/nonsense) - predicted
 as LoF by LOFTEE - within pathogenic range - LoF not established for
-gene</li>
-<li>ACMG_PVS1_4 (<strong>0</strong>) - Null variant (frameshift/nonsense) - not
+gene</p></li>
+<li><p>ACMG_PVS1_4 (<strong>0</strong>) - Null variant (frameshift/nonsense) - not
 predicted as LoF by LOFTEE – within pathogenic range - LoF not
-established for gene</li>
-<li>ACMG_PVS1_5 (<strong>2.5</strong>) - Start (initiator methionine) lost - within
-pathogenic range - Lof established for gene</li>
-<li>ACMG_PVS1_6 (<strong>2</strong>) - Start (initiator methionine) lost - within
-pathogenic range - LoF not established for gene</li>
-<li>ACMG_PVS1_7 (<strong>4</strong>) - Donor/acceptor variant - predicted as LoF by
+established for gene</p></li>
+<li><p>ACMG_PVS1_5 (<strong>2.5</strong>) - Start (initiator methionine) lost - within
+pathogenic range - Lof established for gene</p></li>
+<li><p>ACMG_PVS1_6 (<strong>2</strong>) - Start (initiator methionine) lost - within
+pathogenic range - LoF not established for gene</p></li>
+<li><p>ACMG_PVS1_7 (<strong>4</strong>) - Donor/acceptor variant - predicted as LoF by
 LOFTEE - within pathogenic range - not last intron - LoF established
-for gene</li>
-<li>ACMG_PVS1_8 (<strong>2.5</strong>) - Donor/acceptor variant - last intron -
-within pathogenic range - LoF established for gene</li>
-<li>ACMG_PVS1_9 (<strong>2</strong>)- Donor/acceptor variant - not last intron -
-within pathogenic range - LoF not established for gene</li>
-<li>ACMG_PVS1_10 (<strong>2</strong>) - Donor variant at located at the +3, +4 or +5
-position of the intron - within the pathogenic range</li>
-<li>ACMG_PS1 (<strong>4</strong>) - Same amino acid change as a previously
+for gene</p></li>
+<li><p>ACMG_PVS1_8 (<strong>2.5</strong>) - Donor/acceptor variant - last intron -
+within pathogenic range - LoF established for gene</p></li>
+<li><p>ACMG_PVS1_9 (<strong>2</strong>)- Donor/acceptor variant - not last intron -
+within pathogenic range - LoF not established for gene</p></li>
+<li><p>ACMG_PVS1_10 (<strong>2</strong>) - Donor variant at located at the +3, +4 or +5
+position of the intron - within the pathogenic range</p></li>
+<li><p>ACMG_PS1 (<strong>4</strong>) - Same amino acid change as a previously
 established pathogenic variant (ClinVar) regardless of nucleotide
-change</li>
-<li>ACMG_PP2 (<strong>0.5</strong>) - Missense variant in a gene that has a
+change</p></li>
+<li><p>ACMG_PP2 (<strong>0.5</strong>) - Missense variant in a gene that has a
 relatively low rate of benign missense variation (&lt;30%) and where
 missense variants are a common mechanism of disease (&gt;50% P/LP
-(ClinVar))</li>
-<li>ACMG_PM1 (<strong>2</strong>) - Missense variant in a somatic mutation hotspot as
-determined by cancerhotspots.org</li>
-<li>ACMG_PM4 (<strong>0</strong>) - Protein length changes due to inframe indels or
+(ClinVar))</p></li>
+<li><p>ACMG_PM1 (<strong>2</strong>) - Missense variant in a somatic mutation hotspot as
+determined by cancerhotspots.org</p></li>
+<li><p>ACMG_PM4 (<strong>0</strong>) - Protein length changes due to inframe indels or
 nonstop variant in non-repetitive regions of genes that harbor
-variants with a dominant mode of inheritance.</li>
-<li>ACMG_PPC1 (<strong>0</strong>) - Protein length changes due to inframe indels or
+variants with a dominant mode of inheritance.</p></li>
+<li><p>ACMG_PPC1 (<strong>0</strong>) - Protein length changes due to inframe indels or
 nonstop variant in non-repetitive regions of genes that harbor
-variants with a recessive mode of inheritance.</li>
-<li>ACMG_PM5 (<strong>1.5</strong>) - Novel missense change at an amino acid residue
+variants with a recessive mode of inheritance.</p></li>
+<li><p>ACMG_PM5 (<strong>1.5</strong>) - Novel missense change at an amino acid residue
 where a different missense change determined to be pathogenic has
-been seen before (ClinVar)</li>
-<li>ACMG_PP3 (<strong>0.5</strong>)- Multiple lines (&gt;=5) of computational evidence
+been seen before (ClinVar)</p></li>
+<li><p>ACMG_PP3 (<strong>0.5</strong>)- Multiple lines (&gt;=5) of computational evidence
 support a deleterious effect on the gene or gene product
-(conservation, evolutionary, splicing impact, etc. - from dbNSFP</li>
-<li>ACMG_BP4 (<strong>-1</strong>)- Multiple lines (&gt;=5) of computational evidence
-support a benign effect on the gene or gene product (conservation,
-evolutionary, splicing impact, etc. - from dbNSFP</li>
-<li>ACMG_BMC1 (<strong>0</strong>)- Peptide change is at the same location of a known
-benign change (ClinVar)</li>
-<li>ACMG_BSC1 (<strong>-3</strong>)- Peptide change is reported as benign (ClinVar)</li>
-<li>ACMG_BP1 (<strong>-0.5</strong>)- Missense variant in a gene for which primarily
-truncating variants (&gt;90% of pathogenic variants) are known to cause
-disease (ClinVar)</li>
+(conservation, evolutionary, splicing impact, etc. - from dbNSFP</p>
+</p></li>
 </ol>
 <p>Currently, the <strong>CPSR_CLASSIFICATION</strong> is determined based on the
 following ranges of pathogenicity scores:</p>
-<p><img alt="image0" src="_images/cpsr_classification.png" /></p>
+<p><img alt="image1" src="_images/cpsr_classification.png" /></p>
 </div>
 
 
            </div>
+           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="CHANGELOG.html" class="btn btn-neutral float-right" title="CHANGELOG" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="CHANGELOG.html" class="btn btn-neutral float-right" title="CHANGELOG" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="output.html" class="btn btn-neutral" title="Output" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="output.html" class="btn btn-neutral float-left" title="Output" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -268,11 +296,19 @@ following ranges of pathogenicity scores:</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018-2019, Sigve Nakken.
+        
+        &copy; Copyright 2018-2020, Sigve Nakken
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -284,36 +320,15 @@ following ranges of pathogenicity scores:</p>
   </div>
   
 
-
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'0.5.2',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
-
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
+
+  
+  
+    
     
 
   <style>

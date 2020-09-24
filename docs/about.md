@@ -6,6 +6,12 @@ The *Cancer Predisposition Sequencing Reporter (CPSR)* is a computational workfl
 
 *CPSR* accepts a query file with raw germline variant calls encoded in the [VCF](https://samtools.github.io/hts-specs/VCFv4.2.pdf) format (i.e. analyzing SNVs/InDels). Furthermore, through the use several different _virtual cancer predisposition gene panels_ harvested from the [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk/), the user can flexibly put a restriction on which genes and findings are displayed in the cancer predisposition report.
 
+
+Snapshots of sections in the cancer predisposition genome report:
+
+![CPSR views](cpsr_views.png)
+
+
 The software performs extensive variant annotation on the selected geneset and produces an interactive HTML report, in which the user can investigate:
 
 * __ClinVar variants__ - pre-classified variants according to a five-level tier scheme in ClinVar (Pathogenic to Benign)
@@ -18,59 +24,63 @@ The variant sets can be interactively explored and filtered further through diff
 
 ##### Cancer predisposition genes
 
-The cancer predisposition report can show variants found in a number of well-known cancer predisposition genes, and the specific set of genes can be customized by the user by choosing any of the following __virtual gene panels (0 - 38)__:
+The cancer predisposition report can show variants found in a number of well-known cancer predisposition genes, and the specific set of genes can be customized by the user by choosing any of the following __virtual gene panels (0 - 42)__:
 
-  * **Panel 0 (default)** is a comprehensive gene panel assembled through known sources on cancer predisposition:
+  * **Panel 0 (default)** is a comprehensive, research-based gene panel assembled through known sources on cancer predisposition:
 	* A list of 152 genes that were curated and established within TCGA’s pan-cancer study ([Huang et al., *Cell*, 2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052))
-	* A list of 107 protein-coding genes that has been manually curated in COSMIC’s [Cancer Gene Census v90](https://cancer.sanger.ac.uk/census),
-	* A list of 152 protein-coding genes established by experts within the Norwegian Cancer Genomics Consortium (http://cancergenomics.no)
+	* A list of 107 protein-coding genes that has been manually curated in COSMIC’s [Cancer Gene Census v91](https://cancer.sanger.ac.uk/census),
+	* A list of 148 protein-coding genes established by experts within the Norwegian Cancer Genomics Consortium (http://cancergenomics.no)
+	* Additional genes deemed relevant for cancer predisposition (contributed by the CPSR user community)
 
-	The combination of the three sources resulted in a non-redundant set of [213 protein-coding genes](https://github.com/sigven/cpsr/blob/master/predisposition.md) of relevance for predisposition to tumor development.
+	The combination of the above sources resulted in a non-redundant set of [216 protein-coding genes](https://github.com/sigven/cpsr/blob/master/predisposition.md) which carry variants that may predispose to tumor development.
 
-	* **Panels 1 - 38** are panels for inherited cancer syndromes and cancer predisposition assembled within the [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk/):
-   	  * [1 = Adult solid tumours cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/245/)
-   	  * [2 = Adult solid tumours for rare disease](https://panelapp.genomicsengland.co.uk/panels/391/)
-   	  * [3 = Bladder cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/208/)
-   	  * [4 = Brain cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/166/)
-   	  * [5 = Breast cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/55/)
-   	  * [6 = Childhood solid tumours cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/259/)
-   	  * [7 = Colorectal cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/244/)
-   	  * [8 = Endometrial cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/271/)
-   	  * [9 = Familial Tumours Syndromes of the central & peripheral Nervous system](https://panelapp.genomicsengland.co.uk/panels/167/)
-   	  * [10 = Familial breast cancer](https://panelapp.genomicsengland.co.uk/panels/158/)
-   	  * [11 = Familial melanoma](https://panelapp.genomicsengland.co.uk/panels/522/)
-   	  * [12 = Familial prostate cancer](https://panelapp.genomicsengland.co.uk/panels/318/)
-   	  * [13 = Familial rhabdomyosarcoma](https://panelapp.genomicsengland.co.uk/panels/290/)
-   	  * [14 = GI tract tumours](https://panelapp.genomicsengland.co.uk/panels/254/)
-	  * [15 = Genodermatoses with malignancies](https://panelapp.genomicsengland.co.uk/panels/201/)
-   	  * [16 = Haematological malignancies cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/59/)
-	  * [17 = Haematological malignancies for rare disease](https://panelapp.genomicsengland.co.uk/panels/407/)
-   	  * [18 = Head and neck cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/115/)
-   	  * [19 = Inherited non-medullary thyroid cancer](https://panelapp.genomicsengland.co.uk/panels/171/)
-   	  * [20 = Inherited ovarian cancer (without breast cancer)](https://panelapp.genomicsengland.co.uk/panels/143/)
-   	  * [21 = Inherited pancreatic cancer](https://panelapp.genomicsengland.co.uk/panels/524/)
-   	  * [22 = Inherited renal cancer](https://panelapp.genomicsengland.co.uk/panels/521/)
-   	  * [23 = Inherited phaeochromocytoma and paraganglioma](https://panelapp.genomicsengland.co.uk/panels/97/)
-   	  * [24 = Melanoma pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/133/)
-   	  * [25 = Multiple endocrine tumours](https://panelapp.genomicsengland.co.uk/panels/36/)
-   	  * [26 = Multiple monogenic benign skin tumours](https://panelapp.genomicsengland.co.uk/panels/558/)
-   	  * [27 = Neuroendocrine cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/183/)
-   	  * [28 - Neurofibromatosis Type 1](https://panelapp.genomicsengland.co.uk/panels/255/)
-   	  * [29 = Ovarian cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/117/)
-   	  * [30 = Parathyroid Cancer](https://panelapp.genomicsengland.co.uk/panels/86/)
-   	  * [31 = Prostate cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/17/)
-   	  * [32 = Renal cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/154/)
-   	  * [33 = Rhabdoid tumour predisposition](https://panelapp.genomicsengland.co.uk/panels/600/)
-   	  * [34 = Sarcoma cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/217/)
-	  * [35 = Sarcoma susceptibility](https://panelapp.genomicsengland.co.uk/panels/734/)
- 	  * [36 = Thyroid cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/421/)
- 	  * [37 = Tumour predisposition - childhood onset](https://panelapp.genomicsengland.co.uk/panels/243/)
- 	  * [38 = Upper gastrointestinal cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/273/)
-
+	* **Panels 1 - 42** are panels for inherited cancer syndromes and cancer predisposition assembled within the [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk/):
+       * [1 = Adult solid tumours cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/245/)
+       * [2 = Adult solid tumours for rare disease](https://panelapp.genomicsengland.co.uk/panels/391/)
+       * [3 = Bladder cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/208/)
+       * [4 = Brain cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/166/)
+       * [5 = Breast cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/55/)
+       * [6 = Childhood solid tumours cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/259/)
+       * [7 = Colorectal cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/244/)
+       * [8 = Endometrial cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/271/)
+       * [9 = Familial Tumours Syndromes of the central & peripheral Nervous system](https://panelapp.genomicsengland.co.uk/panels/167/)
+       * [10 = Familial breast cancer](https://panelapp.genomicsengland.co.uk/panels/158/)
+       * [11 = Familial melanoma](https://panelapp.genomicsengland.co.uk/panels/522/)
+       * [12 = Familial prostate cancer](https://panelapp.genomicsengland.co.uk/panels/318/)
+       * [13 = Familial rhabdomyosarcoma](https://panelapp.genomicsengland.co.uk/panels/290/)
+       * [14 = GI tract tumours](https://panelapp.genomicsengland.co.uk/panels/254/)
+       * [15 = Genodermatoses with malignancies](https://panelapp.genomicsengland.co.uk/panels/201/)
+       * [16 = Haematological malignancies cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/59/)
+       * [17 = Haematological malignancies for rare disease](https://panelapp.genomicsengland.co.uk/panels/407/)
+       * [18 = Head and neck cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/115/)
+	  * [19 = Inherited MMR deficiency (Lynch syndrome)](https://panelapp.genomicsengland.co.uk/panels/503/)
+       * [20 = Inherited non-medullary thyroid cancer](https://panelapp.genomicsengland.co.uk/panels/171/)
+       * [21 = Inherited ovarian cancer (without breast cancer)](https://panelapp.genomicsengland.co.uk/panels/143/)
+       * [22 = Inherited pancreatic cancer](https://panelapp.genomicsengland.co.uk/panels/524/)
+	  * [23 = Inherited polyposis](https://panelapp.genomicsengland.co.uk/panels/504/)
+	  * [24 = Inherited predisposition to acute myeloid leukaemia (AML)](https://panelapp.genomicsengland.co.uk/panels/525/)
+	  * [25 = Inherited predisposition to GIST](https://panelapp.genomicsengland.co.uk/panels/523/)
+       * [26 = Inherited renal cancer](https://panelapp.genomicsengland.co.uk/panels/521/)
+       * [27 = Inherited phaeochromocytoma and paraganglioma](https://panelapp.genomicsengland.co.uk/panels/97/)
+       * [28 = Melanoma pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/133/)
+       * [29 = Multiple endocrine tumours](https://panelapp.genomicsengland.co.uk/panels/36/)
+       * [30 = Multiple monogenic benign skin tumours](https://panelapp.genomicsengland.co.uk/panels/558/)
+       * [31 = Neuroendocrine cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/183/)
+       * [32 - Neurofibromatosis Type 1](https://panelapp.genomicsengland.co.uk/panels/255/)
+       * [33 = Ovarian cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/117/)
+       * [34 = Parathyroid Cancer](https://panelapp.genomicsengland.co.uk/panels/86/)
+       * [35 = Prostate cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/17/)
+       * [36 = Renal cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/154/)
+       * [37 = Rhabdoid tumour predisposition](https://panelapp.genomicsengland.co.uk/panels/600/)
+       * [38 = Sarcoma cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/217/)
+       * [39 = Sarcoma susceptibility](https://panelapp.genomicsengland.co.uk/panels/734/)
+       * [40 = Thyroid cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/421/)
+       * [41 = Tumour predisposition - childhood onset](https://panelapp.genomicsengland.co.uk/panels/243/)
+       * [42 = Upper gastrointestinal cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/273/)
 
 ### Example report
 
-* [Cancer predisposition sequencing report](http://folk.uio.no/sigven/example.cpsr.grch37.html)
+* [Cancer predisposition genome report](http://insilico.hpc.uio.no/pcgr/example_reports/cpsr/0.6.0rc/SAMPLE-001.cpsr.grch37.html)
 
 ### Docker-based technology
 

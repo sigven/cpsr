@@ -24,6 +24,13 @@ different *virtual cancer predisposition gene panels* harvested from the
 the user can flexibly put a restriction on which genes and findings are
 displayed in the cancer predisposition report.
 
+Snapshots of sections in the cancer predisposition genome report:
+
+.. figure:: cpsr_views.png
+   :alt: CPSR views
+
+   CPSR views
+
 The software performs extensive variant annotation on the selected
 geneset and produces an interactive HTML report, in which the user can
 investigate:
@@ -66,27 +73,29 @@ Cancer predisposition genes
 The cancer predisposition report can show variants found in a number of
 well-known cancer predisposition genes, and the specific set of genes
 can be customized by the user by choosing any of the following **virtual
-gene panels (0 - 38)**:
+gene panels (0 - 42)**:
 
--  **Panel 0 (default)** is a comprehensive gene panel assembled through
-   known sources on cancer predisposition:
+-  **Panel 0 (default)** is a comprehensive, research-based gene panel
+   assembled through known sources on cancer predisposition:
 
    -  A list of 152 genes that were curated and established within
       TCGA’s pan-cancer study (`Huang et al., Cell,
       2018 <https://www.ncbi.nlm.nih.gov/pubmed/29625052>`__)
    -  A list of 107 protein-coding genes that has been manually curated
       in COSMIC’s `Cancer Gene Census
-      v90 <https://cancer.sanger.ac.uk/census>`__,
-   -  A list of 152 protein-coding genes established by experts within
+      v91 <https://cancer.sanger.ac.uk/census>`__,
+   -  A list of 148 protein-coding genes established by experts within
       the Norwegian Cancer Genomics Consortium
       (http://cancergenomics.no)
+   -  Additional genes deemed relevant for cancer predisposition
+      (contributed by the CPSR user community)
 
-   The combination of the three sources resulted in a non-redundant set
-   of `213 protein-coding
+   The combination of the above sources resulted in a non-redundant set
+   of `216 protein-coding
    genes <https://github.com/sigven/cpsr/blob/master/predisposition.md>`__
-   of relevance for predisposition to tumor development.
+   which carry variants that may predispose to tumor development.
 
-   -  **Panels 1 - 38** are panels for inherited cancer syndromes and
+   -  **Panels 1 - 42** are panels for inherited cancer syndromes and
       cancer predisposition assembled within the `Genomics England
       PanelApp <https://panelapp.genomicsengland.co.uk/>`__:
 
@@ -127,52 +136,60 @@ gene panels (0 - 38)**:
          disease <https://panelapp.genomicsengland.co.uk/panels/407/>`__
       -  `18 = Head and neck cancer pertinent cancer
          susceptibility <https://panelapp.genomicsengland.co.uk/panels/115/>`__
-      -  `19 = Inherited non-medullary thyroid
+      -  `19 = Inherited MMR deficiency (Lynch
+         syndrome) <https://panelapp.genomicsengland.co.uk/panels/503/>`__
+      -  `20 = Inherited non-medullary thyroid
          cancer <https://panelapp.genomicsengland.co.uk/panels/171/>`__
-      -  `20 = Inherited ovarian cancer (without breast
+      -  `21 = Inherited ovarian cancer (without breast
          cancer) <https://panelapp.genomicsengland.co.uk/panels/143/>`__
-      -  `21 = Inherited pancreatic
+      -  `22 = Inherited pancreatic
          cancer <https://panelapp.genomicsengland.co.uk/panels/524/>`__
-      -  `22 = Inherited renal
+      -  `23 = Inherited
+         polyposis <https://panelapp.genomicsengland.co.uk/panels/504/>`__
+      -  `24 = Inherited predisposition to acute myeloid leukaemia
+         (AML) <https://panelapp.genomicsengland.co.uk/panels/525/>`__
+      -  `25 = Inherited predisposition to
+         GIST <https://panelapp.genomicsengland.co.uk/panels/523/>`__
+      -  `26 = Inherited renal
          cancer <https://panelapp.genomicsengland.co.uk/panels/521/>`__
-      -  `23 = Inherited phaeochromocytoma and
+      -  `27 = Inherited phaeochromocytoma and
          paraganglioma <https://panelapp.genomicsengland.co.uk/panels/97/>`__
-      -  `24 = Melanoma pertinent cancer
+      -  `28 = Melanoma pertinent cancer
          susceptibility <https://panelapp.genomicsengland.co.uk/panels/133/>`__
-      -  `25 = Multiple endocrine
+      -  `29 = Multiple endocrine
          tumours <https://panelapp.genomicsengland.co.uk/panels/36/>`__
-      -  `26 = Multiple monogenic benign skin
+      -  `30 = Multiple monogenic benign skin
          tumours <https://panelapp.genomicsengland.co.uk/panels/558/>`__
-      -  `27 = Neuroendocrine cancer pertinent cancer
+      -  `31 = Neuroendocrine cancer pertinent cancer
          susceptibility <https://panelapp.genomicsengland.co.uk/panels/183/>`__
-      -  `28 - Neurofibromatosis Type
+      -  `32 - Neurofibromatosis Type
          1 <https://panelapp.genomicsengland.co.uk/panels/255/>`__
-      -  `29 = Ovarian cancer pertinent cancer
+      -  `33 = Ovarian cancer pertinent cancer
          susceptibility <https://panelapp.genomicsengland.co.uk/panels/117/>`__
-      -  `30 = Parathyroid
+      -  `34 = Parathyroid
          Cancer <https://panelapp.genomicsengland.co.uk/panels/86/>`__
-      -  `31 = Prostate cancer pertinent cancer
+      -  `35 = Prostate cancer pertinent cancer
          susceptibility <https://panelapp.genomicsengland.co.uk/panels/17/>`__
-      -  `32 = Renal cancer pertinent cancer
+      -  `36 = Renal cancer pertinent cancer
          susceptibility <https://panelapp.genomicsengland.co.uk/panels/154/>`__
-      -  `33 = Rhabdoid tumour
+      -  `37 = Rhabdoid tumour
          predisposition <https://panelapp.genomicsengland.co.uk/panels/600/>`__
-      -  `34 = Sarcoma cancer
+      -  `38 = Sarcoma cancer
          susceptibility <https://panelapp.genomicsengland.co.uk/panels/217/>`__
-      -  `35 = Sarcoma
+      -  `39 = Sarcoma
          susceptibility <https://panelapp.genomicsengland.co.uk/panels/734/>`__
-      -  `36 = Thyroid cancer pertinent cancer
+      -  `40 = Thyroid cancer pertinent cancer
          susceptibility <https://panelapp.genomicsengland.co.uk/panels/421/>`__
-      -  `37 = Tumour predisposition - childhood
+      -  `41 = Tumour predisposition - childhood
          onset <https://panelapp.genomicsengland.co.uk/panels/243/>`__
-      -  `38 = Upper gastrointestinal cancer pertinent cancer
+      -  `42 = Upper gastrointestinal cancer pertinent cancer
          susceptibility <https://panelapp.genomicsengland.co.uk/panels/273/>`__
 
 Example report
 ~~~~~~~~~~~~~~
 
--  `Cancer predisposition sequencing
-   report <http://folk.uio.no/sigven/example.cpsr.grch37.html>`__
+-  `Cancer predisposition genome
+   report <http://insilico.hpc.uio.no/pcgr/example_reports/cpsr/0.6.0rc/SAMPLE-001.cpsr.grch37.html>`__
 
 Docker-based technology
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -185,12 +202,11 @@ of. In addition to the bundled software, in the form of a Docker image,
 the workflow needs to be attached with an `annotation data
 bundle <annotation_resources.html>`__.
 
-|image0|
+|image1|
 
 Contact
 ~~~~~~~
 
 sigven@ifi.uio.no
 
-.. |image0| image:: docker-logo50.png
-
+.. |image1| image:: docker-logo50.png

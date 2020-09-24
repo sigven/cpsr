@@ -1,6 +1,37 @@
 
 ## CHANGELOG
 
+#### 0.6.0rc - September 24th 2020
+
+- Data updates: ClinVar, GWAS catalog, GENCODE, CIViC, CancerMine, UniProt KB, dbNSFP, Pfam, KEGG, Open Targets Platform, Genomics England PanelApp
+- Software updates: VEP 101
+
+##### Fixed
+  * Duplicated entries in incidental findings
+
+##### Changed
+  * All arguments to `cpsr.py` are now non-positional
+  * Arguments to `cpsr.py` are divided into two groups: _required_ and _optional_
+  * `secondary_findings` is now coined `incidental_findings`
+  * Option ___gwas:gwas_hits___ in CPSR configuration file is now optional argument `--gwas_findings` in `cpsr.py`
+  * Option ___classification:clinvar_cpsr___ in CPSR configuration file is now optional argument `--classify_all` in `cpsr.py`
+  * Option ___maf_imits:maf_gnomad___ in CPSR configuration file is now optional argument `--maf_upper_threshold` in `cpsr.py`
+  * Option ___secondary_findings:show_sf___ in CPSR configuration file is now optional argument `--incidental_findings` in `cpsr.py`
+  * Virtual panels is now displayed through HTML (previously static ggplot plot)
+  * __Settings__ section of report is now divived into three:
+	  * Sample metadata
+	  * Report configuration
+	  * Virtual panel
+  * Classifications of genes as tumor suppressors/oncogenes are now based on a combination of CancerMine citation count and presence in Network of Cancer Genes
+
+##### Added
+  * Missing ACMG criterion for classification of silent and intronic variants outside of splice regions (_ACMG_BP7_)
+  * Missing ACMG criterion for classification of variants in promoter and untranslated regions (_ACMG_BP3_)
+  * Possibility to create custom virtual panel - any combination of genes from panel 0 provided as a single-column text file with argument `--custom_list`
+  * Ensured that non-empty datatables pr. tier (__ClinVar__ and __Non-ClinVar__) are set as the active tab
+  * Improved documentation of variant classification in the __References__ section
+  * DOIs available for all references
+
 #### 0.5.2 - November 18th 2019
 
 ##### Changed

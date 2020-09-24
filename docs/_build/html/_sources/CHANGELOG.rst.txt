@@ -1,8 +1,58 @@
 CHANGELOG
 ---------
 
+0.6.0 - September 23rd 2020
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Fixed
+'''''
+
+-  Duplicated entries in incidental findings
+
+Changed
+'''''''
+
+-  All arguments to ``cpsr.py`` is now organized with a ``--`` (no
+   positional arguments)
+-  Arguments to ``cpsr.py`` are divided into two groups: *required* and
+   *optional*
+-  ``secondary_findings`` is now coined ``incidental_findings``
+-  Option **gwas:gwas_hits** in CPSR configuration file is now option
+   ``--gwas_findings`` in ``cpsr.py``
+-  Option **classification:clinvar_cpsr** in CPSR configuration file is
+   now option ``--classify_all`` in ``cpsr.py``
+-  Option **maf_imits:maf_gnomad** in CPSR configuration file is now
+   option ``--maf_upper_threshold`` in ``cpsr.py``
+-  Option **secondary_findings:show_sf** in CPSR configuration file is
+   now option ``--incidental_findings`` in ``cpsr.py``
+-  Virtual panels is now displayed through HTML (previously static
+   ggplot plot)
+-  **Settings** section of report is now divived into three:
+
+   -  Sample metadata
+   -  Report configuration
+   -  Virtual panel
+
+Added
+'''''
+
+-  Missing ACMG criteria for classification of silent and intronic
+   variants outside of splice regions (ACMG_BP7)
+-  Missing ACMG criterion for classification of variants in promoter and
+   untranslated regions (ACMG_BP3)
+-  Possibility to create custom virtual panel - any combination of genes
+   from panel 0 provided as a single-column text file with argument
+   ``--custom_list``
+-  Ensured that non-empty datatables pr. tier (**ClinVar** and
+   **Non-ClinVar**) are set as the active tab
+-  Improved documentation of variant classification in the
+   **References** section
+-  DOIs available for all references
+
 0.5.2 - November 18th 2019
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _changed-1:
 
 Changed
 '''''''
@@ -13,6 +63,8 @@ Changed
 -  Moved virtual panel identifier from positional argument to optional
    argument (``--panel_id``) in ``cpsr.py``
 
+.. _added-1:
+
 Added
 '''''
 
@@ -22,6 +74,8 @@ Added
 
 0.5.1 - October 14th 2019
 ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _fixed-1:
 
 Fixed
 '''''
@@ -34,7 +88,7 @@ Fixed
 0.5.0 - September 23rd 2019
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. _fixed-1:
+.. _fixed-2:
 
 Fixed
 '''''
@@ -51,7 +105,7 @@ Fixed
 -  Handling of non-coding variants (synonymous, upstream_variants) in
    the report, no longer excluded
 
-.. _added-1:
+.. _added-2:
 
 Added
 '''''

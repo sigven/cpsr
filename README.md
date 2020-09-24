@@ -1,10 +1,28 @@
 ## Cancer Predisposition Sequencing Reporter (CPSR)
 
+### Contents
+
+- [Overview](#overview)
+- [News](#news)
+- [Example report](#example-report)
+- [Annotation resources](#annotation-resources-included-in-cpsr---0.6.0)
+- [CPSR Documentation](#cpsr-documentation)
+- [Getting started](#getting-started)
+- [Related work](#related-work)
+- [Contact](#contact)
+
+
 ### Overview
 
 The *Cancer Predisposition Sequencing Reporter (CPSR)* is a computational workflow that **interprets germline variants** identified from next-generation sequencing **in the context of cancer predisposition**. The workflow is integrated with the framework that underlies the [Personal Cancer Genome Reporter (PCGR)](https://github.com/sigven/pcgr), utilizing the Docker environment for encapsulation of code and software dependencies. While *PCGR* is intended for reporting and analysis of somatic variants detected in a tumor, *CPSR* is intended for reporting and ranking of germline variants in protein-coding genes that are implicated in cancer predisposition and inherited cancer syndromes.
 
 *CPSR* accepts a query file with raw germline variant calls encoded in the [VCF](https://samtools.github.io/hts-specs/VCFv4.2.pdf) format (i.e. analyzing SNVs/InDels). Furthermore, through the use several different _virtual cancer predisposition gene panels_ harvested from the [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk/), the user can flexibly put a restriction on which genes and findings are displayed in the cancer predisposition report.
+
+
+Snapshots of sections in the cancer predisposition genome report:
+
+![CPSR views](cpsr_views.png)
+
 
 The software performs extensive variant annotation on the selected geneset and produces an interactive HTML report, in which the user can investigate:
 
@@ -18,16 +36,17 @@ The variant sets can be interactively explored and filtered further through diff
 
 ##### Cancer predisposition genes
 
-The cancer predisposition report can show variants found in a number of well-known cancer predisposition genes, and the specific set of genes can be customized by the user by choosing any of the following __virtual gene panels (0 - 38)__:
+The cancer predisposition report can show variants found in a number of well-known cancer predisposition genes, and the specific set of genes can be customized by the user by choosing any of the following __virtual gene panels (0 - 42)__:
 
   * **Panel 0 (default)** is a comprehensive, research-based gene panel assembled through known sources on cancer predisposition:
 	* A list of 152 genes that were curated and established within TCGA’s pan-cancer study ([Huang et al., *Cell*, 2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052))
-	* A list of 107 protein-coding genes that has been manually curated in COSMIC’s [Cancer Gene Census v90](https://cancer.sanger.ac.uk/census),
+	* A list of 107 protein-coding genes that has been manually curated in COSMIC’s [Cancer Gene Census v91](https://cancer.sanger.ac.uk/census),
 	* A list of 148 protein-coding genes established by experts within the Norwegian Cancer Genomics Consortium (http://cancergenomics.no)
+	* Additional genes deemed relevant for cancer predisposition (contributed by the CPSR user community)
 
-	The combination of the three sources resulted in a non-redundant set of [213 protein-coding genes](https://github.com/sigven/cpsr/blob/master/predisposition.md) of relevance for predisposition to tumor development.
+	The combination of the above sources resulted in a non-redundant set of [216 protein-coding genes](https://github.com/sigven/cpsr/blob/master/predisposition.md) which carry variants that may predispose to tumor development.
 
-	* **Panels 1 - 38** are panels for inherited cancer syndromes and cancer predisposition assembled within the [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk/):
+	* **Panels 1 - 42** are panels for inherited cancer syndromes and cancer predisposition assembled within the [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk/):
        * [1 = Adult solid tumours cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/245/)
        * [2 = Adult solid tumours for rare disease](https://panelapp.genomicsengland.co.uk/panels/391/)
        * [3 = Bladder cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/208/)
@@ -46,45 +65,65 @@ The cancer predisposition report can show variants found in a number of well-kno
        * [16 = Haematological malignancies cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/59/)
        * [17 = Haematological malignancies for rare disease](https://panelapp.genomicsengland.co.uk/panels/407/)
        * [18 = Head and neck cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/115/)
-       * [19 = Inherited non-medullary thyroid cancer](https://panelapp.genomicsengland.co.uk/panels/171/)
-       * [20 = Inherited ovarian cancer (without breast cancer)](https://panelapp.genomicsengland.co.uk/panels/143/)
-       * [21 = Inherited pancreatic cancer](https://panelapp.genomicsengland.co.uk/panels/524/)
-       * [22 = Inherited renal cancer](https://panelapp.genomicsengland.co.uk/panels/521/)
-       * [23 = Inherited phaeochromocytoma and paraganglioma](https://panelapp.genomicsengland.co.uk/panels/97/)
-       * [24 = Melanoma pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/133/)
-       * [25 = Multiple endocrine tumours](https://panelapp.genomicsengland.co.uk/panels/36/)
-       * [26 = Multiple monogenic benign skin tumours](https://panelapp.genomicsengland.co.uk/panels/558/)
-       * [27 = Neuroendocrine cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/183/)
-       * [28 - Neurofibromatosis Type 1](https://panelapp.genomicsengland.co.uk/panels/255/)
-       * [29 = Ovarian cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/117/)
-       * [30 = Parathyroid Cancer](https://panelapp.genomicsengland.co.uk/panels/86/)
-       * [31 = Prostate cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/17/)
-       * [32 = Renal cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/154/)
-       * [33 = Rhabdoid tumour predisposition](https://panelapp.genomicsengland.co.uk/panels/600/)
-       * [34 = Sarcoma cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/217/)
-       * [35 = Sarcoma susceptibility](https://panelapp.genomicsengland.co.uk/panels/734/)
-       * [36 = Thyroid cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/421/)
-       * [37 = Tumour predisposition - childhood onset](https://panelapp.genomicsengland.co.uk/panels/243/)
-       * [38 = Upper gastrointestinal cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/273/)
+	  * [19 = Inherited MMR deficiency (Lynch syndrome)](https://panelapp.genomicsengland.co.uk/panels/503/)
+       * [20 = Inherited non-medullary thyroid cancer](https://panelapp.genomicsengland.co.uk/panels/171/)
+       * [21 = Inherited ovarian cancer (without breast cancer)](https://panelapp.genomicsengland.co.uk/panels/143/)
+       * [22 = Inherited pancreatic cancer](https://panelapp.genomicsengland.co.uk/panels/524/)
+	  * [23 = Inherited polyposis](https://panelapp.genomicsengland.co.uk/panels/504/)
+	  * [24 = Inherited predisposition to acute myeloid leukaemia (AML)](https://panelapp.genomicsengland.co.uk/panels/525/)
+	  * [25 = Inherited predisposition to GIST](https://panelapp.genomicsengland.co.uk/panels/523/)
+       * [26 = Inherited renal cancer](https://panelapp.genomicsengland.co.uk/panels/521/)
+       * [27 = Inherited phaeochromocytoma and paraganglioma](https://panelapp.genomicsengland.co.uk/panels/97/)
+       * [28 = Melanoma pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/133/)
+       * [29 = Multiple endocrine tumours](https://panelapp.genomicsengland.co.uk/panels/36/)
+       * [30 = Multiple monogenic benign skin tumours](https://panelapp.genomicsengland.co.uk/panels/558/)
+       * [31 = Neuroendocrine cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/183/)
+       * [32 - Neurofibromatosis Type 1](https://panelapp.genomicsengland.co.uk/panels/255/)
+       * [33 = Ovarian cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/117/)
+       * [34 = Parathyroid Cancer](https://panelapp.genomicsengland.co.uk/panels/86/)
+       * [35 = Prostate cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/17/)
+       * [36 = Renal cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/154/)
+       * [37 = Rhabdoid tumour predisposition](https://panelapp.genomicsengland.co.uk/panels/600/)
+       * [38 = Sarcoma cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/217/)
+       * [39 = Sarcoma susceptibility](https://panelapp.genomicsengland.co.uk/panels/734/)
+       * [40 = Thyroid cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/421/)
+       * [41 = Tumour predisposition - childhood onset](https://panelapp.genomicsengland.co.uk/panels/243/)
+       * [42 = Upper gastrointestinal cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/273/)
+
+### News
+
+* *September 23rd 2020*: **0.6.0rc release**
+   * Updated bundle (ClinVar, CancerMine, UniprotKB, Genomics England PanelApp, dbNSFP, Pfam, CIViC, GWAS catalog)
+  * New VEP version (101)
+  * Updated exploratory panel (n = 216)
+  * New option `--custom_list` permits custom-made panel from the list of genes included in the exploratory set
+  * __PS__: Non-Dockerized (Conda-based) version of 0.6.0 is in the making
+  * see [CHANGELOG](http://cpsr.readthedocs.io/en/latest/CHANGELOG.html)
+* *November 18th 2019*: **0.5.2 release**
+  * Updated bundle (ClinVar, CancerMine, UniProtKB, Genomics England PanelApp)
+  * [CHANGELOG](http://cpsr.readthedocs.io/en/latest/CHANGELOG.html#november-18th-2019)
+* *October 13th 2019*: **0.5.1 release**
+  * Updated software (VEP 98.2)
+  * Updated bundle (ClinVar, CancerMine, Genomics England PanelApp (36 panels))
 
 ### Example report
 
-* [Cancer predisposition sequencing report](http://folk.uio.no/sigven/example.cpsr.grch37.html)
+* [Cancer predisposition genome report](http://insilico.hpc.uio.no/pcgr/example_reports/cpsr/0.6.0rc/SAMPLE-001.cpsr.grch37.html)
 
-### Annotation resources included in _cpsr - 0.5.2_
+### Annotation resources included in CPSR - 0.6.0
 
-* [VEP](http://www.ensembl.org/info/docs/tools/vep/index.html) - Variant Effect Predictor v98.3 (GENCODE v31/v19 as the gene reference dataset), includes [gnomAD r2.1](http://gnomad.broadinstitute.org/), [dbSNP build 152/152](http://www.ncbi.nlm.nih.gov/SNP/), [1000 Genomes Project - phase3](ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/)
-* [ClinVar](http://www.ncbi.nlm.nih.gov/clinvar/) - Database of variants with clinical significance (November 2019)
-* [CIViC](http://civic.genome.wustl.edu) - clinical interpretations of variants in cancer (November 5th 2019)
+* [VEP](http://www.ensembl.org/info/docs/tools/vep/index.html) - Variant Effect Predictor v101 (GENCODE v35/v19 as the gene reference dataset), includes [gnomAD r2.1](http://gnomad.broadinstitute.org/), [dbSNP build 153/153](http://www.ncbi.nlm.nih.gov/SNP/), [1000 Genomes Project - phase3](ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/)
+* [ClinVar](http://www.ncbi.nlm.nih.gov/clinvar/) - Database of variants with clinical significance (August 2020)
+* [CIViC](http://civic.genome.wustl.edu) - clinical interpretations of variants in cancer (September 20th 2019)
 * [Cancer Hotspots](http://cancerhotspots.org) - Resource for statistically significant mutations in cancer (v2 - 2017)
-* [dBNSFP](https://sites.google.com/site/jpopgen/dbNSFP) - Database of non-synonymous functional predictions (v4.0, May 2019)
-* [UniProt/SwissProt KnowledgeBase](http://www.uniprot.org) - Resource on protein sequence and functional information (2019_10, November 2019)
-* [Pfam](http://pfam.xfam.org) - Database of protein families and domains (v32, Sep 2018)
-* [CancerMine](https://zenodo.org/record/3525385#.XcHblUVKiL4) - Literature-derived database of tumor suppressor genes/proto-oncogenes (v18, November 2019)
-* [GenomicsEngland PanelApp](https://panelapp.genomicsengland.co.uk) - panels as of November 16th 2019
-* [NHGRI-EBI GWAS catalog](https://www.ebi.ac.uk/gwas/) - GWAS catalog for cancer phenotypes, October 14th 2019)
+* [dBNSFP](https://sites.google.com/site/jpopgen/dbNSFP) - Database of non-synonymous functional predictions (v4.1, June 2020)
+* [UniProt/SwissProt KnowledgeBase](http://www.uniprot.org) - Resource on protein sequence and functional information (2020_04, August 2020)
+* [Pfam](http://pfam.xfam.org) - Database of protein families and domains (v33.1, May 2020)
+* [CancerMine](https://zenodo.org/record/3525385#.XcHblUVKiL4) - Literature-derived database of tumor suppressor genes/proto-oncogenes (v28, September 2020)
+* [GenomicsEngland PanelApp](https://panelapp.genomicsengland.co.uk) - panels as of September 20th 2020
+* [NHGRI-EBI GWAS catalog](https://www.ebi.ac.uk/gwas/) - GWAS catalog for cancer phenotypes, Sept 9th 2020)
 
-### Documentation
+### CPSR documentation
 
 [![Documentation Status](https://readthedocs.org/projects/cpsr/badge/?version=latest)](https://cpsr.readthedocs.io/en/latest/?badge=latest)
 
@@ -92,112 +131,112 @@ The cancer predisposition report can show variants found in a number of well-kno
 
 Sigve Nakken, Vladislav Saveliev, Oliver Hofmann, Pål Møller, Ola Myklebost, and Eivind Hovig. __Cancer Predisposition Sequencing Reporter: a flexible variant report engine for germline screening in cancer__ (2019). _bioRxiv_. doi:[10.1101/846089](https://doi.org/10.1101/846089)
 
-### News
-* *November 18th 2019*: **0.5.2 release**
-  * Updated bundle (ClinVar, CancerMine, UniProtKB, Genomics England PanelApp)
-  * [CHANGELOG](http://cpsr.readthedocs.io/en/latest/CHANGELOG.html#november-18th-2019)
-* *October 13th 2019*: **0.5.1 release**
-  * Updated software (VEP 98.2)
-  * Updated bundle (ClinVar, CancerMine, Genomics England PanelApp (36 panels))
-* *October 4th 2019*:
-  * By mistake, the recently updated grch38 data bundle (20190927) is missing a critical part for CPSR processing. Please download the missing files using [this link](https://drive.google.com/open?id=13mOn1WXEXz_XO3N57LC415gPO0kz3oRA), and put the contents underneath `data/grch38/gnomad_cpsr/`
 
 
 ### Getting started
 
-#### STEP 0: Install PCGR (version 0.8.4)
+#### STEP 0: Install PCGR (version 0.9.0rc)
 
-Make sure you have a working installation of PCGR (**version 0.8.4**) and the accompanying data bundle(s) (walk through [steps 0-2](https://github.com/sigven/pcgr#getting-started)).
+Make sure you have a working installation of PCGR (**version 0.9.0rc**) and the accompanying data bundle(s) (walk through [steps 0-2](https://github.com/sigven/pcgr#getting-started)).
 
 #### STEP 1: Download the latest release
 
-Download the [0.5.2 release](https://github.com/sigven/cpsr/releases/tag/v0.5.2) of *cpsr* (run script and configuration file)
+Download the [0.6.0rc release](https://github.com/sigven/cpsr/releases/tag/v0.6.0rc) of *cpsr* (run script and configuration file)
 
 #### STEP 2: Configuration
 
 A few elements of the workflow can be figured using the *cpsr* configuration file, encoded in [TOML](https://github.com/toml-lang/toml). The following can be configured:
 
 * Choice of gnomAD control population
-* Upper MAF limit for unclassified variants to be included in the report
-* Inclusion of GWAS hits
-* Inclusion of CPSR-based ACMG classifications for ClinVar variants
-* Inclusion of secondary findings
 * VEP/_vcfanno_ options
+* Metadata regarding custom panel
 
 See section on [Input](https://cpsr.readthedocs.io/en/latest/input.html) for more details wrt. default configuration.
 
 #### STEP 3: Run example
 
-	Cancer Predisposition Sequencing Reporter (CPSR) - report of cancer-predisposing germline variants
+	usage: cpsr.py -h [options]  --query_vcf INPUT_VCF --pcgr_dir PCGR_DIR --output_dir OUTPUT_DIR --genome_assembly GENOME_ASSEMBLY --conf CONFIG_FILE --sample_id SAMPLE_ID
 
-	positional arguments:
-	query_vcf             VCF input file with germline query variants (SNVs/InDels).
-	pcgr_base_dir         Directory that contains the PCGR data bundle directory, e.g. ~/pcgr-0.8.4
-	output_dir            Output directory
-	{grch37,grch38}       Genome assembly build: grch37 or grch38
-	configuration_file    Configuration file (TOML format)
-	sample_id             Sample identifier - prefix for output files
+	Cancer Predisposition Sequencing Reporter - report of clinically significant cancer-predisposing germline variants
 
-	optional arguments:
-	-h, --help            show this help message and exit
+	Required arguments:
+	--query_vcf QUERY_VCF
+				    VCF input file with germline query variants (SNVs/InDels).
+	--pcgr_dir PCGR_DIR   Directory that contains the PCGR data bundle directory, e.g. ~/pcgr-0.9.0rc
+	--output_dir OUTPUT_DIR
+				    Output directory
+	--genome_assembly {grch37,grch38}
+				    Genome assembly build: grch37 or grch38
+	--conf CONFIGURATION_FILE
+				    Configuration file in TOML format
+	--sample_id SAMPLE_ID
+				    Sample identifier - prefix for output files
+
+	Optional arguments:
 	--force_overwrite     By default, the script will fail with an error if any output file already exists.
-					You can force the overwrite of existing result files by using this flag
+					You can force the overwrite of existing result files by using this flag, default: False
 	--version             show program's version number and exit
-	--basic               Run functional variant annotation on VCF through VEP/vcfanno, omit report generation (STEP 4)
+	--basic               Run functional variant annotation on VCF through VEP/vcfanno, omit Tier assignment/report generation (STEP 4), default: False
 	--panel_id VIRTUAL_PANEL_ID
-				    Identifier for choice of predefined virtual cancer predisposition gene panels,
-					choose any between the following identifiers:
-				    0 = CPSR exploratory cancer predisposition panel (n = 213, TCGA + Cancer Gene Census + NCGC)
-				    1 = Adult solid tumours cancer susceptibility (Genomics England PanelApp)
-				    2 = Adult solid tumours for rare disease (Genomics England PanelApp)
-				    3 = Bladder cancer pertinent cancer susceptibility (Genomics England PanelApp)
-				    4 = Brain cancer pertinent cancer susceptibility (Genomics England PanelApp)
-				    5 = Breast cancer pertinent cancer susceptibility (Genomics England PanelApp)
-				    6 = Childhood solid tumours cancer susceptibility (Genomics England PanelApp)
-				    7 = Colorectal cancer pertinent cancer susceptibility (Genomics England PanelApp)
-				    8 = Endometrial cancer pertinent cancer susceptibility (Genomics England PanelApp)
-				    9 = Familial Tumours Syndromes of the central & peripheral Nervous system (Genomics England PanelApp)
-				    10 = Familial breast cancer (Genomics England PanelApp)
-				    11 = Familial melanoma (Genomics England PanelApp)
-				    12 = Familial prostate cancer (Genomics England PanelApp)
-				    13 = Familial rhabdomyosarcoma (Genomics England PanelApp)
-				    14 = GI tract tumours (Genomics England PanelApp)
-				    15 = Genodermatoses with malignancies (Genomics England PanelApp)
-				    16 = Haematological malignancies cancer susceptibility (Genomics England PanelApp)
-				    17 = Haematological malignancies for rare disease (Genomics England PanelApp)
-				    18 = Head and neck cancer pertinent cancer susceptibility (Genomics England PanelApp)
-				    19 = Inherited non-medullary thyroid cancer (Genomics England PanelApp)
-				    20 = Inherited ovarian cancer (without breast cancer) (Genomics England PanelApp)
-				    21 = Inherited pancreatic cancer (Genomics England PanelApp)
-				    22 = Inherited renal cancer (Genomics England PanelApp)
-				    23 = Inherited phaeochromocytoma and paraganglioma (Genomics England PanelApp)
-				    24 = Melanoma pertinent cancer susceptibility (Genomics England PanelApp)
-				    25 = Multiple endocrine tumours (Genomics England PanelApp)
-				    26 = Multiple monogenic benign skin tumours (Genomics England PanelApp)
-				    27 = Neuroendocrine cancer pertinent cancer susceptibility (Genomics England PanelApp)
-				    28 = Neurofibromatosis Type 1 (Genomics England PanelApp)
-				    29 = Ovarian cancer pertinent cancer susceptibility (Genomics England PanelApp)
-				    30 = Parathyroid Cancer (Genomics England PanelApp)
-				    31 = Prostate cancer pertinent cancer susceptibility (Genomics England PanelApp)
-				    32 = Renal cancer pertinent cancer susceptibility (Genomics England PanelApp)
-				    33 = Rhabdoid tumour predisposition (Genomics England PanelApp)
-				    34 = Sarcoma cancer susceptibility (Genomics England PanelApp)
-				    35 = Sarcoma susceptibility (Genomics England PanelApp)
-				    36 = Thyroid cancer pertinent cancer susceptibility (Genomics England PanelApp)
-				    37 = Tumour predisposition - childhood onset (Genomics England PanelApp)
-				    38 = Upper gastrointestinal cancer pertinent cancer susceptibility (Genomics England PanelApp)
+			    Identifier for choice of predefined virtual cancer predisposition gene panels,
+				choose any between the following identifiers:
+			    0 = CPSR exploratory cancer predisposition panel (n = 216, TCGA + Cancer Gene Census + NCGC + Other)
+			    1 = Adult solid tumours cancer susceptibility (Genomics England PanelApp)
+			    2 = Adult solid tumours for rare disease (Genomics England PanelApp)
+			    3 = Bladder cancer pertinent cancer susceptibility (Genomics England PanelApp)
+			    4 = Brain cancer pertinent cancer susceptibility (Genomics England PanelApp)
+			    5 = Breast cancer pertinent cancer susceptibility (Genomics England PanelApp)
+			    6 = Childhood solid tumours cancer susceptibility (Genomics England PanelApp)
+			    7 = Colorectal cancer pertinent cancer susceptibility (Genomics England PanelApp)
+			    8 = Endometrial cancer pertinent cancer susceptibility (Genomics England PanelApp)
+			    9 = Familial Tumours Syndromes of the central & peripheral Nervous system (Genomics England PanelApp)
+			    10 = Familial breast cancer (Genomics England PanelApp)
+			    11 = Familial melanoma (Genomics England PanelApp)
+			    12 = Familial prostate cancer (Genomics England PanelApp)
+			    13 = Familial rhabdomyosarcoma (Genomics England PanelApp)
+			    14 = GI tract tumours (Genomics England PanelApp)
+			    15 = Genodermatoses with malignancies (Genomics England PanelApp)
+			    16 = Haematological malignancies cancer susceptibility (Genomics England PanelApp)
+			    17 = Haematological malignancies for rare disease (Genomics England PanelApp)
+			    18 = Head and neck cancer pertinent cancer susceptibility (Genomics England PanelApp)
+			    19 = Inherited MMR deficiency (Lynch syndrome) - Genomics England PanelApp
+			    20 = Inherited non-medullary thyroid cancer (Genomics England PanelApp)
+			    21 = Inherited ovarian cancer (without breast cancer) (Genomics England PanelApp)
+			    22 = Inherited pancreatic cancer (Genomics England PanelApp)
+			    23 = Inherited polyposis (Genomics England PanelApp)
+			    24 = Inherited predisposition to acute myeloid leukaemia (AML) - Genomics England PanelApp
+			    25 = Inherited predisposition to GIST (Genomics England PanelApp)
+			    26 = Inherited renal cancer (Genomics England PanelApp)
+			    27 = Inherited phaeochromocytoma and paraganglioma (Genomics England PanelApp)
+			    28 = Melanoma pertinent cancer susceptibility (Genomics England PanelApp)
+			    29 = Multiple endocrine tumours (Genomics England PanelApp)
+			    30 = Multiple monogenic benign skin tumours (Genomics England PanelApp)
+			    31 = Neuroendocrine cancer pertinent cancer susceptibility (Genomics England PanelApp)
+			    32 = Neurofibromatosis Type 1 (Genomics England PanelApp)
+			    33 = Ovarian cancer pertinent cancer susceptibility (Genomics England PanelApp)
+			    34 = Parathyroid Cancer (Genomics England PanelApp)
+			    35 = Prostate cancer pertinent cancer susceptibility (Genomics England PanelApp)
+			    36 = Renal cancer pertinent cancer susceptibility (Genomics England PanelApp)
+			    37 = Rhabdoid tumour predisposition (Genomics England PanelApp)
+			    38 = Sarcoma cancer susceptibility (Genomics England PanelApp)
+			    39 = Sarcoma susceptibility (Genomics England PanelApp)
+			    40 = Thyroid cancer pertinent cancer susceptibility (Genomics England PanelApp)
+			    41 = Tumour predisposition - childhood onset (Genomics England PanelApp)
+			    42 = Upper gastrointestinal cancer pertinent cancer susceptibility (Genomics England PanelApp)
 
-	--custom_panel TARGET_BED
-				    Define custom screening panel through a three-column BED file (alternative to predefined panels provided with --panel_id)
-	--no_vcf_validate     Skip validation of input VCF with Ensembl's vcf-validator
-	--diagnostic_grade_only
-				    For Genomics England virtual predisposition panels - consider genes with a GREEN status only
+	--custom_list CUSTOM_LIST	Provide custom list of genes from virtual panel 0 (single-column txt file with gene symbols), alternative to predefined panels provided with --panel_id)
+	--no_vcf_validate     Skip validation of input VCF with Ensembl's vcf-validator, default: False
+	--diagnostic_grade_only		For panel_id's 1-42 (Genomics England PanelApp) - consider genes with a GREEN status only, default: False
 	--docker-uid DOCKER_USER_ID
-				    Docker user ID. Default is the host system user ID. If you are experiencing permission errors,
-					try setting this up to root (`--docker-uid root`)
-	--no-docker           Run the CPSR workflow in a non-Docker mode (see install_no_docker/ folder for instructions
-	--debug               Print full docker commands to log
-
+		Docker user ID. Default is the host system user ID. If you are experiencing permission errors, try setting this up to root (`--docker-uid root`), default: None
+	--no-docker           Run the CPSR workflow in a non-Docker mode, default: False
+	--ignore_noncoding    Do not list non-coding variants in HTML report
+	--incidental_findings	Include variants found in ACMG-recommended list for incidental findings (v2.0)
+	--gwas_findings       Report overlap with low to moderate cancer risk variants (tag SNPs) identified from genome-wide association studies
+	--classify_all        Provide CPSR variant classifications (TIER 1-5) also for variants with exising ClinVar classifications in output TSV
+	--maf_upper_threshold MAF_UPPER_THRESHOLD
+		Upper MAF limit (gnomAD global population frequency) for variants to be included in the report
+	--debug               Print full docker commands to log, default: False
 
 
 
@@ -205,10 +244,20 @@ The *cpsr* software bundle contains an example VCF file. It also contains a conf
 
 Report generation with the example VCF, using the [Adult solid tumours cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/245/) virtual gene panel, can be performed through the following command:
 
-`python ~/cpsr-0.5.2/cpsr.py ~/cpsr-0.5.2/example.vcf.gz ~/pcgr-0.8.4`
-`~/cpsr-0.5.2 grch37 --panel_id 1 ~/cpsr-0.5.2/cpsr.toml example`
+	python ~/cpsr-0.6.0rc/cpsr.py
+	 --query_vcf ~/cpsr-0.6.0rc/example.vcf.gz
+	 --pcgr_dir ~/pcgr-0.9.0rc
+	 --output_dir ~/cpsr-0.6.0rc
+	 --genome_assembly grch37
+	 --panel_id 1
+	 --conf ~/cpsr-0.6.0rc/cpsr.toml
+	 --sample_id example
+	 --incidental_findings
+	 --classify_all
+	 --maf_upper_threshold 0.2
+	 --no_vcf_validate
 
-Note that the example command also refers to the PCGR directory (*pcgr-0.8.4*), which contains the data bundle that are necessary for both *PCGR* and *CPSR*.
+Note that the example command also refers to the PCGR directory (*pcgr-0.9.0rc*), which contains the data bundle that are necessary for both *PCGR* and *CPSR*.
 
 This command will run the Docker-based *cpsr* workflow and produce the following output files in the _cpsr_ folder:
 
@@ -216,7 +265,7 @@ This command will run the Docker-based *cpsr* workflow and produce the following
   2. __example.cpsr.grch37.pass.tsv.gz__ - Compressed TSV file (generated with [vcf2tsv](https://github.com/sigven/vcf2tsv)) of VCF content with relevant annotations appended by CPSR
   3. __example.cpsr.grch37.html__ - Interactive HTML report with clinically relevant variants in cancer predisposition genes organized into tiers
   4. __example.cpsr.grch37.json.gz__ - Compressed JSON dump of HTML report content
-  5. __example.cpsr.snvs_indels.tiers.grch37.tsv__ - TSV file with most important annotations of tier-structured SNVs/InDels
+  5. __example.cpsr.grch37.snvs_indels.tiers.tsv__ - TSV file with most important annotations of tier-structured SNVs/InDels
 
 ### Related work
 

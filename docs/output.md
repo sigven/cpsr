@@ -25,18 +25,17 @@ The report is structured in five main sections, described in more detail below:
 	     * Benign
 	 * Genomic biomarkers
 		* Reported clinical evidence items from [CIViC] that overlap with variants in the query set are reported in four distinct tabs (Predictive / Prognostic / Diagnostic / Predisposing)
-	 * Secondary Findings
+	 * Incidental findings
 	     * Pathogenic variants in the [ACMG recommended list of genes for report of incidental findings](https://www.ncbi.nlm.nih.gov/clinvar/docs/acmg/)
 	 * GWAS hits
 	     * Low-risk variants found in genome-wide association studies of cancer phenotypes (NHGRI-EBI Catalog)
   4. __Documentation__
 	 * Introduction
-	     * Short overview of the predispostion report - aims and contents
+	     * Short overview of the predisposition report - aims and contents
 	 * Annotation resources
 	     * Underlying tools, databases and annotation sources (with versions)
 	 * Variant classification
-	     * Overview of how CPSR performs variant classification of variants not recorded in
-	      ClinVar, listing ACMG criteria and associated scores
+	     * Overview of how CPSR performs variant classification of variants not recorded in ClinVar, listing ACMG criteria and associated scores
      * References
 	     * Supporting scientific literature (Interpretation/implementation of ACMG critera etc.)
 
@@ -51,11 +50,13 @@ The interactive datatables contain a number of hyperlinked annotations similar t
 * PROTEIN_FEATURE - UniProt feature overlapping variant site
 * CDS_CHANGE - Coding sequence change
 * CONSEQUENCE - VEP consequence (primary transcript)
+* LOSS_OF_FUNCTION - Predicted loss-of-function variant
+* RMSK_HIT - Overlap with repeats as annotated by RepeatMasker
 * HGVSc - from VEP
 * HGVSp - from VEP
 * NCBI_REFSEQ - Transcript accession ID(s) (NCBI RefSeq)
-* ONCOGENE - Known proto-oncogene
-* TUMOR_SUPPRESSOR - known tumor suppressor gene
+* ONCOGENE - Predicted proto-oncogene (CancerMine/NCG)
+* TUMOR_SUPPRESSOR - known tumor suppressor gene (CancerMine/NCG)
 * PREDICTED_EFFECT - Effect predictions from dbNSFP
 * VEP_ALL_CSQ - All VEP transcript block consequences
 * DBSNP - dbSNP rsID
@@ -64,7 +65,7 @@ The interactive datatables contain a number of hyperlinked annotations similar t
 
 
 ### Example report
-* [Cancer predisposition sequencing report](http://folk.uio.no/sigven/example.cpsr.grch37.html)
+* [Cancer predisposition genome report report](http://insilico.hpc.uio.no/pcgr/example_reports/cpsr/0.6.0rc/SAMPLE-001.cpsr.grch37.html)
 
 The HTML reports have been tested using the following browsers:
 
@@ -87,14 +88,7 @@ A VCF file containing annotated, germline calls (single nucleotide variants and 
 Here, the __sample_id__ is provided as input by the user, and reflects a unique identifier of the tumor-normal sample pair to be analyzed. Following common standards, the annotated VCF file is compressed with [bgzip](http://www.htslib.org/doc/tabix.html) and indexed with [tabix](http://www.htslib.org/doc/tabix.html). Below follows a description of all annotations/tags present in the VCF INFO column after processing with the CPSR annotation pipeline:
 
 ##### _VEP consequence annotations_
-  - CSQ - Complete consequence annotations from VEP. Format: Allele|Consequence|IMPACT|SYMBOL|Gene|Feature_type|Feature|BIOTYPE|EXON|
-  INTRON|HGVSc|HGVSp|cDNA_position|CDS_position|Protein_position|Amino_acids|
-  Codons|Existing_variation|ALLELE_NUM|DISTANCE|STRAND|FLAGS|PICK|VARIANT_CLASS|
-  SYMBOL_SOURCE|HGNC_ID|CANONICAL|APPRIS|CCDS|ENSP|SWISSPROT|TREMBL|UNIPARC|
-  RefSeq|DOMAINS|HGVS_OFFSET|AF|AFR_AF|AMR_AF|EAS_AF|EUR_AF|SAS_AF|gnomAD_AF|
-  gnomAD_AFR_AF|gnomAD_AMR_AF|gnomAD_ASJ_AF|gnomAD_EAS_AF|gnomAD_FIN_AF|
-  gnomAD_NFE_AF|gnomAD_OTH_AF|gnomAD_SAS_AF|CLIN_SIG|SOMATIC|PHENO|
-  MOTIF_NAME|MOTIF_POS|HIGH_INF_POS|MOTIF_SCORE_CHANGE
+  - CSQ - Complete consequence annotations from VEP. Format: Allele|Consequence|IMPACT|SYMBOL|Gene|Feature_type|Feature|BIOTYPE|EXON|INTRON|HGVSc|HGVSp|cDNA_position|CDS_position|Protein_position|Amino_acids|Codons|Existing_variation|ALLELE_NUM|DISTANCE|STRAND|FLAGS|PICK|VARIANT_CLASS|SYMBOL_SOURCE|HGNC_ID|CANONICAL|MANE|TSL|APPRIS|CCDS|ENSP|SWISSPROT|TREMBL|UNIPARC|RefSeq|DOMAINS|HGVS_OFFSET|AF|AFR_AF|AMR_AF|EAS_AF|EUR_AF|SAS_AF|gnomAD_AF|gnomAD_AFR_AF|gnomAD_AMR_AF|gnomAD_ASJ_AF|gnomAD_EAS_AF|gnomAD_FIN_AF|gnomAD_NFE_AF|gnomAD_OTH_AF|gnomAD_SAS_AF|CLIN_SIG|SOMATIC|PHENO|CHECK_REF| MOTIF_NAME|MOTIF_POS|HIGH_INF_POS|MOTIF_SCORE_CHANGE|TRANSCRIPTION_FACTORS|NearestExonJB
   - Consequence - Impact modifier for the consequence type (picked by VEP's --flag\_pick\_allele option)
   - Gene - Ensembl stable ID of affected gene (picked by VEP's --flag\_pick\_allele option)
   - Feature_type - Type of feature. Currently one of Transcript, RegulatoryFeature, MotifFeature (picked by VEP's --flag\_pick\_allele option)
@@ -122,6 +116,7 @@ Here, the __sample_id__ is provided as input by the user, and reflects a unique 
   - HGVSp - The HGVS protein sequence name (picked by VEP's --flag\_pick\_allele option)
   - HGVSp_short - The HGVS protein sequence name, short version (picked by VEP's --flag\_pick\_allele option)
   - HGVS_OFFSET - Indicates by how many bases the HGVS notations for this variant have been shifted (picked by VEP's --flag\_pick\_allele option)
+  - NearestExonJB - VEP plugin that finds nearest exon junction for a coding sequence variant. Format: Ensembl exon identifier+distanceto exon boundary+boundary type(start/end)+exon length
   - MOTIF_NAME - The source and identifier of a transcription factor binding profile aligned at this position (picked by VEP's --flag\_pick\_allele option)
   - MOTIF_POS - The relative position of the variation in the aligned TFBP (picked by VEP's --flag\_pick\_allele option)
   - HIGH\_INF\_POS - A flag indicating if the variant falls in a high information position of a transcription factor binding profile (TFBP) (picked by VEP's --flag\_pick\_allele option)
@@ -130,6 +125,8 @@ Here, the __sample_id__ is provided as input by the user, and reflects a unique 
   - CANONICAL - A flag indicating if the transcript is denoted as the canonical transcript for this gene (picked by VEP's --flag\_pick\_allele option)
   - CCDS - The CCDS identifier for this transcript, where applicable (picked by VEP's --flag\_pick\_allele option)
   - INTRON - The intron number (out of total number) (picked by VEP's --flag\_pick\_allele option)
+  - INTRON_POSITION - Relative position of intron variant to nearest exon/intron junction (NearestExonJB VEP plugin)
+  - EXON_POSITION - Relative position of exon variant to nearest intron/exon junction (NearestExonJB VEP plugin)
   - EXON - The exon number (out of total number) (picked by VEP's --flag\_pick\_allele option)
   - LAST_EXON - Logical indicator for last exon of transcript (picked by VEP's --flag\_pick\_allele option)
   - LAST_INTRON - Logical indicator for last intron of transcript (picked by VEP's --flag\_pick\_allele option)
@@ -167,14 +164,28 @@ Here, the __sample_id__ is provided as input by the user, and reflects a unique 
   - REFSEQ_MRNA - Corresponding RefSeq transcript(s) identifier for VEP's picked transcript (*NM_XXXXX*)
   - CORUM_ID - Associated protein complexes (identifiers) from [CORUM](http://mips.helmholtz-muenchen.de/corum/)
   - DISGENET_CUI - Tumor types associated with gene, as found in DisGeNET. Tumor types are listed as unique [MedGen](https://www.ncbi.nlm.nih.gov/medgen/) concept IDs (_CUIs_)
-  - TUMOR_SUPPRESSOR - Gene is predicted as tumor suppressor candidate according to ([CancerMine](https://zenodo.org/record/2587719#.XJNfS0RKiL4))
-  - ONCOGENE - Gene is predicted as an oncogene according to ([CancerMine](https://zenodo.org/record/2587719#.XJNfS0RKiL4))
+  - TUMOR_SUPPRESSOR - Indicates whether gene is predicted as a tumor suppressor gene, from Network of Cancer Genes (NCG) & the CancerMine text-mining resource
+  - TUMOR_SUPPRESSOR_EVIDENCE - Underlying evidence for gene being a tumor suppressor. Format: NCG:<TRUE|FALSE>&CancerMine:<LC|MC|HC>:num_citations
+  - ONCOGENE - Indicates whether gene is predicted as an oncogene, from Network of Cancer Genes (NCG) & the CancerMine text-mining resource
+  - ONCOGENE_EVIDENCE - Underlying evidence for gene being an oncogene. Format: NCG:<TRUE|FALSE>&CancerMine:<LC|MC|HC>:num_citations
   - ONCOSCORE - Literature-derived score for cancer gene relevance [Bioconductor/OncoScore](http://bioconductor.org/packages/release/bioc/html/OncoScore.html), range from 0 (low oncogenic potential) to 1 (high oncogenic potential)
   - CANCER_SUSCEPTIBILITY_CUI - MedGen concept unique identifier (CUI) for cancer phenotype
   - CANCER_SYNDROME_CUI - MedGen concept unique identifier (CUI) for cancer syndrome
-  - CANCER_PREDISPOSITION_SOURCE - Data source for susceptibility gene (panel *0*: NCGC, CGC_88, TCGA_PANCAN)
-  - CANCER_PREDISPOSITION_MOI - Mechanism of inheritance for susceptibility gene (AR/AD)
+  - CANCER_PREDISPOSITION_SOURCE - Data source for susceptibility gene (panel *0*: NCGC, CGC_91, TCGA_PANCAN, PANEL_APP, OTHER)
+  - CANCER_PREDISPOSITION_MOI - Mode of inheritance for susceptibility gene (AR/AD)
   - CANCER_PREDISPOSITION_MOD - Mechanism of disease for susceptibility gene (Lof/GoF)
+  - PROB_EXAC_LOF_INTOLERANT - dbNSFP_gene: the probability of being loss-of-function intolerant (intolerant of both heterozygous and homozygous lof variants) based on ExAC r0.3 data
+  - PROB_EXAC_LOF_INTOLERANT_HOM - dbNSFP_gene: the probability of being intolerant of homozygous, but not heterozygous lof variants based on ExAC r0.3 data
+  - PROB_EXAC_LOF_TOLERANT_NULL - dbNSFP_gene: the probability of being tolerant of both heterozygous and homozygous lof variants based on ExAC r0.3 data
+  - PROB_EXAC_NONTCGA_LOF_INTOLERANT - dbNSFP_gene: the probability of being loss-of-function intolerant (intolerant of both heterozygous and homozygous lof variants) based on ExAC r0.3 nonTCGA subset
+  - PROB_EXAC_NONTCGA_LOF_INTOLERANT_HOM - dbNSFP_gene: the probability of being intolerant of homozygous, but not heterozygous lof variants based on ExAC r0.3 nonTCGA subset
+  - PROB_EXAC_NONTCGA_LOF_TOLERANT_NULL - dbNSFP_gene: the probability of being tolerant of both heterozygous and homozygous lof variants based on ExAC r0.3 nonTCGA subset
+  - PROB_GNOMAD_LOF_INTOLERANT - dbNSFP_gene: the probability of being loss-of-function intolerant (intolerant of both heterozygous and homozygous lof variants based on gnomAD 2.1 data
+  - PROB_GNOMAD_LOF_INTOLERANT_HOM - dbNSFP_gene: the probability of being intolerant of homozygous, but not heterozygous lof variants based on gnomAD 2.1 data
+  - PROB_GNOMAD_LOF_TOLERANT_NULL - dbNSFP_gene: the probability of being tolerant of both heterozygous and homozygous lof variants based on gnomAD 2.1 data
+  - PROB_HAPLOINSUFFICIENCY - dbNSFP_gene: Estimated probability of haploinsufficiency of the gene (from http://dx.doi.org/10.1371/journal.pgen.1001154)
+  - ESSENTIAL_GENE_CRISPR - dbNSFP_gene: Essential (E) or Non-essential phenotype-changing (N) based on large scale CRISPR experiments. from http://dx.doi.org/10.1126/science.aac7041
+  - ESSENTIAL_GENE_CRISPR2 - dbNSFP_gene: Essential (E), context-Specific essential (S), or Non-essential phenotype-changing (N) based on large scale CRISPR experiments. from http://dx.doi.org/10.1016/j.cell.2015.11.015
 
 ##### _Variant effect and protein-coding information_
   - MUTATION\_HOTSPOT - mutation hotspot codon in [cancerhotspots.org](http://cancerhotspots.org/). Format: gene_symbol | codon | q-value
@@ -182,7 +193,7 @@ Here, the __sample_id__ is provided as input by the user, and reflects a unique 
   - MUTATION_HOTSPOT_CANCERTYPE - hotspot-associated cancer types (from cancerhotspots.org)
   - UNIPROT\_FEATURE - Overlapping protein annotations from [UniProt KB](http://www.uniprot.org)
   - PFAM_DOMAIN - Pfam domain identifier (from VEP)
-  - EFFECT\_PREDICTIONS - All predictions of effect of variant on protein function and pre-mRNA splicing from [database of non-synonymous functional predictions - dbNSFP v4.0](https://sites.google.com/site/jpopgen/dbNSFP). Predicted effects are provided by different sources/algorithms (separated by '&'):
+  - EFFECT\_PREDICTIONS - All predictions of effect of variant on protein function and pre-mRNA splicing from [database of non-synonymous functional predictions - dbNSFP v4.1](https://sites.google.com/site/jpopgen/dbNSFP). Predicted effects are provided by different sources/algorithms (separated by '&'):
 
 	  1. [SIFT](https://sift.bii.a-star.edu.sg/)
 	  2. [SIFT4G](https://sift.bii.a-star.edu.sg/sift4g/)
@@ -201,8 +212,13 @@ Here, the __sample_id__ is provided as input by the user, and reflects a unique 
 	  15. [M-CAP](http://bejerano.stanford.edu/MCAP)
 	  16. [MutPred](http://mutpred.mutdb.org)
 	  17. [GERP](http://mendel.stanford.edu/SidowLab/downloads/gerp/)
+	  18. [BayesDel](https://doi.org/10.1002/humu.23158)
+	  19. [ClinPred](https://doi.org/10.1016/j.ajhg.2018.08.005)
+	  20. [LIST-S2](https://doi.org/10.1093/nar/gkaa288)
 
-
+  - BAYESDEL_ADDAF_DBNSFP - predicted effect from BayesDel (dbNSFP)
+  - CLINPRED_DBNSFP - predicted effect from ClinPred (dbNSFP)
+  - LIST_S2_DBNSFP - predicted effect from LIST-S2 (dbNSFP)
   - SIFT_DBNSFP - predicted effect from SIFT (dbNSFP)
   - SIFT4G_DBNSFP - predicted effect from SIFT4G (dbNSFP)
   - PROVEAN_DBNSFP - predicted effect from PROVEAN (dbNSFP)
@@ -286,6 +302,7 @@ Here, the __sample_id__ is provided as input by the user, and reflects a unique 
   - CLINVAR_CLNSIG_SOMATIC - Clinical significance for variant in [ClinVar](http://www.ncbi.nlm.nih.gov/clinvar) - somatic state-of-origin
   - CLINVAR_MEDGEN_CUI - Associated [MedGen](https://www.ncbi.nlm.nih.gov/medgen/)  concept identifiers (_CUIs_) - germline state-of-origin
   - CLINVAR_MEDGEN_CUI_SOMATIC - Associated [MedGen](https://www.ncbi.nlm.nih.gov/medgen/)  concept identifiers (_CUIs_) - somatic state-of-origin
+  - CLINVAR_MOLECULAR_EFFECT - Variant effect according to ClinVar annotation
   - CLINVAR\_VARIANT\_ORIGIN - Origin of variant (somatic, germline, de novo etc.) for variant in [ClinVar](http://www.ncbi.nlm.nih.gov/clinvar)
   - CLINVAR_REVIEW_STATUS_STARS - Rating of the [ClinVar](http://www.ncbi.nlm.nih.gov/clinvar) variant (0-4 stars) with respect to level of review
   - GWAS_HIT - variant associated with cancer phenotype from genome-wide association study (NHGRI-EBI GWAS catalog)
@@ -321,69 +338,77 @@ The following variables are included in the tiered TSV file (VCF tags issued by 
 	14. ENSEMBL_GENE_ID - Ensembl gene identifier
 	15. ENSEMBL_TRANSCRIPT_ID - Ensembl transcript identifier
 	16. REFSEQ_MRNA - RefSeq mRNA identifier
-	17. ONCOGENE - Gene is predicted as an oncogene according to literature mining (CancerMine)
-	18. TUMOR_SUPPRESSOR - Gene is predicted as tumor suppressor according to literature mining (CancerMine)
+	17. ONCOGENE - Gene is predicted as an oncogene according to Network of Cancer Genes (NCG) and CancerMine
+	18. TUMOR_SUPPRESSOR - Gene is predicted as a tumor suppressor gene according to Network of Cancer Genes (NCG) and CancerMine
 	19. MOD - Mechanism of disease for cancer predisposition gene (Lof/GoF/NA)
-	20. CONSEQUENCE - Variant consequence
-	21. VEP_ALL_CSQ - All VEP transcript block consequences
-	22. PROTEIN_CHANGE - Protein change - one letter abbreviation (HGVSp)
-	23. PROTEIN_DOMAIN - Protein domain (Pfam)
-	24. DBSNP - dbSNP identifier (rsid)
-	25. HGVSp - The HGVS protein sequence name
-	26. HGVSc - The HGVS coding sequence name
-	27. LAST_EXON - Last exon in gene
-	28. CDS_CHANGE - Coding, transcript-specific sequence annotation
-	29. MUTATION_HOTSPOT - Cancer mutation hotspot (cancerhotspots.org)
-	30. RMSK_HIT - RepeatMasker hit
-	31. PROTEIN_FEATURE - Protein feature (active sites etc.) from UniProt KnowledgeBase
-	32. EFFECT_PREDICTIONS - Functional effect predictions from multiple algorithms (dbNSFP)
-	33. LOSS_OF_FUNCTION - Loss-of-function variant, as predicted from VEP's LofTee plugin
-	34. CLINVAR_CLASSIFICATION - clinical significance of ClinVar Variant (CPSR category)
-	35. CLINVAR_MSID - measureset identifier of ClinVar variant
-	36. CLINVAR_VARIANT_ORIGIN - variant origin (somatic/germline) of ClinVar variant
-	37. CLINVAR_CONFLICTED - indicator of conflicting interpretations
-	38. CLINVAR_PHENOTYPE - associated phenotype(s) for ClinVar variant
-	39. CLINVAR_REVIEW_STATUS_STARS
-	40. N_INSILICO_CALLED - Number of algorithms with effect prediction (damaging/tolerated) from dbNSFP
-	41. N_INSILICO_DAMAGING - Number of algorithms with damaging prediction from dbNSFP
-	42. N_INSILICO_TOLERATED - Number of algorithms with tolerated prediction from dbNSFP
-	43. N_INSILICO_SPLICING_NEUTRAL - Number of algorithms with splicing neutral prediction from dbscSNV
-	43. N_INSILICO_SPLICING_AFFECTED - Number of algorithms with splicing affected prediction from dbscSNV
-	45. GLOBAL_AF_GNOMAD - Global MAF in gnomAD
-	46. <CUSTOM_POPULATION_GNOMAD> - Population specific MAF in gnomAD control (non-cancer, population configured by user)
-	47. ACMG_BA1_AD - Very high MAF (> 0.5% in gnomAD non-cancer pop subset) - min AN = 12,000 - Dominant mechanism of disease
-	48. ACMG_BS1_1_AD - High MAF (> 0.1% in gnomAD non-cancer pop subset) - min AN = 12,000 - Dominant mechanism of disease
-	49. ACMG_BS1_2_AD - Somewhat high MAF (> 0.005% in gnomAD non-cancer pop subset) - Dominant mechanism of disease
-	50. ACMG_BA1_AR - Very high MAF (> 1% in gnomAD non-cancer pop subset) - min AN = 12,000 - Recessive mechanism of disease
-	51. ACMG_BS1_1_AR - High MAF (> 0.3% in gnomAD non-cancer pop subset) - min AN = 12,000 - Recessive mechanism of disease
-	52. ACMG_BS1_2_AR - Somewhat high MAF (> 0.005% in gnomAD non-cancer pop subset) - Recessive mechanism of disease
-	53. ACMG_PM2_1 - Allele count within pathogenic range (MAF <= 0.005% in the population-specific non-cancer gnomAD subset)
-	54. ACMG_PM2_2 - Alternate allele absent in the population-specific non-cancer gnomAD subset
-	55. ACMG_PVS1_1 - Null variant (frameshift/nonsense) - predicted as LoF by LOFTEE - within pathogenic range - LoF established for gene
-	56. ACMG_PVS1_2 - Null variant (frameshift/nonsense) - not predicted as LoF by LOFTEE - within pathogenic range - LoF established for gene
-	57. ACMG_PVS1_3 - Null variant (frameshift/nonsense) - predicted as LoF by LOFTEE - within pathogenic range - LoF not established for gene
-	58. ACMG_PVS1_4 - Null variant (frameshift/nonsense) - not predicted as LoF by LOFTEE -- within pathogenic range - LoF not established for gene
-	59. ACMG_PVS1_5 - Start (initiator methionine) lost - within pathogenic range - Lof established for gene
-	60. ACMG_PVS1_6 - Start (initiator methionine) lost - within pathogenic range - LoF not established for gene
-	61. ACMG_PVS1_7 - Donor/acceptor variant - predicted as LoF by LOFTEE - within pathogenic range - not last intron - LoF established for gene
-	62. ACMG_PVS1_8 - Donor/acceptor variant - last intron - within pathogenic range - LoF established for gene
-	63. ACMG_PVS1_9 - Donor/acceptor variant - not last intron - within pathogenic range - LoF not established for gene
-	64. ACMG_PVS1_10 - Donor variant at located at the +3, +4 or +5 position of the intron -  within the pathogenic range (i.e. <9 alleles in ExAC))
-	65. ACMG_PS1 - Same amino acid change as a previously established pathogenic variant (ClinVar) regardless of nucleotide change
-	66. ACMG_PP2 - Missense variant in a gene that has a relatively low rate of benign missense variation (<20%) and where missense variants are a common mechanism of disease (>50% P/LP (ClinVar))
-	67. ACMG_PM1 - Missense variant in a somatic mutation hotspot as determined by cancerhotspots.org
-	68. ACMG_PM4 - Protein length changes due to inframe indels or nonstop variant in non-repetitive regions of genes that harbor variants with a dominant mode of inheritance.
-	69. ACMG_PPC1 - Protein length changes due to inframe indels or nonstop variant in non-repetitive regions of genes that harbor variants with a recessive mode of inheritance.
-	70. ACMG_PM5 - Novel missense change at an amino acid residue where a different missense change determined to be pathogenic has been seen before (ClinVar)
-	71. ACMG_PP3 - Multiple lines (>=5) of computational evidence support a deleterious effect on the gene or gene product (conservation, evolutionary, splicing impact) with maximum two contradictory predictions - from dbNSFP
-	72. ACMG_BP4 - Multiple lines (>=5) of computational evidence support a benign effect on the gene or gene product (conservation, evolutionary, splicing impact) with maximum two contradictory prediction - from dbNSFP
-	73. ACMG_BMC1 - Peptide change is at the same location of a known benign change (ClinVar)
-	74. ACMG_BSC1 - Peptide change is reported as benign (ClinVar)
-	75. ACMG_BP1 - Missense variant in a gene for which primarily truncating variants are known to cause disease (ClinVar)
-	76. CPSR_CLASSIFICATION - CPSR tier level (P/LP/VUS/LB/B)
-	77. CPSR_CLASSIFICATION_SCORE - Aggregated CPSR pathogenicity score
-	78. CPSR_CLASSIFICATION_CODE - Combination of CPSR classification codes assigned to the variant (ACMG)
-	79. CPSR_CLASSIFICATION_DOC - Verbal description of CPSR classification codes assignted to the variant (ACMG)
+	20. MOI - Mechanism of inheritance for cancer predisposition gene (AR, AD, AD/AR or 'NA')
+	21. CONSEQUENCE - Variant consequence
+	22. VEP_ALL_CSQ - All VEP transcript block consequences
+	23. PROTEIN_CHANGE - Protein change - one letter abbreviation (HGVSp)
+	24. PROTEIN_DOMAIN - Protein domain (Pfam)
+	25. DBSNP - dbSNP identifier (rsid)
+	26. HGVSp - The HGVS protein sequence name
+	27. HGVSc - The HGVS coding sequence name
+	28. LAST_EXON - Last exon in gene
+	29. EXON_POSITION - Relative position of exon variant to nearest intron/exon junction (NearestExonJB plugin)
+	30. INTRON_POSITION - Relative position of intron variant to nearest intron/exon junction (NearestExonJB plugin)
+	31. CDS_CHANGE - Coding, transcript-specific sequence annotation
+	32. MUTATION_HOTSPOT - Cancer mutation hotspot (cancerhotspots.org)
+	33. RMSK_HIT - RepeatMasker hit
+	34. PROTEIN_FEATURE - Protein feature (active sites etc.) from UniProt KnowledgeBase
+	35. EFFECT_PREDICTIONS - Functional effect predictions from multiple algorithms (dbNSFP)
+	36. LOSS_OF_FUNCTION - Loss-of-function variant, as predicted from VEP's LofTee plugin
+	37. CANCER_PHENOTYPE
+	38. CLINVAR_CLASSIFICATION - clinical significance of ClinVar Variant (CPSR category)
+	39. CLINVAR_MSID - measureset identifier of ClinVar variant
+	40. CLINVAR_VARIANT_ORIGIN - variant origin (somatic/germline) of ClinVar variant
+	41. CLINVAR_CONFLICTED - indicator of conflicting interpretations
+	42. CLINVAR_PHENOTYPE - associated phenotype(s) for ClinVar variant
+	43. CLINVAR_REVIEW_STATUS_STARS
+	44. N_INSILICO_CALLED - Number of algorithms with effect prediction (damaging/tolerated) from dbNSFP
+	45. N_INSILICO_DAMAGING - Number of algorithms with damaging prediction from dbNSFP
+	46. N_INSILICO_TOLERATED - Number of algorithms with tolerated prediction from dbNSFP
+	47. N_INSILICO_SPLICING_NEUTRAL - Number of algorithms with splicing neutral prediction from dbscSNV
+	48. N_INSILICO_SPLICING_AFFECTED - Number of algorithms with splicing affected prediction from dbscSNV
+	49. GLOBAL_AF_GNOMAD - Global MAF in gnomAD
+	50. <CUSTOM_POPULATION_GNOMAD> - Population specific MAF in gnomAD control (non-cancer, population configured by user)
+	51. ACMG_BA1_AD - Very high MAF (> 0.5% in gnomAD non-cancer pop subset) - min AN = 12,000 - Dominant mechanism of disease
+	52. ACMG_BS1_1_AD - High MAF (> 0.1% in gnomAD non-cancer pop subset) - min AN = 12,000 - Dominant mechanism of disease
+	53. ACMG_BS1_2_AD - Somewhat high MAF (> 0.005% in gnomAD non-cancer pop subset) - Dominant mechanism of disease
+	54. ACMG_BA1_AR - Very high MAF (> 1% in gnomAD non-cancer pop subset) - min AN = 12,000 - Recessive mechanism of disease
+	55. ACMG_BS1_1_AR - High MAF (> 0.3% in gnomAD non-cancer pop subset) - min AN = 12,000 - Recessive mechanism of disease
+	56. ACMG_BS1_2_AR - Somewhat high MAF (> 0.005% in gnomAD non-cancer pop subset) - Recessive mechanism of disease
+	57. ACMG_PM2_1 - Allele count within pathogenic range (MAF <= 0.005% in the population-specific non-cancer gnomAD subset)
+	58. ACMG_PM2_2 - Alternate allele absent in the population-specific non-cancer gnomAD subset
+	59. ACMG_PVS1_1 - Null variant (frameshift/nonsense) - predicted as LoF by LOFTEE - within pathogenic range - LoF established for gene
+	60. ACMG_PVS1_2 - Null variant (frameshift/nonsense) - not predicted as LoF by LOFTEE - within pathogenic range - LoF established for gene
+	61. ACMG_PVS1_3 - Null variant (frameshift/nonsense) - predicted as LoF by LOFTEE - within pathogenic range - LoF not established for gene
+	62. ACMG_PVS1_4 - Null variant (frameshift/nonsense) - not predicted as LoF by LOFTEE -- within pathogenic range - LoF not established for gene
+	63. ACMG_PVS1_5 - Start (initiator methionine) lost - within pathogenic range - Lof established for gene
+	64. ACMG_PVS1_6 - Start (initiator methionine) lost - within pathogenic range - LoF not established for gene
+	65. ACMG_PVS1_7 - Donor/acceptor variant - predicted as LoF by LOFTEE - within pathogenic range - not last intron - LoF established for gene
+	66. ACMG_PVS1_8 - Donor/acceptor variant - last intron - within pathogenic range - LoF established for gene
+	67. ACMG_PVS1_9 - Donor/acceptor variant - not last intron - within pathogenic range - LoF not established for gene
+	68. ACMG_PVS1_10 - Donor variant at located at the +3, +4 or +5 position of the intron -  within the pathogenic range (i.e. <9 alleles in ExAC))
+	69. ACMG_PS1 - Same amino acid change as a previously established pathogenic variant (ClinVar) regardless of nucleotide change
+	70. ACMG_PP2 - Missense variant in a gene that has a relatively low rate of benign missense variation (<20%) and where missense variants are a common mechanism of disease (>50% P/LP (ClinVar))
+	71. ACMG_PM1 - Missense variant in a somatic mutation hotspot as determined by cancerhotspots.org
+	72. ACMG_PM4 - Protein length changes due to inframe indels or nonstop variant in non-repetitive regions of genes that harbor variants with a dominant mode of inheritance.
+	73. ACMG_PPC1 - Protein length changes due to inframe indels or nonstop variant in non-repetitive regions of genes that harbor variants with a recessive mode of inheritance.
+	74. ACMG_PM5 - Novel missense change at an amino acid residue where a different missense change determined to be pathogenic has been seen before (ClinVar)
+	75. ACMG_PP3 - Multiple lines (>=5) of computational evidence support a deleterious effect on the gene or gene product (conservation, evolutionary, splicing impact) with maximum two contradictory predictions - from dbNSFP
+	76. ACMG_BP4 - Multiple lines (>=5) of computational evidence support a benign effect on the gene or gene product (conservation, evolutionary, splicing impact) with maximum two contradictory prediction - from dbNSFP
+	77. ACMG_BMC1 - Peptide change is at the same location of a known benign change (ClinVar)
+	78. ACMG_BSC1 - Peptide change is reported as benign (ClinVar)
+	79. ACMG_BP1 - Missense variant in a gene for which primarily truncating variants are known to cause disease (ClinVar)
+	80. ACMG_BP3 - Variants in promoter or untranslated regions
+	81. ACMG_BP7 - Silent/intronic variant outside of the splice site consensus
+	82. CPSR_CLASSIFICATION - CPSR tier level (P/LP/VUS/LB/B)
+	83. CPSR_CLASSIFICATION_SCORE - Aggregated CPSR pathogenicity score
+	84. CPSR_CLASSIFICATION_CODE - Combination of CPSR classification codes assigned to the variant (ACMG)
+	85. CPSR_CLASSIFICATION_DOC - Verbal description of CPSR classification codes assignted to the variant (ACMG)
+
+
 
 
 **NOTE**: The user has the possibility to append the TSV file with data from other tags in the input VCF of interest (i.e. using the *custom_tags* option in the TOML configuration file)
