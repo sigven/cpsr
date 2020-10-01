@@ -279,6 +279,12 @@ def read_config_options(arg_dict, logger):
                err_msg = 'Configuration value ' + str(user_options[section][var]) + ' for ' + str(var) + ' cannot be parsed properly (expecting string)'
                error_message(err_msg, logger)
             theme_options = ['default', 'cerulean', 'journal', 'flatly', 'readable', 'spacelab', 'united', 'cosmo', 'lumen', 'paper', 'sandstone', 'simplex','yeti']
+
+            gnomad_pops = ['eas','sas','asj','amr','afr','nfe','fin','global']
+            if var == 'pop_gnomad' and not str(user_options[section][var]) in gnomad_pops:
+               err_msg = "Configuration value for gnomAD population: '" + str(user_options[section][var]) + "' is not among the permitted population types (expecting 'nfe', 'amr', 'afr', 'fin', 'global', 'eas', 'sas', or 'asj')"
+               error_message(err_msg, logger)
+
             if var == 'report_theme' and not str(user_options[section][var]) in theme_options:
                err_msg = 'Configuration value ' + str(user_options[section][var]) + ' for ' + str(var) + ' cannot be parsed properly (expecting \'default\', \'cerulean\', \'journal\', \'flatly\', \'readable\', \'spacelab\', \'united\', \'cosmo\', \'lumen\', \'paper\', \'sandstone\', \'simplex\',or \'yeti\')'
                error_message(err_msg, logger)
