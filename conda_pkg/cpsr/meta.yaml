@@ -16,6 +16,8 @@ requirements:
     - pcgr >=0.8.4.10
     - r-upsetr
     - r-ggpubr
+    - r-reactable
+    - r-treemap
 
 test:
   commands:
