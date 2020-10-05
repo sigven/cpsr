@@ -20,10 +20,8 @@ GENCODE_VERSION = '35'
 VEP_ASSEMBLY = 'GRCh38'
 DOCKER_IMAGE_VERSION = 'sigven/pcgr:' + str(PCGR_VERSION)
 
-
 global debug
 #global VEP_ASSEMBLY
-
 
 GE_panels = {
 		0: "CPSR exploratory cancer predisposition panel (n = 216, TCGA + Cancer Gene Census + NCGC + Other)",
