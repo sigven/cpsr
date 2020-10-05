@@ -265,7 +265,7 @@ This command will run the Docker-based *cpsr* workflow and produce the following
   2. __example.cpsr.grch37.pass.tsv.gz__ - Compressed TSV file (generated with [vcf2tsv](https://github.com/sigven/vcf2tsv)) of VCF content with relevant annotations appended by CPSR
   3. __example.cpsr.grch37.html__ - Interactive HTML report with clinically relevant variants in cancer predisposition genes organized into tiers
   4. __example.cpsr.grch37.json.gz__ - Compressed JSON dump of HTML report content
-  5. __example.cpsr.grch37.snvs_indels.tiers.tsv__ - TSV file with most important annotations of tier-structured SNVs/InDels
+  5. __example.cpsr.grch37.snvs_indels.tiers.tsv__ - TSV file with key annotations of tier-structured SNVs/InDels
 
 ### Related work
 
