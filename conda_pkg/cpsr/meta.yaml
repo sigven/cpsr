@@ -13,7 +13,7 @@ build:
 
 requirements:
   run:
-    - pcgr >=0.8.4.10
+    - pcgr >=0.9.0
     - r-upsetr
     - r-ggpubr
     - r-reactable
