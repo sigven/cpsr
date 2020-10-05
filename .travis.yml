@@ -18,7 +18,7 @@ before_install:
 
 install:
   - export PACKAGE_NAME=cpsr
-  - if test -z "$TRAVIS_TAG" ; then export VERSION="0.0.1" ; else export VERSION="$TRAVIS_TAG" ; fi
+  - if test -z "$TRAVIS_TAG" ; then export VERSION="0.0.1" ; else export VERSION="${TRAVIS_TAG//v/}" ; fi
   # Setting up channels and install dependencies
   - conda config --add channels bioconda --add channels conda-forge --add channels pcgr --add channels local
   - conda install -q python=$TRAVIS_PYTHON_VERSION pip requests conda-build jinja2 anaconda-client
@@ -27,13 +27,13 @@ install:
   - conda build conda_pkg/${PACKAGE_NAME}_dockerized
   - conda install "${PACKAGE_NAME}==${VERSION}"
   # Pulling reference data
-  - wget https://raw.githubusercontent.com/circulosmeos/gdown.pl/master/gdown.pl
-  - perl gdown.pl "https://drive.google.com/uc?id=1TdYagetk-l__aYBsaZJHJvYFStDnIEcq" grch37.tar.gz
-  - tar -xzf grch37.tar.gz  # will extract into ./data/grch37/
+#  - wget https://raw.githubusercontent.com/circulosmeos/gdown.pl/master/gdown.pl
+#  - perl gdown.pl "https://drive.google.com/uc?id=1TdYagetk-l__aYBsaZJHJvYFStDnIEcq" grch37.tar.gz
+#  - tar -xzf grch37.tar.gz  # will extract into ./data/grch37/
 
 script:
   - cpsr.py --version
-  - cpsr.py example.vcf.gz . . grch37 --panel_id 1 cpsr.toml example --no-docker
+#  - cpsr.py example.vcf.gz . . grch37 --panel_id 1 cpsr.toml example --no-docker
 
 deploy:
   # Deploy to Anaconda.org
