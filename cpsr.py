@@ -20,7 +20,6 @@ GENCODE_VERSION = '35'
 VEP_ASSEMBLY = 'GRCh38'
 DOCKER_IMAGE_VERSION = 'sigven/pcgr:' + str(PCGR_VERSION)
 
-
 global debug
 #global VEP_ASSEMBLY
 

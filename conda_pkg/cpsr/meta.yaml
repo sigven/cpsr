@@ -13,9 +13,11 @@ build:
 
 requirements:
   run:
-    - pcgr >=0.8.4.2
+    - pcgr >=0.9.0
     - r-upsetr
     - r-ggpubr
+    - r-reactable
+    - r-treemap
 
 test:
   commands:
