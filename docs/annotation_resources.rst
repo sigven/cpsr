@@ -29,16 +29,16 @@ Variant databases of clinical utility
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 -  `ClinVar <http://www.ncbi.nlm.nih.gov/clinvar/>`__ - database of
-   clinically related variants (August 2020)
+   clinically related variants (November 2020)
 -  `CIViC <https://civicdb.org>`__ - clinical interpretations of
-   variants in cancer (September 20th 2020)
+   variants in cancer (November 18th 2020)
 
 Protein domains/functional features
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 -  `UniProt/SwissProt KnowledgeBase <http://www.uniprot.org>`__ -
-   resource on protein sequence and functional information (2020_04,
-   August 2020)
+   resource on protein sequence and functional information (2020_05,
+   October 2020)
 -  `Pfam <http://pfam.xfam.org>`__ - database of protein families and
    domains (v33, May 2020)
 
@@ -47,14 +47,16 @@ Cancer gene knowledge bases
 
 -  `CancerMine <http://bionlp.bcgsc.ca/cancermine/>`__ -
    Literature-mined database of tumor suppressor genes/proto-oncogenes
-   (v28, September 2020)
+   (v30, November 2020)
 -  `Genomics England
    PanelApp <https://panelapp.genomicsengland.co.uk>`__ - cancer
-   phenotype panels as of September 20th 2020
+   phenotype panels as of November 23rd 2020
 
 Phenotype ontologies
 ~~~~~~~~~~~~~~~~~~~~
 
 -  `UMLS/MedGen <https://www.ncbi.nlm.nih.gov/medgen/>`__
--  `Disease Ontology <https://disease-ontology.org/>`__
--  `Experimental Factor Ontology <https://github.com/EBISPOT/efo>`__
+-  `Disease Ontology <https://disease-ontology.org/>`__ - November 11th,
+   2020
+-  `Experimental Factor Ontology <https://github.com/EBISPOT/efo>`__ -
+   v3.24

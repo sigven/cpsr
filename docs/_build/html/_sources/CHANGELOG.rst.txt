@@ -1,30 +1,78 @@
 CHANGELOG
 ---------
 
-0.6.0 - September 23rd 2020
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0.6.1 - November 30th 2020
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Added
+'''''
+
+-  Increased number of genes in panel 0: All genes in 42 virtual panels
+   related to cancer conditions in Genomics England PanelApp now also
+   contributes toward panel 0
+-  Added option in main script (``--clinvar_ignore_noncancer``) that
+   will exclude any query variants (from HTML report and TSV/JSON
+   output) that have been reported and classified for non-cancer related
+   conditions only (in ClinVar)
+
+   -  this to exclude variants associated with non-cancer related
+      phenotypes
+
+-  For the variant biomarker table, the resolution of the reported
+   biomarker mapping is highlighted with designated background colors
+   for the gene (exact/codon - black vs. exon/gene - orange)
+
+Fixed
+'''''
+
+-  Bug in GWAS hits retrieval, `Issue
+   #30 <https://github.com/sigven/cpsr/issues/18>`__
+-  Custom VCF tags (as specified by user in configuration file) not
+   shown in output TSV files
+
+Changed
+'''''''
+
+-  Removed DisGeNET annotations from output (associations from Open
+   Targets Platform serve same purpose)
+-  Renamed report section **Genomic Biomarkers** to **Variant
+   Biomarkers**
+-  Option ``--incidental_findings`` changed back to
+   ``--secondary_findings`` - recommended term to use according to ACMG
+-  Removed *MOD (mechanism-of-disease)* from TSV output file
+
+0.6.0rc - September 24th 2020
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+-  Data updates: ClinVar, GWAS catalog, GENCODE, CIViC, CancerMine,
+   UniProt KB, dbNSFP, Pfam, KEGG, Open Targets Platform, Genomics
+   England PanelApp
+-  Software updates: VEP 101
+
+.. _fixed-1:
 
 Fixed
 '''''
 
 -  Duplicated entries in incidental findings
 
+.. _changed-1:
+
 Changed
 '''''''
 
--  All arguments to ``cpsr.py`` is now organized with a ``--`` (no
-   positional arguments)
+-  All arguments to ``cpsr.py`` are now non-positional
 -  Arguments to ``cpsr.py`` are divided into two groups: *required* and
    *optional*
 -  ``secondary_findings`` is now coined ``incidental_findings``
--  Option **gwas:gwas_hits** in CPSR configuration file is now option
-   ``--gwas_findings`` in ``cpsr.py``
+-  Option **gwas:gwas_hits** in CPSR configuration file is now optional
+   argument ``--gwas_findings`` in ``cpsr.py``
 -  Option **classification:clinvar_cpsr** in CPSR configuration file is
-   now option ``--classify_all`` in ``cpsr.py``
+   now optional argument ``--classify_all`` in ``cpsr.py``
 -  Option **maf_imits:maf_gnomad** in CPSR configuration file is now
-   option ``--maf_upper_threshold`` in ``cpsr.py``
+   optional argument ``--maf_upper_threshold`` in ``cpsr.py``
 -  Option **secondary_findings:show_sf** in CPSR configuration file is
-   now option ``--incidental_findings`` in ``cpsr.py``
+   now optional argument ``--incidental_findings`` in ``cpsr.py``
 -  Virtual panels is now displayed through HTML (previously static
    ggplot plot)
 -  **Settings** section of report is now divived into three:
@@ -33,13 +81,19 @@ Changed
    -  Report configuration
    -  Virtual panel
 
+-  Classifications of genes as tumor suppressors/oncogenes are now based
+   on a combination of CancerMine citation count and presence in Network
+   of Cancer Genes
+
+.. _added-1:
+
 Added
 '''''
 
--  Missing ACMG criteria for classification of silent and intronic
-   variants outside of splice regions (ACMG_BP7)
+-  Missing ACMG criterion for classification of silent and intronic
+   variants outside of splice regions (*ACMG_BP7*)
 -  Missing ACMG criterion for classification of variants in promoter and
-   untranslated regions (ACMG_BP3)
+   untranslated regions (*ACMG_BP3*)
 -  Possibility to create custom virtual panel - any combination of genes
    from panel 0 provided as a single-column text file with argument
    ``--custom_list``
@@ -52,7 +106,7 @@ Added
 0.5.2 - November 18th 2019
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. _changed-1:
+.. _changed-2:
 
 Changed
 '''''''
@@ -63,7 +117,7 @@ Changed
 -  Moved virtual panel identifier from positional argument to optional
    argument (``--panel_id``) in ``cpsr.py``
 
-.. _added-1:
+.. _added-2:
 
 Added
 '''''
@@ -75,7 +129,7 @@ Added
 0.5.1 - October 14th 2019
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. _fixed-1:
+.. _fixed-2:
 
 Fixed
 '''''
@@ -88,7 +142,7 @@ Fixed
 0.5.0 - September 23rd 2019
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. _fixed-2:
+.. _fixed-3:
 
 Fixed
 '''''
@@ -105,7 +159,7 @@ Fixed
 -  Handling of non-coding variants (synonymous, upstream_variants) in
    the report, no longer excluded
 
-.. _added-2:
+.. _added-3:
 
 Added
 '''''

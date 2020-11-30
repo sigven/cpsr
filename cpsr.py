@@ -12,9 +12,9 @@ import platform
 import toml
 from argparse import RawTextHelpFormatter
 
-PCGR_VERSION = 'dev'
-CPSR_VERSION = '0.6.0rc'
-DB_VERSION = 'PCGR_DB_VERSION = 20200920'
+PCGR_VERSION = '0.9.1'
+CPSR_VERSION = '0.6.1'
+DB_VERSION = 'PCGR_DB_VERSION = 20201123'
 VEP_VERSION = '101'
 GENCODE_VERSION = '35'
 VEP_ASSEMBLY = 'GRCh38'
@@ -24,7 +24,7 @@ global debug
 #global VEP_ASSEMBLY
 
 GE_panels = {
-		0: "CPSR exploratory cancer predisposition panel (n = 216, TCGA + Cancer Gene Census + NCGC + Other)",
+		0: "CPSR exploratory cancer predisposition panel (n = 335, Genomics England PanelApp / TCGA Germline Study / Cancer Gene Census / Other)",
       1: "Adult solid tumours cancer susceptibility (Genomics England PanelApp)",
       2: "Adult solid tumours for rare disease (Genomics England PanelApp)",
       3: "Bladder cancer pertinent cancer susceptibility (Genomics England PanelApp)",
@@ -72,7 +72,7 @@ GE_panels = {
 
 def __main__():
 
-   panels = "0 = CPSR exploratory cancer predisposition panel (n = 216, TCGA + Cancer Gene Census + NCGC + Other)\n"
+   panels = "0 = CPSR exploratory cancer predisposition panel (n = 335, Genomics England PanelApp / TCGA Germline Study / Cancer Gene Census / Other)\n"
    panels = panels + "1 = Adult solid tumours cancer susceptibility (Genomics England PanelApp)\n"
    panels = panels + "2 = Adult solid tumours for rare disease (Genomics England PanelApp)\n"
    panels = panels + "3 = Bladder cancer pertinent cancer susceptibility (Genomics England PanelApp)\n"
@@ -137,9 +137,10 @@ def __main__():
    optional.add_argument('--docker-uid', dest='docker_user_id', help='Docker user ID. Default is the host system user ID. If you are experiencing permission errors,\n try setting this up to root (`--docker-uid root`), default: %(default)s')
    optional.add_argument('--no-docker', action='store_true', dest='no_docker', default=False, help='Run the CPSR workflow in a non-Docker mode, default: %(default)s')
    optional.add_argument('--ignore_noncoding', action='store_true',dest='ignore_noncoding',default=False,help='Do not list non-coding variants in HTML report')
-   optional.add_argument('--incidental_findings', action='store_true',dest='incidental_findings',default=False, help='Include variants found in ACMG-recommended list for incidental findings (v2.0)')
+   optional.add_argument('--secondary_findings', action='store_true',dest='secondary_findings',default=False, help='Include variants found in ACMG-recommended list for secondary findings (v2.0)')
    optional.add_argument('--gwas_findings', action='store_true',dest='gwas_findings',default=False, help='Report overlap with low to moderate cancer risk variants (tag SNPs) identified from genome-wide association studies')
    optional.add_argument('--classify_all', action='store_true',dest='classify_all',help='Provide CPSR variant classifications (TIER 1-5) also for variants with exising ClinVar classifications in output TSV')
+   optional.add_argument('--clinvar_ignore_noncancer', action='store_true', help='Ignore (exclude from report) ClinVar-classified variants reported only for phenotypes/conditions NOT related to cancer')
    optional.add_argument('--maf_upper_threshold', type=float, default = 0.9, dest = 'maf_upper_threshold',help='Upper MAF limit (gnomAD global population frequency) for variants to be included in the report, default: %(default)s')
    optional.add_argument('--debug',action='store_true',default=False, help='Print full docker commands to log, default: %(default)s')
    required.add_argument('--query_vcf', help='VCF input file with germline query variants (SNVs/InDels).', required = True)
@@ -471,21 +472,24 @@ def run_cpsr(arg_dict, host_directories, config_options):
    virtual_panel_id = -1
    ignore_noncoding = 0
    gwas_findings = 0
-   incidental_findings = 0
+   secondary_findings = 0
    classify_all = 0
+   clinvar_ignore_noncancer = 0
 
    diagnostic_grade_set = "OFF"
-   incidental_findings_set = "OFF"
+   secondary_findings_set = "OFF"
    gwas_findings_set = "OFF"
 
+   if arg_dict['clinvar_ignore_noncancer']:
+      clinvar_ignore_noncancer = 1
    if arg_dict['classify_all']:
       classify_all = 1
    if arg_dict['gwas_findings']:
       gwas_findings = 1
       gwas_findings_set = "ON"
-   if arg_dict['incidental_findings']:
-      incidental_findings = 1
-      incidental_findings_set = "ON"
+   if arg_dict['secondary_findings']:
+      secondary_findings = 1
+      secondary_findings_set = "ON"
    if arg_dict['diagnostic_grade_only']:
       diagnostic_grade_only = 1
       diagnostic_grade_set = "ON"
@@ -607,7 +611,7 @@ def run_cpsr(arg_dict, host_directories, config_options):
    else:
       logger.info("Virtual gene panel: " + str(GE_panels[virtual_panel_id]))
       logger.info("Diagnostic-grade genes in virtual panels (GE PanelApp): " + str(diagnostic_grade_set))
-   logger.info("Include incidential findings (ACMG recommended list v2.0): " + str(incidental_findings_set))
+   logger.info("Include incidential findings (ACMG recommended list v2.0): " + str(secondary_findings_set))
    logger.info("Include low to moderate cancer risk variants from genome-wide association studies: " + str(gwas_findings_set))
    logger.info("Reference population, germline variant frequencies (gnomAD): " + str(config_options['popgen']['pop_gnomad']).upper())
    logger.info("Genome assembly: " + str(arg_dict['genome_assembly']))
@@ -725,7 +729,7 @@ def run_cpsr(arg_dict, host_directories, config_options):
          str(PCGR_VERSION) + " " + str(CPSR_VERSION) + " " + str(arg_dict['genome_assembly']) + " " + \
          str(virtual_panel_id) + " " + str(custom_bed) + " " + str(arg_dict['maf_upper_threshold']) + " " + \
          str(diagnostic_grade_only) + " " + data_dir + " " + str(ignore_noncoding) + " " + \
-         str(incidental_findings) + " " + str(gwas_findings) + " " + str(classify_all) + docker_command_run_end)
+         str(clinvar_ignore_noncancer) + " " + str(secondary_findings) + " " + str(gwas_findings) + " " + str(classify_all) + docker_command_run_end)
       check_subprocess(logger, cpsr_report_command)
       logger.info("Finished")
    

@@ -40,10 +40,10 @@ investigate:
 -  **Non-ClinVar variants** - classified by CPSR through ACMG criteria
    (variant frequency levels and functional effects) into to a
    five-level tier scheme (Pathogenic to Benign)
--  **Genomic biomarkers** - cancer predisposition variants with reported
+-  **Variant biomarkers** - cancer predisposition variants with reported
    implications for prognosis, diagnosis or therapeutic regimens
 -  **Secondary findings (optional)** - pathogenic ClinVar variants in
-   the `ACMG recommended list for reporting of incidental
+   the `ACMG recommended list for reporting of secondary
    findings <https://www.ncbi.nlm.nih.gov/clinvar/docs/acmg/>`__
 -  **GWAS hits (optional)** - variants overlapping with previously
    identified hits in genome-wide association studies (GWAS) of cancer
@@ -67,8 +67,8 @@ al., Am J Hum Genet.,
 2016 <https://www.ncbi.nlm.nih.gov/pubmed/27181684>`__). See also
 `Related work <https://github.com/sigven/cpsr#related-work>`__
 
-Cancer predisposition genes
-'''''''''''''''''''''''''''
+Virtual cancer predisposition panels - targets for reporting
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 The cancer predisposition report can show variants found in a number of
 well-known cancer predisposition genes, and the specific set of genes
@@ -95,95 +95,95 @@ gene panels (0 - 42)**:
    genes <https://github.com/sigven/cpsr/blob/master/predisposition.md>`__
    which carry variants that may predispose to tumor development.
 
-   -  **Panels 1 - 42** are panels for inherited cancer syndromes and
-      cancer predisposition assembled within the `Genomics England
-      PanelApp <https://panelapp.genomicsengland.co.uk/>`__:
+-  **Panels 1 - 42** are panels for inherited cancer syndromes and
+   cancer predisposition assembled within the `Genomics England
+   PanelApp <https://panelapp.genomicsengland.co.uk/>`__:
 
-      -  `1 = Adult solid tumours cancer
-         susceptibility <https://panelapp.genomicsengland.co.uk/panels/245/>`__
-      -  `2 = Adult solid tumours for rare
-         disease <https://panelapp.genomicsengland.co.uk/panels/391/>`__
-      -  `3 = Bladder cancer pertinent cancer
-         susceptibility <https://panelapp.genomicsengland.co.uk/panels/208/>`__
-      -  `4 = Brain cancer pertinent cancer
-         susceptibility <https://panelapp.genomicsengland.co.uk/panels/166/>`__
-      -  `5 = Breast cancer pertinent cancer
-         susceptibility <https://panelapp.genomicsengland.co.uk/panels/55/>`__
-      -  `6 = Childhood solid tumours cancer
-         susceptibility <https://panelapp.genomicsengland.co.uk/panels/259/>`__
-      -  `7 = Colorectal cancer pertinent cancer
-         susceptibility <https://panelapp.genomicsengland.co.uk/panels/244/>`__
-      -  `8 = Endometrial cancer pertinent cancer
-         susceptibility <https://panelapp.genomicsengland.co.uk/panels/271/>`__
-      -  `9 = Familial Tumours Syndromes of the central & peripheral
-         Nervous
-         system <https://panelapp.genomicsengland.co.uk/panels/167/>`__
-      -  `10 = Familial breast
-         cancer <https://panelapp.genomicsengland.co.uk/panels/158/>`__
-      -  `11 = Familial
-         melanoma <https://panelapp.genomicsengland.co.uk/panels/522/>`__
-      -  `12 = Familial prostate
-         cancer <https://panelapp.genomicsengland.co.uk/panels/318/>`__
-      -  `13 = Familial
-         rhabdomyosarcoma <https://panelapp.genomicsengland.co.uk/panels/290/>`__
-      -  `14 = GI tract
-         tumours <https://panelapp.genomicsengland.co.uk/panels/254/>`__
-      -  `15 = Genodermatoses with
-         malignancies <https://panelapp.genomicsengland.co.uk/panels/201/>`__
-      -  `16 = Haematological malignancies cancer
-         susceptibility <https://panelapp.genomicsengland.co.uk/panels/59/>`__
-      -  `17 = Haematological malignancies for rare
-         disease <https://panelapp.genomicsengland.co.uk/panels/407/>`__
-      -  `18 = Head and neck cancer pertinent cancer
-         susceptibility <https://panelapp.genomicsengland.co.uk/panels/115/>`__
-      -  `19 = Inherited MMR deficiency (Lynch
-         syndrome) <https://panelapp.genomicsengland.co.uk/panels/503/>`__
-      -  `20 = Inherited non-medullary thyroid
-         cancer <https://panelapp.genomicsengland.co.uk/panels/171/>`__
-      -  `21 = Inherited ovarian cancer (without breast
-         cancer) <https://panelapp.genomicsengland.co.uk/panels/143/>`__
-      -  `22 = Inherited pancreatic
-         cancer <https://panelapp.genomicsengland.co.uk/panels/524/>`__
-      -  `23 = Inherited
-         polyposis <https://panelapp.genomicsengland.co.uk/panels/504/>`__
-      -  `24 = Inherited predisposition to acute myeloid leukaemia
-         (AML) <https://panelapp.genomicsengland.co.uk/panels/525/>`__
-      -  `25 = Inherited predisposition to
-         GIST <https://panelapp.genomicsengland.co.uk/panels/523/>`__
-      -  `26 = Inherited renal
-         cancer <https://panelapp.genomicsengland.co.uk/panels/521/>`__
-      -  `27 = Inherited phaeochromocytoma and
-         paraganglioma <https://panelapp.genomicsengland.co.uk/panels/97/>`__
-      -  `28 = Melanoma pertinent cancer
-         susceptibility <https://panelapp.genomicsengland.co.uk/panels/133/>`__
-      -  `29 = Multiple endocrine
-         tumours <https://panelapp.genomicsengland.co.uk/panels/36/>`__
-      -  `30 = Multiple monogenic benign skin
-         tumours <https://panelapp.genomicsengland.co.uk/panels/558/>`__
-      -  `31 = Neuroendocrine cancer pertinent cancer
-         susceptibility <https://panelapp.genomicsengland.co.uk/panels/183/>`__
-      -  `32 - Neurofibromatosis Type
-         1 <https://panelapp.genomicsengland.co.uk/panels/255/>`__
-      -  `33 = Ovarian cancer pertinent cancer
-         susceptibility <https://panelapp.genomicsengland.co.uk/panels/117/>`__
-      -  `34 = Parathyroid
-         Cancer <https://panelapp.genomicsengland.co.uk/panels/86/>`__
-      -  `35 = Prostate cancer pertinent cancer
-         susceptibility <https://panelapp.genomicsengland.co.uk/panels/17/>`__
-      -  `36 = Renal cancer pertinent cancer
-         susceptibility <https://panelapp.genomicsengland.co.uk/panels/154/>`__
-      -  `37 = Rhabdoid tumour
-         predisposition <https://panelapp.genomicsengland.co.uk/panels/600/>`__
-      -  `38 = Sarcoma cancer
-         susceptibility <https://panelapp.genomicsengland.co.uk/panels/217/>`__
-      -  `39 = Sarcoma
-         susceptibility <https://panelapp.genomicsengland.co.uk/panels/734/>`__
-      -  `40 = Thyroid cancer pertinent cancer
-         susceptibility <https://panelapp.genomicsengland.co.uk/panels/421/>`__
-      -  `41 = Tumour predisposition - childhood
-         onset <https://panelapp.genomicsengland.co.uk/panels/243/>`__
-      -  `42 = Upper gastrointestinal cancer pertinent cancer
-         susceptibility <https://panelapp.genomicsengland.co.uk/panels/273/>`__
+   -  `1 = Adult solid tumours cancer
+      susceptibility <https://panelapp.genomicsengland.co.uk/panels/245/>`__
+   -  `2 = Adult solid tumours for rare
+      disease <https://panelapp.genomicsengland.co.uk/panels/391/>`__
+   -  `3 = Bladder cancer pertinent cancer
+      susceptibility <https://panelapp.genomicsengland.co.uk/panels/208/>`__
+   -  `4 = Brain cancer pertinent cancer
+      susceptibility <https://panelapp.genomicsengland.co.uk/panels/166/>`__
+   -  `5 = Breast cancer pertinent cancer
+      susceptibility <https://panelapp.genomicsengland.co.uk/panels/55/>`__
+   -  `6 = Childhood solid tumours cancer
+      susceptibility <https://panelapp.genomicsengland.co.uk/panels/259/>`__
+   -  `7 = Colorectal cancer pertinent cancer
+      susceptibility <https://panelapp.genomicsengland.co.uk/panels/244/>`__
+   -  `8 = Endometrial cancer pertinent cancer
+      susceptibility <https://panelapp.genomicsengland.co.uk/panels/271/>`__
+   -  `9 = Familial Tumours Syndromes of the central & peripheral
+      Nervous
+      system <https://panelapp.genomicsengland.co.uk/panels/167/>`__
+   -  `10 = Familial breast
+      cancer <https://panelapp.genomicsengland.co.uk/panels/158/>`__
+   -  `11 = Familial
+      melanoma <https://panelapp.genomicsengland.co.uk/panels/522/>`__
+   -  `12 = Familial prostate
+      cancer <https://panelapp.genomicsengland.co.uk/panels/318/>`__
+   -  `13 = Familial
+      rhabdomyosarcoma <https://panelapp.genomicsengland.co.uk/panels/290/>`__
+   -  `14 = GI tract
+      tumours <https://panelapp.genomicsengland.co.uk/panels/254/>`__
+   -  `15 = Genodermatoses with
+      malignancies <https://panelapp.genomicsengland.co.uk/panels/201/>`__
+   -  `16 = Haematological malignancies cancer
+      susceptibility <https://panelapp.genomicsengland.co.uk/panels/59/>`__
+   -  `17 = Haematological malignancies for rare
+      disease <https://panelapp.genomicsengland.co.uk/panels/407/>`__
+   -  `18 = Head and neck cancer pertinent cancer
+      susceptibility <https://panelapp.genomicsengland.co.uk/panels/115/>`__
+   -  `19 = Inherited MMR deficiency (Lynch
+      syndrome) <https://panelapp.genomicsengland.co.uk/panels/503/>`__
+   -  `20 = Inherited non-medullary thyroid
+      cancer <https://panelapp.genomicsengland.co.uk/panels/171/>`__
+   -  `21 = Inherited ovarian cancer (without breast
+      cancer) <https://panelapp.genomicsengland.co.uk/panels/143/>`__
+   -  `22 = Inherited pancreatic
+      cancer <https://panelapp.genomicsengland.co.uk/panels/524/>`__
+   -  `23 = Inherited
+      polyposis <https://panelapp.genomicsengland.co.uk/panels/504/>`__
+   -  `24 = Inherited predisposition to acute myeloid leukaemia
+      (AML) <https://panelapp.genomicsengland.co.uk/panels/525/>`__
+   -  `25 = Inherited predisposition to
+      GIST <https://panelapp.genomicsengland.co.uk/panels/523/>`__
+   -  `26 = Inherited renal
+      cancer <https://panelapp.genomicsengland.co.uk/panels/521/>`__
+   -  `27 = Inherited phaeochromocytoma and
+      paraganglioma <https://panelapp.genomicsengland.co.uk/panels/97/>`__
+   -  `28 = Melanoma pertinent cancer
+      susceptibility <https://panelapp.genomicsengland.co.uk/panels/133/>`__
+   -  `29 = Multiple endocrine
+      tumours <https://panelapp.genomicsengland.co.uk/panels/36/>`__
+   -  `30 = Multiple monogenic benign skin
+      tumours <https://panelapp.genomicsengland.co.uk/panels/558/>`__
+   -  `31 = Neuroendocrine cancer pertinent cancer
+      susceptibility <https://panelapp.genomicsengland.co.uk/panels/183/>`__
+   -  `32 - Neurofibromatosis Type
+      1 <https://panelapp.genomicsengland.co.uk/panels/255/>`__
+   -  `33 = Ovarian cancer pertinent cancer
+      susceptibility <https://panelapp.genomicsengland.co.uk/panels/117/>`__
+   -  `34 = Parathyroid
+      Cancer <https://panelapp.genomicsengland.co.uk/panels/86/>`__
+   -  `35 = Prostate cancer pertinent cancer
+      susceptibility <https://panelapp.genomicsengland.co.uk/panels/17/>`__
+   -  `36 = Renal cancer pertinent cancer
+      susceptibility <https://panelapp.genomicsengland.co.uk/panels/154/>`__
+   -  `37 = Rhabdoid tumour
+      predisposition <https://panelapp.genomicsengland.co.uk/panels/600/>`__
+   -  `38 = Sarcoma cancer
+      susceptibility <https://panelapp.genomicsengland.co.uk/panels/217/>`__
+   -  `39 = Sarcoma
+      susceptibility <https://panelapp.genomicsengland.co.uk/panels/734/>`__
+   -  `40 = Thyroid cancer pertinent cancer
+      susceptibility <https://panelapp.genomicsengland.co.uk/panels/421/>`__
+   -  `41 = Tumour predisposition - childhood
+      onset <https://panelapp.genomicsengland.co.uk/panels/243/>`__
+   -  `42 = Upper gastrointestinal cancer pertinent cancer
+      susceptibility <https://panelapp.genomicsengland.co.uk/panels/273/>`__
 
 Example report
 ~~~~~~~~~~~~~~
@@ -196,7 +196,7 @@ Docker-based technology
 
 The CPSR workflow is developed using the `Docker
 technology <https://www.docker.com/what-docker>`__. The software is thus
-packaged into isolated containers, in which the installation of all
+packaged into an isolated container, in which the installation of all
 software libraries/tools and required dependencies have been taken care
 of. In addition to the bundled software, in the form of a Docker image,
 the workflow needs to be attached with an `annotation data

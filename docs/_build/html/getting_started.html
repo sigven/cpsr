@@ -1,18 +1,15 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Getting started &mdash; Cancer Predisposition Sequencing Reporter 0.6.0rc documentation</title>
+  <title>Getting started &mdash; Cancer Predisposition Sequencing Reporter 0.6.1 documentation</title>
   
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
 
   
   
@@ -20,9 +17,7 @@
   
 
   
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -34,6 +29,10 @@
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="author" title="About these documents" href="about.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -52,7 +51,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> Cancer Predisposition Sequencing Reporter
+            <a href="index.html" class="icon icon-home"> Cancer Predisposition Sequencing Reporter
           
 
           
@@ -62,7 +61,7 @@
             
             
               <div class="version">
-                0.6.0rc
+                0.6.1
               </div>
             
           
@@ -79,7 +78,6 @@
           
         </div>
 
-        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -91,10 +89,11 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Getting started</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#step-0-install-pcgr-version-0-9-0rc">STEP 0: Install PCGR (version 0.9.0rc)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#step-1-download-the-latest-release">STEP 1: Download the latest release</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#step-2-configuration">STEP 2: Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#step-3-run-example">STEP 3: Run example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-0-python">STEP 0: Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-1-install-pcgr-version-0-9-1">STEP 1: Install PCGR (version 0.9.1)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-2-download-the-latest-release">STEP 2: Download the latest release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-3-configuration">STEP 3: Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-4-run-example">STEP 4: Run example</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="annotation_resources.html">CPSR annotation resources</a></li>
@@ -107,7 +106,6 @@
             
           
         </div>
-        
       </div>
     </nav>
 
@@ -146,7 +144,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="index.html">Docs</a> &raquo;</li>
         
       <li>Getting started</li>
     
@@ -169,20 +167,36 @@
             
   <div class="section" id="getting-started">
 <h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="step-0-install-pcgr-version-0-9-0rc">
-<h2>STEP 0: Install PCGR (version 0.9.0rc)<a class="headerlink" href="#step-0-install-pcgr-version-0-9-0rc" title="Permalink to this headline">¶</a></h2>
-<p>Make sure you have a working installation of PCGR (<strong>version 0.9.0rc</strong>)
-and the accompanying data bundle(s) (walk through <a class="reference external" href="https://github.com/sigven/pcgr#getting-started">steps
-0-2</a>).</p>
+<div class="section" id="step-0-python">
+<h2>STEP 0: Python<a class="headerlink" href="#step-0-python" title="Permalink to this headline">¶</a></h2>
+<p>An installation of Python (version <em>3.6</em>) is required to run CPSR. Check
+that Python is installed by typing <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">--version</span></code> in your terminal
+window. In addition, a <a class="reference external" href="https://github.com/uiri/toml">Python library</a>
+for parsing configuration files encoded with
+<a class="reference external" href="https://github.com/toml-lang/toml">TOML</a> is needed. To install,
+simply run the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">toml</span>
+</pre></div>
 </div>
-<div class="section" id="step-1-download-the-latest-release">
-<h2>STEP 1: Download the latest release<a class="headerlink" href="#step-1-download-the-latest-release" title="Permalink to this headline">¶</a></h2>
-<p>Download the <a class="reference external" href="https://github.com/sigven/cpsr/releases/tag/v0.6.0rc">0.6.0rc
+<p><strong>IMPORTANT NOTE</strong>: STEP 1 &amp; 2 below outline installation guidelines for
+running CPSR with Docker. If you want to install and run CPSR without
+the use of Docker (i.e. through Conda), follow <a class="reference external" href="https://github.com/sigven/cpsr/tree/master/conda_pkg/README.md">these
+instructions</a></p>
+</div>
+<div class="section" id="step-1-install-pcgr-version-0-9-1">
+<h2>STEP 1: Install PCGR (version 0.9.1)<a class="headerlink" href="#step-1-install-pcgr-version-0-9-1" title="Permalink to this headline">¶</a></h2>
+<p>Make sure you have a working installation of PCGR (<strong>version 0.9.1</strong>)
+and the accompanying data bundle(s) (walk through <a class="reference external" href="https://github.com/sigven/pcgr#getting-started">steps
+1-2</a>).</p>
+</div>
+<div class="section" id="step-2-download-the-latest-release">
+<h2>STEP 2: Download the latest release<a class="headerlink" href="#step-2-download-the-latest-release" title="Permalink to this headline">¶</a></h2>
+<p>Download the <a class="reference external" href="https://github.com/sigven/cpsr/releases/tag/v0.6.1">0.6.1
 release</a> of
 <em>cpsr</em> (run script and configuration file)</p>
 </div>
-<div class="section" id="step-2-configuration">
-<h2>STEP 2: Configuration<a class="headerlink" href="#step-2-configuration" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="step-3-configuration">
+<h2>STEP 3: Configuration<a class="headerlink" href="#step-3-configuration" title="Permalink to this headline">¶</a></h2>
 <p>A few elements of the workflow can be figured using the <em>cpsr</em>
 configuration file, encoded in
 <a class="reference external" href="https://github.com/toml-lang/toml">TOML</a>. The following can be
@@ -196,8 +210,8 @@ configured:</p>
 <a class="reference external" href="https://cpsr.readthedocs.io/en/latest/input.html">Input</a> for more
 details wrt. default configuration.</p>
 </div>
-<div class="section" id="step-3-run-example">
-<h2>STEP 3: Run example<a class="headerlink" href="#step-3-run-example" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="step-4-run-example">
+<h2>STEP 4: Run example<a class="headerlink" href="#step-4-run-example" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>usage: cpsr.py -h [options]  --query_vcf INPUT_VCF --pcgr_dir PCGR_DIR --output_dir OUTPUT_DIR --genome_assembly GENOME_ASSEMBLY --conf CONFIG_FILE --sample_id SAMPLE_ID
 
 Cancer Predisposition Sequencing Reporter - report of clinically significant cancer-predisposing germline variants
@@ -205,7 +219,7 @@ Cancer Predisposition Sequencing Reporter - report of clinically significant can
 Required arguments:
 --query_vcf QUERY_VCF
                 VCF input file with germline query variants (SNVs/InDels).
---pcgr_dir PCGR_DIR   Directory that contains the PCGR data bundle directory, e.g. ~/pcgr-0.9.0rc
+--pcgr_dir PCGR_DIR   Directory that contains the PCGR data bundle directory, e.g. ~/pcgr-0.9.1
 --output_dir OUTPUT_DIR
                 Output directory
 --genome_assembly {grch37,grch38}
@@ -274,7 +288,7 @@ Optional arguments:
     Docker user ID. Default is the host system user ID. If you are experiencing permission errors, try setting this up to root (`--docker-uid root`), default: None
 --no-docker           Run the CPSR workflow in a non-Docker mode, default: False
 --ignore_noncoding    Do not list non-coding variants in HTML report
---incidental_findings   Include variants found in ACMG-recommended list for incidental findings (v2.0)
+--secondary_findings    Include variants found in ACMG-recommended list for secondary/incidental findings (v2.0)
 --gwas_findings       Report overlap with low to moderate cancer risk variants (tag SNPs) identified from genome-wide association studies
 --classify_all        Provide CPSR variant classifications (TIER 1-5) also for variants with exising ClinVar classifications in output TSV
 --maf_upper_threshold MAF_UPPER_THRESHOLD
@@ -288,13 +302,13 @@ contains a configuration file (<em>cpsr.toml</em>).</p>
 cancer
 susceptibility</a>
 virtual gene panel, can be performed through the following command:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">~/</span><span class="n">cpsr</span><span class="o">-</span><span class="mf">0.6</span><span class="o">.</span><span class="mi">0</span><span class="n">rc</span><span class="o">/</span><span class="n">cpsr</span><span class="o">.</span><span class="n">py</span>
- <span class="o">--</span><span class="n">query_vcf</span> <span class="o">~/</span><span class="n">cpsr</span><span class="o">-</span><span class="mf">0.6</span><span class="o">.</span><span class="mi">0</span><span class="n">rc</span><span class="o">/</span><span class="n">example</span><span class="o">.</span><span class="n">vcf</span><span class="o">.</span><span class="n">gz</span>
- <span class="o">--</span><span class="n">pcgr_dir</span> <span class="o">~/</span><span class="n">pcgr</span><span class="o">-</span><span class="mf">0.9</span><span class="o">.</span><span class="mi">0</span><span class="n">rc</span>
- <span class="o">--</span><span class="n">output_dir</span> <span class="o">~/</span><span class="n">cpsr</span><span class="o">-</span><span class="mf">0.6</span><span class="o">.</span><span class="mi">0</span><span class="n">rc</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">~/</span><span class="n">cpsr</span><span class="o">-</span><span class="mf">0.6</span><span class="o">.</span><span class="mi">1</span><span class="o">/</span><span class="n">cpsr</span><span class="o">.</span><span class="n">py</span>
+ <span class="o">--</span><span class="n">query_vcf</span> <span class="o">~/</span><span class="n">cpsr</span><span class="o">-</span><span class="mf">0.6</span><span class="o">.</span><span class="mi">1</span><span class="o">/</span><span class="n">example</span><span class="o">.</span><span class="n">vcf</span><span class="o">.</span><span class="n">gz</span>
+ <span class="o">--</span><span class="n">pcgr_dir</span> <span class="o">~/</span><span class="n">pcgr</span><span class="o">-</span><span class="mf">0.9</span><span class="o">.</span><span class="mi">1</span>
+ <span class="o">--</span><span class="n">output_dir</span> <span class="o">~/</span><span class="n">cpsr</span><span class="o">-</span><span class="mf">0.6</span><span class="o">.</span><span class="mi">1</span>
  <span class="o">--</span><span class="n">genome_assembly</span> <span class="n">grch37</span>
  <span class="o">--</span><span class="n">panel_id</span> <span class="mi">1</span>
- <span class="o">--</span><span class="n">conf</span> <span class="o">~/</span><span class="n">cpsr</span><span class="o">-</span><span class="mf">0.6</span><span class="o">.</span><span class="mi">0</span><span class="n">rc</span><span class="o">/</span><span class="n">cpsr</span><span class="o">.</span><span class="n">toml</span>
+ <span class="o">--</span><span class="n">conf</span> <span class="o">~/</span><span class="n">cpsr</span><span class="o">-</span><span class="mf">0.6</span><span class="o">.</span><span class="mi">1</span><span class="o">/</span><span class="n">cpsr</span><span class="o">.</span><span class="n">toml</span>
  <span class="o">--</span><span class="n">sample_id</span> <span class="n">example</span>
  <span class="o">--</span><span class="n">incidental_findings</span>
  <span class="o">--</span><span class="n">classify_all</span>
@@ -303,7 +317,7 @@ virtual gene panel, can be performed through the following command:</p>
 </pre></div>
 </div>
 <p>Note that the example command also refers to the PCGR directory
-(<em>pcgr-0.9.0rc</em>), which contains the data bundle that are necessary for
+(<em>pcgr-0.9.1</em>), which contains the data bundle that are necessary for
 both <em>PCGR</em> and <em>CPSR</em>.</p>
 <p>This command will run the Docker-based <em>cpsr</em> workflow and produce the
 following output files in the <em>cpsr</em> folder:</p>
@@ -344,19 +358,11 @@ important annotations of tier-structured SNVs/InDels</p></li>
 
   <div role="contentinfo">
     <p>
-        
         &copy; Copyright 2018-2020, Sigve Nakken
 
     </p>
   </div>
-    
-    
-    
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
-    
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -367,6 +373,7 @@ important annotations of tier-structured SNVs/InDels</p></li>
 
   </div>
   
+
 
   <script type="text/javascript">
       jQuery(function () {

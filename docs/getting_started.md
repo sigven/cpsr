@@ -1,14 +1,22 @@
 ## Getting started
 
-### STEP 0: Install PCGR (version 0.9.0rc)
+### STEP 0: Python
 
-Make sure you have a working installation of PCGR (**version 0.9.0rc**) and the accompanying data bundle(s) (walk through [steps 0-2](https://github.com/sigven/pcgr#getting-started)).
+An installation of Python (version _3.6_) is required to run CPSR. Check that Python is installed by typing `python --version` in your terminal window. In addition, a [Python library](https://github.com/uiri/toml) for parsing configuration files encoded with [TOML](https://github.com/toml-lang/toml) is needed. To install, simply run the following command:
 
-### STEP 1: Download the latest release
+   	pip install toml
 
-Download the [0.6.0rc release](https://github.com/sigven/cpsr/releases/tag/v0.6.0rc) of *cpsr* (run script and configuration file)
+**IMPORTANT NOTE**: STEP 1 & 2 below outline installation guidelines for running CPSR with Docker. If you want to install and run CPSR without the use of Docker (i.e. through Conda), follow [these instructions](https://github.com/sigven/cpsr/tree/master/conda_pkg/README.md)
 
-### STEP 2: Configuration
+### STEP 1: Install PCGR (version 0.9.1)
+
+Make sure you have a working installation of PCGR (**version 0.9.1**) and the accompanying data bundle(s) (walk through [steps 1-2](https://github.com/sigven/pcgr#getting-started)).
+
+### STEP 2: Download the latest release
+
+Download the [0.6.1 release](https://github.com/sigven/cpsr/releases/tag/v0.6.1) of *cpsr* (run script and configuration file)
+
+### STEP 3: Configuration
 
 A few elements of the workflow can be figured using the *cpsr* configuration file, encoded in [TOML](https://github.com/toml-lang/toml). The following can be configured:
 
@@ -18,16 +26,16 @@ A few elements of the workflow can be figured using the *cpsr* configuration fil
 
 See section on [Input](https://cpsr.readthedocs.io/en/latest/input.html) for more details wrt. default configuration.
 
-### STEP 3: Run example
+### STEP 4: Run example
 
 	usage: cpsr.py -h [options]  --query_vcf INPUT_VCF --pcgr_dir PCGR_DIR --output_dir OUTPUT_DIR --genome_assembly GENOME_ASSEMBLY --conf CONFIG_FILE --sample_id SAMPLE_ID
-	
+
 	Cancer Predisposition Sequencing Reporter - report of clinically significant cancer-predisposing germline variants
 
 	Required arguments:
 	--query_vcf QUERY_VCF
 				    VCF input file with germline query variants (SNVs/InDels).
-	--pcgr_dir PCGR_DIR   Directory that contains the PCGR data bundle directory, e.g. ~/pcgr-0.9.0rc
+	--pcgr_dir PCGR_DIR   Directory that contains the PCGR data bundle directory, e.g. ~/pcgr-0.9.1
 	--output_dir OUTPUT_DIR
 				    Output directory
 	--genome_assembly {grch37,grch38}
@@ -96,7 +104,7 @@ See section on [Input](https://cpsr.readthedocs.io/en/latest/input.html) for mor
 		Docker user ID. Default is the host system user ID. If you are experiencing permission errors, try setting this up to root (`--docker-uid root`), default: None
 	--no-docker           Run the CPSR workflow in a non-Docker mode, default: False
 	--ignore_noncoding    Do not list non-coding variants in HTML report
-	--incidental_findings	Include variants found in ACMG-recommended list for incidental findings (v2.0)
+	--secondary_findings	Include variants found in ACMG-recommended list for secondary/incidental findings (v2.0)
 	--gwas_findings       Report overlap with low to moderate cancer risk variants (tag SNPs) identified from genome-wide association studies
 	--classify_all        Provide CPSR variant classifications (TIER 1-5) also for variants with exising ClinVar classifications in output TSV
 	--maf_upper_threshold MAF_UPPER_THRESHOLD
@@ -109,20 +117,20 @@ The *cpsr* software bundle contains an example VCF file. It also contains a conf
 
 Report generation with the example VCF, using the [Adult solid tumours cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/245/) virtual gene panel, can be performed through the following command:
 
-	python ~/cpsr-0.6.0rc/cpsr.py
-	 --query_vcf ~/cpsr-0.6.0rc/example.vcf.gz
-	 --pcgr_dir ~/pcgr-0.9.0rc
-	 --output_dir ~/cpsr-0.6.0rc
+	python ~/cpsr-0.6.1/cpsr.py
+	 --query_vcf ~/cpsr-0.6.1/example.vcf.gz
+	 --pcgr_dir ~/pcgr-0.9.1
+	 --output_dir ~/cpsr-0.6.1
 	 --genome_assembly grch37
 	 --panel_id 1
-	 --conf ~/cpsr-0.6.0rc/cpsr.toml
+	 --conf ~/cpsr-0.6.1/cpsr.toml
 	 --sample_id example
 	 --incidental_findings
 	 --classify_all
 	 --maf_upper_threshold 0.2
 	 --no_vcf_validate
 
-Note that the example command also refers to the PCGR directory (*pcgr-0.9.0rc*), which contains the data bundle that are necessary for both *PCGR* and *CPSR*.
+Note that the example command also refers to the PCGR directory (*pcgr-0.9.1*), which contains the data bundle that are necessary for both *PCGR* and *CPSR*.
 
 This command will run the Docker-based *cpsr* workflow and produce the following output files in the _cpsr_ folder:
 

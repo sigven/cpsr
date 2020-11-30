@@ -1,18 +1,15 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Welcome to Cancer Predisposition Sequencing Reporter’s documentation! &mdash; Cancer Predisposition Sequencing Reporter 0.6.0rc documentation</title>
+  <title>Welcome to Cancer Predisposition Sequencing Reporter’s documentation! &mdash; Cancer Predisposition Sequencing Reporter 0.6.1 documentation</title>
   
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
 
   
   
@@ -20,9 +17,7 @@
   
 
   
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -34,6 +29,10 @@
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="author" title="About these documents" href="about.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -51,7 +50,7 @@
           
 
           
-            <a href="#" class="icon icon-home" alt="Documentation Home"> Cancer Predisposition Sequencing Reporter
+            <a href="#" class="icon icon-home"> Cancer Predisposition Sequencing Reporter
           
 
           
@@ -61,7 +60,7 @@
             
             
               <div class="version">
-                0.6.0rc
+                0.6.1
               </div>
             
           
@@ -78,7 +77,6 @@
           
         </div>
 
-        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -100,7 +98,6 @@
             
           
         </div>
-        
       </div>
     </nav>
 
@@ -139,7 +136,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="#">Docs</a> &raquo;</li>
         
       <li>Welcome to Cancer Predisposition Sequencing Reporter’s documentation!</li>
     
@@ -173,10 +170,11 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#step-0-install-pcgr-version-0-9-0rc">STEP 0: Install PCGR (version 0.9.0rc)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#step-1-download-the-latest-release">STEP 1: Download the latest release</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#step-2-configuration">STEP 2: Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#step-3-run-example">STEP 3: Run example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#step-0-python">STEP 0: Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#step-1-install-pcgr-version-0-9-1">STEP 1: Install PCGR (version 0.9.1)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#step-2-download-the-latest-release">STEP 2: Download the latest release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#step-3-configuration">STEP 3: Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#step-4-run-example">STEP 4: Run example</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="annotation_resources.html">CPSR annotation resources</a><ul>
@@ -203,7 +201,8 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="variant_classification.html">Variant classification (ACMG/AMP)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CHANGELOG.html">CHANGELOG</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="CHANGELOG.html#september-23rd-2020">0.6.0 - September 23rd 2020</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CHANGELOG.html#november-30th-2020">0.6.1 - November 30th 2020</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CHANGELOG.html#rc-september-24th-2020">0.6.0rc - September 24th 2020</a></li>
 <li class="toctree-l2"><a class="reference internal" href="CHANGELOG.html#november-18th-2019">0.5.2 - November 18th 2019</a></li>
 <li class="toctree-l2"><a class="reference internal" href="CHANGELOG.html#october-14th-2019">0.5.1 - October 14th 2019</a></li>
 <li class="toctree-l2"><a class="reference internal" href="CHANGELOG.html#september-23rd-2019">0.5.0 - September 23rd 2019</a></li>
@@ -231,19 +230,11 @@
 
   <div role="contentinfo">
     <p>
-        
         &copy; Copyright 2018-2020, Sigve Nakken
 
     </p>
   </div>
-    
-    
-    
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
-    
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -254,6 +245,7 @@
 
   </div>
   
+
 
   <script type="text/javascript">
       jQuery(function () {

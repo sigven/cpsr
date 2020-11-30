@@ -1,18 +1,15 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>About &mdash; Cancer Predisposition Sequencing Reporter 0.6.0rc documentation</title>
+  <title>About &mdash; Cancer Predisposition Sequencing Reporter 0.6.1 documentation</title>
   
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
 
   
   
@@ -20,9 +17,7 @@
   
 
   
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -34,6 +29,10 @@
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="author" title="About these documents" href="#" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -52,7 +51,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> Cancer Predisposition Sequencing Reporter
+            <a href="index.html" class="icon icon-home"> Cancer Predisposition Sequencing Reporter
           
 
           
@@ -62,7 +61,7 @@
             
             
               <div class="version">
-                0.6.0rc
+                0.6.1
               </div>
             
           
@@ -79,7 +78,6 @@
           
         </div>
 
-        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -91,7 +89,7 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">About</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#what-is-the-cancer-predisposition-sequencing-reporter-cpsr">What is the Cancer Predisposition Sequencing Reporter (CPSR)?</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#cancer-predisposition-genes">Cancer predisposition genes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#virtual-cancer-predisposition-panels-targets-for-reporting">Virtual cancer predisposition panels - targets for reporting</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#example-report">Example report</a></li>
@@ -110,7 +108,6 @@
             
           
         </div>
-        
       </div>
     </nav>
 
@@ -149,7 +146,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="index.html">Docs</a> &raquo;</li>
         
       <li>About</li>
     
@@ -206,10 +203,10 @@ five-level tier scheme in ClinVar (Pathogenic to Benign)</p></li>
 <li><p><strong>Non-ClinVar variants</strong> - classified by CPSR through ACMG criteria
 (variant frequency levels and functional effects) into to a
 five-level tier scheme (Pathogenic to Benign)</p></li>
-<li><p><strong>Genomic biomarkers</strong> - cancer predisposition variants with reported
+<li><p><strong>Variant biomarkers</strong> - cancer predisposition variants with reported
 implications for prognosis, diagnosis or therapeutic regimens</p></li>
 <li><p><strong>Secondary findings (optional)</strong> - pathogenic ClinVar variants in
-the <a class="reference external" href="https://www.ncbi.nlm.nih.gov/clinvar/docs/acmg/">ACMG recommended list for reporting of incidental
+the <a class="reference external" href="https://www.ncbi.nlm.nih.gov/clinvar/docs/acmg/">ACMG recommended list for reporting of secondary
 findings</a></p></li>
 <li><p><strong>GWAS hits (optional)</strong> - variants overlapping with previously
 identified hits in genome-wide association studies (GWAS) of cancer
@@ -232,8 +229,8 @@ Genet Med., 2017</a>;
 al., Am J Hum Genet.,
 2016</a>). See also
 <a class="reference external" href="https://github.com/sigven/cpsr#related-work">Related work</a></p>
-<div class="section" id="cancer-predisposition-genes">
-<h3>Cancer predisposition genes<a class="headerlink" href="#cancer-predisposition-genes" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="virtual-cancer-predisposition-panels-targets-for-reporting">
+<h3>Virtual cancer predisposition panels - targets for reporting<a class="headerlink" href="#virtual-cancer-predisposition-panels-targets-for-reporting" title="Permalink to this headline">¶</a></h3>
 <p>The cancer predisposition report can show variants found in a number of
 well-known cancer predisposition genes, and the specific set of genes
 can be customized by the user by choosing any of the following <strong>virtual
@@ -258,11 +255,11 @@ the Norwegian Cancer Genomics Consortium
 of <a class="reference external" href="https://github.com/sigven/cpsr/blob/master/predisposition.md">216 protein-coding
 genes</a>
 which carry variants that may predispose to tumor development.</p>
-<ul class="simple">
+</li>
 <li><p><strong>Panels 1 - 42</strong> are panels for inherited cancer syndromes and
 cancer predisposition assembled within the <a class="reference external" href="https://panelapp.genomicsengland.co.uk/">Genomics England
 PanelApp</a>:</p>
-<ul>
+<ul class="simple">
 <li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/245/">1 = Adult solid tumours cancer
 susceptibility</a></p></li>
 <li><p><a class="reference external" href="https://panelapp.genomicsengland.co.uk/panels/391/">2 = Adult solid tumours for rare
@@ -351,8 +348,6 @@ susceptibility</a></p></li>
 </ul>
 </li>
 </ul>
-</li>
-</ul>
 </div>
 </div>
 <div class="section" id="example-report">
@@ -366,7 +361,7 @@ report</a></p></li>
 <h2>Docker-based technology<a class="headerlink" href="#docker-based-technology" title="Permalink to this headline">¶</a></h2>
 <p>The CPSR workflow is developed using the <a class="reference external" href="https://www.docker.com/what-docker">Docker
 technology</a>. The software is thus
-packaged into isolated containers, in which the installation of all
+packaged into an isolated container, in which the installation of all
 software libraries/tools and required dependencies have been taken care
 of. In addition to the bundled software, in the form of a Docker image,
 the workflow needs to be attached with an <a class="reference external" href="annotation_resources.html">annotation data
@@ -399,19 +394,11 @@ bundle</a>.</p>
 
   <div role="contentinfo">
     <p>
-        
         &copy; Copyright 2018-2020, Sigve Nakken
 
     </p>
   </div>
-    
-    
-    
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
-    
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -422,6 +409,7 @@ bundle</a>.</p>
 
   </div>
   
+
 
   <script type="text/javascript">
       jQuery(function () {

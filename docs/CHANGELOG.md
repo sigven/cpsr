@@ -1,6 +1,25 @@
 
 ## CHANGELOG
 
+#### 0.6.1 - November 30th 2020
+
+##### Added
+
+ - Increased number of genes in panel 0: All genes in 42 virtual panels related to cancer conditions in Genomics England PanelApp now also contributes toward panel 0
+ - Added option in main script (`--clinvar_ignore_noncancer`) that will exclude any query variants (from HTML report and TSV/JSON output) that have been reported and classified for non-cancer related conditions only (in ClinVar)
+	 - this to exclude variants associated with non-cancer related phenotypes
+ - For the variant biomarker table, the resolution of the reported biomarker mapping is highlighted with designated background colors for the gene (exact/codon - black vs. exon/gene - orange)
+
+##### Fixed
+ - Bug in GWAS hits retrieval, [Issue #30](https://github.com/sigven/cpsr/issues/18)
+ - Custom VCF tags (as specified by user in configuration file) not shown in output TSV files
+
+##### Changed
+ - Removed DisGeNET annotations from output (associations from Open Targets Platform serve same purpose)
+ - Renamed report section __Genomic Biomarkers__ to __Variant Biomarkers__
+ - Option `--incidental_findings` changed back to `--secondary_findings` - recommended term to use according to ACMG
+ - Removed _MOD (mechanism-of-disease)_ from TSV output file
+
 #### 0.6.0rc - September 24th 2020
 
 - Data updates: ClinVar, GWAS catalog, GENCODE, CIViC, CancerMine, UniProt KB, dbNSFP, Pfam, KEGG, Open Targets Platform, Genomics England PanelApp
