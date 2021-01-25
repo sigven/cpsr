@@ -111,7 +111,9 @@ The cancer predisposition report can show variants found in a number of well-kno
 
 ### Example report
 
-* [Cancer predisposition genome report](http://insilico.hpc.uio.no/pcgr/example_reports/cpsr/0.6.1/SAMPLE-001.cpsr.grch37.html)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4309659.svg)](https://doi.org/10.5281/zenodo.4309659)
+
+<!--* [Cancer predisposition genome report](http://insilico.hpc.uio.no/pcgr/example_reports/cpsr/0.6.1/SAMPLE-001.cpsr.grch37.html)-->
 
 ### Annotation resources included in CPSR - 0.6.1
 
