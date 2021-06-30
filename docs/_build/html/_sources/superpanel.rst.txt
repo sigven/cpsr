@@ -35,7 +35,8 @@ also with mode of inheritance and literature support to sigven AT
 ifi.uio.no, so we can include them in Panel 0.
 
 `Download the complete set of CPSR superpanel genes, grch37/grch38
-versions (xlsx) <cpsr_superpanel_0.6.2.xlsx>`__
+versions
+(xlsx) <https://github.com/sigven/cpsr/raw/master/cpsr_superpanel_0.6.2.xlsx>`__
 
 +---+-------------+---+---+---+---+---------------+-------+-----------------------+
 | n | gene_link   | e | e | m | m | gene_name     | s     | ph                    |
