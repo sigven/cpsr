@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>About &mdash; Cancer Predisposition Sequencing Reporter 0.6.1 documentation</title>
+  <title>About &mdash; Cancer Predisposition Sequencing Reporter 0.6.2 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                0.6.1
+                0.6.2
               </div>
             
           
@@ -93,12 +93,14 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#example-report">Example report</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#citation">Citation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#docker-based-technology">Docker-based technology</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#contact">Contact</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="annotation_resources.html">CPSR annotation resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="superpanel.html">CPSR superpanel (v3.0)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="input.html">Input</a></li>
 <li class="toctree-l1"><a class="reference internal" href="output.html">Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="variant_classification.html">Variant classification (ACMG/AMP)</a></li>
@@ -203,7 +205,7 @@ five-level tier scheme in ClinVar (Pathogenic to Benign)</p></li>
 <li><p><strong>Non-ClinVar variants</strong> - classified by CPSR through ACMG criteria
 (variant frequency levels and functional effects) into to a
 five-level tier scheme (Pathogenic to Benign)</p></li>
-<li><p><strong>Variant biomarkers</strong> - cancer predisposition variants with reported
+<li><p><strong>Biomarkers</strong> - cancer predisposition variants with reported
 implications for prognosis, diagnosis or therapeutic regimens</p></li>
 <li><p><strong>Secondary findings (optional)</strong> - pathogenic ClinVar variants in
 the <a class="reference external" href="https://www.ncbi.nlm.nih.gov/clinvar/docs/acmg/">ACMG recommended list for reporting of secondary
@@ -236,9 +238,9 @@ well-known cancer predisposition genes, and the specific set of genes
 can be customized by the user by choosing any of the following <strong>virtual
 gene panels (0 - 42)</strong>:</p>
 <ul>
-<li><p><strong>Panel 0 (default)</strong> is a comprehensive, research-based gene panel
-assembled through known sources on cancer predisposition:</p>
-<ul class="simple">
+<li><p><strong>Panel 0</strong> is a comprehensive, research-based gene panel assembled
+through known sources on cancer predisposition:</p>
+<ul>
 <li><p>A list of 152 genes that were curated and established within
 TCGA’s pan-cancer study (<a class="reference external" href="https://www.ncbi.nlm.nih.gov/pubmed/29625052">Huang et al., Cell,
 2018</a>)</p></li>
@@ -248,13 +250,16 @@ v91</a>,</p></li>
 <li><p>A list of 148 protein-coding genes established by experts within
 the Norwegian Cancer Genomics Consortium
 (<a class="reference external" href="http://cancergenomics.no">http://cancergenomics.no</a>)</p></li>
-<li><p>Additional genes deemed relevant for cancer predisposition
-(contributed by the CPSR user community)</p></li>
+<li><p>Additional genes (&gt; 100) deemed relevant for cancer predisposition
+- as contributed by the CPSR user community</p>
+<p>In total, the combination of the sources above gives a
+non-redundant set of <strong>n = 433 genes</strong> of relevance for cancer
+predisposition - <a class="reference external" href="superpanel.html">CPSR superpanel set, v3.0</a></p>
+</li>
 </ul>
-<p>The combination of the above sources resulted in a non-redundant set
-of <a class="reference external" href="https://github.com/sigven/cpsr/blob/master/predisposition.md">216 protein-coding
-genes</a>
-which carry variants that may predispose to tumor development.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 </li>
 <li><p><strong>Panels 1 - 42</strong> are panels for inherited cancer syndromes and
 cancer predisposition assembled within the <a class="reference external" href="https://panelapp.genomicsengland.co.uk/">Genomics England
@@ -353,9 +358,19 @@ susceptibility</a></p></li>
 <div class="section" id="example-report">
 <h2>Example report<a class="headerlink" href="#example-report" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p><a class="reference external" href="http://insilico.hpc.uio.no/pcgr/example_reports/cpsr/0.6.0rc/SAMPLE-001.cpsr.grch37.html">Cancer predisposition genome
+<li><p><a class="reference external" href="http://insilico.hpc.uio.no/pcgr/example_reports/cpsr/0.6.2/SAMPLE-001.cpsr.grch37.html">Cancer predisposition genome
 report</a></p></li>
 </ul>
+</div>
+<div class="section" id="citation">
+<h2>Citation<a class="headerlink" href="#citation" title="Permalink to this headline">¶</a></h2>
+<p><strong>IMPORTANT</strong>: If you use CPSR, please cite the following bioRxiv
+preprint:</p>
+<p>Sigve Nakken, Vladislav Saveliev, Oliver Hofmann, Pål Møller, Ola
+Myklebost, and Eivind Hovig. <strong>Cancer Predisposition Sequencing
+Reporter: a flexible variant report engine for high-throughput germline
+screening in cancer</strong> (2020). <em>bioRxiv</em>.
+doi:<a class="reference external" href="https://doi.org/10.1101/846089">10.1101/846089</a></p>
 </div>
 <div class="section" id="docker-based-technology">
 <h2>Docker-based technology<a class="headerlink" href="#docker-based-technology" title="Permalink to this headline">¶</a></h2>
@@ -394,7 +409,7 @@ bundle</a>.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018-2020, Sigve Nakken
+        &copy; Copyright 2018-2021, Sigve Nakken
 
     </p>
   </div>

@@ -9,6 +9,7 @@ Welcome to Cancer Predisposition Sequencing Reporter's documentation!
    about
    getting_started
    annotation_resources
+   superpanel
    input
    output
    variant_classification

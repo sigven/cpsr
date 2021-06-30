@@ -6,7 +6,6 @@ The *Cancer Predisposition Sequencing Reporter (CPSR)* is a computational workfl
 
 *CPSR* accepts a query file with raw germline variant calls encoded in the [VCF](https://samtools.github.io/hts-specs/VCFv4.2.pdf) format (i.e. analyzing SNVs/InDels). Furthermore, through the use several different _virtual cancer predisposition gene panels_ harvested from the [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk/), the user can flexibly put a restriction on which genes and findings are displayed in the cancer predisposition report.
 
-
 Snapshots of sections in the cancer predisposition genome report:
 
 ![CPSR views](cpsr_views.png)
@@ -16,7 +15,7 @@ The software performs extensive variant annotation on the selected geneset and p
 
 * __ClinVar variants__ - pre-classified variants according to a five-level tier scheme in ClinVar (Pathogenic to Benign)
 * __Non-ClinVar variants__ - classified by CPSR through ACMG criteria (variant frequency levels and functional effects) into to a five-level tier scheme (Pathogenic to Benign)
-* __Variant biomarkers__ - cancer predisposition variants with reported implications for prognosis, diagnosis or therapeutic regimens
+* __Biomarkers__ - cancer predisposition variants with reported implications for prognosis, diagnosis or therapeutic regimens
 * __Secondary findings (optional)__ - pathogenic ClinVar variants in the [ACMG recommended list for reporting of secondary findings](https://www.ncbi.nlm.nih.gov/clinvar/docs/acmg/)
 * __GWAS hits (optional)__ - variants overlapping with previously identified hits in genome-wide association studies (GWAS) of cancer phenotypes (i.e. low to moderate risk conferring alleles), using [NHGRI-EBI Catalog of published genome-wide association studies](https://www.ebi.ac.uk/gwas/) as the underlying source.
 
@@ -26,13 +25,17 @@ The variant sets can be interactively explored and filtered further through diff
 
 The cancer predisposition report can show variants found in a number of well-known cancer predisposition genes, and the specific set of genes can be customized by the user by choosing any of the following __virtual gene panels (0 - 42)__:
 
-  * **Panel 0 (default)** is a comprehensive, research-based gene panel assembled through known sources on cancer predisposition:
+  * **Panel 0** is a comprehensive, research-based gene panel assembled through known sources on cancer predisposition:
+
 	* A list of 152 genes that were curated and established within TCGA’s pan-cancer study ([Huang et al., *Cell*, 2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052))
 	* A list of 107 protein-coding genes that has been manually curated in COSMIC’s [Cancer Gene Census v91](https://cancer.sanger.ac.uk/census),
 	* A list of 148 protein-coding genes established by experts within the Norwegian Cancer Genomics Consortium (http://cancergenomics.no)
-	* Additional genes deemed relevant for cancer predisposition (contributed by the CPSR user community)
+	* Additional genes (> 100) deemed relevant for cancer predisposition - as contributed by the CPSR user community\
+	&nbsp;\
+	&nbsp;\
+	In total, the combination of the sources above gives a non-redundant set of **n = 433 genes** of relevance for cancer predisposition - [CPSR superpanel set, v3.0](superpanel.html)
 
-	The combination of the above sources resulted in a non-redundant set of [216 protein-coding genes](https://github.com/sigven/cpsr/blob/master/predisposition.md) which carry variants that may predispose to tumor development.
+	&nbsp;\
 
  * **Panels 1 - 42** are panels for inherited cancer syndromes and cancer predisposition assembled within the [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk/):
      * [1 = Adult solid tumours cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/245/)
@@ -80,7 +83,13 @@ The cancer predisposition report can show variants found in a number of well-kno
 
 ### Example report
 
-* [Cancer predisposition genome report](http://insilico.hpc.uio.no/pcgr/example_reports/cpsr/0.6.0rc/SAMPLE-001.cpsr.grch37.html)
+* [Cancer predisposition genome report](http://insilico.hpc.uio.no/pcgr/example_reports/cpsr/0.6.2/SAMPLE-001.cpsr.grch37.html)
+
+### Citation
+
+**IMPORTANT**: If you use CPSR, please cite the following bioRxiv preprint:
+
+Sigve Nakken, Vladislav Saveliev, Oliver Hofmann, Pål Møller, Ola Myklebost, and Eivind Hovig. __Cancer Predisposition Sequencing Reporter: a flexible variant report engine for high-throughput germline screening in cancer__ (2020). _bioRxiv_. doi:[10.1101/846089](https://doi.org/10.1101/846089)
 
 ### Docker-based technology
 

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>CHANGELOG &mdash; Cancer Predisposition Sequencing Reporter 0.6.1 documentation</title>
+  <title>CHANGELOG &mdash; Cancer Predisposition Sequencing Reporter 0.6.2 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.6.1
+                0.6.2
               </div>
             
           
@@ -89,34 +89,42 @@
 <li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="annotation_resources.html">CPSR annotation resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="superpanel.html">CPSR superpanel (v3.0)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="input.html">Input</a></li>
 <li class="toctree-l1"><a class="reference internal" href="output.html">Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="variant_classification.html">Variant classification (ACMG/AMP)</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">CHANGELOG</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#november-30th-2020">0.6.1 - November 30th 2020</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#june-30th-2021">0.6.2 - June 30th 2021</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#changed">Changed</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#added">Added</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#fixed">Fixed</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#changed">Changed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#removed">Removed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#november-30th-2020">0.6.1 - November 30th 2020</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#added-1">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fixed-1">Fixed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#changed-1">Changed</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#rc-september-24th-2020">0.6.0rc - September 24th 2020</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#fixed-1">Fixed</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#changed-1">Changed</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#added-1">Added</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#november-18th-2019">0.5.2 - November 18th 2019</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#fixed-2">Fixed</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#changed-2">Changed</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#added-2">Added</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#november-18th-2019">0.5.2 - November 18th 2019</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#changed-3">Changed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#added-3">Added</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#october-14th-2019">0.5.1 - October 14th 2019</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#fixed-2">Fixed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fixed-3">Fixed</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#september-23rd-2019">0.5.0 - September 23rd 2019</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#fixed-3">Fixed</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#added-3">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fixed-4">Fixed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#added-4">Added</a></li>
 </ul>
 </li>
 </ul>
@@ -187,10 +195,83 @@
             
   <div class="section" id="changelog">
 <h1>CHANGELOG<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="november-30th-2020">
-<h2>0.6.1 - November 30th 2020<a class="headerlink" href="#november-30th-2020" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="june-30th-2021">
+<h2>0.6.2 - June 30th 2021<a class="headerlink" href="#june-30th-2021" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Data updates: ClinVar, PanelApp, GWAS catalog, CIViC, CancerMine,
+dbNSFP, KEGG, Disease Ontology/EFO, Open Targets Platform, UniProt
+KB, GENCODE</p></li>
+<li><p>Software upgrades: R v4.1, Bioconductor v3.13, VEP (104) ++</p></li>
+<li><p>Improved GWAS track for cancer phenotypes</p></li>
+</ul>
+<div class="section" id="changed">
+<h3>Changed<a class="headerlink" href="#changed" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>TOML-based configuration for CPSR is abandoned, all options to CPSR
+are now configured through the command-line parameters</p></li>
+</ul>
+</div>
 <div class="section" id="added">
 <h3>Added<a class="headerlink" href="#added" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Command-line options</p>
+<ul>
+<li><p>Previously set in TOML file</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">--pop_gnomad</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--report_theme</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--preserved_info_tags</span></code> (previously <code class="docutils literal notranslate"><span class="pre">custom_tags</span></code> (TOML))</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--custom_list_name</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--gwas_p_value</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--vcfanno_n_proc</span></code> (previously <code class="docutils literal notranslate"><span class="pre">n_vcfanno_proc</span> <span class="pre">(TOML)</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--vep_n_forks</span></code> (previously <code class="docutils literal notranslate"><span class="pre">n_vep_forks</span> <span class="pre">(TOML)</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--vep_pick_order</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--vep_no_intergenic</span></code> (previously
+<code class="docutils literal notranslate"><span class="pre">vep_skip_intergenic</span> <span class="pre">(TOML)</span></code>)</p></li>
+</ul>
+</li>
+<li><p>New options</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">--report_nonfloating_toc</span></code> (<strong>NEW</strong>) - add the TOC at the top
+of the HTML report, not floating at the left of the document</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--report_table_display</span></code> (<strong>NEW</strong>) - choose level of
+comprehensiveness in interactive data tables (full versus light
+(default))</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Improved support for noncoding variant interpretation, primarily in
+the context of variants of uncertain significance (VUS). Annotations
+will show variants that disrupt/create microRNA target sites (dbMTS),
+and variants that overlap transcription factor binding sites
+(critical and non-critical positions). Genomic conservation scores
+(GERP) are also provided.</p></li>
+<li><p>Approx. 100 protein-coding genes have been appended to the <a class="reference external" href="superpanel.html">CPSR
+superpanel (panel 0)</a></p></li>
+</ul>
+</div>
+<div class="section" id="fixed">
+<h3>Fixed<a class="headerlink" href="#fixed" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Code typo (<a class="reference external" href="https://github.com/sigven/cpsr/issues/33">issue #33</a>)</p></li>
+</ul>
+</div>
+<div class="section" id="removed">
+<h3>Removed<a class="headerlink" href="#removed" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Command-line Options</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">--conf</span></code> - configuration file</p></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="november-30th-2020">
+<h2>0.6.1 - November 30th 2020<a class="headerlink" href="#november-30th-2020" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="added-1">
+<span id="id1"></span><h3>Added<a class="headerlink" href="#added-1" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Increased number of genes in panel 0: All genes in 42 virtual panels
 related to cancer conditions in Genomics England PanelApp now also
@@ -209,8 +290,8 @@ biomarker mapping is highlighted with designated background colors
 for the gene (exact/codon - black vs. exon/gene - orange)</p></li>
 </ul>
 </div>
-<div class="section" id="fixed">
-<h3>Fixed<a class="headerlink" href="#fixed" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="fixed-1">
+<span id="id2"></span><h3>Fixed<a class="headerlink" href="#fixed-1" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Bug in GWAS hits retrieval, <a class="reference external" href="https://github.com/sigven/cpsr/issues/18">Issue
 #30</a></p></li>
@@ -218,8 +299,8 @@ for the gene (exact/codon - black vs. exon/gene - orange)</p></li>
 shown in output TSV files</p></li>
 </ul>
 </div>
-<div class="section" id="changed">
-<h3>Changed<a class="headerlink" href="#changed" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="changed-1">
+<span id="id3"></span><h3>Changed<a class="headerlink" href="#changed-1" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Removed DisGeNET annotations from output (associations from Open
 Targets Platform serve same purpose)</p></li>
@@ -239,14 +320,14 @@ UniProt KB, dbNSFP, Pfam, KEGG, Open Targets Platform, Genomics
 England PanelApp</p></li>
 <li><p>Software updates: VEP 101</p></li>
 </ul>
-<div class="section" id="fixed-1">
-<span id="id1"></span><h3>Fixed<a class="headerlink" href="#fixed-1" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="fixed-2">
+<span id="id4"></span><h3>Fixed<a class="headerlink" href="#fixed-2" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Duplicated entries in incidental findings</p></li>
 </ul>
 </div>
-<div class="section" id="changed-1">
-<span id="id2"></span><h3>Changed<a class="headerlink" href="#changed-1" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="changed-2">
+<span id="id5"></span><h3>Changed<a class="headerlink" href="#changed-2" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>All arguments to <code class="docutils literal notranslate"><span class="pre">cpsr.py</span></code> are now non-positional</p></li>
 <li><p>Arguments to <code class="docutils literal notranslate"><span class="pre">cpsr.py</span></code> are divided into two groups: <em>required</em> and
@@ -274,8 +355,8 @@ on a combination of CancerMine citation count and presence in Network
 of Cancer Genes</p></li>
 </ul>
 </div>
-<div class="section" id="added-1">
-<span id="id3"></span><h3>Added<a class="headerlink" href="#added-1" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="added-2">
+<span id="id6"></span><h3>Added<a class="headerlink" href="#added-2" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Missing ACMG criterion for classification of silent and intronic
 variants outside of splice regions (<em>ACMG_BP7</em>)</p></li>
@@ -294,8 +375,8 @@ from panel 0 provided as a single-column text file with argument
 </div>
 <div class="section" id="november-18th-2019">
 <h2>0.5.2 - November 18th 2019<a class="headerlink" href="#november-18th-2019" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="changed-2">
-<span id="id4"></span><h3>Changed<a class="headerlink" href="#changed-2" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="changed-3">
+<span id="id7"></span><h3>Changed<a class="headerlink" href="#changed-3" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Definition of pathogenic range (wrt to variant frequency) takes into
 account population- and position-specific allele numbers - no longer
@@ -304,8 +385,8 @@ defined only by allele counts (i.e. <em>AC</em>) but by <em>AC</em> and <em>AN<
 argument (<code class="docutils literal notranslate"><span class="pre">--panel_id</span></code>) in <code class="docutils literal notranslate"><span class="pre">cpsr.py</span></code></p></li>
 </ul>
 </div>
-<div class="section" id="added-2">
-<span id="id5"></span><h3>Added<a class="headerlink" href="#added-2" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="added-3">
+<span id="id8"></span><h3>Added<a class="headerlink" href="#added-3" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Ability to analyze custom panels, provided through option
 <code class="docutils literal notranslate"><span class="pre">--custom_panel</span></code>. Needs to be defined as BED file with four
@@ -315,8 +396,8 @@ columns, i.e. chromosome, start, stop, genesymbol</p></li>
 </div>
 <div class="section" id="october-14th-2019">
 <h2>0.5.1 - October 14th 2019<a class="headerlink" href="#october-14th-2019" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="fixed-2">
-<span id="id6"></span><h3>Fixed<a class="headerlink" href="#fixed-2" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="fixed-3">
+<span id="id9"></span><h3>Fixed<a class="headerlink" href="#fixed-3" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Bug in <code class="docutils literal notranslate"><span class="pre">cpsr_validate_input.py</span></code>, <a class="reference external" href="https://github.com/sigven/cpsr/issues/18">GitHub
 Issue</a></p></li>
@@ -327,8 +408,8 @@ omitting report generation</p></li>
 </div>
 <div class="section" id="september-23rd-2019">
 <h2>0.5.0 - September 23rd 2019<a class="headerlink" href="#september-23rd-2019" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="fixed-3">
-<span id="id7"></span><h3>Fixed<a class="headerlink" href="#fixed-3" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="fixed-4">
+<span id="id10"></span><h3>Fixed<a class="headerlink" href="#fixed-4" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Bug in implementation of ACMG criteria; genes without a known
 loss-of-function mechanism were handled inappropriately</p></li>
@@ -343,8 +424,8 @@ consequences in multiple, distinct cancer predisposition genes</p></li>
 the report, no longer excluded</p></li>
 </ul>
 </div>
-<div class="section" id="added-3">
-<span id="id8"></span><h3>Added<a class="headerlink" href="#added-3" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="added-4">
+<span id="id11"></span><h3>Added<a class="headerlink" href="#added-4" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Section on <em>genomic biomarkers</em>; indicating which variants in the
 query VCF that overlaps with existing germline biomarkers (CIViC)</p></li>
@@ -371,7 +452,7 @@ query VCF that overlaps with existing germline biomarkers (CIViC)</p></li>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018-2020, Sigve Nakken
+        &copy; Copyright 2018-2021, Sigve Nakken
 
     </p>
   </div>

@@ -4,16 +4,16 @@ CPSR annotation resources
 Basic variant consequence annotation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
--  `VEP v101 <http://www.ensembl.org/info/docs/tools/vep/index.html>`__
+-  `VEP v104 <http://www.ensembl.org/info/docs/tools/vep/index.html>`__
    - Variant Effect Predictor (`GENCODE
-   v35 <https://www.gencodegenes.org/human/>`__ as gene reference
+   v38 <https://www.gencodegenes.org/human/>`__ as gene reference
    database (v19 for grch37))
 
 *Insilico* predictions of effect of coding variants
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 -  `dBNSFP <https://sites.google.com/site/jpopgen/dbNSFP>`__ - database
-   of non-synonymous functional predictions (v4.1, June 2020)
+   of non-synonymous functional predictions (v4.2, March 2021)
 
 Variant frequency databases
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -21,42 +21,41 @@ Variant frequency databases
 -  `gnomAD <http://exac.broadinstitute.org/>`__ - germline variant
    frequencies exome-wide (r2.1, October 2018)
 -  `dbSNP <http://www.ncbi.nlm.nih.gov/SNP/>`__ - database of short
-   genetic variants (build 153)
+   genetic variants (build 154)
 -  `Cancer Hotspots <http://cancerhotspots.org>`__ - a resource for
-   statistically significant mutations in cancer (2017)
+   statistically significant mutations in cancer (v2, 2017)
 
 Variant databases of clinical utility
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 -  `ClinVar <http://www.ncbi.nlm.nih.gov/clinvar/>`__ - database of
-   clinically related variants (November 2020)
+   clinically related variants (June 2021)
 -  `CIViC <https://civicdb.org>`__ - clinical interpretations of
-   variants in cancer (November 18th 2020)
+   variants in cancer (June 15th 2021)
 
 Protein domains/functional features
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 -  `UniProt/SwissProt KnowledgeBase <http://www.uniprot.org>`__ -
-   resource on protein sequence and functional information (2020_05,
-   October 2020)
+   resource on protein sequence and functional information (2021_03,
+   June 2021)
 -  `Pfam <http://pfam.xfam.org>`__ - database of protein families and
-   domains (v33, May 2020)
+   domains (v34.0, March 2021)
 
 Cancer gene knowledge bases
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 -  `CancerMine <http://bionlp.bcgsc.ca/cancermine/>`__ -
    Literature-mined database of tumor suppressor genes/proto-oncogenes
-   (v30, November 2020)
+   (v36, June 2021)
 -  `Genomics England
    PanelApp <https://panelapp.genomicsengland.co.uk>`__ - cancer
-   phenotype panels as of November 23rd 2020
+   phenotype panels as of June 20th 2021
 
 Phenotype ontologies
 ~~~~~~~~~~~~~~~~~~~~
 
 -  `UMLS/MedGen <https://www.ncbi.nlm.nih.gov/medgen/>`__
--  `Disease Ontology <https://disease-ontology.org/>`__ - November 11th,
-   2020
+-  `Disease Ontology <https://disease-ontology.org/>`__ - June 9th, 2021
 -  `Experimental Factor Ontology <https://github.com/EBISPOT/efo>`__ -
-   v3.24
+   v3.30.0

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Input &mdash; Cancer Predisposition Sequencing Reporter 0.6.1 documentation</title>
+  <title>Input &mdash; Cancer Predisposition Sequencing Reporter 0.6.2 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Output" href="output.html" />
-    <link rel="prev" title="CPSR annotation resources" href="annotation_resources.html" /> 
+    <link rel="prev" title="CPSR superpanel (v3.0)" href="superpanel.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                0.6.1
+                0.6.2
               </div>
             
           
@@ -90,9 +90,9 @@
 <li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="annotation_resources.html">CPSR annotation resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="superpanel.html">CPSR superpanel (v3.0)</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Input</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#vcf">VCF</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#cpsr-configuration-file">CPSR configuration file</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="output.html">Output</a></li>
@@ -187,56 +187,6 @@ other means, but rather a VCF file that comes directly from variant
 calling. If not, there are likely to be INFO tags in the query VCF file
 that coincide with those produced by CPSR.</p>
 </div>
-<div class="section" id="cpsr-configuration-file">
-<h2>CPSR configuration file<a class="headerlink" href="#cpsr-configuration-file" title="Permalink to this headline">¶</a></h2>
-<p>The cancer predisposition sequencing report can be flexibly configured
-in a TOML-formatted configuration file. The default TOML configuration
-file, are shown below:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># CPSR configuration options (TOML).</span>
-
-<span class="p">[</span><span class="n">popgen</span><span class="p">]</span>
-<span class="c1">## choose population source in gnomAD (non-cancer subset for use as control), defaults to the global set</span>
-
-<span class="c1">## For gnomaAD, this can by any of the following values (three-letter codes):</span>
-<span class="c1">## &quot;afr&quot; - African/American (12,020 individuals (7,652 WES / 4,368 WGS))</span>
-<span class="c1">## &quot;amr&quot; - Admixed American (17,210 individuals (16,791 WES / 419 WGS))</span>
-<span class="c1">## &quot;eas&quot; - East Asian (9,435 individuals (8,624 WES / 811 WGS))</span>
-<span class="c1">## &quot;sas&quot; - Sout Asian (15,391 individuals (15,391 WES / 0 WGS))</span>
-<span class="c1">## &quot;nfe&quot; - Non-Finnish European (63,369 individuals (55,860 WES / 7,509 WGS))</span>
-<span class="c1">## &quot;fin&quot; - Finnish (12,897 individuals (11,150 WES / 1,747 WGS))</span>
-<span class="c1">## &quot;global&quot; - All populations (138,632 individuals (123,136 WES / 15,496 WGS))</span>
-<span class="n">pop_gnomad</span> <span class="o">=</span> <span class="s2">&quot;global&quot;</span>
-
-<span class="p">[</span><span class="n">visual</span><span class="p">]</span>
-<span class="c1"># Choose visual theme of report, any of: &quot;default&quot;, &quot;cerulean&quot;, &quot;journal&quot;, &quot;flatly&quot;, &quot;readable&quot;, &quot;spacelab&quot;, &quot;united&quot;, &quot;cosmo&quot;, &quot;lumen&quot;, &quot;paper&quot;, &quot;sandstone&quot;, &quot;simplex&quot;, or &quot;yeti&quot; (https://bootswatch.com/)</span>
-<span class="n">report_theme</span> <span class="o">=</span> <span class="s2">&quot;default&quot;</span>
-
-<span class="p">[</span><span class="n">custom_tags</span><span class="p">]</span>
-<span class="c1">## list VCF info tags that should be present in JSON output</span>
-<span class="c1">## tags should be comma separated, i.e. custom_tags = &quot;GATK_FILTER,VARSCAN_FILTER&quot;</span>
-<span class="n">custom_tags</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-
-<span class="p">[</span><span class="n">custom_panel</span><span class="p">]</span>
-<span class="c1">## edit metadata (name, version, url) of relevance for custom-provided gene panel (provided by option --custom_panel)</span>
-<span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Custom gene panel&quot;</span>
-<span class="n">version</span> <span class="o">=</span> <span class="s2">&quot;1.0&quot;</span>
-<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-
-<span class="p">[</span><span class="n">gwas</span><span class="p">]</span>
-<span class="c1">## Required p-value for reporting of GWAS hits</span>
-<span class="n">p_value_min</span> <span class="o">=</span> <span class="mf">5e-6</span>
-
-
-<span class="p">[</span><span class="n">other</span><span class="p">]</span>
-<span class="n">n_vcfanno_proc</span> <span class="o">=</span> <span class="mi">4</span>
-<span class="n">n_vep_forks</span> <span class="o">=</span> <span class="mi">4</span>
-<span class="n">vep_skip_intergenic</span> <span class="o">=</span> <span class="n">false</span>
-<span class="c1">## choice of how VEP chooses the primary transcript pr. gene</span>
-<span class="c1">## https://www.ensembl.org/info/docs/tools/vep/script/vep_other.html#pick_options</span>
-<span class="n">vep_pick_order</span> <span class="o">=</span> <span class="s2">&quot;canonical,appris,tsl,biotype,ccds,rank,length,mane&quot;</span>
-</pre></div>
-</div>
-</div>
 </div>
 
 
@@ -250,7 +200,7 @@ file, are shown below:</p>
         <a href="output.html" class="btn btn-neutral float-right" title="Output" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="annotation_resources.html" class="btn btn-neutral float-left" title="CPSR annotation resources" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="superpanel.html" class="btn btn-neutral float-left" title="CPSR superpanel (v3.0)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -259,7 +209,7 @@ file, are shown below:</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018-2020, Sigve Nakken
+        &copy; Copyright 2018-2021, Sigve Nakken
 
     </p>
   </div>

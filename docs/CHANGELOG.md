@@ -1,6 +1,42 @@
 
 ## CHANGELOG
 
+#### 0.6.2 - June 30th 2021
+
+* Data updates: ClinVar, PanelApp, GWAS catalog, CIViC, CancerMine, dbNSFP, KEGG, Disease Ontology/EFO, Open Targets Platform, UniProt KB, GENCODE
+* Software upgrades: R v4.1, Bioconductor v3.13, VEP (104) ++
+* Improved GWAS track for cancer phenotypes
+
+##### Changed
+* TOML-based configuration for CPSR is abandoned, all options to CPSR are now configured through the command-line parameters
+
+##### Added
+* Command-line options
+  * Previously set in TOML file
+	* `--pop_gnomad`
+	* `--report_theme`
+	* `--preserved_info_tags` (previously `custom_tags` (TOML))
+	* `--custom_list_name`
+	* `--gwas_p_value`
+	* `--vcfanno_n_proc` (previously `n_vcfanno_proc (TOML)`)
+	* `--vep_n_forks` (previously `n_vep_forks (TOML)`)
+	* `--vep_pick_order`
+	* `--vep_no_intergenic` (previously `vep_skip_intergenic (TOML)`)
+  * New options
+	* `--report_nonfloating_toc` (**NEW**) - add the TOC at the top of the HTML report, not floating at the left of the document
+	* `--report_table_display` (**NEW**) - choose level of comprehensiveness in interactive data tables (full versus light (default))
+
+* Improved support for noncoding variant interpretation, primarily in the context of variants of uncertain significance (VUS). Annotations will show variants that disrupt/create microRNA target sites (dbMTS), and variants that overlap transcription factor binding sites (critical and non-critical positions). Genomic conservation scores (GERP) are also provided.
+
+* Approx. 100 protein-coding genes have been appended to the [CPSR superpanel (panel 0)](superpanel.html)
+
+##### Fixed
+* Code typo ([issue #33](https://github.com/sigven/cpsr/issues/33))
+
+##### Removed
+* Command-line Options
+   * `--conf` - configuration file
+
 #### 0.6.1 - November 30th 2020
 
 ##### Added

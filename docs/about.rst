@@ -40,7 +40,7 @@ investigate:
 -  **Non-ClinVar variants** - classified by CPSR through ACMG criteria
    (variant frequency levels and functional effects) into to a
    five-level tier scheme (Pathogenic to Benign)
--  **Variant biomarkers** - cancer predisposition variants with reported
+-  **Biomarkers** - cancer predisposition variants with reported
    implications for prognosis, diagnosis or therapeutic regimens
 -  **Secondary findings (optional)** - pathogenic ClinVar variants in
    the `ACMG recommended list for reporting of secondary
@@ -75,8 +75,8 @@ well-known cancer predisposition genes, and the specific set of genes
 can be customized by the user by choosing any of the following **virtual
 gene panels (0 - 42)**:
 
--  **Panel 0 (default)** is a comprehensive, research-based gene panel
-   assembled through known sources on cancer predisposition:
+-  **Panel 0** is a comprehensive, research-based gene panel assembled
+   through known sources on cancer predisposition:
 
    -  A list of 152 genes that were curated and established within
       TCGA’s pan-cancer study (`Huang et al., Cell,
@@ -87,13 +87,15 @@ gene panels (0 - 42)**:
    -  A list of 148 protein-coding genes established by experts within
       the Norwegian Cancer Genomics Consortium
       (http://cancergenomics.no)
-   -  Additional genes deemed relevant for cancer predisposition
-      (contributed by the CPSR user community)
+   -  Additional genes (> 100) deemed relevant for cancer predisposition
+      - as contributed by the CPSR user community
+       
+       
+      In total, the combination of the sources above gives a
+      non-redundant set of **n = 433 genes** of relevance for cancer
+      predisposition - `CPSR superpanel set, v3.0 <superpanel.html>`__
 
-   The combination of the above sources resulted in a non-redundant set
-   of `216 protein-coding
-   genes <https://github.com/sigven/cpsr/blob/master/predisposition.md>`__
-   which carry variants that may predispose to tumor development.
+   |  
 
 -  **Panels 1 - 42** are panels for inherited cancer syndromes and
    cancer predisposition assembled within the `Genomics England
@@ -189,7 +191,19 @@ Example report
 ~~~~~~~~~~~~~~
 
 -  `Cancer predisposition genome
-   report <http://insilico.hpc.uio.no/pcgr/example_reports/cpsr/0.6.0rc/SAMPLE-001.cpsr.grch37.html>`__
+   report <http://insilico.hpc.uio.no/pcgr/example_reports/cpsr/0.6.2/SAMPLE-001.cpsr.grch37.html>`__
+
+Citation
+~~~~~~~~
+
+**IMPORTANT**: If you use CPSR, please cite the following bioRxiv
+preprint:
+
+Sigve Nakken, Vladislav Saveliev, Oliver Hofmann, Pål Møller, Ola
+Myklebost, and Eivind Hovig. **Cancer Predisposition Sequencing
+Reporter: a flexible variant report engine for high-throughput germline
+screening in cancer** (2020). *bioRxiv*.
+doi:`10.1101/846089 <https://doi.org/10.1101/846089>`__
 
 Docker-based technology
 ~~~~~~~~~~~~~~~~~~~~~~~

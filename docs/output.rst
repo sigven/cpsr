@@ -28,7 +28,7 @@ below:
       -  Number of variants in each of the five variant classification
          levels
 
-3. **Germline SNVs/InDels**
+3. **Variant classification**
 
    -  For all coding variants in the selected cancer predisposition
       geneset, interactive variant tables are shown for each level
@@ -40,7 +40,7 @@ below:
       -  Likely Benign
       -  Benign
 
-   -  Variant biomarkers
+   -  Biomarkers
 
       -  Reported clinical evidence items from
          `CIViC <https://civicdb.org>`__ that overlap with variants in
@@ -112,21 +112,31 @@ Example report
 ~~~~~~~~~~~~~~
 
 -  `Cancer predisposition genome report
-   report <http://insilico.hpc.uio.no/pcgr/example_reports/cpsr/0.6.1/SAMPLE-001.cpsr.grch37.html>`__
+   report <http://insilico.hpc.uio.no/pcgr/example_reports/cpsr/0.6.2/SAMPLE-001.cpsr.grch37.html>`__
 
 The HTML reports have been tested using the following browsers:
 
--  Safari (Version 14.0 (15610.1.28.1.9, 15610))
+-  Safari (Version 14.1.1 (16611.2.7.1.4))
 -  Mozilla Firefox (83.0)
--  Google Chrome (Version 87.0.4280.67 (Official Build) (x86_64))
+-  Google Chrome (Version 90.0.4430.2127 (Official Build) (x86_64))
 
 JSON
 ~~~~
 
-A JSON file that stores the HTML report content is provided. This file
-will easen the process of extracting particular parts of the report for
-further analysis. Presently, there is no detailed schema documented for
-the JSON structure.
+A JSON file (gzipped) that stores the HTML report content is provided.
+This file will easen the process of extracting particular parts of the
+report for further analysis.
+
+The JSON contains two main objects, *metadata* and *content*, where the
+former contains information about the settings, data versions, and the
+latter contains the various sections of the report.
+
+This file can be used as input to
+`PCGR <https://github.com/sigven/pcgr>`__, in order to populate a
+somatic genome report with germline findings.
+
+At present, there is no detailed schema documented for the JSON
+structure.
 
 Output files - germline SNVs/InDels
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -152,7 +162,13 @@ processing with the CPSR annotation pipeline:
 '''''''''''''''''''''''''''''
 
 -  CSQ - Complete consequence annotations from VEP. Format:
-   Allele|Consequence|IMPACT|SYMBOL|Gene|Feature_type|Feature|BIOTYPE|EXON|INTRON|HGVSc|HGVSp|cDNA_position|CDS_position|Protein_position|Amino_acids|Codons|Existing_variation|ALLELE_NUM|DISTANCE|STRAND|FLAGS|PICK|VARIANT_CLASS|SYMBOL_SOURCE|HGNC_ID|CANONICAL|MANE|TSL|APPRIS|CCDS|ENSP|SWISSPROT|TREMBL|UNIPARC|RefSeq|DOMAINS|HGVS_OFFSET|AF|AFR_AF|AMR_AF|EAS_AF|EUR_AF|SAS_AF|gnomAD_AF|gnomAD_AFR_AF|gnomAD_AMR_AF|gnomAD_ASJ_AF|gnomAD_EAS_AF|gnomAD_FIN_AF|gnomAD_NFE_AF|gnomAD_OTH_AF|gnomAD_SAS_AF|CLIN_SIG|SOMATIC|PHENO|CHECK_REF\|
+   Allele|Consequence|IMPACT|SYMBOL|Gene|Feature_type|Feature|BIOTYPE|EXON|INTRON|HGVSc
+   \|HGVSp|cDNA_position|CDS_position|Protein_position|Amino_acids|Codons|Existing_variation\|
+   ALLELE_NUM|DISTANCE|STRAND|FLAGS|PICK|VARIANT_CLASS|SYMBOL_SOURCE|HGNC_ID\|
+   CANONICAL|MANE|TSL|APPRIS|CCDS|ENSP|SWISSPROT|TREMBL|UNIPARC|RefSeq|DOMAINS\|
+   HGVS_OFFSET|AF|AFR_AF|AMR_AF|EAS_AF|EUR_AF|SAS_AF|gnomAD_AF|gnomAD_AFR_AF\|
+   gnomAD_AMR_AF|gnomAD_ASJ_AF|gnomAD_EAS_AF|gnomAD_FIN_AF|gnomAD_NFE_AF\|
+   gnomAD_OTH_AF|gnomAD_SAS_AF|CLIN_SIG|SOMATIC|PHENO|CHECK_REF\|
    MOTIF_NAME|MOTIF_POS|HIGH_INF_POS|MOTIF_SCORE_CHANGE|TRANSCRIPTION_FACTORS|NearestExonJB
 -  Consequence - Impact modifier for the consequence type (picked by
    VEP’s –flag_pick_allele option)
@@ -285,6 +301,9 @@ processing with the CPSR annotation pipeline:
    stop_gained/stop_lost
 -  SPLICE_DONOR_RELEVANT - Logical indicating if variant is located at a
    particular location near the splice donor site (+3A/G, +4A or +5G)
+-  REGULATORY_ANNOTATION - Comma-separated list of all variant
+   annotations of Feature_type RegulatoryFeature and MotifFeature.
+   Format: \|\|\|\|\|\|\|\|
 
 *Gene information*
 ''''''''''''''''''
@@ -293,12 +312,17 @@ processing with the CPSR annotation pipeline:
    identifier
 -  APPRIS - Principal isoform flags according to the `APPRIS principal
    isoform database <http://appris.bioinfo.cnio.es/#/downloads>`__
+-  MANE_SELECT - Indicating if the transcript is the MANE Select or MANE
+   Plus Clinical transcript for the gene (picked by VEP’s
+   –flag_pick_allele_gene option)
 -  UNIPROT_ID - `UniProt <http://www.uniprot.org>`__ identifier
 -  UNIPROT_ACC - `UniProt <http://www.uniprot.org>`__ accession(s)
 -  ENSEMBL_GENE_ID - Ensembl gene identifier for VEP’s picked transcript
    (*ENSGXXXXXXX*)
 -  ENSEMBL_TRANSCRIPT_ID - Ensembl transcript identifier for VEP’s
    picked transcript (*ENSTXXXXXX*)
+-  ENSEMBL_PROTEIN_ID - Ensembl corresponding protein identifier for
+   VEP’s picked transcript
 -  REFSEQ_MRNA - Corresponding RefSeq transcript(s) identifier for VEP’s
    picked transcript (*NM_XXXXX*)
 -  CORUM_ID - Associated protein complexes (identifiers) from
@@ -382,77 +406,70 @@ processing with the CPSR annotation pipeline:
 -  EFFECT_PREDICTIONS - All predictions of effect of variant on protein
    function and pre-mRNA splicing from `database of non-synonymous
    functional predictions - dbNSFP
-   v4.1 <https://sites.google.com/site/jpopgen/dbNSFP>`__. Predicted
+   v4.2 <https://sites.google.com/site/jpopgen/dbNSFP>`__. Predicted
    effects are provided by different sources/algorithms (separated by
-   ‘&’):
+   ‘&’), T = Tolerated, N = Neutral, D = Damaging:
 
    1.  `SIFT <https://sift.bii.a-star.edu.sg/>`__
-   2.  `SIFT4G <https://sift.bii.a-star.edu.sg/sift4g/>`__
-   3.  `LRT <http://www.genetics.wustl.edu/jflab/lrt_query.html>`__
-       (2009)
-   4.  `MutationTaster <http://www.mutationtaster.org/>`__ (data release
+   2.  `MutationTaster <http://www.mutationtaster.org/>`__ (data release
        Nov 2015)
-   5.  `MutationAssessor <http://mutationassessor.org/>`__ (release 3)
-   6.  `FATHMM <http://fathmm.biocompute.org.uk>`__ (v2.3)
-   7.  `PROVEAN <http://provean.jcvi.org/index.php>`__ (v1.1 Jan 2015)
-   8.  `FATHMM_MKL <http://fathmm.biocompute.org.uk/fathmmMKL.htm>`__
-   9.  `PRIMATEAI <https://www.nature.com/articles/s41588-018-0167-z>`__
-   10. `DEOGEN2 <https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5570203/>`__
-   11. `DBNSFP_CONSENSUS_SVM <https://www.ncbi.nlm.nih.gov/pubmed/25552646>`__
-       (Ensembl/consensus prediction, based on support vector machines)
-   12. `DBNSFP_CONSENSUS_LR <https://www.ncbi.nlm.nih.gov/pubmed/25552646>`__
-       (Ensembl/consensus prediction, logistic regression based)
-   13. `SPLICE_SITE_EFFECT_ADA <http://nar.oxfordjournals.org/content/42/22/13534>`__
+   3.  `MutationAssessor <http://mutationassessor.org/>`__ (release 3)
+   4.  `FATHMM <http://fathmm.biocompute.org.uk>`__ (v2.3)
+   5.  `PROVEAN <http://provean.jcvi.org/index.php>`__ (v1.1 Jan 2015)
+   6.  `FATHMM_MKL <http://fathmm.biocompute.org.uk/fathmmMKL.htm>`__
+   7.  `PRIMATEAI <https://www.nature.com/articles/s41588-018-0167-z>`__
+   8.  `DEOGEN2 <https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5570203/>`__
+   9.  `DBNSFP_CONSENSUS_RNN <https://www.biorxiv.org/content/10.1101/2021.04.09.438706v1>`__
+       (Ensembl/consensus prediction, based on deep learning)
+   10. `SPLICE_SITE_EFFECT_ADA <http://nar.oxfordjournals.org/content/42/22/13534>`__
        (Ensembl/consensus prediction of splice-altering SNVs, based on
        adaptive boosting)
-   14. `SPLICE_SITE_EFFECT_RF <http://nar.oxfordjournals.org/content/42/22/13534>`__
+   11. `SPLICE_SITE_EFFECT_RF <http://nar.oxfordjournals.org/content/42/22/13534>`__
        (Ensembl/consensus prediction of splice-altering SNVs, based on
        random forest)
-   15. `M-CAP <http://bejerano.stanford.edu/MCAP>`__
-   16. `MutPred <http://mutpred.mutdb.org>`__
-   17. `GERP <http://mendel.stanford.edu/SidowLab/downloads/gerp/>`__
-   18. `BayesDel <https://doi.org/10.1002/humu.23158>`__
-   19. `LIST-S2 <https://doi.org/10.1093/nar/gkaa288>`__
-   20. `ALoFT <https://www.nature.com/articles/s41467-017-00443-5>`__
+   12. `M-CAP <http://bejerano.stanford.edu/MCAP>`__
+   13. `MutPred <http://mutpred.mutdb.org>`__
+   14. `GERP <http://mendel.stanford.edu/SidowLab/downloads/gerp/>`__
+   15. `BayesDel <https://doi.org/10.1002/humu.23158>`__
+   16. `LIST-S2 <https://doi.org/10.1093/nar/gkaa288>`__
+   17. `ALoFT <https://www.nature.com/articles/s41467-017-00443-5>`__
 
--  BAYESDEL_ADDAF_DBNSFP - predicted effect from BayesDel (dbNSFP)
+-  DBNSFP_BAYESDEL_ADDAF - predicted effect from BayesDel (dbNSFP)
 
--  LIST_S2_DBNSFP - predicted effect from LIST-S2 (dbNSFP)
+-  DBNSFP_LIST_S2 - predicted effect from LIST-S2 (dbNSFP)
 
--  SIFT_DBNSFP - predicted effect from SIFT (dbNSFP)
+-  DBNSFP_SIFT - predicted effect from SIFT (dbNSFP)
 
--  SIFT4G_DBNSFP - predicted effect from SIFT4G (dbNSFP)
+-  DBNSFP_PROVEAN - predicted effect from PROVEAN (dbNSFP)
 
--  PROVEAN_DBNSFP - predicted effect from PROVEAN (dbNSFP)
+-  DBNSFP_MUTATIONTASTER - predicted effect from MUTATIONTASTER (dbNSFP)
 
--  MUTATIONTASTER_DBNSFP - predicted effect from MUTATIONTASTER (dbNSFP)
-
--  MUTATIONASSESSOR_DBNSFP - predicted effect from MUTATIONASSESSOR
+-  DBNSFP_MUTATIONASSESSOR - predicted effect from MUTATIONASSESSOR
    (dbNSFP)
 
--  M_CAP_DBNSFP - predicted effect from M-CAP (dbNSFP)
+-  DBNSFP_M_CAP - predicted effect from M-CAP (dbNSFP)
 
--  ALOFT_DBNSFP - predicted effect from ALoFT (dbNSFP)
+-  DBNSFP_ALOFTPRED - predicted effect from ALoFT (dbNSFP)
 
--  MUTPRED_DBNSFP - score from MUTPRED (dbNSFP)
+-  DBNSFP_MUTPRED - score from MUTPRED (dbNSFP)
 
--  FATHMM_DBNSFP - predicted effect from FATHMM (dbNSFP)
+-  DBNSFP_FATHMM - predicted effect from FATHMM (dbNSFP)
 
--  PRIMATEAI_DBNSFP - predicted effect from PRIMATEAI (dbNSFP)
+-  DBNSFP_PRIMATEAI - predicted effect from PRIMATEAI (dbNSFP)
 
--  DEOGEN2_DBNSFP - predicted effect from DEOGEN2 (dbNSFP)
+-  DBNSFP_DEOGEN2 - predicted effect from DEOGEN2 (dbNSFP)
 
--  GERP_DBNSFP - evolutionary constraint measure from GERP (dbNSFP)
+-  DBNSFP_GERP - evolutionary constraint measure from GERP (dbNSFP)
 
--  FATHMM_MKL_DBNSFP - predicted effect from FATHMM-mkl (dbNSFP)
+-  DBNSFP_FATHMM_MKL - predicted effect from FATHMM-mkl (dbNSFP)
 
--  META_LR_DBNSFP - predicted effect from ensemble prediction (logistic
-   regression - dbNSFP)
+-  DBNSFP_META_RNN - predicted effect from ensemble prediction (deep
+   learning - dbNSFP)
 
--  SPLICE_SITE_RF_DBNSFP - predicted effect of splice site disruption,
+-  DBNSFP_SPLICE_SITE_RF - predicted effect of splice site disruption,
    using random forest (dbscSNV)
 
--  SPLICE_SITE_ADA_DBNSFP - predicted effect of splice site disruption,
+-  DBNSFP_SPLICE_SITE_ADA - predicted effect of splice site disruption,
    using boosting (dbscSNV)
 
 *Variant frequencies/annotations in germline databases*
@@ -678,7 +695,7 @@ issued by the user will be appended at the end):
          Format: (<chrom>:g.<position><ref_allele>><alt_allele>)
    2. VAR_ID - Variant identifier
    3. GENOTYPE - Variant genotype (heterozygous/homozygous)
-   4. SOURCE - ClinVar or Other (i.e. not present in ClinVar)
+   4. CPSR_CLASSIFICATION_SOURCE - ClinVar or Other (i.e. not present in ClinVar)
    5. GENOME_VERSION - Assembly version, e.g. GRCh37
    6. VCF_SAMPLE_ID - Sample identifier
    7. VARIANT_CLASS - Variant type, e.g. SNV/insertion/deletion
@@ -716,49 +733,56 @@ issued by the user will be appended at the end):
    39. CLINVAR_CONFLICTED - indicator of conflicting interpretations
    40. CLINVAR_PHENOTYPE - associated phenotype(s) for ClinVar variant
    41. CLINVAR_REVIEW_STATUS_STARS
-   42. N_INSILICO_CALLED - Number of algorithms with effect prediction (damaging/tolerated) from dbNSFP
-   43. N_INSILICO_DAMAGING - Number of algorithms with damaging prediction from dbNSFP
-   44. N_INSILICO_TOLERATED - Number of algorithms with tolerated prediction from dbNSFP
-   45. N_INSILICO_SPLICING_NEUTRAL - Number of algorithms with splicing neutral prediction from dbscSNV
-   46. N_INSILICO_SPLICING_AFFECTED - Number of algorithms with splicing affected prediction from dbscSNV
-   47. GLOBAL_AF_GNOMAD - Global MAF in gnomAD
-   48. <CUSTOM_POPULATION_GNOMAD> - Population specific MAF in gnomAD control (non-cancer, population configured by user)
-   49. ACMG_BA1_AD - Very high MAF (> 0.5% in gnomAD non-cancer pop subset) - min AN = 12,000 - Dominant mechanism of disease
-   50. ACMG_BS1_1_AD - High MAF (> 0.1% in gnomAD non-cancer pop subset) - min AN = 12,000 - Dominant mechanism of disease
-   51. ACMG_BS1_2_AD - Somewhat high MAF (> 0.005% in gnomAD non-cancer pop subset) - Dominant mechanism of disease
-   52. ACMG_BA1_AR - Very high MAF (> 1% in gnomAD non-cancer pop subset) - min AN = 12,000 - Recessive mechanism of disease
-   53. ACMG_BS1_1_AR - High MAF (> 0.3% in gnomAD non-cancer pop subset) - min AN = 12,000 - Recessive mechanism of disease
-   54. ACMG_BS1_2_AR - Somewhat high MAF (> 0.005% in gnomAD non-cancer pop subset) - Recessive mechanism of disease
-   55. ACMG_PM2_1 - Allele count within pathogenic range (MAF <= 0.005% in the population-specific non-cancer gnomAD subset)
-   56. ACMG_PM2_2 - Alternate allele absent in the population-specific non-cancer gnomAD subset
-   57. ACMG_PVS1_1 - Null variant (frameshift/nonsense) - predicted as LoF by LOFTEE - within pathogenic range - LoF established for gene
-   58. ACMG_PVS1_2 - Null variant (frameshift/nonsense) - not predicted as LoF by LOFTEE - within pathogenic range - LoF established for gene
-   59. ACMG_PVS1_3 - Null variant (frameshift/nonsense) - predicted as LoF by LOFTEE - within pathogenic range - LoF not established for gene
-   60. ACMG_PVS1_4 - Null variant (frameshift/nonsense) - not predicted as LoF by LOFTEE -- within pathogenic range - LoF not established for gene
-   61. ACMG_PVS1_5 - Start (initiator methionine) lost - within pathogenic range - Lof established for gene
-   62. ACMG_PVS1_6 - Start (initiator methionine) lost - within pathogenic range - LoF not established for gene
-   63. ACMG_PVS1_7 - Donor/acceptor variant - predicted as LoF by LOFTEE - within pathogenic range - not last intron - LoF established for gene
-   64. ACMG_PVS1_8 - Donor/acceptor variant - last intron - within pathogenic range - LoF established for gene
-   65. ACMG_PVS1_9 - Donor/acceptor variant - not last intron - within pathogenic range - LoF not established for gene
-   66. ACMG_PVS1_10 - Donor variant at located at the +3, +4 or +5 position of the intron -  within the pathogenic range (i.e. <9 alleles in ExAC))
-   67. ACMG_PS1 - Same amino acid change as a previously established pathogenic variant (ClinVar) regardless of nucleotide change
-   68. ACMG_PP2 - Missense variant in a gene that has a relatively low rate of benign missense variation (<20%) and where missense variants are a common mechanism of disease (>50% P/LP (ClinVar))
-   69. ACMG_PM1 - Missense variant in a somatic mutation hotspot as determined by cancerhotspots.org
-   70. ACMG_PM4 - Protein length changes due to inframe indels or nonstop variant in non-repetitive regions of genes that harbor variants with a dominant mode of inheritance.
-   71. ACMG_PPC1 - Protein length changes due to inframe indels or nonstop variant in non-repetitive regions of genes that harbor variants with a recessive mode of inheritance.
-   72. ACMG_PM5 - Novel missense change at an amino acid residue where a different missense change determined to be pathogenic has been seen before (ClinVar)
-   73. ACMG_PP3 - Multiple lines (>=5) of computational evidence support a deleterious effect on the gene or gene product (conservation, evolutionary, splicing impact) with maximum two contradictory predictions - from dbNSFP
-   74. ACMG_BP4 - Multiple lines (>=5) of computational evidence support a benign effect on the gene or gene product (conservation, evolutionary, splicing impact) with maximum two contradictory prediction - from dbNSFP
-   75. ACMG_BMC1 - Peptide change is at the same location of a known benign change (ClinVar)
-   76. ACMG_BSC1 - Peptide change is reported as benign (ClinVar)
-   77. ACMG_BP1 - Missense variant in a gene for which primarily truncating variants are known to cause disease (ClinVar)
-   78. ACMG_BP3 - Variants in promoter or untranslated regions
-   79. ACMG_BP7 - Silent/intronic variant outside of the splice site consensus
-   80. CPSR_CLASSIFICATION - CPSR tier level (P/LP/VUS/LB/B)
-   81. CPSR_PATHOGENICITY_SCORE - Aggregated CPSR pathogenicity score
-   82. CPSR_CLASSIFICATION_CODE - Combination of CPSR classification codes assigned to the variant (ACMG)
-   83. CPSR_CLASSIFICATION_DOC - Verbal description of CPSR classification codes assignted to the variant (ACMG)
+   42. DBMTS - variant with potential effect on microRNA target sites (dbMTS). Format: <ensembl_transcript_id>|<microrna_identifier>|<target_prediction_algorithms>|<gain_loss_consensus>. _Target prediction algorithms_ indicate support by different algorithms (separated by '&'), 'TS' = TargetScan, M = 'miRanda', 'R' = RNAhybrid. *Gain_loss_consensus* indicate whether the variant was predicted to disrupt a binding site ('L' = Loss), or create a new target site ('G' = gain) by the different algorithms
+   43. miRNA_TARGET_HIT - loss, gain, or gain|loss, as given from the hits in DBMTS column
+   44. miRNA_TARGET_HIT_PREDICTION - links to miRBase, as given from the hits in the DBMTS column
+   45. TF_BINDING_SITE_VARIANT - Indicates whether a variant overlaps a critical/non-critical position of a transcription factor binding site (TFBS) - as provided by VEP's--regulatory option ('Overlap: non-critical motif position' or 'Overlap: critical motif position')
+   46. TF_BINDING_SITE_VARIANT_INFO - Comma-separated list of transcription factor binding sites affected by variant. Format per factor: <TRANSCRIPTION_FACTOR>|<MOTIF_NAME>|<MOTIF_POS>|<MOTIF_SCORE_CHANGE>|<HIGH_INF_POS>. *HIGH_INF_POS* indicates whether the variant overlapped a critical motif position ('Y'), or non-critical motif position ('N')
+   47. GERP_SCORE - Genomic conservation score (GERP)
+   48. N_INSILICO_CALLED - Number of algorithms with effect prediction (damaging/tolerated) from dbNSFP
+   49. N_INSILICO_DAMAGING - Number of algorithms with damaging prediction from dbNSFP
+   50. N_INSILICO_TOLERATED - Number of algorithms with tolerated prediction from dbNSFP
+   51. N_INSILICO_SPLICING_NEUTRAL - Number of algorithms with splicing neutral prediction from dbscSNV
+   52. N_INSILICO_SPLICING_AFFECTED - Number of algorithms with splicing affected prediction from dbscSNV
+   53. GLOBAL_AF_GNOMAD - Global MAF in gnomAD
+   54. <CUSTOM_POPULATION_GNOMAD> - Population specific MAF in gnomAD control (non-cancer, population configured by user)
+   55. ACMG_BA1_AD - Very high MAF (> 0.5% in gnomAD non-cancer pop subset) - min AN = 12,000 - Dominant mechanism of disease
+   56. ACMG_BS1_1_AD - High MAF (> 0.1% in gnomAD non-cancer pop subset) - min AN = 12,000 - Dominant mechanism of disease
+   57. ACMG_BS1_2_AD - Somewhat high MAF (> 0.005% in gnomAD non-cancer pop subset) - Dominant mechanism of disease
+   58. ACMG_BA1_AR - Very high MAF (> 1% in gnomAD non-cancer pop subset) - min AN = 12,000 - Recessive mechanism of disease
+   59. ACMG_BS1_1_AR - High MAF (> 0.3% in gnomAD non-cancer pop subset) - min AN = 12,000 - Recessive mechanism of disease
+   60. ACMG_BS1_2_AR - Somewhat high MAF (> 0.005% in gnomAD non-cancer pop subset) - Recessive mechanism of disease
+   61. ACMG_PM2_1 - Allele count within pathogenic range (MAF <= 0.005% in the population-specific non-cancer gnomAD subset)
+   62. ACMG_PM2_2 - Alternate allele absent in the population-specific non-cancer gnomAD subset
+   63. ACMG_PVS1_1 - Null variant (frameshift/nonsense) - predicted as LoF by LOFTEE - within pathogenic range - LoF established for gene
+   64. ACMG_PVS1_2 - Null variant (frameshift/nonsense) - not predicted as LoF by LOFTEE - within pathogenic range - LoF established for gene
+   65. ACMG_PVS1_3 - Null variant (frameshift/nonsense) - predicted as LoF by LOFTEE - within pathogenic range - LoF not established for gene
+   66. ACMG_PVS1_4 - Null variant (frameshift/nonsense) - not predicted as LoF by LOFTEE -- within pathogenic range - LoF not established for gene
+   67. ACMG_PVS1_5 - Start (initiator methionine) lost - within pathogenic range - Lof established for gene
+   68. ACMG_PVS1_6 - Start (initiator methionine) lost - within pathogenic range - LoF not established for gene
+   69. ACMG_PVS1_7 - Donor/acceptor variant - predicted as LoF by LOFTEE - within pathogenic range - not last intron - LoF established for gene
+   70. ACMG_PVS1_8 - Donor/acceptor variant - last intron - within pathogenic range - LoF established for gene
+   71. ACMG_PVS1_9 - Donor/acceptor variant - not last intron - within pathogenic range - LoF not established for gene
+   72. ACMG_PVS1_10 - Donor variant at located at the +3, +4 or +5 position of the intron -  within the pathogenic range (i.e. <9 alleles in ExAC))
+   73. ACMG_PS1 - Same amino acid change as a previously established pathogenic variant (ClinVar) regardless of nucleotide change
+   74. ACMG_PP2 - Missense variant in a gene that has a relatively low rate of benign missense variation (<20%) and where missense variants are a common mechanism of disease (>50% P/LP (ClinVar))
+   75. ACMG_PM1 - Missense variant in a somatic mutation hotspot as determined by cancerhotspots.org
+   76. ACMG_PM4 - Protein length changes due to inframe indels or nonstop variant in non-repetitive regions of genes that harbor variants with a dominant mode of inheritance.
+   77. ACMG_PPC1 - Protein length changes due to inframe indels or nonstop variant in non-repetitive regions of genes that harbor variants with a recessive mode of inheritance.
+   78. ACMG_PM5 - Novel missense change at an amino acid residue where a different missense change determined to be pathogenic has been seen before (ClinVar)
+   79. ACMG_PP3 - Multiple lines (>=5) of computational evidence support a deleterious effect on the gene or gene product (conservation, evolutionary, splicing impact) with maximum two contradictory predictions - from dbNSFP
+   80. ACMG_BP4 - Multiple lines (>=5) of computational evidence support a benign effect on the gene or gene product (conservation, evolutionary, splicing impact) with maximum two contradictory prediction - from dbNSFP
+   81. ACMG_BMC1 - Peptide change is at the same location of a known benign change (ClinVar)
+   82. ACMG_BSC1 - Peptide change is reported as benign (ClinVar)
+   83. ACMG_BP1 - Missense variant in a gene for which primarily truncating variants are known to cause disease (ClinVar)
+   84. ACMG_BP3 - Variants in promoter or untranslated regions
+   85. ACMG_BP7 - Silent/intronic variant outside of the splice site consensus
+   86. FINAL_CLASSIFICATION - Final variant classification based on the combination of CLINVAR_CLASSIFICTION (for ClinVar-classified variants), and CPSR_CLASSIFICATION (for novel variants)
+   87. CPSR_CLASSIFICATION - CPSR tier level (P/LP/VUS/LB/B)
+   88. CPSR_PATHOGENICITY_SCORE - Aggregated CPSR pathogenicity score
+   89. CPSR_CLASSIFICATION_CODE - Combination of CPSR classification codes assigned to the variant (ACMG)
+   90. CPSR_CLASSIFICATION_DOC - Verbal description of CPSR classification codes assignted to the variant (ACMG)
 
 **NOTE**: The user has the possibility to append the TSV file with data
-from other tags in the input VCF of interest (i.e. using the
-*custom_tags* option in the TOML configuration file)
+from other INFO tags in the input VCF (i.e. using the
+*–preserved_info_tags* option)

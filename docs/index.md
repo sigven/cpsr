@@ -12,6 +12,7 @@ Welcome to CPSR's documentation!
 
    about
    getting_started
+   superpanel
    annotation_resources
    input
    output
