@@ -127,7 +127,7 @@ The cancer predisposition report can show variants found in a number of well-kno
 
 **IMPORTANT**: If you use CPSR, please cite the following preprint:
 
-Sigve Nakken, Vladislav Saveliev, Oliver Hofmann, Pål Møller, Ola Myklebost, and Eivind Hovig. __Cancer Predisposition Sequencing Reporter: a flexible variant report engine for high-throughput germline screening in cancer__ (2020). _bioRxiv_. doi:[10.1101/846089](https://doi.org/10.1101/846089)
+Sigve Nakken, Vladislav Saveliev, Oliver Hofmann, Pål Møller, Ola Myklebost, and Eivind Hovig. __Cancer Predisposition Sequencing Reporter: a flexible variant report engine for high-throughput germline screening in cancer__ (2021). _Int J Cancer_. doi:[10.1002/ijc.33749](https://doi.org/10.1002/ijc.33749)
 
 
 ### Getting started
