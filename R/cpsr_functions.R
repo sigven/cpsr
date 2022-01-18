@@ -199,7 +199,7 @@ generate_cpsr_report <- function(project_directory = NULL,
 
   if (query_vcf2tsv != "None.gz") {
     if (!file.exists(query_vcf2tsv) | file.size(query_vcf2tsv) == 0) {
-      log4r_warn(
+        pcgrr::log4r_warn(
         paste0("File ",
                query_vcf2tsv,
                " does not exist or has zero size"))
@@ -207,7 +207,7 @@ generate_cpsr_report <- function(project_directory = NULL,
     }else{
       if (!is.null(cpsr_config) & query_vcf2tsv != "None.gz") {
 
-        log4r_info("Retrieving ALL variants: GWAS tag SNPs / variants in ACMG secondary findings list / target predisposition genes")
+          pcgrr::log4r_info("Retrieving ALL variants: GWAS tag SNPs / variants in ACMG secondary findings list / target predisposition genes")
         ## read calls
         calls <-
           pcgrr::get_calls(
@@ -219,7 +219,7 @@ generate_cpsr_report <- function(project_directory = NULL,
               cps_report[["metadata"]][["phenotype_ontology"]][["oncotree_query"]],
             cpsr = TRUE)
         if (nrow(calls) == 0) {
-          log4r_warn(paste0("There are zero calls in input file ",
+            pcgrr::log4r_warn(paste0("There are zero calls in input file ",
                             "- no report will be produced"))
           return(NULL)
         }
@@ -242,8 +242,8 @@ generate_cpsr_report <- function(project_directory = NULL,
 
         calls <- calls[, !(colnames(calls) %in% cpsr_generated_cols)]
 
-        log4r_info("------")
-        log4r_info(
+        pcgrr::log4r_info("------")
+        pcgrr::log4r_info(
           paste0("Considering variants in the targeted predisposition genes: ",
                  paste(unique(sort(cps_report$metadata$gene_panel$genes$symbol)),
                        collapse=", ")))
@@ -252,7 +252,7 @@ generate_cpsr_report <- function(project_directory = NULL,
           n_noncoding_vars <- calls %>%
             dplyr::filter(.data$CODING_STATUS == "noncoding") %>%
             NROW()
-          log4r_info(
+          pcgrr::log4r_info(
             paste0(
               "Excluding n = ",
               n_noncoding_vars,
@@ -262,7 +262,7 @@ generate_cpsr_report <- function(project_directory = NULL,
           calls <- calls %>%
             dplyr::filter(.data$CODING_STATUS == "coding")
           if (NROW(calls) == 0) {
-            log4r_warn(paste0(
+              pcgrr::log4r_warn(paste0(
               "There are zero remaining protein-coding ",
               "calls in input file - no report will be produced")
               )
@@ -283,13 +283,13 @@ generate_cpsr_report <- function(project_directory = NULL,
           pcgrr::variant_stats_report(
             cpg_calls, name = "v_stat_cpg")
 
-        log4r_info(
+        pcgrr::log4r_info(
           paste0("Total number of variants in target cancer predisposition genes (for TIER output): ",
                  cpg_call_stats[["v_stat_cpg"]][["n"]]))
-        log4r_info(
+        pcgrr::log4r_info(
           paste0("Number of coding variants in target cancer predisposition genes (for TIER output): ",
                  cpg_call_stats[["v_stat_cpg"]][["n_coding"]]))
-        log4r_info(
+        pcgrr::log4r_info(
           paste0(
             "Number of non-coding variants in cancer predisposition genes (for TIER output): ",
             cpg_call_stats[["v_stat_cpg"]][["n_noncoding"]]))
@@ -329,7 +329,7 @@ generate_cpsr_report <- function(project_directory = NULL,
             dplyr::filter(.data$CANCER_PHENOTYPE == 0) %>%
             NROW()
 
-          log4r_info(
+          pcgrr::log4r_info(
             paste0("ClinVar variants related to non-cancer conditions excluded",
             " from report: ", n_clinvar_noncancer)
           )
@@ -343,7 +343,7 @@ generate_cpsr_report <- function(project_directory = NULL,
             cpg_calls <- cpg_calls %>%
               dplyr::anti_join(cpg_calls_exclude, by = "VAR_ID")
 
-            log4r_info(
+            pcgrr::log4r_info(
               paste0("Variants remaining after exclusion of non-cancer related",
               " ClinVar variants: ", NROW(cpg_calls)))
 
@@ -414,20 +414,20 @@ generate_cpsr_report <- function(project_directory = NULL,
           unique(
             cps_report[["content"]][["snv_indel"]][["variant_set"]][["tsv"]]$SYMBOL),
           collapse = ", ")
-        log4r_info(paste0("Variants were found in the following cancer ",
+        pcgrr::log4r_info(paste0("Variants were found in the following cancer ",
                           "predisposition genes: ", gene_hits))
 
         ## secondary findings
         if (cpsr_config[["secondary_findings"]] == TRUE) {
           if (nrow(secondary_calls) > 0) {
-            log4r_info(paste0("Assignment of other variants in genes ",
+              pcgrr::log4r_info(paste0("Assignment of other variants in genes ",
                               "recommended for reporting as secondary ",
                               "findings (ACMG SF v3.0)"))
             cps_report[["content"]][["snv_indel"]][["disp"]][["secondary"]] <-
               secondary_calls %>%
               dplyr::arrange(.data$LOSS_OF_FUNCTION, .data$CODING_STATUS) %>%
               dplyr::select(dplyr::one_of(cpsr_sf_display_cols))
-            log4r_info(paste0(
+            pcgrr::log4r_info(paste0(
               "Number of pathogenic variants in the ACMG secondary findings list - other ",
               "genes of clinical significance: ",
               cps_report[["content"]][["snv_indel"]][["v_stat_secondary"]][["n_coding"]]))
@@ -437,7 +437,7 @@ generate_cpsr_report <- function(project_directory = NULL,
         cps_report[["content"]][["snv_indel"]][["eval"]] <- TRUE
 
         if (cpsr_config[["gwas"]][["run"]] == TRUE) {
-          log4r_info(paste0("Assignment of other variants to hits ",
+            pcgrr::log4r_info(paste0("Assignment of other variants to hits ",
                             "from genome-wide association studies"))
 
           ## Assign GWAS hits to cps_report object
@@ -1368,7 +1368,7 @@ assign_variant_tiers <-
         if (t %in% colnames(cpg_calls)) {
           cpsr_tsv_cols <- c(cpsr_tsv_cols, t)
         }else{
-          log4r_warn(
+            pcgrr::log4r_warn(
             paste0("Could NOT detect the following tag in query VCF: ", tag))
         }
       }
@@ -1376,7 +1376,7 @@ assign_variant_tiers <-
   }
 
 
-  log4r_info(paste0("Generating tiered set of result variants for ",
+  pcgrr::log4r_info(paste0("Generating tiered set of result variants for ",
                     "output in tab-separated values (TSV) file"))
 
   snv_indel_report <- pcgrr::init_report(config = config,
@@ -1429,7 +1429,7 @@ assign_variant_tiers <-
     dplyr::filter(is.na(.data$GLOBAL_AF_GNOMAD) |
                     .data$GLOBAL_AF_GNOMAD <= config[["popgen"]][["maf_upper_threshold"]])
   n_maf_filtered <- n_nonclinvar - nrow(cpg_calls_non_clinvar)
-  log4r_info(
+  pcgrr::log4r_info(
     paste0("Ignoring n = ", n_maf_filtered,
            " unclassified variants with a global MAF frequency above ",
            config[["popgen"]][["maf_upper_threshold"]]))
@@ -1459,14 +1459,14 @@ assign_variant_tiers <-
 
   for (c in c("class1", "class2", "class3", "class4", "class5")) {
 
-    log4r_info(paste0("Merging ClinVar-classified variants and CPSR-classified (novel) variants - ",c))
+      pcgrr::log4r_info(paste0("Merging ClinVar-classified variants and CPSR-classified (novel) variants - ",c))
     snv_indel_report[["variant_set"]][[c]] <-
       dplyr::bind_rows(non_clinvar_calls[[c]],
                        snv_indel_report[["variant_set"]][[c]])
 
 
     if(nrow(snv_indel_report[["variant_set"]][[c]]) == 0){
-      log4r_info(paste0("Zero variants found - ", c))
+        pcgrr::log4r_info(paste0("Zero variants found - ", c))
     }
 
     ## set FINAL_CLASSIFICATION col
@@ -1707,7 +1707,7 @@ retrieve_secondary_calls <- function(calls, umls_map) {
                                       .data$VAR_ID, .data$CLINVAR_PHENOTYPE),
                         by = c("VAR_ID" = "VAR_ID"))
 
-    log4r_info(paste0(
+    pcgrr::log4r_info(paste0(
       "Found n = ",
       nrow(secondary_calls),
       " variants in genes recommended for return as ",
@@ -1954,7 +1954,7 @@ get_germline_biomarkers <- function(sample_calls,
                                     colset = NULL,
                                     eitems = NULL) {
 
-  log4r_info(paste0("Matching variant set with existing genomic ",
+    pcgrr::log4r_info(paste0("Matching variant set with existing genomic ",
                     "biomarkers from CIViC (germline)"))
 
   clin_eitems_list <- list()
