@@ -5,7 +5,6 @@ on:
     branches:
       - master
       - dev
-      - cleanup1
 env:
   atoken: ${{ secrets.ANACONDA_UPLOAD_TOKEN }}
   recipe_path: conda/recipe
