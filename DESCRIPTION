@@ -1,0 +1,46 @@
+Package: cpsr
+Type: Package
+Title: Cancer Predisposition Sequencing Reporter (CPSR)
+Version: 0.7.0
+Authors@R:
+    c(person(given = "Sigve",
+             family = "Nakken",
+             role = c("aut", "cre"),
+             email = "sigven@ifi.uio.no",
+             comment = c(ORCID = "0000-0001-8468-2050")))
+Maintainer: Sigve Nakken <sigven@ifi.uio.no>
+URL: https://github.com/sigven/cpsr
+BugReports: https://github.com/sigven/cpsr/issues
+Description: CPSR is a computational workflow that interprets germline variants identified from
+             next-generation sequencing in the context of cancer predisposition. The workflow is
+             integrated with the framework that underlies the Personal Cancer Genome Reporter
+             (PCGR) (https://github.com/sigven/pcgr), utilizing the Docker environment for
+             encapsulation of code and software dependencies. While PCGR is intended for reporting
+             and analysis of somatic variants detected in a tumor, CPSR is intended for reporting
+             and ranking of germline variants in protein-coding genes that are implicated in cancer
+             predisposition and inherited cancer syndromes.
+License: MIT + file LICENSE
+biocViews:
+Remotes: github::sigven/pcgr/pcgrr@dev
+Imports:
+    assertthat,
+    dplyr,
+    ggplot2,
+    log4r,
+    magrittr,
+    pcgrr,
+    rlang,
+    scales,
+    stringr,
+    tidyr
+Depends:
+    R (>= 4.0)
+Suggests:
+    testthat,
+    devtools,
+    BSgenome.Hsapiens.UCSC.hg19,
+    BSgenome.Hsapiens.UCSC.hg38
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.2
+Roxygen: list(markdown = TRUE)
