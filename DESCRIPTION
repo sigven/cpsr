@@ -23,6 +23,7 @@ License: MIT + file LICENSE
 biocViews:
 Remotes: github::sigven/pcgr/pcgrr@dev
 Imports:
+    assertable,
     assertthat,
     dplyr,
     ggplot2,

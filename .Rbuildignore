@@ -1,6 +1,7 @@
 ^cpsr\.Rproj$
 ^\.Rproj\.user$
 ^\.bumpversion\.cfg$
+^\.github$
 
 ^data-raw$
 ^LICENSE\.md$
