@@ -296,7 +296,7 @@ generate_cpsr_report <- function(project_directory = NULL,
 
 
         secondary_calls <-
-          pcgrr::retrieve_secondary_calls(
+          retrieve_secondary_calls(
             calls,
             umls_map = pcgr_data$phenotype_ontology$umls)
         secondary_call_stats <-
@@ -311,10 +311,10 @@ generate_cpsr_report <- function(project_directory = NULL,
 
         ## Assign ACMG evidence codes (>30 criteria) to variants
         cpg_calls <-
-          pcgrr::assign_pathogenicity_evidence(
+          assign_pathogenicity_evidence(
             cpg_calls, cpsr_config, pcgr_data) %>%
-          pcgrr::determine_pathogenicity_classification() %>%
-          pcgrr::detect_cancer_traits_clinvar(
+          determine_pathogenicity_classification() %>%
+          detect_cancer_traits_clinvar(
             oncotree =
               cps_report[["metadata"]][["phenotype_ontology"]][["oncotree"]],
             umls_map =
@@ -359,7 +359,7 @@ generate_cpsr_report <- function(project_directory = NULL,
         ## Assign calls to tiers (ClinVar calls + CPSR classification
         ## for novel, non-ClinVar variants)
         snv_indel_report <-
-          pcgrr::assign_variant_tiers(
+          assign_variant_tiers(
             cpg_calls,
             config = cps_report[["metadata"]][["config"]],
             cpsr_display_cols = cpsr_tier_display_cols,
@@ -388,12 +388,15 @@ generate_cpsr_report <- function(project_directory = NULL,
 
         eitems_all <- dplyr::bind_rows(eitems_mut_germline,
                                        eitems_mut_lof_germline) %>%
-          pcgrr::remove_cols_from_df(cnames = c("DISEASE_ONTOLOGY_ID",
-                                                "VARIANT_ORIGIN",
-                                                "SOURCE_DB"))
+          pcgrr::remove_cols_from_df(
+            cnames = c("DISEASE_ONTOLOGY_ID",
+                       "VARIANT_ORIGIN",
+                       "VARIANT_TYPE",
+                       "ACTIONABILITY_SCORE")) %>%
+          dplyr::distinct()
 
         snv_indel_report$clin_eitem <-
-          pcgrr::get_germline_biomarkers(
+          get_germline_biomarkers(
             sample_calls = snv_indel_report[["variant_set"]][["tsv"]],
             colset = colnames(snv_indel_report[["variant_set"]][["tsv"]]),
             eitems = eitems_all)
@@ -728,10 +731,10 @@ assign_pathogenicity_evidence <- function(cpg_calls, cpsr_config, pcgr_data) {
 
   predisposition_gene_info <-
     dplyr::select(pcgr_data[["predisposition"]][["genes"]], .data$symbol,
-                  .data$mechanism_of_disease, .data$path_truncation_rate,
+                  .data$cancer_predisposition_mod, .data$path_truncation_rate,
                   .data$benign_missense_rate) %>%
     dplyr::rename(SYMBOL = .data$symbol,
-                  MOD = .data$mechanism_of_disease,
+                  MOD = .data$cancer_predisposition_mod,
                   PATH_TRUNCATION_RATE = .data$path_truncation_rate,
                   BENIGN_MISSENSE_RATE = .data$benign_missense_rate)
 
@@ -770,7 +773,7 @@ assign_pathogenicity_evidence <- function(cpg_calls, cpsr_config, pcgr_data) {
   dbnsfp_max_minority <- 3
   dbnsfp_min_called <- dbnsfp_min_majority
 
-  cpg_calls <- pcgrr::get_insilico_prediction_statistics(cpg_calls)
+  cpg_calls <- get_insilico_prediction_statistics(cpg_calls)
 
   cpg_calls <- cpg_calls %>%
     dplyr::mutate(
@@ -813,11 +816,16 @@ assign_pathogenicity_evidence <- function(cpg_calls, cpsr_config, pcgr_data) {
       gad_AC_tag %in% colnames(cpg_calls) &
       gad_NHOMALT_tag %in% colnames(cpg_calls)) {
 
+    # cpg_calls2 <- cpg_calls %>%
+    #   dplyr::mutate(!!rlang::sym(gad_AN_tag) := as.double(!!rlang::sym(gad_AN_tag))) %>%
+    #   dplyr::mutate(!!rlang::sym(gad_AC_tag) := as.double(!!rlang::sym(gad_AC_tag))) %>%
+    #   dplyr::mutate(!!rlang::sym(gad_NHOMALT_tag)  := as.double(!!rlang::sym(gad_NHOMALT_tag)))
+
     cpg_calls <- cpg_calls %>%
       dplyr::mutate(
         gad_af =
           dplyr::if_else(!!rlang::sym(gad_AN_tag) >= min_an,
-                         as.numeric(!!rlang::sym(gad_AC_tag) /
+                         as.double(!!rlang::sym(gad_AC_tag) /
                                       !!rlang::sym(gad_AN_tag)),
                          as.double(NA), as.double(NA))) %>%
       dplyr::mutate(
@@ -1018,10 +1026,10 @@ assign_pathogenicity_evidence <- function(cpg_calls, cpsr_config, pcgr_data) {
     dplyr::mutate(
       ACMG_BP7 =
         dplyr::if_else((
-          (.data$INTRON_POSITION < 0 & .data$INTRON_POSITION < -3) |
-            (.data$INTRON_POSITION > 0 & .data$INTRON_POSITION > 6) |
-            (.data$EXON_POSITION < 0 & .data$EXON_POSITION < -2) |
-            (.data$EXON_POSITION > 0 & .data$EXON_POSITION > 1)) &
+          (as.integer(.data$INTRON_POSITION) < 0 & as.integer(.data$INTRON_POSITION) < -3) |
+            (as.integer(.data$INTRON_POSITION) > 0 & as.integer(.data$INTRON_POSITION) > 6) |
+            (as.integer(.data$EXON_POSITION) < 0 & as.integer(.data$EXON_POSITION) < -2) |
+            (as.integer(.data$EXON_POSITION) > 0 & as.integer(.data$EXON_POSITION) > 1)) &
             stringr::str_detect(
               .data$CONSEQUENCE,
               "^(synonymous_variant|intron_variant|splice_region_variant)"),
@@ -1653,20 +1661,54 @@ assign_variant_tiers <-
 #' @export
 retrieve_secondary_calls <- function(calls, umls_map) {
 
+  assertable::assert_colnames(
+    calls, colnames = c("CANCER_PREDISPOSITION_SOURCE",
+             "CLINVAR_CLASSIFICATION",
+             "CLINVAR_UMLS_CUI",
+             "GENOTYPE",
+             "SYMBOL",
+             "VAR_ID",
+             "LOSS_OF_FUNCTION",
+             "PROTEIN_CHANGE"),
+    only_colnames = F, quiet = T
+  )
+
   secondary_calls <- calls %>%
+    ## do not consider secondary variant findings if
+    ## genotypes have not been retrieved properly
+    dplyr::filter(!is.na(GENOTYPE) & !is.na(SYMBOL))
+
+
+  if(nrow(secondary_calls) == 0){
+    return(secondary_calls)
+  }
+
+  secondary_calls <- secondary_calls %>%
     dplyr::filter(!is.na(.data$CANCER_PREDISPOSITION_SOURCE) &
                     .data$CANCER_PREDISPOSITION_SOURCE == "ACMG_SF30" &
                     !is.na(.data$CLINVAR_CLASSIFICATION)) %>%
     dplyr::filter(.data$CLINVAR_CLASSIFICATION == "Pathogenic" |
                     .data$CLINVAR_CLASSIFICATION == "Likely_Pathogenic") %>%
     ## only LOF for TTN
-    dplyr::filter(.data$SYMBOL != "TTN" | (.data$SYMBOL == "TTN" & .data$LOSS_OF_FUNCTION == T))
+    dplyr::filter(.data$SYMBOL != "TTN" |
+                    (.data$SYMBOL == "TTN" &
+                       .data$LOSS_OF_FUNCTION == T)) %>%
+
+    ## only homozygotes p.Cys282Tyr HFE carriers
+    dplyr::filter(.data$SYMBOL != "HFE" |
+                    (.data$SYMBOL == "HFE" &
+                       (!is.na(PROTEIN_CHANGE) &
+                          stringr::str_detect(.data$PROTEIN_CHANGE,"Cys282Tyr")) &
+                       .data$GENOTYPE == "homozygous"))
+
 
 
   ## AR genes
   min_two_variants_required <-
     data.frame(SYMBOL = 'MUTYH', stringsAsFactors = F) %>%
     dplyr::bind_rows(
+      data.frame(SYMBOL = 'CASQ2', stringsAsFactors = F),
+      data.frame(SYMBOL = 'TRDN', stringsAsFactors = F),
       data.frame(SYMBOL = 'RPE65', stringsAsFactors = F),
       data.frame(SYMBOL = 'GAA', stringsAsFactors = F),
       data.frame(SYMBOL = 'BTD', stringsAsFactors = F),
@@ -1702,10 +1744,11 @@ retrieve_secondary_calls <- function(calls, umls_map) {
       dplyr::distinct()
 
     secondary_calls <-
-      dplyr::inner_join(secondary_calls,
-                        dplyr::select(secondary_calls_per_trait,
-                                      .data$VAR_ID, .data$CLINVAR_PHENOTYPE),
-                        by = c("VAR_ID" = "VAR_ID"))
+      dplyr::inner_join(
+        secondary_calls,
+        dplyr::select(secondary_calls_per_trait,
+                      .data$VAR_ID, .data$CLINVAR_PHENOTYPE),
+        by = c("VAR_ID" = "VAR_ID"))
 
     pcgrr::log4r_info(paste0(
       "Found n = ",
@@ -1728,15 +1771,17 @@ retrieve_secondary_calls <- function(calls, umls_map) {
 #'
 #' @export
 detect_cancer_traits_clinvar <- function(cpg_calls, oncotree, umls_map) {
-  if (nrow(cpg_calls) > 0 & "CLINVAR_UMLS_CUI" %in% colnames(cpg_calls)
-      & "VAR_ID" %in% colnames(cpg_calls)) {
+  if (nrow(cpg_calls) > 0 &
+      "CLINVAR_UMLS_CUI" %in% colnames(cpg_calls) &
+      "VAR_ID" %in% colnames(cpg_calls)) {
 
     oncotree <- oncotree %>%
       dplyr::select(.data$cui) %>%
       dplyr::mutate(CANCER_PHENOTYPE = 1) %>%
       dplyr::distinct()
 
-    n_clinvar <- cpg_calls %>% dplyr::filter(!is.na(.data$CLINVAR_UMLS_CUI)) %>%
+    n_clinvar <- cpg_calls %>%
+      dplyr::filter(!is.na(.data$CLINVAR_UMLS_CUI)) %>%
       nrow()
 
     if (n_clinvar > 0) {
@@ -2012,15 +2057,17 @@ get_germline_biomarkers <- function(sample_calls,
     }
   }
 
-  var_eitems <- pcgrr::deduplicate_eitems(var_eitems = var_eitems,
-                                          target_type = "exact",
-                                          target_other =
-                                            c("codon", "exon", "gene"))
+  var_eitems <- pcgrr::deduplicate_eitems(
+    var_eitems = var_eitems,
+    target_type = "exact",
+    target_other =
+      c("codon", "exon", "gene"))
 
-  var_eitems <- pcgrr::deduplicate_eitems(var_eitems = var_eitems,
-                                          target_type = "codon",
-                                          target_other =
-                                            c("exon", "gene"))
+  var_eitems <- pcgrr::deduplicate_eitems(
+    var_eitems = var_eitems,
+    target_type = "codon",
+    target_other =
+      c("exon", "gene"))
 
   ## log the types and number of clinical
   ## evidence items found (exact / codon / exon)
@@ -2046,12 +2093,16 @@ get_germline_biomarkers <- function(sample_calls,
   if (nrow(all_var_evidence_items) > 0) {
     for (type in c("prognostic", "diagnostic", "predictive", "predisposing")) {
       clin_eitems_list[[type]] <- all_var_evidence_items %>%
-        dplyr::filter(.data$EVIDENCE_TYPE == stringr::str_to_title(.data$type)) %>%
+        dplyr::filter(.data$EVIDENCE_TYPE == stringr::str_to_title(type)) %>%
         dplyr::arrange(.data$EVIDENCE_LEVEL, .data$RATING) %>%
-        dplyr::select(.data$SYMBOL, .data$GENE_NAME, .data$CANCER_TYPE, .data$CLINICAL_SIGNIFICANCE,
-                      .data$EVIDENCE_LEVEL, .data$RATING, .data$EVIDENCE_DIRECTION, .data$CITATION,
-                      .data$THERAPEUTIC_CONTEXT, .data$EVIDENCE_TYPE, .data$DESCRIPTION, .data$BIOMARKER_MAPPING,
-                      .data$CDS_CHANGE, .data$LOSS_OF_FUNCTION, .data$GENOMIC_CHANGE) %>%
+        dplyr::select(.data$SYMBOL, .data$GENE_NAME,
+                      .data$CANCER_TYPE, .data$CLINICAL_SIGNIFICANCE,
+                      .data$EVIDENCE_LEVEL, .data$RATING,
+                      .data$EVIDENCE_DIRECTION, .data$CITATION,
+                      .data$THERAPEUTIC_CONTEXT, .data$EVIDENCE_TYPE,
+                      .data$DESCRIPTION, .data$BIOMARKER_MAPPING,
+                      .data$CDS_CHANGE, .data$LOSS_OF_FUNCTION,
+                      .data$GENOMIC_CHANGE) %>%
         dplyr::distinct()
     }
   }
