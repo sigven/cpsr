@@ -1676,7 +1676,7 @@ retrieve_secondary_calls <- function(calls, umls_map) {
   secondary_calls <- calls %>%
     ## do not consider secondary variant findings if
     ## genotypes have not been retrieved properly
-    dplyr::filter(!is.na(GENOTYPE) & !is.na(SYMBOL))
+    dplyr::filter(!is.na(.data$GENOTYPE) & !is.na(.data$SYMBOL))
 
 
   if(nrow(secondary_calls) == 0){
@@ -1697,7 +1697,7 @@ retrieve_secondary_calls <- function(calls, umls_map) {
     ## only homozygotes p.Cys282Tyr HFE carriers
     dplyr::filter(.data$SYMBOL != "HFE" |
                     (.data$SYMBOL == "HFE" &
-                       (!is.na(PROTEIN_CHANGE) &
+                       (!is.na(.data$PROTEIN_CHANGE) &
                           stringr::str_detect(.data$PROTEIN_CHANGE,"Cys282Tyr")) &
                        .data$GENOTYPE == "homozygous"))
 
