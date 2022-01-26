@@ -8,6 +8,7 @@ on:
 env:
   atoken: ${{ secrets.ANACONDA_UPLOAD_TOKEN }}
   recipe_path: conda/recipe
+  env_yml_path: conda/env/yml
 jobs:
   build_conda_pkgs:
     # When merging to one of the branches above and the commit message matches
@@ -34,3 +35,33 @@ jobs:
       - name: Build + upload cpsr conda pkg
         run: |
           conda mambabuild ${recipe_path}/cpsr -c pcgr -c conda-forge -c bioconda --token ${atoken}
+
+  pkgdown_site:
+    name: Deploy pkgdown website
+    runs-on: ubuntu-latest
+    needs: build_conda_pkgs
+    defaults:
+      run:
+        shell: bash -l {0}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up miniconda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-update-conda: true
+          auto-activate-base: true
+          activate-environment: ""
+          mamba-version: "*"
+          channels: "pcgr,conda-forge,bioconda"
+      - name: Install conda packages
+        run: mamba env create -n pkgdown -f ${env_yml_path}/pkgdown.yml
+      - name: Publish pkgdown website
+        run: |
+            git config --local user.email "actions@github.com"
+            git config --local user.name "GitHub Actions"
+            conda activate pkgdown
+            printf "cpsr version:\n"
+            Rscript -e "packageVersion('cpsr')"
+            Rscript -e "pkgdown::deploy_to_branch(pkg = '.', commit_message = paste(pkgdown:::construct_commit_message('.'), '- see https://sigven.github.io/cpsr/'), branch = 'gh-pages', new_process = FALSE)"
+

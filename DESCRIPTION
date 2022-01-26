@@ -5,17 +5,22 @@ Version: 0.7.2
 Authors@R:
     c(person(given = "Sigve",
              family = "Nakken",
-             role = c("aut", "cre"),
+             role = c("aut"),
              email = "sigven@ifi.uio.no",
-             comment = c(ORCID = "0000-0001-8468-2050")))
-Maintainer: Sigve Nakken <sigven@ifi.uio.no>
-URL: https://github.com/sigven/cpsr
+             comment = c(ORCID = "0000-0001-8468-2050")),
+      person(given = "Peter",
+             family = "Diakumis",
+             role = c("ctb", "cre"),
+             email = "peterdiakumis@gmail.com",
+             comment = c(ORCID = "0000-0002-7502-7545")))
+Maintainer: Sigve Nakken <sigven@ifi.uio.no>, Peter Diakumis <peterdiakumis@gmail.com>
+URL: https://github.com/sigven/cpsr,
+    https://sigven.github.io/cpsr/
 BugReports: https://github.com/sigven/cpsr/issues
 Description: CPSR is a computational workflow that interprets germline variants identified from
              next-generation sequencing in the context of cancer predisposition. The workflow is
              integrated with the framework that underlies the Personal Cancer Genome Reporter
-             (PCGR) (https://github.com/sigven/pcgr), utilizing the Docker environment for
-             encapsulation of code and software dependencies. While PCGR is intended for reporting
+             (PCGR - https://github.com/sigven/pcgr). While PCGR is intended for reporting
              and analysis of somatic variants detected in a tumor, CPSR is intended for reporting
              and ranking of germline variants in protein-coding genes that are implicated in cancer
              predisposition and inherited cancer syndromes.

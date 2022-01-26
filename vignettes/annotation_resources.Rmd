@@ -1,0 +1,33 @@
+---
+title: "Annotation resources"
+output: rmarkdown::html_document
+---
+
+### Basic variant consequence annotation
+  * [VEP v105](http://www.ensembl.org/info/docs/tools/vep/index.html) - Variant Effect Predictor ([GENCODE v39](https://www.gencodegenes.org/human/) as gene reference database (v19 for grch37))
+
+###  *Insilico* predictions of effect of coding variants
+  * [dBNSFP](https://sites.google.com/site/jpopgen/dbNSFP) - database of non-synonymous functional predictions (v4.2, March 2021)
+
+###  Variant frequency databases
+  * [gnomAD](http://exac.broadinstitute.org/) - germline variant frequencies exome-wide (r2.1, October 2018)
+  * [dbSNP](http://www.ncbi.nlm.nih.gov/SNP/) - database of short genetic variants (build 154)
+  * [Cancer Hotspots](http://cancerhotspots.org) - a resource for statistically significant mutations in cancer (v2, 2017)
+
+### Variant databases of clinical utility
+  * [ClinVar](http://www.ncbi.nlm.nih.gov/clinvar/) - database of clinically related variants (January 2022)
+  * [CIViC](https://civicdb.org) - clinical interpretations of variants in cancer (January 18th 2022)
+
+### Protein domains/functional features
+  * [UniProt/SwissProt KnowledgeBase](http://www.uniprot.org) - resource on protein sequence and functional information (2021_04, November 2021)
+  * [Pfam](http://pfam.xfam.org) - database of protein families and domains (v35.0, November 2021)
+
+### Cancer gene knowledge bases
+  * [CancerMine](http://bionlp.bcgsc.ca/cancermine/) - Literature-mined database of tumor suppressor genes/proto-oncogenes (v42, December 2021)
+  * [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk) - cancer phenotype panels as of January 18th 2022
+
+
+### Phenotype ontologies
+  * [UMLS/MedGen](https://www.ncbi.nlm.nih.gov/medgen/)
+  * [Disease Ontology](https://disease-ontology.org/) - December 15th 2021
+  * [Experimental Factor Ontology](https://github.com/EBISPOT/efo) - v3.37.0
