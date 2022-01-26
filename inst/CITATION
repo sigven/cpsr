@@ -1,0 +1,29 @@
+citHeader("To cite CPSR in publications use:")
+
+citEntry(
+  entry = "Article",
+  title = "Cancer Predisposition Sequencing Reporter (CPSR): A flexible variant report engine for high-throughput germline screening in cancer",
+  author = personList(
+    as.person("Sigve Nakken"),
+    as.person("Vladislav Saveliev"),
+    as.person("Oliver Hofmann"),
+    as.person("Pål Møller"),
+    as.person("Ola Myklebost"),
+    as.person("Eivind Hovig")
+  ),
+  journal = "Int. J. Cancer",
+  year = "2021",
+  month = "dec",
+  volume = "149",
+  number = "11",
+  pages = "1955-1960",
+  url = "http://dx.doi.org/10.1002/ijc.33749",
+  textVersion  = paste0(
+    "Sigve Nakken, Vladislav Saveliev, Oliver Hofmann, ",
+    "Pål Møller, Ola Myklebost, and Eivind Hovig. ",
+    "Cancer Predisposition Sequencing Reporter ({CPSR)}: A flexible ",
+    "variant report engine for high-throughput germline screening in cancer. ",
+    "Int. J. Cancer. ",
+    "149(11):1955–1960. doi:10.1002/ijc.33749"
+  )
+)

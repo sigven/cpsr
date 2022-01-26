@@ -14,3 +14,6 @@
 ^docs$
 ^example\.vcf\.gz$
 ^example\.vcf\.gz.tbi$
+^pkgdown/_pkgdown\.yml$
+^pkgdown$
+^_pkgdown\.yml$
