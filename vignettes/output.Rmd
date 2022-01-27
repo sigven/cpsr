@@ -69,15 +69,6 @@ The interactive datatables contain a number of hyperlinked annotations similar t
 * GENOME_VERSION - Genome assembly
 
 
-### Example report
-* [Cancer predisposition genome report report](http://insilico.hpc.uio.no/pcgr/example_reports/cpsr/0.6.2/SAMPLE-001.cpsr.grch37.html)
-
-The HTML reports have been tested using the following browsers:
-
-* Safari (Version 14.1.1 (16611.2.7.1.4))
-* Mozilla Firefox (83.0)
-* Google Chrome (Version 90.0.4430.2127 (Official Build) (x86_64))
-
 ### JSON
 
 A JSON file (gzipped) that stores the HTML report content is provided. This file will easen the process of extracting particular parts of the report for further analysis.
@@ -88,9 +79,7 @@ This file can be used as input to [PCGR](https://github.com/sigven/pcgr), in ord
 
 At present, there is no detailed schema documented for the JSON structure.
 
-### Output files - germline SNVs/InDels
-
-#### Variant call format - VCF
+### Variant call format - VCF
 
 A VCF file containing annotated, germline calls (single nucleotide variants and insertion/deletions) is generated with the following naming convention:
 
@@ -319,9 +308,8 @@ Here, the __sample_id__ is provided as input by the user, and reflects a unique 
   - OPENTARGETS_TRACTABILITY_COMPOUND - Confidence for the existence of a modulator (small molecule) that interacts with the target to elicit a desired biological effect
   - OPENTARGETS_TRACTABILITY_ANTIBODY - Confidence for the existence of a modulator (antibody) that interacts with the target to elicit a desired biological effect
 
-#### Tab-separated values (TSV)
+### Tab-separated values (TSV)
 
-##### Annotated List of all SNVs/InDels
 We provide a tab-separated values file with most important variant/gene annotations. The file has the following naming convention:
 
 <*sample_id*>.**cpsr**.<*genome_assembly*>.**snvs_indels.tiers.tsv**

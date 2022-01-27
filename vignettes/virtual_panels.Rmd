@@ -66,9 +66,9 @@ The cancer predisposition report can show variants found in a number of well-kno
      * [42 = Upper gastrointestinal cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/273/)
 
 
-### Panel 0
+## Panel 0
 
-[Download the complete set of CPSR superpanel genes, grch37/grch38 versions (xlsx)](https://github.com/sigven/cpsr/raw/master/cpsr_superpanel_0.6.2.xlsx)
+[Download the complete set of CPSR superpanel genes, grch37/grch38 versions (xlsx)](https://sigven.github.io/cpsr/cpsr_superpanel_2022_01.xlsx)
 
 
 |  no | gene_link                                                                          | entrezgene | ensembl_gene_id | moi       | mod | gene_name                                                                                         | source                                           | phenotype_syndrome_term                                                                                                                      |

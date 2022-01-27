@@ -1,5 +1,7 @@
 url: https://sigven.github.io/cpsr/
 title: CPSR
+toc:
+  depth: 3
 template:
   bootstrap: 5
   bootswatch: flatly

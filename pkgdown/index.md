@@ -1,6 +1,8 @@
 <br><br>
 
-## Cancer Predisposition Sequencing Reporter
+### Cancer Predisposition Sequencing Reporter {.unlisted}
+
+<br>
 
 The *Cancer Predisposition Sequencing Reporter (CPSR)* is a computational workflow that **interprets germline variants** identified from next-generation sequencing **in the context of cancer predisposition**. The workflow is integrated with the framework that underlies [Personal Cancer Genome Reporter - PCGR ](https://github.com/sigven/pcgr). While *PCGR* is primarily intended for reporting and analysis of somatic variants detected in a tumor, *CPSR* is intended for reporting and ranking of germline variants in protein-coding genes that are implicated in cancer predisposition and inherited cancer syndromes.
 
@@ -44,10 +46,11 @@ The variant sets can be interactively explored and filtered further through diff
 
 ### Getting started
 
-- [Install CPSR](articles/installation.html)
+- [Installation instructions](articles/installation.html)
 - [Run through an example](articles/running.html#example-run)
 - Learn more about
-   1) Details regarding [CPSR input files](articles/input.html) 
+
+   1) Details regarding [CPSR input files](articles/input.html), and how they should be formatted 
    2) The types of [CPSR output files](articles/output.html)
    3) [ACMG variant classification procedure](articles/variant_classification.html) used in CPSR
    4) The list of [virtual gene panels](articles/virtual_panels.html) available in CPSR
