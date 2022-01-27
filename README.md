@@ -10,7 +10,7 @@ Snapshots of sections in the cancer predisposition genome report:
 
 ## News
 
--   *January 2022*: **0.7.3 release**
+-   *January 2022*: **x.x.x release**
 
     -   Complete restructure of code and Conda installation routines
     -   Updated bundle (ClinVar, CancerMine, UniprotKB, PanelApp, CIViC, GWAS catalog)

@@ -25,7 +25,7 @@ The variant sets can be interactively explored and filtered further through diff
 
 ### News
 
-* *January 2022*: **0.7.2 release**
+* *January 2022*: **x.x.x release**
   * Complete restructure of code and Conda installation routines
   * Updated bundle (ClinVar, CancerMine, UniprotKB, PanelApp, CIViC, GWAS catalog)
   * Software upgrade (VEP, R/BioConductor)
