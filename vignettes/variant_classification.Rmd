@@ -3,11 +3,6 @@ title: "Variant classification"
 output: rmarkdown::html_document
 ---
 
-<br>
-
-### ACMG/AMP variant classification
-
-
 All coding, <b>non-ClinVar</b> variants in the set of genes subject to screening have been classified according to a <i>standard, five-level pathogenicity scheme</i> (coined <b>CPSR_CLASSIFICATION</b>). The scheme has the same five levels as those employed by ClinVar, i.e.
 
 * pathogenic (**P**)

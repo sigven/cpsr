@@ -5,12 +5,12 @@ Version: 0.7.2
 Authors@R:
     c(person(given = "Sigve",
              family = "Nakken",
-             role = c("aut"),
+             role = c("aut", "cre"),
              email = "sigven@ifi.uio.no",
              comment = c(ORCID = "0000-0001-8468-2050")),
       person(given = "Peter",
              family = "Diakumis",
-             role = c("ctb", "cre"),
+             role = c("aut","ctb"),
              email = "peterdiakumis@gmail.com",
              comment = c(ORCID = "0000-0002-7502-7545")))
 Maintainer: Sigve Nakken <sigven@ifi.uio.no>, Peter Diakumis <peterdiakumis@gmail.com>
