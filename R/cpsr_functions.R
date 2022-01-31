@@ -1733,28 +1733,30 @@ retrieve_secondary_calls <- function(calls, umls_map) {
       }
     }
 
-    secondary_calls_per_trait <-
-      tidyr::separate_rows(secondary_calls, .data$CLINVAR_UMLS_CUI, sep = ",") %>%
-      dplyr::select(.data$VAR_ID, .data$CLINVAR_UMLS_CUI) %>%
-      dplyr::left_join(umls_map, by = c("CLINVAR_UMLS_CUI" = "cui")) %>%
-      dplyr::rename(CLINVAR_PHENOTYPE = .data$cui_name) %>%
-      dplyr::group_by(.data$VAR_ID) %>%
-      dplyr::summarise(CLINVAR_PHENOTYPE =
-                         paste(unique(.data$CLINVAR_PHENOTYPE), collapse="; ")) %>%
-      dplyr::distinct()
+    if(nrow(secondary_calls) > 0){
+      secondary_calls_per_trait <-
+        tidyr::separate_rows(secondary_calls, .data$CLINVAR_UMLS_CUI, sep = ",") %>%
+        dplyr::select(.data$VAR_ID, .data$CLINVAR_UMLS_CUI) %>%
+        dplyr::left_join(umls_map, by = c("CLINVAR_UMLS_CUI" = "cui")) %>%
+        dplyr::rename(CLINVAR_PHENOTYPE = .data$cui_name) %>%
+        dplyr::group_by(.data$VAR_ID) %>%
+        dplyr::summarise(CLINVAR_PHENOTYPE =
+                           paste(unique(.data$CLINVAR_PHENOTYPE), collapse="; ")) %>%
+        dplyr::distinct()
 
-    secondary_calls <-
-      dplyr::inner_join(
-        secondary_calls,
-        dplyr::select(secondary_calls_per_trait,
-                      .data$VAR_ID, .data$CLINVAR_PHENOTYPE),
-        by = c("VAR_ID" = "VAR_ID"))
+      secondary_calls <-
+        dplyr::inner_join(
+          secondary_calls,
+          dplyr::select(secondary_calls_per_trait,
+                        .data$VAR_ID, .data$CLINVAR_PHENOTYPE),
+          by = c("VAR_ID" = "VAR_ID"))
 
-    pcgrr::log4r_info(paste0(
-      "Found n = ",
-      nrow(secondary_calls),
-      " variants in genes recommended for return as ",
-      "secondary findings from clinical sequencing"))
+      pcgrr::log4r_info(paste0(
+        "Found n = ",
+        nrow(secondary_calls),
+        " variants in genes recommended for return as ",
+        "secondary findings from clinical sequencing"))
+    }
 
   }
 
