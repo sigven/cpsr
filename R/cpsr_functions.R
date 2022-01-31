@@ -1725,7 +1725,7 @@ retrieve_secondary_calls <- function(calls, umls_map) {
 
     if(nrow(genes_lacking_twohit_evidence) > 0){
       genes_lacking_twohit_evidence <- genes_lacking_twohit_evidence %>%
-        dplyr::inner_join(min_two_variants_required)
+        dplyr::inner_join(min_two_variants_required, by = "SYMBOL")
 
       if(nrow(genes_lacking_twohit_evidence) > 0){
         secondary_calls <- secondary_calls %>%
