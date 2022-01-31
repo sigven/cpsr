@@ -1,7 +1,7 @@
 ---
 title: "Cancer Predisposition Genome Report by CPSR"
 date: '`r strftime(Sys.time(), format = "%B %d, %Y")`'
-bibliography: bibliography.bib
+bibliography: cpsr_bibliography.bib
 nocite: |
   @Huang2018-ah, @Richards2015-kj, @Maxwell2016-mr, @Amendola2016-pu, @Griffith2017-do, @Martin2019-nq, @Nykamp2017-rj
 output: html_document
