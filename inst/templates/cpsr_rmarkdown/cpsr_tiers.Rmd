@@ -458,7 +458,7 @@ if(missing_class_items[['class3']][['ClinVar']] == T & missing_class_items[['cla
 
 htmltools::br()
 
-cat('<ul><li><b>IMPORTANT NOTE:</b> Non-ClinVar variants with a CPSR pathogenicity score of 2.0 (maximum score for VUS in CPSR) represent the most challenging collection of variants when it comes to classification. Based on calibration of classification score thresholds with high-confident ClinVar variants, we discovered a heterogeneous mix of _Likely Pathogenic_, _Pathogenic_, and _VUS_ variants that were all attributed with this score. Henceforth, we recommend that these variants should be prioritized for careful examination, and any such cases are <mark style="background-color:#ff7518; font-weight:bold; color:black">conveniently higlighted</mark> in the table below</li></ul>:\n')
+cat('<ul><li><b>IMPORTANT NOTE:</b> Non-ClinVar variants with a CPSR pathogenicity score of 2.0 (maximum score for VUS in CPSR) represent the most challenging collection of variants when it comes to classification. Based on calibration of classification score thresholds with high-confident ClinVar variants, we discovered a heterogeneous mix of _Likely Pathogenic_, _Pathogenic_, and _VUS_ variants that were all attributed with this score. Henceforth, we recommend that these variants should be prioritized for careful examination, and any such cases are <mark style="background-color:#ff7518; font-weight:bold; color:black">conveniently higlighted</mark> in the table below.</li></ul>\n')
 
 htmltools::br()
 ```
