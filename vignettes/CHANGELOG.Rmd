@@ -7,6 +7,7 @@ output: rmarkdown::html_document
 
 * Data updates: ClinVar, GWAS catalog, CIViC, CancerMine, KEGG, Disease Ontology/EFO, Open Targets Platform, UniProt KB, GENCODE
 * Improved detection of secondary variant findings
+* CPSR is now implemented as a dedicated R package, depending also on the [pcgrr](https://github.com/sigven/pcgr/tree/master/pcgrr) R package. Running the complete CPSR workflow relies upon installation of [PCGR](https://github.com/sigven/pcgr).
 
 ## 0.6.2 - June 30th 2021
 

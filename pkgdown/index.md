@@ -51,7 +51,7 @@ The variant sets can be interactively explored and filtered further through diff
 - Learn more about
 
    1) Details regarding [CPSR input files](articles/input.html), and how they should be formatted 
-   2) The types of [CPSR output files](articles/output.html)
+   2) The types and contents of [CPSR output files](articles/output.html)
    3) [ACMG variant classification procedure](articles/variant_classification.html) used in CPSR
    4) The list of [virtual gene panels](articles/virtual_panels.html) available in CPSR
 
