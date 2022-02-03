@@ -165,6 +165,10 @@ Here, the __sample_id__ is provided as input by the user, and reflects a unique 
   - ENSEMBL_TRANSCRIPT_ID - Ensembl transcript identifier for VEP's picked transcript (*ENSTXXXXXX*)
   - ENSEMBL_PROTEIN_ID - Ensembl corresponding protein identifier for VEP's picked transcript
   - REFSEQ_MRNA - Corresponding RefSeq transcript(s) identifier for VEP's picked transcript (*NM_XXXXX*)
+  - TRANSCRIPT_MANE_SELECT - MANE select transcript identifer: one high-quality representative transcript per protein-coding gene that is well-supported by experimental data and represents the biology of the gene
+  - TRANSCRIPT_MANE_PLUS_CLINICAL - transcripts chosen to supplement MANE Select when needed for clinical variant reporting
+  - GENCODE_TAG - tag for gencode transcript (basic etc)
+  - GENCODE_TRANSCRIPT_TYPE - type of transcript (protein-coding etc.)
   - CORUM_ID - Associated protein complexes (identifiers) from [CORUM](http://mips.helmholtz-muenchen.de/corum/)
   - TUMOR_SUPPRESSOR - Indicates whether gene is predicted as a tumor suppressor gene, from Network of Cancer Genes (NCG) & the CancerMine text-mining resource
   - TUMOR_SUPPRESSOR_EVIDENCE - Underlying evidence for gene being a tumor suppressor. Format: NCG:<TRUE|FALSE>&CancerMine:<LC|MC|HC>:num_citations
@@ -172,7 +176,7 @@ Here, the __sample_id__ is provided as input by the user, and reflects a unique 
   - ONCOGENE_EVIDENCE - Underlying evidence for gene being an oncogene. Format: NCG:<TRUE|FALSE>&CancerMine:<LC|MC|HC>:num_citations
   - CANCER_SUSCEPTIBILITY_CUI - MedGen concept unique identifier (CUI) for cancer phenotype
   - CANCER_SYNDROME_CUI - MedGen concept unique identifier (CUI) for cancer syndrome
-  - CANCER_PREDISPOSITION_SOURCE - Data source for susceptibility gene (panel *0*: NCGC, CGC_91, TCGA_PANCAN, PANEL_APP, OTHER)
+  - CANCER_PREDISPOSITION_SOURCE - Data source for susceptibility gene (panel *0*: NCGC, CGC_94, TCGA_PANCAN, PANEL_APP, OTHER)
   - CANCER_PREDISPOSITION_MOI - Mode of inheritance for susceptibility gene (AR/AD)
   - CANCER_PREDISPOSITION_MOD - Mechanism of disease for susceptibility gene (Lof/GoF)
   - PROB_EXAC_LOF_INTOLERANT - dbNSFP_gene: the probability of being loss-of-function intolerant (intolerant of both heterozygous and homozygous lof variants) based on ExAC r0.3 data

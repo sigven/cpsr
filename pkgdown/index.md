@@ -15,7 +15,7 @@ Snapshots of sections in the cancer predisposition genome report:
 The software performs extensive variant annotation on the selected geneset and produces an interactive HTML report, in which the user can investigate:
 
 * __ClinVar variants__ - pre-classified variants according to a five-level tier scheme in ClinVar (Pathogenic to Benign)
-* __Non-ClinVar variants__ - classified by CPSR through ACMG criteria (variant frequency levels and functional effects) into to a five-level tier scheme (Pathogenic to Benign)
+* __Novel variants__ - classified by CPSR through ACMG criteria (variant frequency levels and functional effects) into to a five-level tier scheme (Pathogenic to Benign)
 * __Variant biomarkers__ - cancer predisposition variants with reported implications for prognosis, diagnosis or therapeutic regimens
 * __Secondary findings (optional)__ - pathogenic ClinVar variants in the [ACMG recommended list for reporting of secondary findings](https://www.ncbi.nlm.nih.gov/clinvar/docs/acmg/)
 * __GWAS hits (optional)__ - variants overlapping with previously identified hits in genome-wide association studies (GWAS) of cancer phenotypes (i.e. low to moderate risk conferring alleles), using [NHGRI-EBI Catalog of published genome-wide association studies](https://www.ebi.ac.uk/gwas/) as the underlying source.
@@ -25,8 +25,8 @@ The variant sets can be interactively explored and filtered further through diff
 
 ### News
 
-* *January 2022*: **x.x.x release**
-  * Complete restructure of code and Conda installation routines
+* *February 2022*: **x.x.x release**
+  * Complete restructure of code and Conda installation routines, contributed largely by the great [@pdiakumis](https://github.com/pdiakumis)
   * Updated bundle (ClinVar, CancerMine, UniprotKB, PanelApp, CIViC, GWAS catalog)
   * Software upgrade (VEP, R/BioConductor)
   * New documentation site (https://sigven.github.io/cpsr)
