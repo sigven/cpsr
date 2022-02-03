@@ -15,7 +15,12 @@ Snapshots of sections in the cancer predisposition genome report:
 -   *February 2022*: **x.x.x release**
 
     -   Complete restructure of code and Conda installation routines, contributed largely by the great [@pdiakumis](https://github.com/pdiakumis)
-    -   Updated bundle (ClinVar - Jan 2022, CancerMine, UniprotKB - Nov 2021, PanelApp, CIViC - Feb 2022, GWAS catalog - Dec 2021)
+    -   Updated data bundle
+        - ClinVar - Feb 2022
+        - CancerMine - Dec 2021
+        - UniprotKB - Nov 2021
+        - CIViC - Feb 2022
+        - GWAS catalog - Dec 2021
     -   Software upgrade (VEP 105, R/BioConductor)
     -   New documentation site ([https://sigven.github.io/cpsr](https://sigven.github.io/cpsr))
 

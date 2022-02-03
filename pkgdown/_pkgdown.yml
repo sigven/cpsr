@@ -8,6 +8,8 @@ template:
 authors:
   Sigve Nakken:
     href: https://github.com/sigven
+  Peter Diakumis:
+    href: https://github.com/pdiakumis
 navbar:
   structure:
     left:  [home, installation, running, articles, changelog]
