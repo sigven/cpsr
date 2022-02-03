@@ -10,7 +10,7 @@ authors:
     href: https://github.com/sigven
 navbar:
   structure:
-    left:  [home, installation, running, articles, news]
+    left:  [home, installation, running, articles, changelog]
     right: [reference, search, github]
   components:
     home:
@@ -35,6 +35,9 @@ navbar:
         href: articles/output.html
       - text: Annotation resources
         href: articles/annotation_resources.html
+    changelog:
+      text: CHANGELOG
+      href: articles/CHANGELOG.html
 
 home:
   sidebar:

@@ -1,7 +1,14 @@
+---
+title: "Changelog"
+output: rmarkdown::html_document
+---
 
-## CHANGELOG
+## x.x.x - February 2022
 
-#### 0.6.2 - June 30th 2021
+* Data updates: ClinVar, GWAS catalog, CIViC, CancerMine, KEGG, Disease Ontology/EFO, Open Targets Platform, UniProt KB, GENCODE
+* Improved detection of secondary variant findings
+
+## 0.6.2 - June 30th 2021
 
 * Data updates: ClinVar, PanelApp, GWAS catalog, CIViC, CancerMine, dbNSFP, KEGG, Disease Ontology/EFO, Open Targets Platform, UniProt KB, GENCODE
 * Software upgrades: R v4.1, Bioconductor v3.13, VEP (104) ++
@@ -37,7 +44,7 @@
 * Command-line Options
    * `--conf` - configuration file
 
-#### 0.6.1 - November 30th 2020
+## 0.6.1 - November 30th 2020
 
 ##### Added
 
@@ -56,7 +63,7 @@
  - Option `--incidental_findings` changed back to `--secondary_findings` - recommended term to use according to ACMG
  - Removed _MOD (mechanism-of-disease)_ from TSV output file
 
-#### 0.6.0rc - September 24th 2020
+## 0.6.0rc - September 24th 2020
 
 - Data updates: ClinVar, GWAS catalog, GENCODE, CIViC, CancerMine, UniProt KB, dbNSFP, Pfam, KEGG, Open Targets Platform, Genomics England PanelApp
 - Software updates: VEP 101
@@ -87,7 +94,7 @@
   * Improved documentation of variant classification in the __References__ section
   * DOIs available for all references
 
-#### 0.5.2 - November 18th 2019
+## 0.5.2 - November 18th 2019
 
 ##### Changed
   * Definition of pathogenic range (wrt to variant frequency) takes into account population- and position-specific allele numbers - no longer defined only by allele counts (i.e. *AC*) but by *AC* and *AN*
@@ -96,13 +103,13 @@
 ##### Added
   * Ability to analyze custom panels, provided through option `--custom_panel`. Needs to be defined as BED file with four columns, i.e. chromosome, start, stop, genesymbol
 
-#### 0.5.1 - October 14th 2019
+## 0.5.1 - October 14th 2019
 
 ##### Fixed
   * Bug in `cpsr_validate_input.py`, [GitHub Issue](https://github.com/sigven/cpsr/issues/18)
   * Bug when there are zero variants with a 'PASS' status in VCF - omitting report generation
 
-#### 0.5.0 - September 23rd 2019
+## 0.5.0 - September 23rd 2019
 
 ##### Fixed
   * Bug in implementation of ACMG criteria; genes without a known loss-of-function mechanism were handled inappropriately
