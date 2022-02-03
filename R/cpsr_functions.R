@@ -295,6 +295,7 @@ generate_cpsr_report <- function(project_directory = NULL,
             cpg_call_stats[["v_stat_cpg"]][["n_noncoding"]]))
 
 
+        ## Get secondary variant calls
         secondary_calls <-
           retrieve_secondary_calls(
             calls,
@@ -422,19 +423,20 @@ generate_cpsr_report <- function(project_directory = NULL,
 
         ## secondary findings
         if (cpsr_config[["secondary_findings"]] == TRUE) {
+          pcgrr::log4r_info(paste0("Assignment of other variants in genes ",
+                                   "recommended for reporting as secondary ",
+                                   "findings (ACMG SF v3.0)"))
           if (nrow(secondary_calls) > 0) {
-              pcgrr::log4r_info(paste0("Assignment of other variants in genes ",
-                              "recommended for reporting as secondary ",
-                              "findings (ACMG SF v3.0)"))
             cps_report[["content"]][["snv_indel"]][["disp"]][["secondary"]] <-
               secondary_calls %>%
               dplyr::arrange(.data$LOSS_OF_FUNCTION, .data$CODING_STATUS) %>%
               dplyr::select(dplyr::one_of(cpsr_sf_display_cols))
-            pcgrr::log4r_info(paste0(
-              "Number of pathogenic variants in the ACMG secondary findings list - other ",
-              "genes of clinical significance: ",
-              cps_report[["content"]][["snv_indel"]][["v_stat_secondary"]][["n_coding"]]))
+
           }
+          pcgrr::log4r_info(paste0(
+            "Number of pathogenic variants in the ACMG secondary findings list - other ",
+            "genes of clinical significance: ",
+            cps_report[["content"]][["snv_indel"]][["v_stat_secondary"]][["n_coding"]]))
         }
 
         cps_report[["content"]][["snv_indel"]][["eval"]] <- TRUE
@@ -1680,6 +1682,11 @@ retrieve_secondary_calls <- function(calls, umls_map) {
 
 
   if(nrow(secondary_calls) == 0){
+    # pcgrr::log4r_info(paste0(
+    #   "Found n = ",
+    #   nrow(secondary_calls),
+    #   " variants in genes recommended for return as ",
+    #   "secondary findings from clinical sequencing"))
     return(secondary_calls)
   }
 
@@ -1751,14 +1758,15 @@ retrieve_secondary_calls <- function(calls, umls_map) {
                         .data$VAR_ID, .data$CLINVAR_PHENOTYPE),
           by = c("VAR_ID" = "VAR_ID"))
 
-      pcgrr::log4r_info(paste0(
-        "Found n = ",
-        nrow(secondary_calls),
-        " variants in genes recommended for return as ",
-        "secondary findings from clinical sequencing"))
     }
 
   }
+
+  # pcgrr::log4r_info(paste0(
+  #   "Found n = ",
+  #   nrow(secondary_calls),
+  #   " variants in genes recommended for return as ",
+  #   "secondary findings from clinical sequencing"))
 
   return(secondary_calls)
 
