@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">CPSR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.5</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,6 +53,9 @@
     <a class="dropdown-item" href="../articles/output.html">Output files</a>
     <a class="dropdown-item" href="../articles/annotation_resources.html">Annotation resources</a>
   </div>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="../articles/CHANGELOG.html">CHANGELOG</a>
 </li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
@@ -431,6 +434,15 @@ picked transcript (<em>ENSTXXXXXX</em>)</li>
 VEP’s picked transcript</li>
 <li>REFSEQ_MRNA - Corresponding RefSeq transcript(s) identifier for
 VEP’s picked transcript (<em>NM_XXXXX</em>)</li>
+<li>TRANSCRIPT_MANE_SELECT - MANE select transcript identifer: one
+high-quality representative transcript per protein-coding gene that is
+well-supported by experimental data and represents the biology of the
+gene</li>
+<li>TRANSCRIPT_MANE_PLUS_CLINICAL - transcripts chosen to supplement
+MANE Select when needed for clinical variant reporting</li>
+<li>GENCODE_TAG - tag for gencode transcript (basic etc)</li>
+<li>GENCODE_TRANSCRIPT_TYPE - type of transcript (protein-coding
+etc.)</li>
 <li>CORUM_ID - Associated protein complexes (identifiers) from <a href="http://mips.helmholtz-muenchen.de/corum/" class="external-link">CORUM</a>
 </li>
 <li>TUMOR_SUPPRESSOR - Indicates whether gene is predicted as a tumor
@@ -450,7 +462,7 @@ for cancer phenotype</li>
 <li>CANCER_SYNDROME_CUI - MedGen concept unique identifier (CUI) for
 cancer syndrome</li>
 <li>CANCER_PREDISPOSITION_SOURCE - Data source for susceptibility gene
-(panel <em>0</em>: NCGC, CGC_91, TCGA_PANCAN, PANEL_APP, OTHER)</li>
+(panel <em>0</em>: NCGC, CGC_94, TCGA_PANCAN, PANEL_APP, OTHER)</li>
 <li>CANCER_PREDISPOSITION_MOI - Mode of inheritance for susceptibility
 gene (AR/AD)</li>
 <li>CANCER_PREDISPOSITION_MOD - Mechanism of disease for susceptibility
@@ -858,7 +870,7 @@ file with data from other INFO tags in the input VCF (i.e. using the
     <footer><div class="pkgdown-footer-left">
   <p></p>
 <p>Developed by <a href="https://github.com/sigven" class="external-link">Sigve Nakken</a>,
-Peter Diakumis.</p>
+<a href="https://github.com/pdiakumis" class="external-link">Peter Diakumis</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
