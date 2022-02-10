@@ -1,10 +1,10 @@
 # Cancer Predisposition Sequencing Reporter (CPSR)
 
-The *Cancer Predisposition Sequencing Reporter (CPSR)* is a computational workflow that **interprets and classifies germline DNA variants** identified from next-generation sequencing **in the context of cancer predisposition**.
+The *Cancer Predisposition Sequencing Reporter (CPSR)* is a computational workflow that **interprets and classifies germline DNA variants** identified from next-generation sequencing **in the context of cancer predisposition and inherited cancer syndromes**. The workflow can also report **incidental findings (ACMG v3.0)** as well as the genotypes of common germline variants associated with cancer risk, as reported in the **NHGRI-EBI GWAS catalog**.
 
-The CPSR workflow is integrated with the framework that underlies the [Personal Cancer Genome Reporter - PCGR](https://github.com/sigven/pcgr). While *PCGR* is intended for reporting and analysis of somatic variants detected in a tumor, *CPSR* is intended for reporting and ranking of germline variants in protein-coding genes that are implicated in cancer predisposition and inherited cancer syndromes. The workflow can also report **incidental findings (ACMG v3.0)** as well as the genotypes of common germline variants associated with cancer risk, as reported in the **NHGRI-EBI GWAS catalog**.
+The CPSR workflow is integrated with the framework that underlies the [Personal Cancer Genome Reporter - PCGR](https://github.com/sigven/pcgr). While *PCGR* is intended for reporting and analysis of somatic variants detected in a tumor, 
 
-*CPSR* accepts a query file from a single case/patient, containing raw germline variant calls encoded in the [VCF](https://samtools.github.io/hts-specs/VCFv4.2.pdf) format (i.e. SNVs/InDels). A comprehensive set of **virtual cancer predisposition gene panels** harvested from the [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk/) allow the user to flexibly put a restriction on which genes and findings are displayed in the cancer predisposition report.
+*CPSR* accepts a query file from a single case/patient, containing raw germline variant calls encoded in the [VCF](https://samtools.github.io/hts-specs/VCFv4.2.pdf) format (i.e. SNVs/InDels). A comprehensive set of **virtual cancer predisposition gene panels** harvested from the [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk/) allows the user to flexibly put a restriction on which genes and findings are displayed in the cancer predisposition report.
 
 Snapshots of sections in the cancer predisposition genome report:
 
