@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">CPSR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.6</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -235,8 +235,9 @@ parts of the report for further analysis.</p>
 <em>content</em>, where the former contains information about the
 settings, data versions, and the latter contains the various sections of
 the report.</p>
-<p>This file can be used as input to <a href="https://github.com/sigven/pcgr" class="external-link">PCGR</a>, in order to populate a
-somatic genome report with germline findings.</p>
+<p>The JSON file can be used <a href="https://sigven.github.io/pcgr/articles/input.html#cpsr-report" class="external-link">as
+input to PCGR</a>, in order to populate a somatic genome report with
+germline findings.</p>
 <p>At present, there is no detailed schema documented for the JSON
 structure.</p>
 </div>
@@ -251,7 +252,7 @@ convention:</p>
 <p>Here, the <strong>sample_id</strong> is provided as input by the
 user, and reflects a unique identifier of the tumor-normal sample pair
 to be analyzed. Following common standards, the annotated VCF file is
-compressed with <a href="http://www.htslib.org/doc/tabix.html" class="external-link">bgzip</a>
+compressed with <a href="http://www.htslib.org/doc/bgzip.html" class="external-link">bgzip</a>
 and indexed with <a href="http://www.htslib.org/doc/tabix.html" class="external-link">tabix</a>. Below follows a
 description of all annotations/tags present in the VCF INFO column after
 processing with the CPSR annotation pipeline:</p>

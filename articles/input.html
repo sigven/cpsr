@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">CPSR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.6</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -94,25 +94,25 @@
     
     
 <div class="section level2">
-<h2 id="input">Input<a class="anchor" aria-label="anchor" href="#input"></a>
+<h2 id="vcf-file">VCF file<a class="anchor" aria-label="anchor" href="#vcf-file"></a>
 </h2>
-<p>The CPSR workflow accepts a single input file:</p>
-<ul>
-<li>An unannotated, single-sample <strong>VCF file</strong> (&gt;= v4.2)
-with germline calls (SNVs/InDels)</li>
-</ul>
-<div class="section level3">
-<h3 id="vcf">VCF<a class="anchor" aria-label="anchor" href="#vcf"></a>
-</h3>
+<p>The CPSR workflow accepts a single input file, which is an
+unannotated, single-sample <strong>VCF file</strong> (&gt;= v4.2) with
+germline calls (SNVs/InDels)</p>
 <ul>
 <li>We <strong>strongly</strong> recommend that the input VCF is
-compressed and indexed using <a href="http://www.htslib.org/doc/tabix.html" class="external-link">bgzip</a> and <a href="http://www.htslib.org/doc/tabix.html" class="external-link">tabix</a>
+compressed and indexed using <a href="http://www.htslib.org/doc/bgzip.html" class="external-link">bgzip</a> and <a href="http://www.htslib.org/doc/tabix.html" class="external-link">tabix</a>
 </li>
 <li>If the input VCF contains multi-allelic sites, these will be subject
-to <a href="http://genome.sph.umich.edu/wiki/Vt#Decompose" class="external-link">decomposition</a>
-</li>
+to <a href="http://genome.sph.umich.edu/wiki/Vt#Decompose" class="external-link">decomposition</a>.
+Either way, we encourage that users prepare the input VCF <em>without
+the presence of multi-allelic sites</em>.</li>
 <li>Variants used for reporting should be designated as ‘PASS’ in the
 VCF FILTER column</li>
+<li>In order for CPSR to report the genotypes of individual variants in
+cancer predisposition genes (<strong>hom/het</strong>), the VCF file
+needs to contain the sample-specific genotype data (i.e. a FORMAT field
++ sample-specific genotype field pr. VCF record)</li>
 </ul>
 <p><strong>IMPORTANT NOTE </strong>: CPSR generates a number of VCF INFO
 annotation tags that is appended to the query VCF. We will therefore
@@ -121,9 +121,7 @@ to annotations by other means, but rather a VCF file that comes directly
 from variant calling. If not, there are likely to be INFO tags in the
 query VCF file that coincide with those produced by CPSR.</p>
 </div>
-</div>
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
-    </nav></aside>
+  </main>
 </div>
 
 
