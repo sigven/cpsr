@@ -195,7 +195,7 @@ generate_cpsr_report <- function(project_directory = NULL,
       "N_INSILICO_SPLICING_NEUTRAL",
       "N_INSILICO_SPLICING_AFFECTED",
       "GLOBAL_AF_GNOMAD",
-      cpsr_config[["popgen"]][["vcftag_gnomad"]])
+      cps_report[["metadata"]][["config"]][["popgen"]][["vcftag_gnomad"]])
 
   if (query_vcf2tsv != "None.gz") {
     if (!file.exists(query_vcf2tsv) | file.size(query_vcf2tsv) == 0) {
