@@ -3,21 +3,24 @@ title: "Installation"
 output: rmarkdown::html_document
 ---
 
-CPSR is distributed alongside the [Personal Cancer Genome Reporter](https://github.com/sigven). To install CPSR, you should thus follow the outlined [PCGR installation steps](https://sigven.github.io/pcgr/articles/installation.html). We recommend Conda as the simplest framework to install PCGR and CPSR, using either a MacOS or a Linux platform.
+CPSR is distributed alongside the [Personal Cancer Genome Reporter (PCGR)](https://github.com/sigven/pcgr), so please follow
+the [PCGR installation steps](https://sigven.github.io/pcgr/articles/installation.html) to install CPSR.
 
-Assuming you have your PCGR codebase installed in `/Users/you/dir4/pcgr`; type the following to load the environment and check that CPSR is installed (Conda-based):
+We recommend [conda](https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html)
+as the simplest framework to install PCGR and CPSR, using either a MacOS or a Linux platform.
+
+Assuming you have installed the `pcgr` and `pcgrr` conda envs as described in the above links
+at e.g. `/home/user/projects/cpsr_proj1/conda/env/`, you can load the `pcgr` environment and check
+that CPSR is installed with the following:
 
 ```text
-$ cd /Users/you/dir4/pcgr
+(base) $ cd /home/user/projects/cpsr_proj1
 (base) $ conda activate ./conda/env/pcgr
-# note how the full path to the locally installed conda environment is now displayed
+(/home/user/projects/cpsr_proj1/conda/env/pcgr) $ which cpsr
+/home/user/projects/cpsr_proj1/conda/env/pcgr/bin/cpsr
 
-(/Users/you/dir4/pcgr) $ which cpsr
-/Users/you/dir4/pcgr/conda/env/pcgr/bin/cpsr
-
-(/Users/you/dir4/pcgr) $ cpsr -h
-
+(/home/user/projects/cpsr_proj1/conda/env/pcgr/bin/cpsr) $ cpsr -h
+[...]
 ```
 
 You should now be all set up to run CPSR! Continue on to [an example run](running.html#example-run).
-
