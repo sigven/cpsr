@@ -14,7 +14,7 @@ at e.g. `/home/user/projects/cpsr_proj1/conda/env/`, you can load the `pcgr` env
 that CPSR is installed with the following:
 
 ```text
-$ cd /home/user/projects/cpsr_proj1
+(base) $ cd /home/user/projects/cpsr_proj1
 (base) $ conda activate ./conda/env/pcgr
 (/home/user/projects/cpsr_proj1/conda/env/pcgr) $ which cpsr
 /home/user/projects/cpsr_proj1/conda/env/pcgr/bin/cpsr
