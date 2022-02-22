@@ -87,6 +87,8 @@ A VCF file containing annotated, germline calls (single nucleotide variants and 
 - `<sample_id>.cpsr.<genome_assembly>.vcf.gz (.tbi)`
   - The __sample_id__ is provided as input by the user, and reflects a unique identifier of the tumor-normal sample pair to be analyzed. Following common standards, the annotated VCF file is compressed with [bgzip](http://www.htslib.org/doc/bgzip.html) and indexed with [tabix](http://www.htslib.org/doc/tabix.html). Below follows a description of all annotations/tags present in the VCF INFO column after processing with the CPSR annotation pipeline:
 
+<br>
+
 ##### _VEP consequence annotations_
 
 | Tag | Description |
@@ -149,6 +151,8 @@ A VCF file containing annotated, germline calls (single nucleotide variants and 
 | `SPLICE_DONOR_RELEVANT` | Logical indicating if variant is located at a particular location near the splice donor site (`+3A/G`, `+4A` or `+5G`) |
 | `REGULATORY_ANNOTATION` | Comma-separated list of all variant annotations of `Feature_type`, `RegulatoryFeature`, and `MotifFeature`. Format (separated by a `|`): `<Consequence>`, `<Feature_type>`, `<Feature>`, `<BIOTYPE>`, `<MOTIF_NAME>`, `<MOTIF_POS>`, `<HIGH_INF_POS>`, `<MOTIF_SCORE_CHANGE>`, `<TRANSCRIPTION_FACTORS>` |
 
+<br>
+
 ##### _Gene information_
 
 | Tag | Description |
@@ -189,6 +193,8 @@ A VCF file containing annotated, germline calls (single nucleotide variants and 
 | `ESSENTIAL_GENE_CRISPR` | `dbNSFP_gene`: Essential (`E`) or Non-essential phenotype-changing (`N`) based on large scale CRISPR experiments (from <http://dx.doi.org/10.1126/science.aac7041>) |
 | `ESSENTIAL_GENE_CRISPR2` | `dbNSFP_gene`: Essential (`E`), context-Specific essential (`S`), or Non-essential phenotype-changing (`N`) based on large scale CRISPR experiments (from <http://dx.doi.org/10.1016/j.cell.2015.11.015>) |
 
+<br>
+
 ##### _Variant effect and protein-coding information_
 
 | Tag | Description |
@@ -217,6 +223,7 @@ A VCF file containing annotated, germline calls (single nucleotide variants and 
 | `DBNSFP_SPLICE_SITE_RF` | predicted effect of splice site disruption, using random forest (dbscSNV) |
 | `DBNSFP_SPLICE_SITE_ADA` | predicted effect of splice site disruption, using boosting (dbscSNV) |
 
+<br>
 
 ##### _Variant frequencies/annotations in germline databases_
 
@@ -275,6 +282,7 @@ A VCF file containing annotated, germline calls (single nucleotide variants and 
 | `GLOBAL_AF_1KG` | [1000G Project - phase 3](http://www.1000genomes.org) germline allele frequency for all 1000G project samples (global) |
 | `DBSNPRSID` | [dbSNP](http://www.ncbi.nlm.nih.gov/SNP/) reference ID, as provided by VEP |
 
+<br>
 
 ##### _Clinical associations_
 

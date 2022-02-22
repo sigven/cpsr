@@ -3,13 +3,27 @@ title: "Changelog"
 output: rmarkdown::html_document
 ---
 
-## x.x.x - February 2022
+## vX.X.X
 
-* Data updates: ClinVar, GWAS catalog, CIViC, CancerMine, KEGG, Disease Ontology/EFO, Open Targets Platform, UniProt KB, GENCODE
+* Date: **2022-02-XX**
+
+* Data updates
+  * ClinVar
+  * GWAS catalog
+  * CIViC
+  * CancerMine
+  * KEGG
+  * Disease Ontology/EFO
+  * Open Targets Platform, 
+  * UniProt KB
+  * GENCODE
+  
 * Improved detection of secondary variant findings
 * CPSR is now implemented as a dedicated R package, depending also on the [pcgrr](https://github.com/sigven/pcgr/tree/master/pcgrr) R package. Running the complete CPSR workflow relies upon installation of [PCGR](https://github.com/sigven/pcgr).
 
-## 0.6.2 - June 30th 2021
+## v0.6.2
+
+* Date: **2021-06-30**
 
 * Data updates: ClinVar, PanelApp, GWAS catalog, CIViC, CancerMine, dbNSFP, KEGG, Disease Ontology/EFO, Open Targets Platform, UniProt KB, GENCODE
 * Software upgrades: R v4.1, Bioconductor v3.13, VEP (104) ++
@@ -45,7 +59,9 @@ output: rmarkdown::html_document
 * Command-line Options
    * `--conf` - configuration file
 
-## 0.6.1 - November 30th 2020
+## v0.6.1
+
+* Date: **2020-11-30**
 
 ##### Added
 
@@ -64,7 +80,9 @@ output: rmarkdown::html_document
  - Option `--incidental_findings` changed back to `--secondary_findings` - recommended term to use according to ACMG
  - Removed _MOD (mechanism-of-disease)_ from TSV output file
 
-## 0.6.0rc - September 24th 2020
+## v0.6.0rc
+
+* Date: **2020-09-24**
 
 - Data updates: ClinVar, GWAS catalog, GENCODE, CIViC, CancerMine, UniProt KB, dbNSFP, Pfam, KEGG, Open Targets Platform, Genomics England PanelApp
 - Software updates: VEP 101
@@ -95,7 +113,9 @@ output: rmarkdown::html_document
   * Improved documentation of variant classification in the __References__ section
   * DOIs available for all references
 
-## 0.5.2 - November 18th 2019
+## v0.5.2
+
+* Date: **2019-11-18**
 
 ##### Changed
   * Definition of pathogenic range (wrt to variant frequency) takes into account population- and position-specific allele numbers - no longer defined only by allele counts (i.e. *AC*) but by *AC* and *AN*
@@ -104,13 +124,17 @@ output: rmarkdown::html_document
 ##### Added
   * Ability to analyze custom panels, provided through option `--custom_panel`. Needs to be defined as BED file with four columns, i.e. chromosome, start, stop, genesymbol
 
-## 0.5.1 - October 14th 2019
+## v0.5.1
+
+* Date: **2019-10-14**
 
 ##### Fixed
   * Bug in `cpsr_validate_input.py`, [GitHub Issue](https://github.com/sigven/cpsr/issues/18)
   * Bug when there are zero variants with a 'PASS' status in VCF - omitting report generation
 
-## 0.5.0 - September 23rd 2019
+## v0.5.0
+
+* Date: **2019-09-23**
 
 ##### Fixed
   * Bug in implementation of ACMG criteria; genes without a known loss-of-function mechanism were handled inappropriately
