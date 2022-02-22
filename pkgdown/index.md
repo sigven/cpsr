@@ -42,7 +42,7 @@ The variant sets can be interactively explored and filtered further through diff
 
 ### Example report
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5035960.svg)](https://doi.org/10.5281/zenodo.5035960)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6223386.svg)](https://doi.org/10.5281/zenodo.6223386)
 
 ### Getting started
 
