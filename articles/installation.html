@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">CPSR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.7</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.8</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -93,22 +93,24 @@
 
     
     
-<p>CPSR is distributed alongside the <a href="https://github.com/sigven" class="external-link">Personal Cancer Genome Reporter</a>. To
-install CPSR, you should thus follow the outlined <a href="https://sigven.github.io/pcgr/articles/installation.html" class="external-link">PCGR
-installation steps</a>. We recommend Conda as the simplest framework to
-install PCGR and CPSR, using either a MacOS or a Linux platform.</p>
-<p>Assuming you have your PCGR codebase installed in
-<code>/Users/you/dir4/pcgr</code>; type the following to load the
-environment and check that CPSR is installed (Conda-based):</p>
-<pre class="text"><code>$ cd /Users/you/dir4/pcgr
+<p>CPSR is distributed alongside the <a href="https://github.com/sigven/pcgr" class="external-link">Personal Cancer Genome Reporter
+(PCGR)</a>, so please follow the <a href="https://sigven.github.io/pcgr/articles/installation.html" class="external-link">PCGR
+installation steps</a> to install CPSR.</p>
+<p>We recommend <a href="https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html" class="external-link">conda</a>
+as the simplest framework to install PCGR and CPSR, using either a MacOS
+or a Linux platform.</p>
+<p>Assuming you have installed the <code>pcgr</code> and
+<code>pcgrr</code> conda envs as described in the above links at
+e.g. <code>/home/user/projects/cpsr_proj1/conda/env/</code>, you can
+load the <code>pcgr</code> environment and check that CPSR is installed
+with the following:</p>
+<pre class="text"><code>(base) $ cd /home/user/projects/cpsr_proj1
 (base) $ conda activate ./conda/env/pcgr
-# note how the full path to the locally installed conda environment is now displayed
+(/home/user/projects/cpsr_proj1/conda/env/pcgr) $ which cpsr
+/home/user/projects/cpsr_proj1/conda/env/pcgr/bin/cpsr
 
-(/Users/you/dir4/pcgr) $ which cpsr
-/Users/you/dir4/pcgr/conda/env/pcgr/bin/cpsr
-
-(/Users/you/dir4/pcgr) $ cpsr -h
-</code></pre>
+(/home/user/projects/cpsr_proj1/conda/env/pcgr/bin/cpsr) $ cpsr -h
+[...]</code></pre>
 <p>You should now be all set up to run CPSR! Continue on to <a href="running.html#example-run">an example run</a>.</p>
   </main>
 </div>

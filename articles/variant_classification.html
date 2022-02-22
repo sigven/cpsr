@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">CPSR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.7</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.8</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -93,10 +93,11 @@
 
     
     
-<p>All coding, <b>non-ClinVar</b> variants in the set of genes subject
-to screening have been classified according to a <i>standard, five-level
-pathogenicity scheme</i> (coined <b>CPSR_CLASSIFICATION</b>). The scheme
-has the same five levels as those employed by ClinVar, i.e.</p>
+<p>All coding, <strong>non-ClinVar</strong> variants in the set of genes
+subject to screening have been classified according to a <em>standard,
+five-level pathogenicity scheme</em> (coined
+<strong>CPSR_CLASSIFICATION</strong>). The scheme has the same five
+levels as those employed by ClinVar, i.e.</p>
 <ul>
 <li>pathogenic (<strong>P</strong>)</li>
 <li>likely pathogenic (<strong>LP</strong>)</li>
@@ -105,106 +106,194 @@ has the same five levels as those employed by ClinVar, i.e.</p>
 <li>benign (<strong>B</strong>)</li>
 </ul>
 <p>The classification performed by CPSR is rule-based, implementing most
-of the ACMG criteria related to <i>variant effect</i> and <i>population
-frequency</i>, which have been outlined in <a href="https://www.invitae.com/en/variant-classification/" class="external-link">SherLoc</a>
+of the ACMG criteria related to <em>variant effect</em> and
+<em>population frequency</em>, which have been outlined in <a href="https://www.invitae.com/en/variant-classification/" class="external-link">SherLoc</a>
 (<a href="https://www.ncbi.nlm.nih.gov/pubmed/28492532" class="external-link">Nykamp et al.,
 Genetics in Medicine, 2017</a>), and also some in <a href="https://github.com/ding-lab/CharGer" class="external-link">CharGer</a>. Information on
 cancer predisposition genes (mode of inheritance, loss-of-funcion
 mechanism etc.) is largely harvested from <a href="https://www.ncbi.nlm.nih.gov/pubmed/27153395" class="external-link">Maxwell et al., Am J
 Hum Genet, 2016</a>.</p>
 <p>The refined ACMG/AMP criteria listed below form the basis for the
-tier assigned to the <b>CPSR_CLASSIFICATION</b> variable. Specifically,
-the <b>score</b> in parenthesis indicates how much each evidence item
-contributes to either of the two pathogenicity poles (positive values
-indicate pathogenic support, negative values indicate benign support).
-Evidence score along each pole (‘B’ and ‘P’) are aggregated, and if
-there is conflicting or little evidence it will be classified as a VUS.
-This classification scheme has been adopted by the one outlined in <a href="https://www.ncbi.nlm.nih.gov/pubmed/28492532" class="external-link">SherLoc</a>.</p>
-<ol style="list-style-type: decimal">
-<li>ACMG_BA1_AD (<strong>-5</strong>) - Very high MAF (&gt; 0.5% in
-gnomAD non-cancer pop subset) - min AN = 12,000 - Dominant mechanism of
-disease</li>
-<li>ACMG_BS1_1_AD (<strong>-3</strong>)- High MAF (&gt; 0.1% in gnomAD
-non-cancer pop subset) - min AN = 12,000 - Dominant mechanism of
-disease</li>
-<li>ACMG_BS1_2_AD (<strong>-1</strong>) Somewhat high MAF (&gt; 0.005%
-in gnomAD non-cancer pop subset) - Dominant mechanism of disease</li>
-<li>ACMG_BA1_AR (<strong>-5</strong>) - Very high MAF (&gt; 1% in gnomAD
-non-cancer pop subset) - min AN = 12,000 - Recessive mechanism of
-disease</li>
-<li>ACMG_BS1_1_AR (<strong>-3</strong>)- High MAF (&gt; 0.3% in gnomAD
-non-cancer pop subset) - min AN = 12,000 - Recessive mechanism of
-disease</li>
-<li>ACMG_BS1_2_AR (<strong>-1</strong>)- Somewhat high MAF (&gt; 0.005%
-in gnomAD non-cancer pop subset) - Recessive mechanism of disease</li>
-<li>ACMG_BP3 (<strong>-2.5</strong>) - Non-coding variant in the UTR or
-promoter region</li>
-<li>ACMG_BP7 (<strong>-2.5</strong>) - Silent and intronic changes
-outside of the consensus splice site</li>
-<li>ACMG_BP4 (<strong>-1</strong>)- Multiple lines (&gt;=5) of
-computational evidence support a benign effect on the gene or gene
-product (conservation, evolutionary, splicing impact, etc. - from
-dbNSFP</li>
-<li>ACMG_BMC1 (<strong>0</strong>)- Peptide change is at the same
-location of a known benign change (ClinVar)</li>
-<li>ACMG_BSC1 (<strong>-3</strong>)- Peptide change is reported as
-benign (ClinVar)</li>
-<li>ACMG_BP1 (<strong>-0.5</strong>)- Missense variant in a gene for
-which primarily truncating variants (&gt;90% of pathogenic variants) are
-known to cause disease (ClinVar)</li>
-<li>ACMG_PM2_1 (<strong>0.5</strong>)- Allele count within pathogenic
-range (MAF &lt;= 0.005% in the population-specific non-cancer gnomAD
-subset)</li>
-<li>ACMG_PM2_2 (<strong>1</strong>)- Alternate allele absent in the
-population-specific non-cancer gnomAD subset</li>
-<li>ACMG_PVS1_1 (<strong>5</strong>) - Null variant
-(frameshift/nonsense) - predicted as LoF by LOFTEE - within pathogenic
-range - LoF established for gene</li>
-<li>ACMG_PVS1_2 (<strong>2.5</strong>)- Null variant
-(frameshift/nonsense) - not predicted as LoF by LOFTEE - within
-pathogenic range - LoF established for gene</li>
-<li>ACMG_PVS1_3 (<strong>2</strong>) - Null variant
-(frameshift/nonsense) - predicted as LoF by LOFTEE - within pathogenic
-range - LoF not established for gene</li>
-<li>ACMG_PVS1_4 (<strong>0</strong>) - Null variant
-(frameshift/nonsense) - not predicted as LoF by LOFTEE – within
-pathogenic range - LoF not established for gene</li>
-<li>ACMG_PVS1_5 (<strong>2.5</strong>) - Start (initiator methionine)
-lost - within pathogenic range - Lof established for gene</li>
-<li>ACMG_PVS1_6 (<strong>2</strong>) - Start (initiator methionine) lost
-- within pathogenic range - LoF not established for gene</li>
-<li>ACMG_PVS1_7 (<strong>4</strong>) - Donor/acceptor variant -
-predicted as LoF by LOFTEE - within pathogenic range - not last intron -
-LoF established for gene</li>
-<li>ACMG_PVS1_8 (<strong>2.5</strong>) - Donor/acceptor variant - last
-intron - within pathogenic range - LoF established for gene</li>
-<li>ACMG_PVS1_9 (<strong>2</strong>)- Donor/acceptor variant - not last
-intron - within pathogenic range - LoF not established for gene</li>
-<li>ACMG_PVS1_10 (<strong>2</strong>) - Donor variant at located at the
-+3, +4 or +5 position of the intron - within the pathogenic range</li>
-<li>ACMG_PS1 (<strong>4</strong>) - Same amino acid change as a
-previously established pathogenic variant (ClinVar) regardless of
-nucleotide change</li>
-<li>ACMG_PP2 (<strong>0.5</strong>) - Missense variant in a gene that
-has a relatively low rate of benign missense variation (&lt;30%) and
-where missense variants are a common mechanism of disease (&gt;50% P/LP
-(ClinVar))</li>
-<li>ACMG_PM1 (<strong>2</strong>) - Missense variant in a somatic
-mutation hotspot as determined by cancerhotspots.org</li>
-<li>ACMG_PM4 (<strong>0</strong>) - Protein length changes due to
-inframe indels or nonstop variant in non-repetitive regions of genes
-that harbor variants with a dominant mode of inheritance.</li>
-<li>ACMG_PPC1 (<strong>0</strong>) - Protein length changes due to
-inframe indels or nonstop variant in non-repetitive regions of genes
-that harbor variants with a recessive mode of inheritance.</li>
-<li>ACMG_PM5 (<strong>1.5</strong>) - Novel missense change at an amino
-acid residue where a different missense change determined to be
-pathogenic has been seen before (ClinVar)</li>
-<li>ACMG_PP3 (<strong>0.5</strong>)- Multiple lines (&gt;=5) of
-computational evidence support a deleterious effect on the gene or gene
-product (conservation, evolutionary, splicing impact, etc. - from dbNSFP
-</li>
-</ol>
+tier assigned to the <strong>CPSR_CLASSIFICATION</strong> variable.
+Specifically, the <strong>score</strong> in parenthesis indicates how
+much each evidence item contributes to either of the two pathogenicity
+poles (positive values indicate pathogenic support, negative values
+indicate benign support). Evidence score along each pole (‘B’ and ‘P’)
+are aggregated, and if there is conflicting or little evidence it will
+be classified as a VUS. This classification scheme has been adopted by
+the one outlined in <a href="https://www.ncbi.nlm.nih.gov/pubmed/28492532" class="external-link">SherLoc</a>.</p>
+<table class="table">
+<colgroup>
+<col width="35%">
+<col width="65%">
+</colgroup>
+<thead><tr class="header">
+<th>Tag</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>1. <code>ACMG_BA1_AD</code> (<strong>-5</strong>)</td>
+<td>Very high MAF (&gt; 0.5% in gnomAD non-cancer pop subset) - min AN =
+12,000 - Dominant mechanism of disease</td>
+</tr>
+<tr class="even">
+<td>2. <code>ACMG_BS1_1_AD</code> (<strong>-3</strong>)</td>
+<td>High MAF (&gt; 0.1% in gnomAD non-cancer pop subset) - min AN =
+12,000 - Dominant mechanism of disease</td>
+</tr>
+<tr class="odd">
+<td>3. <code>ACMG_BS1_2_AD</code> (<strong>-1</strong>)</td>
+<td>Somewhat high MAF (&gt; 0.005% in gnomAD non-cancer pop subset) -
+Dominant mechanism of disease</td>
+</tr>
+<tr class="even">
+<td>4. <code>ACMG_BA1_AR</code> (<strong>-5</strong>)</td>
+<td>Very high MAF (&gt; 1% in gnomAD non-cancer pop subset) - min AN =
+12,000 - Recessive mechanism of disease</td>
+</tr>
+<tr class="odd">
+<td>5. <code>ACMG_BS1_1_AR</code> (<strong>-3</strong>)</td>
+<td>High MAF (&gt; 0.3% in gnomAD non-cancer pop subset) - min AN =
+12,000 - Recessive mechanism of disease</td>
+</tr>
+<tr class="even">
+<td>6. <code>ACMG_BS1_2_AR</code> (<strong>-1</strong>)</td>
+<td>Somewhat high MAF (&gt; 0.005% in gnomAD non-cancer pop subset) -
+Recessive mechanism of disease</td>
+</tr>
+<tr class="odd">
+<td>7. <code>ACMG_BP3</code> (<strong>-2.5</strong>)</td>
+<td>Non-coding variant in the UTR or promoter region</td>
+</tr>
+<tr class="even">
+<td>8. <code>ACMG_BP7</code> (<strong>-2.5</strong>)</td>
+<td>Silent and intronic changes outside of the consensus splice
+site</td>
+</tr>
+<tr class="odd">
+<td>9. <code>ACMG_BP4</code> (<strong>-1</strong>)</td>
+<td>Multiple lines (&gt;=5) of computational evidence support a benign
+effect on the gene or gene product (conservation, evolutionary, splicing
+impact, etc. - from dbNSFP</td>
+</tr>
+<tr class="even">
+<td>10. <code>ACMG_BMC1</code> (<strong>0</strong>)</td>
+<td>Peptide change is at the same location of a known benign change
+(ClinVar)</td>
+</tr>
+<tr class="odd">
+<td>11. <code>ACMG_BSC1</code> (<strong>-3</strong>)</td>
+<td>Peptide change is reported as benign (ClinVar)</td>
+</tr>
+<tr class="even">
+<td>12. <code>ACMG_BP1</code> (<strong>-0.5</strong>)</td>
+<td>Missense variant in a gene for which primarily truncating variants
+(&gt;90% of pathogenic variants) are known to cause disease
+(ClinVar)</td>
+</tr>
+<tr class="odd">
+<td>13. <code>ACMG_PM2_1</code> (<strong>0.5</strong>)</td>
+<td>Allele count within pathogenic range (MAF &lt;= 0.005% in the
+population-specific non-cancer gnomAD subset)</td>
+</tr>
+<tr class="even">
+<td>14. <code>ACMG_PM2_2</code> (<strong>1</strong>)</td>
+<td>Alternate allele absent in the population-specific non-cancer gnomAD
+subset</td>
+</tr>
+<tr class="odd">
+<td>15. <code>ACMG_PVS1_1</code> (<strong>5</strong>)</td>
+<td>Null variant (frameshift/nonsense) - predicted as LoF by LOFTEE -
+within pathogenic range - LoF established for gene</td>
+</tr>
+<tr class="even">
+<td>16. <code>ACMG_PVS1_2</code> (<strong>2.5</strong>)</td>
+<td>Null variant (frameshift/nonsense) - not predicted as LoF by LOFTEE
+- within pathogenic range - LoF established for gene</td>
+</tr>
+<tr class="odd">
+<td>17. <code>ACMG_PVS1_3</code> (<strong>2</strong>)</td>
+<td>Null variant (frameshift/nonsense) - predicted as LoF by LOFTEE -
+within pathogenic range - LoF not established for gene</td>
+</tr>
+<tr class="even">
+<td>18. <code>ACMG_PVS1_4</code> (<strong>0</strong>)</td>
+<td>Null variant (frameshift/nonsense) - not predicted as LoF by LOFTEE
+– within pathogenic range - LoF not established for gene</td>
+</tr>
+<tr class="odd">
+<td>19. <code>ACMG_PVS1_5</code> (<strong>2.5</strong>)</td>
+<td>Start (initiator methionine) lost - within pathogenic range - Lof
+established for gene</td>
+</tr>
+<tr class="even">
+<td>20. <code>ACMG_PVS1_6</code> (<strong>2</strong>)</td>
+<td>Start (initiator methionine) lost - within pathogenic range - LoF
+not established for gene</td>
+</tr>
+<tr class="odd">
+<td>21. <code>ACMG_PVS1_7</code> (<strong>4</strong>)</td>
+<td>Donor/acceptor variant - predicted as LoF by LOFTEE - within
+pathogenic range - not last intron - LoF established for gene</td>
+</tr>
+<tr class="even">
+<td>22. <code>ACMG_PVS1_8</code> (<strong>2.5</strong>)</td>
+<td>Donor/acceptor variant - last intron - within pathogenic range - LoF
+established for gene</td>
+</tr>
+<tr class="odd">
+<td>23. <code>ACMG_PVS1_9</code> (<strong>2</strong>)</td>
+<td>Donor/acceptor variant - not last intron - within pathogenic range -
+LoF not established for gene</td>
+</tr>
+<tr class="even">
+<td>24. <code>ACMG_PVS1_10</code> (<strong>2</strong>)</td>
+<td>Donor variant at located at the +3, +4 or +5 position of the intron
+- within the pathogenic range</td>
+</tr>
+<tr class="odd">
+<td>25. <code>ACMG_PS1</code> (<strong>4</strong>)</td>
+<td>Same amino acid change as a previously established pathogenic
+variant (ClinVar) regardless of nucleotide change</td>
+</tr>
+<tr class="even">
+<td>26. <code>ACMG_PP2</code> (<strong>0.5</strong>)</td>
+<td>Missense variant in a gene that has a relatively low rate of benign
+missense variation (&lt;30%) and where missense variants are a common
+mechanism of disease (&gt;50% P/LP (ClinVar))</td>
+</tr>
+<tr class="odd">
+<td>27. <code>ACMG_PM1</code> (<strong>2</strong>)</td>
+<td>Missense variant in a somatic mutation hotspot as determined by
+cancerhotspots.org</td>
+</tr>
+<tr class="even">
+<td>28. <code>ACMG_PM4</code> (<strong>0</strong>)</td>
+<td>Protein length changes due to inframe indels or nonstop variant in
+non-repetitive regions of genes that harbor variants with a dominant
+mode of inheritance.</td>
+</tr>
+<tr class="odd">
+<td>29. <code>ACMG_PPC1</code> (<strong>0</strong>)</td>
+<td>Protein length changes due to inframe indels or nonstop variant in
+non-repetitive regions of genes that harbor variants with a recessive
+mode of inheritance.</td>
+</tr>
+<tr class="even">
+<td>30. <code>ACMG_PM5</code> (<strong>1.5</strong>)</td>
+<td>Novel missense change at an amino acid residue where a different
+missense change determined to be pathogenic has been seen before
+(ClinVar)</td>
+</tr>
+<tr class="odd">
+<td>31. <code>ACMG_PP3</code> (<strong>0.5</strong>)</td>
+<td>Multiple lines (&gt;=5) of computational evidence support a
+deleterious effect on the gene or gene product (conservation,
+evolutionary, splicing impact, etc. - from dbNSFP</td>
+</tr>
+</tbody>
+</table>
 <p>Currently, the <strong>CPSR_CLASSIFICATION</strong> is determined
 based on the following ranges of pathogenicity scores:</p>
 <p><br></p>

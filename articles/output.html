@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">CPSR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.7</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.8</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -100,13 +100,17 @@
 <h3 id="interactive-html-report">Interactive HTML report<a class="anchor" aria-label="anchor" href="#interactive-html-report"></a>
 </h3>
 <p>An interactive and tier-structured HTML report that lists variants in
-in known cancer predisposition genes is provided with the following
-naming convention:</p>
-<p>&lt;<em>sample_id</em>&gt;.<strong>cpsr</strong>.&lt;<em>genome_assembly</em>&gt;.<strong>html</strong></p>
+known cancer predisposition genes is provided with the following naming
+convention:</p>
+<ul>
+<li>
+<code>&lt;sample_id&gt;.cpsr.&lt;genome_assembly&gt;.html</code>
 <ul>
 <li>The <strong>sample_id</strong> is provided as input by the user, and
 reflects a unique identifier of the tumor-normal sample pair to be
 analyzed.</li>
+</ul>
+</li>
 </ul>
 <p>The report is structured in five main sections, described in more
 detail below:</p>
@@ -201,28 +205,94 @@ ACMG critera etc.)</li>
 <p>The interactive datatables contain a number of hyperlinked
 annotations similar to those defined for the annotated VCF file,
 including the following:</p>
-<ul>
-<li>SYMBOL - Gene symbol (Entrez/NCBI)</li>
-<li>PROTEIN_CHANGE - Amino acid change (VEP)</li>
-<li>GENE_NAME - gene name description (Entrez/NCBI)</li>
-<li>PROTEIN_DOMAIN - PFAM protein domain</li>
-<li>PROTEIN_FEATURE - UniProt feature overlapping variant site</li>
-<li>CDS_CHANGE - Coding sequence change</li>
-<li>CONSEQUENCE - VEP consequence (primary transcript)</li>
-<li>LOSS_OF_FUNCTION - Predicted loss-of-function variant</li>
-<li>RMSK_HIT - Overlap with repeats as annotated by RepeatMasker</li>
-<li>HGVSc - from VEP</li>
-<li>HGVSp - from VEP</li>
-<li>NCBI_REFSEQ - Transcript accession ID(s) (NCBI RefSeq)</li>
-<li>ONCOGENE - Predicted proto-oncogene (CancerMine/NCG)</li>
-<li>TUMOR_SUPPRESSOR - known tumor suppressor gene (CancerMine/NCG)</li>
-<li>PREDICTED_EFFECT - Effect predictions (deleterious/benign) from
-dbNSFP</li>
-<li>VEP_ALL_CSQ - All VEP transcript block consequences</li>
-<li>DBSNP - dbSNP rsID</li>
-<li>GENOMIC_CHANGE - Variant ID</li>
-<li>GENOME_VERSION - Genome assembly</li>
-</ul>
+<table class="table">
+<colgroup>
+<col width="16%">
+<col width="84%">
+</colgroup>
+<thead><tr class="header">
+<th>Annotation</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>SYMBOL</code></td>
+<td>Gene symbol (Entrez/NCBI)</td>
+</tr>
+<tr class="even">
+<td><code>PROTEIN_CHANGE</code></td>
+<td>Amino acid change (VEP)</td>
+</tr>
+<tr class="odd">
+<td><code>GENE_NAME</code></td>
+<td>gene name description (Entrez/NCBI)</td>
+</tr>
+<tr class="even">
+<td><code>PROTEIN_DOMAIN</code></td>
+<td>PFAM protein domain</td>
+</tr>
+<tr class="odd">
+<td><code>PROTEIN_FEATURE</code></td>
+<td>UniProt feature overlapping variant site</td>
+</tr>
+<tr class="even">
+<td><code>CDS_CHANGE</code></td>
+<td>Coding sequence change</td>
+</tr>
+<tr class="odd">
+<td><code>CONSEQUENCE</code></td>
+<td>VEP consequence (primary transcript)</td>
+</tr>
+<tr class="even">
+<td><code>LOSS_OF_FUNCTION</code></td>
+<td>Predicted loss-of-function variant</td>
+</tr>
+<tr class="odd">
+<td><code>RMSK_HIT</code></td>
+<td>Overlap with repeats as annotated by RepeatMasker</td>
+</tr>
+<tr class="even">
+<td><code>HGVSc</code></td>
+<td>from VEP</td>
+</tr>
+<tr class="odd">
+<td><code>HGVSp</code></td>
+<td>from VEP</td>
+</tr>
+<tr class="even">
+<td><code>NCBI_REFSEQ</code></td>
+<td>Transcript accession ID(s) (NCBI RefSeq)</td>
+</tr>
+<tr class="odd">
+<td><code>ONCOGENE</code></td>
+<td>Predicted proto-oncogene (CancerMine/NCG)</td>
+</tr>
+<tr class="even">
+<td><code>TUMOR_SUPPRESSOR</code></td>
+<td>known tumor suppressor gene (CancerMine/NCG)</td>
+</tr>
+<tr class="odd">
+<td><code>PREDICTED_EFFECT</code></td>
+<td>Effect predictions (deleterious/benign) from dbNSFP</td>
+</tr>
+<tr class="even">
+<td><code>VEP_ALL_CSQ</code></td>
+<td>All VEP transcript block consequences</td>
+</tr>
+<tr class="odd">
+<td><code>DBSNP</code></td>
+<td>dbSNP rsID</td>
+</tr>
+<tr class="even">
+<td><code>GENOMIC_CHANGE</code></td>
+<td>Variant ID</td>
+</tr>
+<tr class="odd">
+<td><code>GENOME_VERSION</code></td>
+<td>Genome assembly</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="section level3">
@@ -245,514 +315,1134 @@ structure.</p>
 <h3 id="variant-call-format---vcf">Variant call format - VCF<a class="anchor" aria-label="anchor" href="#variant-call-format---vcf"></a>
 </h3>
 <p>A VCF file containing annotated, germline calls (single nucleotide
-variants and insertion/deletions) is generated with the following naming
-convention:</p>
-<p>&lt;<em>sample_id</em>&gt;.<strong>cpsr</strong>.&lt;<em>genome_assembly</em>&gt;.<strong>vcf.gz
-(.tbi)</strong></p>
-<p>Here, the <strong>sample_id</strong> is provided as input by the
-user, and reflects a unique identifier of the tumor-normal sample pair
-to be analyzed. Following common standards, the annotated VCF file is
+variants and insertions/deletions) is generated with the following
+naming convention:</p>
+<ul>
+<li>
+<code>&lt;sample_id&gt;.cpsr.&lt;genome_assembly&gt;.vcf.gz (.tbi)</code>
+<ul>
+<li>The <strong>sample_id</strong> is provided as input by the user, and
+reflects a unique identifier of the tumor-normal sample pair to be
+analyzed. Following common standards, the annotated VCF file is
 compressed with <a href="http://www.htslib.org/doc/bgzip.html" class="external-link">bgzip</a>
 and indexed with <a href="http://www.htslib.org/doc/tabix.html" class="external-link">tabix</a>. Below follows a
 description of all annotations/tags present in the VCF INFO column after
-processing with the CPSR annotation pipeline:</p>
+processing with the CPSR annotation pipeline:</li>
+</ul>
+</li>
+</ul>
+<p><br></p>
 <div class="section level5">
 <h5 id="vep-consequence-annotations">
 <em>VEP consequence annotations</em><a class="anchor" aria-label="anchor" href="#vep-consequence-annotations"></a>
 </h5>
-<ul>
-<li>CSQ - Complete consequence annotations from VEP. Format:
-Allele|Consequence|IMPACT|SYMBOL|Gene|Feature_type|Feature|BIOTYPE|EXON|INTRON|HGVSc
-|HGVSp|cDNA_position|CDS_position|Protein_position|Amino_acids|Codons|Existing_variation|
-ALLELE_NUM|DISTANCE|STRAND|FLAGS|PICK|VARIANT_CLASS|SYMBOL_SOURCE|HGNC_ID|
-CANONICAL|MANE|TSL|APPRIS|CCDS|ENSP|SWISSPROT|TREMBL|UNIPARC|RefSeq|DOMAINS|
-HGVS_OFFSET|AF|AFR_AF|AMR_AF|EAS_AF|EUR_AF|SAS_AF|gnomAD_AF|gnomAD_AFR_AF|
-gnomAD_AMR_AF|gnomAD_ASJ_AF|gnomAD_EAS_AF|gnomAD_FIN_AF|gnomAD_NFE_AF|
-gnomAD_OTH_AF|gnomAD_SAS_AF|CLIN_SIG|SOMATIC|PHENO|CHECK_REF|
-MOTIF_NAME|MOTIF_POS|HIGH_INF_POS|MOTIF_SCORE_CHANGE|TRANSCRIPTION_FACTORS|NearestExonJB</li>
-<li>Consequence - Impact modifier for the consequence type (picked by
-VEP’s –flag_pick_allele option)</li>
-<li>Gene - Ensembl stable ID of affected gene (picked by VEP’s
-–flag_pick_allele option)</li>
-<li>Feature_type - Type of feature. Currently one of Transcript,
-RegulatoryFeature, MotifFeature (picked by VEP’s –flag_pick_allele
-option)</li>
-<li>Feature - Ensembl stable ID of feature (picked by VEP’s
-–flag_pick_allele option)</li>
-<li>cDNA_position - Relative position of base pair in cDNA sequence
-(picked by VEP’s –flag_pick_allele option)</li>
-<li>CDS_position - Relative position of base pair in coding sequence
-(picked by VEP’s –flag_pick_allele option)</li>
-<li>CDS_CHANGE - Coding, transcript-specific sequence annotation (picked
-by VEP’s –flag_pick_allele option)</li>
-<li>AMINO_ACID_START - Protein position indicating absolute start of
-amino acid altered (fetched from Protein_position)</li>
-<li>AMINO_ACID_END - Protein position indicating absolute end of amino
-acid altered (fetched from Protein_position)</li>
-<li>Protein_position - Relative position of amino acid in protein
-(picked by VEP’s –flag_pick_allele option)</li>
-<li>Amino_acids - Only given if the variant affects the protein-coding
-sequence (picked by VEP’s –flag_pick_allele option)</li>
-<li>Codons - The alternative codons with the variant base in upper case
-(picked by VEP’s –flag_pick_allele option)</li>
-<li>IMPACT - Impact modifier for the consequence type (picked by VEP’s
-–flag_pick_allele option)</li>
-<li>VARIANT_CLASS - Sequence Ontology variant class (picked by VEP’s
-–flag_pick_allele option)</li>
-<li>SYMBOL - Gene symbol (picked by VEP’s –flag_pick_allele option)</li>
-<li>SYMBOL_ENTREZ - Official gene symbol as provided by NCBI’s Entrez
-gene</li>
-<li>SYMBOL_SOURCE - The source of the gene symbol (picked by VEP’s
-–flag_pick_allele option)</li>
-<li>STRAND - The DNA strand (1 or -1) on which the transcript/feature
-lies (picked by VEP’s –flag_pick_allele option)</li>
-<li>ENSP - The Ensembl protein identifier of the affected transcript
-(picked by VEP’s –flag_pick_allele option)</li>
-<li>FLAGS - Transcript quality flags: cds_start_NF: CDS 5’, incomplete
-cds_end_NF: CDS 3’ incomplete (picked by VEP’s –flag_pick_allele
-option)</li>
-<li>SWISSPROT - Best match UniProtKB/Swiss-Prot accession of protein
-product (picked by VEP’s –flag_pick_allele option)</li>
-<li>TREMBL - Best match UniProtKB/TrEMBL accession of protein product
-(picked by VEP’s –flag_pick_allele option)</li>
-<li>UNIPARC - Best match UniParc accession of protein product (picked by
-VEP’s –flag_pick_allele option)</li>
-<li>HGVSc - The HGVS coding sequence name (picked by VEP’s
-–flag_pick_allele option)</li>
-<li>HGVSp - The HGVS protein sequence name (picked by VEP’s
-–flag_pick_allele option)</li>
-<li>HGVSp_short - The HGVS protein sequence name, short version (picked
-by VEP’s –flag_pick_allele option)</li>
-<li>HGVS_OFFSET - Indicates by how many bases the HGVS notations for
-this variant have been shifted (picked by VEP’s –flag_pick_allele
-option)</li>
-<li>NearestExonJB - VEP plugin that finds nearest exon junction for a
-coding sequence variant. Format: Ensembl exon identifier+distanceto exon
-boundary+boundary type(start/end)+exon length</li>
-<li>MOTIF_NAME - The source and identifier of a transcription factor
-binding profile aligned at this position (picked by VEP’s
-–flag_pick_allele option)</li>
-<li>MOTIF_POS - The relative position of the variation in the aligned
-TFBP (picked by VEP’s –flag_pick_allele option)</li>
-<li>HIGH_INF_POS - A flag indicating if the variant falls in a high
-information position of a transcription factor binding profile (TFBP)
-(picked by VEP’s –flag_pick_allele option)</li>
-<li>MOTIF_SCORE_CHANGE - The difference in motif score of the reference
-and variant sequences for the TFBP (picked by VEP’s –flag_pick_allele
-option)</li>
-<li>CELL_TYPE - List of cell types and classifications for regulatory
-feature (picked by VEP’s –flag_pick_allele option)</li>
-<li>CANONICAL - A flag indicating if the transcript is denoted as the
-canonical transcript for this gene (picked by VEP’s –flag_pick_allele
-option)</li>
-<li>CCDS - The CCDS identifier for this transcript, where applicable
-(picked by VEP’s –flag_pick_allele option)</li>
-<li>INTRON - The intron number (out of total number) (picked by VEP’s
-–flag_pick_allele option)</li>
-<li>INTRON_POSITION - Relative position of intron variant to nearest
-exon/intron junction (NearestExonJB VEP plugin)</li>
-<li>EXON_POSITION - Relative position of exon variant to nearest
-intron/exon junction (NearestExonJB VEP plugin)</li>
-<li>EXON - The exon number (out of total number) (picked by VEP’s
-–flag_pick_allele option)</li>
-<li>LAST_EXON - Logical indicator for last exon of transcript (picked by
-VEP’s –flag_pick_allele option)</li>
-<li>LAST_INTRON - Logical indicator for last intron of transcript
-(picked by VEP’s –flag_pick_allele option)</li>
-<li>DISTANCE - Shortest distance from variant to transcript (picked by
-VEP’s –flag_pick_allele option)</li>
-<li>BIOTYPE - Biotype of transcript or regulatory feature (picked by
-VEP’s –flag_pick_allele option)</li>
-<li>TSL - Transcript support level (picked by VEP’s –flag_pick_allele
-option)&gt;</li>
-<li>PUBMED - PubMed ID(s) of publications that cite existing variant -
-VEP</li>
-<li>PHENO - Indicates if existing variant is associated with a
-phenotype, disease or trait - VEP</li>
-<li>GENE_PHENO - Indicates if overlapped gene is associated with a
-phenotype, disease or trait - VEP</li>
-<li>ALLELE_NUM - Allele number from input; 0 is reference, 1 is first
-alternate etc - VEP</li>
-<li>REFSEQ_MATCH - The RefSeq transcript match status; contains a number
-of flags indicating whether this RefSeq transcript matches the
-underlying reference sequence and/or an Ensembl transcript (picked by
-VEP’s –flag_pick_allele option)</li>
-<li>PICK - Indicates if this block of consequence data was picked by
-VEP’s –flag_pick_allele option</li>
-<li>VEP_ALL_CSQ - All VEP transcript block consequences
-(Consequence:SYMBOL:Feature_type:Feature:BIOTYPE) - VEP</li>
-<li>EXONIC_STATUS - Indicates if variant consequence type is ‘exonic’ or
-‘nonexonic’. We define ‘exonic’ as any variants with the following
-consequences:
-<ul>
-<li>stop_gained / stop_lost</li>
-<li>start_lost</li>
-<li>frameshift_variant</li>
-<li>missense_variant</li>
-<li>splice_donor_variant</li>
-<li>splice_acceptor_variant</li>
-<li>inframe_insertion / inframe_deletion</li>
-<li>synonymous_variant</li>
-<li>protein_altering</li>
-</ul>
-</li>
-<li>CODING_STATUS - Indicates if primary variant consequence type is
-‘coding’ or ‘noncoding’. ‘coding’ variants are here defined as those
-with an ‘exonic’ status, with the exception of synonymous variants</li>
-<li>NULL_VARIANT - Primary variant consequence type is frameshift or
-stop_gained/stop_lost</li>
-<li>SPLICE_DONOR_RELEVANT - Logical indicating if variant is located at
-a particular location near the splice donor site (+3A/G, +4A or
-+5G)</li>
-<li>REGULATORY_ANNOTATION - Comma-separated list of all variant
-annotations of Feature_type RegulatoryFeature and MotifFeature. Format:
-<consequence>|<feature_type>|<feature>|<biotype>|<motif_name>|<motif_pos>|<high_inf_pos>|<motif_score_change>|<transcription_factors></transcription_factors></motif_score_change></high_inf_pos></motif_pos></motif_name></biotype></feature></feature_type></consequence>
-</li>
-</ul>
+<table class="table">
+<colgroup>
+<col width="27%">
+<col width="72%">
+</colgroup>
+<thead><tr class="header">
+<th>Tag</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>CSQ</code></td>
+<td>Complete consequence annotations from VEP. Format (separated by a
+<code>|</code>): <code>Allele</code>, <code>Consequence</code>,
+<code>IMPACT</code>, <code>SYMBOL</code>, <code>Gene</code>,
+<code>Feature_type</code>, <code>Feature</code>, <code>BIOTYPE</code>,
+<code>EXON</code>, <code>INTRON</code>, <code>HGVSc</code>,
+<code>HGVSp</code>, <code>cDNA_position</code>,
+<code>CDS_position</code>, <code>Protein_position</code>,
+<code>Amino_acids</code>, <code>Codons</code>,
+<code>Existing_variation</code>, <code>ALLELE_NUM</code>,
+<code>DISTANCE</code>, <code>STRAND</code>, <code>FLAGS</code>,
+<code>PICK</code>, <code>VARIANT_CLASS</code>,
+<code>SYMBOL_SOURCE</code>, <code>HGNC_ID</code>,
+<code>CANONICAL</code>, <code>MANE</code>, <code>TSL</code>,
+<code>APPRIS</code>, <code>CCDS</code>, <code>ENSP</code>,
+<code>SWISSPROT</code>, <code>TREMBL</code>, <code>UNIPARC</code>,
+<code>RefSeq</code>, <code>DOMAINS</code>, <code>HGVS_OFFSET</code>,
+<code>AF</code>, <code>AFR_AF</code>, <code>AMR_AF</code>,
+<code>EAS_AF</code>, <code>EUR_AF</code>, <code>SAS_AF</code>,
+<code>gnomAD_AF</code>, <code>gnomAD_AFR_AF</code>,
+<code>gnomAD_AMR_AF</code>, <code>gnomAD_ASJ_AF</code>,
+<code>gnomAD_EAS_AF</code>, <code>gnomAD_FIN_AF</code>,
+<code>gnomAD_NFE_AF</code>, <code>gnomAD_OTH_AF</code>,
+<code>gnomAD_SAS_AF</code>, <code>CLIN_SIG</code>, <code>SOMATIC</code>,
+<code>PHENO</code>, <code>CHECK_REF</code>, <code>MOTIF_NAME</code>,
+<code>MOTIF_POS</code>, <code>HIGH_INF_POS</code>,
+<code>MOTIF_SCORE_CHANGE</code>, <code>TRANSCRIPTION_FACTORS</code>,
+<code>NearestExonJB</code>
+</td>
+</tr>
+<tr class="even">
+<td><code>Consequence</code></td>
+<td>Impact modifier for the consequence type (picked by VEP’s
+<code>--flag_pick_allele</code> option)</td>
+</tr>
+<tr class="odd">
+<td><code>Gene</code></td>
+<td>Ensembl stable ID of affected gene (picked by VEP’s
+<code>--flag_pick_allele</code> option)</td>
+</tr>
+<tr class="even">
+<td><code>Feature_type</code></td>
+<td>Type of feature. Currently one of <code>Transcript</code>,
+RegulatoryFeature, MotifFeature (picked by VEP’s
+<code>--flag_pick_allele</code> option)</td>
+</tr>
+<tr class="odd">
+<td><code>Feature</code></td>
+<td>Ensembl stable ID of feature (picked by VEP’s
+<code>--flag_pick_allele</code> option)</td>
+</tr>
+<tr class="even">
+<td><code>cDNA_position</code></td>
+<td>Relative position of base pair in cDNA sequence (picked by VEP’s
+<code>--flag_pick_allele</code> option)</td>
+</tr>
+<tr class="odd">
+<td><code>CDS_position</code></td>
+<td>Relative position of base pair in coding sequence (picked by VEP’s
+<code>--flag_pick_allele</code> option)</td>
+</tr>
+<tr class="even">
+<td><code>CDS_CHANGE</code></td>
+<td>Coding, transcript-specific sequence annotation (picked by VEP’s
+<code>--flag_pick_allele</code> option)</td>
+</tr>
+<tr class="odd">
+<td><code>AMINO_ACID_START</code></td>
+<td>Protein position indicating absolute start of amino acid altered
+(fetched from <code>Protein_position</code>)</td>
+</tr>
+<tr class="even">
+<td><code>AMINO_ACID_END</code></td>
+<td>Protein position indicating absolute end of amino acid altered
+(fetched from <code>Protein_position</code>)</td>
+</tr>
+<tr class="odd">
+<td><code>Protein_position</code></td>
+<td>Relative position of amino acid in protein (picked by VEP’s
+<code>--flag_pick_allele</code> option)</td>
+</tr>
+<tr class="even">
+<td><code>Amino_acids</code></td>
+<td>Only given if the variant affects the protein-coding sequence
+(picked by VEP’s <code>--flag_pick_allele</code> option)</td>
+</tr>
+<tr class="odd">
+<td><code>Codons</code></td>
+<td>The alternative codons with the variant base in upper case (picked
+by VEP’s <code>--flag_pick_allele</code> option)</td>
+</tr>
+<tr class="even">
+<td><code>IMPACT</code></td>
+<td>Impact modifier for the consequence type (picked by VEP’s
+<code>--flag_pick_allele</code> option)</td>
+</tr>
+<tr class="odd">
+<td><code>VARIANT_CLASS</code></td>
+<td>Sequence Ontology variant class (picked by VEP’s
+<code>--flag_pick_allele</code> option)</td>
+</tr>
+<tr class="even">
+<td><code>SYMBOL</code></td>
+<td>Gene symbol (picked by VEP’s <code>--flag_pick_allele</code>
+option)</td>
+</tr>
+<tr class="odd">
+<td><code>SYMBOL_ENTREZ</code></td>
+<td>Official gene symbol as provided by NCBI’s Entrez gene</td>
+</tr>
+<tr class="even">
+<td><code>SYMBOL_SOURCE</code></td>
+<td>The source of the gene symbol (picked by VEP’s
+<code>--flag_pick_allele</code> option)</td>
+</tr>
+<tr class="odd">
+<td><code>STRAND</code></td>
+<td>The DNA strand (1 or -1) on which the transcript/feature lies
+(picked by VEP’s <code>--flag_pick_allele</code> option)</td>
+</tr>
+<tr class="even">
+<td><code>ENSP</code></td>
+<td>The Ensembl protein identifier of the affected transcript (picked by
+VEP’s <code>--flag_pick_allele</code> option)</td>
+</tr>
+<tr class="odd">
+<td><code>FLAGS</code></td>
+<td>Transcript quality flags: <code>cds_start_NF</code>: CDS 5’,
+incomplete <code>cds_end_NF</code>: CDS 3’ incomplete (picked by VEP’s
+<code>--flag_pick_allele</code> option)</td>
+</tr>
+<tr class="even">
+<td><code>SWISSPROT</code></td>
+<td>Best match UniProtKB/Swiss-Prot accession of protein product (picked
+by VEP’s <code>--flag_pick_allele</code> option)</td>
+</tr>
+<tr class="odd">
+<td><code>TREMBL</code></td>
+<td>Best match UniProtKB/TrEMBL accession of protein product (picked by
+VEP’s <code>--flag_pick_allele</code> option)</td>
+</tr>
+<tr class="even">
+<td><code>UNIPARC</code></td>
+<td>Best match UniParc accession of protein product (picked by VEP’s
+<code>--flag_pick_allele</code> option)</td>
+</tr>
+<tr class="odd">
+<td><code>HGVSc</code></td>
+<td>The HGVS coding sequence name (picked by VEP’s
+<code>--flag_pick_allele</code> option)</td>
+</tr>
+<tr class="even">
+<td><code>HGVSp</code></td>
+<td>The HGVS protein sequence name (picked by VEP’s
+<code>--flag_pick_allele</code> option)</td>
+</tr>
+<tr class="odd">
+<td><code>HGVSp_short</code></td>
+<td>The HGVS protein sequence name, short version (picked by VEP’s
+<code>--flag_pick_allele</code> option)</td>
+</tr>
+<tr class="even">
+<td><code>HGVS_OFFSET</code></td>
+<td>Indicates by how many bases the HGVS notations for this variant have
+been shifted (picked by VEP’s <code>--flag_pick_allele</code>
+option)</td>
+</tr>
+<tr class="odd">
+<td><code>NearestExonJB</code></td>
+<td>VEP plugin that finds nearest exon junction for a coding sequence
+variant. Format:
+<code>Ensembl exon identifier+distanceto exon boundary+boundary type(start/end)+exon length</code>
+</td>
+</tr>
+<tr class="even">
+<td><code>MOTIF_NAME</code></td>
+<td>The source and identifier of a transcription factor binding profile
+aligned at this position (picked by VEP’s
+<code>--flag_pick_allele</code> option)</td>
+</tr>
+<tr class="odd">
+<td><code>MOTIF_POS</code></td>
+<td>The relative position of the variation in the aligned TFBP (picked
+by VEP’s <code>--flag_pick_allele</code> option)</td>
+</tr>
+<tr class="even">
+<td><code>HIGH_INF_POS</code></td>
+<td>A flag indicating if the variant falls in a high information
+position of a transcription factor binding profile (TFBP) (picked by
+VEP’s <code>--flag_pick_allele</code> option)</td>
+</tr>
+<tr class="odd">
+<td><code>MOTIF_SCORE_CHANGE</code></td>
+<td>The difference in motif score of the reference and variant sequences
+for the TFBP (picked by VEP’s <code>--flag_pick_allele</code>
+option)</td>
+</tr>
+<tr class="even">
+<td><code>CELL_TYPE</code></td>
+<td>List of cell types and classifications for regulatory feature
+(picked by VEP’s <code>--flag_pick_allele</code> option)</td>
+</tr>
+<tr class="odd">
+<td><code>CANONICAL</code></td>
+<td>A flag indicating if the transcript is denoted as the canonical
+transcript for this gene (picked by VEP’s
+<code>--flag_pick_allele</code> option)</td>
+</tr>
+<tr class="even">
+<td><code>CCDS</code></td>
+<td>The CCDS identifier for this transcript, where applicable (picked by
+VEP’s <code>--flag_pick_allele</code> option)</td>
+</tr>
+<tr class="odd">
+<td><code>INTRON</code></td>
+<td>The intron number (out of total number) (picked by VEP’s
+<code>--flag_pick_allele</code> option)</td>
+</tr>
+<tr class="even">
+<td><code>INTRON_POSITION</code></td>
+<td>Relative position of intron variant to nearest exon/intron junction
+(NearestExonJB VEP plugin)</td>
+</tr>
+<tr class="odd">
+<td><code>EXON_POSITION</code></td>
+<td>Relative position of exon variant to nearest intron/exon junction
+(NearestExonJB VEP plugin)</td>
+</tr>
+<tr class="even">
+<td><code>EXON</code></td>
+<td>The exon number (out of total number) (picked by VEP’s
+<code>--flag_pick_allele</code> option)</td>
+</tr>
+<tr class="odd">
+<td><code>LAST_EXON</code></td>
+<td>Logical indicator for last exon of transcript (picked by VEP’s
+<code>--flag_pick_allele</code> option)</td>
+</tr>
+<tr class="even">
+<td><code>LAST_INTRON</code></td>
+<td>Logical indicator for last intron of transcript (picked by VEP’s
+<code>--flag_pick_allele</code> option)</td>
+</tr>
+<tr class="odd">
+<td><code>DISTANCE</code></td>
+<td>Shortest distance from variant to transcript (picked by VEP’s
+<code>--flag_pick_allele</code> option)</td>
+</tr>
+<tr class="even">
+<td><code>BIOTYPE</code></td>
+<td>Biotype of transcript or regulatory feature (picked by VEP’s
+<code>--flag_pick_allele</code> option)</td>
+</tr>
+<tr class="odd">
+<td><code>TSL</code></td>
+<td>Transcript support level (picked by VEP’s
+<code>--flag_pick_allele</code> option)&gt;</td>
+</tr>
+<tr class="even">
+<td><code>PUBMED</code></td>
+<td>PubMed ID(s) of publications that cite existing variant - VEP</td>
+</tr>
+<tr class="odd">
+<td><code>PHENO</code></td>
+<td>Indicates if existing variant is associated with a phenotype,
+disease or trait - VEP</td>
+</tr>
+<tr class="even">
+<td><code>GENE_PHENO</code></td>
+<td>Indicates if overlapped gene is associated with a phenotype, disease
+or trait - VEP</td>
+</tr>
+<tr class="odd">
+<td><code>ALLELE_NUM</code></td>
+<td>Allele number from input; 0 is reference, 1 is first alternate etc -
+VEP</td>
+</tr>
+<tr class="even">
+<td><code>REFSEQ_MATCH</code></td>
+<td>The RefSeq transcript match status; contains a number of flags
+indicating whether this RefSeq transcript matches the underlying
+reference sequence and/or an Ensembl transcript (picked by VEP’s
+<code>--flag_pick_allele</code> option)</td>
+</tr>
+<tr class="odd">
+<td><code>PICK</code></td>
+<td>Indicates if this block of consequence data was picked by VEP’s
+<code>--flag_pick_allele</code> option</td>
+</tr>
+<tr class="even">
+<td><code>VEP_ALL_CSQ</code></td>
+<td>All VEP transcript block consequences
+(<code>Consequence:SYMBOL:Feature_type:Feature:BIOTYPE</code>) -
+VEP</td>
+</tr>
+<tr class="odd">
+<td><code>EXONIC_STATUS</code></td>
+<td>Indicates if variant consequence type is ‘exonic’ or ‘nonexonic’. We
+define ‘exonic’ as any variants with the following consequences:
+<code>stop_gained / stop_lost</code>, <code>start_lost</code>,
+<code>frameshift_variant</code>, <code>missense_variant</code>,
+<code>splice_donor_variant</code>, <code>splice_acceptor_variant</code>,
+<code>inframe_insertion / inframe_deletion</code>,
+<code>synonymous_variant</code>, <code>protein_altering</code>
+</td>
+</tr>
+<tr class="even">
+<td><code>CODING_STATUS</code></td>
+<td>Indicates if primary variant consequence type is ‘coding’ or
+‘noncoding’. ‘coding’ variants are here defined as those with an
+‘exonic’ status, with the exception of synonymous variants</td>
+</tr>
+<tr class="odd">
+<td><code>NULL_VARIANT</code></td>
+<td>Primary variant consequence type is <code>frameshift</code> or
+<code>stop_gained</code>/<code>stop_lost</code>
+</td>
+</tr>
+<tr class="even">
+<td><code>SPLICE_DONOR_RELEVANT</code></td>
+<td>Logical indicating if variant is located at a particular location
+near the splice donor site (<code>+3A/G</code>, <code>+4A</code> or
+<code>+5G</code>)</td>
+</tr>
+<tr class="odd">
+<td><code>REGULATORY_ANNOTATION</code></td>
+<td>Comma-separated list of all variant annotations of
+<code>Feature_type</code>, <code>RegulatoryFeature</code>, and
+<code>MotifFeature</code>. Format (separated by a <code>|</code>):
+<code>&lt;Consequence&gt;</code>, <code>&lt;Feature_type&gt;</code>,
+<code>&lt;Feature&gt;</code>, <code>&lt;BIOTYPE&gt;</code>,
+<code>&lt;MOTIF_NAME&gt;</code>, <code>&lt;MOTIF_POS&gt;</code>,
+<code>&lt;HIGH_INF_POS&gt;</code>,
+<code>&lt;MOTIF_SCORE_CHANGE&gt;</code>,
+<code>&lt;TRANSCRIPTION_FACTORS&gt;</code>
+</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
 </div>
 <div class="section level5">
 <h5 id="gene-information">
 <em>Gene information</em><a class="anchor" aria-label="anchor" href="#gene-information"></a>
 </h5>
-<ul>
-<li>ENTREZ_ID - <a href="http://www.ncbi.nlm.nih.gov/gene" class="external-link">Entrez</a>
-gene identifier</li>
-<li>APPRIS - Principal isoform flags according to the <a href="http://appris.bioinfo.cnio.es/#/downloads" class="external-link">APPRIS principal
+<table class="table">
+<colgroup>
+<col width="27%">
+<col width="72%">
+</colgroup>
+<thead><tr class="header">
+<th>Tag</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>ENTREZ_ID</code></td>
+<td>
+<a href="http://www.ncbi.nlm.nih.gov/gene" class="external-link">Entrez</a> gene
+identifier</td>
+</tr>
+<tr class="even">
+<td><code>APPRIS</code></td>
+<td>Principal isoform flags according to the <a href="http://appris.bioinfo.cnio.es/#/downloads" class="external-link">APPRIS principal
 isoform database</a>
-</li>
-<li>MANE_SELECT - Indicating if the transcript is the MANE Select or
-MANE Plus Clinical transcript for the gene (picked by VEP’s
-–flag_pick_allele_gene option)</li>
-<li>UNIPROT_ID - <a href="http://www.uniprot.org" class="external-link">UniProt</a>
-identifier</li>
-<li>UNIPROT_ACC - <a href="http://www.uniprot.org" class="external-link">UniProt</a>
-accession(s)</li>
-<li>ENSEMBL_GENE_ID - Ensembl gene identifier for VEP’s picked
-transcript (<em>ENSGXXXXXXX</em>)</li>
-<li>ENSEMBL_TRANSCRIPT_ID - Ensembl transcript identifier for VEP’s
-picked transcript (<em>ENSTXXXXXX</em>)</li>
-<li>ENSEMBL_PROTEIN_ID - Ensembl corresponding protein identifier for
-VEP’s picked transcript</li>
-<li>REFSEQ_MRNA - Corresponding RefSeq transcript(s) identifier for
-VEP’s picked transcript (<em>NM_XXXXX</em>)</li>
-<li>TRANSCRIPT_MANE_SELECT - MANE select transcript identifer: one
-high-quality representative transcript per protein-coding gene that is
-well-supported by experimental data and represents the biology of the
-gene</li>
-<li>TRANSCRIPT_MANE_PLUS_CLINICAL - transcripts chosen to supplement
-MANE Select when needed for clinical variant reporting</li>
-<li>GENCODE_TAG - tag for gencode transcript (basic etc)</li>
-<li>GENCODE_TRANSCRIPT_TYPE - type of transcript (protein-coding
-etc.)</li>
-<li>CORUM_ID - Associated protein complexes (identifiers) from <a href="http://mips.helmholtz-muenchen.de/corum/" class="external-link">CORUM</a>
-</li>
-<li>TUMOR_SUPPRESSOR - Indicates whether gene is predicted as a tumor
-suppressor gene, from Network of Cancer Genes (NCG) &amp; the CancerMine
-text-mining resource</li>
-<li>TUMOR_SUPPRESSOR_EVIDENCE - Underlying evidence for gene being a
-tumor suppressor. Format:
-NCG:&lt;TRUE|FALSE&gt;&amp;CancerMine:&lt;LC|MC|HC&gt;:num_citations</li>
-<li>ONCOGENE - Indicates whether gene is predicted as an oncogene, from
+</td>
+</tr>
+<tr class="odd">
+<td><code>MANE_SELECT</code></td>
+<td>Indicating if the transcript is the MANE Select or MANE Plus
+Clinical transcript for the gene (picked by VEP’s
+<code>--flag_pick_allele_gene</code> option)</td>
+</tr>
+<tr class="even">
+<td><code>UNIPROT_ID</code></td>
+<td>
+<a href="http://www.uniprot.org" class="external-link">UniProt</a> identifier</td>
+</tr>
+<tr class="odd">
+<td><code>UNIPROT_ACC</code></td>
+<td>
+<a href="http://www.uniprot.org" class="external-link">UniProt</a> accession(s)</td>
+</tr>
+<tr class="even">
+<td><code>ENSEMBL_GENE_ID</code></td>
+<td>Ensembl gene identifier for VEP’s picked transcript
+(<em>ENSGXXXXXXX</em>)</td>
+</tr>
+<tr class="odd">
+<td><code>ENSEMBL_TRANSCRIPT_ID</code></td>
+<td>Ensembl transcript identifier for VEP’s picked transcript
+(<em>ENSTXXXXXX</em>)</td>
+</tr>
+<tr class="even">
+<td><code>ENSEMBL_PROTEIN_ID</code></td>
+<td>Ensembl corresponding protein identifier for VEP’s picked
+transcript</td>
+</tr>
+<tr class="odd">
+<td><code>REFSEQ_MRNA</code></td>
+<td>Corresponding RefSeq transcript(s) identifier for VEP’s picked
+transcript (<em>NM_XXXXX</em>)</td>
+</tr>
+<tr class="even">
+<td><code>TRANSCRIPT_MANE_SELECT</code></td>
+<td>MANE select transcript identifer: one high-quality representative
+transcript per protein-coding gene that is well-supported by
+experimental data and represents the biology of the gene</td>
+</tr>
+<tr class="odd">
+<td><code>TRANSCRIPT_MANE_PLUS_CLINICAL</code></td>
+<td>transcripts chosen to supplement MANE Select when needed for
+clinical variant reporting</td>
+</tr>
+<tr class="even">
+<td><code>GENCODE_TAG</code></td>
+<td>tag for gencode transcript (basic etc)</td>
+</tr>
+<tr class="odd">
+<td><code>GENCODE_TRANSCRIPT_TYPE</code></td>
+<td>type of transcript (protein-coding etc.)</td>
+</tr>
+<tr class="even">
+<td><code>CORUM_ID</code></td>
+<td>Associated protein complexes (identifiers) from <a href="http://mips.helmholtz-muenchen.de/corum/" class="external-link">CORUM</a>
+</td>
+</tr>
+<tr class="odd">
+<td><code>TUMOR_SUPPRESSOR</code></td>
+<td>Indicates whether gene is predicted as a tumor suppressor gene, from
 Network of Cancer Genes (NCG) &amp; the CancerMine text-mining
-resource</li>
-<li>ONCOGENE_EVIDENCE - Underlying evidence for gene being an oncogene.
-Format:
-NCG:&lt;TRUE|FALSE&gt;&amp;CancerMine:&lt;LC|MC|HC&gt;:num_citations</li>
-<li>CANCER_SUSCEPTIBILITY_CUI - MedGen concept unique identifier (CUI)
-for cancer phenotype</li>
-<li>CANCER_SYNDROME_CUI - MedGen concept unique identifier (CUI) for
-cancer syndrome</li>
-<li>CANCER_PREDISPOSITION_SOURCE - Data source for susceptibility gene
-(panel <em>0</em>: NCGC, CGC_94, TCGA_PANCAN, PANEL_APP, OTHER)</li>
-<li>CANCER_PREDISPOSITION_MOI - Mode of inheritance for susceptibility
-gene (AR/AD)</li>
-<li>CANCER_PREDISPOSITION_MOD - Mechanism of disease for susceptibility
-gene (Lof/GoF)</li>
-<li>PROB_EXAC_LOF_INTOLERANT - dbNSFP_gene: the probability of being
-loss-of-function intolerant (intolerant of both heterozygous and
-homozygous lof variants) based on ExAC r0.3 data</li>
-<li>PROB_EXAC_LOF_INTOLERANT_HOM - dbNSFP_gene: the probability of being
-intolerant of homozygous, but not heterozygous lof variants based on
-ExAC r0.3 data</li>
-<li>PROB_EXAC_LOF_TOLERANT_NULL - dbNSFP_gene: the probability of being
-tolerant of both heterozygous and homozygous lof variants based on ExAC
-r0.3 data</li>
-<li>PROB_EXAC_NONTCGA_LOF_INTOLERANT - dbNSFP_gene: the probability of
-being loss-of-function intolerant (intolerant of both heterozygous and
-homozygous lof variants) based on ExAC r0.3 nonTCGA subset</li>
-<li>PROB_EXAC_NONTCGA_LOF_INTOLERANT_HOM - dbNSFP_gene: the probability
-of being intolerant of homozygous, but not heterozygous lof variants
-based on ExAC r0.3 nonTCGA subset</li>
-<li>PROB_EXAC_NONTCGA_LOF_TOLERANT_NULL - dbNSFP_gene: the probability
-of being tolerant of both heterozygous and homozygous lof variants based
-on ExAC r0.3 nonTCGA subset</li>
-<li>PROB_GNOMAD_LOF_INTOLERANT - dbNSFP_gene: the probability of being
-loss-of-function intolerant (intolerant of both heterozygous and
-homozygous lof variants based on gnomAD 2.1 data</li>
-<li>PROB_GNOMAD_LOF_INTOLERANT_HOM - dbNSFP_gene: the probability of
-being intolerant of homozygous, but not heterozygous lof variants based
-on gnomAD 2.1 data</li>
-<li>PROB_GNOMAD_LOF_TOLERANT_NULL - dbNSFP_gene: the probability of
-being tolerant of both heterozygous and homozygous lof variants based on
-gnomAD 2.1 data</li>
-<li>PROB_HAPLOINSUFFICIENCY - dbNSFP_gene: Estimated probability of
-haploinsufficiency of the gene (from <a href="http://dx.doi.org/10.1371/journal.pgen.1001154" class="external-link uri">http://dx.doi.org/10.1371/journal.pgen.1001154</a>)</li>
-<li>ESSENTIAL_GENE_CRISPR - dbNSFP_gene: Essential (E) or Non-essential
-phenotype-changing (N) based on large scale CRISPR experiments. from <a href="http://dx.doi.org/10.1126/science.aac7041" class="external-link uri">http://dx.doi.org/10.1126/science.aac7041</a>
-</li>
-<li>ESSENTIAL_GENE_CRISPR2 - dbNSFP_gene: Essential (E),
-context-Specific essential (S), or Non-essential phenotype-changing (N)
-based on large scale CRISPR experiments. from <a href="http://dx.doi.org/10.1016/j.cell.2015.11.015" class="external-link uri">http://dx.doi.org/10.1016/j.cell.2015.11.015</a>
-</li>
-</ul>
+resource</td>
+</tr>
+<tr class="even">
+<td><code>TUMOR_SUPPRESSOR_EVIDENCE</code></td>
+<td>Underlying evidence for gene being a tumor suppressor. Format:
+<code>NCG:&lt;TRUE|FALSE&gt;&amp;CancerMine:&lt;LC|MC|HC&gt;:num_citations</code>
+</td>
+</tr>
+<tr class="odd">
+<td><code>ONCOGENE</code></td>
+<td>Indicates whether gene is predicted as an oncogene, from Network of
+Cancer Genes (NCG) &amp; the CancerMine text-mining resource</td>
+</tr>
+<tr class="even">
+<td><code>ONCOGENE_EVIDENCE</code></td>
+<td>Underlying evidence for gene being an oncogene. Format:
+<code>NCG:&lt;TRUE|FALSE&gt;&amp;CancerMine:&lt;LC|MC|HC&gt;:num_citations</code>
+</td>
+</tr>
+<tr class="odd">
+<td><code>CANCER_SUSCEPTIBILITY_CUI</code></td>
+<td>MedGen concept unique identifier (CUI) for cancer phenotype</td>
+</tr>
+<tr class="even">
+<td><code>CANCER_SYNDROME_CUI</code></td>
+<td>MedGen concept unique identifier (CUI) for cancer syndrome</td>
+</tr>
+<tr class="odd">
+<td><code>CANCER_PREDISPOSITION_SOURCE</code></td>
+<td>Data source for susceptibility gene (panel <em>0</em>:
+<code>NCGC</code>, <code>CGC_94</code>, <code>TCGA_PANCAN</code>,
+<code>PANEL_APP</code>, <code>OTHER</code>)</td>
+</tr>
+<tr class="even">
+<td><code>CANCER_PREDISPOSITION_MOI</code></td>
+<td>Mode of inheritance for susceptibility gene
+(<code>AR</code>/<code>AD</code>)</td>
+</tr>
+<tr class="odd">
+<td><code>CANCER_PREDISPOSITION_MOD</code></td>
+<td>Mechanism of disease for susceptibility gene
+(<code>Lof</code>/<code>GoF</code>)</td>
+</tr>
+<tr class="even">
+<td><code>PROB_EXAC_LOF_INTOLERANT</code></td>
+<td>
+<code>dbNSFP_gene</code>: the probability of being loss-of-function
+intolerant (intolerant of both heterozygous and homozygous lof variants)
+based on ExAC r0.3 data</td>
+</tr>
+<tr class="odd">
+<td><code>PROB_EXAC_LOF_INTOLERANT_HOM</code></td>
+<td>
+<code>dbNSFP_gene</code>: the probability of being intolerant of
+homozygous, but not heterozygous lof variants based on ExAC r0.3
+data</td>
+</tr>
+<tr class="even">
+<td><code>PROB_EXAC_LOF_TOLERANT_NULL</code></td>
+<td>
+<code>dbNSFP_gene</code>: the probability of being tolerant of both
+heterozygous and homozygous lof variants based on ExAC r0.3 data</td>
+</tr>
+<tr class="odd">
+<td><code>PROB_EXAC_NONTCGA_LOF_INTOLERANT</code></td>
+<td>
+<code>dbNSFP_gene</code>: the probability of being loss-of-function
+intolerant (intolerant of both heterozygous and homozygous lof variants)
+based on ExAC r0.3 nonTCGA subset</td>
+</tr>
+<tr class="even">
+<td><code>PROB_EXAC_NONTCGA_LOF_INTOLERANT_HOM</code></td>
+<td>
+<code>dbNSFP_gene</code>: the probability of being intolerant of
+homozygous, but not heterozygous lof variants based on ExAC r0.3 nonTCGA
+subset</td>
+</tr>
+<tr class="odd">
+<td><code>PROB_EXAC_NONTCGA_LOF_TOLERANT_NULL</code></td>
+<td>
+<code>dbNSFP_gene</code>: the probability of being tolerant of both
+heterozygous and homozygous lof variants based on ExAC r0.3 nonTCGA
+subset</td>
+</tr>
+<tr class="even">
+<td><code>PROB_GNOMAD_LOF_INTOLERANT</code></td>
+<td>
+<code>dbNSFP_gene</code>: the probability of being loss-of-function
+intolerant (intolerant of both heterozygous and homozygous lof variants
+based on gnomAD 2.1 data</td>
+</tr>
+<tr class="odd">
+<td><code>PROB_GNOMAD_LOF_INTOLERANT_HOM</code></td>
+<td>
+<code>dbNSFP_gene</code>: the probability of being intolerant of
+homozygous, but not heterozygous lof variants based on gnomAD 2.1
+data</td>
+</tr>
+<tr class="even">
+<td><code>PROB_GNOMAD_LOF_TOLERANT_NULL</code></td>
+<td>
+<code>dbNSFP_gene</code>: the probability of being tolerant of both
+heterozygous and homozygous lof variants based on gnomAD 2.1 data</td>
+</tr>
+<tr class="odd">
+<td><code>PROB_HAPLOINSUFFICIENCY</code></td>
+<td>
+<code>dbNSFP_gene</code>: Estimated probability of
+haploinsufficiency of the gene (from <a href="http://dx.doi.org/10.1371/journal.pgen.1001154" class="external-link uri">http://dx.doi.org/10.1371/journal.pgen.1001154</a>)</td>
+</tr>
+<tr class="even">
+<td><code>ESSENTIAL_GENE_CRISPR</code></td>
+<td>
+<code>dbNSFP_gene</code>: Essential (<code>E</code>) or
+Non-essential phenotype-changing (<code>N</code>) based on large scale
+CRISPR experiments (from <a href="http://dx.doi.org/10.1126/science.aac7041" class="external-link uri">http://dx.doi.org/10.1126/science.aac7041</a>)</td>
+</tr>
+<tr class="odd">
+<td><code>ESSENTIAL_GENE_CRISPR2</code></td>
+<td>
+<code>dbNSFP_gene</code>: Essential (<code>E</code>),
+context-Specific essential (<code>S</code>), or Non-essential
+phenotype-changing (<code>N</code>) based on large scale CRISPR
+experiments (from <a href="http://dx.doi.org/10.1016/j.cell.2015.11.015" class="external-link uri">http://dx.doi.org/10.1016/j.cell.2015.11.015</a>)</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
 </div>
 <div class="section level5">
 <h5 id="variant-effect-and-protein-coding-information">
 <em>Variant effect and protein-coding information</em><a class="anchor" aria-label="anchor" href="#variant-effect-and-protein-coding-information"></a>
 </h5>
-<ul>
-<li><p>MUTATION_HOTSPOT - mutation hotspot codon in <a href="http://cancerhotspots.org/" class="external-link">cancerhotspots.org</a>. Format:
-gene_symbol | codon | q-value</p></li>
-<li><p>MUTATION_HOTSPOT_TRANSCRIPT - hotspot-associated transcripts
-(Ensembl transcript ID)</p></li>
-<li><p>MUTATION_HOTSPOT_CANCERTYPE - hotspot-associated cancer types
-(from cancerhotspots.org)</p></li>
-<li><p>UNIPROT_FEATURE - Overlapping protein annotations from <a href="http://www.uniprot.org" class="external-link">UniProt KB</a></p></li>
-<li><p>PFAM_DOMAIN - Pfam domain identifier (from VEP)</p></li>
-<li>
-<p>EFFECT_PREDICTIONS - All predictions of effect of variant on
-protein function and pre-mRNA splicing from <a href="https://sites.google.com/site/jpopgen/dbNSFP" class="external-link">database of
+<table class="table">
+<colgroup>
+<col width="27%">
+<col width="72%">
+</colgroup>
+<thead><tr class="header">
+<th>Tag</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>MUTATION_HOTSPOT</code></td>
+<td>mutation hotspot codon in <a href="http://cancerhotspots.org/" class="external-link">cancerhotspots.org</a>. Format:
+<code>gene_symbol | codon | q-value</code>
+</td>
+</tr>
+<tr class="even">
+<td><code>MUTATION_HOTSPOT_TRANSCRIPT</code></td>
+<td>hotspot-associated transcripts (Ensembl transcript ID)</td>
+</tr>
+<tr class="odd">
+<td><code>MUTATION_HOTSPOT_CANCERTYPE</code></td>
+<td>hotspot-associated cancer types (from cancerhotspots.org)</td>
+</tr>
+<tr class="even">
+<td><code>UNIPROT_FEATURE</code></td>
+<td>Overlapping protein annotations from <a href="http://www.uniprot.org" class="external-link">UniProt KB</a>
+</td>
+</tr>
+<tr class="odd">
+<td><code>PFAM_DOMAIN</code></td>
+<td>Pfam domain identifier (from VEP)</td>
+</tr>
+<tr class="even">
+<td><code>EFFECT_PREDICTIONS</code></td>
+<td>All predictions of effect of variant on protein function and
+pre-mRNA splicing from <a href="https://sites.google.com/site/jpopgen/dbNSFP" class="external-link">database of
 non-synonymous functional predictions - dbNSFP v4.2</a>. Predicted
 effects are provided by different sources/algorithms (separated by
-‘&amp;’), T = Tolerated, N = Neutral, D = Damaging:</p>
-<ol style="list-style-type: decimal">
-<li><a href="https://sift.bii.a-star.edu.sg/" class="external-link">SIFT</a></li>
-<li>
-<a href="http://www.mutationtaster.org/" class="external-link">MutationTaster</a> (data
-release Nov 2015)</li>
-<li>
-<a href="http://mutationassessor.org/" class="external-link">MutationAssessor</a> (release
-3)</li>
-<li>
-<a href="http://fathmm.biocompute.org.uk" class="external-link">FATHMM</a> (v2.3)</li>
-<li>
-<a href="http://provean.jcvi.org/index.php" class="external-link">PROVEAN</a> (v1.1 Jan
-2015)</li>
-<li><a href="http://fathmm.biocompute.org.uk/fathmmMKL.htm" class="external-link">FATHMM_MKL</a></li>
-<li><a href="https://www.nature.com/articles/s41588-018-0167-z" class="external-link">PRIMATEAI</a></li>
-<li><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5570203/" class="external-link">DEOGEN2</a></li>
-<li>
-<a href="https://www.biorxiv.org/content/10.1101/2021.04.09.438706v1" class="external-link">DBNSFP_CONSENSUS_RNN</a>
-(Ensembl/consensus prediction, based on deep learning)</li>
-<li>
-<a href="http://nar.oxfordjournals.org/content/42/22/13534" class="external-link">SPLICE_SITE_EFFECT_ADA</a>
+<code>&amp;</code>), <code>T</code> = Tolerated, <code>N</code> =
+Neutral, <code>D</code> = Damaging: 1.<a href="https://sift.bii.a-star.edu.sg/" class="external-link">SIFT</a>, 2.<a href="http://www.mutationtaster.org/" class="external-link">MutationTaster</a> (data release
+Nov 2015), 3.<a href="http://mutationassessor.org/" class="external-link">MutationAssessor</a>
+(release 3), 4.<a href="http://fathmm.biocompute.org.uk" class="external-link">FATHMM</a>
+(v2.3), 5.<a href="http://provean.jcvi.org/index.php" class="external-link">PROVEAN</a> (v1.1
+Jan 2015), 6.<a href="http://fathmm.biocompute.org.uk/fathmmMKL.htm" class="external-link">FATHMM_MKL</a>,
+7.<a href="https://www.nature.com/articles/s41588-018-0167-z" class="external-link">PRIMATEAI</a>,
+8.<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5570203/" class="external-link">DEOGEN2</a>,
+9.<a href="https://www.biorxiv.org/content/10.1101/2021.04.09.438706v1" class="external-link">DBNSFP_CONSENSUS_RNN</a>
+(Ensembl/consensus prediction, based on deep learning), 10.<a href="http://nar.oxfordjournals.org/content/42/22/13534" class="external-link">SPLICE_SITE_EFFECT_ADA</a>
 (Ensembl/consensus prediction of splice-altering SNVs, based on adaptive
-boosting)</li>
-<li>
-<a href="http://nar.oxfordjournals.org/content/42/22/13534" class="external-link">SPLICE_SITE_EFFECT_RF</a>
+boosting), 11.<a href="http://nar.oxfordjournals.org/content/42/22/13534" class="external-link">SPLICE_SITE_EFFECT_RF</a>
 (Ensembl/consensus prediction of splice-altering SNVs, based on random
-forest)</li>
-<li><a href="http://bejerano.stanford.edu/MCAP" class="external-link">M-CAP</a></li>
-<li><a href="http://mutpred.mutdb.org" class="external-link">MutPred</a></li>
-<li><a href="http://mendel.stanford.edu/SidowLab/downloads/gerp/" class="external-link">GERP</a></li>
-<li><a href="https://doi.org/10.1002/humu.23158" class="external-link">BayesDel</a></li>
-<li><a href="https://doi.org/10.1093/nar/gkaa288" class="external-link">LIST-S2</a></li>
-<li><a href="https://www.nature.com/articles/s41467-017-00443-5" class="external-link">ALoFT</a></li>
-</ol>
-</li>
-<li><p>DBNSFP_BAYESDEL_ADDAF - predicted effect from BayesDel
-(dbNSFP)</p></li>
-<li><p>DBNSFP_LIST_S2 - predicted effect from LIST-S2 (dbNSFP)</p></li>
-<li><p>DBNSFP_SIFT - predicted effect from SIFT (dbNSFP)</p></li>
-<li><p>DBNSFP_PROVEAN - predicted effect from PROVEAN (dbNSFP)</p></li>
-<li><p>DBNSFP_MUTATIONTASTER - predicted effect from MUTATIONTASTER
-(dbNSFP)</p></li>
-<li><p>DBNSFP_MUTATIONASSESSOR - predicted effect from MUTATIONASSESSOR
-(dbNSFP)</p></li>
-<li><p>DBNSFP_M_CAP - predicted effect from M-CAP (dbNSFP)</p></li>
-<li><p>DBNSFP_ALOFTPRED - predicted effect from ALoFT (dbNSFP)</p></li>
-<li><p>DBNSFP_MUTPRED - score from MUTPRED (dbNSFP)</p></li>
-<li><p>DBNSFP_FATHMM - predicted effect from FATHMM (dbNSFP)</p></li>
-<li><p>DBNSFP_PRIMATEAI - predicted effect from PRIMATEAI
-(dbNSFP)</p></li>
-<li><p>DBNSFP_DEOGEN2 - predicted effect from DEOGEN2 (dbNSFP)</p></li>
-<li><p>DBNSFP_GERP - evolutionary constraint measure from GERP
-(dbNSFP)</p></li>
-<li><p>DBNSFP_FATHMM_MKL - predicted effect from FATHMM-mkl
-(dbNSFP)</p></li>
-<li><p>DBNSFP_META_RNN - predicted effect from ensemble prediction (deep
-learning - dbNSFP)</p></li>
-<li><p>DBNSFP_SPLICE_SITE_RF - predicted effect of splice site
-disruption, using random forest (dbscSNV)</p></li>
-<li><p>DBNSFP_SPLICE_SITE_ADA - predicted effect of splice site
-disruption, using boosting (dbscSNV)</p></li>
-</ul>
+forest), 12.<a href="http://bejerano.stanford.edu/MCAP" class="external-link">M-CAP</a>, 13.<a href="http://mutpred.mutdb.org" class="external-link">MutPred</a>, 14.<a href="http://mendel.stanford.edu/SidowLab/downloads/gerp/" class="external-link">GERP</a>,
+15.<a href="https://doi.org/10.1002/humu.23158" class="external-link">BayesDel</a>, 16.<a href="https://doi.org/10.1093/nar/gkaa288" class="external-link">LIST-S2</a>, 17.<a href="https://www.nature.com/articles/s41467-017-00443-5" class="external-link">ALoFT</a>
+</td>
+</tr>
+<tr class="odd">
+<td><code>DBNSFP_BAYESDEL_ADDAF</code></td>
+<td>predicted effect from BayesDel (dbNSFP)</td>
+</tr>
+<tr class="even">
+<td><code>DBNSFP_LIST_S2</code></td>
+<td>predicted effect from LIST-S2 (dbNSFP)</td>
+</tr>
+<tr class="odd">
+<td><code>DBNSFP_SIFT</code></td>
+<td>predicted effect from SIFT (dbNSFP)</td>
+</tr>
+<tr class="even">
+<td><code>DBNSFP_PROVEAN</code></td>
+<td>predicted effect from PROVEAN (dbNSFP)</td>
+</tr>
+<tr class="odd">
+<td><code>DBNSFP_MUTATIONTASTER</code></td>
+<td>predicted effect from MUTATIONTASTER (dbNSFP)</td>
+</tr>
+<tr class="even">
+<td><code>DBNSFP_MUTATIONASSESSOR</code></td>
+<td>predicted effect from MUTATIONASSESSOR (dbNSFP)</td>
+</tr>
+<tr class="odd">
+<td><code>DBNSFP_M_CAP</code></td>
+<td>predicted effect from M-CAP (dbNSFP)</td>
+</tr>
+<tr class="even">
+<td><code>DBNSFP_ALOFTPRED</code></td>
+<td>predicted effect from ALoFT (dbNSFP)</td>
+</tr>
+<tr class="odd">
+<td><code>DBNSFP_MUTPRED</code></td>
+<td>score from MUTPRED (dbNSFP)</td>
+</tr>
+<tr class="even">
+<td><code>DBNSFP_FATHMM</code></td>
+<td>predicted effect from FATHMM (dbNSFP)</td>
+</tr>
+<tr class="odd">
+<td><code>DBNSFP_PRIMATEAI</code></td>
+<td>predicted effect from PRIMATEAI (dbNSFP)</td>
+</tr>
+<tr class="even">
+<td><code>DBNSFP_DEOGEN2</code></td>
+<td>predicted effect from DEOGEN2 (dbNSFP)</td>
+</tr>
+<tr class="odd">
+<td><code>DBNSFP_GERP</code></td>
+<td>evolutionary constraint measure from GERP (dbNSFP)</td>
+</tr>
+<tr class="even">
+<td><code>DBNSFP_FATHMM_MKL</code></td>
+<td>predicted effect from FATHMM-mkl (dbNSFP)</td>
+</tr>
+<tr class="odd">
+<td><code>DBNSFP_META_RNN</code></td>
+<td>predicted effect from ensemble prediction (deep learning -
+dbNSFP)</td>
+</tr>
+<tr class="even">
+<td><code>DBNSFP_SPLICE_SITE_RF</code></td>
+<td>predicted effect of splice site disruption, using random forest
+(dbscSNV)</td>
+</tr>
+<tr class="odd">
+<td><code>DBNSFP_SPLICE_SITE_ADA</code></td>
+<td>predicted effect of splice site disruption, using boosting
+(dbscSNV)</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
 </div>
 <div class="section level5">
 <h5 id="variant-frequenciesannotations-in-germline-databases">
 <em>Variant frequencies/annotations in germline databases</em><a class="anchor" aria-label="anchor" href="#variant-frequenciesannotations-in-germline-databases"></a>
 </h5>
-<ul>
-<li>AFR_AF_GNOMAD - African/American germline allele frequency (<a href="http://gnomad.broadinstitute.org/" class="external-link">Genome Aggregation Database
-release 2.1</a>)</li>
-<li>AMR_AF_GNOMAD - American germline allele frequency (<a href="http://gnomad.broadinstitute.org/" class="external-link">Genome Aggregation Database
-release 2.1</a>)</li>
-<li>GLOBAL_AF_GNOMAD - Adjusted global germline allele frequency (<a href="http://gnomad.broadinstitute.org/" class="external-link">Genome Aggregation Database
-release 2.1</a>)</li>
-<li>SAS_AF_GNOMAD - South Asian germline allele frequency (<a href="http://gnomad.broadinstitute.org/" class="external-link">Genome Aggregation Database
-release 2.1</a>)</li>
-<li>EAS_AF_GNOMAD - East Asian germline allele frequency (<a href="http://gnomad.broadinstitute.org/" class="external-link">Genome Aggregation Database
-release 2.1</a>)</li>
-<li>FIN_AF_GNOMAD - Finnish germline allele frequency (<a href="http://gnomad.broadinstitute.org/" class="external-link">Genome Aggregation Database
-release 2.1</a>)</li>
-<li>NFE_AF_GNOMAD - Non-Finnish European germline allele frequency (<a href="http://gnomad.broadinstitute.org/" class="external-link">Genome Aggregation Database
-release 2.1</a>)</li>
-<li>OTH_AF_GNOMAD - Other germline allele frequency (<a href="http://gnomad.broadinstitute.org/" class="external-link">Genome Aggregation Database
-release 2.1</a>)</li>
-<li>ASJ_AF_GNOMAD - Ashkenazi Jewish allele frequency (<a href="http://gnomad.broadinstitute.org/" class="external-link">Genome Aggregation Database
-release 2.1</a>)</li>
-<li>NON_CANCER_AF_ASJ - Alternate allele frequency for samples of
-Ashkenazi Jewish ancestry in the non_cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</li>
-<li>NON_CANCER_AF_EAS - Alternate allele frequency for samples of East
-Asian ancestry in the non_cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</li>
-<li>NON_CANCER_AF_AFR - Alternate allele frequency for samples of
-African-American/African ancestry in the non_cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</li>
-<li>NON_CANCER_AF_AMR - Alternate allele frequency for samples of Latino
-ancestry in the non_cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</li>
-<li>NON_CANCER_AF_OTH - Alternate allele frequency for samples of Other
-ancestry in the non_cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</li>
-<li>NON_CANCER_AF_NFE - Alternate allele frequency for samples of
-Non-Finnish European ancestry in the non_cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</li>
-<li>NON_CANCER_AF_FIN - Alternate allele frequency for samples of
-Finnish ancestry in the non_cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</li>
-<li>NON_CANCER_AF_SAS - Alternate allele frequency for samples of South
-Asian ancestry in the non_cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</li>
-<li>NON_CANCER_AF_GLOBAL - Alternate allele frequency in the non_cancer
-subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD
-2.1.1</a>)</li>
-<li>NON_CANCER_AC_ASJ - Alternate allele count for samples of Ashkenazi
-Jewish ancestry in the non_cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</li>
-<li>NON_CANCER_AC_EAS - Alternate allele count for samples of East Asian
-ancestry in the non_cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</li>
-<li>NON_CANCER_AC_AFR - Alternate allele count for samples of
-African-American/African ancestry in the non_cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</li>
-<li>NON_CANCER_AC_AMR - Alternate allele count for samples of Latino
-ancestry in the non_cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</li>
-<li>NON_CANCER_AC_OTH - Alternate allele count for samples of Other
-ancestry in the non_cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</li>
-<li>NON_CANCER_AC_NFE - Alternate allele frequency for samples of
-Non-Finnish European ancestry in the non_cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</li>
-<li>NON_CANCER_AC_FIN - Alternate allele count for samples of Finnish
-ancestry in the non_cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</li>
-<li>NON_CANCER_AC_SAS - Alternate allele count for samples of South
-Asian ancestry in the non_cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</li>
-<li>NON_CANCER_AC_GLOBAL - Alternate allele count in the non_cancer
-subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD
-2.1.1</a>)</li>
-<li>NON_CANCER_AN_ASJ - Total number of alleles in samples of Ashkenazi
-Jewish ancestry in the non_cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</li>
-<li>NON_CANCER_AN_EAS - Total number of alleles in samples of East Asian
-ancestry in the non_cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</li>
-<li>NON_CANCER_AN_AFR - Total number of alleles in samples of
-African-American/African ancestry in the non_cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</li>
-<li>NON_CANCER_AN_AMR - Total number of alleles in samples of Latino
-ancestry in the non_cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</li>
-<li>NON_CANCER_AN_OTH - Total number of alleles in samples of Other
-ancestry in the non_cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</li>
-<li>NON_CANCER_AN_NFE - Total number of alleles in samples of
-Non-Finnish European ancestry in the non_cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</li>
-<li>NON_CANCER_AN_FIN - Total number of alleles in samples of Finnish
-ancestry in the non_cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</li>
-<li>NON_CANCER_AN_SAS - Total number of alleles in samples of South
-Asian ancestry in the non_cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</li>
-<li>NON_CANCER_AN_GLOBAL - Total number of alleles in the non_cancer
-subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD
-2.1.1</a>)</li>
-<li>NON_CANCER_NHOMALT_ASJ - Count of homozygous individuals in samples
-of Ashkenazi Jewish ancestry in the non_cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</li>
-<li>NON_CANCER_NHOMALT_EAS - Count of homozygous individuals in samples
-of East Asian ancestry in the non_cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</li>
-<li>NON_CANCER_NHOMALT_AFR - Count of homozygous individuals in samples
-of African-American/African ancestry in the non_cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</li>
-<li>NON_CANCER_NHOMALT_AMR - Count of homozygous individuals in samples
-of Latino ancestry in the non_cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</li>
-<li>NON_CANCER_NHOMALT_OTH - Count of homozygous individuals in samples
-of Other ancestry in the non_cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</li>
-<li>NON_CANCER_NHOMALT_NFE - Count of homozygous individuals in samples
-of Non-Finnish European ancestry in the non_cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</li>
-<li>NON_CANCER_NHOMALT_FIN - Count of homozygous individuals in samples
-of Finnish ancestry in the non_cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</li>
-<li>NON_CANCER_NHOMALT_SAS - Count of homozygous individuals in samples
-of South Asian ancestry in the non_cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</li>
-<li>NON_CANCER_NHOMALT_GLOBAL - Count of homozygous individuals in
-samples in the non_cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</li>
-<li>AFR_AF_1KG - <a href="http://www.1000genomes.org" class="external-link">1000G Project -
-phase 3</a> germline allele frequency for samples from AFR
-(African)</li>
-<li>AMR_AF_1KG - <a href="http://www.1000genomes.org" class="external-link">1000G Project -
-phase 3</a> germline allele frequency for samples from AMR (Ad Mixed
-American)</li>
-<li>EAS_AF_1KG - <a href="http://www.1000genomes.org" class="external-link">1000G Project -
-phase 3</a> germline allele frequency for samples from EAS (East
-Asian)</li>
-<li>EUR_AF_1KG - <a href="http://www.1000genomes.org" class="external-link">1000G Project -
-phase 3</a> germline allele frequency for samples from EUR
-(European)</li>
-<li>SAS_AF_1KG - <a href="http://www.1000genomes.org" class="external-link">1000G Project -
-phase 3</a> germline allele frequency for samples from SAS (South
-Asian)</li>
-<li>GLOBAL_AF_1KG - <a href="http://www.1000genomes.org" class="external-link">1000G Project -
-phase 3</a> germline allele frequency for all 1000G project samples
-(global)</li>
-<li>DBSNPRSID - <a href="http://www.ncbi.nlm.nih.gov/SNP/" class="external-link">dbSNP</a>
-reference ID, as provided by VEP</li>
-</ul>
+<table class="table">
+<colgroup>
+<col width="27%">
+<col width="72%">
+</colgroup>
+<thead><tr class="header">
+<th>Tag</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>AFR_AF_GNOMAD</code></td>
+<td>African/American germline allele frequency (<a href="http://gnomad.broadinstitute.org/" class="external-link">gnomAD release 2.1</a>)</td>
+</tr>
+<tr class="even">
+<td><code>AMR_AF_GNOMAD</code></td>
+<td>American germline allele frequency (<a href="http://gnomad.broadinstitute.org/" class="external-link">gnomAD release 2.1</a>)</td>
+</tr>
+<tr class="odd">
+<td><code>GLOBAL_AF_GNOMAD</code></td>
+<td>Adjusted global germline allele frequency (<a href="http://gnomad.broadinstitute.org/" class="external-link">gnomAD release 2.1</a>)</td>
+</tr>
+<tr class="even">
+<td><code>SAS_AF_GNOMAD</code></td>
+<td>South Asian germline allele frequency (<a href="http://gnomad.broadinstitute.org/" class="external-link">gnomAD release 2.1</a>)</td>
+</tr>
+<tr class="odd">
+<td><code>EAS_AF_GNOMAD</code></td>
+<td>East Asian germline allele frequency (<a href="http://gnomad.broadinstitute.org/" class="external-link">gnomAD release 2.1</a>)</td>
+</tr>
+<tr class="even">
+<td><code>FIN_AF_GNOMAD</code></td>
+<td>Finnish germline allele frequency (<a href="http://gnomad.broadinstitute.org/" class="external-link">gnomAD release 2.1</a>)</td>
+</tr>
+<tr class="odd">
+<td><code>NFE_AF_GNOMAD</code></td>
+<td>Non-Finnish European germline allele frequency (<a href="http://gnomad.broadinstitute.org/" class="external-link">gnomAD release 2.1</a>)</td>
+</tr>
+<tr class="even">
+<td><code>OTH_AF_GNOMAD</code></td>
+<td>Other germline allele frequency (<a href="http://gnomad.broadinstitute.org/" class="external-link">gnomAD release 2.1</a>)</td>
+</tr>
+<tr class="odd">
+<td><code>ASJ_AF_GNOMAD</code></td>
+<td>Ashkenazi Jewish allele frequency (<a href="http://gnomad.broadinstitute.org/" class="external-link">gnomAD release 2.1</a>)</td>
+</tr>
+<tr class="even">
+<td><code>NON_CANCER_AF_ASJ</code></td>
+<td>Alternate allele frequency for samples of Ashkenazi Jewish ancestry
+in the non-cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</td>
+</tr>
+<tr class="odd">
+<td><code>NON_CANCER_AF_EAS</code></td>
+<td>Alternate allele frequency for samples of East Asian ancestry in the
+non-cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD
+2.1.1</a>)</td>
+</tr>
+<tr class="even">
+<td><code>NON_CANCER_AF_AFR</code></td>
+<td>Alternate allele frequency for samples of African-American/African
+ancestry in the non-cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</td>
+</tr>
+<tr class="odd">
+<td><code>NON_CANCER_AF_AMR</code></td>
+<td>Alternate allele frequency for samples of Latino ancestry in the
+non-cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD
+2.1.1</a>)</td>
+</tr>
+<tr class="even">
+<td><code>NON_CANCER_AF_OTH</code></td>
+<td>Alternate allele frequency for samples of Other ancestry in the
+non-cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD
+2.1.1</a>)</td>
+</tr>
+<tr class="odd">
+<td><code>NON_CANCER_AF_NFE</code></td>
+<td>Alternate allele frequency for samples of Non-Finnish European
+ancestry in the non-cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</td>
+</tr>
+<tr class="even">
+<td><code>NON_CANCER_AF_FIN</code></td>
+<td>Alternate allele frequency for samples of Finnish ancestry in the
+non-cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD
+2.1.1</a>)</td>
+</tr>
+<tr class="odd">
+<td><code>NON_CANCER_AF_SAS</code></td>
+<td>Alternate allele frequency for samples of South Asian ancestry in
+the non-cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD
+2.1.1</a>)</td>
+</tr>
+<tr class="even">
+<td><code>NON_CANCER_AF_GLOBAL</code></td>
+<td>Alternate allele frequency in the non-cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</td>
+</tr>
+<tr class="odd">
+<td><code>NON_CANCER_AC_ASJ</code></td>
+<td>Alternate allele count for samples of Ashkenazi Jewish ancestry in
+the non-cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD
+2.1.1</a>)</td>
+</tr>
+<tr class="even">
+<td><code>NON_CANCER_AC_EAS</code></td>
+<td>Alternate allele count for samples of East Asian ancestry in the
+non-cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD
+2.1.1</a>)</td>
+</tr>
+<tr class="odd">
+<td><code>NON_CANCER_AC_AFR</code></td>
+<td>Alternate allele count for samples of African-American/African
+ancestry in the non-cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</td>
+</tr>
+<tr class="even">
+<td><code>NON_CANCER_AC_AMR</code></td>
+<td>Alternate allele count for samples of Latino ancestry in the
+non-cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD
+2.1.1</a>)</td>
+</tr>
+<tr class="odd">
+<td><code>NON_CANCER_AC_OTH</code></td>
+<td>Alternate allele count for samples of Other ancestry in the
+non-cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD
+2.1.1</a>)</td>
+</tr>
+<tr class="even">
+<td><code>NON_CANCER_AC_NFE</code></td>
+<td>Alternate allele frequency for samples of Non-Finnish European
+ancestry in the non-cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</td>
+</tr>
+<tr class="odd">
+<td><code>NON_CANCER_AC_FIN</code></td>
+<td>Alternate allele count for samples of Finnish ancestry in the
+non-cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD
+2.1.1</a>)</td>
+</tr>
+<tr class="even">
+<td><code>NON_CANCER_AC_SAS</code></td>
+<td>Alternate allele count for samples of South Asian ancestry in the
+non-cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD
+2.1.1</a>)</td>
+</tr>
+<tr class="odd">
+<td><code>NON_CANCER_AC_GLOBAL</code></td>
+<td>Alternate allele count in the non-cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</td>
+</tr>
+<tr class="even">
+<td><code>NON_CANCER_AN_ASJ</code></td>
+<td>Total number of alleles in samples of Ashkenazi Jewish ancestry in
+the non-cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD
+2.1.1</a>)</td>
+</tr>
+<tr class="odd">
+<td><code>NON_CANCER_AN_EAS</code></td>
+<td>Total number of alleles in samples of East Asian ancestry in the
+non-cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD
+2.1.1</a>)</td>
+</tr>
+<tr class="even">
+<td><code>NON_CANCER_AN_AFR</code></td>
+<td>Total number of alleles in samples of African-American/African
+ancestry in the non-cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</td>
+</tr>
+<tr class="odd">
+<td><code>NON_CANCER_AN_AMR</code></td>
+<td>Total number of alleles in samples of Latino ancestry in the
+non-cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD
+2.1.1</a>)</td>
+</tr>
+<tr class="even">
+<td><code>NON_CANCER_AN_OTH</code></td>
+<td>Total number of alleles in samples of Other ancestry in the
+non-cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD
+2.1.1</a>)</td>
+</tr>
+<tr class="odd">
+<td><code>NON_CANCER_AN_NFE</code></td>
+<td>Total number of alleles in samples of Non-Finnish European ancestry
+in the non-cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</td>
+</tr>
+<tr class="even">
+<td><code>NON_CANCER_AN_FIN</code></td>
+<td>Total number of alleles in samples of Finnish ancestry in the
+non-cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD
+2.1.1</a>)</td>
+</tr>
+<tr class="odd">
+<td><code>NON_CANCER_AN_SAS</code></td>
+<td>Total number of alleles in samples of South Asian ancestry in the
+non-cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD
+2.1.1</a>)</td>
+</tr>
+<tr class="even">
+<td><code>NON_CANCER_AN_GLOBAL</code></td>
+<td>Total number of alleles in the non-cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</td>
+</tr>
+<tr class="odd">
+<td><code>NON_CANCER_NHOMALT_ASJ</code></td>
+<td>Count of homozygous individuals in samples of Ashkenazi Jewish
+ancestry in the non-cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</td>
+</tr>
+<tr class="even">
+<td><code>NON_CANCER_NHOMALT_EAS</code></td>
+<td>Count of homozygous individuals in samples of East Asian ancestry in
+the non-cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD
+2.1.1</a>)</td>
+</tr>
+<tr class="odd">
+<td><code>NON_CANCER_NHOMALT_AFR</code></td>
+<td>Count of homozygous individuals in samples of
+African-American/African ancestry in the non-cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</td>
+</tr>
+<tr class="even">
+<td><code>NON_CANCER_NHOMALT_AMR</code></td>
+<td>Count of homozygous individuals in samples of Latino ancestry in the
+non-cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD
+2.1.1</a>)</td>
+</tr>
+<tr class="odd">
+<td><code>NON_CANCER_NHOMALT_OTH</code></td>
+<td>Count of homozygous individuals in samples of Other ancestry in the
+non-cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD
+2.1.1</a>)</td>
+</tr>
+<tr class="even">
+<td><code>NON_CANCER_NHOMALT_NFE</code></td>
+<td>Count of homozygous individuals in samples of Non-Finnish European
+ancestry in the non-cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</td>
+</tr>
+<tr class="odd">
+<td><code>NON_CANCER_NHOMALT_FIN</code></td>
+<td>Count of homozygous individuals in samples of Finnish ancestry in
+the non-cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD
+2.1.1</a>)</td>
+</tr>
+<tr class="even">
+<td><code>NON_CANCER_NHOMALT_SAS</code></td>
+<td>Count of homozygous individuals in samples of South Asian ancestry
+in the non-cancer subset (<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</td>
+</tr>
+<tr class="odd">
+<td><code>NON_CANCER_NHOMALT_GLOBAL</code></td>
+<td>Count of homozygous individuals in samples in the non-cancer subset
+(<a href="http://gnomad.broadinstitute.org" class="external-link">gnomAD 2.1.1</a>)</td>
+</tr>
+<tr class="even">
+<td><code>AFR_AF_1KG</code></td>
+<td>
+<a href="http://www.1000genomes.org" class="external-link">1000G Project - phase 3</a>
+germline allele frequency for samples from AFR (African)</td>
+</tr>
+<tr class="odd">
+<td><code>AMR_AF_1KG</code></td>
+<td>
+<a href="http://www.1000genomes.org" class="external-link">1000G Project - phase 3</a>
+germline allele frequency for samples from AMR (Ad Mixed American)</td>
+</tr>
+<tr class="even">
+<td><code>EAS_AF_1KG</code></td>
+<td>
+<a href="http://www.1000genomes.org" class="external-link">1000G Project - phase 3</a>
+germline allele frequency for samples from EAS (East Asian)</td>
+</tr>
+<tr class="odd">
+<td><code>EUR_AF_1KG</code></td>
+<td>
+<a href="http://www.1000genomes.org" class="external-link">1000G Project - phase 3</a>
+germline allele frequency for samples from EUR (European)</td>
+</tr>
+<tr class="even">
+<td><code>SAS_AF_1KG</code></td>
+<td>
+<a href="http://www.1000genomes.org" class="external-link">1000G Project - phase 3</a>
+germline allele frequency for samples from SAS (South Asian)</td>
+</tr>
+<tr class="odd">
+<td><code>GLOBAL_AF_1KG</code></td>
+<td>
+<a href="http://www.1000genomes.org" class="external-link">1000G Project - phase 3</a>
+germline allele frequency for all 1000G project samples (global)</td>
+</tr>
+<tr class="even">
+<td><code>DBSNPRSID</code></td>
+<td>
+<a href="http://www.ncbi.nlm.nih.gov/SNP/" class="external-link">dbSNP</a> reference ID,
+as provided by VEP</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
 </div>
 <div class="section level5">
 <h5 id="clinical-associations">
 <em>Clinical associations</em><a class="anchor" aria-label="anchor" href="#clinical-associations"></a>
 </h5>
-<ul>
-<li>CLINVAR_MSID - <a href="http://www.ncbi.nlm.nih.gov/clinvar" class="external-link">ClinVar</a> Measure
-Set/Variant ID</li>
-<li>CLINVAR_ALLELE_ID - <a href="http://www.ncbi.nlm.nih.gov/clinvar" class="external-link">ClinVar</a> allele ID</li>
-<li>CLINVAR_PMID - Associated Pubmed IDs for variant in <a href="http://www.ncbi.nlm.nih.gov/clinvar" class="external-link">ClinVar</a> - germline
-state-of-origin</li>
-<li>CLINVAR_HGVSP - Protein variant expression using HGVS
-nomenclature</li>
-<li>CLINVAR_PMID_SOMATIC - Associated Pubmed IDs for variant in <a href="http://www.ncbi.nlm.nih.gov/clinvar" class="external-link">ClinVar</a> - somatic
-state-of-origin</li>
-<li>CLINVAR_CONFLICTED - Variant has conflicting interpretations</li>
-<li>CLINVAR_CLNSIG - Clinical significance for variant in <a href="http://www.ncbi.nlm.nih.gov/clinvar" class="external-link">ClinVar</a> - germline
-state-of-origin</li>
-<li>CLINVAR_CLASSIFICATION - Clean clinical significance on a five-level
-scheme</li>
-<li>CLINVAR_CLNSIG_SOMATIC - Clinical significance for variant in <a href="http://www.ncbi.nlm.nih.gov/clinvar" class="external-link">ClinVar</a> - somatic
-state-of-origin</li>
-<li>CLINVAR_MEDGEN_CUI - Associated <a href="https://www.ncbi.nlm.nih.gov/medgen/" class="external-link">MedGen</a> concept
-identifiers (<em>CUIs</em>) - germline state-of-origin</li>
-<li>CLINVAR_MEDGEN_CUI_SOMATIC - Associated <a href="https://www.ncbi.nlm.nih.gov/medgen/" class="external-link">MedGen</a> concept
-identifiers (<em>CUIs</em>) - somatic state-of-origin</li>
-<li>CLINVAR_MOLECULAR_EFFECT - Variant effect according to ClinVar
-annotation</li>
-<li>CLINVAR_VARIANT_ORIGIN - Origin of variant (somatic, germline, de
-novo etc.) for variant in <a href="http://www.ncbi.nlm.nih.gov/clinvar" class="external-link">ClinVar</a>
-</li>
-<li>CLINVAR_REVIEW_STATUS_STARS - Rating of the <a href="http://www.ncbi.nlm.nih.gov/clinvar" class="external-link">ClinVar</a> variant (0-4
-stars) with respect to level of review</li>
-<li>GWAS_HIT - variant associated with cancer phenotype from genome-wide
-association study (NHGRI-EBI GWAS catalog)</li>
-<li>OPENTARGETS_DISEASE_ASSOCS - Associations between protein targets
-and disease based on multiple lines of evidence (mutations,affected
-pathways,GWAS, literature etc). Format:
-CUI:EFO_ID:IS_DIRECT:OVERALL_SCORE</li>
-<li>OPENTARGETS_TRACTABILITY_COMPOUND - Confidence for the existence of
-a modulator (small molecule) that interacts with the target to elicit a
-desired biological effect</li>
-<li>OPENTARGETS_TRACTABILITY_ANTIBODY - Confidence for the existence of
-a modulator (antibody) that interacts with the target to elicit a
-desired biological effect</li>
-</ul>
+<table class="table">
+<colgroup>
+<col width="27%">
+<col width="72%">
+</colgroup>
+<thead><tr class="header">
+<th>Tag</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>CLINVAR_MSID</code></td>
+<td>
+<a href="http://www.ncbi.nlm.nih.gov/clinvar" class="external-link">ClinVar</a> Measure
+Set/Variant ID</td>
+</tr>
+<tr class="even">
+<td><code>CLINVAR_ALLELE_ID</code></td>
+<td>
+<a href="http://www.ncbi.nlm.nih.gov/clinvar" class="external-link">ClinVar</a> allele
+ID</td>
+</tr>
+<tr class="odd">
+<td><code>CLINVAR_PMID</code></td>
+<td>Associated Pubmed IDs for variant in <a href="http://www.ncbi.nlm.nih.gov/clinvar" class="external-link">ClinVar</a> - germline
+state-of-origin</td>
+</tr>
+<tr class="even">
+<td><code>CLINVAR_HGVSP</code></td>
+<td>Protein variant expression using HGVS nomenclature</td>
+</tr>
+<tr class="odd">
+<td><code>CLINVAR_PMID_SOMATIC</code></td>
+<td>Associated Pubmed IDs for variant in <a href="http://www.ncbi.nlm.nih.gov/clinvar" class="external-link">ClinVar</a> - somatic
+state-of-origin</td>
+</tr>
+<tr class="even">
+<td><code>CLINVAR_CONFLICTED</code></td>
+<td>Variant has conflicting interpretations</td>
+</tr>
+<tr class="odd">
+<td><code>CLINVAR_CLNSIG</code></td>
+<td>Clinical significance for variant in <a href="http://www.ncbi.nlm.nih.gov/clinvar" class="external-link">ClinVar</a> - germline
+state-of-origin</td>
+</tr>
+<tr class="even">
+<td><code>CLINVAR_CLASSIFICATION</code></td>
+<td>Clean clinical significance on a five-level scheme</td>
+</tr>
+<tr class="odd">
+<td><code>CLINVAR_CLNSIG_SOMATIC</code></td>
+<td>Clinical significance for variant in <a href="http://www.ncbi.nlm.nih.gov/clinvar" class="external-link">ClinVar</a> - somatic
+state-of-origin</td>
+</tr>
+<tr class="even">
+<td><code>CLINVAR_MEDGEN_CUI</code></td>
+<td>Associated <a href="https://www.ncbi.nlm.nih.gov/medgen/" class="external-link">MedGen</a>
+concept identifiers (<em>CUIs</em>) - germline state-of-origin</td>
+</tr>
+<tr class="odd">
+<td><code>CLINVAR_MEDGEN_CUI_SOMATIC</code></td>
+<td>Associated <a href="https://www.ncbi.nlm.nih.gov/medgen/" class="external-link">MedGen</a>
+concept identifiers (<em>CUIs</em>) - somatic state-of-origin</td>
+</tr>
+<tr class="even">
+<td><code>CLINVAR_MOLECULAR_EFFECT</code></td>
+<td>Variant effect according to ClinVar annotation</td>
+</tr>
+<tr class="odd">
+<td><code>CLINVAR_VARIANT_ORIGIN</code></td>
+<td>Origin of variant (somatic, germline, de novo etc.) for variant in
+<a href="http://www.ncbi.nlm.nih.gov/clinvar" class="external-link">ClinVar</a>
+</td>
+</tr>
+<tr class="even">
+<td><code>CLINVAR_REVIEW_STATUS_STARS</code></td>
+<td>Rating of the <a href="http://www.ncbi.nlm.nih.gov/clinvar" class="external-link">ClinVar</a> variant (0-4
+stars) with respect to level of review</td>
+</tr>
+<tr class="odd">
+<td><code>GWAS_HIT</code></td>
+<td>variant associated with cancer phenotype from genome-wide
+association study (NHGRI-EBI GWAS catalog)</td>
+</tr>
+<tr class="even">
+<td><code>OPENTARGETS_DISEASE_ASSOCS</code></td>
+<td>Associations between protein targets and disease based on multiple
+lines of evidence (mutations,affected pathways,GWAS, literature etc).
+Format: <code>CUI:EFO_ID:IS_DIRECT:OVERALL_SCORE</code>
+</td>
+</tr>
+<tr class="odd">
+<td><code>OPENTARGETS_TRACTABILITY_COMPOUND</code></td>
+<td>Confidence for the existence of a modulator (small molecule) that
+interacts with the target to elicit a desired biological effect</td>
+</tr>
+<tr class="even">
+<td><code>OPENTARGETS_TRACTABILITY_ANTIBODY</code></td>
+<td>Confidence for the existence of a modulator (antibody) that
+interacts with the target to elicit a desired biological effect</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="section level3">
@@ -761,102 +1451,542 @@ desired biological effect</li>
 <p>We provide a tab-separated values file with most important
 variant/gene annotations. The file has the following naming
 convention:</p>
-<p>&lt;<em>sample_id</em>&gt;.<strong>cpsr</strong>.&lt;<em>genome_assembly</em>&gt;.<strong>snvs_indels.tiers.tsv</strong></p>
+<ul>
+<li><code>&lt;sample_id&gt;.cpsr.&lt;genome_assembly&gt;.snvs_indels.tiers.tsv</code></li>
+</ul>
 <p>The SNVs/InDels are organized into different <strong>tiers</strong>
-(as defined above for the HTML report)</p>
+(as defined above for the HTML report).</p>
 <p>The following variables are included in the tiered TSV file (VCF tags
 issued by the user will be appended at the end):</p>
-<pre><code>1. GENOMIC_CHANGE - Identifier for variant at the genome (VCF) level, e.g. 1:g.152382569A&gt;G
-      Format: (&lt;chrom&gt;:g.&lt;position&gt;&lt;ref_allele&gt;&gt;&lt;alt_allele&gt;)
-2. VAR_ID - Variant identifier
-3. GENOTYPE - Variant genotype (heterozygous/homozygous)
-4. CPSR_CLASSIFICATION_SOURCE - ClinVar or Other (i.e. not present in ClinVar)
-5. GENOME_VERSION - Assembly version, e.g. GRCh37
-6. VCF_SAMPLE_ID - Sample identifier
-7. VARIANT_CLASS - Variant type, e.g. SNV/insertion/deletion
-8. CODING_STATUS - coding/noncoding (wrt. protein alteration and canonical splice site disruption)
-9. SYMBOL - Gene symbol
-10. GENE_NAME - Gene description
-11. CCDS - CCDS identifier
-12. ENTREZ_ID - Entrez gene identifier
-13. UNIPROT_ID - UniProt protein identifier
-14. ENSEMBL_GENE_ID - Ensembl gene identifier
-15. ENSEMBL_TRANSCRIPT_ID - Ensembl transcript identifier
-16. REFSEQ_MRNA - RefSeq mRNA identifier
-17. ONCOGENE - Gene is predicted as an oncogene according to Network of Cancer Genes (NCG) and CancerMine
-18. TUMOR_SUPPRESSOR - Gene is predicted as a tumor suppressor gene according to Network of Cancer Genes (NCG) and CancerMine
-19. CONSEQUENCE - Variant consequence
-20. VEP_ALL_CSQ - All VEP transcript block consequences
-21. PROTEIN_CHANGE - Protein change - one letter abbreviation (HGVSp)
-22. PROTEIN_DOMAIN - Protein domain (Pfam)
-23. DBSNP - dbSNP identifier (rsid)
-24. HGVSp - The HGVS protein sequence name
-25. HGVSc - The HGVS coding sequence name
-26. LAST_EXON - Last exon in gene
-27. EXON_POSITION - Relative position of exon variant to nearest intron/exon junction (NearestExonJB plugin)
-28. INTRON_POSITION - Relative position of intron variant to nearest intron/exon junction (NearestExonJB plugin)
-29. CDS_CHANGE - Coding, transcript-specific sequence annotation
-30. MUTATION_HOTSPOT - Cancer mutation hotspot (cancerhotspots.org)
-31. RMSK_HIT - RepeatMasker hit
-32. PROTEIN_FEATURE - Protein feature (active sites etc.) from UniProt KnowledgeBase
-33. EFFECT_PREDICTIONS - Functional effect predictions from multiple algorithms (dbNSFP)
-34. LOSS_OF_FUNCTION - Loss-of-function variant, as predicted from VEP's LofTee plugin
-35. CANCER_PHENOTYPE - For variants with a ClinVar classification, indication of cancer-associated disease/phenotype (1) or not (0)
-36. CLINVAR_CLASSIFICATION - clinical significance of ClinVar Variant (CPSR category)
-37. CLINVAR_MSID - measureset identifier of ClinVar variant
-38. CLINVAR_VARIANT_ORIGIN - variant origin (somatic/germline) of ClinVar variant
-39. CLINVAR_CONFLICTED - indicator of conflicting interpretations
-40. CLINVAR_PHENOTYPE - associated phenotype(s) for ClinVar variant
-41. CLINVAR_REVIEW_STATUS_STARS
-42. DBMTS - variant with potential effect on microRNA target sites (dbMTS). Format: &lt;ensembl_transcript_id&gt;|&lt;microrna_identifier&gt;|&lt;target_prediction_algorithms&gt;|&lt;gain_loss_consensus&gt;. _Target prediction algorithms_ indicate support by different algorithms (separated by '&amp;'), 'TS' = TargetScan, M = 'miRanda', 'R' = RNAhybrid. *Gain_loss_consensus* indicate whether the variant was predicted to disrupt a binding site ('L' = Loss), or create a new target site ('G' = gain) by the different algorithms
-43. miRNA_TARGET_HIT - loss, gain, or gain|loss, as given from the hits in DBMTS column
-44. miRNA_TARGET_HIT_PREDICTION - links to miRBase, as given from the hits in the DBMTS column
-45. TF_BINDING_SITE_VARIANT - Indicates whether a variant overlaps a critical/non-critical position of a transcription factor binding site (TFBS) - as provided by VEP's--regulatory option ('Overlap: non-critical motif position' or 'Overlap: critical motif position')
-46. TF_BINDING_SITE_VARIANT_INFO - Comma-separated list of transcription factor binding sites affected by variant. Format per factor: &lt;TRANSCRIPTION_FACTOR&gt;|&lt;MOTIF_NAME&gt;|&lt;MOTIF_POS&gt;|&lt;MOTIF_SCORE_CHANGE&gt;|&lt;HIGH_INF_POS&gt;. *HIGH_INF_POS* indicates whether the variant overlapped a critical motif position ('Y'), or non-critical motif position ('N')
-47. GERP_SCORE - Genomic conservation score (GERP)
-48. N_INSILICO_CALLED - Number of algorithms with effect prediction (damaging/tolerated) from dbNSFP
-49. N_INSILICO_DAMAGING - Number of algorithms with damaging prediction from dbNSFP
-50. N_INSILICO_TOLERATED - Number of algorithms with tolerated prediction from dbNSFP
-51. N_INSILICO_SPLICING_NEUTRAL - Number of algorithms with splicing neutral prediction from dbscSNV
-52. N_INSILICO_SPLICING_AFFECTED - Number of algorithms with splicing affected prediction from dbscSNV
-53. GLOBAL_AF_GNOMAD - Global MAF in gnomAD
-54. &lt;CUSTOM_POPULATION_GNOMAD&gt; - Population specific MAF in gnomAD control (non-cancer, population configured by user)
-55. ACMG_BA1_AD - Very high MAF (&gt; 0.5% in gnomAD non-cancer pop subset) - min AN = 12,000 - Dominant mechanism of disease
-56. ACMG_BS1_1_AD - High MAF (&gt; 0.1% in gnomAD non-cancer pop subset) - min AN = 12,000 - Dominant mechanism of disease
-57. ACMG_BS1_2_AD - Somewhat high MAF (&gt; 0.005% in gnomAD non-cancer pop subset) - Dominant mechanism of disease
-58. ACMG_BA1_AR - Very high MAF (&gt; 1% in gnomAD non-cancer pop subset) - min AN = 12,000 - Recessive mechanism of disease
-59. ACMG_BS1_1_AR - High MAF (&gt; 0.3% in gnomAD non-cancer pop subset) - min AN = 12,000 - Recessive mechanism of disease
-60. ACMG_BS1_2_AR - Somewhat high MAF (&gt; 0.005% in gnomAD non-cancer pop subset) - Recessive mechanism of disease
-61. ACMG_PM2_1 - Allele count within pathogenic range (MAF &lt;= 0.005% in the population-specific non-cancer gnomAD subset)
-62. ACMG_PM2_2 - Alternate allele absent in the population-specific non-cancer gnomAD subset
-63. ACMG_PVS1_1 - Null variant (frameshift/nonsense) - predicted as LoF by LOFTEE - within pathogenic range - LoF established for gene
-64. ACMG_PVS1_2 - Null variant (frameshift/nonsense) - not predicted as LoF by LOFTEE - within pathogenic range - LoF established for gene
-65. ACMG_PVS1_3 - Null variant (frameshift/nonsense) - predicted as LoF by LOFTEE - within pathogenic range - LoF not established for gene
-66. ACMG_PVS1_4 - Null variant (frameshift/nonsense) - not predicted as LoF by LOFTEE -- within pathogenic range - LoF not established for gene
-67. ACMG_PVS1_5 - Start (initiator methionine) lost - within pathogenic range - Lof established for gene
-68. ACMG_PVS1_6 - Start (initiator methionine) lost - within pathogenic range - LoF not established for gene
-69. ACMG_PVS1_7 - Donor/acceptor variant - predicted as LoF by LOFTEE - within pathogenic range - not last intron - LoF established for gene
-70. ACMG_PVS1_8 - Donor/acceptor variant - last intron - within pathogenic range - LoF established for gene
-71. ACMG_PVS1_9 - Donor/acceptor variant - not last intron - within pathogenic range - LoF not established for gene
-72. ACMG_PVS1_10 - Donor variant at located at the +3, +4 or +5 position of the intron -  within the pathogenic range (i.e. &lt;9 alleles in ExAC))
-73. ACMG_PS1 - Same amino acid change as a previously established pathogenic variant (ClinVar) regardless of nucleotide change
-74. ACMG_PP2 - Missense variant in a gene that has a relatively low rate of benign missense variation (&lt;20%) and where missense variants are a common mechanism of disease (&gt;50% P/LP (ClinVar))
-75. ACMG_PM1 - Missense variant in a somatic mutation hotspot as determined by cancerhotspots.org
-76. ACMG_PM4 - Protein length changes due to inframe indels or nonstop variant in non-repetitive regions of genes that harbor variants with a dominant mode of inheritance.
-77. ACMG_PPC1 - Protein length changes due to inframe indels or nonstop variant in non-repetitive regions of genes that harbor variants with a recessive mode of inheritance.
-78. ACMG_PM5 - Novel missense change at an amino acid residue where a different missense change determined to be pathogenic has been seen before (ClinVar)
-79. ACMG_PP3 - Multiple lines (&gt;=5) of computational evidence support a deleterious effect on the gene or gene product (conservation, evolutionary, splicing impact) with maximum two contradictory predictions - from dbNSFP
-80. ACMG_BP4 - Multiple lines (&gt;=5) of computational evidence support a benign effect on the gene or gene product (conservation, evolutionary, splicing impact) with maximum two contradictory prediction - from dbNSFP
-81. ACMG_BMC1 - Peptide change is at the same location of a known benign change (ClinVar)
-82. ACMG_BSC1 - Peptide change is reported as benign (ClinVar)
-83. ACMG_BP1 - Missense variant in a gene for which primarily truncating variants are known to cause disease (ClinVar)
-84. ACMG_BP3 - Variants in promoter or untranslated regions
-85. ACMG_BP7 - Silent/intronic variant outside of the splice site consensus
-86. FINAL_CLASSIFICATION - Final variant classification based on the combination of CLINVAR_CLASSIFICTION (for ClinVar-classified variants), and CPSR_CLASSIFICATION (for novel variants)
-87. CPSR_CLASSIFICATION - CPSR tier level (P/LP/VUS/LB/B)
-88. CPSR_PATHOGENICITY_SCORE - Aggregated CPSR pathogenicity score
-89. CPSR_CLASSIFICATION_CODE - Combination of CPSR classification codes assigned to the variant (ACMG)
-90. CPSR_CLASSIFICATION_DOC - Verbal description of CPSR classification codes assignted to the variant (ACMG)</code></pre>
+<table class="table">
+<colgroup>
+<col width="43%">
+<col width="56%">
+</colgroup>
+<thead><tr class="header">
+<th>Variable</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>1. <code>GENOMIC_CHANGE</code>
+</td>
+<td>Identifier for variant at the genome (VCF) level,
+e.g. <code>1:g.152382569A&gt;G</code>. Format:
+<code>&lt;chrom&gt;:g.&lt;position&gt;&lt;ref_allele&gt;&gt;&lt;alt_allele&gt;</code>
+</td>
+</tr>
+<tr class="even">
+<td>2. <code>VAR_ID</code>
+</td>
+<td>Variant identifier</td>
+</tr>
+<tr class="odd">
+<td>3. <code>GENOTYPE</code>
+</td>
+<td>Variant genotype (heterozygous/homozygous)</td>
+</tr>
+<tr class="even">
+<td>4. <code>CPSR_CLASSIFICATION_SOURCE</code>
+</td>
+<td>ClinVar or Other (i.e. not present in ClinVar)</td>
+</tr>
+<tr class="odd">
+<td>5. <code>GENOME_VERSION</code>
+</td>
+<td>Assembly version, e.g. GRCh37</td>
+</tr>
+<tr class="even">
+<td>6. <code>VCF_SAMPLE_ID</code>
+</td>
+<td>Sample identifier</td>
+</tr>
+<tr class="odd">
+<td>7. <code>VARIANT_CLASS</code>
+</td>
+<td>Variant type, e.g. SNV/insertion/deletion</td>
+</tr>
+<tr class="even">
+<td>8. <code>CODING_STATUS</code>
+</td>
+<td>coding/noncoding (wrt. protein alteration and canonical splice site
+disruption)</td>
+</tr>
+<tr class="odd">
+<td>9. <code>SYMBOL</code>
+</td>
+<td>Gene symbol</td>
+</tr>
+<tr class="even">
+<td>10. <code>GENE_NAME</code>
+</td>
+<td>Gene description</td>
+</tr>
+<tr class="odd">
+<td>11. <code>CCDS</code>
+</td>
+<td>CCDS identifier</td>
+</tr>
+<tr class="even">
+<td>12. <code>ENTREZ_ID</code>
+</td>
+<td>Entrez gene identifier</td>
+</tr>
+<tr class="odd">
+<td>13. <code>UNIPROT_ID</code>
+</td>
+<td>UniProt protein identifier</td>
+</tr>
+<tr class="even">
+<td>14. <code>ENSEMBL_GENE_ID</code>
+</td>
+<td>Ensembl gene identifier</td>
+</tr>
+<tr class="odd">
+<td>15. <code>ENSEMBL_TRANSCRIPT_ID</code>
+</td>
+<td>Ensembl transcript identifier</td>
+</tr>
+<tr class="even">
+<td>16. <code>REFSEQ_MRNA</code>
+</td>
+<td>RefSeq mRNA identifier</td>
+</tr>
+<tr class="odd">
+<td>17. <code>ONCOGENE</code>
+</td>
+<td>Gene is predicted as an oncogene according to Network of Cancer
+Genes (NCG) and CancerMine</td>
+</tr>
+<tr class="even">
+<td>18. <code>TUMOR_SUPPRESSOR</code>
+</td>
+<td>Gene is predicted as a tumor suppressor gene according to Network of
+Cancer Genes (NCG) and CancerMine</td>
+</tr>
+<tr class="odd">
+<td>19. <code>CONSEQUENCE</code>
+</td>
+<td>Variant consequence</td>
+</tr>
+<tr class="even">
+<td>20. <code>VEP_ALL_CSQ</code>
+</td>
+<td>All VEP transcript block consequences</td>
+</tr>
+<tr class="odd">
+<td>21. <code>PROTEIN_CHANGE</code>
+</td>
+<td>Protein change - one letter abbreviation (HGVSp)</td>
+</tr>
+<tr class="even">
+<td>22. <code>PROTEIN_DOMAIN</code>
+</td>
+<td>Protein domain (Pfam)</td>
+</tr>
+<tr class="odd">
+<td>23. <code>DBSNP</code>
+</td>
+<td>dbSNP identifier (rsid)</td>
+</tr>
+<tr class="even">
+<td>24. <code>HGVSp</code>
+</td>
+<td>The HGVS protein sequence name</td>
+</tr>
+<tr class="odd">
+<td>25. <code>HGVSc</code>
+</td>
+<td>The HGVS coding sequence name</td>
+</tr>
+<tr class="even">
+<td>26. <code>LAST_EXON</code>
+</td>
+<td>Last exon in gene</td>
+</tr>
+<tr class="odd">
+<td>27. <code>EXON_POSITION</code>
+</td>
+<td>Relative position of exon variant to nearest intron/exon junction
+(NearestExonJB plugin)</td>
+</tr>
+<tr class="even">
+<td>28. <code>INTRON_POSITION</code>
+</td>
+<td>Relative position of intron variant to nearest intron/exon junction
+(NearestExonJB plugin)</td>
+</tr>
+<tr class="odd">
+<td>29. <code>CDS_CHANGE</code>
+</td>
+<td>Coding, transcript-specific sequence annotation</td>
+</tr>
+<tr class="even">
+<td>30. <code>MUTATION_HOTSPOT</code>
+</td>
+<td>Cancer mutation hotspot (cancerhotspots.org)</td>
+</tr>
+<tr class="odd">
+<td>31. <code>RMSK_HIT</code>
+</td>
+<td>RepeatMasker hit</td>
+</tr>
+<tr class="even">
+<td>32. <code>PROTEIN_FEATURE</code>
+</td>
+<td>Protein feature (active sites etc.) from UniProt KnowledgeBase</td>
+</tr>
+<tr class="odd">
+<td>33. <code>EFFECT_PREDICTIONS</code>
+</td>
+<td>Functional effect predictions from multiple algorithms (dbNSFP)</td>
+</tr>
+<tr class="even">
+<td>34. <code>LOSS_OF_FUNCTION</code>
+</td>
+<td>Loss-of-function variant, as predicted from VEP’s LofTee plugin</td>
+</tr>
+<tr class="odd">
+<td>35. <code>CANCER_PHENOTYPE</code>
+</td>
+<td>For variants with a ClinVar classification, indication of
+cancer-associated disease/phenotype (1) or not (0)</td>
+</tr>
+<tr class="even">
+<td>36. <code>CLINVAR_CLASSIFICATION</code>
+</td>
+<td>clinical significance of ClinVar Variant (CPSR category)</td>
+</tr>
+<tr class="odd">
+<td>37. <code>CLINVAR_MSID</code>
+</td>
+<td>measureset identifier of ClinVar variant</td>
+</tr>
+<tr class="even">
+<td>38. <code>CLINVAR_VARIANT_ORIGIN</code>
+</td>
+<td>variant origin (somatic/germline) of ClinVar variant</td>
+</tr>
+<tr class="odd">
+<td>39. <code>CLINVAR_CONFLICTED</code>
+</td>
+<td>indicator of conflicting interpretations</td>
+</tr>
+<tr class="even">
+<td>40. <code>CLINVAR_PHENOTYPE</code>
+</td>
+<td>associated phenotype(s) for ClinVar variant</td>
+</tr>
+<tr class="odd">
+<td>41. <code>CLINVAR_REVIEW_STATUS_STARS</code>
+</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>42. <code>DBMTS</code>
+</td>
+<td>variant with potential effect on microRNA target sites (dbMTS).
+Format:
+<code>&lt;ensembl_transcript_id&gt;|&lt;microrna_identifier&gt;|&lt;target_prediction_algorithms&gt;|&lt;gain_loss_consensus&gt;</code>.
+<em>Target prediction algorithms</em> indicate support by different
+algorithms (separated by ‘&amp;’), <code>TS</code> = TargetScan,
+<code>M</code> = miRanda, <code>R</code> = RNAhybrid.
+<em>Gain_loss_consensus</em> indicate whether the variant was predicted
+to disrupt a binding site (<code>L</code> = Loss), or create a new
+target site (<code>G</code> = gain) by the different algorithms</td>
+</tr>
+<tr class="odd">
+<td>43. <code>miRNA_TARGET_HIT</code>
+</td>
+<td>loss, gain, or gain</td>
+</tr>
+<tr class="even">
+<td>44. <code>miRNA_TARGET_HIT_PREDICTION</code>
+</td>
+<td>links to miRBase, as given from the hits in the DBMTS column</td>
+</tr>
+<tr class="odd">
+<td>45. <code>TF_BINDING_SITE_VARIANT</code>
+</td>
+<td>Indicates whether a variant overlaps a critical/non-critical
+position of a transcription factor binding site (TFBS) - as provided by
+VEP’s–regulatory option (‘Overlap: non-critical motif position’ or
+‘Overlap: critical motif position’)</td>
+</tr>
+<tr class="even">
+<td>46. <code>TF_BINDING_SITE_VARIANT_INFO</code>
+</td>
+<td>Comma-separated list of transcription factor binding sites affected
+by variant. Format per factor:
+<code>&lt;TRANSCRIPTION_FACTOR&gt;|&lt;MOTIF_NAME&gt;|&lt;MOTIF_POS&gt;|&lt;MOTIF_SCORE_CHANGE&gt;|&lt;HIGH_INF_POS&gt;</code>.
+<em>HIGH_INF_POS</em> indicates whether the variant overlapped a
+critical motif position (<code>Y</code>), or non-critical motif position
+(<code>N</code>)</td>
+</tr>
+<tr class="odd">
+<td>47. <code>GERP_SCORE</code>
+</td>
+<td>Genomic conservation score (GERP)</td>
+</tr>
+<tr class="even">
+<td>48. <code>N_INSILICO_CALLED</code>
+</td>
+<td>Number of algorithms with effect prediction (damaging/tolerated)
+from dbNSFP</td>
+</tr>
+<tr class="odd">
+<td>49. <code>N_INSILICO_DAMAGING</code>
+</td>
+<td>Number of algorithms with damaging prediction from dbNSFP</td>
+</tr>
+<tr class="even">
+<td>50. <code>N_INSILICO_TOLERATED</code>
+</td>
+<td>Number of algorithms with tolerated prediction from dbNSFP</td>
+</tr>
+<tr class="odd">
+<td>51. <code>N_INSILICO_SPLICING_NEUTRAL</code>
+</td>
+<td>Number of algorithms with splicing neutral prediction from
+dbscSNV</td>
+</tr>
+<tr class="even">
+<td>52. <code>N_INSILICO_SPLICING_AFFECTED</code>
+</td>
+<td>Number of algorithms with splicing affected prediction from
+dbscSNV</td>
+</tr>
+<tr class="odd">
+<td>53. <code>GLOBAL_AF_GNOMAD</code>
+</td>
+<td>Global MAF in gnomAD</td>
+</tr>
+<tr class="even">
+<td>54. <code>&lt;CUSTOM_POPULATION_GNOMAD</code>&gt;</td>
+<td>Population specific MAF in gnomAD control (non-cancer, population
+configured by user)</td>
+</tr>
+<tr class="odd">
+<td>55. <code>ACMG_BA1_AD</code>
+</td>
+<td>Very high MAF (&gt; 0.5% in gnomAD non-cancer pop subset) - min AN =
+12,000 - Dominant mechanism of disease</td>
+</tr>
+<tr class="even">
+<td>56. <code>ACMG_BS1_1_AD</code>
+</td>
+<td>High MAF (&gt; 0.1% in gnomAD non-cancer pop subset) - min AN =
+12,000 - Dominant mechanism of disease</td>
+</tr>
+<tr class="odd">
+<td>57. <code>ACMG_BS1_2_AD</code>
+</td>
+<td>Somewhat high MAF (&gt; 0.005% in gnomAD non-cancer pop subset) -
+Dominant mechanism of disease</td>
+</tr>
+<tr class="even">
+<td>58. <code>ACMG_BA1_AR</code>
+</td>
+<td>Very high MAF (&gt; 1% in gnomAD non-cancer pop subset) - min AN =
+12,000 - Recessive mechanism of disease</td>
+</tr>
+<tr class="odd">
+<td>59. <code>ACMG_BS1_1_AR</code>
+</td>
+<td>High MAF (&gt; 0.3% in gnomAD non-cancer pop subset) - min AN =
+12,000 - Recessive mechanism of disease</td>
+</tr>
+<tr class="even">
+<td>60. <code>ACMG_BS1_2_AR</code>
+</td>
+<td>Somewhat high MAF (&gt; 0.005% in gnomAD non-cancer pop subset) -
+Recessive mechanism of disease</td>
+</tr>
+<tr class="odd">
+<td>61. <code>ACMG_PM2_1</code>
+</td>
+<td>Allele count within pathogenic range (MAF &lt;= 0.005% in the
+population-specific non-cancer gnomAD subset)</td>
+</tr>
+<tr class="even">
+<td>62. <code>ACMG_PM2_2</code>
+</td>
+<td>Alternate allele absent in the population-specific non-cancer gnomAD
+subset</td>
+</tr>
+<tr class="odd">
+<td>63. <code>ACMG_PVS1_1</code>
+</td>
+<td>Null variant (frameshift/nonsense) - predicted as LoF by LOFTEE -
+within pathogenic range - LoF established for gene</td>
+</tr>
+<tr class="even">
+<td>64. <code>ACMG_PVS1_2</code>
+</td>
+<td>Null variant (frameshift/nonsense) - not predicted as LoF by LOFTEE
+- within pathogenic range - LoF established for gene</td>
+</tr>
+<tr class="odd">
+<td>65. <code>ACMG_PVS1_3</code>
+</td>
+<td>Null variant (frameshift/nonsense) - predicted as LoF by LOFTEE -
+within pathogenic range - LoF not established for gene</td>
+</tr>
+<tr class="even">
+<td>66. <code>ACMG_PVS1_4</code>
+</td>
+<td>Null variant (frameshift/nonsense) - not predicted as LoF by LOFTEE
+– within pathogenic range - LoF not established for gene</td>
+</tr>
+<tr class="odd">
+<td>67. <code>ACMG_PVS1_5</code>
+</td>
+<td>Start (initiator methionine) lost - within pathogenic range - Lof
+established for gene</td>
+</tr>
+<tr class="even">
+<td>68. <code>ACMG_PVS1_6</code>
+</td>
+<td>Start (initiator methionine) lost - within pathogenic range - LoF
+not established for gene</td>
+</tr>
+<tr class="odd">
+<td>69. <code>ACMG_PVS1_7</code>
+</td>
+<td>Donor/acceptor variant - predicted as LoF by LOFTEE - within
+pathogenic range - not last intron - LoF established for gene</td>
+</tr>
+<tr class="even">
+<td>70. <code>ACMG_PVS1_8</code>
+</td>
+<td>Donor/acceptor variant - last intron - within pathogenic range - LoF
+established for gene</td>
+</tr>
+<tr class="odd">
+<td>71. <code>ACMG_PVS1_9</code>
+</td>
+<td>Donor/acceptor variant - not last intron - within pathogenic range -
+LoF not established for gene</td>
+</tr>
+<tr class="even">
+<td>72. <code>ACMG_PVS1_10</code>
+</td>
+<td>Donor variant at located at the +3, +4 or +5 position of the intron
+- within the pathogenic range (i.e. &lt;9 alleles in ExAC))</td>
+</tr>
+<tr class="odd">
+<td>73. <code>ACMG_PS1</code>
+</td>
+<td>Same amino acid change as a previously established pathogenic
+variant (ClinVar) regardless of nucleotide change</td>
+</tr>
+<tr class="even">
+<td>74. <code>ACMG_PP2</code>
+</td>
+<td>Missense variant in a gene that has a relatively low rate of benign
+missense variation (&lt;20%) and where missense variants are a common
+mechanism of disease (&gt;50% P/LP (ClinVar))</td>
+</tr>
+<tr class="odd">
+<td>75. <code>ACMG_PM1</code>
+</td>
+<td>Missense variant in a somatic mutation hotspot as determined by
+cancerhotspots.org</td>
+</tr>
+<tr class="even">
+<td>76. <code>ACMG_PM4</code>
+</td>
+<td>Protein length changes due to inframe indels or nonstop variant in
+non-repetitive regions of genes that harbor variants with a dominant
+mode of inheritance.</td>
+</tr>
+<tr class="odd">
+<td>77. <code>ACMG_PPC1</code>
+</td>
+<td>Protein length changes due to inframe indels or nonstop variant in
+non-repetitive regions of genes that harbor variants with a recessive
+mode of inheritance.</td>
+</tr>
+<tr class="even">
+<td>78. <code>ACMG_PM5</code>
+</td>
+<td>Novel missense change at an amino acid residue where a different
+missense change determined to be pathogenic has been seen before
+(ClinVar)</td>
+</tr>
+<tr class="odd">
+<td>79. <code>ACMG_PP3</code>
+</td>
+<td>Multiple lines (&gt;=5) of computational evidence support a
+deleterious effect on the gene or gene product (conservation,
+evolutionary, splicing impact) with maximum two contradictory
+predictions - from dbNSFP</td>
+</tr>
+<tr class="even">
+<td>80. <code>ACMG_BP4</code>
+</td>
+<td>Multiple lines (&gt;=5) of computational evidence support a benign
+effect on the gene or gene product (conservation, evolutionary, splicing
+impact) with maximum two contradictory prediction - from dbNSFP</td>
+</tr>
+<tr class="odd">
+<td>81. <code>ACMG_BMC1</code>
+</td>
+<td>Peptide change is at the same location of a known benign change
+(ClinVar)</td>
+</tr>
+<tr class="even">
+<td>82. <code>ACMG_BSC1</code>
+</td>
+<td>Peptide change is reported as benign (ClinVar)</td>
+</tr>
+<tr class="odd">
+<td>83. <code>ACMG_BP1</code>
+</td>
+<td>Missense variant in a gene for which primarily truncating variants
+are known to cause disease (ClinVar)</td>
+</tr>
+<tr class="even">
+<td>84. <code>ACMG_BP3</code>
+</td>
+<td>Variants in promoter or untranslated regions</td>
+</tr>
+<tr class="odd">
+<td>85. <code>ACMG_BP7</code>
+</td>
+<td>Silent/intronic variant outside of the splice site consensus</td>
+</tr>
+<tr class="even">
+<td>86. <code>FINAL_CLASSIFICATION</code>
+</td>
+<td>Final variant classification based on the combination of
+<code>CLINVAR_CLASSIFICTION</code> (for ClinVar-classified variants),
+and <code>CPSR_CLASSIFICATION</code> (for novel variants)</td>
+</tr>
+<tr class="odd">
+<td>87. <code>CPSR_CLASSIFICATION</code>
+</td>
+<td>CPSR tier level (P/LP/VUS/LB/B)</td>
+</tr>
+<tr class="even">
+<td>88. <code>CPSR_PATHOGENICITY_SCORE</code>
+</td>
+<td>Aggregated CPSR pathogenicity score</td>
+</tr>
+<tr class="odd">
+<td>89. <code>CPSR_CLASSIFICATION_CODE</code>
+</td>
+<td>Combination of CPSR classification codes assigned to the variant
+(ACMG)</td>
+</tr>
+<tr class="even">
+<td>90. <code>CPSR_CLASSIFICATION_DOC</code>
+</td>
+<td>Verbal description of CPSR classification codes assignted to the
+variant (ACMG)</td>
+</tr>
+</tbody>
+</table>
 <p><strong>NOTE</strong>: The user has the possibility to append the TSV
 file with data from other INFO tags in the input VCF (i.e. using the
 <em>–preserved_info_tags</em> option)</p>
