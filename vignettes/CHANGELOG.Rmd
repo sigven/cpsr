@@ -3,9 +3,9 @@ title: "Changelog"
 output: rmarkdown::html_document
 ---
 
-## vX.X.X
+## v1.0.0
 
-* Date: **2022-02-XX**
+* Date: **2022-02-25**
 
 * Data updates
   * ClinVar
