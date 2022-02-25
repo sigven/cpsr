@@ -12,7 +12,7 @@ Snapshots of sections in the cancer predisposition genome report:
 
 ## News
 
--   *February 2022*: **x.x.x release**
+-   *February 2022*: **1.0.0 release**
 
     -   Complete restructure of code and Conda installation routines, contributed largely by the great [@pdiakumis](https://github.com/pdiakumis)
     -   Updated data bundle
