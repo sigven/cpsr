@@ -1,4 +1,4 @@
-# Cancer Predisposition Sequencing Reporter (CPSR)
+# Cancer Predisposition Sequencing Reporter <a href="https://sigven.github.io/cpsr/"><img src="man/figures/logo.png" align="right" height="118" width="100"/></a>
 
 The *Cancer Predisposition Sequencing Reporter (CPSR)* is a computational workflow that **interprets and classifies germline DNA variants** identified from next-generation sequencing **in the context of cancer predisposition and inherited cancer syndromes**. The workflow can also report **incidental findings (ACMG v3.0)** as well as the genotypes of common germline variants associated with cancer risk, as reported in the **NHGRI-EBI GWAS catalog**.
 
@@ -12,6 +12,9 @@ Snapshots of sections in the cancer predisposition genome report:
 
 ## News
 
+-   *November 2022*: **1.0.1 release**
+    -   Added CPSR logo (designed by [Hal Nakken](halvetica.net))
+    
 -   *February 2022*: **1.0.0 release**
 
     -   Complete restructure of code and Conda installation routines, contributed largely by the great [@pdiakumis](https://github.com/pdiakumis)

@@ -4,7 +4,6 @@ toc:
   depth: 3
 template:
   bootstrap: 5
-  bootswatch: flatly
 authors:
   Sigve Nakken:
     href: https://github.com/sigven
