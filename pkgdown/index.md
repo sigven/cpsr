@@ -1,6 +1,6 @@
-<br><br>
+<br>
 
-### Cancer Predisposition Sequencing Reporter {.unlisted}
+## Cancer Predisposition Sequencing Reporter <a href="https://sigven.github.io/cpsr/"><img src="man/figures/logo.png" align="right" height="118" width="100"/></a>
 
 <br>
 
@@ -24,6 +24,9 @@ The variant sets can be interactively explored and filtered further through diff
 
 
 ### News
+
+* *November 2022*: **1.0.1 release**
+  * Added CPSR logo (designed by [Hal Nakken](halvetica.net))
 
 * *February 2022*: **1.0.0 release**
   * Complete restructure of code and Conda installation routines, contributed largely by the great [@pdiakumis](https://github.com/pdiakumis)

@@ -2,6 +2,7 @@ Package: cpsr
 Type: Package
 Title: Cancer Predisposition Sequencing Reporter (CPSR)
 Version: 1.0.0
+Date: 2022-11-11
 Authors@R:
     c(person(given = "Sigve",
              family = "Nakken",
@@ -26,7 +27,7 @@ Description: CPSR is a computational workflow that interprets germline variants 
              predisposition and inherited cancer syndromes.
 License: MIT + file LICENSE
 biocViews:
-Remotes: github::sigven/pcgr/pcgrr@dev
+Remotes: github::sigven/pcgr/pcgrr@master
 Imports:
     assertable,
     assertthat,
@@ -48,5 +49,5 @@ Suggests:
     BSgenome.Hsapiens.UCSC.hg38
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
 Roxygen: list(markdown = TRUE)
