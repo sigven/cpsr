@@ -13,7 +13,7 @@ Snapshots of sections in the cancer predisposition genome report:
 ## News
 
 -   *November 2022*: **1.0.1 release**
-    -   Added CPSR logo (designed by [Hal Nakken](halvetica.net))
+    -   Added CPSR logo (designed by [Hal Nakken](https://halvetica.net))
     
 -   *February 2022*: **1.0.0 release**
 
