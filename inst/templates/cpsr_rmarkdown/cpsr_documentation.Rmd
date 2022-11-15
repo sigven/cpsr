@@ -20,31 +20,29 @@ The analysis performed in the cancer genome report is based on the following und
 
 * __Software__ 
 ```{r list_software, echo=F,results='asis'}
-for(n in names(cps_report$metadata$pcgr_db_release)){
-  if(n == 'mosdepth' | n == 'mutationalpatterns' | n == 'vcf2maf' | n == 'bundle_version'){
+for (n in names(cps_report$metadata$pcgr_db_release)) {
+  if (n == "mosdepth" | n == "mutationalpatterns" | n == "vcf2maf" | n == "bundle_version") {
     next
   }
-  if(cps_report$metadata$pcgr_db_release[[n]]$resource_type == 'software'){
-    s <- paste0('    * [',cps_report$metadata$pcgr_db_release[[n]]$name,'](',cps_report$metadata$pcgr_db_release[[n]]$url,') - ',cps_report$metadata$pcgr_db_release[[n]]$description, ' (',cps_report$metadata$pcgr_db_release[[n]]$version,')')
-    cat(s,sep="\n")
+  if (cps_report$metadata$pcgr_db_release[[n]]$resource_type == "software") {
+    s <- paste0("    * [", cps_report$metadata$pcgr_db_release[[n]]$name, "](", cps_report$metadata$pcgr_db_release[[n]]$url, ") - ", cps_report$metadata$pcgr_db_release[[n]]$description, " (", cps_report$metadata$pcgr_db_release[[n]]$version, ")")
+    cat(s, sep = "\n")
   }
 }
-
 ```
 <br><br>
 
 * __Databases/datasets__ 
 ```{r list_db, echo=F,results='asis'}
-for(n in names(cps_report$metadata$pcgr_db_release)){
-  if(cps_report$metadata$pcgr_db_release[[n]]$resource_type != 'software'){
-    if(n != 'cbmdb' & n != 'chembl' & n != 'corum' & n != 'icgc' & n != 'bundle_version' & n != 'tcga' & n != 'cosmic' & n != 'dgidb' & n != 'ct' & 
-       n != 'kegg' & n != 'onekg' &  n != 'tcga-pcdm' & n != 'opentargets'){
-      s <- paste0('    * [',cps_report$metadata$pcgr_db_release[[n]]$name,'](',cps_report$metadata$pcgr_db_release[[n]]$url,') - ',cps_report$metadata$pcgr_db_release[[n]]$description, ' (',cps_report$metadata$pcgr_db_release[[n]]$version,')')
-      cat(s,sep="\n")
+for (n in names(cps_report$metadata$pcgr_db_release)) {
+  if (cps_report$metadata$pcgr_db_release[[n]]$resource_type != "software") {
+    if (n != "cbmdb" & n != "chembl" & n != "corum" & n != "icgc" & n != "bundle_version" & n != "tcga" & n != "cosmic" & n != "dgidb" & n != "ct" &
+      n != "kegg" & n != "onekg" & n != "tcga-pcdm" & n != "opentargets") {
+      s <- paste0("    * [", cps_report$metadata$pcgr_db_release[[n]]$name, "](", cps_report$metadata$pcgr_db_release[[n]]$url, ") - ", cps_report$metadata$pcgr_db_release[[n]]$description, " (", cps_report$metadata$pcgr_db_release[[n]]$version, ")")
+      cat(s, sep = "\n")
     }
   }
 }
-
 ```
 
 ### Variant classification
@@ -72,21 +70,28 @@ In the table below, a detailed description of all evidence criteria that are cur
 
 
 ```{r acmg_evidence, echo = F, eval = T}
-data <- dplyr::filter(pcgrr::cpsr_acmg[['evidence_codes']], 
-                      cpsr_evidence_code != 'ACMG_BS2_1' & 
-                        cpsr_evidence_code != 'ACMG_BS2_2' & 
-                        cpsr_evidence_code != 'ACMG_BS2_3') %>% 
-  dplyr::select(-category) %>% 
-  dplyr::rename(pole = pathogenicity_pole, category = category_long, score = path_score) %>% 
+data <- dplyr::filter(
+  pcgrr::cpsr_acmg[["evidence_codes"]],
+  cpsr_evidence_code != "ACMG_BS2_1" &
+    cpsr_evidence_code != "ACMG_BS2_2" &
+    cpsr_evidence_code != "ACMG_BS2_3"
+) %>%
+  dplyr::select(-category) %>%
+  dplyr::rename(pole = pathogenicity_pole, category = category_long, score = path_score) %>%
   dplyr::arrange(pole)
 
-DT::datatable(data, escape=F, extensions=c("Buttons","Responsive"), 
-                options = list(
-                  pageLength = 10,
-                  buttons = c('csv','excel'),
-                  dom = 'Bfrtip')) %>%
-  DT::formatStyle("cpsr_evidence_code","pole", color = "white", 
-                  backgroundColor = DT::styleEqual(c('P','B'), c('#9E0142','#077009')))
+DT::datatable(data,
+  escape = F, extensions = c("Buttons", "Responsive"),
+  options = list(
+    pageLength = 10,
+    buttons = c("csv", "excel"),
+    dom = "Bfrtip"
+  )
+) %>%
+  DT::formatStyle("cpsr_evidence_code", "pole",
+    color = "white",
+    backgroundColor = DT::styleEqual(c("P", "B"), c("#9E0142", "#077009"))
+  )
 ```
 
 

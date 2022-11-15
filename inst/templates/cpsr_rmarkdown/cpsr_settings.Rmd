@@ -4,19 +4,20 @@
 
 gencode_versions <- unlist(stringr::str_split_fixed(
   stringr::str_replace(
-    cps_report$metadata$pcgr_db_release$gencode$version,"release ",""),
-  "/", 2))[1,]
-  
+    cps_report$metadata$pcgr_db_release$gencode$version, "release ", ""
+  ),
+  "/", 2
+))[1, ]
+
 gencode_version <- gencode_versions[2]
-if(cps_report[['metadata']][['genome_assembly']] == "grch38"){
+if (cps_report[["metadata"]][["genome_assembly"]] == "grch38") {
   gencode_version <- gencode_versions[1]
 }
 
-transcript_set_gencode <- paste0("GENCODE - basic set (v", gencode_version,")")
-if(cps_report[['metadata']][['config']][['other']][['vep_gencode_all']] == T){
-  transcript_set_gencode <- paste0("GENCODE - all transcripts (v", gencode_version,")")
+transcript_set_gencode <- paste0("GENCODE - basic set (v", gencode_version, ")")
+if (cps_report[["metadata"]][["config"]][["other"]][["vep_gencode_all"]] == T) {
+  transcript_set_gencode <- paste0("GENCODE - all transcripts (v", gencode_version, ")")
 }
-
 ```
 
 ### Sample metadata

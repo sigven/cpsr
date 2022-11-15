@@ -8,8 +8,8 @@ output: html_document
 ---
 
 ```{r global_options, include=FALSE}
-knitr::opts_chunk$set(echo = F,warning=FALSE, dpi=72, error=F, eval=T)
-options(scipen=999)
+knitr::opts_chunk$set(echo = F, warning = FALSE, dpi = 72, error = F, eval = T)
+options(scipen = 999)
 
 # width_panel <- 14
 # height_panel <- 3 + as.integer((max(0,(NROW(cps_report[['metadata']][['gene_panel']][['genes']]) - 24)) / 16))
@@ -22,18 +22,17 @@ set_all <- NROW(cps_report$content$snv_indel$variant_set$tsv)
 
 set_clinvar <- 0
 set_other <- 0
-if(cps_report$content$snv_indel$eval == T){
-  if(cps_report$content$snv_indel$v_stat$n > 0){
+if (cps_report$content$snv_indel$eval == T) {
+  if (cps_report$content$snv_indel$v_stat$n > 0) {
     set_clinvar <- NROW(cps_report$content$snv_indel$variant_set$tsv %>% dplyr::filter(!is.na(CLINVAR_CLASSIFICATION)))
     set_other <- NROW(cps_report$content$snv_indel$variant_set$tsv %>% dplyr::filter(is.na(CLINVAR_CLASSIFICATION) & !is.na(CPSR_CLASSIFICATION) > 0))
   }
 }
 
-if(set_other == 0 | set_clinvar == 0){
+if (set_other == 0 | set_clinvar == 0) {
   width_donut <- 6
   height_donut <- 4
 }
-
 ```
 
 ```{r settings_cpsr, child='cpsr_rmarkdown/cpsr_settings.Rmd'}
@@ -47,9 +46,9 @@ if(set_other == 0 | set_clinvar == 0){
 ```
 
 ```{r no_variants, eval = !cps_report[['content']][['snv_indel']][['eval']], results = "asis"}
-cat('<br><ul>')
+cat("<br><ul>")
 cat("<li><b>NO</b> variants found in the selected virtual gene panel/custom geneset</li>")
-cat('</ul><br>')
+cat("</ul><br>")
 ```
 
 
@@ -67,7 +66,7 @@ cat('</ul><br>')
 ```
 
 ```{r global_options2, include=FALSE}
-options(scipen=0)
+options(scipen = 0)
 ```
 
 ```{r conditional_gwas, child='cpsr_rmarkdown/cpsr_gwas.Rmd', eval = cps_report[['metadata']][['config']][['gwas']][['run']]}
@@ -80,4 +79,3 @@ options(scipen=0)
 
 
 ## References
-
