@@ -9,31 +9,28 @@ dtable_scrollY <- "700px"
 show_class_filters <- list()
 missing_class_items <- list()
 tot_variants <- list()
-for(c in c('class1','class2','class3','class4','class5')){
+for (c in c("class1", "class2", "class3", "class4", "class5")) {
   show_class_filters[[c]] <- list()
   missing_class_items[[c]] <- list()
   tot_variants[[c]] <- list()
-  for(m in c('Other','ClinVar')){
+  for (m in c("Other", "ClinVar")) {
     tot_variants[[c]][[m]] <- 0
     show_class_filters[[c]][[m]] <- F
     missing_class_items[[c]][[m]] <- T
-    if(NROW(cps_report[['content']][['snv_indel']][["disp"]][[c]]) > 0){
-      tot_variants[[c]][[m]] <- NROW(cps_report[['content']][['snv_indel']][["disp"]][[c]] %>% 
-                                     dplyr::filter(CPSR_CLASSIFICATION_SOURCE == m))
+    if (NROW(cps_report[["content"]][["snv_indel"]][["disp"]][[c]]) > 0) {
+      tot_variants[[c]][[m]] <- NROW(cps_report[["content"]][["snv_indel"]][["disp"]][[c]] %>%
+        dplyr::filter(CPSR_CLASSIFICATION_SOURCE == m))
     }
-    if(tot_variants[[c]][[m]] > 0){
+    if (tot_variants[[c]][[m]] > 0) {
       show_class_filters[[c]][[m]] <- T
       missing_class_items[[c]][[m]] <- F
     }
   }
 }
 
-tag_gnomad <- cps_report[['metadata']][['config']][['popgen']][['vcftag_gnomad']]
-desc_gnomad <- cps_report[['metadata']][['config']][['popgen']][['popdesc_gnomad']]
-formula_gnomad <- as.formula(paste0("~",rlang::sym(tag_gnomad)))
-
-
-
+tag_gnomad <- cps_report[["metadata"]][["config"]][["popgen"]][["vcftag_gnomad"]]
+desc_gnomad <- cps_report[["metadata"]][["config"]][["popgen"]][["popdesc_gnomad"]]
+formula_gnomad <- as.formula(paste0("~", rlang::sym(tag_gnomad)))
 ```
 
 
@@ -52,11 +49,11 @@ formula_gnomad <- as.formula(paste0("~",rlang::sym(tag_gnomad)))
 
 
 ```{r active_tab_class5, echo = F, results = "asis"}
-if(missing_class_items[['class5']][['ClinVar']] == F | (missing_class_items[['class5']][['Other']] == T & missing_class_items[['class5']][['ClinVar']] == T)){
+if (missing_class_items[["class5"]][["ClinVar"]] == F | (missing_class_items[["class5"]][["Other"]] == T & missing_class_items[["class5"]][["ClinVar"]] == T)) {
   cat("")
   cat("#### ClinVar {.active}")
   cat("")
-}else{
+} else {
   cat("")
   cat("#### ClinVar")
   cat("")
@@ -66,23 +63,25 @@ if(missing_class_items[['class5']][['ClinVar']] == F | (missing_class_items[['cl
 
 ```{r class5_cpsr_clinvar, echo=F, results = 'asis', eval = show_class_filters[['class5']][['ClinVar']]}
 
-cat('\n')
+cat("\n")
 htmltools::br()
 
 
-variants_class5_clinvar <- 
-  dplyr::filter(cps_report[['content']][['snv_indel']][["disp"]][['class5']], CPSR_CLASSIFICATION_SOURCE == 'ClinVar')
+variants_class5_clinvar <-
+  dplyr::filter(cps_report[["content"]][["snv_indel"]][["disp"]][["class5"]], CPSR_CLASSIFICATION_SOURCE == "ClinVar")
 
-if(NROW(variants_class5_clinvar) > 2000){
-  cat('<b>NOTE - only considering top 2000 variants (due to limitations with client-side tables) </b><br>',sep="\n")
-  cat('<br>')
-  variants_class5_clinvar <- 
+if (NROW(variants_class5_clinvar) > 2000) {
+  cat("<b>NOTE - only considering top 2000 variants (due to limitations with client-side tables) </b><br>", sep = "\n")
+  cat("<br>")
+  variants_class5_clinvar <-
     head(variants_class5_clinvar, 2000)
 }
 
-variants_class5_clinvar <- variants_class5_clinvar %>% 
-  dplyr::select(-c(CPSR_CLASSIFICATION,CPSR_PATHOGENICITY_SCORE,
-                   CPSR_CLASSIFICATION_DOC,CPSR_CLASSIFICATION_CODE))
+variants_class5_clinvar <- variants_class5_clinvar %>%
+  dplyr::select(-c(
+    CPSR_CLASSIFICATION, CPSR_PATHOGENICITY_SCORE,
+    CPSR_CLASSIFICATION_DOC, CPSR_CLASSIFICATION_CODE
+  ))
 
 variants_class5_1 <- crosstalk::SharedData$new(variants_class5_clinvar)
 crosstalk::bscols(
@@ -95,43 +94,43 @@ crosstalk::bscols(
     crosstalk::filter_select("CLINVAR_PHENOTYPE", "ClinVar phenotype(s)", variants_class5_1, ~CLINVAR_PHENOTYPE),
     crosstalk::filter_slider("CLINVAR_REVIEW_STATUS_STARS", "ClinVar review status stars", variants_class5_1, ~CLINVAR_REVIEW_STATUS_STARS, min = 0, max = 4, step = 1, ticks = T),
     crosstalk::filter_select("CLINVAR_CONFLICTED", "ClinVar conflicting interpretations", variants_class5_1, ~CLINVAR_CONFLICTED),
-    crosstalk::filter_slider(tag_gnomad, paste0("MAF gnomAD (",desc_gnomad,")"), variants_class5_1, formula_gnomad, sep="",ticks = F)
+    crosstalk::filter_slider(tag_gnomad, paste0("MAF gnomAD (", desc_gnomad, ")"), variants_class5_1, formula_gnomad, sep = "", ticks = F)
   )
 )
 
-    
+
 
 htmltools::br()
 htmltools::br()
 
-DT::datatable(variants_class5_1, escape=F,extensions=c("Buttons","Responsive"),
-              options = list(
-                pageLength = dtable_pageLength,
-                #scrollY = dtable_scrollY,
-                scrollCollapse = T,
-                #autoWidth = T,
-                buttons = c('csv','excel'),
-                dom = 'Bfrtip',
-                initComplete = DT::JS(
-                  "function(settings, json) {",
-                  "$(this.api().table().header()).css({'background-color':'#9E0142', 'color': '#fff'});",
-                  "}")
-              )
+DT::datatable(variants_class5_1,
+  escape = F, extensions = c("Buttons", "Responsive"),
+  options = list(
+    pageLength = dtable_pageLength,
+    # scrollY = dtable_scrollY,
+    scrollCollapse = T,
+    # autoWidth = T,
+    buttons = c("csv", "excel"),
+    dom = "Bfrtip",
+    initComplete = DT::JS(
+      "function(settings, json) {",
+      "$(this.api().table().header()).css({'background-color':'#9E0142', 'color': '#fff'});",
+      "}"
+    )
+  )
 )
 
 htmltools::br()
 htmltools::br()
 htmltools::br()
-
-
 ```
 
 ```{r active2_tab_class5, echo = F, results = "asis"}
-if(missing_class_items[['class5']][['ClinVar']] == T & missing_class_items[['class5']][['Other']] == F){
+if (missing_class_items[["class5"]][["ClinVar"]] == T & missing_class_items[["class5"]][["Other"]] == F) {
   cat("")
   cat("#### Non-ClinVar {.active}")
   cat("")
-}else{
+} else {
   cat("")
   cat("#### Non-ClinVar")
   cat("")
@@ -141,19 +140,21 @@ if(missing_class_items[['class5']][['ClinVar']] == T & missing_class_items[['cla
 
 ```{r class5_cpsr_other, echo=F, results = 'asis', eval = show_class_filters[['class5']][['Other']]}
 
-variants_class5_other <- 
-  dplyr::filter(cps_report[['content']][['snv_indel']][["disp"]][['class5']], CPSR_CLASSIFICATION_SOURCE == 'Other')
+variants_class5_other <-
+  dplyr::filter(cps_report[["content"]][["snv_indel"]][["disp"]][["class5"]], CPSR_CLASSIFICATION_SOURCE == "Other")
 
-if(NROW(variants_class5_other) > 2000){
-  cat('<b>NOTE - only considering top 2000 variants (ranked according to CPSR classification score) </b><br>',sep="\n")
-  cat('<br>')
-  variants_class5_other <- 
+if (NROW(variants_class5_other) > 2000) {
+  cat("<b>NOTE - only considering top 2000 variants (ranked according to CPSR classification score) </b><br>", sep = "\n")
+  cat("<br>")
+  variants_class5_other <-
     head(variants_class5_other, 2000)
 }
 
-variants_class5_other <- variants_class5_other %>% 
-  dplyr::select(-c(CLINVAR, CLINVAR_REVIEW_STATUS_STARS, CLINVAR_VARIANT_ORIGIN, 
-                   CLINVAR_CLASSIFICATION, CLINVAR_CONFLICTED, CLINVAR_PHENOTYPE))
+variants_class5_other <- variants_class5_other %>%
+  dplyr::select(-c(
+    CLINVAR, CLINVAR_REVIEW_STATUS_STARS, CLINVAR_VARIANT_ORIGIN,
+    CLINVAR_CLASSIFICATION, CLINVAR_CONFLICTED, CLINVAR_PHENOTYPE
+  ))
 
 
 variants_class5_2 <- crosstalk::SharedData$new(variants_class5_other)
@@ -166,33 +167,34 @@ crosstalk::bscols(
   list(
     crosstalk::filter_select("CPSR_CLASSIFICATION_CODE", "CPSR classification (ACMG criteria codes)", variants_class5_2, ~CPSR_CLASSIFICATION_CODE),
     crosstalk::filter_slider("CPSR_PATHOGENICITY_SCORE", "CPSR pathogenicity score", variants_class5_2, ~CPSR_PATHOGENICITY_SCORE, step = 0.5, ticks = T),
-    crosstalk::filter_slider(tag_gnomad, paste0("MAF gnomAD (",desc_gnomad,")"), variants_class5_2, formula_gnomad, sep="",ticks = F)
+    crosstalk::filter_slider(tag_gnomad, paste0("MAF gnomAD (", desc_gnomad, ")"), variants_class5_2, formula_gnomad, sep = "", ticks = F)
   )
 )
 
-    
+
 
 htmltools::br()
 htmltools::br()
 
-DT::datatable(variants_class5_2, escape=F,extensions=c("Buttons","Responsive"), 
-              options = list(
-                 pageLength = dtable_pageLength,
-                  #scrollY = dtable_scrollY,
-                  scrollCollapse = T,
-                buttons = c('csv','excel'),
-                dom = 'Bfrtip',
-                initComplete = DT::JS(
-                  "function(settings, json) {",
-                  "$(this.api().table().header()).css({'background-color':'#9E0142', 'color': '#fff'});",
-                  "}")
-              )
+DT::datatable(variants_class5_2,
+  escape = F, extensions = c("Buttons", "Responsive"),
+  options = list(
+    pageLength = dtable_pageLength,
+    # scrollY = dtable_scrollY,
+    scrollCollapse = T,
+    buttons = c("csv", "excel"),
+    dom = "Bfrtip",
+    initComplete = DT::JS(
+      "function(settings, json) {",
+      "$(this.api().table().header()).css({'background-color':'#9E0142', 'color': '#fff'});",
+      "}"
+    )
+  )
 )
 
 htmltools::br()
 htmltools::br()
 htmltools::br()
-
 ```
 
 
@@ -210,11 +212,11 @@ htmltools::br()
 
 
 ```{r active_tab_class4, echo = F, results = "asis"}
-if(missing_class_items[['class4']][['ClinVar']] == F | (missing_class_items[['class4']][['Other']] == T & missing_class_items[['class4']][['ClinVar']] == T)){
+if (missing_class_items[["class4"]][["ClinVar"]] == F | (missing_class_items[["class4"]][["Other"]] == T & missing_class_items[["class4"]][["ClinVar"]] == T)) {
   cat("")
   cat("#### ClinVar {.active}")
   cat("")
-}else{
+} else {
   cat("")
   cat("#### ClinVar")
   cat("")
@@ -223,22 +225,24 @@ if(missing_class_items[['class4']][['ClinVar']] == F | (missing_class_items[['cl
 
 ```{r class4_cpsr_clinvar, echo=F, results = 'asis', eval = show_class_filters[['class4']][['ClinVar']]}
 
-cat('\n')
+cat("\n")
 htmltools::br()
 
-variants_class4_clinvar <- 
-  dplyr::filter(cps_report[['content']][['snv_indel']][["disp"]][['class4']], CPSR_CLASSIFICATION_SOURCE == 'ClinVar')
+variants_class4_clinvar <-
+  dplyr::filter(cps_report[["content"]][["snv_indel"]][["disp"]][["class4"]], CPSR_CLASSIFICATION_SOURCE == "ClinVar")
 
-if(NROW(variants_class4_clinvar) > 2000){
-  cat('<b>NOTE - only considering top 2000 variants (due to limitations with client-side tables) </b><br>',sep="\n")
-  cat('<br>')
-  variants_class4_clinvar <- 
+if (NROW(variants_class4_clinvar) > 2000) {
+  cat("<b>NOTE - only considering top 2000 variants (due to limitations with client-side tables) </b><br>", sep = "\n")
+  cat("<br>")
+  variants_class4_clinvar <-
     head(variants_class4_clinvar, 2000)
 }
 
-variants_class4_clinvar <- variants_class4_clinvar %>% 
-  dplyr::select(-c(CPSR_CLASSIFICATION,CPSR_PATHOGENICITY_SCORE,
-                   CPSR_CLASSIFICATION_DOC,CPSR_CLASSIFICATION_CODE))
+variants_class4_clinvar <- variants_class4_clinvar %>%
+  dplyr::select(-c(
+    CPSR_CLASSIFICATION, CPSR_PATHOGENICITY_SCORE,
+    CPSR_CLASSIFICATION_DOC, CPSR_CLASSIFICATION_CODE
+  ))
 
 variants_class4_1 <- crosstalk::SharedData$new(variants_class4_clinvar)
 crosstalk::bscols(
@@ -251,41 +255,41 @@ crosstalk::bscols(
     crosstalk::filter_select("CLINVAR_PHENOTYPE", "ClinVar phenotype(s)", variants_class4_1, ~CLINVAR_PHENOTYPE),
     crosstalk::filter_slider("CLINVAR_REVIEW_STATUS_STARS", "ClinVar review status stars", variants_class4_1, ~CLINVAR_REVIEW_STATUS_STARS, min = 0, max = 4, step = 1, ticks = T),
     crosstalk::filter_select("CLINVAR_CONFLICTED", "ClinVar conflicting interpretations", variants_class4_1, ~CLINVAR_CONFLICTED),
-    crosstalk::filter_slider(tag_gnomad, paste0("MAF gnomAD (",desc_gnomad,")"), variants_class4_1, formula_gnomad, sep="",ticks = F)
+    crosstalk::filter_slider(tag_gnomad, paste0("MAF gnomAD (", desc_gnomad, ")"), variants_class4_1, formula_gnomad, sep = "", ticks = F)
   )
 )
 
-    
+
 
 htmltools::br()
 htmltools::br()
 
-DT::datatable(variants_class4_1, escape=F,extensions=c("Buttons","Responsive"),
-              options = list(
-                 pageLength = dtable_pageLength,
-                  #scrollY = dtable_scrollY,
-                  scrollCollapse = T,
-                buttons = c('csv','excel'),
-                dom = 'Bfrtip',
-                initComplete = DT::JS(
-                  "function(settings, json) {",
-                  "$(this.api().table().header()).css({'background-color':'#D53E4F', 'color': '#fff'});",
-                  "}")
-              )
+DT::datatable(variants_class4_1,
+  escape = F, extensions = c("Buttons", "Responsive"),
+  options = list(
+    pageLength = dtable_pageLength,
+    # scrollY = dtable_scrollY,
+    scrollCollapse = T,
+    buttons = c("csv", "excel"),
+    dom = "Bfrtip",
+    initComplete = DT::JS(
+      "function(settings, json) {",
+      "$(this.api().table().header()).css({'background-color':'#D53E4F', 'color': '#fff'});",
+      "}"
+    )
+  )
 )
 htmltools::br()
 htmltools::br()
 htmltools::br()
-
-
 ```
 
 ```{r active2_tab_class4, echo = F, results = "asis"}
-if(missing_class_items[['class4']][['ClinVar']] == T & missing_class_items[['class4']][['Other']] == F){
+if (missing_class_items[["class4"]][["ClinVar"]] == T & missing_class_items[["class4"]][["Other"]] == F) {
   cat("")
   cat("#### Non-ClinVar {.active}")
   cat("")
-}else{
+} else {
   cat("")
   cat("#### Non-ClinVar")
   cat("")
@@ -294,22 +298,24 @@ if(missing_class_items[['class4']][['ClinVar']] == T & missing_class_items[['cla
 
 ```{r class4_cpsr_other, echo=F, results = 'asis', eval = show_class_filters[['class4']][['Other']]}
 
-cat('\n')
+cat("\n")
 htmltools::br()
 
-variants_class4_other <- 
-  dplyr::filter(cps_report[['content']][['snv_indel']][["disp"]][['class4']], CPSR_CLASSIFICATION_SOURCE == 'Other')
+variants_class4_other <-
+  dplyr::filter(cps_report[["content"]][["snv_indel"]][["disp"]][["class4"]], CPSR_CLASSIFICATION_SOURCE == "Other")
 
-if(NROW(variants_class4_other) > 2000){
-  cat('<b>NOTE - only considering top 2000 variants (ranked according to CPSR classification score) </b><br>',sep="\n")
-  cat('<br>')
-  variants_class4_other <- 
+if (NROW(variants_class4_other) > 2000) {
+  cat("<b>NOTE - only considering top 2000 variants (ranked according to CPSR classification score) </b><br>", sep = "\n")
+  cat("<br>")
+  variants_class4_other <-
     head(variants_class4_other, 2000)
 }
 
-variants_class4_other <- variants_class4_other %>% 
-  dplyr::select(-c(CLINVAR, CLINVAR_REVIEW_STATUS_STARS, CLINVAR_VARIANT_ORIGIN, 
-                   CLINVAR_CLASSIFICATION, CLINVAR_CONFLICTED, CLINVAR_PHENOTYPE))
+variants_class4_other <- variants_class4_other %>%
+  dplyr::select(-c(
+    CLINVAR, CLINVAR_REVIEW_STATUS_STARS, CLINVAR_VARIANT_ORIGIN,
+    CLINVAR_CLASSIFICATION, CLINVAR_CONFLICTED, CLINVAR_PHENOTYPE
+  ))
 
 variants_class4_2 <- crosstalk::SharedData$new(variants_class4_other)
 crosstalk::bscols(
@@ -321,7 +327,7 @@ crosstalk::bscols(
   list(
     crosstalk::filter_select("CPSR_CLASSIFICATION_CODE", "CPSR classification (ACMG criteria codes)", variants_class4_2, ~CPSR_CLASSIFICATION_CODE),
     crosstalk::filter_slider("CPSR_PATHOGENICITY_SCORE", "CPSR pathogenicity score", variants_class4_2, ~CPSR_PATHOGENICITY_SCORE, step = 0.5, ticks = T),
-    crosstalk::filter_slider(tag_gnomad, paste0("MAF gnomAD (",desc_gnomad,")"), variants_class4_2, formula_gnomad, sep="",ticks = F)
+    crosstalk::filter_slider(tag_gnomad, paste0("MAF gnomAD (", desc_gnomad, ")"), variants_class4_2, formula_gnomad, sep = "", ticks = F)
   )
 )
 
@@ -330,24 +336,25 @@ crosstalk::bscols(
 htmltools::br()
 htmltools::br()
 
-DT::datatable(variants_class4_2, escape=F,extensions=c("Buttons","Responsive"),
-              options = list(
-                 pageLength = dtable_pageLength,
-                  #scrollY = dtable_scrollY,
-                  scrollCollapse = T,
-                buttons = c('csv','excel'),
-                dom = 'Bfrtip',
-                initComplete = DT::JS(
-                  "function(settings, json) {",
-                  "$(this.api().table().header()).css({'background-color':'#D53E4F', 'color': '#fff'});",
-                  "}")
-              )
+DT::datatable(variants_class4_2,
+  escape = F, extensions = c("Buttons", "Responsive"),
+  options = list(
+    pageLength = dtable_pageLength,
+    # scrollY = dtable_scrollY,
+    scrollCollapse = T,
+    buttons = c("csv", "excel"),
+    dom = "Bfrtip",
+    initComplete = DT::JS(
+      "function(settings, json) {",
+      "$(this.api().table().header()).css({'background-color':'#D53E4F', 'color': '#fff'});",
+      "}"
+    )
+  )
 )
 
 htmltools::br()
 htmltools::br()
 htmltools::br()
-
 ```
 
 
@@ -367,11 +374,11 @@ htmltools::br()
 
 
 ```{r active_tab_class3, echo = F, results = "asis"}
-if(missing_class_items[['class3']][['ClinVar']] == F | (missing_class_items[['class3']][['Other']] == T & missing_class_items[['class3']][['ClinVar']] == T)){
+if (missing_class_items[["class3"]][["ClinVar"]] == F | (missing_class_items[["class3"]][["Other"]] == T & missing_class_items[["class3"]][["ClinVar"]] == T)) {
   cat("")
   cat("#### ClinVar {.active}")
   cat("")
-}else{
+} else {
   cat("")
   cat("#### ClinVar")
   cat("")
@@ -380,22 +387,24 @@ if(missing_class_items[['class3']][['ClinVar']] == F | (missing_class_items[['cl
 
 ```{r class3_cpsr_clinvar, echo=F, results = 'asis', eval = show_class_filters[['class3']][['ClinVar']]}
 
-cat('\n')
+cat("\n")
 htmltools::br()
 
-variants_class3_clinvar <- 
-  dplyr::filter(cps_report[['content']][['snv_indel']][["disp"]][['class3']], CPSR_CLASSIFICATION_SOURCE == 'ClinVar')
+variants_class3_clinvar <-
+  dplyr::filter(cps_report[["content"]][["snv_indel"]][["disp"]][["class3"]], CPSR_CLASSIFICATION_SOURCE == "ClinVar")
 
-if(NROW(variants_class3_clinvar) > 2000){
-  cat('<b>NOTE - only considering top 2000 variants (due to limitations with client-side tables) </b><br>',sep="\n")
-  cat('<br>')
-  variants_class3_clinvar <- 
+if (NROW(variants_class3_clinvar) > 2000) {
+  cat("<b>NOTE - only considering top 2000 variants (due to limitations with client-side tables) </b><br>", sep = "\n")
+  cat("<br>")
+  variants_class3_clinvar <-
     head(variants_class3_clinvar, 2000)
 }
 
-variants_class3_clinvar <- variants_class3_clinvar %>% 
-  dplyr::select(-c(CPSR_CLASSIFICATION,CPSR_PATHOGENICITY_SCORE,
-                   CPSR_CLASSIFICATION_DOC,CPSR_CLASSIFICATION_CODE))
+variants_class3_clinvar <- variants_class3_clinvar %>%
+  dplyr::select(-c(
+    CPSR_CLASSIFICATION, CPSR_PATHOGENICITY_SCORE,
+    CPSR_CLASSIFICATION_DOC, CPSR_CLASSIFICATION_CODE
+  ))
 
 variants_class3_1 <- crosstalk::SharedData$new(variants_class3_clinvar)
 crosstalk::bscols(
@@ -403,9 +412,10 @@ crosstalk::bscols(
     crosstalk::filter_select("CONSEQUENCE", "Consequence", variants_class3_1, ~CONSEQUENCE),
     crosstalk::filter_checkbox("GENOTYPE", "Genotype", variants_class3_1, ~GENOTYPE),
     crosstalk::filter_select("SYMBOL", "Gene", variants_class3_1, ~SYMBOL),
-    crosstalk::filter_slider("GERP_SCORE","Genomic conservation score (GERP)",variants_class3_1, ~GERP_SCORE,
-                             min = -12.3, max = 6.17, ticks = T),
-    crosstalk::filter_slider(tag_gnomad, paste0("MAF gnomAD (",desc_gnomad,")"), variants_class3_1, formula_gnomad, sep="",ticks = F)
+    crosstalk::filter_slider("GERP_SCORE", "Genomic conservation score (GERP)", variants_class3_1, ~GERP_SCORE,
+      min = -12.3, max = 6.17, ticks = T
+    ),
+    crosstalk::filter_slider(tag_gnomad, paste0("MAF gnomAD (", desc_gnomad, ")"), variants_class3_1, formula_gnomad, sep = "", ticks = F)
   ),
   list(
     crosstalk::filter_select("miRNA_TARGET_HIT", "miRNA target gain/loss", variants_class3_1, ~miRNA_TARGET_HIT),
@@ -421,32 +431,33 @@ crosstalk::bscols(
 htmltools::br()
 htmltools::br()
 
-  DT::datatable(variants_class3_1, escape=F,extensions=c("Buttons","Responsive"),
-                options = list(
-                  pageLength = dtable_pageLength,
-                  #scrollY = dtable_scrollY,
-                  scrollCollapse = T,
-                  buttons = c('csv','excel'),
-                  dom = 'Bfrtip',
-                  initComplete = DT::JS(
-                  "function(settings, json) {",
-                  "$(this.api().table().header()).css({'background-color':'#000000', 'color': '#fff'});",
-                  "}")
-                )
+DT::datatable(variants_class3_1,
+  escape = F, extensions = c("Buttons", "Responsive"),
+  options = list(
+    pageLength = dtable_pageLength,
+    # scrollY = dtable_scrollY,
+    scrollCollapse = T,
+    buttons = c("csv", "excel"),
+    dom = "Bfrtip",
+    initComplete = DT::JS(
+      "function(settings, json) {",
+      "$(this.api().table().header()).css({'background-color':'#000000', 'color': '#fff'});",
+      "}"
+    )
   )
+)
 
 htmltools::br()
 htmltools::br()
 htmltools::br()
-
 ```
 
 ```{r active2_tab_class3, echo = F, results = "asis"}
-if(missing_class_items[['class3']][['ClinVar']] == T & missing_class_items[['class3']][['Other']] == F){
+if (missing_class_items[["class3"]][["ClinVar"]] == T & missing_class_items[["class3"]][["Other"]] == F) {
   cat("")
   cat("#### Non-ClinVar {.active}")
   cat("")
-}else{
+} else {
   cat("")
   cat("#### Non-ClinVar")
   cat("")
@@ -467,22 +478,24 @@ htmltools::br()
 
 ```{r class3_cpsr_other, echo=F, results = 'asis', eval = show_class_filters[['class3']][['Other']]}
 
-cat('\n')
+cat("\n")
 htmltools::br()
 
-variants_class3_other <- 
-  dplyr::filter(cps_report[['content']][['snv_indel']][["disp"]][['class3']], CPSR_CLASSIFICATION_SOURCE == 'Other')
+variants_class3_other <-
+  dplyr::filter(cps_report[["content"]][["snv_indel"]][["disp"]][["class3"]], CPSR_CLASSIFICATION_SOURCE == "Other")
 
-if(NROW(variants_class3_other) > 2000){
-  cat('<b>NOTE - only considering top 2000 variants (ranked according to CPSR classification score) </b><br>',sep="\n")
-  cat('<br>')
-  variants_class3_other <- 
+if (NROW(variants_class3_other) > 2000) {
+  cat("<b>NOTE - only considering top 2000 variants (ranked according to CPSR classification score) </b><br>", sep = "\n")
+  cat("<br>")
+  variants_class3_other <-
     head(variants_class3_other, 2000)
 }
 
-variants_class3_other <- variants_class3_other %>% 
-  dplyr::select(-c(CLINVAR, CLINVAR_REVIEW_STATUS_STARS, CLINVAR_VARIANT_ORIGIN, 
-                   CLINVAR_CLASSIFICATION, CLINVAR_CONFLICTED, CLINVAR_PHENOTYPE))
+variants_class3_other <- variants_class3_other %>%
+  dplyr::select(-c(
+    CLINVAR, CLINVAR_REVIEW_STATUS_STARS, CLINVAR_VARIANT_ORIGIN,
+    CLINVAR_CLASSIFICATION, CLINVAR_CONFLICTED, CLINVAR_PHENOTYPE
+  ))
 
 variants_class3_2 <- crosstalk::SharedData$new(variants_class3_other)
 crosstalk::bscols(
@@ -490,15 +503,16 @@ crosstalk::bscols(
     crosstalk::filter_select("CONSEQUENCE", "Consequence", variants_class3_2, ~CONSEQUENCE),
     crosstalk::filter_checkbox("GENOTYPE", "Genotype", variants_class3_2, ~GENOTYPE),
     crosstalk::filter_select("SYMBOL", "Gene", variants_class3_2, ~SYMBOL),
-    crosstalk::filter_slider("GERP_SCORE","Genomic conservation score (GERP)",variants_class3_2, ~GERP_SCORE,
-                             min = -12.3, max = 6.17, ticks = T)
+    crosstalk::filter_slider("GERP_SCORE", "Genomic conservation score (GERP)", variants_class3_2, ~GERP_SCORE,
+      min = -12.3, max = 6.17, ticks = T
+    )
   ),
   list(
     crosstalk::filter_select("miRNA_TARGET_HIT", "miRNA target gain/loss", variants_class3_2, ~miRNA_TARGET_HIT),
     crosstalk::filter_select("TF_BINDING_SITE_VARIANT", "TF binding site alteration", variants_class3_2, ~TF_BINDING_SITE_VARIANT),
     crosstalk::filter_select("CPSR_CLASSIFICATION_CODE", "CPSR classification (ACMG criteria codes)", variants_class3_2, ~CPSR_CLASSIFICATION_CODE),
     crosstalk::filter_slider("CPSR_PATHOGENICITY_SCORE", "CPSR pathogenicity score", variants_class3_2, ~CPSR_PATHOGENICITY_SCORE, step = 0.5, ticks = T),
-    crosstalk::filter_slider(tag_gnomad, paste0("MAF gnomAD (",desc_gnomad,")"), variants_class3_2, formula_gnomad, sep="",ticks = F)
+    crosstalk::filter_slider(tag_gnomad, paste0("MAF gnomAD (", desc_gnomad, ")"), variants_class3_2, formula_gnomad, sep = "", ticks = F)
   )
 )
 
@@ -507,32 +521,34 @@ crosstalk::bscols(
 htmltools::br()
 htmltools::br()
 
-DT::datatable(variants_class3_2, escape=F,extensions=c("Buttons","Responsive"),
-              options = list(
-                 pageLength = dtable_pageLength,
-                  #scrollY = dtable_scrollY,
-                  scrollCollapse = T,
-                buttons = c('csv','excel'),
-                dom = 'Bfrtip',
-                initComplete = DT::JS(
-                  "function(settings, json) {",
-                  "$(this.api().table().header()).css({'background-color':'#000000', 'color': '#fff'});",
-                  "}")
-              ) 
-) %>%
-  DT::formatStyle(color = "black", 
-                  columns = "SYMBOL", 
-                  valueColumns = "CPSR_PATHOGENICITY_SCORE", 
-                  backgroundColor = DT::styleEqual(
-                    c(-1.0, -0.5, 0, 0.5, 1.0, 1.5, 2.0),
-                    c('#FFFFFF','#FFFFFF','#FFFFFF','#FFFFFF','#FFFFFF','#FFFFFF','#ff7518')
-                  )
+DT::datatable(variants_class3_2,
+  escape = F, extensions = c("Buttons", "Responsive"),
+  options = list(
+    pageLength = dtable_pageLength,
+    # scrollY = dtable_scrollY,
+    scrollCollapse = T,
+    buttons = c("csv", "excel"),
+    dom = "Bfrtip",
+    initComplete = DT::JS(
+      "function(settings, json) {",
+      "$(this.api().table().header()).css({'background-color':'#000000', 'color': '#fff'});",
+      "}"
+    )
   )
- 
-htmltools::br()
-htmltools::br()
-htmltools::br()
+) %>%
+  DT::formatStyle(
+    color = "black",
+    columns = "SYMBOL",
+    valueColumns = "CPSR_PATHOGENICITY_SCORE",
+    backgroundColor = DT::styleEqual(
+      c(-1.0, -0.5, 0, 0.5, 1.0, 1.5, 2.0),
+      c("#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#ff7518")
+    )
+  )
 
+htmltools::br()
+htmltools::br()
+htmltools::br()
 ```
 
 <!--
@@ -549,11 +565,11 @@ htmltools::br()
 
 
 ```{r active_tab_class2, echo = F, results = "asis"}
-if(missing_class_items[['class2']][['ClinVar']] == F | (missing_class_items[['class2']][['Other']] == T & missing_class_items[['class2']][['ClinVar']] == T)){
+if (missing_class_items[["class2"]][["ClinVar"]] == F | (missing_class_items[["class2"]][["Other"]] == T & missing_class_items[["class2"]][["ClinVar"]] == T)) {
   cat("")
   cat("#### ClinVar {.active}")
   cat("")
-}else{
+} else {
   cat("")
   cat("#### ClinVar")
   cat("")
@@ -562,22 +578,24 @@ if(missing_class_items[['class2']][['ClinVar']] == F | (missing_class_items[['cl
 
 ```{r class2_cpsr_clinvar, echo=F, results = 'asis', eval = show_class_filters[['class2']][['ClinVar']]}
 
-cat('\n')
+cat("\n")
 htmltools::br()
 
-variants_class2_clinvar <- 
-  dplyr::filter(cps_report[['content']][['snv_indel']][["disp"]][['class2']], CPSR_CLASSIFICATION_SOURCE == 'ClinVar')
+variants_class2_clinvar <-
+  dplyr::filter(cps_report[["content"]][["snv_indel"]][["disp"]][["class2"]], CPSR_CLASSIFICATION_SOURCE == "ClinVar")
 
-if(NROW(variants_class2_clinvar) > 2000){
-  cat('<b>NOTE - only considering top 2000 variants (due to limitations with client-side tables) </b><br>',sep="\n")
-  cat('<br>')
-  variants_class2_clinvar <- 
+if (NROW(variants_class2_clinvar) > 2000) {
+  cat("<b>NOTE - only considering top 2000 variants (due to limitations with client-side tables) </b><br>", sep = "\n")
+  cat("<br>")
+  variants_class2_clinvar <-
     head(variants_class2_clinvar, 2000)
 }
 
-variants_class2_clinvar <- variants_class2_clinvar %>% 
-  dplyr::select(-c(CPSR_CLASSIFICATION,CPSR_PATHOGENICITY_SCORE,
-                   CPSR_CLASSIFICATION_DOC,CPSR_CLASSIFICATION_CODE))
+variants_class2_clinvar <- variants_class2_clinvar %>%
+  dplyr::select(-c(
+    CPSR_CLASSIFICATION, CPSR_PATHOGENICITY_SCORE,
+    CPSR_CLASSIFICATION_DOC, CPSR_CLASSIFICATION_CODE
+  ))
 
 variants_class2_1 <- crosstalk::SharedData$new(variants_class2_clinvar)
 crosstalk::bscols(
@@ -590,7 +608,7 @@ crosstalk::bscols(
     crosstalk::filter_select("CLINVAR_PHENOTYPE", "ClinVar phenotype(s)", variants_class2_1, ~CLINVAR_PHENOTYPE),
     crosstalk::filter_slider("CLINVAR_REVIEW_STATUS_STARS", "ClinVar review status stars", variants_class2_1, ~CLINVAR_REVIEW_STATUS_STARS, min = 0, max = 4, step = 1, ticks = T),
     crosstalk::filter_select("CLINVAR_CONFLICTED", "ClinVar conflicting interpretations", variants_class2_1, ~CLINVAR_CONFLICTED),
-    crosstalk::filter_slider(tag_gnomad, paste0("MAF gnomAD (",desc_gnomad,")"), variants_class2_1, formula_gnomad, sep="",ticks = F)
+    crosstalk::filter_slider(tag_gnomad, paste0("MAF gnomAD (", desc_gnomad, ")"), variants_class2_1, formula_gnomad, sep = "", ticks = F)
   )
 )
 
@@ -599,32 +617,33 @@ crosstalk::bscols(
 htmltools::br()
 htmltools::br()
 
-DT::datatable(variants_class2_1, escape=F,extensions=c("Buttons","Responsive"),
-              options = list(
-                 pageLength = dtable_pageLength,
-                  #scrollY = dtable_scrollY,
-                  scrollCollapse = T,
-                buttons = c('csv','excel'),
-                dom = 'Bfrtip',
-                initComplete = DT::JS(
-                  "function(settings, json) {",
-                  "$(this.api().table().header()).css({'background-color':'#78C679', 'color': '#fff'});",
-                  "}")
-              )
+DT::datatable(variants_class2_1,
+  escape = F, extensions = c("Buttons", "Responsive"),
+  options = list(
+    pageLength = dtable_pageLength,
+    # scrollY = dtable_scrollY,
+    scrollCollapse = T,
+    buttons = c("csv", "excel"),
+    dom = "Bfrtip",
+    initComplete = DT::JS(
+      "function(settings, json) {",
+      "$(this.api().table().header()).css({'background-color':'#78C679', 'color': '#fff'});",
+      "}"
+    )
+  )
 )
 
 htmltools::br()
 htmltools::br()
 htmltools::br()
-
 ```
 
 ```{r active2_tab_class2, echo = F, results = "asis"}
-if(missing_class_items[['class2']][['ClinVar']] == T & missing_class_items[['class2']][['Other']] == F){
+if (missing_class_items[["class2"]][["ClinVar"]] == T & missing_class_items[["class2"]][["Other"]] == F) {
   cat("")
   cat("#### Non-ClinVar {.active}")
   cat("")
-}else{
+} else {
   cat("")
   cat("#### Non-ClinVar")
   cat("")
@@ -633,22 +652,24 @@ if(missing_class_items[['class2']][['ClinVar']] == T & missing_class_items[['cla
 
 ```{r class2_cpsr_other, echo=F, results = 'asis', eval = show_class_filters[['class2']][['Other']]}
 
-cat('\n')
+cat("\n")
 htmltools::br()
 
-variants_class2_other <- 
-  dplyr::filter(cps_report[['content']][['snv_indel']][["disp"]][['class2']], CPSR_CLASSIFICATION_SOURCE == 'Other')
+variants_class2_other <-
+  dplyr::filter(cps_report[["content"]][["snv_indel"]][["disp"]][["class2"]], CPSR_CLASSIFICATION_SOURCE == "Other")
 
-if(NROW(variants_class2_other) > 2000){
-  cat('<b>NOTE - only considering top 2000 variants (ranked according to CPSR classification score) </b><br>',sep="\n")
-  cat('<br>')
-  variants_class2_other <- 
+if (NROW(variants_class2_other) > 2000) {
+  cat("<b>NOTE - only considering top 2000 variants (ranked according to CPSR classification score) </b><br>", sep = "\n")
+  cat("<br>")
+  variants_class2_other <-
     head(variants_class2_other, 2000)
 }
 
-variants_class2_other <- variants_class2_other %>% 
-  dplyr::select(-c(CLINVAR, CLINVAR_REVIEW_STATUS_STARS, CLINVAR_VARIANT_ORIGIN, 
-                   CLINVAR_CLASSIFICATION, CLINVAR_CONFLICTED, CLINVAR_PHENOTYPE))
+variants_class2_other <- variants_class2_other %>%
+  dplyr::select(-c(
+    CLINVAR, CLINVAR_REVIEW_STATUS_STARS, CLINVAR_VARIANT_ORIGIN,
+    CLINVAR_CLASSIFICATION, CLINVAR_CONFLICTED, CLINVAR_PHENOTYPE
+  ))
 
 variants_class2_2 <- crosstalk::SharedData$new(variants_class2_other)
 crosstalk::bscols(
@@ -660,7 +681,7 @@ crosstalk::bscols(
   list(
     crosstalk::filter_select("CPSR_CLASSIFICATION_CODE", "CPSR classification (ACMG criteria codes)", variants_class2_2, ~CPSR_CLASSIFICATION_CODE),
     crosstalk::filter_slider("CPSR_PATHOGENICITY_SCORE", "CPSR pathogenicity score", variants_class2_2, ~CPSR_PATHOGENICITY_SCORE, step = 0.5, ticks = T),
-    crosstalk::filter_slider(tag_gnomad, paste0("MAF gnomAD (",desc_gnomad,")"), variants_class2_2, formula_gnomad, sep="",ticks = F)
+    crosstalk::filter_slider(tag_gnomad, paste0("MAF gnomAD (", desc_gnomad, ")"), variants_class2_2, formula_gnomad, sep = "", ticks = F)
   )
 )
 
@@ -669,24 +690,24 @@ crosstalk::bscols(
 htmltools::br()
 htmltools::br()
 
-DT::datatable(variants_class2_2, escape=F,extensions=c("Buttons","Responsive"), 
-              options = list(
-                 pageLength = dtable_pageLength,
-                  #scrollY = dtable_scrollY,
-                  scrollCollapse = T,
-                buttons = c('csv','excel'),
-                dom = 'Bfrtip',
-                initComplete = DT::JS(
-                  "function(settings, json) {",
-                  "$(this.api().table().header()).css({'background-color':'#78C679', 'color': '#fff'});",
-                  "}")
-              )
+DT::datatable(variants_class2_2,
+  escape = F, extensions = c("Buttons", "Responsive"),
+  options = list(
+    pageLength = dtable_pageLength,
+    # scrollY = dtable_scrollY,
+    scrollCollapse = T,
+    buttons = c("csv", "excel"),
+    dom = "Bfrtip",
+    initComplete = DT::JS(
+      "function(settings, json) {",
+      "$(this.api().table().header()).css({'background-color':'#78C679', 'color': '#fff'});",
+      "}"
+    )
+  )
 )
 htmltools::br()
 htmltools::br()
 htmltools::br()
-
-
 ```
 
 <!--
@@ -705,11 +726,11 @@ htmltools::br()
 
 
 ```{r active_tab_class1, echo = F, results = "asis"}
-if(missing_class_items[['class1']][['ClinVar']] == F | (missing_class_items[['class1']][['Other']] == T & missing_class_items[['class1']][['ClinVar']] == T)){
+if (missing_class_items[["class1"]][["ClinVar"]] == F | (missing_class_items[["class1"]][["Other"]] == T & missing_class_items[["class1"]][["ClinVar"]] == T)) {
   cat("")
   cat("#### ClinVar {.active}")
   cat("")
-}else{
+} else {
   cat("")
   cat("#### ClinVar")
   cat("")
@@ -718,22 +739,24 @@ if(missing_class_items[['class1']][['ClinVar']] == F | (missing_class_items[['cl
 
 ```{r class1_cpsr_clinvar, echo=F, results = 'asis', eval = show_class_filters[['class1']][['ClinVar']]}
 
-cat('\n')
+cat("\n")
 htmltools::br()
 
-variants_class1_clinvar <- 
-  dplyr::filter(cps_report[['content']][['snv_indel']][["disp"]][['class1']], CPSR_CLASSIFICATION_SOURCE == 'ClinVar')
+variants_class1_clinvar <-
+  dplyr::filter(cps_report[["content"]][["snv_indel"]][["disp"]][["class1"]], CPSR_CLASSIFICATION_SOURCE == "ClinVar")
 
-if(NROW(variants_class1_clinvar) > 2000){
-  cat('<b>NOTE - only considering top 2000 variants (due to limitations with client-side tables) </b><br>',sep="\n")
-  cat('<br>')
-  variants_class1_clinvar <- 
+if (NROW(variants_class1_clinvar) > 2000) {
+  cat("<b>NOTE - only considering top 2000 variants (due to limitations with client-side tables) </b><br>", sep = "\n")
+  cat("<br>")
+  variants_class1_clinvar <-
     head(variants_class1_clinvar, 2000)
 }
 
-variants_class1_clinvar <- variants_class1_clinvar %>% 
-  dplyr::select(-c(CPSR_CLASSIFICATION,CPSR_PATHOGENICITY_SCORE,
-                   CPSR_CLASSIFICATION_DOC,CPSR_CLASSIFICATION_CODE))
+variants_class1_clinvar <- variants_class1_clinvar %>%
+  dplyr::select(-c(
+    CPSR_CLASSIFICATION, CPSR_PATHOGENICITY_SCORE,
+    CPSR_CLASSIFICATION_DOC, CPSR_CLASSIFICATION_CODE
+  ))
 
 variants_class1_1 <- crosstalk::SharedData$new(variants_class1_clinvar)
 crosstalk::bscols(
@@ -746,7 +769,7 @@ crosstalk::bscols(
     crosstalk::filter_select("CLINVAR_PHENOTYPE", "ClinVar phenotype(s)", variants_class1_1, ~CLINVAR_PHENOTYPE),
     crosstalk::filter_slider("CLINVAR_REVIEW_STATUS_STARS", "ClinVar review status stars", variants_class1_1, ~CLINVAR_REVIEW_STATUS_STARS, min = 0, max = 4, step = 1, ticks = T),
     crosstalk::filter_select("CLINVAR_CONFLICTED", "ClinVar conflicting interpretations", variants_class1_1, ~CLINVAR_CONFLICTED),
-    crosstalk::filter_slider(tag_gnomad, paste0("MAF gnomAD (",desc_gnomad,")"), variants_class1_1, formula_gnomad, sep="",ticks = F)
+    crosstalk::filter_slider(tag_gnomad, paste0("MAF gnomAD (", desc_gnomad, ")"), variants_class1_1, formula_gnomad, sep = "", ticks = F)
   )
 )
 
@@ -755,34 +778,34 @@ crosstalk::bscols(
 htmltools::br()
 htmltools::br()
 
-DT::datatable(variants_class1_1, 
-              escape = F, 
-              extensions=c("Buttons","Responsive"), 
-              options = list(
-                 pageLength = dtable_pageLength,
-                  #scrollY = dtable_scrollY,
-                  scrollCollapse = T,
-                buttons = c('csv','excel'),
-                dom = 'Bfrtip',
-                initComplete = DT::JS(
-                  "function(settings, json) {",
-                  "$(this.api().table().header()).css({'background-color':'#077009', 'color': '#fff'});",
-                  "}")
-              )
+DT::datatable(variants_class1_1,
+  escape = F,
+  extensions = c("Buttons", "Responsive"),
+  options = list(
+    pageLength = dtable_pageLength,
+    # scrollY = dtable_scrollY,
+    scrollCollapse = T,
+    buttons = c("csv", "excel"),
+    dom = "Bfrtip",
+    initComplete = DT::JS(
+      "function(settings, json) {",
+      "$(this.api().table().header()).css({'background-color':'#077009', 'color': '#fff'});",
+      "}"
+    )
+  )
 )
 
 htmltools::br()
 htmltools::br()
 htmltools::br()
-
 ```
 
 ```{r active2_tab_class1, echo = F, results = "asis"}
-if(missing_class_items[['class1']][['ClinVar']] == T & missing_class_items[['class1']][['Other']] == F){
+if (missing_class_items[["class1"]][["ClinVar"]] == T & missing_class_items[["class1"]][["Other"]] == F) {
   cat("")
   cat("#### Non-ClinVar {.active}")
   cat("")
-}else{
+} else {
   cat("")
   cat("#### Non-ClinVar")
   cat("")
@@ -791,22 +814,24 @@ if(missing_class_items[['class1']][['ClinVar']] == T & missing_class_items[['cla
 
 ```{r class1_cpsr_other, echo=F, results = 'asis', eval = show_class_filters[['class1']][['Other']]}
 
-cat('\n')
+cat("\n")
 htmltools::br()
 
-variants_class1_other <- 
-  dplyr::filter(cps_report[['content']][['snv_indel']][["disp"]][['class1']], CPSR_CLASSIFICATION_SOURCE == 'Other')
+variants_class1_other <-
+  dplyr::filter(cps_report[["content"]][["snv_indel"]][["disp"]][["class1"]], CPSR_CLASSIFICATION_SOURCE == "Other")
 
-if(NROW(variants_class1_other) > 2000){
-  cat('<b>NOTE - only considering top 2000 variants (ranked according to CPSR classification score) </b><br>',sep="\n")
-  cat('<br>')
-  variants_class1_other <- 
+if (NROW(variants_class1_other) > 2000) {
+  cat("<b>NOTE - only considering top 2000 variants (ranked according to CPSR classification score) </b><br>", sep = "\n")
+  cat("<br>")
+  variants_class1_other <-
     head(variants_class1_other, 2000)
 }
 
-variants_class1_other <- variants_class1_other %>% 
-  dplyr::select(-c(CLINVAR, CLINVAR_REVIEW_STATUS_STARS, CLINVAR_VARIANT_ORIGIN, 
-                   CLINVAR_CLASSIFICATION, CLINVAR_CONFLICTED, CLINVAR_PHENOTYPE))
+variants_class1_other <- variants_class1_other %>%
+  dplyr::select(-c(
+    CLINVAR, CLINVAR_REVIEW_STATUS_STARS, CLINVAR_VARIANT_ORIGIN,
+    CLINVAR_CLASSIFICATION, CLINVAR_CONFLICTED, CLINVAR_PHENOTYPE
+  ))
 
 variants_class1_2 <- crosstalk::SharedData$new(variants_class1_other)
 crosstalk::bscols(
@@ -818,7 +843,7 @@ crosstalk::bscols(
   list(
     crosstalk::filter_select("CPSR_CLASSIFICATION_CODE", "CPSR classification (ACMG criteria codes)", variants_class1_2, ~CPSR_CLASSIFICATION_CODE),
     crosstalk::filter_slider("CPSR_PATHOGENICITY_SCORE", "CPSR pathogenicity score", variants_class1_2, ~CPSR_PATHOGENICITY_SCORE, step = 0.5, ticks = T),
-    crosstalk::filter_slider(tag_gnomad, paste0("MAF gnomAD (",desc_gnomad,")"), variants_class1_2, formula_gnomad, sep="",ticks = F)
+    crosstalk::filter_slider(tag_gnomad, paste0("MAF gnomAD (", desc_gnomad, ")"), variants_class1_2, formula_gnomad, sep = "", ticks = F)
   )
 )
 
@@ -827,26 +852,26 @@ crosstalk::bscols(
 htmltools::br()
 htmltools::br()
 
-DT::datatable(variants_class1_2, escape=F,extensions=c("Buttons","Responsive"), 
-              options = list(
-                 pageLength = dtable_pageLength,
-                  #scrollY = dtable_scrollY,
-                  scrollCollapse = T,
-                buttons = c('csv','excel'),
-                dom = 'Bfrtip',
-                initComplete = 
-                  DT::JS(
-                  "function(settings, json) {",
-                  "$(this.api().table().header()).css({'background-color':'#077009', 'color': '#fff'});",
-                   "}")
-              )
+DT::datatable(variants_class1_2,
+  escape = F, extensions = c("Buttons", "Responsive"),
+  options = list(
+    pageLength = dtable_pageLength,
+    # scrollY = dtable_scrollY,
+    scrollCollapse = T,
+    buttons = c("csv", "excel"),
+    dom = "Bfrtip",
+    initComplete =
+      DT::JS(
+        "function(settings, json) {",
+        "$(this.api().table().header()).css({'background-color':'#077009', 'color': '#fff'});",
+        "}"
+      )
+  )
 )
 
 htmltools::br()
 htmltools::br()
 htmltools::br()
-
-
 ```
 
 

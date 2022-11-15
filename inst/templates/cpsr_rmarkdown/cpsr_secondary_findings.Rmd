@@ -5,8 +5,7 @@
 
 ```{r prepare_sf_data, echo=F, results='asis'}
 
-tot_variants_p_clinvar <- NROW(cps_report[['content']][['snv_indel']][["disp"]][['secondary']])
-
+tot_variants_p_clinvar <- NROW(cps_report[["content"]][["snv_indel"]][["disp"]][["secondary"]])
 ```
 
 *  In the sample, a total of n = __`r tot_variants_p_clinvar`__ variants in [genes recommended for secondary findings reporting (ACMG v3.0)](https://www.nature.com/articles/s41436-021-01172-3) 
@@ -19,17 +18,18 @@ are registered with a <i>Pathogenic/Likely pathogenic</i> clinical significance 
 htmltools::br()
 htmltools::br()
 
-DT::datatable(cps_report[['content']][['snv_indel']][["disp"]][['secondary']], 
-              escape=F,extensions=c("Buttons","Responsive"), 
-              options = list(
-                pageLength = 6,
-                buttons = c('csv','excel'),
-                dom = 'Bfrtip',
-                initComplete = DT::JS(
-                  "function(settings, json) {",
-                  "$(this.api().table().header()).css({'background-color': '#8E9092', 'color': '#fff'});",
-                  "}")
-              )
+DT::datatable(cps_report[["content"]][["snv_indel"]][["disp"]][["secondary"]],
+  escape = F, extensions = c("Buttons", "Responsive"),
+  options = list(
+    pageLength = 6,
+    buttons = c("csv", "excel"),
+    dom = "Bfrtip",
+    initComplete = DT::JS(
+      "function(settings, json) {",
+      "$(this.api().table().header()).css({'background-color': '#8E9092', 'color': '#fff'});",
+      "}"
+    )
+  )
 )
 
 htmltools::br()
