@@ -7,17 +7,16 @@ p1 <- cpsr::summary_donut_chart(cps_report$content$snv_indel$variant_set$tsv, pl
 p2 <- cpsr::summary_donut_chart(cps_report$content$snv_indel$variant_set$tsv, plot_type = "Other")
 
 p <- NULL
-if(!is.null(p1) & !is.null(p2)){
-  p <- ggpubr::ggarrange(p1, p2, labels = c("",""), ncol = 2, nrow = 1)
+if (!is.null(p1) & !is.null(p2)) {
+  p <- ggpubr::ggarrange(p1, p2, labels = c("", ""), ncol = 2, nrow = 1)
 }
-if(!is.null(p1) & is.null(p2)){
-  p  = p1
+if (!is.null(p1) & is.null(p2)) {
+  p <- p1
 }
-if(is.null(p1) & !is.null(p2)){
+if (is.null(p1) & !is.null(p2)) {
   p <- p2
 }
 p
-
 ```
 
 
