@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - master
-      - dev
+      - update_conda_r
 env:
   atoken: ${{ secrets.ANACONDA_UPLOAD_TOKEN }}
   recipe_path: conda/recipe
@@ -19,7 +19,9 @@ jobs:
     defaults:
       run:
         shell: bash -l {0}
-
+    strategy:
+      matrix:
+        r_version: ["4.2", "4.3"]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -35,7 +37,7 @@ jobs:
           use-mamba: true
       - name: Build + upload cpsr conda pkg
         run: |
-          conda mambabuild ${recipe_path}/cpsr -c pcgr -c conda-forge -c bioconda --token ${atoken}
+          conda mambabuild ${recipe_path}/cpsr --R=${{ matrix.r_version }} -c umccr -c pcgr -c conda-forge -c bioconda --token ${atoken}
 
   pkgdown_site:
     name: Deploy pkgdown website
@@ -54,7 +56,7 @@ jobs:
           auto-activate-base: true
           activate-environment: ""
           mamba-version: "*"
-          channels: "pcgr,conda-forge,bioconda"
+          channels: "umccr,pcgr,conda-forge,bioconda"
       - name: Install conda packages
         run: mamba env create -n pkgdown -f ${env_yml_path}/pkgdown.yml
       - name: Publish pkgdown website
