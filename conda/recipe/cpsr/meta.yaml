@@ -17,24 +17,26 @@ requirements:
     - git
   host:
     - r-base
-#   - r-pcgrr
+    - r-assertable
     - r-assertthat
     - r-dplyr
     - r-ggplot2
     - r-log4r
     - r-magrittr
+#   - r-pcgrr
     - r-rlang
     - r-scales
     - r-stringr
     - r-tidyr
   run:
     - r-base
-#   - r-pcgrr
+    - r-assertable
     - r-assertthat
     - r-dplyr
     - r-ggplot2
     - r-log4r
     - r-magrittr
+#   - r-pcgrr
     - r-rlang
     - r-scales
     - r-stringr

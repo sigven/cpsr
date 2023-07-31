@@ -27,7 +27,6 @@ Description: CPSR is a computational workflow that interprets germline variants 
              predisposition and inherited cancer syndromes.
 License: MIT + file LICENSE
 biocViews:
-Remotes: github::sigven/pcgr/pcgrr@master
 Imports:
     assertable,
     assertthat,
@@ -35,7 +34,6 @@ Imports:
     ggplot2,
     log4r,
     magrittr,
-    pcgrr,
     rlang,
     scales,
     stringr,
