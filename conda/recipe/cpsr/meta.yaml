@@ -17,7 +17,7 @@ requirements:
     - git
   host:
     - r-base
-    - r-pcgrr
+#   - r-pcgrr
     - r-assertthat
     - r-dplyr
     - r-ggplot2
@@ -29,7 +29,7 @@ requirements:
     - r-tidyr
   run:
     - r-base
-    - r-pcgrr
+#   - r-pcgrr
     - r-assertthat
     - r-dplyr
     - r-ggplot2
