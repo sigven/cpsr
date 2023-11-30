@@ -28,7 +28,7 @@ jobs:
       - name: Micromamba setup
         uses: mamba-org/setup-micromamba@v1
         with:
-          environment-file: ${{ env.env_yaml_path }}/condabuild_env.yml
+          environment-file: ${{ env.env_yml_path }}/condabuild_env.yml
       - name: Build + upload cpsr conda pkg
         run: |
           conda mambabuild ${recipe_path}/cpsr --R=${{ matrix.r_version }} -c umccr -c pcgr -c conda-forge -c bioconda --token ${atoken}
@@ -46,7 +46,7 @@ jobs:
       - name: Micromamba setup
         uses: mamba-org/setup-micromamba@v1
         with:
-          environment-file: ${{ env.env_yaml_path }}/pkgdown.yml
+          environment-file: ${{ env.env_yml_path }}/pkgdown.yml
       - name: Publish pkgdown website
         run: |
             git config --local user.email "actions@github.com"
