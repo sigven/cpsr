@@ -24,17 +24,11 @@ jobs:
         r_version: ["4.2", "4.3"]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Set up Mambaforge
-        uses: conda-incubator/setup-miniconda@v2
+        uses: actions/checkout@v4
+      - name: Micromamba setup
+        uses: mamba-org/setup-micromamba@v1
         with:
-          miniforge-variant: Mambaforge
-          miniforge-version: 4.11.0-0
-          show-channel-urls: true
-          auto-activate-base: false
-          activate-environment: condabuild
-          environment-file: conda/condabuild_env.yml
-          use-mamba: true
+          environment-file: ${{ env.env_yaml_path }}/condabuild_env.yml
       - name: Build + upload cpsr conda pkg
         run: |
           conda mambabuild ${recipe_path}/cpsr --R=${{ matrix.r_version }} -c umccr -c pcgr -c conda-forge -c bioconda --token ${atoken}
@@ -48,28 +42,22 @@ jobs:
         shell: bash -l {0}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Set up miniconda
-        uses: conda-incubator/setup-miniconda@v2
+        uses: actions/checkout@v4
+      - name: Micromamba setup
+        uses: mamba-org/setup-micromamba@v1
         with:
-          auto-update-conda: true
-          auto-activate-base: true
-          activate-environment: ""
-          mamba-version: "*"
-          channels: "umccr,pcgr,conda-forge,bioconda"
-      - name: Install conda packages
-        run: mamba env create -n pkgdown -f ${env_yml_path}/pkgdown.yml
+          environment-file: ${{ env.env_yaml_path }}/pkgdown.yml
       - name: Publish pkgdown website
         run: |
             git config --local user.email "actions@github.com"
             git config --local user.name "GitHub Actions"
-            conda activate pkgdown
+            micromamba activate pkgdown
             printf "cpsr version:\n"
             Rscript -e "packageVersion('cpsr')"
             Rscript -e "pkgdown::deploy_to_branch(pkg = '.', commit_message = paste(pkgdown:::construct_commit_message('.'), '- see https://sigven.github.io/cpsr/'), branch = 'gh-pages', new_process = FALSE)"
 
       - name: Create tag
-        uses: actions/github-script@v5
+        uses: actions/github-script@v7
         with:
           script: |
             const the_tag_name = 'refs/tags/v' + process.env.VERSION
