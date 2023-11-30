@@ -32,10 +32,8 @@ Imports:
     assertthat,
     dplyr,
     ggplot2,
-    log4r,
     magrittr,
     rlang,
-    scales,
     stringr,
     tidyr
 Depends:
@@ -47,5 +45,5 @@ Suggests:
     BSgenome.Hsapiens.UCSC.hg38
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
