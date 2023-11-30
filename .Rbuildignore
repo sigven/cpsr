@@ -17,3 +17,4 @@
 ^pkgdown/_pkgdown\.yml$
 ^pkgdown$
 ^_pkgdown\.yml$
+^\.pre-commit-config\.yaml$
