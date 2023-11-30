@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - update_conda_r
 env:
   atoken: ${{ secrets.ANACONDA_UPLOAD_TOKEN }}
   recipe_path: conda/recipe
@@ -31,7 +30,7 @@ jobs:
           environment-file: ${{ env.env_yml_path }}/condabuild_env.yml
       - name: Build + upload cpsr conda pkg
         run: |
-          conda mambabuild ${recipe_path}/cpsr --R=${{ matrix.r_version }} -c umccr -c pcgr -c conda-forge -c bioconda --token ${atoken}
+          conda mambabuild ${recipe_path}/cpsr --R=${{ matrix.r_version }} -c pcgr -c conda-forge -c bioconda --token ${atoken}
 
   pkgdown_site:
     name: Deploy pkgdown website
