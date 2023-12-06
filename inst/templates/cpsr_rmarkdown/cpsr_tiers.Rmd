@@ -18,7 +18,7 @@ for (c in c("class1", "class2", "class3", "class4", "class5")) {
     show_class_filters[[c]][[m]] <- F
     missing_class_items[[c]][[m]] <- T
     if (NROW(cps_report[["content"]][["snv_indel"]][["disp"]][[c]]) > 0) {
-      tot_variants[[c]][[m]] <- NROW(cps_report[["content"]][["snv_indel"]][["disp"]][[c]] %>%
+      tot_variants[[c]][[m]] <- NROW(cps_report[["content"]][["snv_indel"]][["disp"]][[c]] |>
         dplyr::filter(CPSR_CLASSIFICATION_SOURCE == m))
     }
     if (tot_variants[[c]][[m]] > 0) {
@@ -28,8 +28,10 @@ for (c in c("class1", "class2", "class3", "class4", "class5")) {
   }
 }
 
-tag_gnomad <- cps_report[["metadata"]][["config"]][["popgen"]][["vcftag_gnomad"]]
-desc_gnomad <- cps_report[["metadata"]][["config"]][["popgen"]][["popdesc_gnomad"]]
+tag_gnomad <- 
+  cps_report[["settings"]][["conf"]][["variant_classification"]][["vcftag_gnomad_AF"]]
+desc_gnomad <- 
+  cps_report[["settings"]][["conf"]][["variant_classification"]][["popdesc_gnomad"]]
 formula_gnomad <- as.formula(paste0("~", rlang::sym(tag_gnomad)))
 ```
 
@@ -77,7 +79,7 @@ if (NROW(variants_class5_clinvar) > 2000) {
     head(variants_class5_clinvar, 2000)
 }
 
-variants_class5_clinvar <- variants_class5_clinvar %>%
+variants_class5_clinvar <- variants_class5_clinvar |>
   dplyr::select(-c(
     CPSR_CLASSIFICATION, CPSR_PATHOGENICITY_SCORE,
     CPSR_CLASSIFICATION_DOC, CPSR_CLASSIFICATION_CODE
@@ -150,7 +152,7 @@ if (NROW(variants_class5_other) > 2000) {
     head(variants_class5_other, 2000)
 }
 
-variants_class5_other <- variants_class5_other %>%
+variants_class5_other <- variants_class5_other |>
   dplyr::select(-c(
     CLINVAR, CLINVAR_REVIEW_STATUS_STARS, CLINVAR_VARIANT_ORIGIN,
     CLINVAR_CLASSIFICATION, CLINVAR_CONFLICTED, CLINVAR_PHENOTYPE
@@ -238,7 +240,7 @@ if (NROW(variants_class4_clinvar) > 2000) {
     head(variants_class4_clinvar, 2000)
 }
 
-variants_class4_clinvar <- variants_class4_clinvar %>%
+variants_class4_clinvar <- variants_class4_clinvar |>
   dplyr::select(-c(
     CPSR_CLASSIFICATION, CPSR_PATHOGENICITY_SCORE,
     CPSR_CLASSIFICATION_DOC, CPSR_CLASSIFICATION_CODE
@@ -311,7 +313,7 @@ if (NROW(variants_class4_other) > 2000) {
     head(variants_class4_other, 2000)
 }
 
-variants_class4_other <- variants_class4_other %>%
+variants_class4_other <- variants_class4_other |>
   dplyr::select(-c(
     CLINVAR, CLINVAR_REVIEW_STATUS_STARS, CLINVAR_VARIANT_ORIGIN,
     CLINVAR_CLASSIFICATION, CLINVAR_CONFLICTED, CLINVAR_PHENOTYPE
@@ -400,7 +402,7 @@ if (NROW(variants_class3_clinvar) > 2000) {
     head(variants_class3_clinvar, 2000)
 }
 
-variants_class3_clinvar <- variants_class3_clinvar %>%
+variants_class3_clinvar <- variants_class3_clinvar |>
   dplyr::select(-c(
     CPSR_CLASSIFICATION, CPSR_PATHOGENICITY_SCORE,
     CPSR_CLASSIFICATION_DOC, CPSR_CLASSIFICATION_CODE
@@ -491,7 +493,7 @@ if (NROW(variants_class3_other) > 2000) {
     head(variants_class3_other, 2000)
 }
 
-variants_class3_other <- variants_class3_other %>%
+variants_class3_other <- variants_class3_other |>
   dplyr::select(-c(
     CLINVAR, CLINVAR_REVIEW_STATUS_STARS, CLINVAR_VARIANT_ORIGIN,
     CLINVAR_CLASSIFICATION, CLINVAR_CONFLICTED, CLINVAR_PHENOTYPE
@@ -535,7 +537,7 @@ DT::datatable(variants_class3_2,
       "}"
     )
   )
-) %>%
+) |>
   DT::formatStyle(
     color = "black",
     columns = "SYMBOL",
@@ -591,7 +593,7 @@ if (NROW(variants_class2_clinvar) > 2000) {
     head(variants_class2_clinvar, 2000)
 }
 
-variants_class2_clinvar <- variants_class2_clinvar %>%
+variants_class2_clinvar <- variants_class2_clinvar |>
   dplyr::select(-c(
     CPSR_CLASSIFICATION, CPSR_PATHOGENICITY_SCORE,
     CPSR_CLASSIFICATION_DOC, CPSR_CLASSIFICATION_CODE
@@ -665,7 +667,7 @@ if (NROW(variants_class2_other) > 2000) {
     head(variants_class2_other, 2000)
 }
 
-variants_class2_other <- variants_class2_other %>%
+variants_class2_other <- variants_class2_other |>
   dplyr::select(-c(
     CLINVAR, CLINVAR_REVIEW_STATUS_STARS, CLINVAR_VARIANT_ORIGIN,
     CLINVAR_CLASSIFICATION, CLINVAR_CONFLICTED, CLINVAR_PHENOTYPE
@@ -752,7 +754,7 @@ if (NROW(variants_class1_clinvar) > 2000) {
     head(variants_class1_clinvar, 2000)
 }
 
-variants_class1_clinvar <- variants_class1_clinvar %>%
+variants_class1_clinvar <- variants_class1_clinvar |>
   dplyr::select(-c(
     CPSR_CLASSIFICATION, CPSR_PATHOGENICITY_SCORE,
     CPSR_CLASSIFICATION_DOC, CPSR_CLASSIFICATION_CODE
@@ -827,7 +829,7 @@ if (NROW(variants_class1_other) > 2000) {
     head(variants_class1_other, 2000)
 }
 
-variants_class1_other <- variants_class1_other %>%
+variants_class1_other <- variants_class1_other |>
   dplyr::select(-c(
     CLINVAR, CLINVAR_REVIEW_STATUS_STARS, CLINVAR_VARIANT_ORIGIN,
     CLINVAR_CLASSIFICATION, CLINVAR_CONFLICTED, CLINVAR_PHENOTYPE

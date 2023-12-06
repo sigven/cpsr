@@ -5,21 +5,14 @@
 \title{Function that assign variants to different tiers for
 prioritization of germline variants}
 \usage{
-assign_variant_tiers(
-  cpg_calls,
-  config = NULL,
-  cpsr_display_cols = NULL,
-  cpsr_tsv_cols = NULL
-)
+assign_variant_tiers(cpg_calls, config = NULL, col_format_output = NULL)
 }
 \arguments{
 \item{cpg_calls}{data frame with variants in predisposition_genes}
 
 \item{config}{CPSR configuration object with run settings}
 
-\item{cpsr_display_cols}{list of variables for display in report}
-
-\item{cpsr_tsv_cols}{list of variables for display in report}
+\item{col_format_output}{object with output column formats (html, tsv)}
 }
 \description{
 Function that assign variants to different tiers for

@@ -3,7 +3,7 @@ title: "Cancer Predisposition Genome Report by CPSR"
 date: '`r strftime(Sys.time(), format = "%B %d, %Y")`'
 bibliography: cpsr_bibliography.bib
 nocite: |
-  @Huang2018-ah, @Richards2015-kj, @Maxwell2016-mr, @Amendola2016-pu, @Griffith2017-do, @Martin2019-nq, @Nykamp2017-rj
+  @Nakken2021-mb, @Huang2018-ah, @Richards2015-kj, @Maxwell2016-mr, @Amendola2016-pu, @Griffith2017-do, @Martin2019-nq, @Nykamp2017-rj
 output: html_document
 ---
 
@@ -17,6 +17,8 @@ options(scipen = 999)
 width_donut <- 10
 height_donut <- 7
 
+cps_report <- readRDS(file="../../cps_test.rds")
+
 set_all <- NROW(cps_report$content$snv_indel$variant_set$tsv)
 
 
@@ -24,8 +26,8 @@ set_clinvar <- 0
 set_other <- 0
 if (cps_report$content$snv_indel$eval == T) {
   if (cps_report$content$snv_indel$v_stat$n > 0) {
-    set_clinvar <- NROW(cps_report$content$snv_indel$variant_set$tsv %>% dplyr::filter(!is.na(CLINVAR_CLASSIFICATION)))
-    set_other <- NROW(cps_report$content$snv_indel$variant_set$tsv %>% dplyr::filter(is.na(CLINVAR_CLASSIFICATION) & !is.na(CPSR_CLASSIFICATION) > 0))
+    set_clinvar <- NROW(cps_report$content$snv_indel$variant_set$tsv |> dplyr::filter(!is.na(CLINVAR_CLASSIFICATION)))
+    set_other <- NROW(cps_report$content$snv_indel$variant_set$tsv |> dplyr::filter(is.na(CLINVAR_CLASSIFICATION) & !is.na(CPSR_CLASSIFICATION) > 0))
   }
 }
 
@@ -62,14 +64,14 @@ cat("</ul><br>")
 
 <br><br>
 
-```{r conditional_secondary, child='cpsr_rmarkdown/cpsr_secondary_findings.Rmd', eval = cps_report[['metadata']][['config']][['secondary_findings']]}
+```{r conditional_secondary, child='cpsr_rmarkdown/cpsr_secondary_findings.Rmd', eval = as.logical(cps_report$settings$conf$variant_classification$secondary_findings)}
 ```
 
 ```{r global_options2, include=FALSE}
 options(scipen = 0)
 ```
 
-```{r conditional_gwas, child='cpsr_rmarkdown/cpsr_gwas.Rmd', eval = cps_report[['metadata']][['config']][['gwas']][['run']]}
+```{r conditional_gwas, child='cpsr_rmarkdown/cpsr_gwas.Rmd', eval = as.logical(cps_report$settings$conf$variant_classification$gwas_findings)}
 ```
 
 ```{r conditional_documentation, child='cpsr_rmarkdown/cpsr_documentation.Rmd', eval = TRUE}

@@ -1,14 +1,21 @@
 
 <!--##  <span style="color:#8E9092"><b>Secondary findings</b> (ACMG SF v2.0)</span>-->
 
-##  Secondary findings (ACMG-based - v3.0)
+##  Secondary findings
 
 ```{r prepare_sf_data, echo=F, results='asis'}
 
 tot_variants_p_clinvar <- NROW(cps_report[["content"]][["snv_indel"]][["disp"]][["secondary"]])
+acmg_version <- cps_report[['ref_data']][['source']][
+  cps_report$ref_data$source_abbreviation == "acmg_sf","source_version"]
+acmg_url <- cps_report[['ref_data']][['source']][
+  cps_report$ref_data$source_abbreviation == "acmg_sf","source_url"]
+
+  
+
 ```
 
-*  In the sample, a total of n = __`r tot_variants_p_clinvar`__ variants in [genes recommended for secondary findings reporting (ACMG v3.0)](https://www.nature.com/articles/s41436-021-01172-3) 
+*  In the sample, a total of n = __`r tot_variants_p_clinvar`__ variants in [genes recommended for secondary findings reporting (ACMG `r acmg_version`)](`r acmg_url`) 
 are registered with a <i>Pathogenic/Likely pathogenic</i> clinical significance in ClinVar.
 
 <br>

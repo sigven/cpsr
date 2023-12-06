@@ -3,7 +3,7 @@
 \name{retrieve_secondary_calls}
 \alias{retrieve_secondary_calls}
 \title{Function that retrieves variants in genes recommended for secondary
-(secondary) findings}
+findings}
 \usage{
 retrieve_secondary_calls(calls, umls_map)
 }
@@ -15,5 +15,5 @@ secondary findings reporting}
 }
 \description{
 Function that retrieves variants in genes recommended for secondary
-(secondary) findings
+findings
 }

@@ -2,7 +2,7 @@ Package: cpsr
 Type: Package
 Title: Cancer Predisposition Sequencing Reporter (CPSR)
 Version: 1.0.1
-Date: 2022-11-11
+Date: 2023-12-05
 Authors@R:
     c(person(given = "Sigve",
              family = "Nakken",
@@ -33,11 +33,8 @@ Imports:
     assertthat,
     dplyr,
     ggplot2,
-    log4r,
-    magrittr,
     pcgrr,
     rlang,
-    scales,
     stringr,
     tidyr
 Depends:
@@ -49,5 +46,5 @@ Suggests:
     BSgenome.Hsapiens.UCSC.hg38
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
