@@ -919,3 +919,336 @@ assign_pathogenicity_evidence <- function(calls, settings, ref_data) {
 
   return(calls)
 }
+
+
+#' Function that assign variants to different tiers for
+#' prioritization of germline variants
+#'
+#' @param cpg_calls data frame with variants in predisposition_genes
+#' @param config CPSR configuration object with run settings
+#' @param col_format_output object with output column formats (html, tsv)
+#' @export
+assign_variant_tiers <-
+  function(cpg_calls,
+           config = NULL,
+           col_format_output = NULL) {
+    # dot_args <- list(...)
+
+    # evidence_codes <- cpsr::acmg[["evidence_codes"]] |>
+    #   dplyr::filter(
+    #     .data$cpsr_evidence_code != "ACMG_BS2_1" &
+    #     .data$cpsr_evidence_code != "ACMG_BS2_2" &
+    #     .data$cpsr_evidence_code != "ACMG_BS2_3")
+    col_format_output[['tsv']] <-
+      c(
+        col_format_output[['tsv']],
+        #evidence_codes$cpsr_evidence_code,
+        c(
+          "FINAL_CLASSIFICATION",
+          "CPSR_CLASSIFICATION",
+          "CPSR_PATHOGENICITY_SCORE",
+          "CPSR_CLASSIFICATION_CODE",
+          "CPSR_CLASSIFICATION_DOC",
+          "CPSR_CLASSIFICATION_SOURCE"
+        )
+      )
+
+    pcgrr::log4r_info(paste0(
+      "Generating tiered set of result variants for ",
+      "output in tab-separated values (TSV) file"
+    ))
+
+    snv_indel_report <- pcgrr::init_germline_content()
+
+    snv_indel_report[["variant_set"]][["class5"]] <- cpg_calls |>
+      dplyr::filter(!is.na(.data$CLINVAR_CLASSIFICATION) &
+                      .data$CLINVAR_CLASSIFICATION == "Pathogenic") |>
+      dplyr::mutate(CPSR_CLASSIFICATION_SOURCE = "ClinVar")
+
+    snv_indel_report[["variant_set"]][["class4"]] <- cpg_calls |>
+      dplyr::filter(!is.na(.data$CLINVAR_CLASSIFICATION) &
+                      .data$CLINVAR_CLASSIFICATION == "Likely_Pathogenic") |>
+      dplyr::mutate(CPSR_CLASSIFICATION_SOURCE = "ClinVar")
+
+    snv_indel_report[["variant_set"]][["class3"]] <- cpg_calls |>
+      dplyr::filter(!is.na(.data$CLINVAR_CLASSIFICATION) &
+                      .data$CLINVAR_CLASSIFICATION == "VUS") |>
+      dplyr::mutate(CPSR_CLASSIFICATION_SOURCE = "ClinVar")
+
+    snv_indel_report[["variant_set"]][["class2"]] <- cpg_calls |>
+      dplyr::filter(!is.na(.data$CLINVAR_CLASSIFICATION) &
+                      .data$CLINVAR_CLASSIFICATION == "Likely_Benign") |>
+      dplyr::mutate(CPSR_CLASSIFICATION_SOURCE = "ClinVar")
+
+    snv_indel_report[["variant_set"]][["class1"]] <- cpg_calls |>
+      dplyr::filter(!is.na(.data$CLINVAR_CLASSIFICATION) &
+                      .data$CLINVAR_CLASSIFICATION == "Benign") |>
+      dplyr::mutate(CPSR_CLASSIFICATION_SOURCE = "ClinVar")
+
+    ## identify remaining calls not registered in ClinVar
+    all_clinvar_calls <- data.frame()
+    for (c in c("class1", "class2", "class3", "class4", "class5")) {
+      all_clinvar_calls <- all_clinvar_calls |>
+        dplyr::bind_rows(
+          dplyr::select(
+            snv_indel_report[["variant_set"]][[c]],
+            "VAR_ID"
+          )
+        )
+    }
+    cpg_calls_non_clinvar <- cpg_calls |>
+      dplyr::anti_join(all_clinvar_calls, by = c("VAR_ID"))
+
+    n_nonclinvar <- NROW(cpg_calls_non_clinvar)
+
+    cpg_calls_non_clinvar <- cpg_calls_non_clinvar |>
+      dplyr::filter(is.na(.data$gnomAD_AF) |
+                      .data$gnomAD_AF <=
+                      config[["variant_classification"]][["maf_upper_threshold"]])
+    n_maf_filtered <- n_nonclinvar - nrow(cpg_calls_non_clinvar)
+    pcgrr::log4r_info(
+      paste0(
+        "Ignoring n = ", n_maf_filtered,
+        " unclassified variants with a global MAF frequency above ",
+        config[["variant_classification"]][["maf_upper_threshold"]]
+      )
+    )
+
+    n_after_maf_filtering <- nrow(cpg_calls_non_clinvar)
+
+    non_clinvar_calls <- list()
+    non_clinvar_calls[["class5"]] <- cpg_calls_non_clinvar |>
+      dplyr::filter(.data$CPSR_CLASSIFICATION == "Pathogenic") |>
+      dplyr::mutate(CPSR_CLASSIFICATION_SOURCE = "Other")
+
+    non_clinvar_calls[["class4"]] <- cpg_calls_non_clinvar |>
+      dplyr::filter(.data$CPSR_CLASSIFICATION == "Likely_Pathogenic") |>
+      dplyr::mutate(CPSR_CLASSIFICATION_SOURCE = "Other")
+
+    non_clinvar_calls[["class3"]] <- cpg_calls_non_clinvar |>
+      dplyr::filter(.data$CPSR_CLASSIFICATION == "VUS") |>
+      dplyr::mutate(CPSR_CLASSIFICATION_SOURCE = "Other")
+
+    non_clinvar_calls[["class2"]] <- cpg_calls_non_clinvar |>
+      dplyr::filter(.data$CPSR_CLASSIFICATION == "Likely_Benign") |>
+      dplyr::mutate(CPSR_CLASSIFICATION_SOURCE = "Other")
+
+    non_clinvar_calls[["class1"]] <- cpg_calls_non_clinvar |>
+      dplyr::filter(.data$CPSR_CLASSIFICATION == "Benign") |>
+      dplyr::mutate(CPSR_CLASSIFICATION_SOURCE = "Other")
+
+    for (c in c("class1", "class2", "class3", "class4", "class5")) {
+      pcgrr::log4r_info(paste0("Merging ClinVar-classified variants and CPSR-classified (novel) variants - ", c))
+      snv_indel_report[["variant_set"]][[c]] <-
+        dplyr::bind_rows(
+          non_clinvar_calls[[c]],
+          snv_indel_report[["variant_set"]][[c]]
+        )
+
+
+      if (nrow(snv_indel_report[["variant_set"]][[c]]) == 0) {
+        pcgrr::log4r_info(paste0("Zero variants found - ", c))
+        next
+      }
+
+      ## set FINAL_CLASSIFICATION col
+      snv_indel_report[["variant_set"]][[c]] <-
+        snv_indel_report[["variant_set"]][[c]] |>
+        dplyr::mutate(
+          FINAL_CLASSIFICATION = dplyr::case_when(
+            !is.na(.data$CLINVAR_CLASSIFICATION) ~
+              as.character(.data$CLINVAR_CLASSIFICATION),
+            is.na(.data$CLINVAR_CLASSIFICATION) ~
+              as.character(.data$CPSR_CLASSIFICATION),
+            TRUE ~ as.character(NA)
+          )
+        )
+
+
+      ## If not 'classify_all' is turned on,
+      ## remove CPSR classifications for existing
+      ## ClinVar classifications
+      if (config[["variant_classification"]][["classify_all"]] == 1) {
+        snv_indel_report[["variant_set"]][[c]] <-
+          snv_indel_report[["variant_set"]][[c]] |>
+          dplyr::mutate(
+            CPSR_CLASSIFICATION =
+              dplyr::if_else(
+                !is.na(.data$CLINVAR_CLASSIFICATION),
+                "",
+                as.character(.data$CPSR_CLASSIFICATION)
+              )
+          ) |>
+          dplyr::mutate(
+            CPSR_CLASSIFICATION_DOC =
+              dplyr::if_else(
+                !is.na(.data$CLINVAR_CLASSIFICATION),
+                "",
+                as.character(.data$CPSR_CLASSIFICATION_DOC)
+              )
+          ) |>
+          dplyr::mutate(
+            CPSR_CLASSIFICATION_CODE =
+              dplyr::if_else(
+                !is.na(.data$CLINVAR_CLASSIFICATION),
+                "",
+                as.character(.data$CPSR_CLASSIFICATION_CODE)
+              )
+          ) |>
+          dplyr::mutate(
+            CPSR_PATHOGENICITY_SCORE =
+              dplyr::if_else(
+                !is.na(.data$CLINVAR_CLASSIFICATION),
+                as.numeric(NA),
+                as.numeric(.data$CPSR_PATHOGENICITY_SCORE)
+              )
+          )
+      }
+      snv_indel_report[["variant_set"]][[c]] <-
+        snv_indel_report[["variant_set"]][[c]] |>
+        dplyr::arrange(
+          .data$CPSR_CLASSIFICATION_SOURCE,
+          dplyr::desc(.data$CANCER_PHENOTYPE),
+          dplyr::desc(.data$CPSR_PATHOGENICITY_SCORE)
+        )
+
+      # if (config[["visual_reporting"]][["table_display"]] == "full") {
+      #   cols_in_tsv_not_display_cols <-
+      #     setdiff(cpsr_tsv_cols, cpsr_display_cols)
+      #
+      #   cpsr_display_cols <-
+      #     c(
+      #       cpsr_display_cols,
+      #       cols_in_tsv_not_display_cols
+      #     )
+      #
+      #   #cpsr_display_cols <-
+      #     #cpsr_display_cols[!cpsr_display_cols %in% c("AMINO_ACID_START", "AMINO_ACID_END", "EXON", "CIVIC_ID", "CIVIC_ID_SEGMENT")]
+      # }
+
+      snv_indel_report[["disp"]][[c]] <-
+        dplyr::select(
+          snv_indel_report[["variant_set"]][[c]],
+          dplyr::one_of(col_format_output[['html_tier']])
+        )
+      snv_indel_report[["variant_set"]][[c]] <-
+        dplyr::select(
+          snv_indel_report[["variant_set"]][[c]],
+          dplyr::one_of(col_format_output[['tsv']])
+        )
+
+      snv_indel_report[["variant_set"]][[c]]$DBSNP <-
+        unlist(lapply(
+          stringr::str_match_all(
+            snv_indel_report[["variant_set"]][[c]]$DBSNP,
+            ">rs[0-9]{1,}<"
+          ), paste,
+          collapse = ","
+        ))
+      snv_indel_report[["variant_set"]][[c]]$DBSNP <-
+        stringr::str_replace_all(
+          snv_indel_report[["variant_set"]][[c]]$DBSNP, ">|<", ""
+        )
+
+      snv_indel_report[["variant_set"]][[c]]$CPSR_CLASSIFICATION_DOC <-
+        stringr::str_replace_all(
+          snv_indel_report[["variant_set"]][[c]]$CPSR_CLASSIFICATION_DOC,
+          "<br>-", ","
+        )
+      snv_indel_report[["variant_set"]][[c]]$CPSR_CLASSIFICATION_DOC <-
+        stringr::str_replace_all(
+          snv_indel_report[["variant_set"]][[c]]$CPSR_CLASSIFICATION_DOC,
+          "^, ", ""
+        )
+
+      snv_indel_report[["variant_set"]][[c]] <-
+        snv_indel_report[["variant_set"]][[c]] |>
+        dplyr::select(
+          c(
+            "GENOMIC_CHANGE",
+            "VAR_ID",
+            "GENOTYPE",
+            "CPSR_CLASSIFICATION_SOURCE",
+            "GENOME_VERSION",
+            "VCF_SAMPLE_ID",
+            "VARIANT_CLASS",
+            "CODING_STATUS",
+            "SYMBOL",
+            "GENENAME",
+            "CCDS",
+            "ENTREZGENE",
+            "UNIPROT_ID",
+            "ENSEMBL_GENE_ID",
+            "ENSEMBL_TRANSCRIPT_ID",
+            "REFSEQ_TRANSCRIPT_ID",
+            "ONCOGENE",
+            "TUMOR_SUPPRESSOR",
+            "CONSEQUENCE",
+            "VEP_ALL_CSQ",
+            "REGULATORY_ANNOTATION",
+            "PROTEIN_CHANGE",
+            "PFAM_DOMAIN_NAME",
+            "DBSNP",
+            "HGVSp",
+            "HGVSc",
+            "LAST_EXON",
+            "EXON_POSITION",
+            "INTRON_POSITION",
+            "CDS_CHANGE",
+            "MUTATION_HOTSPOT",
+            "RMSK_HIT",
+            "EFFECT_PREDICTIONS",
+            "LOSS_OF_FUNCTION",
+            "DBSNP",
+            "CANCER_PHENOTYPE",
+            "CLINVAR_CLASSIFICATION",
+            "CLINVAR_MSID",
+            "CLINVAR_VARIANT_ORIGIN",
+            "CLINVAR_CONFLICTED",
+            "CLINVAR_PHENOTYPE",
+            "CLINVAR_REVIEW_STATUS_STARS"
+          ),
+          dplyr::everything()
+        )
+
+      for (col in colnames(snv_indel_report[["variant_set"]][[c]])) {
+        if (nrow(snv_indel_report[["variant_set"]][[c]][!is.na(
+          snv_indel_report[["variant_set"]][[c]][, col]
+        ) &
+        snv_indel_report[["variant_set"]][[c]][, col] == "", ]) > 0) {
+          snv_indel_report[["variant_set"]][[c]][!is.na(
+            snv_indel_report[["variant_set"]][[c]][, col]
+          ) &
+            snv_indel_report[["variant_set"]][[c]][, col] == "", col] <- NA
+        }
+      }
+
+      population_tags <- unique(
+        c("gnomAD_AF",
+          config[["variant_classification"]][["vcftag_gnomad_AF"]])
+      )
+      for (tag in population_tags) {
+        if (tag %in% colnames(snv_indel_report[["disp"]][[c]])) {
+          if (nrow(snv_indel_report[["disp"]][[c]][is.na(
+            snv_indel_report[["disp"]][[c]][, tag]
+          ), ]) > 0) {
+            snv_indel_report[["disp"]][[c]][is.na(
+              snv_indel_report[["disp"]][[c]][, tag]
+            ), tag] <- 0.00
+          }
+        }
+      }
+    }
+
+    snv_indel_report[["variant_set"]][["tsv"]] <-
+      dplyr::bind_rows(
+        snv_indel_report[["variant_set"]][["class5"]],
+        snv_indel_report[["variant_set"]][["class4"]],
+        snv_indel_report[["variant_set"]][["class3"]],
+        snv_indel_report[["variant_set"]][["class2"]],
+        snv_indel_report[["variant_set"]][["class1"]]
+      )
+
+
+    return(snv_indel_report)
+  }
