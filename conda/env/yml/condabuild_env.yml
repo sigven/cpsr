@@ -5,6 +5,5 @@ channels:
 dependencies:
   - boa
   - conda-build
-  - conda-lock
   - conda-verify
   - anaconda-client
