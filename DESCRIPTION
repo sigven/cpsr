@@ -1,7 +1,7 @@
 Package: cpsr
 Type: Package
 Title: Cancer Predisposition Sequencing Reporter (CPSR)
-Version: 1.0.1.9001
+Version: 1.0.1.9002
 Date: 2023-12-13
 Authors@R:
     c(person(given = "Sigve",
