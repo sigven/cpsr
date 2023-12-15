@@ -1224,7 +1224,7 @@ assign_variant_tiers <-
       }
 
       population_tags <- unique(
-        c("gnomAD_AF",
+        c("gnomADe_AF",
           config[["variant_classification"]][["vcftag_gnomad_AF"]])
       )
       for (tag in population_tags) {
