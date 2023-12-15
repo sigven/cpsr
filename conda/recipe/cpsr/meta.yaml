@@ -1,6 +1,6 @@
 package:
   name: r-cpsr
-  version: 1.0.1 # versioned by bump2version
+  version: 1.0.1.9003 # versioned by bump2version
 
 source:
   path: ../../../
@@ -21,11 +21,8 @@ requirements:
     - r-assertthat
     - r-dplyr
     - r-ggplot2
-    - r-log4r
-    - r-magrittr
-#   - r-pcgrr
+    - r-pcgrr
     - r-rlang
-    - r-scales
     - r-stringr
     - r-tidyr
   run:
@@ -34,11 +31,8 @@ requirements:
     - r-assertthat
     - r-dplyr
     - r-ggplot2
-    - r-log4r
-    - r-magrittr
-#   - r-pcgrr
+    - r-pcgrr
     - r-rlang
-    - r-scales
     - r-stringr
     - r-tidyr
 
