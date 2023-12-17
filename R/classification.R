@@ -1002,8 +1002,8 @@ assign_variant_tiers <-
     n_nonclinvar <- NROW(cpg_calls_non_clinvar)
 
     cpg_calls_non_clinvar <- cpg_calls_non_clinvar |>
-      dplyr::filter(is.na(.data$gnomAD_AF) |
-                      .data$gnomAD_AF <=
+      dplyr::filter(is.na(.data$gnomADe_AF) |
+                      .data$gnomADe_AF <=
                       config[["variant_classification"]][["maf_upper_threshold"]])
     n_maf_filtered <- n_nonclinvar - nrow(cpg_calls_non_clinvar)
     pcgrr::log4r_info(
@@ -1068,7 +1068,7 @@ assign_variant_tiers <-
       ## If not 'classify_all' is turned on,
       ## remove CPSR classifications for existing
       ## ClinVar classifications
-      if (config[["variant_classification"]][["classify_all"]] == 1) {
+      if (config[["variant_classification"]][["classify_all"]] == 0) {
         snv_indel_report[["variant_set"]][[c]] <-
           snv_indel_report[["variant_set"]][[c]] |>
           dplyr::mutate(
