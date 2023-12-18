@@ -1019,23 +1019,23 @@ assign_variant_tiers <-
     non_clinvar_calls <- list()
     non_clinvar_calls[["class5"]] <- cpg_calls_non_clinvar |>
       dplyr::filter(.data$CPSR_CLASSIFICATION == "Pathogenic") |>
-      dplyr::mutate(CPSR_CLASSIFICATION_SOURCE = "Other")
+      dplyr::mutate(CPSR_CLASSIFICATION_SOURCE = "CPSR_ACMG")
 
     non_clinvar_calls[["class4"]] <- cpg_calls_non_clinvar |>
       dplyr::filter(.data$CPSR_CLASSIFICATION == "Likely_Pathogenic") |>
-      dplyr::mutate(CPSR_CLASSIFICATION_SOURCE = "Other")
+      dplyr::mutate(CPSR_CLASSIFICATION_SOURCE = "CPSR_ACMG")
 
     non_clinvar_calls[["class3"]] <- cpg_calls_non_clinvar |>
       dplyr::filter(.data$CPSR_CLASSIFICATION == "VUS") |>
-      dplyr::mutate(CPSR_CLASSIFICATION_SOURCE = "Other")
+      dplyr::mutate(CPSR_CLASSIFICATION_SOURCE = "CPSR_ACMG")
 
     non_clinvar_calls[["class2"]] <- cpg_calls_non_clinvar |>
       dplyr::filter(.data$CPSR_CLASSIFICATION == "Likely_Benign") |>
-      dplyr::mutate(CPSR_CLASSIFICATION_SOURCE = "Other")
+      dplyr::mutate(CPSR_CLASSIFICATION_SOURCE = "CPSR_ACMG")
 
     non_clinvar_calls[["class1"]] <- cpg_calls_non_clinvar |>
       dplyr::filter(.data$CPSR_CLASSIFICATION == "Benign") |>
-      dplyr::mutate(CPSR_CLASSIFICATION_SOURCE = "Other")
+      dplyr::mutate(CPSR_CLASSIFICATION_SOURCE = "CPSR_ACMG")
 
     for (c in c("class1", "class2", "class3", "class4", "class5")) {
       pcgrr::log4r_info(paste0("Merging ClinVar-classified variants and CPSR-classified (novel) variants - ", c))
@@ -1164,13 +1164,12 @@ assign_variant_tiers <-
       snv_indel_report[["variant_set"]][[c]] <-
         snv_indel_report[["variant_set"]][[c]] |>
         dplyr::select(
-          c(
+          c("SAMPLE_ID",
             "GENOMIC_CHANGE",
             "VAR_ID",
             "GENOTYPE",
             "CPSR_CLASSIFICATION_SOURCE",
             "GENOME_VERSION",
-            "VCF_SAMPLE_ID",
             "VARIANT_CLASS",
             "CODING_STATUS",
             "SYMBOL",
@@ -1199,6 +1198,7 @@ assign_variant_tiers <-
             "RMSK_HIT",
             "EFFECT_PREDICTIONS",
             "LOSS_OF_FUNCTION",
+            "NULL_VARIANT",
             "DBSNP",
             "CANCER_PHENOTYPE",
             "CLINVAR_CLASSIFICATION",

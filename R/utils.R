@@ -27,7 +27,7 @@ get_max_rows_pr_datatable <- function(cps_report) {
           dplyr::filter(.data$CPSR_CLASSIFICATION_SOURCE == "ClinVar") |>
           nrow()
         num_rows_other <- t1 |>
-          dplyr::filter(.data$CPSR_CLASSIFICATION_SOURCE == "Other") |>
+          dplyr::filter(.data$CPSR_CLASSIFICATION_SOURCE == "CPSR_ACMG") |>
           nrow()
         if (num_rows_other > max_row_nr) {
           max_row_nr <- num_rows_other
@@ -236,7 +236,9 @@ check_variant2cancer_phenotype <- function(cpg_calls, ref_data) {
 
   oncotree <- ref_data[['phenotype']][['oncotree']]
   umls_map <- ref_data[['phenotype']][['umls']] |>
-    dplyr::filter(.data$MAIN_TERM == TRUE)
+    dplyr::filter(.data$MAIN_TERM == TRUE) |>
+    dplyr::select(-c("SOURCE")) |>
+    dplyr::distinct()
 
   if (nrow(cpg_calls) > 0 &
     "CLINVAR_UMLS_CUI" %in% colnames(cpg_calls) &
@@ -252,12 +254,17 @@ check_variant2cancer_phenotype <- function(cpg_calls, ref_data) {
 
     if (n_clinvar > 0) {
       cpg_calls_traits <- as.data.frame(
-        tidyr::separate_rows(cpg_calls, .data$CLINVAR_UMLS_CUI, sep = ",") |>
-          dplyr::select(.data$VAR_ID, .data$CLINVAR_UMLS_CUI) |>
-          dplyr::left_join(umls_map, by = c("CLINVAR_UMLS_CUI" = "CUI")) |>
+        tidyr::separate_rows(
+          cpg_calls, "CLINVAR_UMLS_CUI", sep = ",") |>
+          dplyr::select(c("VAR_ID", "CLINVAR_UMLS_CUI")) |>
+          dplyr::left_join(
+            umls_map, by = c("CLINVAR_UMLS_CUI" = "CUI"),
+            relationship = "many-to-many") |>
           dplyr::distinct() |>
           dplyr::filter(!is.na(.data$CUI_NAME)) |>
-          dplyr::left_join(oncotree, by = c("CLINVAR_UMLS_CUI" = "CUI")) |>
+          dplyr::left_join(
+            oncotree, by = c("CLINVAR_UMLS_CUI" = "CUI"),
+            relationship = "many-to-many") |>
           dplyr::mutate(
             CANCER_PHENOTYPE = dplyr::if_else(
               is.na(.data$CANCER_PHENOTYPE),
@@ -267,7 +274,9 @@ check_variant2cancer_phenotype <- function(cpg_calls, ref_data) {
           ) |>
           dplyr::mutate(
             CANCER_PHENOTYPE =
-              dplyr::if_else(stringr::str_detect(
+              dplyr::if_else(
+                !is.na(.data$CUI_NAME) &
+                  stringr::str_detect(
                 tolower(.data$CUI_NAME),
                 pcgrr::cancer_phenotypes_regex
               ),

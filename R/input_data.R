@@ -51,63 +51,11 @@ load_germline_snv_indel <- function(
       ref_data = ref_data
     )
 
-  for (type in pcgrr::evidence_types) {
-    for (elevel in pcgrr::evidence_levels) {
-      if(NROW(callset[['biomarker_evidence']][[type]][[elevel]]) > 0){
-        callset[['biomarker_evidence']][[type]][[elevel]] <-
-          callset[['biomarker_evidence']][[type]][[elevel]] |>
-          dplyr::left_join(
-            dplyr::select(
-              callset[['variant']],
-              c("VAR_ID",
-                "GENOTYPE",
-                "GENOMIC_CHANGE",
-                "GENOME_VERSION",
-                "SYMBOL",
-                "ENTREZGENE",
-                "CONSEQUENCE",
-                "PROTEIN_CHANGE",
-                "MUTATION_HOTSPOT",
-                "CDS_CHANGE",
-                "LOSS_OF_FUNCTION",
-                "HGVSc",
-                "HGVSp",
-                "REFSEQ",
-                "OFFICIAL_GENENAME",
-                "PREDICTED_EFFECT",
-                "PROTEIN_DOMAIN",
-                "DBSNP",
-                "CLINVAR",
-                "COSMIC",
-                "CLINVAR_CLASSIFICATION",
-                "CPSR_CLASSIFICATION",
-                "VEP_ALL_CSQ")
-            ),
-            by = c("VAR_ID")
-          ) |>
-          dplyr::arrange(
-            .data$EVIDENCE_LEVEL,
-            .data$PROTEIN_CHANGE,
-            dplyr::desc(
-              .data$RATING)) |>
-
-          ## only report biomarkers with a pathogenic impact in CPSR
-          dplyr::filter(
-            (!is.na(CLINVAR_CLASSIFICATION) &
-               stringr::str_detect(tolower(CLINVAR_CLASSIFICATION), "pathogenic")) |
-              (is.na(CLINVAR_CLASSIFICATION) &
-                 !is.na(CPSR_CLASSIFICATION) &
-                 stringr::str_detect(tolower(CPSR_CLASSIFICATION), "pathogenic"))
-          )
-
-        if(NROW(callset[['biomarker_evidence']][[type]][[elevel]]) > 0){
-          callset[['biomarker_evidence']][[type]][[elevel]] <-
-            callset[['biomarker_evidence']][[type]][[elevel]] |>
-            dplyr::semi_join(primary_targets, by = "ENTREZGENE")
-        }
-      }
-    }
-  }
+  callset <-
+    pcgrr::expand_biomarker_items(
+      callset = callset,
+      variant_origin = "germline",
+      target_genes = primary_targets)
 
   return(callset)
 

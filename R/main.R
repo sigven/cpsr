@@ -192,6 +192,8 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
           next
         }
         if(NROW(callset_cpsr[['biomarker_evidence']][[type]][[level]]) > 0){
+          cat(type, level, sep= " - ")
+          cat('\n')
           snv_indel_report[['clin_eitem']][[type]][[level]] <-
             callset_cpsr[['biomarker_evidence']][[type]][[level]] |>
             dplyr::select(-c("PRIMARY_SITE")) |>
@@ -238,6 +240,12 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
   ## secondary findings
   if (cps_report$settings$conf$variant_classification$secondary_findings == TRUE) {
 
+    if(identical("undefined",unique(variant_calls$GENOTYPE)) == T){
+      pcgrr::log4r_warn(paste0(
+        "Assessement of secondary variant findings (ACMG SF v3.2) ",
+        "NOT possible - variant genotype information unavailable"
+      ))
+    }
     secondary_calls <-
       cpsr::retrieve_secondary_calls(
         variant_calls,
@@ -255,9 +263,7 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
         name = "v_stat_secondary"
       )
     pcgrr::log4r_info(paste0(
-      "Assignment of other variants in genes ",
-      "recommended for reporting as secondary ",
-      "findings (ACMG SF v3.0)"
+      "Assessement of secondary variant findings (ACMG SF v3.2)"
     ))
     if (NROW(secondary_calls) > 0) {
       cps_report[["content"]][["snv_indel"]][["disp"]][["secondary"]] <-
@@ -342,7 +348,7 @@ write_cpsr_output <- function(report,
   fnames[["tsv"]] <-
     file.path(output_dir,
               paste0(sample_fname_pattern,
-                     ".snvs_indels.tiers.tsv"))
+                     ".snvs_indels.tiers.tsv.gz"))
   fnames[["xlsx"]] <-
     file.path(output_dir,
               paste0(sample_fname_pattern,
@@ -353,7 +359,8 @@ write_cpsr_output <- function(report,
 
   ## Set to CPSR/germline settings as default
   cpsr_rep_template_path <- system.file("templates", package = "cpsr")
-  markdown_input <- file.path(cpsr_rep_template_path, "cpsr_rmarkdown_report.qmd")
+  markdown_input <- file.path(
+    cpsr_rep_template_path, "cpsr_rmarkdown_report.qmd")
   report_theme <-
     settings[["conf"]][["visual_reporting"]][["visual_theme"]]
 
@@ -383,11 +390,12 @@ write_cpsr_output <- function(report,
                "with CPSR variant classifications - ('",
                output_format, "')"))
 
-      utils::write.table(
+      readr::write_tsv(
         report[["content"]][["snv_indel"]][["variant_set"]][[output_format]],
         file = fnames[[output_format]],
-        sep = "\t", col.names = T,
-        row.names = F, quote = F)
+        col_names = T,
+        quote = "none",
+        na = ".")
 
       pcgrr::log4r_info("------")
     }
@@ -421,7 +429,9 @@ write_cpsr_output <- function(report,
     openxlsx::writeDataTable(
       workbook,
       sheet = "CLASSIFICATION",
-      x = report[["content"]][["snv_indel"]][["variant_set"]][['tsv']],
+      x = dplyr::select(
+        report[["content"]][["snv_indel"]][["variant_set"]][['tsv']],
+        cpsr::col_format_output[['xlsx_classification']]),
       startRow = 1,
       startCol = 1,
       colNames = TRUE,
