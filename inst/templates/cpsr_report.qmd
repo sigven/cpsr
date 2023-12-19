@@ -41,7 +41,7 @@ options(scipen = 999)
 width_donut <- 10
 height_donut <- 7
 
-cps_report <- readRDS(file="../../cps_test.rds")
+cps_report <- readRDS(file="<CPSR_REPORT_OBJECT.rds>")
 
 set_all <- NROW(cps_report$content$snv_indel$variant_set$tsv)
 no_content <- !(as.logical(cps_report[['content']][['snv_indel']][['eval']]))

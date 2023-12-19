@@ -192,8 +192,6 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
           next
         }
         if(NROW(callset_cpsr[['biomarker_evidence']][[type]][[level]]) > 0){
-          cat(type, level, sep= " - ")
-          cat('\n')
           snv_indel_report[['clin_eitem']][[type]][[level]] <-
             callset_cpsr[['biomarker_evidence']][[type]][[level]] |>
             dplyr::select(-c("PRIMARY_SITE")) |>
@@ -358,27 +356,69 @@ write_cpsr_output <- function(report,
               paste0(sample_fname_pattern, ".html"))
 
   ## Set to CPSR/germline settings as default
-  cpsr_rep_template_path <- system.file("templates", package = "cpsr")
-  markdown_input <- file.path(
-    cpsr_rep_template_path, "cpsr_rmarkdown_report.qmd")
+  cpsr_rep_template_path <-
+    system.file("templates", package = "cpsr")
+  quarto_input <- file.path(
+    cpsr_rep_template_path, "cpsr_report.qmd")
   report_theme <-
     settings[["conf"]][["visual_reporting"]][["visual_theme"]]
 
   if (output_format == "html") {
 
-    template_path <-
-      system.file("templates","quarto", package = "cpsr")
 
-    pcgrr::log4r_info("------")
-    pcgrr::log4r_info(paste0(
-      "Writing HTML file (.html) with report contents - rmarkdown (theme = '",
-      report_theme,"')"))
-    quarto::quarto_render(
-      input = markdown_input,
-      output_file = fnames[["html"]],
-      #execute_dir = output_dir,
-      quiet = T)
-    pcgrr::log4r_info("------")
+    if(file.exists(quarto_input)){
+
+      ## make temporary directory
+      stringi::stri_rand_strings(10, 1)
+      tmp_quarto_dir <- file.path(
+        output_dir,
+        paste0('quarto_', stringi::stri_rand_strings(1, 15))
+      )
+      quarto_template <-
+        glue::glue("{tmp_quarto_dir}{.Platform$file.sep}cpsr_report.qmd")
+      quarto_template_sample <-
+        glue::glue("{tmp_quarto_dir}{.Platform$file.sep}cpsr_report_sample.qmd")
+      quarto_html <-
+        glue::glue("{tmp_quarto_dir}{.Platform$file.sep}cpsr_report_sample.html")
+
+      invisible(cpsr::mkdir(tmp_quarto_dir))
+      system(glue::glue("cp -r {cpsr_rep_template_path}{.Platform$file.sep}* {tmp_quarto_dir}"))
+
+      ## Save report object in temporary directory
+      rds_report_path <- file.path(
+        tmp_quarto_dir, "cps_report.rds")
+      saveRDS(report, file = rds_report_path)
+
+      ## Substitute rds object in template with path to sample rds
+      readLines(quarto_template) |>
+        stringr::str_replace(
+          pattern = "<CPSR_REPORT_OBJECT.rds>",
+          replacement = rds_report_path) |>
+        writeLines(con = quarto_template_sample)
+
+      pcgrr::log4r_info("------")
+      pcgrr::log4r_info(
+        "Writing HTML file (.html) with report contents - quarto")
+      quarto::quarto_render(
+        input = quarto_template_sample,
+        execute_dir = tmp_quarto_dir,
+        quiet = T)
+
+      if(file.exists(quarto_html)){
+        system(
+          glue::glue(paste0(
+            "cp -f {quarto_html} ",
+            "{fnames[['html']]}")))
+      }else{
+        ## issue warning
+      }
+
+      if(!(settings$conf$debug)){
+        system(glue::glue("rm -rf {tmp_quarto_dir}"))
+      }
+
+      pcgrr::log4r_info("------")
+    }
   }
 
   if (output_format == "tsv") {

@@ -55,7 +55,8 @@ h2, #TOC>ul>li {
 }
 
 .app_combo {
-  background: #084594;
+  background: #007a74;
+  /*background: #084594;*/
   border-radius: 5px;
   color: white;
 
@@ -76,7 +77,6 @@ h2, #TOC>ul>li {
 .nolist {
   background: #b8b8ba;
   border-radius: 5px;
-
 
 }
 

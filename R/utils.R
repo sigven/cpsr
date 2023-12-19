@@ -313,3 +313,16 @@ check_variant2cancer_phenotype <- function(cpg_calls, ref_data) {
   }
   return(cpg_calls)
 }
+
+#' Create directory
+#'
+#' @param d Directory to create.
+#'
+#' @export
+mkdir <- function(d) {
+  if (!dir.exists(d)) {
+    dir.create(d, recursive = TRUE)
+  }
+  TRUE
+}
+
