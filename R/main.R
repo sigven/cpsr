@@ -445,59 +445,41 @@ write_cpsr_output <- function(report,
     pcgrr::log4r_info(
       paste0("Writing Excel output file with ",
              "CPSR report contents"))
-    workbook <- openxlsx::createWorkbook()
-
-    openxlsx::addWorksheet(workbook,
-                           sheetName = "VIRTUAL_PANEL")
-    openxlsx::addWorksheet(workbook,
-                           sheetName = "CLASSIFICATION")
-    openxlsx::addWorksheet(workbook,
-                           sheetName = "BIOMARKERS")
-    openxlsx::addWorksheet(workbook,
-                           sheetName = "SECONDARY_FINDINGS")
-    openxlsx::addWorksheet(workbook,
-                           sheetName = "GWAS")
-
-    ## set automatic column widths
-    openxlsx::setColWidths(
-      workbook,
-      sheet = "CLASSIFICATION",
-      cols = 1:ncol(report[["content"]][["snv_indel"]][["variant_set"]][['tsv']]),
-      widths = "auto")
-
-    ## write with default Excel Table style
-    openxlsx::writeDataTable(
-      workbook,
-      sheet = "CLASSIFICATION",
-      x = dplyr::select(
-        report[["content"]][["snv_indel"]][["variant_set"]][['tsv']],
-        cpsr::col_format_output[['xlsx_classification']]),
-      startRow = 1,
-      startCol = 1,
-      colNames = TRUE,
-      tableStyle = "TableStyleMedium15")
-
-    ## set automatic column widths
-    openxlsx::setColWidths(
-      workbook,
-      sheet = "VIRTUAL_PANEL",
-      cols = 1:ncol(report$settings$conf$gene_panel$panel_genes),
-      widths = "auto")
-
-    ## write with default Excel Table style
-    openxlsx::writeDataTable(
-      workbook,
-      sheet = "VIRTUAL_PANEL",
-      x = report$settings$conf$gene_panel$panel_genes,
-      startRow = 1,
-      startCol = 1,
-      colNames = TRUE,
-      tableStyle = "TableStyleMedium16")
-
-    openxlsx::saveWorkbook(
-      workbook,
-      fnames[['xlsx']],
-      overwrite = TRUE)
+    workbook <- openxlsx2::wb_workbook() |>
+      openxlsx2::wb_add_worksheet(sheet = "VIRTUAL_PANEL") |>
+      openxlsx2::wb_add_worksheet(sheet = "CLASSIFICATION") |>
+      openxlsx2::wb_add_worksheet(sheet = "BIOMARKERS") |>
+      openxlsx2::wb_add_worksheet(sheet = "SECONDARY_FINDINGS") |>
+      openxlsx2::wb_add_worksheet(sheet = "GWAS_HITS") |>
+      openxlsx2::wb_add_data_table(
+        sheet = "CLASSIFICATION",
+        x = dplyr::select(
+          report[["content"]][["snv_indel"]][["variant_set"]][['tsv']],
+          cpsr::col_format_output[['xlsx_classification']]),
+        start_row = 1,
+        start_col = 1,
+        col_names = TRUE,
+        na.strings = "",
+        table_style = "TableStyleMedium15") |>
+      openxlsx2::wb_add_data_table(
+        sheet = "VIRTUAL_PANEL",
+        x = report$settings$conf$gene_panel$panel_genes,
+        start_row = 1,
+        start_col = 1,
+        col_names = TRUE,
+        na.strings = "",
+        table_style = "TableStyleMedium16") |>
+      openxlsx2::wb_set_col_widths(
+        sheet = "CLASSIFICATION",
+        cols = 1:ncol(report$content$snv_indel$variant_set$tsv),
+        widths = "auto") |>
+      openxlsx2::wb_set_col_widths(
+        sheet = "VIRTUAL_PANEL",
+        cols = 1:ncol(report$settings$conf$gene_panel$panel_genes),
+        widths = "auto") |>
+      openxlsx2::wb_save(
+        fnames[['xlsx']],
+        overwrite = TRUE)
   }
 
 
