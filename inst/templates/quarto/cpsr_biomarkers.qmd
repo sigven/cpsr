@@ -1,7 +1,6 @@
 
 ## Genomic biomarkers 
 
-
 - Sample variants (__class 4/5__) in the targeted cancer predisposition genes that overlap with reported clinical evidence items from [CIViC](https://civicdb.org) and [CGI biomarker database](https://www.cancergenomeinterpreter.org/biomarkers) are listed. 
 - Note the same variant may overlap multiple evidence items, pending on the _disease context_, _therapeutic context_, or underlying evidence source (e.g. publication)
 - Total number of _clinical evidence items_ that have been matched with query variants:
@@ -14,7 +13,10 @@
 <br><br>
 
 
-```{r prepare_germline_data, echo=F, results='asis'}
+```{r prepare_germline_data}
+#| echo: false
+#| output: asis
+#| eval: true
 
 show_germline_filters <- list()
 missing_germline_items <- list()
@@ -35,7 +37,10 @@ for (type in names(cps_report$content$snv_indel$clin_eitem)) {
 ```
 
 
-```{r biomarker_note, echo=F, results = "asis", include = biomarker_present}
+```{r biomarker_note}
+#| echo: false
+#| output: asis
+#| include: !expr biomarker_present
 
 cat("<b>NOTE:</b> Biomarkers registered in CIViC/CGI are provided at different _resolutions_ (i.e. filter <b>Biomarker mapping</b>). The accuracy of a match between a variant in the tumor sample and a reported biomarker will vary accordingly (highlighted by gene symbols with different color backgrounds):\n\n")
 
@@ -47,7 +52,11 @@ htmltools::br()
 
 ::: {.panel-tabset}
 
-```{r active_tab_cpsr_predisposing, echo = F, results = "asis"}
+```{r active_tab_cpsr_predisposing}
+#| echo: false
+#| output: asis
+#| eval: true
+
 if (missing_germline_items[["predisposing"]] == F |
   (missing_germline_items[["diagnostic"]] == T &
     missing_germline_items[["prognostic"]] == T &
@@ -65,7 +74,10 @@ if (missing_germline_items[["predisposing"]] == F |
 
 <br>
 
-```{r germline_predisposing, echo=F, results = 'asis', eval = show_germline_filters[['predisposing']]}
+```{r germline_predisposing}
+#| eval: !expr show_germline_filters$predisposing
+#| output: asis
+#| echo: false
 
 variants_germline_predisposing_shared <- crosstalk::SharedData$new(
   cps_report[["content"]][["snv_indel"]][["clin_eitem"]][["predisposing"]][["any"]])
@@ -110,7 +122,11 @@ DT::datatable(variants_germline_predisposing_shared,
   )
 ```
 
-```{r germline_predisposing_missing, echo=F, results = 'asis', eval = missing_germline_items[['predisposing']]}
+```{r germline_predisposing_missing}
+#| echo: false
+#| output: asis
+#| eval: !expr missing_germline_items$predisposing
+
 cat("<i>No variant-evidence item associations found.</i>", sep = "\n")
 cat("\n")
 ```
@@ -118,7 +134,10 @@ cat("\n")
 <br><br><br>
 
 
-```{r active_tab_cpsr_predictive, echo = F, results = "asis"}
+```{r active_tab_cpsr_predictive}
+#| echo: false
+#| output: asis
+
 if (missing_germline_items[["predictive"]] == F &
   missing_germline_items[["predisposing"]] == T) {
   cat("")
@@ -134,7 +153,10 @@ if (missing_germline_items[["predictive"]] == F &
 
 <br>
 
-```{r germline_predictive, echo=F, results = 'asis', eval = show_germline_filters[['predictive']]}
+```{r germline_predictive}
+#| eval: !expr show_germline_filters$predictive
+#| output: asis
+#| echo: false
 
 variants_germline_predictive_shared <- crosstalk::SharedData$new(
   cps_report[["content"]][["snv_indel"]][["clin_eitem"]][["predictive"]][["any"]])
@@ -175,7 +197,11 @@ DT::datatable(variants_germline_predictive_shared, escape = F, extensions = c("B
   )
 ```
 
-```{r germline_predictive_missing, echo=F, results = 'asis', eval = missing_germline_items[['predictive']]}
+```{r germline_predictive_missing}
+#| echo: false
+#| output: asis
+#| eval: !expr missing_germline_items$predictive
+
 cat("<i>No variant-evidence item associations found.</i>", sep = "\n")
 cat("\n")
 ```
@@ -183,7 +209,10 @@ cat("\n")
 <br><br><br>
 
 
-```{r active_tab_cpsr_prognostic, echo = F, results = "asis"}
+```{r active_tab_cpsr_prognostic}
+#| echo: false
+#| output: asis
+
 if (missing_germline_items[["prognostic"]] == F &
   missing_germline_items[["predisposing"]] == T &
   missing_germline_items[["predictive"]] == T) {
@@ -200,7 +229,10 @@ if (missing_germline_items[["prognostic"]] == F &
 
 <br>
 
-```{r germline_prognostic, echo=F, results='asis', eval = show_germline_filters[['prognostic']]}
+```{r germline_prognostic}
+#| eval: !expr show_germline_filters$prognostic
+#| output: asis
+#| echo: false
 
 variants_germline_prognostic_shared <- crosstalk::SharedData$new(
   cps_report[["content"]][["snv_indel"]][["clin_eitem"]][["prognostic"]][['any']])
@@ -239,14 +271,21 @@ DT::datatable(variants_germline_prognostic_shared, escape = F, extensions = c("B
   )
 ```
 
-```{r germline_prognostic_missing, echo=F, results = 'asis', eval = missing_germline_items[['prognostic']]}
+```{r germline_prognostic_missing}
+#| echo: false
+#| output: asis
+#| eval: !expr missing_germline_items$prognostic
+
 cat("<i>No variant-evidence item associations found.</i>", sep = "\n")
 cat("\n")
 ```
 
 <br><br><br>
 
-```{r active_tab_cpsr_diagnostic, echo = F, results = "asis"}
+```{r active_tab_cpsr_diagnostic}
+#| echo: false
+#| output: asis
+
 if (missing_germline_items[["diagnostic"]] == F &
   missing_germline_items[["prognostic"]] == T &
   missing_germline_items[["predisposing"]] == T &
@@ -265,6 +304,9 @@ if (missing_germline_items[["diagnostic"]] == F &
 <br>
 
 ```{r germline_diagnostic, echo=F, results='asis', eval = show_germline_filters[['diagnostic']]}
+#| eval: !expr show_germline_filters$diagnostic
+#| output: asis
+#| echo: false
 
 variants_germline_diagnostic_shared <- crosstalk::SharedData$new(
   cps_report[["content"]][["snv_indel"]][["clin_eitem"]][["diagnostic"]][['any']])
@@ -306,7 +348,11 @@ DT::datatable(variants_germline_diagnostic_shared,
   )
 ```
 
-```{r germline_diagnostic_missing, echo=F, results = 'asis', eval = missing_germline_items[['diagnostic']]}
+```{r germline_diagnostic_missing}
+#| echo: false
+#| output: asis
+#| eval: !expr missing_germline_items$diagnostic
+
 cat("<i>No variant-evidence item associations found.</i>", sep = "\n")
 cat("\n")
 ```

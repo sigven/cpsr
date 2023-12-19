@@ -20,7 +20,10 @@ The variant interpretation procedures performed in this cancer genome report are
   * __`r cps_report$settings$reference_data$version`__
 
 * __Databases/datasets__ 
-```{r list_db, echo=F,results='asis'}
+```{r list_db}
+#| echo: false
+#| output: asis
+
 i <- 1
 ref_datasets <- cps_report$ref_data$metadata
 for(i in 1:NROW(ref_datasets)){
@@ -73,7 +76,7 @@ The ACMG criteria listed in the table below form the basis for the <b>CPSR_CLASS
 
 #### Calibration of classification thresholds 
 
-How do we derive the variant classification (<i>P, LP, VUS, LB, B</i>) from the aggregated variant pathogenicity score (<i>CPSR_PATHOGENICITY_SCORE</i>)?
+How do we assign classification of novel variants (<i>P, LP, VUS, LB, B</i>) from the aggregated variant pathogenicity score (<i>CPSR_PATHOGENICITY_SCORE</i>)?
 
 We calibrated the thresholds for conversion of pathogenicity scores to categorical variant classification using high-quality ClinVar-classified variants in cancer predisposition genes (see details in [CPSR manuscript](https://doi.org/10.1002/ijc.33749)). The following thresholds are currently used to assign classifications based on pathogenicity scores:
 
@@ -86,7 +89,10 @@ We calibrated the thresholds for conversion of pathogenicity scores to categoric
 In the table below, a detailed description of all evidence criteria that are currently used for variant classification in CPSR (green elements indicate criteria that contribute with a benign effect, red elements contribute with a pathogenic effect):<br><br>
 
 
-```{r acmg_evidence, echo = F, eval = T}
+```{r acmg_evidence}
+#| echo: false
+#| eval: true
+
 data <- dplyr::filter(
   cpsr::acmg[["evidence_codes"]],
   cpsr_evidence_code != "ACMG_BS2_1" &

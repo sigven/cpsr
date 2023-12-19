@@ -1,24 +1,39 @@
 
 ##  Secondary findings
 
-```{r prepare_sf_data, echo=F, results='asis'}
+```{r prepare_sf_data}
+#| output: asis
+#| echo: false
 
 tot_sf_variants <- NROW(cps_report[["content"]][["snv_indel"]][["disp"]][["secondary"]])
 acmg_version <- cps_report[['ref_data']][['source']][
   cps_report$ref_data$source_abbreviation == "acmg_sf","source_version"]
 acmg_url <- cps_report[['ref_data']][['source']][
   cps_report$ref_data$source_abbreviation == "acmg_sf","source_url"]
-
-  
+genotypes_unavailable <- !(as.logical(
+  cps_report$settings$conf$sample_properties$genotypes_available))
 
 ```
+
+```{r gt_unavailable}
+#| eval: !expr genotypes_unavailable
+#| output: asis
+#| echo: false
+
+
+
+```
+
 
 *  In the sample, a total of n = __`r tot_sf_variants`__ variants in [genes recommended for secondary findings reporting (ACMG `r acmg_version`)](`r acmg_url`) 
 are registered with a <i>Pathogenic/Likely pathogenic</i> clinical significance in ClinVar.
 
 <br>
 
-```{r sf_cancer, echo=F, results = 'asis', eval = tot_sf_variants > 0}
+```{r sf_cancer}
+#| eval: !expr tot_sf_variants > 0
+#| output: asis
+#| echo: false
 
 htmltools::br()
 htmltools::br()

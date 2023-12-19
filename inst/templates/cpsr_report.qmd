@@ -101,14 +101,14 @@ cat("</ul><br>")
 
 ```{r classification_cpsr}
 #| child: 'quarto/cpsr_classification.qmd'
-#| eval: !expr as.logical(cps_report[['content']][['snv_indel']][['eval']])
+#| eval: !expr as.logical(cps_report$content$snv_indel$eval)
 ```
 
 <br><br>
 
 ```{r biomarkers_cpsr} 
 #| child: 'quarto/cpsr_biomarkers.qmd'
-#| eval: !expr as.logical(cps_report[['content']][['snv_indel']][['eval']])
+#| eval: !expr as.logical(cps_report$content$snv_indel$eval)
 ```
 
 <br><br>

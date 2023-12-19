@@ -364,8 +364,6 @@ write_cpsr_output <- function(report,
     settings[["conf"]][["visual_reporting"]][["visual_theme"]]
 
   if (output_format == "html") {
-
-
     if(file.exists(quarto_input)){
 
       ## make temporary directory
@@ -410,7 +408,7 @@ write_cpsr_output <- function(report,
             "cp -f {quarto_html} ",
             "{fnames[['html']]}")))
       }else{
-        ## issue warning
+        cat("WARNING\n")
       }
 
       if(!(settings$conf$debug)){
@@ -442,9 +440,11 @@ write_cpsr_output <- function(report,
   }
 
   if (output_format == "xlsx") {
+    pcgrr::log4r_info("------")
     pcgrr::log4r_info(
       paste0("Writing Excel output file with ",
-             "CPSR report contents"))
+             "CPSR report contents - ('",
+             output_format, "')"))
     workbook <- openxlsx2::wb_workbook() |>
       openxlsx2::wb_add_worksheet(sheet = "VIRTUAL_PANEL") |>
       openxlsx2::wb_add_worksheet(sheet = "CLASSIFICATION") |>
@@ -480,6 +480,7 @@ write_cpsr_output <- function(report,
       openxlsx2::wb_save(
         fnames[['xlsx']],
         overwrite = TRUE)
+    pcgrr::log4r_info("------")
   }
 
 

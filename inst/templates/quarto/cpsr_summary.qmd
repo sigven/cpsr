@@ -2,7 +2,12 @@
 
 ## Summary of findings
 
-```{r donut_chart, echo = F, fig.width = width_donut, fig.height = height_donut, eval = cps_report[['content']][['snv_indel']][['eval']]}
+```{r donut_chart}
+#| echo: false
+#| fig-width: !expr width_donut
+#| fig-height: !expr height_donut
+#| eval: !expr cps_report$content$snv_indel$eval
+
 p1 <- cpsr::plot_summary_statistics(
   cps_report$content$snv_indel$variant_set$tsv, plot_type = "ClinVar")
 p2 <- cpsr::plot_summary_statistics(
@@ -24,7 +29,9 @@ p
 
 ### Variant statistics 
 
-```{r num_cpg_targets, eval = TRUE}
+```{r num_cpg_targets}
+#| eval: true
+#| echo: false
 
 primary_targets <- 
   cps_report[['settings']][['conf']][['gene_panel']][['panel_genes']] |>

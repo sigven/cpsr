@@ -1,6 +1,8 @@
 ## Settings
 
-```{r on_off_settings, echo=F}
+```{r on_off_settings}
+#| echo: false
+#| eval: true
 
 gencode_metadata <- 
   cps_report$settings$reference_data$source_metadata |>
