@@ -20,12 +20,12 @@ genotypes_unavailable <- !(as.logical(
 #| output: asis
 #| echo: false
 
-
+cat("<b>IMPORTANT: Secondary findings not assessed due to lacking genotype information among sample variants</b>. CPSR was unable to pull this data from the input VCF (<i>'GT'</i> FORMAT tag not present within sample genotype information)\n\n")
 
 ```
 
 
-*  In the sample, a total of n = __`r tot_sf_variants`__ variants in [genes recommended for secondary findings reporting (ACMG `r acmg_version`)](`r acmg_url`) 
+*  For the sample in question, a total of n = __`r tot_sf_variants`__ variants in [genes recommended for secondary findings reporting (ACMG `r acmg_version`)](`r acmg_url`) 
 are registered with a <i>Pathogenic/Likely pathogenic</i> clinical significance in ClinVar.
 
 <br>

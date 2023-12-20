@@ -208,7 +208,7 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
               "THERAPEUTIC_CONTEXT",
               "EVIDENCE_TYPE",
               "EVIDENCE_DESCRIPTION",
-              "BIOMARKER_MAPPING",
+              "BIOMARKER_RESOLUTION",
               "OFFICIAL_GENENAME",
               "CDS_CHANGE",
               "LOSS_OF_FUNCTION",
@@ -355,7 +355,7 @@ write_cpsr_output <- function(report,
     file.path(output_dir,
               paste0(sample_fname_pattern, ".html"))
 
-  ## Set to CPSR/germline settings as default
+  ## Path to CPSR reporting templates
   cpsr_rep_template_path <-
     system.file("templates", package = "cpsr")
   quarto_input <- file.path(
@@ -366,42 +366,47 @@ write_cpsr_output <- function(report,
   if (output_format == "html") {
     if(file.exists(quarto_input)){
 
-      ## make temporary directory
+      ## make temporary directory for quarto report rendering
       stringi::stri_rand_strings(10, 1)
       tmp_quarto_dir <- file.path(
         output_dir,
         paste0('quarto_', stringi::stri_rand_strings(1, 15))
       )
-      quarto_template <-
+      quarto_main_template <-
         glue::glue("{tmp_quarto_dir}{.Platform$file.sep}cpsr_report.qmd")
-      quarto_template_sample <-
+      quarto_main_template_sample <-
         glue::glue("{tmp_quarto_dir}{.Platform$file.sep}cpsr_report_sample.qmd")
       quarto_html <-
         glue::glue("{tmp_quarto_dir}{.Platform$file.sep}cpsr_report_sample.html")
 
+      ## Copy all CPSR quarto reporting templates, bibliography, css etc to
+      ## the temporary directory for quarto report rendering
       invisible(cpsr::mkdir(tmp_quarto_dir))
       system(glue::glue("cp -r {cpsr_rep_template_path}{.Platform$file.sep}* {tmp_quarto_dir}"))
 
-      ## Save report object in temporary directory
+      ## Save sample CPSR report object in temporary quarto rendering directory
       rds_report_path <- file.path(
         tmp_quarto_dir, "cps_report.rds")
       saveRDS(report, file = rds_report_path)
 
-      ## Substitute rds object in template with path to sample rds
-      readLines(quarto_template) |>
+      ## Substitute rds object in main quarto template with path to sample rds
+      readLines(quarto_main_template) |>
         stringr::str_replace(
           pattern = "<CPSR_REPORT_OBJECT.rds>",
           replacement = rds_report_path) |>
-        writeLines(con = quarto_template_sample)
+        writeLines(con = quarto_main_template_sample)
 
+      ## Render report (quietly)
       pcgrr::log4r_info("------")
       pcgrr::log4r_info(
         "Writing HTML file (.html) with report contents - quarto")
       quarto::quarto_render(
-        input = quarto_template_sample,
+        input = quarto_main_template_sample,
         execute_dir = tmp_quarto_dir,
         quiet = T)
 
+      ## Copy output HTML report from temporary rendering directory
+      ## to designated HTML file in output directory
       if(file.exists(quarto_html)){
         system(
           glue::glue(paste0(
@@ -411,6 +416,7 @@ write_cpsr_output <- function(report,
         cat("WARNING\n")
       }
 
+      ## remove temporary quarto directory (if debugging is switched off)
       if(!(settings$conf$debug)){
         system(glue::glue("rm -rf {tmp_quarto_dir}"))
       }
@@ -448,7 +454,7 @@ write_cpsr_output <- function(report,
     workbook <- openxlsx2::wb_workbook() |>
       openxlsx2::wb_add_worksheet(sheet = "VIRTUAL_PANEL") |>
       openxlsx2::wb_add_worksheet(sheet = "CLASSIFICATION") |>
-      openxlsx2::wb_add_worksheet(sheet = "BIOMARKERS") |>
+      openxlsx2::wb_add_worksheet(sheet = "BIOMARKER_EVIDENCE") |>
       openxlsx2::wb_add_worksheet(sheet = "SECONDARY_FINDINGS") |>
       openxlsx2::wb_add_worksheet(sheet = "GWAS_HITS") |>
       openxlsx2::wb_add_data_table(
@@ -469,9 +475,23 @@ write_cpsr_output <- function(report,
         col_names = TRUE,
         na.strings = "",
         table_style = "TableStyleMedium16") |>
+      openxlsx2::wb_add_data_table(
+        sheet = "BIOMARKER_EVIDENCE",
+        x = dplyr::select(
+          report$content$snv_indel$clin_eitem$all$any,
+          cpsr::col_format_output[['xlsx_biomarker']]),
+        start_row = 1,
+        start_col = 1,
+        col_names = TRUE,
+        na.strings = "",
+        table_style = "TableStyleMedium17") |>
       openxlsx2::wb_set_col_widths(
         sheet = "CLASSIFICATION",
-        cols = 1:ncol(report$content$snv_indel$variant_set$tsv),
+        cols = 1:length(cpsr::col_format_output[['xlsx_classification']]),
+        widths = "auto") |>
+      openxlsx2::wb_set_col_widths(
+        sheet = "BIOMARKER_EVIDENCE",
+        cols = 1:length(cpsr::col_format_output[['xlsx_biomarker']]),
         widths = "auto") |>
       openxlsx2::wb_set_col_widths(
         sheet = "VIRTUAL_PANEL",

@@ -42,7 +42,7 @@ for (type in names(cps_report$content$snv_indel$clin_eitem)) {
 #| output: asis
 #| include: !expr biomarker_present
 
-cat("<b>NOTE:</b> Biomarkers registered in CIViC/CGI are provided at different _resolutions_ (i.e. filter <b>Biomarker mapping</b>). The accuracy of a match between a variant in the tumor sample and a reported biomarker will vary accordingly (highlighted by gene symbols with different color backgrounds):\n\n")
+cat("<b>NOTE:</b> Biomarkers registered in CIViC/CGI are provided at different _resolutions_ (i.e. filter <b>Biomarker resolution</b>). The accuracy of a match between a variant in the sample and a clinical evidence item (biomarker) will vary accordingly (highlighted by gene symbols with different color backgrounds):\n\n")
 
 cat('<ul><li>Biomarker match at the <mark style="background-color:black; font-weight:bold; color:white">&nbsp; genomic position/amino acid/codon level &nbsp;</mark></li>')
 cat(paste0('<br><li>Biomarker match at the <mark style="background-color:', cps_report$settings$conf$visual_reporting$color_palette[["warning"]][["values"]][1], '; color:white; font-weight:bold">&nbsp; exon/gene level&nbsp; </mark></li></ul>\n'))
@@ -89,7 +89,7 @@ crosstalk::bscols(
   ),
   list(
     crosstalk::filter_select("SYMBOL", "Gene", variants_germline_predisposing_shared, ~SYMBOL),
-    crosstalk::filter_select("BIOMARKER_MAPPING", "Biomarker mapping", variants_germline_predisposing_shared, ~BIOMARKER_MAPPING)
+    crosstalk::filter_select("BIOMARKER_RESOLUTION", "Biomarker resolution", variants_germline_predisposing_shared, ~BIOMARKER_RESOLUTION)
   )
 )
 
@@ -112,7 +112,7 @@ DT::datatable(variants_germline_predisposing_shared,
     )
   ) |>
   DT::formatStyle(
-    color = "white", "SYMBOL", "BIOMARKER_MAPPING", fontWeight = "bold", `text-align` = "center",
+    color = "white", "SYMBOL", "BIOMARKER_RESOLUTION", fontWeight = "bold", `text-align` = "center",
     backgroundColor = DT::styleEqual(
       c("genomic", "hgvsp", "codon", "hgvsp_nonprincipal", "exon", "gene"),
       c("#000", "#000", "#000","#000",
@@ -168,7 +168,7 @@ crosstalk::bscols(
   ),
   list(
     crosstalk::filter_select("SYMBOL", "Gene", variants_germline_predictive_shared, ~SYMBOL),
-    crosstalk::filter_select("BIOMARKER_MAPPING", "Biomarker mapping", variants_germline_predictive_shared, ~BIOMARKER_MAPPING),
+    crosstalk::filter_select("BIOMARKER_RESOLUTION", "Biomarker resolution", variants_germline_predictive_shared, ~BIOMARKER_RESOLUTION),
     crosstalk::filter_select("THERAPEUTIC_CONTEXT", "Therapeutic context", variants_germline_predictive_shared, ~THERAPEUTIC_CONTEXT)
   )
 )
@@ -187,7 +187,7 @@ DT::datatable(variants_germline_predictive_shared, escape = F, extensions = c("B
     )
   ) |>
   DT::formatStyle(
-    color = "white", "SYMBOL", "BIOMARKER_MAPPING", fontWeight = "bold", `text-align` = "center",
+    color = "white", "SYMBOL", "BIOMARKER_RESOLUTION", fontWeight = "bold", `text-align` = "center",
     backgroundColor = DT::styleEqual(
       c("genomic", "hgvsp", "codon", "hgvsp_nonprincipal", "exon", "gene"),
       c("#000", "#000", "#000","#000",
@@ -244,7 +244,7 @@ crosstalk::bscols(
   ),
   list(
     crosstalk::filter_select("EVIDENCE_LEVEL", "Evidence level", variants_germline_prognostic_shared, ~EVIDENCE_LEVEL),
-    crosstalk::filter_select("BIOMARKER_MAPPING", "Biomarker mapping", variants_germline_prognostic_shared, ~BIOMARKER_MAPPING)
+    crosstalk::filter_select("BIOMARKER_RESOLUTION", "Biomarker resolution", variants_germline_prognostic_shared, ~BIOMARKER_RESOLUTION)
   )
 )
 ##cat("The table below lists all variant-evidence item associations:", sep = "\n")
@@ -261,7 +261,7 @@ DT::datatable(variants_germline_prognostic_shared, escape = F, extensions = c("B
     )
   ) |>
  DT::formatStyle(
-    color = "white", "SYMBOL", "BIOMARKER_MAPPING", fontWeight = "bold", `text-align` = "center",
+    color = "white", "SYMBOL", "BIOMARKER_RESOLUTION", fontWeight = "bold", `text-align` = "center",
     backgroundColor = DT::styleEqual(
       c("genomic", "hgvsp", "codon", "hgvsp_nonprincipal", "exon", "gene"),
       c("#000", "#000", "#000","#000",
@@ -318,7 +318,7 @@ crosstalk::bscols(
   ),
   list(
     crosstalk::filter_select("EVIDENCE_LEVEL", "Evidence level", variants_germline_diagnostic_shared, ~EVIDENCE_LEVEL),
-    crosstalk::filter_select("BIOMARKER_MAPPING", "Biomarker mapping", variants_germline_diagnostic_shared, ~BIOMARKER_MAPPING)
+    crosstalk::filter_select("BIOMARKER_RESOLUTION", "Biomarker resolution", variants_germline_diagnostic_shared, ~BIOMARKER_RESOLUTION)
   )
 )
 ##cat("The table below lists all variant-evidence item associations:", sep = "\n")
@@ -338,7 +338,7 @@ DT::datatable(variants_germline_diagnostic_shared,
     )
   ) |>
   DT::formatStyle(
-    color = "white", "SYMBOL", "BIOMARKER_MAPPING", fontWeight = "bold", `text-align` = "center",
+    color = "white", "SYMBOL", "BIOMARKER_RESOLUTION", fontWeight = "bold", `text-align` = "center",
     backgroundColor = DT::styleEqual(
       c("genomic", "hgvsp", "codon", "hgvsp_nonprincipal", "exon", "gene"),
       c("#000", "#000", "#000","#000",
