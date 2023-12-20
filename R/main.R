@@ -168,6 +168,12 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
     return(cps_report)
   }
 
+  cpg_call_stats <-
+    pcgrr::variant_stats_report(
+      cpg_calls,
+      name = "v_stat_cpg"
+    )
+
   ## Assign calls to tiers (ClinVar calls + CPSR classification
   ## for novel, non-ClinVar variants)
   snv_indel_report <-
@@ -238,44 +244,51 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
   ## secondary findings
   if (cps_report$settings$conf$variant_classification$secondary_findings == TRUE) {
 
-    if(identical("undefined",unique(variant_calls$GENOTYPE)) == T){
+    if(as.logical(
+      cps_report$settings$conf$sample_properties$genotypes_available) == F){
       pcgrr::log4r_warn(paste0(
         "Assessement of secondary variant findings (ACMG SF v3.2) ",
         "NOT possible - variant genotype information unavailable"
       ))
-    }
-    secondary_calls <-
-      cpsr::retrieve_secondary_calls(
-        variant_calls,
-        umls_map = cps_report$ref_data$phenotype$umls)
+    }else{
+      secondary_calls <-
+        cpsr::retrieve_secondary_calls(
+          variant_calls,
+          umls_map = cps_report$ref_data$phenotype$umls)
 
-    if(NROW(secondary_calls) > 0){
-      secondary_calls <- secondary_calls |>
-        dplyr::anti_join(
-          cpg_calls, by = "VAR_ID"
+      ## do not report a secondary variant finding if this is
+      ## already reported among the main hits (e.g. BRCA)
+      if(NROW(secondary_calls) > 0){
+        secondary_calls <- secondary_calls |>
+          dplyr::anti_join(
+            cpg_calls, by = "VAR_ID"
+          )
+      }
+      secondary_call_stats <-
+        pcgrr::variant_stats_report(
+          secondary_calls,
+          name = "v_stat_secondary"
         )
+      cps_report[['content']][['snv_indel']][['v_stat_secondary']] <-
+        secondary_call_stats$v_stat_secondary
+
+      pcgrr::log4r_info(paste0(
+        "Assessement of secondary variant findings (ACMG SF v3.2)"
+      ))
+      if (NROW(secondary_calls) > 0) {
+        cps_report[["content"]][["snv_indel"]][["disp"]][["secondary"]] <-
+          secondary_calls |>
+          dplyr::arrange(
+            .data$LOSS_OF_FUNCTION, .data$CODING_STATUS) |>
+          dplyr::select(
+            dplyr::one_of(col_format_output[['html_sf']]))
+      }
+      pcgrr::log4r_info(paste0(
+        "Number of pathogenic ClinVar variants in the ACMG secondary findings list - other ",
+        "genes of clinical significance: ",
+        cps_report[["content"]][["snv_indel"]][["v_stat_secondary"]][["n_coding"]]
+      ))
     }
-    secondary_call_stats <-
-      pcgrr::variant_stats_report(
-        secondary_calls,
-        name = "v_stat_secondary"
-      )
-    pcgrr::log4r_info(paste0(
-      "Assessement of secondary variant findings (ACMG SF v3.2)"
-    ))
-    if (NROW(secondary_calls) > 0) {
-      cps_report[["content"]][["snv_indel"]][["disp"]][["secondary"]] <-
-        secondary_calls |>
-        dplyr::arrange(
-          .data$LOSS_OF_FUNCTION, .data$CODING_STATUS) |>
-        dplyr::select(
-          dplyr::one_of(col_format_output[['html_sf']]))
-    }
-    pcgrr::log4r_info(paste0(
-      "Number of pathogenic variants in the ACMG secondary findings list - other ",
-      "genes of clinical significance: ",
-      cps_report[["content"]][["snv_indel"]][["v_stat_secondary"]][["n_coding"]]
-    ))
   }
 
   cps_report[["content"]][["snv_indel"]][["eval"]] <- TRUE
@@ -399,7 +412,10 @@ write_cpsr_output <- function(report,
       ## Render report (quietly)
       pcgrr::log4r_info("------")
       pcgrr::log4r_info(
-        "Writing HTML file (.html) with report contents - quarto")
+        paste0(
+        "Generating quarto-based interactive HTML report (.html) with variant findings",
+        "- ('",output_format, "')"))
+
       quarto::quarto_render(
         input = quarto_main_template_sample,
         execute_dir = tmp_quarto_dir,
@@ -420,7 +436,6 @@ write_cpsr_output <- function(report,
       if(!(settings$conf$debug)){
         system(glue::glue("rm -rf {tmp_quarto_dir}"))
       }
-
       pcgrr::log4r_info("------")
     }
   }
@@ -430,8 +445,8 @@ write_cpsr_output <- function(report,
       report[["content"]][["snv_indel"]][["variant_set"]][[output_format]]) > 0) {
       pcgrr::log4r_info("------")
       pcgrr::log4r_info(
-        paste0("Writing SNV/InDel tab-separated values (TSV) file ",
-               "with CPSR variant classifications - ('",
+        paste0("Generating SNV/InDel tab-separated values file (.tsv) ",
+               "with variant findings - ('",
                output_format, "')"))
 
       readr::write_tsv(
@@ -440,16 +455,14 @@ write_cpsr_output <- function(report,
         col_names = T,
         quote = "none",
         na = ".")
-
-      pcgrr::log4r_info("------")
     }
   }
 
   if (output_format == "xlsx") {
     pcgrr::log4r_info("------")
     pcgrr::log4r_info(
-      paste0("Writing Excel output file with ",
-             "CPSR report contents - ('",
+      paste0("Generating Excel workbook (.xlsx) with ",
+             "variant findings - ('",
              output_format, "')"))
     workbook <- openxlsx2::wb_workbook() |>
       openxlsx2::wb_add_worksheet(sheet = "VIRTUAL_PANEL") |>
@@ -475,7 +488,18 @@ write_cpsr_output <- function(report,
         col_names = TRUE,
         na.strings = "",
         table_style = "TableStyleMedium16") |>
-      openxlsx2::wb_add_data_table(
+      openxlsx2::wb_set_col_widths(
+        sheet = "CLASSIFICATION",
+        cols = 1:length(cpsr::col_format_output[['xlsx_classification']]),
+        widths = "auto") |>
+      openxlsx2::wb_set_col_widths(
+        sheet = "VIRTUAL_PANEL",
+        cols = 1:ncol(report$settings$conf$gene_panel$panel_genes),
+        widths = "auto")
+
+    if(NROW(report$content$snv_indel$clin_eitem$all$any) > 0){
+      workbook <- workbook |>
+        openxlsx2::wb_add_data_table(
         sheet = "BIOMARKER_EVIDENCE",
         x = dplyr::select(
           report$content$snv_indel$clin_eitem$all$any,
@@ -486,21 +510,15 @@ write_cpsr_output <- function(report,
         na.strings = "",
         table_style = "TableStyleMedium17") |>
       openxlsx2::wb_set_col_widths(
-        sheet = "CLASSIFICATION",
-        cols = 1:length(cpsr::col_format_output[['xlsx_classification']]),
-        widths = "auto") |>
-      openxlsx2::wb_set_col_widths(
         sheet = "BIOMARKER_EVIDENCE",
         cols = 1:length(cpsr::col_format_output[['xlsx_biomarker']]),
-        widths = "auto") |>
-      openxlsx2::wb_set_col_widths(
-        sheet = "VIRTUAL_PANEL",
-        cols = 1:ncol(report$settings$conf$gene_panel$panel_genes),
-        widths = "auto") |>
+        widths = "auto")
+    }
+
+    workbook <- workbook |>
       openxlsx2::wb_save(
         fnames[['xlsx']],
         overwrite = TRUE)
-    pcgrr::log4r_info("------")
   }
 
 

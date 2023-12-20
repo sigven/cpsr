@@ -1045,7 +1045,6 @@ assign_variant_tiers <-
           snv_indel_report[["variant_set"]][[c]]
         )
 
-
       if (nrow(snv_indel_report[["variant_set"]][[c]]) == 0) {
         pcgrr::log4r_info(paste0("Zero variants found - ", c))
         next
@@ -1240,15 +1239,15 @@ assign_variant_tiers <-
       }
     }
 
-    snv_indel_report[["variant_set"]][["tsv"]] <-
-      dplyr::bind_rows(
-        snv_indel_report[["variant_set"]][["class5"]],
-        snv_indel_report[["variant_set"]][["class4"]],
-        snv_indel_report[["variant_set"]][["class3"]],
-        snv_indel_report[["variant_set"]][["class2"]],
-        snv_indel_report[["variant_set"]][["class1"]]
-      )
-
+    for(c in c("class5","class4","class3","class2","class1")){
+      if(NROW(snv_indel_report[["variant_set"]][[c]]) > 0){
+        snv_indel_report[["variant_set"]][["tsv"]] <-
+          snv_indel_report[["variant_set"]][["tsv"]] |>
+          dplyr::bind_rows(
+            snv_indel_report[["variant_set"]][[c]]
+          )
+      }
+    }
 
     return(snv_indel_report)
   }
