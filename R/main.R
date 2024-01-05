@@ -263,6 +263,8 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
           dplyr::anti_join(
             cpg_calls, by = "VAR_ID"
           )
+        cps_report[['content']][['snv_indel']][['variant_set']][['secondary']] <-
+          secondary_calls
       }
       secondary_call_stats <-
         pcgrr::variant_stats_report(
@@ -380,7 +382,6 @@ write_cpsr_output <- function(report,
     if(file.exists(quarto_input)){
 
       ## make temporary directory for quarto report rendering
-      stringi::stri_rand_strings(10, 1)
       tmp_quarto_dir <- file.path(
         output_dir,
         paste0('quarto_', stringi::stri_rand_strings(1, 15))
@@ -497,22 +498,40 @@ write_cpsr_output <- function(report,
         cols = 1:ncol(report$settings$conf$gene_panel$panel_genes),
         widths = "auto")
 
-    if(NROW(report$content$snv_indel$clin_eitem$all$any) > 0){
+    if(NROW(report$content$snv_indel$variant_set$secondary) > 0){
       workbook <- workbook |>
         openxlsx2::wb_add_data_table(
-        sheet = "BIOMARKER_EVIDENCE",
+        sheet = "SECONDARY_FINDINGS",
         x = dplyr::select(
-          report$content$snv_indel$clin_eitem$all$any,
-          cpsr::col_format_output[['xlsx_biomarker']]),
+          report$content$snv_indel$variant_set$secondary,
+          cpsr::col_format_output[['xlsx_secondary']]),
         start_row = 1,
         start_col = 1,
         col_names = TRUE,
         na.strings = "",
         table_style = "TableStyleMedium17") |>
       openxlsx2::wb_set_col_widths(
-        sheet = "BIOMARKER_EVIDENCE",
-        cols = 1:length(cpsr::col_format_output[['xlsx_biomarker']]),
+        sheet = "SECONDARY_FINDINGS",
+        cols = 1:length(cpsr::col_format_output[['xlsx_secondary']]),
         widths = "auto")
+    }
+
+    if(NROW(report$content$snv_indel$clin_eitem$all$any) > 0){
+      workbook <- workbook |>
+        openxlsx2::wb_add_data_table(
+          sheet = "BIOMARKER_EVIDENCE",
+          x = dplyr::select(
+            report$content$snv_indel$clin_eitem$all$any,
+            cpsr::col_format_output[['xlsx_biomarker']]),
+          start_row = 1,
+          start_col = 1,
+          col_names = TRUE,
+          na.strings = "",
+          table_style = "TableStyleMedium18") |>
+        openxlsx2::wb_set_col_widths(
+          sheet = "BIOMARKER_EVIDENCE",
+          cols = 1:length(cpsr::col_format_output[['xlsx_biomarker']]),
+          widths = "auto")
     }
 
     workbook <- workbook |>

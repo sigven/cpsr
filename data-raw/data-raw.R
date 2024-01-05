@@ -206,6 +206,40 @@ col_format_output[['xlsx_classification']] <-
   )
 
 ## define tags/variables to display in output Excel
+col_format_output[['xlsx_secondary']] <-
+  c("SAMPLE_ID",
+    "GENOMIC_CHANGE",
+    "GENOTYPE",
+    "GENOME_VERSION",
+    "VARIANT_CLASS",
+    "SYMBOL",
+    "GENENAME",
+    "CONSEQUENCE",
+    "PROTEIN_CHANGE",
+    "CLINVAR_CLASSIFICATION",
+    "CLINVAR_MSID",
+    "CLINVAR_VARIANT_ORIGIN",
+    "CLINVAR_CONFLICTED",
+    "CLINVAR_PHENOTYPE",
+    "CLINVAR_REVIEW_STATUS_STARS",
+    "ENSEMBL_GENE_ID",
+    "ENSEMBL_TRANSCRIPT_ID",
+    "REFSEQ_TRANSCRIPT_ID",
+    "PFAM_DOMAIN_NAME",
+    "HGVSp",
+    "HGVSc",
+    "CDS_CHANGE",
+    "CODING_STATUS",
+    "MUTATION_HOTSPOT",
+    "EFFECT_PREDICTIONS",
+    "LOSS_OF_FUNCTION",
+    "NULL_VARIANT",
+    "DBSNP",
+    "gnomADe_AF"
+  )
+
+
+## define tags/variables to display in output Excel
 col_format_output[['xlsx_biomarker']] <-
   c("SAMPLE_ID",
     "GENOMIC_CHANGE",
