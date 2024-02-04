@@ -15,7 +15,9 @@ include-in-header:
       }
       </style>
 nocite: |
-  @Nakken2021-mb, @Huang2018-ah, @Richards2015-kj, @Maxwell2016-mr, @Amendola2016-pu, @Griffith2017-do, @Martin2019-nq, @Nykamp2017-rj, Dienstmann2015-od
+  @Nakken2021-mb, @Huang2018-ah, @Richards2015-kj, 
+  @Maxwell2016-mr, @Amendola2016-pu, @Griffith2017-do, 
+  @Martin2019-nq, @Nykamp2017-rj, Dienstmann2015-od
 format: 
   html:
     embed-resources: true

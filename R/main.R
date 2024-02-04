@@ -361,7 +361,7 @@ write_cpsr_output <- function(report,
   fnames[["tsv"]] <-
     file.path(output_dir,
               paste0(sample_fname_pattern,
-                     ".snvs_indels.tiers.tsv.gz"))
+                     ".snvs_indels.tsv.gz"))
   fnames[["xlsx"]] <-
     file.path(output_dir,
               paste0(sample_fname_pattern,
