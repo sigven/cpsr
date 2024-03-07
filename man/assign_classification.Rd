@@ -6,13 +6,13 @@
 based on accumulated scores from different ACMG criteria and pre-defined
 cutoffs (calibrated against ClinVar)}
 \usage{
-assign_classification(cpg_calls)
+assign_classification(var_calls)
 }
 \arguments{
-\item{cpg_calls}{data frame with variant calls in predisposition genes}
+\item{var_calls}{data frame with variant calls in predisposition genes}
 }
 \value{
-cpg_calls data frame with pathogenicity classification appended
+var_calls data frame with pathogenicity classification appended
 }
 \description{
 Function that assigns final pathogenicity classification (B, LB, VUS, P, LP)

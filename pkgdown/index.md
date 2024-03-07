@@ -17,13 +17,16 @@ The software performs extensive variant annotation on the selected geneset and p
 * __ClinVar variants__ - pre-classified variants according to a five-level tier scheme in ClinVar (Pathogenic to Benign)
 * __Novel variants__ - classified by CPSR through refined ACMG criteria (variant frequency levels and functional effects) into a five-level classification scheme (Pathogenic to Benign)
 * __Variant biomarkers__ - cancer predisposition variants with reported implications for prognosis, diagnosis or therapeutic regimens
-* __Secondary findings (optional)__ - pathogenic ClinVar variants in the [ACMG recommended list for reporting of secondary findings](https://www.ncbi.nlm.nih.gov/clinvar/docs/acmg/)
-* __GWAS hits (optional)__ - variants overlapping with previously identified hits in genome-wide association studies (GWAS) of cancer phenotypes (i.e. low to moderate risk conferring alleles), using [NHGRI-EBI Catalog of published genome-wide association studies](https://www.ebi.ac.uk/gwas/) as the underlying source.
+* __Secondary findings (optional)__ - pathogenic variants in the [ACMG recommended list for reporting of secondary findings](https://www.ncbi.nlm.nih.gov/clinvar/docs/acmg/)
+* __GWAS hits (optional)__ - variants overlapping with previously identified hits in genome-wide association studies (GWAS) of cancer phenotypes (i.e. low to moderate risk conferring alleles).
 
 The variant sets can be interactively explored and filtered further through different types of filters (phenotypes, genes, variant consequences, population MAF etc.). Importantly, the unclassified (i.e. non-ClinVar) variants are assigned a *pathogenicity score* based on the aggregation of scores according to previously established [ACMG criteria](https://www.ncbi.nlm.nih.gov/pubmed/25741868). The ACMG criteria includes cancer-specific criteria, as outlined and specified in several previous studies ([Huang et al., *Cell*, 2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052); [Nykamp et al., *Genet Med.*, 2017](https://www.ncbi.nlm.nih.gov/pubmed/28492532); [Maxwell et al., *Am J Hum Genet.*, 2016](https://www.ncbi.nlm.nih.gov/pubmed/27153395); [Amendola et al., *Am J Hum Genet.*,  2016](https://www.ncbi.nlm.nih.gov/pubmed/27181684)). See also [*Related work*](https://github.com/sigven/cpsr#related-work) below).
 
 
 ### News
+
+* *March 2024*: **1.xxx release**
+  * Major bundle update
 
 * *November 2022*: **1.0.1 release**
   * Added CPSR logo (designed by [Hal Nakken](https://halvetica.net))

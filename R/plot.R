@@ -125,21 +125,21 @@ plot_virtual_panels <- function(gene_df) {
   while(i <= nrow(gene_df)) {
     CONFIDENCE_LEVEL <- gene_df[i,"CONFIDENCE_LEVEL"]
     css_class <- "exploratory"
-    if (CONFIDENCE_LEVEL == 3) {
-      css_class <- "green"
-    }
-    if (CONFIDENCE_LEVEL == 2) {
-      css_class <- "amber"
-    }
-    if (CONFIDENCE_LEVEL == 1) {
-      css_class <- "red"
-    }
+    #if (CONFIDENCE_LEVEL == 3) {
+    #  css_class <- "green"
+    #}
+    #if (CONFIDENCE_LEVEL == 2) {
+    #  css_class <- "amber"
+    #}
+    #if (CONFIDENCE_LEVEL == 1) {
+    #  css_class <- "red"
+    #}
     if (CONFIDENCE_LEVEL == -1) {
       css_class <- "custom"
     }
-    if (CONFIDENCE_LEVEL == 0) {
-      css_class <- "nolist"
-    }
+    #if (CONFIDENCE_LEVEL == 0) {
+    #  css_class <- "nolist"
+    #}
     if (CONFIDENCE_LEVEL == 5) {
       css_class <- "app_combo"
     }

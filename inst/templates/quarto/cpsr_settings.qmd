@@ -22,14 +22,10 @@ if (as.logical(cps_report[["settings"]][["conf"]][["vep"]][["vep_gencode_basic"]
 The report is generated with _[cpsr](https://github.com/sigven/cpsr)_ version `r cps_report[['settings']][['software']][['cpsr_version']]`, ( _[pcgr](https://github.com/sigven/pcgr)_ version `r cps_report[['settings']][['software']][['pcgr_version']]`), using the following key settings:
 
 * Genome assembly: __`r cps_report[['settings']][['genome_assembly']]`__
-* Report settings
-  * R Markdown theme (Bootstrap): __`r cps_report[['settings']][['conf']][['visual_reporting']][['visual_theme']]`__
-  * Datatable display: __`r cps_report[['settings']][['conf']][['visual_reporting']][['table_display']]`__
-  * Non-floating TOC: __`r as.logical(cps_report[['settings']][['conf']][['visual_reporting']][['nonfloating_toc']])`__
 * Control population gnomAD: __`r cps_report[['settings']][['conf']][['variant_classification']][['popdesc_gnomad']]`__
-* Upper MAF threshold (gnomAD) for unclassified variants included in report:  __`r cps_report[['settings']][['conf']][['variant_classification']][['maf_upper_threshold']]`__
-* Ignore non-proteincoding variants in report: __`r !as.logical(cps_report[['settings']][['conf']][['other']][['show_noncoding']])`__
-* Generate CPSR variant classifications also for existing ClinVar variants: __`r as.logical(cps_report[['settings']][['conf']][['variant_classification']][['classify_all']])`__
+* Upper MAF threshold (gnomAD) for non-ClinVar-classified variants included in report:  __`r cps_report[['settings']][['conf']][['variant_classification']][['maf_upper_threshold']]`__
+* Ignore non-protein-coding variants in report: __`r !as.logical(cps_report[['settings']][['conf']][['other']][['show_noncoding']])`__
+* Generate CPSR variant classifications also for classified ClinVar variants: __`r as.logical(cps_report[['settings']][['conf']][['variant_classification']][['classify_all']])`__
 * Report ClinVar variants in target genes if they are only associated with non-cancer phenotypes/diseases: 
 __`r as.logical(cps_report[['settings']][['conf']][['variant_classification']][['clinvar_report_noncancer']])`__
 * Include [secondary findings](https://www.ncbi.nlm.nih.gov/clinvar/docs/acmg/) in report: __`r as.logical(cps_report[['settings']][['conf']][['variant_classification']][['secondary_findings']])`__

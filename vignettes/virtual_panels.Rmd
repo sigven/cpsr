@@ -21,7 +21,7 @@ The cancer predisposition report can show variants found in a number of well-kno
 	dominant (AD) etc.) and whether mechanisms of disease are associated with loss-of-function (<i>LoF</i>) or
   gain-of-function (<i>GoF</i>) were primarily retrieved from [Maxwell et al., Am J Hum Genet, 2016](https://www.ncbi.nlm.nih.gov/pubmed/27153395), and [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk/). We want to make it explicit that this list is by no means regarded as an international consensus, but should rather be subject to continuous update by the international community that carry expertise on genetic risk factors for cancer. Do you miss other genes of relevance for cancer predisposition/inherited tumor syndromes? Please forward a list of gene identifiers, preferably also with mode of inheritance and literature support to sigven AT ifi.uio.no, so we can include them in Panel 0.
 
-* **Panels 1 - 42** are panels for inherited cancers and tumor syndromes assembled within the [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk/):
+* **Panels 1 - 44** are panels for inherited cancers and tumor syndromes assembled within the [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk/):
 
 | Panel | Description |
 |-------|-------------|

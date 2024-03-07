@@ -4,14 +4,14 @@
 \alias{assign_pathogenicity_evidence}
 \title{Function that assigns variant pathogenicity evidence based on ACMG guidelines}
 \usage{
-assign_pathogenicity_evidence(calls, settings, ref_data)
+assign_pathogenicity_evidence(var_calls, settings, ref_data)
 }
 \arguments{
-\item{calls}{sample calls with dbnsfp annotations}
-
 \item{settings}{cpsr settings object}
 
 \item{ref_data}{pcgr data object}
+
+\item{calls}{sample calls with dbnsfp annotations}
 }
 \value{
 calls

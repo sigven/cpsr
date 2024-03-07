@@ -1,0 +1,81 @@
+
+
+## Summary of findings
+
+```{r determine_donut_size}
+#| echo: false
+#| eval: true
+
+width_donut <- 10
+height_donut <- 7
+
+set_clinvar <- 0
+set_other <- 0
+if (cps_report$content$snv_indel$eval == T) {
+  if (cps_report$content$snv_indel$v_stat$n > 0) {
+    set_clinvar <- 
+      NROW(
+        cps_report$content$snv_indel$callset$tsv |> 
+          dplyr::filter(!is.na(CLINVAR_CLASSIFICATION))
+        )
+    set_other <- NROW(
+      cps_report$content$snv_indel$callset$tsv |> 
+        dplyr::filter(is.na(CLINVAR_CLASSIFICATION) & 
+                        !is.na(CPSR_CLASSIFICATION) > 0)
+      )
+  }
+}
+
+if (set_other == 0 | set_clinvar == 0) {
+  width_donut <- 6
+  height_donut <- 4
+}
+
+```
+
+
+```{r donut_chart}
+#| echo: false
+#| fig-width: !expr width_donut
+#| fig-height: !expr height_donut
+#| eval: !expr cps_report$content$snv_indel$eval
+
+p1 <- cpsr::plot_summary_statistics(
+  cps_report$content$snv_indel$callset$tsv, plot_type = "ClinVar")
+p2 <- cpsr::plot_summary_statistics(
+  cps_report$content$snv_indel$callset$tsv, plot_type = "Other")
+
+p <- NULL
+if (!is.null(p1) & !is.null(p2)) {
+  p <- ggpubr::ggarrange(p1, p2, labels = c("", ""), ncol = 2, nrow = 1)
+}
+if (!is.null(p1) & is.null(p2)) {
+  p <- p1
+}
+if (is.null(p1) & !is.null(p2)) {
+  p <- p2
+}
+p
+```
+
+
+### Variant statistics 
+
+```{r num_cpg_targets}
+#| eval: true
+#| echo: false
+
+primary_targets <- 
+  cps_report[['settings']][['conf']][['gene_panel']][['panel_genes']] |>
+  dplyr::filter(PRIMARY_TARGET == T) |>
+  dplyr::select(ENTREZGENE) |>
+  dplyr::distinct()
+```
+
+Variant numbers in the targeted cancer predisposition genes (n = `r NROW(primary_targets)`)
+
+* Number of SNVs: __`r cps_report[['content']][['snv_indel']][['v_stat_cpg']][['n_snv']]`__
+* Number of InDels: __`r cps_report[['content']][['snv_indel']][['v_stat_cpg']][['n_indel']]`__
+* Number of protein-coding variants: __`r cps_report[['content']][['snv_indel']][['v_stat_cpg']][['n_coding']]`__
+
+<br><br>

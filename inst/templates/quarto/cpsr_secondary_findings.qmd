@@ -5,11 +5,12 @@
 #| output: asis
 #| echo: false
 
-tot_sf_variants <- NROW(cps_report[["content"]][["snv_indel"]][["disp"]][["secondary"]])
-acmg_version <- cps_report[['ref_data']][['source']][
-  cps_report$ref_data$source_abbreviation == "acmg_sf","source_version"]
-acmg_url <- cps_report[['ref_data']][['source']][
-  cps_report$ref_data$source_abbreviation == "acmg_sf","source_url"]
+tot_sf_variants <- NROW(
+  cps_report[["content"]][["snv_indel"]]$callset$variant_display$sf)
+acmg_version <- cps_report$settings$reference_data$source_metadata[
+  cps_report$settings$reference_data$source_metadata$source_abbreviation == "acmg_sf","source_version"]
+acmg_url <- cps_report$settings$reference_data$source_metadata[
+  cps_report$settings$reference_data$source_metadata$source_abbreviation == "acmg_sf","source_url"]
 genotypes_unavailable <- !(as.logical(
   cps_report$settings$conf$sample_properties$genotypes_available))
 
@@ -20,7 +21,7 @@ genotypes_unavailable <- !(as.logical(
 #| output: asis
 #| echo: false
 
-cat("<b>IMPORTANT: Secondary findings not assessed due to lacking genotype information among sample variants</b>. CPSR was unable to pull this data from the input VCF (<i>'GT'</i> FORMAT tag not present within sample genotype information)\n\n")
+cat("::: {.callout-warning}\n\n**Secondary findings not assessed due to lacking genotype information among sample variants**. CPSR was unable to pull this data from the input VCF (<i>'GT'</i> FORMAT tag not present within sample genotype information)\n\n:::")
 
 ```
 
@@ -38,7 +39,8 @@ are registered with a <i>Pathogenic/Likely pathogenic</i> clinical significance 
 htmltools::br()
 htmltools::br()
 
-DT::datatable(cps_report[["content"]][["snv_indel"]][["disp"]][["secondary"]],
+DT::datatable(
+  cps_report[["content"]][["snv_indel"]]$callset$variant_display$sf,
   escape = F, extensions = c("Buttons", "Responsive"),
   options = list(
     pageLength = 6,

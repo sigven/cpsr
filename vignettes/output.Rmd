@@ -50,32 +50,6 @@ The report is structured in multiple sections, described briefly below:
   8. __References__
 	    * Supporting scientific literature - knowledge resources, guideline references etc.)
 
-#### Interactive datatables
-
-The interactive datatables contain a number of hyperlinked annotations similar to those defined for the annotated VCF file, including the following:
-
-| Annotation | Description                                                   |
-|------------|---------------------------------------------------------------|
-| `SYMBOL` | Gene symbol (Entrez/NCBI) |
-| `PROTEIN_CHANGE` | Amino acid change (VEP) |
-| `OFFICIAL_GENENAME` | official gene name description (Entrez/NCBI) |
-| `PROTEIN_DOMAIN` | PFAM protein domain |
-| `CDS_CHANGE` | Coding sequence change |
-| `CONSEQUENCE` | VEP consequence (primary transcript) |
-| `LOSS_OF_FUNCTION` | Predicted loss-of-function variant |
-| `RMSK_HIT` | Overlap with repeats as annotated by RepeatMasker |
-| `HGVSc` | from VEP |
-| `HGVSp` | from VEP |
-| `REFSEQ` | Transcript accession ID(s) (NCBI RefSeq) |
-| `ONCOGENE` | Predicted proto-oncogene (CancerMine/NCG) |
-| `TUMOR_SUPPRESSOR` | known tumor suppressor gene (CancerMine/NCG) |
-| `PREDICTED_EFFECT` | Effect predictions (deleterious/benign) from dbNSFP |
-| `VEP_ALL_CSQ` | All VEP transcript block consequences |
-| `DBSNP` | dbSNP rsID |
-| `GENOMIC_CHANGE` | Variant ID |
-| `GENOME_VERSION` | Genome assembly |
-
-
 ### Variant call format - VCF
 
 A VCF file containing annotated, germline calls (single nucleotide variants and insertions/deletions) is generated with the following naming convention:
@@ -300,9 +274,9 @@ A VCF file containing annotated, germline calls (single nucleotide variants and 
 
 ### Tab-separated values (TSV)
 
-We provide a tab-separated values file with most important variant/gene annotations. The file has the following naming convention:
+We provide a compressed tab-separated values file with variant classifications and the most essential variant/gene annotations. The file has the following naming convention:
 
-- `<sample_id>.cpsr.<genome_assembly>.snvs_indels.tsv`
+- `<sample_id>.cpsr.<genome_assembly>.classification.tsv.gz`
 
 The SNVs/InDels are classified according to clinical significance (pathogenicity) (as defined above for the HTML report).
 

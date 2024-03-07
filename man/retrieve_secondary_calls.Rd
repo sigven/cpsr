@@ -5,13 +5,10 @@
 \title{Function that retrieves variants in genes recommended for secondary
 findings}
 \usage{
-retrieve_secondary_calls(calls, umls_map)
+retrieve_secondary_calls(calls)
 }
 \arguments{
-\item{calls}{data frame with variants in genes recommended for
-secondary findings reporting}
-
-\item{umls_map}{data frame with UMLS phenotype terms}
+\item{calls}{data frame with all calls found}
 }
 \description{
 Function that retrieves variants in genes recommended for secondary

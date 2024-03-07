@@ -138,21 +138,18 @@ get_insilico_prediction_statistics <- function(cpg_calls) {
 #' Function that retrieves variants in genes recommended for secondary
 #' findings
 #'
-#' @param calls data frame with variants in genes recommended for
-#' secondary findings reporting
-#' @param umls_map data frame with UMLS phenotype terms
+#' @param calls data frame with all calls found
 #'
 #' @export
-retrieve_secondary_calls <- function(calls, umls_map) {
+retrieve_secondary_calls <- function(calls) {
   assertable::assert_colnames(
     calls,
     colnames = c(
       "CPG_SOURCE",
-      "CLINVAR_CLASSIFICATION",
-      "CLINVAR_UMLS_CUI",
+      "FINAL_CLASSIFICATION",
+      "PRIMARY_TARGET",
       "GENOTYPE",
       "SYMBOL",
-      "VAR_ID",
       "LOSS_OF_FUNCTION",
       "PROTEIN_CHANGE"
     ),
@@ -167,9 +164,10 @@ retrieve_secondary_calls <- function(calls, umls_map) {
         !is.na(.data$SYMBOL) &
         !is.na(.data$CPG_SOURCE) &
         stringr::str_detect(.data$CPG_SOURCE,"ACMG_SF") &
-        !is.na(.data$CLINVAR_CLASSIFICATION) &
+        .data$PRIMARY_TARGET == FALSE,
+        !is.na(.data$FINAL_CLASSIFICATION) &
         stringr::str_detect(
-          .data$CLINVAR_CLASSIFICATION,"Pathogenic")) |>
+          .data$FINAL_CLASSIFICATION,"Pathogenic")) |>
     dplyr::filter(
       .data$GENOTYPE != "undefined"
     )

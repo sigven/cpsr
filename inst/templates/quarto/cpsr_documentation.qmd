@@ -2,8 +2,8 @@
 
 This report is intended for interpretation of inherited DNA variants implicated with cancer susceptibility and inherited cancer syndromes. The set of classified variants are limited to those overlapping a user-defined set of known cancer predisposition target genes (i.e. _virtual panel_), for which the report lists __ONLY__ those variants that are
 
-1. Previously classified in ClinVar (five-level significance scheme: pathogenic/likely pathogenic/VUS/likely benign/benign), or
-2. Coding variants not recorded in ClinVar with germline population frequency below the user-defined threshold, i.e. 
+1. Previously classified in ClinVar (five-level clinical significance scheme: pathogenic/likely pathogenic/VUS/likely benign/benign), or
+2. Coding, non-ClinVar-classified variants with germline population frequency below the user-defined threshold, i.e. 
     * Minor allele frequency (MAF) < `r cps_report[['settings']][['conf']][['variant_classification']][['maf_upper_threshold']]`) in the user-defined population set in the gnomAD database
     * The set of novel, _non-ClinVar_ variants are classified using CPSR's dedicated variant classification algorithm, applying the same five-level clinical significance scheme as found in ClinVar
 
@@ -13,7 +13,12 @@ This report is intended for interpretation of inherited DNA variants implicated 
 
 ### Gene/variant annotation resources
 
-The variant interpretation procedures performed in this cancer genome report are relying upon multiple tools and knowledge resources, as outlined below. Note that some resources (highlighted below) demand specific licensing agreements if you plan to utilize their data (and thus this report) in a commercial, non-academic setting.
+The variant interpretation procedures performed in this cancer genome report are relying upon multiple tools and knowledge resources, as outlined below. 
+
+::: {.callout-important}
+Note that some resources (highlighted below) demand specific licensing agreements if you plan to utilize their data (and thus this report) in a commercial, non-research setting.
+:::
+
 
 * __PCGR databundle version__
 
@@ -25,21 +30,21 @@ The variant interpretation procedures performed in this cancer genome report are
 #| output: asis
 
 i <- 1
-ref_datasets <- cps_report$ref_data$metadata
+ref_datasets <- cps_report$settings$reference_data$source_metadata
 for(i in 1:NROW(ref_datasets)){
   source_full <- ref_datasets[i,"source"]
   source <- ref_datasets[i,"source_abbreviation"]
   description <- ref_datasets[i,"source_description"]
   url <- ref_datasets[i,"source_url"]
   version <- ref_datasets[i,"source_version"]
-  if(version == "."){
-    version = NA
-  }
+  #if(version == "."){
+  #  version = NA
+  #}
   license <- ref_datasets[i, "source_license"]
   license_url <- ref_datasets[i, "source_license_url"]
-  if(license_url == "."){
-    license_url <- NA
-  }
+  #if(license_url == "."){
+  #  license_url <- NA
+  #}
   wflow <- ref_datasets[i, "wflow"]
   if(!(stringr::str_detect(
     wflow,"cpsr"))){
@@ -100,7 +105,7 @@ classification_calibration_plot_fname_path <-
               package = "cpsr")
 ```
 
-<img src="`r classification_calibration_plot_fname_path`" title="" alt="" align="center" width="950" height="500"/>
+<img src="`r classification_calibration_plot_fname_path`" title="" alt="" align="center" width="950" height="530"/>
 
 <br>
 <br>

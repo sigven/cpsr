@@ -2,62 +2,139 @@
 
 ## Summary of findings
 
-```{r determine_donut_size}
+```{r prepare_summary_stats}
 #| echo: false
 #| eval: true
 
-width_donut <- 10
-height_donut <- 7
 
-set_clinvar <- 0
-set_other <- 0
-if (cps_report$content$snv_indel$eval == T) {
-  if (cps_report$content$snv_indel$v_stat$n > 0) {
-    set_clinvar <- 
-      NROW(
-        cps_report$content$snv_indel$variant_set$tsv |> 
-          dplyr::filter(!is.na(CLINVAR_CLASSIFICATION))
-        )
-    set_other <- NROW(
-      cps_report$content$snv_indel$variant_set$tsv |> 
-        dplyr::filter(is.na(CLINVAR_CLASSIFICATION) & 
-                        !is.na(CPSR_CLASSIFICATION) > 0)
-      )
+color_none <- "#8B8989"
+color_report <- "#007a74"
+
+color_clinvar <- color_report
+color_novel <- color_report
+color_vus <- "#000"
+
+n_clinvar <- cps_report$content$snv_indel$callset$variant_display$cpg_non_sf |>
+  dplyr::filter(.data$CPSR_CLASSIFICATION_SOURCE == "ClinVar") |>
+  NROW()
+n_novel <- cps_report$content$snv_indel$callset$variant_display$cpg_non_sf |>
+  dplyr::filter(.data$CPSR_CLASSIFICATION_SOURCE == "CPSR_ACMG") |>
+  NROW()
+n_vus <- cps_report$content$snv_indel$callset$variant_display$cpg_non_sf |>
+  dplyr::filter(.data$FINAL_CLASSIFICATION == "VUS") |>
+  NROW()
+
+if(n_clinvar == 0){
+  color_clinvar <- color_none
+}
+if(n_novel == 0){
+  color_novel <- color_none
+}
+if(n_vus == 0){
+  color_vus <- color_none
+}
+
+genes_affected <- 
+  dplyr::filter(
+    cps_report$content$snv_indel$callset$variant$cpg_non_sf, 
+    .data$FINAL_CLASSIFICATION == "Pathogenic" |
+      .data$FINAL_CLASSIFICATION == "Likely_Pathogenic") |> 
+  dplyr::select("SYMBOL") |>
+  dplyr::distinct() |>
+  head(3)
+
+genes_value_box <- "None"
+if(NROW(genes_affected) > 0){
+  genes_value_box = 
+    paste(genes_affected$SYMBOL, collapse="/")
+  if(NROW(genes_affected) == 3){
+    genes_value_box = "> 2"
   }
 }
 
-if (set_other == 0 | set_clinvar == 0) {
-  width_donut <- 6
-  height_donut <- 4
+color_lp <- color_none
+if(genes_value_box != "None"){
+  color_lp <- 
+    pcgrr::color_palette$pathogenicity$values[1]
+}
+color_sf <- color_none
+value_sf <- "Not determined"
+if(as.logical(cps_report$settings$conf$variant_classification$secondary_findings) == TRUE){
+  value_sf <- "N = 0"
+  if(cps_report$content$snv_indel$v_stat_sf$n > 0){
+    value_sf <- paste0("N = ", cps_report$content$snv_indel$v_stat_sf$n)
+    color_sf <- pcgrr::color_palette$pathogenicity$values[1]
+  }
 }
 
 ```
 
-
-```{r donut_chart}
+```{r summary_cpsr_findings}
+#| output: asis
 #| echo: false
-#| fig-width: !expr width_donut
-#| fig-height: !expr height_donut
-#| eval: !expr cps_report$content$snv_indel$eval
+#| eval: true
 
-p1 <- cpsr::plot_summary_statistics(
-  cps_report$content$snv_indel$variant_set$tsv, plot_type = "ClinVar")
-p2 <- cpsr::plot_summary_statistics(
-  cps_report$content$snv_indel$variant_set$tsv, plot_type = "Other")
+bslib::layout_column_wrap(
+  width = 1/3,
+  height = 120,
+  bslib::value_box(
+    title = "Pathogenic/likely pathogenic variants",
+    value = paste0(
+      "N = ", 
+      cps_report$content$snv_indel$v_stat_cpg$n_p + 
+        cps_report$content$snv_indel$v_stat_cpg$n_p),
+    showcase = bsicons::bs_icon("bullseye"), 
+    theme = bslib::value_box_theme(
+      bg = color_lp, fg = "#fff"),
+    showcase_layout = "left center"
+  ),
+  bslib::value_box(
+    title = "Cancer predisposition genes affected",
+    value = genes_value_box,
+    showcase = bsicons::bs_icon("bullseye"),
+    theme = bslib::value_box_theme(
+      bg = color_lp, fg = "#fff"),
+    showcase_layout = "left center"
+  ),
+  bslib::value_box(
+    title = "Secondary findings",
+    value = value_sf,
+    showcase = bsicons::bs_icon("bullseye"),
+    theme = bslib::value_box_theme(
+      bg = color_sf, fg = "#fff"),
+    showcase_layout = "left center"
+  )
+)
 
-p <- NULL
-if (!is.null(p1) & !is.null(p2)) {
-  p <- ggpubr::ggarrange(p1, p2, labels = c("", ""), ncol = 2, nrow = 1)
-}
-if (!is.null(p1) & is.null(p2)) {
-  p <- p1
-}
-if (is.null(p1) & !is.null(p2)) {
-  p <- p2
-}
-p
+bslib::layout_column_wrap(
+  width = 1/3,
+  height = 120,
+  bslib::value_box(
+    title = "Pre-classified variants (ClinVar)",
+    value = paste0("N = ", n_clinvar),
+    showcase = bsicons::bs_icon("check-square"),
+    theme = bslib::value_box_theme(
+      bg = color_clinvar, fg = "#fff"),
+    showcase_layout = "left center"
+  ),
+  bslib::value_box(
+    title = "Novel variants",
+    value = paste0("N = ", n_novel),
+    showcase = bsicons::bs_icon("check-square"),
+    theme = bslib::value_box_theme(
+      bg = color_novel, fg = "#fff"),
+    showcase_layout = "left center"
+  ),
+  bslib::value_box(
+    title = "VUS variants",
+    value = paste0("N = ", n_vus),
+    showcase = bsicons::bs_icon("check-square"),
+    theme = bslib::value_box_theme(
+      bg = color_vus, fg = "#fff"),
+    showcase_layout = "left center"
+  )
+)
 ```
-
 
 ### Variant statistics 
 

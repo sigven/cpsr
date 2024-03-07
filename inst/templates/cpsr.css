@@ -87,7 +87,8 @@ h2, #TOC>ul>li {
 }
 
 .custom {
-  background: darkmagenta;
+  /*background: darkmagenta;*/
+  background: #000;
   border-radius: 5px;
 
 }
