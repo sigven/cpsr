@@ -147,6 +147,7 @@ retrieve_secondary_calls <- function(calls) {
     colnames = c(
       "CPG_SOURCE",
       "FINAL_CLASSIFICATION",
+      "CPSR_CLASSIFICATION_SOURCE",
       "PRIMARY_TARGET",
       "GENOTYPE",
       "SYMBOL",
@@ -164,7 +165,9 @@ retrieve_secondary_calls <- function(calls) {
         !is.na(.data$SYMBOL) &
         !is.na(.data$CPG_SOURCE) &
         stringr::str_detect(.data$CPG_SOURCE,"ACMG_SF") &
-        .data$PRIMARY_TARGET == FALSE,
+        .data$PRIMARY_TARGET == FALSE &
+        !is.na(.data$CPSR_CLASSIFICATION_SOURCE) &
+        .data$CPSR_CLASSIFICATION_SOURCE == "ClinVar" &
         !is.na(.data$FINAL_CLASSIFICATION) &
         stringr::str_detect(
           .data$FINAL_CLASSIFICATION,"Pathogenic")) |>

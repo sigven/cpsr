@@ -37,14 +37,13 @@ for(i in 1:NROW(ref_datasets)){
   description <- ref_datasets[i,"source_description"]
   url <- ref_datasets[i,"source_url"]
   version <- ref_datasets[i,"source_version"]
-  #if(version == "."){
-  #  version = NA
-  #}
   license <- ref_datasets[i, "source_license"]
   license_url <- ref_datasets[i, "source_license_url"]
-  #if(license_url == "."){
-  #  license_url <- NA
-  #}
+  
+  ## temporary fix for outdated ACMG URL (geneOncoX needs update):
+  if(source == "acmg_sf"){
+    url <- "https://pubmed.ncbi.nlm.nih.gov/37347242/"
+  }
   wflow <- ref_datasets[i, "wflow"]
   if(!(stringr::str_detect(
     wflow,"cpsr"))){

@@ -7,10 +7,10 @@ output: rmarkdown::html_document
 
 ### Interactive HTML report
 
-An interactive and structured HTML report, generated through [quarto](https://quarto.org/) technology, that lists variants in known cancer predisposition genes, is provided with the following naming convention:
+An interactive and structured [quarto](https://quarto.org/)-generated HTML report, lists variants in known cancer predisposition genes and is provided with the following naming convention:
 
 - `<sample_id>.cpsr.<genome_assembly>.html`
-  - The __sample_id__ is provided as input by the user, and reflects a unique identifier of the tumor-normal sample pair to be analyzed.
+  - The __sample_id__ is provided as input by the user, and reflects a unique identifier of the sample to be analyzed.
 
 The report is structured in multiple sections, described briefly below:
 
@@ -19,9 +19,8 @@ The report is structured in multiple sections, described briefly below:
 	   that constitute the virtual gene panel in the report
 	   
   2. __Summary of findings__
-     * Summarizes the findings through donut charts
-     * Number of variants in each of the five variant classification levels
-  
+     * Summarizes the main findings in the sample through value boxes
+
   3. __Variant classification__
      * For all coding variants in the selected cancer predisposition geneset, interactive variant tables are shown for each level (__ClinVar__ and __non-ClinVar (Other)__ variants combined):
 	      * Pathogenic
@@ -31,7 +30,7 @@ The report is structured in multiple sections, described briefly below:
 	      * Benign
 
   4. __Genomic biomarkers__
-     * Reported clinical evidence items from [CIViC](https://civicdb.org) that overlap with variants in the query set are reported in four distinct tabs (Predictive / Prognostic / Diagnostic / Predisposing)
+     * Reported clinical evidence items from [CIViC](https://civicdb.org) that match with variants in the query set are reported in four distinct tabs (Predictive / Prognostic / Diagnostic / Predisposing)
         - See section below for [details of biomarker annotations]()
 		  
   5. __Secondary findings__
@@ -42,9 +41,9 @@ The report is structured in multiple sections, described briefly below:
 	    
   7. __Documentation__
 	    * Introduction
-	       * Short overview of the predisposition report - aims and contents
+	       * Short overview of the CPSR variant report - aims and contents
 	    * Annotation resources
-	       * Underlying tools, databases and annotation sources (with versions)
+	       * Information on annotation sources utilized by CPSR, including versions and licensing requirements
 	    * Variant classification
 	       * Overview of how CPSR performs variant classification of variants not recorded in ClinVar, listing ACMG criteria and associated scores
   
@@ -56,7 +55,7 @@ The report is structured in multiple sections, described briefly below:
 A VCF file containing annotated, germline calls (single nucleotide variants and insertions/deletions) is generated with the following naming convention:
 
 - `<sample_id>.cpsr.<genome_assembly>.vcf.gz (.tbi)`
-  - The __sample_id__ is provided as input by the user, and reflects a unique identifier of the tumor-normal sample pair to be analyzed. Following common standards, the annotated VCF file is compressed with [bgzip](http://www.htslib.org/doc/bgzip.html) and indexed with [tabix](http://www.htslib.org/doc/tabix.html). Below follows a description of all annotations/tags present in the VCF INFO column after processing with the CPSR annotation pipeline:
+  - The __sample_id__ is provided as input by the user, and reflects a unique identifier of the sample to be analyzed. Following common standards, the annotated VCF file is compressed with [bgzip](http://www.htslib.org/doc/bgzip.html) and indexed with [tabix](http://www.htslib.org/doc/tabix.html). Below follows a description of all annotations/tags present in the VCF INFO column after processing with the CPSR annotation pipeline:
 
 <br>
 

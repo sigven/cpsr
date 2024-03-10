@@ -229,11 +229,10 @@ This command will produce the following output files in the _output_ folder:
   2. __example.cpsr.grch37.pass.vcf.gz (.tbi)__ - Bgzipped VCF file with relevant annotations appended by CPSR (PASS variants only)
   3. __example.cpsr.grch37.yaml__ - CPSR configuration file - output from pre-reporting (Python) workflow
   4. __example.cpsr.grch37.pass.tsv.gz__ - Compressed TSV file (generated with [vcf2tsvpy](https://github.com/sigven/vcf2tsvpy)) of VCF content with relevant annotations appended by CPSR
-  5. __example.cpsr.grch37.xlsx__ - A multisheet Excel workbook that contain
+  5. __example.cpsr.grch37.xlsx__ - A four-sheet Excel workbook that contains
       * _i)_ information on virtual gene panel interrogated for variants
       * _ii)_ classification of variants found in input VCF
-      * _iii)_ overlap of variants with existing biomarkers
+      * _iii)_ match of variants with existing biomarkers
       * _iv)_ secondary findings
-      * _v)_ GWAS hits
   6. __example.cpsr.grch37.html__ - Interactive HTML report with clinically relevant variants in cancer predisposition genes
   7. __example.cpsr.grch37.snvs_indels.classification.tsv.gz__ - TSV file with key annotations of SNVs/InDels classified according to clinical signififance

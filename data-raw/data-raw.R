@@ -365,3 +365,107 @@ acmg[["score2tier"]] <-
 
 usethis::use_data(acmg, overwrite = T)
 usethis::use_data(col_format_output, overwrite = T)
+
+my_log4r_layout <- function(level, ...) {
+  paste0(format(Sys.time()), " - cpsr-report-generation - ",
+         level, " - ", ..., "\n", collapse = "")
+}
+
+log4r_logger <-
+  log4r::logger(
+    threshold = "INFO", appenders = log4r::console_appender(my_log4r_layout))
+
+# this gets passed on to all the log4r_* functions inside the pkg
+options("PCGRR_LOG4R_LOGGER" = log4r_logger)
+
+panel_zero <- list()
+for(build in c('grch37','grch38')){
+  ref_data <- pcgrr::load_reference_data(
+    pcgr_db_assembly_dir =
+      file.path(
+        "/Users/sigven/project_data/data/data__pcgrdb/dev/pcgrdb",
+        "20240309/data",
+        build)
+  )
+  panel_zero[[build]] <- ref_data$gene$cpg |>
+    dplyr::filter(CPG_SOURCE != "ACMG_SF") |>
+    dplyr::mutate(
+      PANEL_NAME = "CPSR superpanel of cancer predisposition genes",
+      PANEL_VERSION = "v2024_03") |>
+    dplyr::inner_join(
+      dplyr::select(ref_data$gene$gene_xref,
+                    ENTREZGENE,
+                    ENSEMBL_GENE_ID,
+                    GENE_BIOTYPE,
+                    GENENAME,
+                    TSG,
+                    TSG_SUPPORT,
+                    ONCOGENE,
+                    ONCOGENE_SUPPORT),
+      by = c("ENTREZGENE","ENSEMBL_GENE_ID")
+    ) |>
+    dplyr::rename(
+      TUMOR_SUPPRESSOR = TSG,
+      TUMOR_SUPPRESSOR_SUPPORT = TSG_SUPPORT
+    ) |>
+    dplyr::left_join(
+      dplyr::select(
+        dplyr::filter(
+          ref_data$variant$clinvar_gene_stats,
+          .data$CONFIDENCE == "min2goldstars"),
+        c("ENTREZGENE",
+          "N_TRUNC_PATH",
+          "N_NONTRUNC_PATH",
+          "N_MISSENSE_PATH",
+          "N_MISSENSE_BENIGN",
+          "BENIGN_MISSENSE_FRAC",
+          "PATH_TRUNC_FRAC")
+      ), by = "ENTREZGENE"
+    ) |>
+    dplyr::select(
+      dplyr::any_of(
+        c("ENTREZGENE",
+          "SYMBOL",
+          "GENENAME",
+          "GENE_BIOTYPE",
+          "ENSEMBL_GENE_ID",
+          "TUMOR_SUPPRESSOR",
+          "TUMOR_SUPPRESSOR_SUPPORT",
+          "ONCOGENE",
+          "ONCOGENE_SUPPORT",
+          "CPG_SOURCE",
+          "CPG_MOD",
+          "CPG_MOI",
+          "CPG_PHENOTYPES",
+          "CPG_CANCER_CUI",
+          "CPG_SYNDROME_CUI")
+      ),
+      dplyr::everything()
+    ) |>
+    dplyr::distinct()
+}
+
+workbook <- openxlsx2::wb_workbook() |>
+  openxlsx2::wb_add_worksheet(sheet = "CPSR_SUPERPANEL.GRCH37") |>
+  openxlsx2::wb_add_worksheet(sheet = "CPSR_SUPERPANEL.GRCH38") |>
+  openxlsx2::wb_add_data_table(
+    sheet = "CPSR_SUPERPANEL.GRCH37",
+    x = panel_zero[['grch37']],
+    start_row = 1,
+    start_col = 1,
+    col_names = TRUE,
+    na.strings = "NA",
+    table_style = "TableStyleMedium15") |>
+  openxlsx2::wb_add_data_table(
+    sheet = "CPSR_SUPERPANEL.GRCH38",
+    x = panel_zero[['grch38']],
+    start_row = 1,
+    start_col = 1,
+    col_names = TRUE,
+    na.strings = "NA",
+    table_style = "TableStyleMedium16")
+
+openxlsx2::wb_save(
+  wb = workbook,
+  "pkgdown/assets/cpsr_superpanel_2024_03.xlsx",
+  overwrite = TRUE)
