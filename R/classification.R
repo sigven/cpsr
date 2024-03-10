@@ -185,7 +185,7 @@ assign_classification <- function(var_calls) {
 
 #' Function that assigns variant pathogenicity evidence based on ACMG guidelines
 #'
-#' @param calls sample calls with dbnsfp annotations
+#' @param var_calls sample calls with dbnsfp annotations
 #' @param settings cpsr settings object
 #' @param ref_data pcgr data object
 #'
@@ -1176,7 +1176,7 @@ exclude_vars_noncoding <- function(
     var_calls = NULL,
     conf = NULL){
 
-  if(config[['other']][['show_noncoding']] == T){
+  if(conf[['other']][['show_noncoding']] == T){
     return(var_calls)
   }
   if("CODING_STATUS" %in% colnames(var_calls) &
@@ -1194,7 +1194,7 @@ exclude_vars_noncoding <- function(
       )
     )
     var_calls <-
-      var_cals |>
+      var_calls |>
       dplyr::filter(
         .data$CODING_STATUS == "coding")
 

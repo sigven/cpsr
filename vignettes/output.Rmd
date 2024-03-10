@@ -32,6 +32,7 @@ The report is structured in multiple sections, described briefly below:
 
   4. __Genomic biomarkers__
      * Reported clinical evidence items from [CIViC](https://civicdb.org) that overlap with variants in the query set are reported in four distinct tabs (Predictive / Prognostic / Diagnostic / Predisposing)
+        - See section below for [details of biomarker annotations]()
 		  
   5. __Secondary findings__
      * Pathogenic variants in the [ACMG recommended list of genes for report of secondary/incidental findings](https://www.ncbi.nlm.nih.gov/clinvar/docs/acmg/)
@@ -248,7 +249,7 @@ A VCF file containing annotated, germline calls (single nucleotide variants and 
 | `gnomaADe_non_cancer_FIN_NHOMALT` | Count of homozygous individuals in samples of Finnish ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
 | `gnomaADe_non_cancer_SAS_NHOMALT` | Count of homozygous individuals in samples of South Asian ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
 | `gnomaADe_non_cancer_NHOMALT` | Count of homozygous individuals in samples in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
-| `DBSNPRSID` | [dbSNP](http://www.ncbi.nlm.nih.gov/SNP/) reference ID, as provided by VEP |
+| `DBSNP_RSID` | [dbSNP](http://www.ncbi.nlm.nih.gov/SNP/) reference ID, as provided by VEP |
 
 <br>
 
@@ -259,11 +260,11 @@ A VCF file containing annotated, germline calls (single nucleotide variants and 
 | `CLINVAR_MSID` | [ClinVar](http://www.ncbi.nlm.nih.gov/clinvar) Measure Set/Variant ID |
 | `CLINVAR_ALLELE_ID` | [ClinVar](http://www.ncbi.nlm.nih.gov/clinvar) allele ID |
 | `CLINVAR_PMID` | Associated Pubmed IDs for variant in [ClinVar](http://www.ncbi.nlm.nih.gov/clinvar) - germline state-of-origin |
-| `CLINVAR_HGVSP` | Protein variant expression using HGVS nomenclature |
+| `CLINVAR_HGVSP` | Protein variant expression using HGVS nomenclature - ClinVar |
 | `CLINVAR_PMID_SOMATIC` | Associated Pubmed IDs for variant in [ClinVar](http://www.ncbi.nlm.nih.gov/clinvar) - somatic state-of-origin |
-| `CLINVAR_CONFLICTED` | Variant has conflicting interpretations |
+| `CLINVAR_CONFLICTED` | ClinVar variant has conflicting interpretations |
 | `CLINVAR_CLNSIG` | Clinical significance for variant in [ClinVar](http://www.ncbi.nlm.nih.gov/clinvar) - germline state-of-origin |
-| `CLINVAR_CLASSIFICATION` | Clean clinical significance on a five-level scheme |
+| `CLINVAR_CLASSIFICATION` | Clean clinical significance on a five-level scheme - ClinVar |
 | `CLINVAR_CLNSIG_SOMATIC` | Clinical significance for variant in [ClinVar](http://www.ncbi.nlm.nih.gov/clinvar) - somatic state-of-origin |
 | `CLINVAR_MEDGEN_CUI` | Associated [MedGen](https://www.ncbi.nlm.nih.gov/medgen/)  concept identifiers (_CUIs_) - germline state-of-origin |
 | `CLINVAR_MEDGEN_CUI_SOMATIC` | Associated [MedGen](https://www.ncbi.nlm.nih.gov/medgen/)  concept identifiers (_CUIs_) - somatic state-of-origin |
@@ -272,7 +273,17 @@ A VCF file containing annotated, germline calls (single nucleotide variants and 
 | `CLINVAR_REVIEW_STATUS_STARS` | Rating of the [ClinVar](http://www.ncbi.nlm.nih.gov/clinvar) variant (0-4 stars) with respect to level of review |
 | `GWAS_HIT` | variant associated with cancer phenotype from genome-wide association study (NHGRI-EBI GWAS catalog) |
 
-### Tab-separated values (TSV)
+
+### Excel workbook - XLSX
+
+We provide an Excel workbook with **four** sheets that cover the main findings of the predisposition analysis
+
+ - *VIRTUAL_PANEL* - details on the the chosen virtual gene panel 
+ - *CLASSIFICATION* - variant classifications and corresponding gene annotations
+ - *BIOMARKER_EVIDENCE* - matches of variants with genomic biomarkers
+ - *SECONDARY_FINDINGS* - potential secondary findings
+
+### Tab-separated values - TSV
 
 We provide a compressed tab-separated values file with variant classifications and the most essential variant/gene annotations. The file has the following naming convention:
 
@@ -286,10 +297,10 @@ The following variables are included in the tiered TSV file (VCF tags in the que
 |----------|-------------|
 | 1. `SAMPLE_ID` | Sample identifier |
 | 2. `GENOMIC_CHANGE` | Identifier for variant at the genome (VCF) level, e.g. `1:g.152382569A>G`. Format: `<chrom>:g.<position><ref_allele>><alt_allele>` |
-| 3. `VAR_ID` | Variant identifier |
-| 4. `GENOTYPE` | Variant genotype (heterozygous/homozygous) |
-| 5. `CPSR_CLASSIFICATION_SOURCE` | ClinVar or CPSR_ACMG (i.e. not present in ClinVar, classified by CPSR) |
-| 6. `GENOME_VERSION` | Assembly version, e.g. GRCh37 |
+| 3. `VAR_ID` | Variant identifier - chrom_pos_ref_alt |
+| 4. `GENOME_VERSION` | Assembly version, e.g. grch37/grch38 |
+| 5. `GENOTYPE` | Variant genotype (heterozygous/homozygous) |
+| 6. `CPSR_CLASSIFICATION_SOURCE` | ClinVar or CPSR_ACMG (the latter meaning variant not recorded in ClinVar, classified by CPSR) |
 | 7. `VARIANT_CLASS` | Variant type, e.g. SNV/insertion/deletion |
 | 8. `CODING_STATUS` | coding/noncoding (wrt. protein alteration and canonical splice site disruption) |
 | 9. `SYMBOL` | Gene symbol |
@@ -303,49 +314,71 @@ The following variables are included in the tiered TSV file (VCF tags in the que
 | 17. `ONCOGENE` | Gene is predicted as an oncogene according to Network of Cancer Genes (NCG)/Cancer Gene Census (CGC) and CancerMine |
 | 18. `TUMOR_SUPPRESSOR` | Gene is predicted as a tumor suppressor gene according to Network of Cancer Genes (NCG)/Cancer Gene Census (CGC) and CancerMine |
 | 19. `CONSEQUENCE` | Variant consequence |
-| 20. `VEP_ALL_CSQ` | All VEP transcript block consequences |
-| 21. `REGULATORY_ANNOTATION` | Overlap of variant with regulatory elements (VEP) | 
-| 22. `PROTEIN_CHANGE` | Protein change - one letter abbreviation (HGVSp) |
-| 23. `PROTEIN_DOMAIN_NAME` | Protein domain name (Pfam) |
-| 24. `DBSNP` | dbSNP identifier (rsid) |
-| 25. `HGVSp` | The HGVS protein sequence name |
-| 26. `HGVSc` | The HGVS coding sequence name |
-| 27. `LAST_EXON` | Last exon in gene |
+| 20. `PROTEIN_CHANGE` | Protein change - one letter abbreviation (HGVSp) |
+| 21. `PFAM_DOMAIN_NAME` | Protein domain name (Pfam) |
+| 22. `HGVSp` | The HGVS protein sequence name |
+| 23. `HGVSc` | The HGVS coding sequence name |
+| 24. `CDS_CHANGE` | Coding, transcript-specific sequence annotation |
+| 25. `LAST_EXON` | Last exon in gene |
+| 26. `EXON`| Exon of variant/total number of exons in transcript (from VEP) |
+| 27. `EXON_AFFECTED` | Transcript exon of variant (from VEP) | 
 | 28. `EXON_POSITION` | Relative position of exon variant to nearest intron/exon junction (NearestExonJB plugin) |
 | 29. `INTRON_POSITION` | Relative position of intron variant to nearest intron/exon junction (NearestExonJB plugin) |
-| 30. `CDS_CHANGE` | Coding, transcript-specific sequence annotation |
-| 31. `MUTATION_HOTSPOT` | Cancer mutation hotspot (cancerhotspots.org) |
-| 32. `RMSK_HIT` | RepeatMasker hit |
-| 33. `EFFECT_PREDICTIONS` | Functional effect predictions from multiple algorithms (dbNSFP) |
-| 34. `LOSS_OF_FUNCTION` | Loss-of-function variant, as predicted from VEP's LofTee plugin |
-| 35. `NULL_VARIANT` | Frameshift or stop-gain variant |
-| 36. `CANCER_PHENOTYPE` | For variants with a ClinVar classification, indication of cancer-associated disease/phenotype (1) or not (0) |
-| 37. `CLINVAR_CLASSIFICATION` | clinical significance of ClinVar Variant (CPSR category) |
-| 38. `CLINVAR_MSID` | measureset identifier of ClinVar variant |
-| 39. `CLINVAR_VARIANT_ORIGIN` | variant origin (somatic/germline) of ClinVar variant |
-| 40. `CLINVAR_CONFLICTED` | indicator of conflicting interpretations |
-| 41. `CLINVAR_PHENOTYPE` | associated phenotype(s) for ClinVar variant |
-| 42. `CLINVAR_REVIEW_STATUS_STARS` | Review confidence - number of gold stars |
-| 43. `EXON`| Exon of variant/total number of exons in transcript (from VEP) |
-| 44. `EXON_AFFECTED` | Transcript exon of variant (from VEP) | 
-| 45. `DBMTS` | variant with potential effect on microRNA target sites (dbMTS). Format: `<ensembl_transcript_id>|<microrna_identifier>|<target_prediction_algorithms>|<gain_loss_consensus>`. _Target prediction algorithms_ indicate support by different algorithms (separated by '&'), `TS` = TargetScan, `M` = miRanda, `R` = RNAhybrid. *Gain_loss_consensus* indicate whether the variant was predicted to disrupt a binding site (`L` = Loss), or create a new target site (`G` = gain) by the different algorithms |
-| 46. `miRNA_TARGET_HIT` | loss, gain, or gain|loss, as given from the hits in DBMTS column |
-| 47. `miRNA_TARGET_HIT_PREDICTION` | links to miRBase, as given from the hits in the DBMTS column |
-| 48. `TF_BINDING_SITE_VARIANT` | Indicates whether a variant overlaps a critical/non-critical position of a transcription factor binding site (TFBS) - as provided by VEP's--regulatory option ('Overlap: non-critical motif position' or 'Overlap: critical motif position') |
-| 49. `TF_BINDING_SITE_VARIANT_INFO` | Comma-separated list of transcription factor binding sites affected by variant. Format per factor: `<TRANSCRIPTION_FACTOR>|<MOTIF_NAME>|<MOTIF_POS>|<MOTIF_SCORE_CHANGE>|<HIGH_INF_POS>`. *HIGH_INF_POS* indicates whether the variant overlapped a critical motif position (`Y`), or non-critical motif position (`N`) |
-| 50. `GERP_SCORE` | Genomic conservation score (GERP) |
-| 51. `N_INSILICO_CALLED` | Number of algorithms with effect prediction (damaging/tolerated) from dbNSFP |
-| 52. `N_INSILICO_DAMAGING` | Number of algorithms with damaging prediction from dbNSFP |
-| 53. `N_INSILICO_TOLERATED` | Number of algorithms with tolerated prediction from dbNSFP |
-| 54. `N_INSILICO_SPLICING_NEUTRAL` | Number of algorithms with splicing neutral prediction from dbscSNV |
-| 55. `N_INSILICO_SPLICING_AFFECTED` | Number of algorithms with splicing affected prediction from dbscSNV |
-| 56. `gnomADe_AF` | Global MAF in gnomAD (exome samples) |
-| 57. `<CUSTOM_POPULATION_GNOMAD`> | Population specific MAF in gnomAD control (non-cancer, population configured by user) |
-| 58. `FINAL_CLASSIFICATION` | Final variant classification based on the combination of `CLINVAR_CLASSIFICTION` (for ClinVar-classified variants), and `CPSR_CLASSIFICATION` (for novel variants) |
-| 59. `CPSR_CLASSIFICATION` | Variant clinical significance by CPSR's classification algorithm (P/LP/VUS/LB/B) |
-| 60. `CPSR_PATHOGENICITY_SCORE` | Aggregated pathogenicity score by CPSR's algorithm|
-| 61. `CPSR_CLASSIFICATION_CODE` | Combination of CPSR classification codes assigned to the variant (ACMG) |
-| 62. `CPSR_CLASSIFICATION_DOC` | Description of CPSR classification codes assigned to the variant (ACMG) |
-
+| 30. `VEP_ALL_CSQ` | All VEP transcript block consequences |
+| 31. `CANCER_PHENOTYPE` | For variants with a ClinVar classification, indication of cancer-associated disease/phenotype (1) or not (0) |
+| 32. `MUTATION_HOTSPOT` | Cancer mutation hotspot (cancerhotspots.org) |
+| 33. `RMSK_HIT` | RepeatMasker hit |
+| 34. `EFFECT_PREDICTIONS` | Functional effect predictions from multiple algorithms (dbNSFP) |
+| 35. `LOSS_OF_FUNCTION` | Loss-of-function variant, as predicted from VEP's LofTee plugin |
+| 36. `NULL_VARIANT` | Frameshift or stop-gain variant |
+| 37. `DBMTS` | variant with potential effect on microRNA target sites (dbMTS). Format: `<ensembl_transcript_id>|<microrna_identifier>|<target_prediction_algorithms>|<gain_loss_consensus>`. _Target prediction algorithms_ indicate support by different algorithms (separated by '&'), `TS` = TargetScan, `M` = miRanda, `R` = RNAhybrid. *Gain_loss_consensus* indicate whether the variant was predicted to disrupt a binding site (`L` = Loss), or create a new target site (`G` = gain) by the different algorithms |
+| 38. `REGULATORY_ANNOTATION` | Overlap of variant with regulatory elements (VEP) | 
+| 39. `TF_BINDING_SITE_VARIANT` | Indicates whether a variant overlaps a critical/non-critical position of a transcription factor binding site (TFBS) - as provided by VEP's--regulatory option ('Overlap: non-critical motif position' or 'Overlap: critical motif position') |
+| 40. `TF_BINDING_SITE_VARIANT_INFO` | Comma-separated list of transcription factor binding sites affected by variant. Format per factor: `<TRANSCRIPTION_FACTOR>|<MOTIF_NAME>|<MOTIF_POS>|<MOTIF_SCORE_CHANGE>|<HIGH_INF_POS>`. *HIGH_INF_POS* indicates whether the variant overlapped a critical motif position (`Y`), or non-critical motif position (`N`) |
+| 41. `GERP_SCORE` | Genomic conservation score (GERP) |
+| 42. `DBSNP_RSID` | dbSNP identifier (rsid) |
+| 43. `CLINVAR_CLASSIFICATION` | clinical significance of ClinVar-recorded variant |
+| 44. `CLINVAR_MSID` | measureset identifier of ClinVar variant |
+| 45. `CLINVAR_VARIANT_ORIGIN` | variant origin (somatic/germline) of ClinVar variant |
+| 46. `CLINVAR_CONFLICTED` | indicator of conflicting interpretations |
+| 47. `CLINVAR_PHENOTYPE` | associated phenotype(s) for ClinVar variant |
+| 48. `CLINVAR_REVIEW_STATUS_STARS` | Review confidence - number of gold stars |
+| 49. `N_INSILICO_CALLED` | Number of algorithms with effect prediction (damaging/tolerated) from dbNSFP |
+| 50. `N_INSILICO_DAMAGING` | Number of algorithms with damaging prediction from dbNSFP |
+| 51. `N_INSILICO_TOLERATED` | Number of algorithms with tolerated prediction from dbNSFP |
+| 52. `N_INSILICO_SPLICING_NEUTRAL` | Number of algorithms with splicing neutral prediction from dbscSNV |
+| 53. `N_INSILICO_SPLICING_AFFECTED` | Number of algorithms with splicing affected prediction from dbscSNV |
+| 54. `gnomADe_AF` | Global MAF in gnomAD (exome samples) |
+| 55. `FINAL_CLASSIFICATION` | Final variant classification based on the combination of `CLINVAR_CLASSIFICTION` (for ClinVar-classified variants), and `CPSR_CLASSIFICATION` (for novel variants) |
+| 56. `CPSR_CLASSIFICATION` | Variant clinical significance by CPSR's classification algorithm (P/LP/VUS/LB/B) |
+| 57. `CPSR_PATHOGENICITY_SCORE` | Aggregated pathogenicity score by CPSR's algorithm |
+| 58. `CPSR_CLASSIFICATION_CODE` | Combination of CPSR classification codes assigned to the variant (ACMG) |
+| 59. `CPSR_CLASSIFICATION_DOC` | Descriptions of CPSR classification codes assigned to the variant (ACMG) |
+| 60. `<CUSTOM_POPULATION_GNOMAD`> | Population specific MAF in gnomAD control (non-cancer, population configured by user) |
 
 **NOTE**: The user has the possibility to append the TSV file with data from other INFO tags in the input VCF (i.e. using the *--retained_info_tags* option)
+
+### Biomarker annotations
+
+The interactive HTML report (section *Genomic biomarkers*) and the Excel workbook (sheet *BIOMARKER_EVIDENCE* contains information on matches between potential pathogenic/likely pathogenic sample variants and reported biomarkers, the latter referring to clinical evidence items that relate genomic genomic aberrations to prognosis, diagnosis or sensitivity/resistance to particular treatments. All biomarker annotations are prefixed with **BM_**, and the following is provided per evidence item:
+
+| Variable | Description |
+|----------|-------------|
+| 1. `BM_CANCER_TYPE` | Annotated cancer type for biomarker - from CIViC |
+| 2. `BM_DISEASE_ONTOLOGY_ID` | Disease ontology id for cancer type - from CIViC |
+| 3. `BM_PRIMARY_SITE` | Primary tumor type of cancer type - mapped with [phenOncoX](https://github.com/sigven/phenOncoX) |
+| 4. `BM_CLINICAL_SIGNIFICANCE` | Clinical significance of biomarker (drug sensitivity, drug resistance, poor outcome etc.) - from CIViC |
+| 5. `BM_THERAPEUTIC_CONTEXT` | Cancer drugs associated with biomarker (for biomarkers related to drug sensitivity/reistance) - from CIViC |
+| 6. `BM_CITATION` | Reference/source for biomarker - i.e. publication or guidelines - from CIViC |
+| 7. `BM_RATING` | Rating of biomarker - from CIViC |
+| 8. `BM_MOLECULAR_PROFILE_NAME` | Associated name of molecular profile - i.e. "BRCA mutation" - from CIViC |
+| 9. `BM_EVIDENCE_TYPE` | Biomarker type - _Predictive_, _Diagnostic_, _Prognostic_, _Predisposing_  - from CIViC |
+| 10. `BM_EVIDENCE_LEVEL` | Strength of evidence for the given biomarker - _A_ to _D_ - from CIViC |
+| 11. `BM_EVIDENCE_DIRECTION` | Direction of biomarker evidence, i.e. _Supports_ or _Does Not Support_ - from CIViC |
+| 12. `BM_EVIDENCE_DESCRIPTION` | Description of biomarker - from CIViC |
+| 13. `BM_SOURCE_DB` | Biomarker source database - CIViC |
+| 14. `BM_EVIDENCE_ID` | Evidence identifier - from CIViC |
+| 15. `BM_VARIANT_ORIGIN` | Origin of biomarker variant - _germline_ |
+| 16. `BM_MATCH` | Match between sample variant and biomarker  - _by_genomic_coord_, _by_hgvsp_principal_, _by_gene_mut_lof_ etc. |
+| 17. `BM_RESOLUTION` | Highest resolution of mapping between sample variant and biomarker - _genomic_, _hgvsp_, _codon_, _gene_ |
+

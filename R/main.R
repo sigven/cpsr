@@ -207,7 +207,6 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
           ref_data = ref_data) |>
         pcgrr::append_dbnsfp_var_link() |>
         pcgrr::append_annotation_links() |>
-        pcgrr::append_tfbs_annotation() |>
         pcgrr::append_dbmts_var_link()
 
       if(c != "all"){
@@ -323,7 +322,7 @@ write_cpsr_output <- function(report,
       quarto::quarto_render(
         input = quarto_main_template_sample,
         execute_dir = tmp_quarto_dir,
-        quiet = !cps_report$settings$conf$debug)
+        quiet = !report$settings$conf$debug)
 
       ## Copy output HTML report from temporary rendering directory
       ## to designated HTML file in output directory

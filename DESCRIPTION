@@ -35,6 +35,8 @@ Imports:
     ggplot2,
     pcgrr,
     rlang,
+    quarto,
+    openxlsx2,
     stringr,
     tidyr
 Depends:

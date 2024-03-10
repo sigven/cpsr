@@ -36,13 +36,14 @@ load_germline_snv_indel <- function(
     dplyr::mutate(
       ENTREZGENE = as.character(.data$ENTREZGENE)) |>
     dplyr::select(
-      ENTREZGENE, PRIMARY_TARGET
+      c("ENTREZGENE", "PRIMARY_TARGET")
     )
 
   if(NROW(callset[['variant']]) > 0){
     callset[['variant']] <- callset[['variant']] |>
       cpsr::append_cpg_properties(ref_data = ref_data) |>
       cpsr::get_insilico_prediction_statistics() |>
+      pcgrr::append_tfbs_annotation() |>
       pcgrr::append_gwas_citation_phenotype(
        ref_data = ref_data) |>
       cpsr::assign_pathogenicity_evidence(
@@ -130,9 +131,9 @@ load_germline_snv_indel <- function(
   cpsr_callset[['variant']][['all']] <- callset$variant |>
     dplyr::left_join(primary_targets, by = "ENTREZGENE") |>
     dplyr::mutate(PRIMARY_TARGET = dplyr::if_else(
-      is.na(PRIMARY_TARGET),
+      is.na(.data$PRIMARY_TARGET),
       FALSE,
-      as.logical(PRIMARY_TARGET)
+      as.logical(.data$PRIMARY_TARGET)
     ))
   ## Make variant set for tier reporting (virtual panel genes only)
   cpsr_callset[['variant']][['cpg_non_sf']] <- callset$variant |>

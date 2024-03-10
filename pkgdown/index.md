@@ -62,12 +62,6 @@ The variant sets can be interactively explored and filtered further through diff
    4) The list of [virtual gene panels](articles/virtual_panels.html) available in CPSR
 
 
-### Related work
-
-* [CharGer - Characterization of Germline variants](https://github.com/ding-lab/CharGer)
-* [PathoMan - Pathogenicity of Mutation Analyzer (Beta)](https://pathoman.mskcc.org/)
-* [SherLoc - Variant classification](https://www.invitae.com/en/variant-classification/)
-
 ### Contact
 
 sigven@ifi.uio.no

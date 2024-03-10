@@ -7,11 +7,11 @@
 assign_pathogenicity_evidence(var_calls, settings, ref_data)
 }
 \arguments{
+\item{var_calls}{sample calls with dbnsfp annotations}
+
 \item{settings}{cpsr settings object}
 
 \item{ref_data}{pcgr data object}
-
-\item{calls}{sample calls with dbnsfp annotations}
 }
 \value{
 calls
