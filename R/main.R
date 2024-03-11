@@ -149,19 +149,19 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
 
   pcgrr::log4r_info(
     paste0(
-      "Total number of variants in target cancer predisposition genes (for TIER output): ",
+      "Total number of variants in target cancer predisposition genes: ",
       cps_report$content$snv_indel[["v_stat_cpg"]][["n"]]
     )
   )
   pcgrr::log4r_info(
     paste0(
-      "Number of coding variants in target cancer predisposition genes (for TIER output): ",
+      "Number of coding variants in target cancer predisposition genes: ",
       cps_report$content$snv_indel[["v_stat_cpg"]][["n_coding"]]
     )
   )
   pcgrr::log4r_info(
     paste0(
-      "Number of non-coding variants in cancer predisposition genes (for TIER output): ",
+      "Number of non-coding variants in cancer predisposition genes: ",
       cps_report$content$snv_indel[["v_stat_cpg"]][["n_noncoding"]]
     )
   )
@@ -347,7 +347,7 @@ write_cpsr_output <- function(report,
       pcgrr::log4r_warn(
         paste0("Too large variant set (n = ",
                report$content$snv_indel$v_stat_cpg$n,
-               "for display in HTML report - ",
+               ") for display in HTML report - ",
                "skipping report generation"))
       pcgrr::log4r_warn("------")
     }
