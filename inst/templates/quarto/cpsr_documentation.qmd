@@ -104,7 +104,7 @@ classification_calibration_plot_fname_path <-
               package = "cpsr")
 ```
 
-<img src="`r classification_calibration_plot_fname_path`" title="" alt="" align="center" width="950" height="530"/>
+<img src="`r classification_calibration_plot_fname_path`" title="" alt="" align="center" width="950" height="560"/>
 
 <br>
 <br>
