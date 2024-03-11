@@ -469,3 +469,46 @@ usethis::use_data(col_format_output, overwrite = T)
 #   wb = workbook,
 #   "pkgdown/assets/cpsr_superpanel_2024_03.xlsx",
 #   overwrite = TRUE)
+
+#
+# panel_zero_display <- panel_zero$grch38 |>
+#   dplyr::select(
+#     c("ENTREZGENE",
+#       "SYMBOL",
+#       "ENTREZGENE",
+#       "ENSEMBL_GENE_ID",
+#       "GENENAME",
+#       "CPG_PHENOTYPES",
+#       "CPG_MOI",
+#       "CPG_MOD",
+#       "CPG_SOURCE",
+#     )
+#   ) |>
+#   dplyr::mutate(
+#     CPG_SOURCE = stringr::str_replace_all(
+#       CPG_SOURCE, "&", ", "
+#     )) |>
+#   dplyr::mutate(
+#     CPG_SOURCE = stringr::str_replace_all(
+#       CPG_SOURCE, "ACMG_SF", ""
+#     )
+#   ) |>
+#   dplyr::mutate(
+#     GENE = paste0(
+#       "<a href='https://www.ncbi.nlm.nih.gov/gene/",
+#       .data$ENTREZGENE,
+#       "' target='_blank'>",
+#       .data$SYMBOL, "</a>"
+#     )
+#   ) |>
+#   dplyr::select(
+#     c("GENE","ENTREZGENE","ENSEMBL_GENE_ID",
+#       "CPG_MOD", "CPG_MOI", "GENENAME",
+#       "CPG_SOURCE", "CPG_PHENOTYPES")
+#   )
+#
+# readr::write_tsv(
+#   panel_zero_display, file = "inst/extdata/panel_zero.tsv.gz",
+#   na = "NA", col_names = T,quote = "none"
+# )
+

@@ -276,70 +276,80 @@ write_cpsr_output <- function(report,
     settings[["conf"]][["visual_reporting"]][["visual_theme"]]
 
   if (output_format == "html") {
-    if(file.exists(quarto_input)){
+    if(report$content$snv_indel$v_stat_cpg$n < 2000){
+      if(file.exists(quarto_input)){
 
-      ## make temporary directory for quarto report rendering
-      tmp_quarto_dir <- file.path(
-        output_dir,
-        paste0('quarto_', stringi::stri_rand_strings(1, 15))
-      )
-      quarto_main_template <-
-        glue::glue("{tmp_quarto_dir}{.Platform$file.sep}cpsr_report.qmd")
-      quarto_main_template_sample <-
-        glue::glue("{tmp_quarto_dir}{.Platform$file.sep}cpsr_report_sample.qmd")
-      quarto_html <-
-        glue::glue("{tmp_quarto_dir}{.Platform$file.sep}cpsr_report_sample.html")
+        ## make temporary directory for quarto report rendering
+        tmp_quarto_dir <- file.path(
+          output_dir,
+          paste0('quarto_', stringi::stri_rand_strings(1, 15))
+        )
+        quarto_main_template <-
+          glue::glue("{tmp_quarto_dir}{.Platform$file.sep}cpsr_report.qmd")
+        quarto_main_template_sample <-
+          glue::glue("{tmp_quarto_dir}{.Platform$file.sep}cpsr_report_sample.qmd")
+        quarto_html <-
+          glue::glue("{tmp_quarto_dir}{.Platform$file.sep}cpsr_report_sample.html")
 
-      ## Copy all CPSR quarto reporting templates, bibliography, css etc to
-      ## the temporary directory for quarto report rendering
-      invisible(cpsr::mkdir(tmp_quarto_dir))
-      system(glue::glue("cp -r {cpsr_rep_template_path}{.Platform$file.sep}* {tmp_quarto_dir}"))
+        ## Copy all CPSR quarto reporting templates, bibliography, css etc to
+        ## the temporary directory for quarto report rendering
+        invisible(cpsr::mkdir(tmp_quarto_dir))
+        system(glue::glue("cp -r {cpsr_rep_template_path}{.Platform$file.sep}* {tmp_quarto_dir}"))
 
-      ## Save sample CPSR report object in temporary quarto rendering directory
-      rds_report_path <- file.path(
-        tmp_quarto_dir, "cps_report.rds")
-      report$ref_data <- NULL
-      saveRDS(report, file = rds_report_path)
+        ## Save sample CPSR report object in temporary quarto rendering directory
+        rds_report_path <- file.path(
+          tmp_quarto_dir, "cps_report.rds")
+        report$ref_data <- NULL
+        saveRDS(report, file = rds_report_path)
 
-      ## Substitute rds object in main quarto template with path to sample rds
-      readLines(quarto_main_template) |>
-        stringr::str_replace(
-          pattern = "<CPSR_REPORT_OBJECT.rds>",
-          replacement = rds_report_path) |>
-        stringr::str_replace(
-          pattern = "<SAMPLE_NAME>",
-          replacement = sample_name
-        ) |>
-        writeLines(con = quarto_main_template_sample)
+        ## Substitute rds object in main quarto template with path to sample rds
+        readLines(quarto_main_template) |>
+          stringr::str_replace(
+            pattern = "<CPSR_REPORT_OBJECT.rds>",
+            replacement = rds_report_path) |>
+          stringr::str_replace(
+            pattern = "<SAMPLE_NAME>",
+            replacement = sample_name
+          ) |>
+          writeLines(con = quarto_main_template_sample)
 
-      ## Render report (quietly)
-      pcgrr::log4r_info("------")
-      pcgrr::log4r_info(
-        paste0(
-        "Generating quarto-based interactive HTML report (.html) with variant findings",
-        "- ('",output_format, "')"))
+        ## Render report (quietly)
+        pcgrr::log4r_info("------")
+        pcgrr::log4r_info(
+          paste0(
+          "Generating quarto-based interactive HTML report (.html) with variant findings",
+          "- ('",output_format, "')"))
 
-      quarto::quarto_render(
-        input = quarto_main_template_sample,
-        execute_dir = tmp_quarto_dir,
-        quiet = !report$settings$conf$debug)
+        quarto::quarto_render(
+          input = quarto_main_template_sample,
+          execute_dir = tmp_quarto_dir,
+          quiet = !report$settings$conf$debug)
 
-      ## Copy output HTML report from temporary rendering directory
-      ## to designated HTML file in output directory
-      if(file.exists(quarto_html)){
-        system(
-          glue::glue(paste0(
-            "cp -f {quarto_html} ",
-            "{fnames[['html']]}")))
-      }else{
-        cat("WARNING\n")
+        ## Copy output HTML report from temporary rendering directory
+        ## to designated HTML file in output directory
+        if(file.exists(quarto_html)){
+          system(
+            glue::glue(paste0(
+              "cp -f {quarto_html} ",
+              "{fnames[['html']]}")))
+        }else{
+          cat("WARNING\n")
+        }
+
+        ## remove temporary quarto directory (if debugging is switched off)
+        if(!(settings$conf$debug)){
+          system(glue::glue("rm -rf {tmp_quarto_dir}"))
+        }
+        pcgrr::log4r_info("------")
       }
-
-      ## remove temporary quarto directory (if debugging is switched off)
-      if(!(settings$conf$debug)){
-        system(glue::glue("rm -rf {tmp_quarto_dir}"))
-      }
-      pcgrr::log4r_info("------")
+    }else{
+      pcgrr::log4r_warn("------")
+      pcgrr::log4r_warn(
+        paste0("Too large variant set (n = ",
+               report$content$snv_indel$v_stat_cpg$n,
+               "for display in HTML report - ",
+               "skipping report generation"))
+      pcgrr::log4r_warn("------")
     }
   }
 

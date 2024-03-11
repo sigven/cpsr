@@ -9,13 +9,13 @@ The cancer predisposition report can show variants found in a number of well-kno
 
   * **Panel 0** is a non-conservative, research-based _superpanel_ assembled through multiple sources on cancer predisposition genes:
 	* A list of 152 genes that were curated and established within TCGA’s pan-cancer study ([Huang et al., *Cell*, 2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052))
-	* A list of 114 protein-coding genes that has been manually curated in COSMIC’s [Cancer Gene Census v91](https://cancer.sanger.ac.uk/census),
-	* Genes from all [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk/) panels for inherited cancers and tumor syndromes (detailed below)
-	* Additional genes deemed relevant for cancer predisposition (contributed by the CPSR user community)
+	* A list of 114 protein-coding genes that has been manually curated in COSMIC’s [Cancer Gene Census v99](https://cancer.sanger.ac.uk/census),
+	* Genes from all [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk/) panels for inherited cancers and tumor syndromes, as well as DNA repair genes (detailed below)
+	* Additional genes deemed relevant for cancer predisposition (i.e. contributed by CPSR users)
 
 
-	The combination of the above sources resulted in a [non-redundant set of **n = 563**
-	genes](https://cpsr.readthedocs.io/en/latest/superpanel.html) of relevance for cancer predisposition (see complete details [below](#panel-0))
+	The combination of the above sources resulted in a non-redundant set of **n = 563**
+	genes of relevance for cancer predisposition (see complete details [below](#panel-0))
 	
 	Data with respect to mechanisms of inheritance (<i>MoI</i> - autosomal recessive (AR) vs. autosomal
 	dominant (AD) etc.) and whether mechanisms of disease are associated with loss-of-function (<i>LoF</i>) or
@@ -76,6 +76,7 @@ The cancer predisposition report can show variants found in a number of well-kno
 [Download the complete set of CPSR superpanel genes, grch37/grch38 versions (xlsx)](https://sigven.github.io/cpsr/cpsr_superpanel_2024_03.xlsx)
 
 
+<!--
 |  no | gene_link                                                                          | entrezgene | ensembl_gene_id | moi       | mod | gene_name                                                                                         | source                                           | phenotype_syndrome_term                                                                                                                      |
 |----:|:-----------------------------------------------------------------------------------|-----------:|:----------------|:----------|:----|:--------------------------------------------------------------------------------------------------|:-------------------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------|
 |   1 | <a href='https://www.ncbi.nlm.nih.gov/gene/8647' target='_blank'>ABCB11</a>        |       8647 | ENSG00000073734 | AR        | LoF | ATP binding cassette subfamily B member 11                                                        | TCGA_PANCAN_2018                                 | Crigler-Najjar syndrome, type II                                                                                                             |
@@ -511,3 +512,5 @@ The cancer predisposition report can show variants found in a number of well-kno
 | 431 | <a href='https://www.ncbi.nlm.nih.gov/gene/7516' target='_blank'>XRCC2</a>         |       7516 | ENSG00000196584 | AR        | LoF | X-ray repair cross complementing 2                                                                | NCGC,PANEL_APP                                   | NA                                                                                                                                           |
 | 432 | <a href='https://www.ncbi.nlm.nih.gov/gene/7517' target='_blank'>XRCC3</a>         |       7517 | ENSG00000126215 | AD        | NA  | X-ray repair cross complementing 3                                                                | OTHER                                            | NA                                                                                                                                           |
 | 433 | <a href='https://www.ncbi.nlm.nih.gov/gene/7704' target='_blank'>ZBTB16</a>        |       7704 | ENSG00000109906 | NA        | NA  | zinc finger and BTB domain containing 16                                                          | OTHER                                            | NA                                                                                                                                           |
+-->
+

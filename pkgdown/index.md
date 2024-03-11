@@ -4,23 +4,21 @@
 
 <br>
 
-The *Cancer Predisposition Sequencing Reporter (CPSR)* is a computational workflow that **interprets germline variants** identified from next-generation sequencing **in the context of cancer predisposition**. The workflow is integrated with the framework that underlies [Personal Cancer Genome Reporter - PCGR ](https://github.com/sigven/pcgr). While *PCGR* is intended for reporting and analysis of somatic variants detected in a tumor, *CPSR* is intended for reporting and ranking of germline variants in protein-coding genes that are implicated in cancer predisposition and inherited cancer syndromes.
+The *Cancer Predisposition Sequencing Reporter (CPSR)* is a computational workflow that **interprets germline variants** identified from next-generation sequencing **in the context of cancer predisposition**. 
 
-*CPSR* accepts a query file with raw germline variant calls(SNVs/InDels) from a single sample, encoded in the [VCF format ](https://samtools.github.io/hts-specs/VCFv4.2.pdf). Through the use several different [virtual cancer predisposition gene panels](articles/virtual_panels.html), the user can flexibly put a restriction on which genes and findings are displayed in the cancer predisposition report. *CPSR* determines the clinical significance of variants through the implementation of refined ACMG-AMP variant classification criteria.
+*CPSR* accepts a query file with raw germline variant calls (SNVs/InDels) from a single sample (cancer patient), encoded in the [VCF format ](https://samtools.github.io/hts-specs/VCFv4.2.pdf). CPSR conducts comprehensive gene and variant annotation on the input calls, and generates a dedicated _variant HTML report_, that provides the following main functionality:
+
+1) Flexible **selection of cancer predisposition genes** subject to analysis
+2) **Variant classification** (*Pathogenic* to _Benign_) according to published guidelines (ACMG/AMP)
+3) **Biomarker matching** of sample variants (prognosis, diagnosis, drug sensitivity/resistance)
+4) Potential **secondary/incidental findings** (ACMG recommendations)
+
+
+The workflow is integrated with the framework that underlies [Personal Cancer Genome Reporter - PCGR ](https://github.com/sigven/pcgr). While *PCGR* is intended for reporting and analysis of somatic variants detected in a tumor, *CPSR* is intended for reporting and ranking of germline variants in protein-coding genes that are implicated in cancer predisposition and inherited cancer syndromes.
 
 Snapshots of sections in the cancer predisposition genome report:
 
 ![](img/cpsr_views.png)
-
-The software performs extensive variant annotation on the selected geneset and produces an interactive HTML report, in which the user can investigate:
-
-* __ClinVar variants__ - pre-classified variants according to a five-level tier scheme in ClinVar (Pathogenic to Benign)
-* __Novel variants__ - classified by CPSR through refined ACMG criteria (variant frequency levels and functional effects) into a five-level classification scheme (Pathogenic to Benign)
-* __Variant biomarkers__ - cancer predisposition variants with reported implications for prognosis, diagnosis or therapeutic regimens
-* __Secondary findings (optional)__ - pathogenic variants in the [ACMG recommended list for reporting of secondary findings](https://www.ncbi.nlm.nih.gov/clinvar/docs/acmg/)
-* __GWAS hits (optional)__ - variants overlapping with previously identified hits in genome-wide association studies (GWAS) of cancer phenotypes (i.e. low to moderate risk conferring alleles).
-
-The variant sets can be interactively explored and filtered further through different types of filters (phenotypes, genes, variant consequences, population MAF etc.). Importantly, the unclassified (i.e. non-ClinVar) variants are assigned a *pathogenicity score* based on the aggregation of scores according to previously established [ACMG criteria](https://www.ncbi.nlm.nih.gov/pubmed/25741868). The ACMG criteria includes cancer-specific criteria, as outlined and specified in several previous studies ([Huang et al., *Cell*, 2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052); [Nykamp et al., *Genet Med.*, 2017](https://www.ncbi.nlm.nih.gov/pubmed/28492532); [Maxwell et al., *Am J Hum Genet.*, 2016](https://www.ncbi.nlm.nih.gov/pubmed/27153395); [Amendola et al., *Am J Hum Genet.*,  2016](https://www.ncbi.nlm.nih.gov/pubmed/27181684)). See also [*Related work*](https://github.com/sigven/cpsr#related-work) below).
 
 
 ### News

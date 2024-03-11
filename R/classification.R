@@ -1038,56 +1038,6 @@ combine_novel_and_preclassified <-
         "^, ", ""
       )
 
-    # snv_indel_report[["variant"]][[c]] <-
-    #   snv_indel_report[["variant"]][[c]] |>
-    #   dplyr::select(
-    #     c("SAMPLE_ID",
-    #       "GENOMIC_CHANGE",
-    #       "VAR_ID",
-    #       "GENOTYPE",
-    #       "CPSR_CLASSIFICATION_SOURCE",
-    #       "GENOME_VERSION",
-    #       "VARIANT_CLASS",
-    #       "CODING_STATUS",
-    #       "SYMBOL",
-    #       "GENENAME",
-    #       "CCDS",
-    #       "ENTREZGENE",
-    #       "UNIPROT_ID",
-    #       "ENSEMBL_GENE_ID",
-    #       "ENSEMBL_TRANSCRIPT_ID",
-    #       "REFSEQ_TRANSCRIPT_ID",
-    #       "ONCOGENE",
-    #       "TUMOR_SUPPRESSOR",
-    #       "CANCERGENE_EVIDENCE",
-    #       "CONSEQUENCE",
-    #       "VEP_ALL_CSQ",
-    #       "CDS_CHANGE",
-    #       "PROTEIN_CHANGE",
-    #       "HGVSp",
-    #       "HGVSc",
-    #       "EFFECT_PREDICTIONS",
-    #       "LOSS_OF_FUNCTION",
-    #       "NULL_VARIANT",
-    #       "LAST_EXON",
-    #       "EXON_POSITION",
-    #       "INTRON_POSITION",
-    #       "MUTATION_HOTSPOT",
-    #       "REGULATORY_ANNOTATION",
-    #       "PFAM_DOMAIN_NAME",
-    #       "DBSNP",
-    #       "RMSK_HIT",
-    #       "CANCER_PHENOTYPE",
-    #       "CLINVAR_CLASSIFICATION",
-    #       "CLINVAR_MSID",
-    #       "CLINVAR_VARIANT_ORIGIN",
-    #       "CLINVAR_CONFLICTED",
-    #       "CLINVAR_PHENOTYPE",
-    #       "CLINVAR_REVIEW_STATUS_STARS"
-    #     ),
-    #     dplyr::everything()
-    #   )
-
     for (col in colnames(var_calls)) {
       if (nrow(var_calls[!is.na(
         var_calls[, col]

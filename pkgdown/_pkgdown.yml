@@ -4,15 +4,29 @@ toc:
   depth: 3
 template:
   bootstrap: 5
+  bslib:
+    info: "#007a74"
+    dropdown-link-hover-bg: "#007a74"
+    dropdown-link-hover-color: "white"
+    dropdown-link-active-color: "white"
+    navbar-light-color: "white"
+    navbar-light-brand-color: "white"
+    navbar-light-brand-hover-color: "white"
+    navbar-link-color: "white"
 authors:
   Sigve Nakken:
     href: https://github.com/sigven
   Peter Diakumis:
     href: https://github.com/pdiakumis
 navbar:
+  link-color: "white"
+  light-color: "white"
+  light-brand-color: "white"
+  type: light
+  bg: info
   structure:
-    left:  [home, installation, running, articles, changelog]
-    right: [reference, search, github]
+    left: [installation, running, reference, articles]
+    right: [search, changelog, github]
   components:
     home:
       text: Intro
@@ -30,7 +44,7 @@ navbar:
         href: articles/input.html
       - text: Virtual gene panels
         href: articles/virtual_panels.html
-      - text: ACMG classification
+      - text: Variant classification
         href: articles/variant_classification.html
       - text: Output files
         href: articles/output.html

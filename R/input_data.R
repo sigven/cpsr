@@ -111,13 +111,16 @@ load_germline_snv_indel <- function(
             )
 
           if("FINAL_CLASSIFICATION" %in%
-             colnames(callset$biomarker_evidence$items)){
+             colnames(callset$biomarker_evidence$items) &
+             "CPSR_CLASSIFICATION_SOURCE" %in%
+             colnames(callset$variant)){
 
             callset$biomarker_evidence$items <-
               callset$biomarker_evidence$items |>
               dplyr::filter(
-                .data$FINAL_CLASSIFICATION == "Pathogenic" |
-                  .data$FINAL_CLASSIFICATION == "Likely_Pathogenic")
+                .data$CPSR_CLASSIFICATION_SOURCE == "ClinVar" &
+                (.data$FINAL_CLASSIFICATION == "Pathogenic" |
+                  .data$FINAL_CLASSIFICATION == "Likely_Pathogenic"))
           }
 
         }
