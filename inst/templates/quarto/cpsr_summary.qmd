@@ -82,7 +82,7 @@ bslib::layout_column_wrap(
     value = paste0(
       "N = ", 
       cps_report$content$snv_indel$v_stat_cpg$n_p + 
-        cps_report$content$snv_indel$v_stat_cpg$n_p),
+        cps_report$content$snv_indel$v_stat_cpg$n_lp),
     showcase = bsicons::bs_icon("bullseye"), 
     theme = bslib::value_box_theme(
       bg = color_lp, fg = "#fff"),

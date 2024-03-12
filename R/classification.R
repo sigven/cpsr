@@ -13,7 +13,7 @@ assign_classification <- function(var_calls) {
 
   pcgrr::log4r_info(paste0(
     "Assigning five-tier classifications (P, LP, VUS, LB, B) based on ",
-    "aggregated scores from ACMG criteria"))
+    "aggregated ACMG points"))
 
   path_cols <- c(
     "CPSR_CLASSIFICATION",
@@ -203,7 +203,7 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
   #pcgrr::validate_settings(settings)
 
   pcgrr::log4r_info(
-    "Assigning pathogenicity codes according to enhanced ACMG criteria/guidelines")
+    "Assigning variant classification codes according to refined ACMG criteria")
   classification_settings <-
     settings$conf$variant_classification
 

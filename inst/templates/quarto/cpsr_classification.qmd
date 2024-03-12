@@ -635,7 +635,7 @@ htmltools::br()
 <br>
 
 *  A total of n = __`r tot_variants[['class2']][['ClinVar']]`__ variants are recorded with a <i>Likely Benign</i> clinical significance in the [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) database.
-*  A total of n = __`r tot_variants[['class2']][['CPSR_ACMG']]`__ <i><b>Other</b></i> variants (i.e. not submitted to/recorded in ClinVar) are classified with a <i>Likely Benign</i> clinical significance by CPSR (refined ACMG criteria - based on population frequency and variant effect).
+*  A total of n = __`r tot_variants[['class2']][['CPSR_ACMG']]`__ <i><b>non-ClinVar</b></i> variants (i.e. not submitted to/recorded in ClinVar) are classified with a <i>Likely Benign</i> clinical significance by CPSR (refined ACMG criteria - based on population frequency and variant effect).
 
 ::: {.callout-note}
 Variants displayed here constitute the top 2000 variants for each of the ClinVar and non-ClinVar variant sets (due to display limitations with client-side tables)

@@ -18,9 +18,7 @@ tiles_html <- cpsr::plot_virtual_panels(
 <br>
 
 ::: {.callout-note}
-CPSR does not perform any interrogation of _which genes 
-that were subject to sequencing_, it merely checks potential overlap of input variants 
-within the user-defined __virtual__ gene panel.
+For the sample in question, `r cps_report$settings$sample_id`, CPSR does **not** perform any interrogation of _which genes that were subject to sequencing_. CPSR classifies only input variants (i.e. as found in the query VCF) within the user-defined __virtual__ gene panel.
 :::
 
 <br>

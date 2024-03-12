@@ -116,53 +116,61 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
   callset_all <- list()
   callset_all[['variant']] <-
     cps_report$content$snv_indel[['callset']]$variant$all
-  cps_report$content$snv_indel$v_stat <-
-    pcgrr::variant_stats_report(
-      callset = callset_all,
-      name = "v_stat")$v_stat
+  if(NROW(callset_all[['variant']]) > 0){
+    cps_report$content$snv_indel$v_stat <-
+      pcgrr::variant_stats_report(
+        callset = callset_all,
+        name = "v_stat")$v_stat
+  }
 
   ## get overall call statistics (cpg targets only)
   callset_cpg <- list()
   callset_cpg[['variant']] <-
     cps_report$content$snv_indel[['callset']]$variant$cpg_non_sf
-  cps_report$content$snv_indel$v_stat_cpg <-
-    pcgrr::variant_stats_report(
-      callset = callset_cpg,
-      name = "v_stat_cpg")$v_stat_cpg
+  if(NROW(callset_cpg[['variant']]) > 0){
+    cps_report$content$snv_indel$v_stat_cpg <-
+      pcgrr::variant_stats_report(
+        callset = callset_cpg,
+        name = "v_stat_cpg")$v_stat_cpg
+  }
 
   ## get overall call statistics (sf targets only)
   callset_sf <- list()
   callset_sf[['variant']] <-
     cps_report$content$snv_indel[['callset']]$variant$sf
-  cps_report$content$snv_indel$v_stat_sf <-
-    pcgrr::variant_stats_report(
-      callset = callset_sf,
-      name = "v_stat_sf")$v_stat_sf
+  if(NROW(callset_sf[['variant']]) > 0){
+    cps_report$content$snv_indel$v_stat_sf <-
+      pcgrr::variant_stats_report(
+        callset = callset_sf,
+        name = "v_stat_sf")$v_stat_sf
+  }
 
   callset_bm <- list()
   callset_bm[['variant']] <-
     cps_report$content$snv_indel[['callset']]$variant$bm
-  cps_report$content$snv_indel$v_stat_bm <-
-    pcgrr::variant_stats_report(
-      callset = callset_bm,
-      name = "v_stat_bm")$v_stat_bm
+  if(NROW(callset_bm[['variant']]) > 0){
+    cps_report$content$snv_indel$v_stat_bm <-
+      pcgrr::variant_stats_report(
+        callset = callset_bm,
+        name = "v_stat_bm")$v_stat_bm
+  }
 
   pcgrr::log4r_info(
     paste0(
       "Total number of variants in target cancer predisposition genes: ",
-      cps_report$content$snv_indel[["v_stat_cpg"]][["n"]]
+      "N = ", cps_report$content$snv_indel[["v_stat_cpg"]][["n"]]
     )
   )
   pcgrr::log4r_info(
     paste0(
       "Number of coding variants in target cancer predisposition genes: ",
-      cps_report$content$snv_indel[["v_stat_cpg"]][["n_coding"]]
+      "N = ", cps_report$content$snv_indel[["v_stat_cpg"]][["n_coding"]]
     )
   )
   pcgrr::log4r_info(
     paste0(
       "Number of non-coding variants in cancer predisposition genes: ",
-      cps_report$content$snv_indel[["v_stat_cpg"]][["n_noncoding"]]
+      "N = ", cps_report$content$snv_indel[["v_stat_cpg"]][["n_noncoding"]]
     )
   )
 

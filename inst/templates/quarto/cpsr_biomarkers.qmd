@@ -15,6 +15,10 @@ for (etype in c("Predictive","Diagnostic","Predisposing","Prognostic")) {
   show_germline_filters[[tolower(etype)]] <- F
   missing_germline_items[[tolower(etype)]] <- T
   
+  if(NROW(cps_report[["content"]][["snv_indel"]]$callset$variant_display$bm) == 0){
+    next
+  }
+  
   etype_set[[tolower(etype)]] <- 
     cps_report[["content"]][["snv_indel"]]$callset$variant_display$bm |>
     dplyr::filter(.data$BM_EVIDENCE_TYPE == etype)
@@ -49,7 +53,7 @@ The same genetic variant may match with multiple evidence items, pending on the 
 ```{r biomarker_note}
 #| echo: false
 #| output: asis
-#| include: !expr biomarker_present
+#| include: true
 
 cat("\n::: {.callout-note}\n Biomarkers registered in CIViC/CGI are provided at different _resolutions_ (i.e. filter <b>Biomarker resolution</b>). The accuracy of a match between a variant in the sample and a clinical evidence item (biomarker) will vary accordingly (highlighted by gene symbols with different color backgrounds):\n\n")
 
