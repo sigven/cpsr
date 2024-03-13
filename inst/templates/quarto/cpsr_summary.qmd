@@ -89,7 +89,7 @@ bslib::layout_column_wrap(
     showcase_layout = "left center"
   ),
   bslib::value_box(
-    title = "Cancer predisposition genes affected",
+    title = "Genes affected by pathogenic variants",
     value = genes_value_box,
     showcase = bsicons::bs_icon("bullseye"),
     theme = bslib::value_box_theme(

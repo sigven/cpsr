@@ -284,7 +284,7 @@ write_cpsr_output <- function(report,
     settings[["conf"]][["visual_reporting"]][["visual_theme"]]
 
   if (output_format == "html") {
-    if(report$content$snv_indel$v_stat_cpg$n < 2000){
+    if(report$content$snv_indel$v_stat_cpg$n < 3000){
       if(file.exists(quarto_input)){
 
         ## make temporary directory for quarto report rendering

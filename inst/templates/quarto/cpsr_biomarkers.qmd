@@ -40,14 +40,16 @@ for (etype in c("Predictive","Diagnostic","Predisposing","Prognostic")) {
 
 - Germline DNA variants (__class 4/5__) in the targeted cancer predisposition genes that match with reported clinical evidence items from [CIViC](https://civicdb.org) and [CGI biomarker database](https://www.cancergenomeinterpreter.org/biomarkers) are listed. 
 
-- Total number of _variant-clinical evidence associations_ that have been detected:
-    * Predisposing: __`r cps_report[['content']][['snv_indel']]$v_stat_bm$n_predisposing`__
-    * Predictive: __`r cps_report[['content']][['snv_indel']]$v_stat_bm$n_predictive`__ 
-    * Prognostic: __`r cps_report[['content']][['snv_indel']]$v_stat_bm$n_prognostic`__ 
-    * Diagnostic: __`r cps_report[['content']][['snv_indel']]$v_stat_bm$n_diagnostic`__
+- Total number of _unique variants_ with clinical evidence associations: __N = `r cps_report[['content']][['snv_indel']]$v_stat_bm$n_var_eitems`__
+
+- Total number of detected _variant-clinical evidence associations_:
+    * Predictive: __`r cps_report[['content']][['snv_indel']]$v_stat_bm$n_eitems_predictive`__ 
+    * Predisposing: __`r cps_report[['content']][['snv_indel']]$v_stat_bm$n_eitems_predisposing`__
+    * Prognostic: __`r cps_report[['content']][['snv_indel']]$v_stat_bm$n_eitems_prognostic`__ 
+    * Diagnostic: __`r cps_report[['content']][['snv_indel']]$v_stat_bm$n_eitems_diagnostic`__
 
 ::: {.callout-note}
-The same genetic variant may match with multiple evidence items, pending on the e.g. _disease context_, _therapeutic context_, _biomarker resolution_, or underlying _evidence source_ (publication)
+As indicated from the variant-association numbers above, the same germline mutation may potentially match with multiple evidence items, pending on e.g. the _disease context_, _therapeutic context_, _biomarker resolution_, or underlying _evidence source_ (i.e. publication)
 :::
 
 ```{r biomarker_note}

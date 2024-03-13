@@ -69,8 +69,8 @@ formula_gnomad <- as.formula(paste0("~", rlang::sym(tag_gnomad)))
 
 <br>
 
-   *  A total of n = __`r tot_variants[['class5']][['ClinVar']]`__ variants are registered with a <i>Pathogenic</i> clinical significance in the [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) database.
-   *  A total of n = __`r tot_variants[['class5']][['CPSR_ACMG']]`__ <i><b>non-ClinVar</b></i> variants (i.e. not submitted to/recorded in ClinVar) are classified with a <i>Pathogenic</i> clinical significance by CPSR (refined ACMG criteria - based on population frequency and variant effect).
+   *  A total of __N = `r tot_variants[['class5']][['ClinVar']]`__ variants are registered with a <i>Pathogenic</i> clinical significance in the [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) database.
+   *  A total of __N = `r tot_variants[['class5']][['CPSR_ACMG']]`__ <i><b>non-ClinVar</b></i> variants (i.e. not submitted to/recorded in ClinVar) are classified with a <i>Pathogenic</i> clinical significance by CPSR (refined ACMG criteria - based on population frequency and variant effect).
 
 ::: {.callout-note}
 Variants displayed here constitute the top 2000 variants for each of the ClinVar and non-ClinVar variant sets (due to display limitations with client-side tables)
@@ -126,6 +126,10 @@ crosstalk::bscols(
   list(
     crosstalk::filter_select("CONSEQUENCE", "Consequence", variants_class5_1, ~CONSEQUENCE),
     crosstalk::filter_checkbox("GENOTYPE", "Genotype", variants_class5_1, ~GENOTYPE),
+    if(cps_report$settings$conf$sample_properties$dp_detected == 1){
+      crosstalk::filter_slider("DP_CONTROL", "Variant sequencing depth", 
+                             variants_class5_1, ~DP_CONTROL)
+    },
     crosstalk::filter_select("SYMBOL", "Gene", variants_class5_1, ~SYMBOL)
   ),
   list(
@@ -206,6 +210,10 @@ crosstalk::bscols(
   list(
     crosstalk::filter_select("CONSEQUENCE", "Consequence", variants_class5_2, ~CONSEQUENCE),
     crosstalk::filter_checkbox("GENOTYPE", "Genotype", variants_class5_2, ~GENOTYPE),
+    if(cps_report$settings$conf$sample_properties$dp_detected == 1){
+      crosstalk::filter_slider("DP_CONTROL", "Variant sequencing depth", 
+                             variants_class5_2, ~DP_CONTROL)
+    },
     crosstalk::filter_select("SYMBOL", "Gene", variants_class5_2, ~SYMBOL)
   ),
   list(
@@ -247,8 +255,8 @@ htmltools::br()
 
 <br>
 
-*  A total of n = __`r tot_variants[['class4']][['ClinVar']]`__ variants are recorded with a <i>Likely Pathogenic</i> clinical significance in the [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) database.
-*  A total of n = __`r tot_variants[['class4']][['CPSR_ACMG']]`__ <i><b>non-ClinVar</b></i> variants (i.e. not submitted to/recorded in ClinVar) are classified with a <i>Likely Pathogenic</i> clinical significance by CPSR (refined ACMG criteria - based on population frequency and variant effect).
+*  A total of __N = `r tot_variants[['class4']][['ClinVar']]`__ variants are recorded with a <i>Likely Pathogenic</i> clinical significance in the [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) database.
+*  A total of __N = `r tot_variants[['class4']][['CPSR_ACMG']]`__ <i><b>non-ClinVar</b></i> variants (i.e. not submitted to/recorded in ClinVar) are classified with a <i>Likely Pathogenic</i> clinical significance by CPSR (refined ACMG criteria - based on population frequency and variant effect).
 
 ::: {.callout-note}
 Variants displayed here constitute the top 2000 variants for each of the ClinVar and non-ClinVar variant sets (due to display limitations with client-side tables)
@@ -303,6 +311,10 @@ crosstalk::bscols(
   list(
     crosstalk::filter_select("CONSEQUENCE", "Consequence", variants_class4_1, ~CONSEQUENCE),
     crosstalk::filter_checkbox("GENOTYPE", "Genotype", variants_class4_1, ~GENOTYPE),
+    if(cps_report$settings$conf$sample_properties$dp_detected == 1){
+      crosstalk::filter_slider("DP_CONTROL", "Variant sequencing depth", 
+                             variants_class4_1, ~DP_CONTROL)
+    },
     crosstalk::filter_select("SYMBOL", "Gene", variants_class4_1, ~SYMBOL)
   ),
   list(
@@ -384,6 +396,10 @@ crosstalk::bscols(
   list(
     crosstalk::filter_select("CONSEQUENCE", "Consequence", variants_class4_2, ~CONSEQUENCE),
     crosstalk::filter_checkbox("GENOTYPE", "Genotype", variants_class4_2, ~GENOTYPE),
+    if(cps_report$settings$conf$sample_properties$dp_detected == 1){
+      crosstalk::filter_slider("DP_CONTROL", "Variant sequencing depth", 
+                             variants_class4_2, ~DP_CONTROL)
+    },
     crosstalk::filter_select("SYMBOL", "Gene", variants_class4_2, ~SYMBOL)
   ),
   list(
@@ -424,8 +440,8 @@ htmltools::br()
 
 <br>
 
-*  A total of n = __`r tot_variants[['class3']][['ClinVar']]`__ variants are recorded with a <i>VUS</i> clinical significance in the [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) database.
-*  A total of n = __`r tot_variants[['class3']][['CPSR_ACMG']]`__ <i><b>non-ClinVar</b></i> variants (i.e. not submitted to/recorded in ClinVar) are classified with a <i>VUS</i> clinical significance by CPSR (refined ACMG criteria - based on population frequency and variant effect).
+*  A total of __N = `r tot_variants[['class3']][['ClinVar']]`__ variants are recorded with a <i>VUS</i> clinical significance in the [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) database.
+*  A total of __N = `r tot_variants[['class3']][['CPSR_ACMG']]`__ <i><b>non-ClinVar</b></i> variants (i.e. not submitted to/recorded in ClinVar) are classified with a <i>VUS</i> clinical significance by CPSR (refined ACMG criteria - based on population frequency and variant effect).
 
 ::: {.callout-note}
 Variants displayed here constitute the top 2000 variants for each of the ClinVar and non-ClinVar variant sets (due to display limitations with client-side tables)
@@ -478,6 +494,10 @@ crosstalk::bscols(
   list(
     crosstalk::filter_select("CONSEQUENCE", "Consequence", variants_class3_1, ~CONSEQUENCE),
     crosstalk::filter_checkbox("GENOTYPE", "Genotype", variants_class3_1, ~GENOTYPE),
+    if(cps_report$settings$conf$sample_properties$dp_detected == 1){
+      crosstalk::filter_slider("DP_CONTROL", "Variant sequencing depth", 
+                             variants_class3_1, ~DP_CONTROL)
+    },
     crosstalk::filter_select("SYMBOL", "Gene", variants_class3_1, ~SYMBOL),
     crosstalk::filter_slider("GERP_SCORE", "Genomic conservation score (GERP)", 
                              variants_class3_1, ~GERP_SCORE,
@@ -580,6 +600,10 @@ crosstalk::bscols(
   list(
     crosstalk::filter_select("CONSEQUENCE", "Consequence", variants_class3_2, ~CONSEQUENCE),
     crosstalk::filter_checkbox("GENOTYPE", "Genotype", variants_class3_2, ~GENOTYPE),
+    if(cps_report$settings$conf$sample_properties$dp_detected == 1){
+      crosstalk::filter_slider("DP_CONTROL", "Variant sequencing depth", 
+                             variants_class3_2, ~DP_CONTROL)
+    },
     crosstalk::filter_select("SYMBOL", "Gene", variants_class3_2, ~SYMBOL),
     crosstalk::filter_slider("GERP_SCORE", "Genomic conservation score (GERP)", variants_class3_2, ~GERP_SCORE,
       min = -12.3, max = 6.17, ticks = T
@@ -634,8 +658,8 @@ htmltools::br()
 
 <br>
 
-*  A total of n = __`r tot_variants[['class2']][['ClinVar']]`__ variants are recorded with a <i>Likely Benign</i> clinical significance in the [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) database.
-*  A total of n = __`r tot_variants[['class2']][['CPSR_ACMG']]`__ <i><b>non-ClinVar</b></i> variants (i.e. not submitted to/recorded in ClinVar) are classified with a <i>Likely Benign</i> clinical significance by CPSR (refined ACMG criteria - based on population frequency and variant effect).
+*  A total of __N = `r tot_variants[['class2']][['ClinVar']]`__ variants are recorded with a <i>Likely Benign</i> clinical significance in the [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) database.
+*  A total of __N = `r tot_variants[['class2']][['CPSR_ACMG']]`__ <i><b>non-ClinVar</b></i> variants (i.e. not submitted to/recorded in ClinVar) are classified with a <i>Likely Benign</i> clinical significance by CPSR (refined ACMG criteria - based on population frequency and variant effect).
 
 ::: {.callout-note}
 Variants displayed here constitute the top 2000 variants for each of the ClinVar and non-ClinVar variant sets (due to display limitations with client-side tables)
@@ -691,6 +715,10 @@ crosstalk::bscols(
   list(
     crosstalk::filter_select("CONSEQUENCE", "Consequence", variants_class2_1, ~CONSEQUENCE),
     crosstalk::filter_checkbox("GENOTYPE", "Genotype", variants_class2_1, ~GENOTYPE),
+    if(cps_report$settings$conf$sample_properties$dp_detected == 1){
+      crosstalk::filter_slider("DP_CONTROL", "Variant sequencing depth", 
+                             variants_class2_1, ~DP_CONTROL)
+    },
     crosstalk::filter_select("SYMBOL", "Gene", variants_class2_1, ~SYMBOL)
   ),
   list(
@@ -773,6 +801,10 @@ crosstalk::bscols(
   list(
     crosstalk::filter_select("CONSEQUENCE", "Consequence", variants_class2_2, ~CONSEQUENCE),
     crosstalk::filter_checkbox("GENOTYPE", "Genotype", variants_class2_2, ~GENOTYPE),
+    if(cps_report$settings$conf$sample_properties$dp_detected == 1){
+      crosstalk::filter_slider("DP_CONTROL", "Variant sequencing depth", 
+                             variants_class2_2, ~DP_CONTROL)
+    },
     crosstalk::filter_select("SYMBOL", "Gene", variants_class2_2, ~SYMBOL)
   ),
   list(
@@ -812,8 +844,8 @@ htmltools::br()
 
 <br>
 
-*  A total of n = __`r tot_variants[['class1']][['ClinVar']]`__ variants are recorded with a <i>Benign</i> clinical significance in the [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) database.
-*  A total of n = __`r tot_variants[['class1']][['CPSR_ACMG']]`__ <i><b>Other</b></i> variants (i.e. not submitted to/recorded in ClinVar) are classified with a <i>Benign</i> clinical significance by CPSR (refined ACMG criteria - based on population frequency and variant effect).
+*  A total of __N = `r tot_variants[['class1']][['ClinVar']]`__ variants are recorded with a <i>Benign</i> clinical significance in the [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) database.
+*  A total of __N = `r tot_variants[['class1']][['CPSR_ACMG']]`__ <i><b>Other</b></i> variants (i.e. not submitted to/recorded in ClinVar) are classified with a <i>Benign</i> clinical significance by CPSR (refined ACMG criteria - based on population frequency and variant effect).
 
 ::: {.callout-note}
 Variants displayed here constitute the top 2000 variants for each of the ClinVar and non-ClinVar variant sets (due to display limitations with client-side tables)
@@ -867,6 +899,10 @@ crosstalk::bscols(
   list(
     crosstalk::filter_select("CONSEQUENCE", "Consequence", variants_class1_1, ~CONSEQUENCE),
     crosstalk::filter_checkbox("GENOTYPE", "Genotype", variants_class1_1, ~GENOTYPE),
+    if(cps_report$settings$conf$sample_properties$dp_detected == 1){
+      crosstalk::filter_slider("DP_CONTROL", "Variant sequencing depth", 
+                             variants_class1_1, ~DP_CONTROL)
+    },
     crosstalk::filter_select("SYMBOL", "Gene", variants_class1_1, ~SYMBOL)
   ),
   list(
@@ -950,6 +986,10 @@ crosstalk::bscols(
   list(
     crosstalk::filter_select("CONSEQUENCE", "Consequence", variants_class1_2, ~CONSEQUENCE),
     crosstalk::filter_checkbox("GENOTYPE", "Genotype", variants_class1_2, ~GENOTYPE),
+    if(cps_report$settings$conf$sample_properties$dp_detected == 1){
+      crosstalk::filter_slider("DP_CONTROL", "Variant sequencing depth", 
+                             variants_class1_2, ~DP_CONTROL)
+    },
     crosstalk::filter_select("SYMBOL", "Gene", variants_class1_2, ~SYMBOL)
   ),
   list(

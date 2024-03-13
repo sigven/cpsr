@@ -152,7 +152,7 @@ load_germline_snv_indel <- function(
   if (as.logical(
     conf$variant_classification$secondary_findings) == TRUE) {
     if(as.logical(
-      conf$sample_properties$genotypes_available) == F){
+      conf$sample_properties$gt_detected) == F){
       pcgrr::log4r_warn(paste0(
         "Assessment of secondary variant findings (ACMG SF v3.2) ",
         "NOT possible - variant genotype information unavailable"
