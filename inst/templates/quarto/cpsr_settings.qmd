@@ -21,16 +21,35 @@ if (as.logical(cps_report[["settings"]][["conf"]][["vep"]][["vep_gencode_basic"]
 
 The report is generated with _[cpsr](https://github.com/sigven/cpsr)_ version `r cps_report[['settings']][['software']][['cpsr_version']]`, ( _[pcgr](https://github.com/sigven/pcgr)_ version `r cps_report[['settings']][['software']][['pcgr_version']]`), using the following key settings:
 
+:::: {.columns}
+
+::: {.column width="47.5%"}
+
 * Genome assembly: __`r cps_report[['settings']][['genome_assembly']]`__
 * Control population gnomAD: __`r cps_report[['settings']][['conf']][['variant_classification']][['popdesc_gnomad']]`__
 * Upper MAF threshold (gnomAD) for non-ClinVar-classified variants included in report:  __`r cps_report[['settings']][['conf']][['variant_classification']][['maf_upper_threshold']]`__
 * Ignore non-protein-coding variants in report: __`r !as.logical(cps_report[['settings']][['conf']][['other']][['show_noncoding']])`__
 * Generate CPSR variant classifications also for classified ClinVar variants: __`r as.logical(cps_report[['settings']][['conf']][['variant_classification']][['classify_all']])`__
-* Report ClinVar variants in target genes if they are only associated with non-cancer phenotypes/diseases: 
+* Report ClinVar variants if they are only associated with non-cancer phenotypes/diseases: 
 __`r as.logical(cps_report[['settings']][['conf']][['variant_classification']][['clinvar_report_noncancer']])`__
+
+:::
+
+::: {.column width="5%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="47.5%"}
+
 * Include [secondary findings](https://www.ncbi.nlm.nih.gov/clinvar/docs/acmg/) in report: __`r as.logical(cps_report[['settings']][['conf']][['variant_classification']][['secondary_findings']])`__
 * Include GWAS hits in report: __`r as.logical(cps_report[['settings']][['conf']][['variant_classification']][['gwas_findings']])`__
 * Variant Effect Predictor (VEP) settings:
   * Transcript set: __`r transcript_set_gencode`__
-  * Transcript pick order: __`r cps_report[['settings']][['conf']][['vep']][['vep_pick_order']]`__
+  * Transcript pick order: __`r stringr::str_replace_all(cps_report[['settings']][['conf']][['vep']][['vep_pick_order']],",",", ")`__
   * Regulatory regions annotation: __`r as.logical(cps_report[['settings']][['conf']][['vep']][['vep_regulatory']])`__
+  * Buffer size: __`r cps_report$settings$conf$vep$vep_buffer_size`__
+  * Number of forks: __`r cps_report$settings$conf$vep$vep_n_forks`__
+
+:::
+
+::::

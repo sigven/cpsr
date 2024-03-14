@@ -280,8 +280,6 @@ write_cpsr_output <- function(report,
     system.file("templates", package = "cpsr")
   quarto_input <- file.path(
     cpsr_rep_template_path, "cpsr_report.qmd")
-  report_theme <-
-    settings[["conf"]][["visual_reporting"]][["visual_theme"]]
 
   if (output_format == "html") {
     if(report$content$snv_indel$v_stat_cpg$n < 3000){
@@ -325,8 +323,8 @@ write_cpsr_output <- function(report,
         pcgrr::log4r_info("------")
         pcgrr::log4r_info(
           paste0(
-          "Generating quarto-based interactive HTML report (.html) with variant findings",
-          "- ('",output_format, "')"))
+          "Generating quarto-based interactive HTML report ",
+          "(.html) with variant findings"))
 
         quarto::quarto_render(
           input = quarto_main_template_sample,
@@ -366,10 +364,8 @@ write_cpsr_output <- function(report,
       report[["content"]][["snv_indel"]]$callset$tsv) > 0) {
       pcgrr::log4r_info("------")
       pcgrr::log4r_info(
-        paste0("Generating SNV/InDel tab-separated values file (.tsv) ",
-               "with variant findings - ('",
-               output_format, "')"))
-
+        paste0("Generating SNV/InDel tab-separated values file (.tsv.gz) ",
+               "with variant findings"))
       readr::write_tsv(
         report[["content"]][["snv_indel"]]$callset$tsv,
         file = fnames[[output_format]],
@@ -383,8 +379,7 @@ write_cpsr_output <- function(report,
     pcgrr::log4r_info("------")
     pcgrr::log4r_info(
       paste0("Generating Excel workbook (.xlsx) with ",
-             "variant findings - ('",
-             output_format, "')"))
+             "variant findings"))
     workbook <- openxlsx2::wb_workbook() |>
       openxlsx2::wb_add_worksheet(sheet = "VIRTUAL_PANEL") |>
       openxlsx2::wb_add_worksheet(sheet = "CLASSIFICATION") |>
@@ -456,10 +451,10 @@ write_cpsr_output <- function(report,
           widths = "auto")
     }
 
-    workbook <- workbook |>
-      openxlsx2::wb_save(
-        fnames[['xlsx']],
-        overwrite = TRUE)
+    openxlsx2::wb_save(
+      wb = workbook,
+      fnames[['xlsx']],
+      overwrite = TRUE)
   }
 
 

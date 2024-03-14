@@ -49,6 +49,8 @@ for (etype in c("Predictive","Diagnostic","Predisposing","Prognostic")) {
     * Diagnostic: __`r cps_report[['content']][['snv_indel']]$v_stat_bm$n_eitems_diagnostic`__
 
 ::: {.callout-note}
+## Note - biomarker matching
+
 As indicated from the variant-association numbers above, the same germline mutation may potentially match with multiple evidence items, pending on e.g. the _disease context_, _therapeutic context_, _biomarker resolution_, or underlying _evidence source_ (i.e. publication)
 :::
 
@@ -57,7 +59,7 @@ As indicated from the variant-association numbers above, the same germline mutat
 #| output: asis
 #| include: true
 
-cat("\n::: {.callout-note}\n Biomarkers registered in CIViC/CGI are provided at different _resolutions_ (i.e. filter <b>Biomarker resolution</b>). The accuracy of a match between a variant in the sample and a clinical evidence item (biomarker) will vary accordingly (highlighted by gene symbols with different color backgrounds):\n\n")
+cat("\n::: {.callout-note}\n## Note - biomarker resolution\n\n Biomarkers registered in CIViC/CGI are provided at different _resolutions_ (i.e. filter <b>Biomarker resolution</b>). The accuracy of a match between a variant in the sample and a clinical evidence item (biomarker) will vary accordingly (highlighted by gene symbols with different color backgrounds):\n\n")
 
 cat('<ul><li>Biomarker match at the <mark style="background-color:black; font-weight:bold; color:white">&nbsp; genomic position/amino acid/codon level &nbsp;</mark></li>')
 cat(paste0('<br><li>Biomarker match at the <mark style="background-color:', 

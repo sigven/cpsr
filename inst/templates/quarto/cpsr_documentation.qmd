@@ -16,7 +16,9 @@ This report is intended for interpretation of inherited DNA variants implicated 
 The variant interpretation procedures performed in this cancer genome report are relying upon multiple tools and knowledge resources, as outlined below. 
 
 ::: {.callout-important}
-Note that some resources (highlighted below) demand specific licensing agreements if you plan to utilize their data (and thus this report) in a commercial, non-research setting.
+## Licensing note
+
+Some resources (highlighted below) demand specific licensing agreements if you plan to utilize their data (and thus this report) in a commercial, non-research setting.
 :::
 
 
@@ -143,7 +145,8 @@ DT::datatable(data,
 ) |>
   DT::formatStyle("cpsr_evidence_code", "pole",
     color = "white",
-    backgroundColor = DT::styleEqual(c("P", "B"), c("#9E0142", "#077009"))
+    backgroundColor = DT::styleEqual(c("P", "B"), 
+                                     c("#9E0142", "#077009"))
   )
 ```
 
