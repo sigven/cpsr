@@ -12,7 +12,7 @@ color_report <- "#007a74"
 
 color_clinvar <- color_report
 color_novel <- color_report
-color_vus <- "#000"
+color_vus <- "#2c313c"
 
 n_clinvar <- cps_report$content$snv_indel$callset$variant_display$cpg_non_sf |>
   dplyr::filter(.data$CPSR_CLASSIFICATION_SOURCE == "ClinVar") |>

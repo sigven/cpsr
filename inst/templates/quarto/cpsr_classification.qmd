@@ -530,7 +530,7 @@ DT::datatable(variants_class3_1,
     dom = "Bfrtip",
     initComplete = DT::JS(
       "function(settings, json) {",
-      "$(this.api().table().header()).css({'background-color':'#000000', 'color': '#fff'});",
+      "$(this.api().table().header()).css({'background-color':'#2c313c', 'color': '#fff'});",
       "}"
     )
   )
