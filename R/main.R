@@ -282,7 +282,7 @@ write_cpsr_output <- function(report,
     cpsr_rep_template_path, "cpsr_report.qmd")
 
   if (output_format == "html") {
-    if(report$content$snv_indel$v_stat_cpg$n < 3000){
+    if(report$content$snv_indel$v_stat_cpg$n < 15000){
       if(file.exists(quarto_input)){
 
         ## make temporary directory for quarto report rendering

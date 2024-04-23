@@ -36,24 +36,30 @@ for (c in c("class1", "class2", "class3", "class4", "class5")) {
     tot_variants[[c]][[m]] <- 0
     show_class_filters[[c]][[m]] <- F
     missing_class_items[[c]][[m]] <- T
-    if (NROW(callset_cpg[callset_cpg$CPSR_CLASSIFICATION_SOURCE == m & 
-                         callset_cpg$FINAL_CLASSIFICATION == path_level,]) > 0) {
-      tot_variants[[c]][[m]] <- 
-        NROW(callset_cpg[callset_cpg$CPSR_CLASSIFICATION_SOURCE == m & 
-                         callset_cpg$FINAL_CLASSIFICATION == path_level,])
-    }
-    if (tot_variants[[c]][[m]] > 0) {
-      show_class_filters[[c]][[m]] <- T
-      missing_class_items[[c]][[m]] <- F
+    if(NROW(callset_cpg) > 0){
+      if (NROW(callset_cpg[callset_cpg$CPSR_CLASSIFICATION_SOURCE == m & 
+                           callset_cpg$FINAL_CLASSIFICATION == path_level,]) > 0) {
+        tot_variants[[c]][[m]] <- 
+          NROW(callset_cpg[callset_cpg$CPSR_CLASSIFICATION_SOURCE == m & 
+                           callset_cpg$FINAL_CLASSIFICATION == path_level,])
+      }
+      if (tot_variants[[c]][[m]] > 0) {
+        show_class_filters[[c]][[m]] <- T
+        missing_class_items[[c]][[m]] <- F
+      }
     }
   }
 }
 
-cps_report[["content"]][["snv_indel"]]$callset$variant_display$cpg_non_sf <- 
-  cps_report[["content"]][["snv_indel"]]$callset$variant_display$cpg_non_sf |>
-  dplyr::mutate(CONSEQUENCE = stringr::str_replace_all(CONSEQUENCE,"&", ", ")) |>
-  dplyr::mutate(CDS_CHANGE = stringr::str_replace_all(CDS_CHANGE,"&", ", "))
-
+if(NROW(cps_report$content$snv_indel$variant_display$cpg_non_sf) > 0){
+  cps_report[["content"]][["snv_indel"]]$callset$variant_display$cpg_non_sf <- 
+    cps_report[["content"]][["snv_indel"]]$callset$variant_display$cpg_non_sf |>
+    dplyr::mutate(
+      CONSEQUENCE = stringr::str_replace_all(CONSEQUENCE,"&", ", ")) |>
+    dplyr::mutate(
+      CDS_CHANGE = stringr::str_replace_all(CDS_CHANGE,"&", ", "))
+}
+  
 tag_gnomad <- 
   cps_report[["settings"]][["conf"]][["variant_classification"]][["vcftag_gnomad_AF"]]
 desc_gnomad <- 
@@ -73,7 +79,11 @@ formula_gnomad <- as.formula(paste0("~", rlang::sym(tag_gnomad)))
    *  A total of __N = `r tot_variants[['class5']][['CPSR_ACMG']]`__ <i><b>non-ClinVar</b></i> variants (i.e. not submitted to/recorded in ClinVar) are classified with a <i>Pathogenic</i> clinical significance by CPSR (refined ACMG criteria - based on population frequency and variant effect).
 
 ::: {.callout-note}
-Variants displayed here constitute the top 2000 variants for each of the ClinVar and non-ClinVar variant sets (due to display limitations with client-side tables)
+
+## Note - output limitations
+
+In order to maintain responsiveness of client-side data interaction, variants displayed here constitute the top 2,000 variants for each of the ClinVar and non-ClinVar variant sets.
+
 :::
 
 
@@ -102,7 +112,7 @@ if (missing_class_items[["class5"]][["ClinVar"]] == F |
 ```{r class5_cpsr_clinvar}
 #| echo: false
 #| output: asis
-#| eval: !expr show_class_filters[['class5']][['ClinVar']]
+#| eval: !expr show_class_filters[['class5']][['ClinVar']] == TRUE
 
 cat("\n")
 htmltools::br()
@@ -185,7 +195,7 @@ if (missing_class_items[["class5"]][["ClinVar"]] == T &
 ```{r class5_cpsr_other}
 #| echo: false
 #| output: asis
-#| eval: !expr show_class_filters[['class5']][['CPSR_ACMG']]
+#| eval: !expr show_class_filters[['class5']][['CPSR_ACMG']] == TRUE
 
 variants_class5_other <-
   dplyr::filter(
@@ -286,7 +296,7 @@ if (missing_class_items[["class4"]][["ClinVar"]] == F |
 ```{r class4_cpsr_clinvar}
 #| echo: false
 #| output: asis
-#| eval: !expr show_class_filters[['class4']][['ClinVar']]
+#| eval: !expr show_class_filters[['class4']][['ClinVar']] == TRUE
 
 cat("\n")
 htmltools::br()
@@ -369,7 +379,7 @@ if (missing_class_items[["class4"]][["ClinVar"]] == T &
 ```{r class4_cpsr_other}
 #| echo: false
 #| output: asis
-#| eval: !expr show_class_filters[['class4']][['CPSR_ACMG']]
+#| eval: !expr show_class_filters[['class4']][['CPSR_ACMG']] == TRUE
 
 cat("\n")
 htmltools::br()
@@ -471,7 +481,7 @@ if (missing_class_items[["class3"]][["ClinVar"]] == F |
 ```{r class3_cpsr_clinvar}
 #| echo: false
 #| output: asis
-#| eval: !expr show_class_filters[['class3']][['ClinVar']]
+#| eval: !expr show_class_filters[['class3']][['ClinVar']] == TRUE
 
 cat("\n")
 htmltools::br()
@@ -560,7 +570,7 @@ if (missing_class_items[["class3"]][["ClinVar"]] == T & missing_class_items[["cl
 ```{r vus_caution_note}
 #| echo: false
 #| output: asis
-#| include: !expr show_class_filters[['class3']][['CPSR_ACMG']]
+#| include: !expr show_class_filters[['class3']][['CPSR_ACMG']] == TRUE
 
 htmltools::br()
 
@@ -690,7 +700,7 @@ if (missing_class_items[["class2"]][["ClinVar"]] == F |
 ```{r class2_cpsr_clinvar}
 #| echo: false
 #| output: asis
-#| eval: !expr show_class_filters[['class2']][['ClinVar']]
+#| eval: !expr show_class_filters[['class2']][['ClinVar']] == TRUE
 
 cat("\n")
 htmltools::br()
@@ -773,7 +783,7 @@ if (missing_class_items[["class2"]][["ClinVar"]] == T &
 ```{r class2_cpsr_other}
 #| echo: false
 #| output: asis
-#| eval: !expr show_class_filters[['class2']][['CPSR_ACMG']]
+#| eval: !expr show_class_filters[['class2']][['CPSR_ACMG']] == TRUE
 
 cat("\n")
 htmltools::br()
@@ -876,7 +886,7 @@ if (missing_class_items[["class1"]][["ClinVar"]] == F |
 ```{r class1_cpsr_clinvar}
 #| echo: false
 #| output: asis
-#| eval: !expr show_class_filters[['class1']][['ClinVar']]
+#| eval: !expr show_class_filters[['class1']][['ClinVar']] == TRUE
 
 cat("\n")
 htmltools::br()
@@ -959,7 +969,7 @@ if (missing_class_items[["class1"]][["ClinVar"]] == T &
 ```{r class1_cpsr_other}
 #| echo: false
 #| output: asis
-#| eval: !expr show_class_filters[['class1']][['CPSR_ACMG']]
+#| eval: !expr show_class_filters[['class1']][['CPSR_ACMG']] == TRUE
 
 cat("\n")
 htmltools::br()

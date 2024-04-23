@@ -14,15 +14,31 @@ color_clinvar <- color_report
 color_novel <- color_report
 color_vus <- "#2c313c"
 
-n_clinvar <- cps_report$content$snv_indel$callset$variant_display$cpg_non_sf |>
-  dplyr::filter(.data$CPSR_CLASSIFICATION_SOURCE == "ClinVar") |>
-  NROW()
-n_novel <- cps_report$content$snv_indel$callset$variant_display$cpg_non_sf |>
-  dplyr::filter(.data$CPSR_CLASSIFICATION_SOURCE == "CPSR_ACMG") |>
-  NROW()
-n_vus <- cps_report$content$snv_indel$callset$variant_display$cpg_non_sf |>
-  dplyr::filter(.data$FINAL_CLASSIFICATION == "VUS") |>
-  NROW()
+n_clinvar <- 0
+n_novel <- 0
+n_vus <- 0
+genes_affected <- data.frame()
+
+if(NROW(cps_report$content$snv_indel$callset$variant_display$cpg_non_sf) > 0){
+  n_clinvar <- cps_report$content$snv_indel$callset$variant_display$cpg_non_sf |>
+    dplyr::filter(.data$CPSR_CLASSIFICATION_SOURCE == "ClinVar") |>
+    NROW()
+  n_novel <- cps_report$content$snv_indel$callset$variant_display$cpg_non_sf |>
+    dplyr::filter(.data$CPSR_CLASSIFICATION_SOURCE == "CPSR_ACMG") |>
+    NROW()
+  n_vus <- cps_report$content$snv_indel$callset$variant_display$cpg_non_sf |>
+    dplyr::filter(.data$FINAL_CLASSIFICATION == "VUS") |>
+    NROW()
+  
+  genes_affected <- 
+  dplyr::filter(
+    cps_report$content$snv_indel$callset$variant$cpg_non_sf, 
+    .data$FINAL_CLASSIFICATION == "Pathogenic" |
+      .data$FINAL_CLASSIFICATION == "Likely_Pathogenic") |> 
+  dplyr::select("SYMBOL") |>
+  dplyr::distinct() |>
+  head(3)
+}
 
 if(n_clinvar == 0){
   color_clinvar <- color_none
@@ -33,15 +49,6 @@ if(n_novel == 0){
 if(n_vus == 0){
   color_vus <- color_none
 }
-
-genes_affected <- 
-  dplyr::filter(
-    cps_report$content$snv_indel$callset$variant$cpg_non_sf, 
-    .data$FINAL_CLASSIFICATION == "Pathogenic" |
-      .data$FINAL_CLASSIFICATION == "Likely_Pathogenic") |> 
-  dplyr::select("SYMBOL") |>
-  dplyr::distinct() |>
-  head(3)
 
 genes_value_box <- "None"
 if(NROW(genes_affected) > 0){

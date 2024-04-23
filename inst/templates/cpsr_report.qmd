@@ -20,12 +20,15 @@ nocite: |
   @Martin2019-nq, @Nykamp2017-rj, Dienstmann2015-od
 format: 
   html:
+    link-external-newwindow: true
     embed-resources: true
     smooth-scroll: true
     page-layout: full
-    fontsize: 0.92em
+    fontsize: 0.93em
     toc: true
-    toc_depth: 2
+    toc-depth: 3
+    toc-expqand: 3
+    toc-title: Contents
     grid:
       body-width: 940px
 css: cpsr.css
@@ -104,7 +107,7 @@ options(scipen = 0)
 ```{r documentation_cpsr, child='quarto/cpsr_documentation.qmd', eval = TRUE}
 ```
 
-<br><br>
+<br>
 
 <font size="-1">
 
