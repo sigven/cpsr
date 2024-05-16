@@ -17,23 +17,31 @@ requirements:
     - git
   host:
     - r-base
-    - r-assertable
     - r-assertthat
     - r-dplyr
     - r-ggplot2
+    - r-glue
     - r-pcgrr
+    - r-quarto
+    - quarto
+    - r-readr
     - r-rlang
     - r-stringr
+    - r-stringi
     - r-tidyr
   run:
     - r-base
-    - r-assertable
     - r-assertthat
     - r-dplyr
     - r-ggplot2
+    - r-glue
     - r-pcgrr
+    - r-quarto
+    - quarto
+    - r-readr
     - r-rlang
     - r-stringr
+    - r-stringi
     - r-tidyr
 
 test:
