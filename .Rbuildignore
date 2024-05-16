@@ -11,3 +11,4 @@
 ^pkgdown$
 ^_pkgdown\.yml$
 ^\.pre-commit-config\.yaml$
+^vignettes$
