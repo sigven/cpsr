@@ -209,7 +209,7 @@ $ (base) conda activate pcgr
 $ (pcgr)
 cpsr \
 	 --input_vcf ~/cpsr-1.2/example.vcf.gz \
-	 --vep_dir ~/.vep
+	 --vep_dir ~/.vep \
 	 --refdata_dir ~/pcgr_ref_data \
 	 --output_dir ~/cpsr-1.2 \
 	 --genome_assembly grch37 \

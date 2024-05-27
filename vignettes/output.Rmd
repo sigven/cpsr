@@ -22,7 +22,7 @@ The report is structured in multiple sections, described briefly below:
      * Summarizes the main findings in the sample through value boxes
 
   3. __Variant classification__
-     * For all coding variants in the selected cancer predisposition geneset, interactive variant tables are shown for each level (__ClinVar__ and __non-ClinVar (Other)__ variants combined):
+     * For all coding variants in the selected cancer predisposition geneset, interactive variant tables are shown for each level of clinical significance (__ClinVar__ and __non-ClinVar (Other)__ variants combined):
 	      * Pathogenic
 	      * Likely Pathogenic
 	      * Variants of Uncertain Significance (VUS)
@@ -31,7 +31,7 @@ The report is structured in multiple sections, described briefly below:
 
   4. __Genomic biomarkers__
      * Reported clinical evidence items from [CIViC](https://civicdb.org) that match with variants in the query set are reported in four distinct tabs (Predictive / Prognostic / Diagnostic / Predisposing)
-        - See section below for [details of biomarker annotations]()
+        - See section below for [details of biomarker annotations](#biomarker-annotations)
 		  
   5. __Secondary findings__
      * Pathogenic variants in the [ACMG recommended list of genes for report of secondary/incidental findings](https://www.ncbi.nlm.nih.gov/clinvar/docs/acmg/)
@@ -49,6 +49,8 @@ The report is structured in multiple sections, described briefly below:
   
   8. __References__
 	    * Supporting scientific literature - knowledge resources, guideline references etc.)
+
+<br><br>
 
 ### Variant call format - VCF
 
@@ -143,7 +145,7 @@ A VCF file containing annotated, germline calls (single nucleotide variants and 
 | `REFSEQ_PROTEIN_ID` | RefSeq protein/peptide identifier for VEP's picked transcript (*NP_XXXXXX*) |
 | `TRANSCRIPT_MANE_SELECT` | MANE select transcript identifer: one high-quality representative transcript per protein-coding gene that is well-supported by experimental data and represents the biology of the gene |
 | `TRANSCRIPT_MANE_PLUS_CLINICAL` | transcripts chosen to supplement MANE Select when needed for clinical variant reporting |
-| `GENCODE_TAG` | tag for gencode transcript (basic etc) |
+| `GENCODE_TAG` | tag for GENCODE transcript (basic etc) |
 | `GENCODE_TRANSCRIPT_TYPE` | type of transcript (protein-coding etc.) |
 | `TSG` | Indicates whether gene is predicted as a tumor suppressor gene, from Network of Cancer Genes (NCG) & the CancerMine text-mining resource |
 | `TSG_SUPPORT` | Underlying evidence for gene being a tumor suppressor. Format: `CGC_TIER<1/2>&NCG&CancerMine:num_citations"` |
@@ -154,7 +156,7 @@ A VCF file containing annotated, germline calls (single nucleotide variants and 
 | `CGC_SOMATIC` | Member of Cancer Gene Census - somatic set |
 | `CGC_TIER` | Cancer Gene Census tier (1/2) |
 | `NCG_DRIVER` | Cancer driver gene prediction by Network of Cancer Genes (NCG) |
-| `INTOGEN_DRIVER` | Indicates whether gene is predicted as cancer driver from IntoGen's cancer driver prediction algorithm |
+| `INTOGEN_DRIVER` | Indicates whether gene is predicted as cancer driver from IntOGen's cancer driver prediction algorithm |
 | `PROB_EXAC_LOF_INTOLERANT` | `dbNSFP_gene`: the probability of being loss-of-function intolerant (intolerant of both heterozygous and homozygous lof variants) based on ExAC r0.3 data |
 | `PROB_EXAC_LOF_INTOLERANT_HOM` | `dbNSFP_gene`: the probability of being intolerant of homozygous, but not heterozygous lof variants based on ExAC r0.3 data |
 | `PROB_EXAC_LOF_TOLERANT_NULL` | `dbNSFP_gene`: the probability of being tolerant of both heterozygous and homozygous lof variants based on ExAC r0.3 data |
@@ -276,8 +278,13 @@ A VCF file containing annotated, germline calls (single nucleotide variants and 
 
 ##### _Variant/genotype information_
 
-| 1. `GENOTYPE` | Variant genotype (*het*/*hom_ref*/*hom_alt*) |
-| 2. `DP_CONTROL` | Sequencing depth at variant site ('DP')|
+| Tag | Description |
+|-----|-------------|
+| `GENOTYPE` | Variant genotype (*het*/*hom_ref*/*hom_alt*) |
+| `DP_CONTROL` | Sequencing depth at variant site ('DP')|
+
+
+<br><br>
 
 ### Excel workbook - XLSX
 
@@ -291,6 +298,8 @@ The four sheets of the workbook contains the following:
  - *CLASSIFICATION* - variant classifications and corresponding gene annotations
  - *BIOMARKER_EVIDENCE* - matches of variants with genomic biomarkers
  - *SECONDARY_FINDINGS* - potential secondary findings
+
+<br><br>
 
 ### Tab-separated values - TSV
 
@@ -359,7 +368,7 @@ The following variables are included in the tiered TSV file (VCF tags in the que
 | 53. `N_INSILICO_SPLICING_NEUTRAL` | Number of algorithms with splicing neutral prediction from dbscSNV |
 | 54. `N_INSILICO_SPLICING_AFFECTED` | Number of algorithms with splicing affected prediction from dbscSNV |
 | 55. `gnomADe_AF` | Global MAF in gnomAD (exome samples) |
-| 56. `FINAL_CLASSIFICATION` | Final variant classification based on the combination of `CLINVAR_CLASSIFICTION` (for ClinVar-classified variants), and `CPSR_CLASSIFICATION` (for novel variants) |
+| 56. `FINAL_CLASSIFICATION` | Final variant classification, using either `CLINVAR_CLASSIFICATION` if variant is ClinVar-classified, or `CPSR_CLASSIFICATION` for novel variants |
 | 57. `CPSR_CLASSIFICATION` | Variant clinical significance by CPSR's classification algorithm (P/LP/VUS/LB/B) |
 | 58. `CPSR_PATHOGENICITY_SCORE` | Aggregated pathogenicity score by CPSR's algorithm |
 | 59. `CPSR_CLASSIFICATION_CODE` | Combination of CPSR classification codes assigned to the variant (ACMG) |
@@ -367,6 +376,8 @@ The following variables are included in the tiered TSV file (VCF tags in the que
 | 61. `<CUSTOM_POPULATION_GNOMAD`> | Population specific MAF in gnomAD control (non-cancer, population configured by user) |
 
 **NOTE**: The user has the possibility to append the TSV file with data from other INFO tags in the input VCF (i.e. using the *--retained_info_tags* option)
+
+<br><br>
 
 ### Biomarker annotations
 
@@ -378,7 +389,7 @@ The interactive HTML report (section *Genomic biomarkers*) and the Excel workboo
 | 2. `BM_DISEASE_ONTOLOGY_ID` | Disease ontology id for cancer type - from CIViC |
 | 3. `BM_PRIMARY_SITE` | Primary tumor type of cancer type - mapped with [phenOncoX](https://github.com/sigven/phenOncoX) |
 | 4. `BM_CLINICAL_SIGNIFICANCE` | Clinical significance of biomarker (drug sensitivity, drug resistance, poor outcome etc.) - from CIViC |
-| 5. `BM_THERAPEUTIC_CONTEXT` | Cancer drugs associated with biomarker (for biomarkers related to drug sensitivity/reistance) - from CIViC |
+| 5. `BM_THERAPEUTIC_CONTEXT` | Cancer drugs associated with biomarker (for biomarkers related to drug sensitivity/resistance) - from CIViC |
 | 6. `BM_CITATION` | Reference/source for biomarker - i.e. publication or guidelines - from CIViC |
 | 7. `BM_RATING` | Rating of biomarker - from CIViC |
 | 8. `BM_MOLECULAR_PROFILE_NAME` | Associated name of molecular profile - i.e. "BRCA mutation" - from CIViC |

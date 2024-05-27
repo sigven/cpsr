@@ -383,8 +383,6 @@ write_cpsr_output <- function(report,
     workbook <- openxlsx2::wb_workbook() |>
       openxlsx2::wb_add_worksheet(sheet = "VIRTUAL_PANEL") |>
       openxlsx2::wb_add_worksheet(sheet = "CLASSIFICATION") |>
-      openxlsx2::wb_add_worksheet(sheet = "BIOMARKER_EVIDENCE") |>
-      openxlsx2::wb_add_worksheet(sheet = "SECONDARY_FINDINGS") |>
       openxlsx2::wb_add_data_table(
         sheet = "CLASSIFICATION",
         x = dplyr::select(
@@ -415,6 +413,7 @@ write_cpsr_output <- function(report,
 
     if(NROW(report[["content"]]$snv_indel$callset$variant$sf) > 0){
       workbook <- workbook |>
+        openxlsx2::wb_add_worksheet(sheet = "SECONDARY_FINDINGS") |>
         openxlsx2::wb_add_data_table(
         sheet = "SECONDARY_FINDINGS",
         x = dplyr::select(
@@ -434,6 +433,7 @@ write_cpsr_output <- function(report,
 
     if(NROW(report$content$snv_indel$callset$variant$bm) > 0){
       workbook <- workbook |>
+        openxlsx2::wb_add_worksheet(sheet = "BIOMARKER_EVIDENCE") |>
         openxlsx2::wb_add_data_table(
           sheet = "BIOMARKER_EVIDENCE",
           x = dplyr::select(
