@@ -5,6 +5,6 @@ channels:
   - bioconda
 dependencies:
   - r-pcgrr
-  - r-cpsr ==1.0.1.9004 # versioned by bump2version
+  - r-cpsr ==1.0.1.9005 # versioned by bump2version
   - r-pkgdown
   - pandoc
