@@ -19,9 +19,6 @@ jobs:
     defaults:
       run:
         shell: bash -l {0}
-    strategy:
-      matrix:
-        r_version: ["4.2"]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -29,9 +26,9 @@ jobs:
         uses: mamba-org/setup-micromamba@v1
         with:
           environment-file: ${{ env.env_yml_path }}/condabuild_env.yml
-      - name: Build + upload cpsr conda pkg
+      - name: 🐍 Conda pkg build and upload
         run: |
-          conda mambabuild ${recipe_path}/cpsr --R=${{ matrix.r_version }} -c pcgr -c conda-forge -c bioconda --token ${atoken}
+          conda mambabuild ${recipe_path}/cpsr -c pcgr -c conda-forge -c bioconda --token ${atoken}
 
   pkgdown_site:
     name: Deploy pkgdown website
