@@ -51,7 +51,7 @@ jobs:
             micromamba activate pkgdown
             printf "cpsr version:\n"
             Rscript -e "packageVersion('cpsr')"
-            Rscript -e "pkgdown::deploy_to_branch(pkg = '.', commit_message = 'Built site for CPSR - see https://sigven.github.io/cpsr/'), branch = 'gh-pages', new_process = FALSE)"
+            Rscript -e "pkgdown::deploy_to_branch(pkg = '.', commit_message = 'Built CPSR website: https://sigven.github.io/cpsr/', branch = 'gh-pages', new_process = FALSE)"
 
       - name: Create tag
         uses: actions/github-script@v7
