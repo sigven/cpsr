@@ -73,8 +73,6 @@ formula_gnomad <- as.formula(paste0("~", rlang::sym(tag_gnomad)))
 
 ### Pathogenic
 
-<br>
-
    *  A total of __N = `r tot_variants[['class5']][['ClinVar']]`__ variants are registered with a <i>Pathogenic</i> clinical significance in the [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) database.
    *  A total of __N = `r tot_variants[['class5']][['CPSR_ACMG']]`__ <i><b>non-ClinVar</b></i> variants (i.e. not submitted to/recorded in ClinVar) are classified with a <i>Pathogenic</i> clinical significance by CPSR (refined ACMG criteria - based on population frequency and variant effect).
 
@@ -87,7 +85,7 @@ In order to maintain responsiveness of client-side data interaction, variants di
 :::
 
 
-<br><br>
+<br>
 
 ::: {.panel-tabset}
 

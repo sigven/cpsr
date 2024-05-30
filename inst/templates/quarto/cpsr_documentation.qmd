@@ -7,7 +7,7 @@ This report is intended for interpretation of inherited DNA variants implicated 
     * Minor allele frequency (MAF) < `r cps_report[['settings']][['conf']][['variant_classification']][['maf_upper_threshold']]`) in the user-defined population set in the gnomAD database
     * The set of novel, _non-ClinVar_ variants are classified using CPSR's dedicated variant classification algorithm, applying the same five-level clinical significance scheme as found in ClinVar
 
-<br><br>
+<br>
 
 ::: {.panel-tabset}
 
