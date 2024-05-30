@@ -25,8 +25,8 @@ navbar:
   type: light
   bg: info
   structure:
-    left: [installation, running, reference, articles]
-    right: [search, changelog, github]
+    left: [installation, running, articles, changelog]
+    right: [search, reference, github]
   components:
     home:
       text: Intro

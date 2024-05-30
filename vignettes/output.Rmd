@@ -292,7 +292,7 @@ We provide an Excel workbook with **four** sheets that lists main findings and a
 
 - `<sample_id>.cpsr.<genome_assembly>.xlsx`
 
-The four sheets of the workbook contains the following:
+The Excel workbook is populated with the following sheets (pending that data is available):
 
  - *VIRTUAL_PANEL* - details on the the chosen virtual gene panel 
  - *CLASSIFICATION* - variant classifications and corresponding gene annotations

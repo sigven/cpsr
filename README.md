@@ -1,6 +1,6 @@
 # Cancer Predisposition Sequencing Reporter <a href="https://sigven.github.io/cpsr/"><img src="man/figures/logo.png" align="right" height="118" width="100"/></a>
 
-The *Cancer Predisposition Sequencing Reporter (CPSR)* is a computational workflow that **interprets and classifies germline DNA variants** identified from next-generation sequencing **in the context of cancer predisposition and inherited cancer syndromes**. The workflow can also report **incidental findings (ACMG v3.0)** as well as the genotypes of common germline variants associated with cancer risk, as reported in the **NHGRI-EBI GWAS catalog**.
+The *Cancer Predisposition Sequencing Reporter (CPSR)* is a computational workflow that **interprets and classifies the clinical significance of germline DNA variants** identified from next-generation sequencing **in the context of cancer predisposition and inherited cancer syndromes**. The workflow can also report **incidental findings (ACMG v3.2)**.
 
 The CPSR workflow is integrated with the framework that underlies the [Personal Cancer Genome Reporter - PCGR](https://github.com/sigven/pcgr). While *PCGR* is intended for reporting and analysis of somatic variants detected in a tumor, *CPSR* is intended for reporting and ranking of germline variants in protein-coding genes that are implicated in cancer predisposition and inherited cancer syndromes. 
 
@@ -12,11 +12,21 @@ Snapshots of sections in the cancer predisposition genome report:
 
 ## News
 
+-   *May 2024*: **2.x.x release**
+    -   New HTML report generation and layout with [quarto](https://quarto.org/)
+    -   Excel output supported
+    -   Updated virtual gene panels (Genomics England PanelApp, Cancer Gene Census)
+    -   Reference data updates, most importantly including 
+        - ClinVar - May 2024
+        - CIViC - May 2024
+        - GENCODE - v45
+    -   Software updates - VEP 111
+    -   Extensive code clean-up and re-structuring
+
 -   *November 2022*: **1.0.1 release**
     -   Added CPSR logo (designed by [Hal Nakken](https://halvetica.net))
     
 -   *February 2022*: **1.0.0 release**
-
     -   Complete restructure of code and Conda installation routines, contributed largely by the great [@pdiakumis](https://github.com/pdiakumis)
     -   Updated data bundle
         - ClinVar - Feb 2022
@@ -27,16 +37,6 @@ Snapshots of sections in the cancer predisposition genome report:
     -   Software upgrade (VEP 105, R/BioConductor)
     -   New documentation site ([https://sigven.github.io/cpsr](https://sigven.github.io/cpsr))
 
--   *June 30th 2021*: **0.6.2 release**
-
-    -   Updated bundle (ClinVar, CancerMine, UniprotKB, PanelApp, CIViC, GWAS catalog)
-    -   Software upgrade (VEP, R/BioConductor)
-    -   [CHANGELOG](http://cpsr.readthedocs.io/en/latest/CHANGELOG.html)
-
--   *November 30th 2020*: **0.6.1 release**
-
-    -   Updated bundle (ClinVar, CancerMine, UniprotKB, CIViC, GWAS catalog)
-    -   [CHANGELOG](http://cpsr.readthedocs.io/en/latest/CHANGELOG.html)
 
 ## Example report
 

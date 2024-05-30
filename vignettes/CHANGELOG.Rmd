@@ -3,6 +3,33 @@ title: "Changelog"
 output: rmarkdown::html_document
 ---
 
+## v2.0.0
+
+* Date: **2024-05-xx**
+* Data updates
+  * ClinVar
+  * GWAS catalog
+  * CIViC
+  * GENCODE
+  * Cancer Gene Census
+  * PanelApp
+  * Disease Ontology/EFO
+  * UniProt KB
+
+##### Added/changed
+
+- New report generation framework - [quarto](https://quarto.org)
+  - multiple options related to Rmarkdown output are now deprecated
+- Re-organized data bundle structure
+  - Users need to download an assembly-specific VEP cache separately from PCGR/CPSR
+- Re-engineered data bundle generation pipeline
+- Improved data bundle documentation
+  - An HTML report with an overview of the contents of the data bundle is shipped with the reference data itself.
+- Cleaned up code base for reporting and classification
+- Software now also offers a multi-sheet Excel workbook output with variant classifications and biomarker findings, amenable e.g. for aggregation of results across samples
+
+#### 
+
 ## v1.0.1
 
 * Date: **2022-11-11**

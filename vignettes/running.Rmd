@@ -83,7 +83,9 @@ usage:
 	Required arguments:
 	--input_vcf INPUT_VCF
 				    VCF input file with germline query variants (SNVs/InDels).
-	--refdata_dir REFDATA_DIR   Directory that contains the uncompressed PCGR/CPSR reference data bundle 
+	--vep_dir VEP_DIR     Directory of VEP cache, e.g.  $HOME/.vep
+  --refdata_dir REFDATA_DIR
+                        Directory that contains the PCGR/CPSR reference data, e.g. ~/pcgr-data-1.4.1.9003 
 	--output_dir OUTPUT_DIR
 				    Output directory
 	--genome_assembly {grch37,grch38}
@@ -166,7 +168,7 @@ usage:
 	--vep_buffer_size VEP_BUFFER_SIZE
 				    Variant buffer size (variants read into memory simultaneously, option '--buffer_size' in VEP)
 				    - set lower to reduce memory usage, default: 500
-	--vep_gencode_basic   Consider only basic GENCODE transcripts with Variant Effect Predictor (VEP) (option '--gencode_basic' in VEP is used by default).
+	--vep_gencode_basic   Consider only basic GENCODE transcripts with Variant Effect Predictor (VEP) (option '--gencode_basic' in VEP).
 	--vep_pick_order VEP_PICK_ORDER
 				    Comma-separated string of ordered transcript properties for primary variant pick
 					( option '--pick_order' in VEP), default: mane_select,mane_plus_clinical,canonical,appris,tsl,biotype,ccds,rank,length
@@ -180,27 +182,18 @@ usage:
 	--force_overwrite     By default, the script will fail with an error if any output file already exists.
 					You can force the overwrite of existing result files by using this flag, default: False
 	--version             show program's version number and exit
-	--no_reporting        Run functional variant annotation on VCF through VEP/vcfanno, omit tier assignment/report generation (STEP 4), default: False
+	--no_reporting        Run functional variant annotation on VCF through VEP/vcfanno, omit tier assignment/report generation, default: False
 	--retained_info_tags RETAINED_INFO_TAGS
 				    Comma-separated string of VCF INFO tags from query VCF that should be kept in CPSR output TSV
-	--docker_uid DOCKER_USER_ID
-				    Docker user ID. Default is the host system user ID. If you are experiencing permission errors,
-					try setting this up to root (`--docker_uid root`), default: None
-	--no_docker           Run the CPSR workflow in a non-Docker mode, default: False
-
-	--report_theme {default,cerulean,journal,flatly,readable,spacelab,united,cosmo,lumen,paper,sandstone,simplex,yeti}
-				    Visual report theme (rmarkdown), default: default
-	--report_nonfloating_toc
-				    Do not float the table of contents (TOC) in output HTML report, default: False
-	--report_table_display {full,light}
-				    Set the level of detail/comprehensiveness in interactive datables of HTML report, very comprehensive (option 'full') or slim/focused ('light')
 	--ignore_noncoding    Do not list non-coding variants in HTML report, default: False
 	--debug            Print full docker commands to log, default: False
+	--pcgrr_conda PCGRR_CONDA
+                        pcgrr conda env name (default: pcgrr)
 ```
 
 ## Example run
 
-The *cpsr* software bundle contains an example VCF file.
+The *cpsr* R package comes with a test VCF file (GRCh37, not originating as germline calls from a real patient) that can be used to test the CPSR pipeline.
 
 Report generation with the example VCF, using the [Adult solid tumours cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/245/) as the virtual gene panel, can be performed through the following command:
 
@@ -208,10 +201,10 @@ Report generation with the example VCF, using the [Adult solid tumours cancer su
 $ (base) conda activate pcgr
 $ (pcgr)
 cpsr \
-	 --input_vcf ~/cpsr-1.2/example.vcf.gz \
+	 --input_vcf ~/cpsr-2.0.0/inst/examples/example.vcf.gz \
 	 --vep_dir ~/.vep \
 	 --refdata_dir ~/pcgr_ref_data \
-	 --output_dir ~/cpsr-1.2 \
+	 --output_dir ~/cpsr-2.0.0/ \
 	 --genome_assembly grch37 \
 	 --panel_id 1 \
 	 --sample_id example \
@@ -221,18 +214,18 @@ cpsr \
 	 --force_overwrite
 ```
 
-Note that the example command also refers to the PCGR data bundle directory (*pcgr_db*), which contains the data bundle that are necessary for both *PCGR* and *CPSR*.
+Note that the example command also refers to the PCGR data bundle directory (*refdata_dir*), which contains the data bundle that are necessary for both *PCGR* and *CPSR*.
 
 This command will produce the following output files in the _output_ folder:
 
   1. __example.cpsr.grch37.vcf.gz (.tbi)__ - Bgzipped VCF file with relevant annotations appended by CPSR
   2. __example.cpsr.grch37.pass.vcf.gz (.tbi)__ - Bgzipped VCF file with relevant annotations appended by CPSR (PASS variants only)
-  3. __example.cpsr.grch37.yaml__ - CPSR configuration file - output from pre-reporting (Python) workflow
+  3. __example.cpsr.grch37.conf.yaml__ - CPSR configuration file - output from pre-reporting annotation (Python) workflow
   4. __example.cpsr.grch37.pass.tsv.gz__ - Compressed TSV file (generated with [vcf2tsvpy](https://github.com/sigven/vcf2tsvpy)) of VCF content with relevant annotations appended by CPSR
-  5. __example.cpsr.grch37.xlsx__ - A four-sheet Excel workbook that contains
+  5. __example.cpsr.grch37.xlsx__ - An Excel workbook that contains
       * _i)_ information on virtual gene panel interrogated for variants
-      * _ii)_ classification of variants found in input VCF
-      * _iii)_ match of variants with existing biomarkers
-      * _iv)_ secondary findings
+      * _ii)_ classification of clinical significance for variants overlapping with cancer predisposition genes
+      * _iii)_ match of variants with existing biomarkers (if any found)
+      * _iv)_ secondary findings (if any found)
   6. __example.cpsr.grch37.html__ - Interactive HTML report with clinically relevant variants in cancer predisposition genes
-  7. __example.cpsr.grch37.snvs_indels.classification.tsv.gz__ - TSV file with key annotations of SNVs/InDels classified according to clinical signififance
+  7. __example.cpsr.grch37.snvs_indels.classification.tsv.gz__ - TSV file with key annotations of SNVs/InDels classified according to clinical significance

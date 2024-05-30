@@ -20,11 +20,20 @@ Snapshots of sections in the cancer predisposition genome report:
 
 ![](img/cpsr_views.png)
 
+<br>
 
 ### News
 
-* *March 2024*: **1.xxx release**
-  * Major bundle update
+* *May 2024*: **2.x.x release**
+  - New HTML report generation and layout with [quarto](https://quarto.org/)
+  - Excel output supported
+  - Updated virtual gene panels (Genomics England PanelApp, Cancer Gene Census)
+  - Reference data updates, most importantly including 
+    - ClinVar - May 2024
+    - CIViC - May 2024
+    - GENCODE - v45
+  - Software updates - VEP 111
+  - Extensive code clean-up and re-structuring
 
 * *November 2022*: **1.0.1 release**
   * Added CPSR logo (designed by [Hal Nakken](https://halvetica.net))
