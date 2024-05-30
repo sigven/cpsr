@@ -382,18 +382,6 @@ write_cpsr_output <- function(report,
              "variant findings"))
     workbook <- openxlsx2::wb_workbook() |>
       openxlsx2::wb_add_worksheet(sheet = "VIRTUAL_PANEL") |>
-      openxlsx2::wb_add_worksheet(sheet = "CLASSIFICATION") |>
-      openxlsx2::wb_add_data_table(
-        sheet = "CLASSIFICATION",
-        x = dplyr::select(
-          report[["content"]]$snv_indel$callset$variant$cpg_non_sf,
-          dplyr::any_of(
-            cpsr::col_format_output[['xlsx_classification']])),
-        start_row = 1,
-        start_col = 1,
-        col_names = TRUE,
-        na.strings = "",
-        table_style = "TableStyleMedium15") |>
       openxlsx2::wb_add_data_table(
         sheet = "VIRTUAL_PANEL",
         x = report$settings$conf$gene_panel$panel_genes,
@@ -403,13 +391,30 @@ write_cpsr_output <- function(report,
         na.strings = "",
         table_style = "TableStyleMedium16") |>
       openxlsx2::wb_set_col_widths(
-        sheet = "CLASSIFICATION",
-        cols = 1:length(cpsr::col_format_output[['xlsx_classification']]),
-        widths = "auto") |>
-      openxlsx2::wb_set_col_widths(
         sheet = "VIRTUAL_PANEL",
         cols = 1:ncol(report$settings$conf$gene_panel$panel_genes),
         widths = "auto")
+
+    if(NROW(report[["content"]]$snv_indel$callset$variant$cpg_non_sf) > 0){
+      workbook <- workbook |>
+        openxlsx2::wb_add_worksheet(sheet = "CLASSIFICATION") |>
+        openxlsx2::wb_add_data_table(
+          sheet = "CLASSIFICATION",
+          x = dplyr::select(
+            report[["content"]]$snv_indel$callset$variant$cpg_non_sf,
+            dplyr::any_of(
+              cpsr::col_format_output[['xlsx_classification']])),
+          start_row = 1,
+          start_col = 1,
+          col_names = TRUE,
+          na.strings = "",
+          table_style = "TableStyleMedium15") |>
+        openxlsx2::wb_set_col_widths(
+          sheet = "CLASSIFICATION",
+          cols = 1:length(cpsr::col_format_output[['xlsx_classification']]),
+          widths = "auto")
+    }
+
 
     if(NROW(report[["content"]]$snv_indel$callset$variant$sf) > 0){
       workbook <- workbook |>
