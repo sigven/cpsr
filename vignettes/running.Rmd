@@ -53,7 +53,7 @@ In the final classification, note that CPSR's classification will not overrule t
 
 <hr>
 
-By default, CPSR do not report variants found in cancer predisposition genes that are not associated with diseases or syndromes that are cancer relevant. The user may choose to show all reported ClinVar variants in cancer predisposition genes through a dedicated option:
+By default, CPSR do not report variants in the input sample that are found in cancer predisposition genes, yet _not_ associated with diseases or syndromes that are cancer relevant. The user may choose to show all reported ClinVar variants in cancer predisposition genes through a dedicated option:
 
 * `--clinvar_report_noncancer`
 

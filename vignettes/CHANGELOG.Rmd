@@ -21,12 +21,25 @@ output: rmarkdown::html_document
 - New report generation framework - [quarto](https://quarto.org)
   - multiple options related to Rmarkdown output are now deprecated
 - Re-organized data bundle structure
-  - Users need to download an assembly-specific VEP cache separately from PCGR/CPSR
+  - Users need to download an assembly-specific VEP cache separately from PCGR/CPSR, and provide its path to the new required argument `--vep_dir` in the `cpsr` command
 - Re-engineered data bundle generation pipeline
 - Improved data bundle documentation
-  - An HTML report with an overview of the contents of the data bundle is shipped with the reference data itself.
+  - An HTML report with an overview of the contents of the data bundle is shipped with the reference data itself, also available [here](https://rpubs.com/sigven/pcgr_refdata).
 - Cleaned up code base for reporting and classification
-- Software now also offers a multi-sheet Excel workbook output with variant classifications and biomarker findings, amenable e.g. for aggregation of results across samples
+- A multi-sheet Excel workbook output with variant classifications and biomarker findings are provided, amenable e.g. for aggregation of results across samples
+- argument name changes to `cpsr`:
+  - `--pcgr_dir` is now named `--refdata_dir`
+  - `--clinvar_ignore_noncancer` is now named `--clinvar_report_noncancer`, meaning that variants found in ClinVar, yet attributed to _non-cancer related_ phenotypes, are now excluded from reporting by default)
+  - `--vep_gencode_all` is now named `--vep_gencode_basic`, meaning that the gene variant annotation is now using _all_ GENCODE transcripts by default, not only the _basic_ set)
+  - `--preserved_info_tags` is now named `--retained_info_tags`
+  - `--basic` is now named `--no_reporting`
+
+##### Removed
+
+- Options for configuring Rmarkdown output, i.e. `--report_theme`, `report_nonfloating_toc`, `report_table_display` argument in the `cpsr` command is deprecated
+- `--gwas_p_value`
+- `--no_vcf_validate` - VCF validation is simplified, not relying on _vcf-validator_ anymore
+
 
 #### 
 

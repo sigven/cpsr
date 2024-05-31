@@ -14,7 +14,7 @@ The cancer predisposition report can show variants found in a number of well-kno
 	* Additional genes deemed relevant for cancer predisposition (i.e. contributed by CPSR users)
 
 
-	The combination of the above sources resulted in a non-redundant set of **n = 560**
+	The combination of the above sources resulted in a non-redundant set of **n = 562**
 	genes of relevance for cancer predisposition (see complete details [below](#panel-0))
 	
 	Data with respect to mechanisms of inheritance (<i>MoI</i> - autosomal recessive (AR) vs. autosomal

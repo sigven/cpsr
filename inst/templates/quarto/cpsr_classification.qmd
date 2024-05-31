@@ -71,6 +71,8 @@ formula_gnomad <- as.formula(paste0("~", rlang::sym(tag_gnomad)))
 
 ::: {.panel-tabset}
 
+<br>
+
 ### Pathogenic
 
    *  A total of __N = `r tot_variants[['class5']][['ClinVar']]`__ variants are registered with a <i>Pathogenic</i> clinical significance in the [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) database.
@@ -267,7 +269,9 @@ htmltools::br()
 *  A total of __N = `r tot_variants[['class4']][['CPSR_ACMG']]`__ <i><b>non-ClinVar</b></i> variants (i.e. not submitted to/recorded in ClinVar) are classified with a <i>Likely Pathogenic</i> clinical significance by CPSR (refined ACMG criteria - based on population frequency and variant effect).
 
 ::: {.callout-note}
-Variants displayed here constitute the top 2000 variants for each of the ClinVar and non-ClinVar variant sets (due to display limitations with client-side tables)
+
+In order to maintain responsiveness of client-side data interaction, variants displayed here constitute the top 2,000 variants for each of the ClinVar and non-ClinVar variant sets.
+
 :::
 
 <br><br>
@@ -452,7 +456,9 @@ htmltools::br()
 *  A total of __N = `r tot_variants[['class3']][['CPSR_ACMG']]`__ <i><b>non-ClinVar</b></i> variants (i.e. not submitted to/recorded in ClinVar) are classified with a <i>VUS</i> clinical significance by CPSR (refined ACMG criteria - based on population frequency and variant effect).
 
 ::: {.callout-note}
-Variants displayed here constitute the top 2000 variants for each of the ClinVar and non-ClinVar variant sets (due to display limitations with client-side tables)
+
+In order to maintain responsiveness of client-side data interaction, variants displayed here constitute the top 2,000 variants for each of the ClinVar and non-ClinVar variant sets.
+
 :::
 
 <br><br>
@@ -670,7 +676,9 @@ htmltools::br()
 *  A total of __N = `r tot_variants[['class2']][['CPSR_ACMG']]`__ <i><b>non-ClinVar</b></i> variants (i.e. not submitted to/recorded in ClinVar) are classified with a <i>Likely Benign</i> clinical significance by CPSR (refined ACMG criteria - based on population frequency and variant effect).
 
 ::: {.callout-note}
-Variants displayed here constitute the top 2000 variants for each of the ClinVar and non-ClinVar variant sets (due to display limitations with client-side tables)
+
+In order to maintain responsiveness of client-side data interaction, variants displayed here constitute the top 2,000 variants for each of the ClinVar and non-ClinVar variant sets.
+
 :::
 
 <br><br>
@@ -856,7 +864,9 @@ htmltools::br()
 *  A total of __N = `r tot_variants[['class1']][['CPSR_ACMG']]`__ <i><b>Other</b></i> variants (i.e. not submitted to/recorded in ClinVar) are classified with a <i>Benign</i> clinical significance by CPSR (refined ACMG criteria - based on population frequency and variant effect).
 
 ::: {.callout-note}
-Variants displayed here constitute the top 2000 variants for each of the ClinVar and non-ClinVar variant sets (due to display limitations with client-side tables)
+
+In order to maintain responsiveness of client-side data interaction, variants displayed here constitute the top 2,000 variants for each of the ClinVar and non-ClinVar variant sets.
+
 :::
 
 <br><br>

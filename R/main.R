@@ -437,12 +437,18 @@ write_cpsr_output <- function(report,
     }
 
     if(NROW(report$content$snv_indel$callset$variant$bm) > 0){
+
+      bm_excel <- report$content$snv_indel$callset$variant$bm |>
+        dplyr::mutate(
+          BM_MOLECULAR_PROFILE = pcgrr::strip_html(
+            .data$BM_MOLECULAR_PROFILE))
+
       workbook <- workbook |>
         openxlsx2::wb_add_worksheet(sheet = "BIOMARKER_EVIDENCE") |>
         openxlsx2::wb_add_data_table(
           sheet = "BIOMARKER_EVIDENCE",
           x = dplyr::select(
-            report$content$snv_indel$callset$variant$bm,
+            bm_excel,
             dplyr::any_of(
               cpsr::col_format_output[['xlsx_biomarker']])),
           start_row = 1,
