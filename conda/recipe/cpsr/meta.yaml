@@ -17,10 +17,12 @@ requirements:
     - git
   host:
     - r-base ==4.3.3
+    - r-assertable
     - r-assertthat
     - r-dplyr
     - r-ggplot2
     - r-glue
+    - r-openxlsx2
     - r-pcgrr
     - r-quarto
     - quarto
@@ -31,10 +33,12 @@ requirements:
     - r-tidyr
   run:
     - r-base
+    - r-assertable
     - r-assertthat
     - r-dplyr
     - r-ggplot2
     - r-glue
+    - r-openxlsx2
     - r-pcgrr
     - r-quarto
     - quarto
