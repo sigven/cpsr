@@ -24,9 +24,9 @@ output: rmarkdown::html_document
   - Users need to download an assembly-specific VEP cache separately from PCGR/CPSR, and provide its path to the new required argument `--vep_dir` in the `cpsr` command
 - Re-engineered data bundle generation pipeline
 - Improved data bundle documentation
-  - An HTML report with an overview of the contents of the data bundle is shipped with the reference data itself, also available [here](https://rpubs.com/sigven/pcgr_refdata).
+  - An HTML report with an overview of the contents of the data bundle is shipped with the reference data itself, also available [here (grch38)](https://rpubs.com/sigven/pcgr_refdata).
 - Cleaned up code base for reporting and classification
-- A multi-sheet Excel workbook output with variant classifications and biomarker findings are provided, amenable e.g. for aggregation of results across samples
+- A multi-sheet Excel workbook output with variant classifications and biomarker findings are provided, suitable e.g. for aggregation of results across samples
 - argument name changes to `cpsr`:
   - `--pcgr_dir` is now named `--refdata_dir`
   - `--clinvar_ignore_noncancer` is now named `--clinvar_report_noncancer`, meaning that variants found in ClinVar, yet attributed to _non-cancer related_ phenotypes, are now excluded from reporting by default)

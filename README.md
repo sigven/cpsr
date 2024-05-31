@@ -6,9 +6,9 @@ The CPSR workflow is integrated with the framework that underlies the [Personal 
 
 *CPSR* accepts a query file from a single case/patient, containing raw germline variant calls encoded in the [VCF](https://samtools.github.io/hts-specs/VCFv4.2.pdf) format (i.e. SNVs/InDels). A comprehensive set of **virtual cancer predisposition gene panels** harvested from the [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk/) allows the user to flexibly put a restriction on which genes and findings are displayed in the cancer predisposition report.
 
-Snapshots of sections in the cancer predisposition genome report:
+Snapshots of sections in the cancer predisposition genome report (artificial sample, with more findings than usual) are shown below:
 
-![CPSR views](pkgdown/assets/img/cpsr_views.png)
+![CPSR views](pkgdown/assets/img/cpsr_sc.png)
 
 ## News
 
@@ -40,7 +40,7 @@ Snapshots of sections in the cancer predisposition genome report:
 
 ## Example report
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6223386.svg)](https://doi.org/10.5281/zenodo.6223386)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11401491.svg)](https://doi.org/10.5281/zenodo.11401491)
 
 ## Getting started
 

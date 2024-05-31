@@ -18,7 +18,7 @@ The workflow is integrated with the framework that underlies [Personal Cancer Ge
 
 Snapshots of sections in the cancer predisposition genome report:
 
-![](img/cpsr_views.png)
+![](img/cpsr_sc.png)
 
 <br>
 
@@ -55,7 +55,7 @@ Snapshots of sections in the cancer predisposition genome report:
 
 ### Example report
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6223386.svg)](https://doi.org/10.5281/zenodo.6223386)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11401491.svg)](https://doi.org/10.5281/zenodo.11401491)
 
 ### Getting started
 
