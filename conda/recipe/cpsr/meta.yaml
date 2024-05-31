@@ -1,6 +1,6 @@
 package:
   name: r-cpsr
-  version: 1.0.1.9006 # versioned by bump2version
+  version: 1.0.1.9007 # versioned by bump2version
 
 source:
   path: ../../../
