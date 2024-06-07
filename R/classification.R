@@ -253,23 +253,23 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
       ## Alternate allele absent in the population-specific
       ## non-cancer gnomAD subset
       "ACMG_PVS1_1",
-      ## Null variant - predicted as LoF by LOFTEE - within pathogenic range
+      ## Null variant - predicted as LoF - within pathogenic range
       ## - LoF established for gene
       "ACMG_PVS1_2",
-      ## Null variant - not predicted as LoF by LOFTEE -
+      ## Null variant - not predicted as LoF -
       ## within pathogenic range - LoF established for gene
       "ACMG_PVS1_3",
-      ## Null variant - predicted as LoF by LOFTEE - within pathogenic range -
+      ## Null variant - predicted as LoF - within pathogenic range -
       ## LoF not established for gene
       "ACMG_PVS1_4",
-      ## Null variant - not predicted as LoF by LOFTEE --
+      ## Null variant - not predicted as LoF --
       ## within pathogenic range - LoF not established for gene
       "ACMG_PVS1_5",
       ## start lost - within pathogenic range - Lof established for gene
       "ACMG_PVS1_6",
       ## start lost - within pathogenic range - LoF not established for gene
       "ACMG_PVS1_7",
-      ## donor/acceptor variant - predicted as LoF by LOFTEE -
+      ## donor/acceptor variant - predicted as LoF -
       ## within pathogenic range
       ## - not last intron - LoF established for gene
       "ACMG_PVS1_8",
@@ -553,21 +553,21 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
   # presumed loss of mRNA/protein (LOFTEE) or not)
   #
   # 'ACMG_PVS1_1' - Null variant (frameshift, nonsense) -
-  #  predicted as LoF by LOFTEE - within pathogenic range - LoF established
+  #  predicted as LoF - within pathogenic range - LoF established
   # 'ACMG_PVS1_2' - Null variant (frameshift, nonsense) -
-  # not predicted as LoF by LOFTEE - within pathogenic range - LoF established
+  # not predicted as LoF - within pathogenic range - LoF established
   # 'ACMG_PVS1_3' - Null variant (frameshift, nonsense) -
-  # predicted as LoF by LOFTEE - within pathogenic range - LoF not established
+  # predicted as LoF - within pathogenic range - LoF not established
   # 'ACMG_PVS1_4' - Null variant (frameshift, nonsense) -
-  # not predicted as LoF by LOFTEE -- within pathogenic range - LoF not
+  # not predicted as LoF -- within pathogenic range - LoF not
   # established for gene
   # 'ACMG_PVS1_5' - start lost - within pathogenic range - Lof established
   # 'ACMG_PVS1_6' - start lost - within pathogenic range - LoF not established
-  # 'ACMG_PVS1_7' - splice acceptor/donor variant - predicted as LoF by LOFTEE
+  # 'ACMG_PVS1_7' - splice acceptor/donor variant - predicted as LoF
   # - not last intron - within pathogenic range - Lof established
-  # 'ACMG_PVS1_8' - splice acceptor/donor variant - predicted as LoF by LOFTEE
+  # 'ACMG_PVS1_8' - splice acceptor/donor variant - predicted as LoF
   # - last intron - within pathogenic range - Lof established
-  # 'ACMG_PVS1_9' - splice acceptor/donor variant - predicted as LoF by LOFTEE
+  # 'ACMG_PVS1_9' - splice acceptor/donor variant - predicted as LoF
   # - not last intron - within pathogenic range - Lof established
   # 'ACMG_PVS1_10' - splice variant involving a donor at +3A/G, +4A or +5G -
   # predicted as damaging by insilico predictions - within pathogenic range

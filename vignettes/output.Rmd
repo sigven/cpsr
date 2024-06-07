@@ -348,7 +348,7 @@ The following variables are included in the tiered TSV file (VCF tags in the que
 | 33. `MUTATION_HOTSPOT` | Cancer mutation hotspot (cancerhotspots.org) |
 | 34. `RMSK_HIT` | RepeatMasker hit |
 | 35. `EFFECT_PREDICTIONS` | Functional effect predictions from multiple algorithms (dbNSFP) |
-| 36. `LOSS_OF_FUNCTION` | Loss-of-function variant, as predicted from VEP's LofTee plugin |
+| 36. `LOSS_OF_FUNCTION` | Loss-of-function variant |
 | 37. `NULL_VARIANT` | Frameshift or stop-gain variant |
 | 38. `DBMTS` | variant with potential effect on microRNA target sites (dbMTS). Format: `<ensembl_transcript_id>|<microrna_identifier>|<target_prediction_algorithms>|<gain_loss_consensus>`. _Target prediction algorithms_ indicate support by different algorithms (separated by '&'), `TS` = TargetScan, `M` = miRanda, `R` = RNAhybrid. *Gain_loss_consensus* indicate whether the variant was predicted to disrupt a binding site (`L` = Loss), or create a new target site (`G` = gain) by the different algorithms |
 | 39. `REGULATORY_ANNOTATION` | Overlap of variant with regulatory elements (VEP) | 
