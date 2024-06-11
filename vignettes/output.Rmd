@@ -121,10 +121,6 @@ A VCF file containing annotated, germline calls (single nucleotide variants and 
 | `NULL_VARIANT` | Primary variant consequence type is `frameshift` or `stop_gained`/`stop_lost` |
 | `SPLICE_DONOR_RELEVANT` | Logical indicating if variant is located at a particular location near the splice donor site (`+3A/G`, `+4A` or `+5G`) |
 | `REGULATORY_ANNOTATION` | Comma-separated list of all variant annotations of `Feature_type`, `RegulatoryFeature`, and `MotifFeature`. Format (separated by a `|`): `<Consequence>`, `<Feature_type>`, `<Feature>`, `<BIOTYPE>`, `<MOTIF_NAME>`, `<MOTIF_POS>`, `<HIGH_INF_POS>`, `<MOTIF_SCORE_CHANGE>`, `<TRANSCRIPTION_FACTORS>` |
-| `LoF` | Indicates Loss-of-function variant, as assessed by the LOFTEE VEP plugin (https://github.com/konradjk/loftee) |
-| `LoF_filter` | Filters underlying low confidence (LC) LoF calls, as assessed by the LOFTEE VEP plugin (https://github.com/konradjk/loftee)` |
-| `LoF_flags` | LOFTEE flags, see (https://github.com/konradjk/loftee) |
-| `LoF_info` | LOFTEE info, see (https://github.com/konradjk/loftee) |
 
 <br>
 
@@ -349,31 +345,32 @@ The following variables are included in the tiered TSV file (VCF tags in the que
 | 34. `RMSK_HIT` | RepeatMasker hit |
 | 35. `EFFECT_PREDICTIONS` | Functional effect predictions from multiple algorithms (dbNSFP) |
 | 36. `LOSS_OF_FUNCTION` | Loss-of-function variant |
-| 37. `NULL_VARIANT` | Frameshift or stop-gain variant |
-| 38. `DBMTS` | variant with potential effect on microRNA target sites (dbMTS). Format: `<ensembl_transcript_id>|<microrna_identifier>|<target_prediction_algorithms>|<gain_loss_consensus>`. _Target prediction algorithms_ indicate support by different algorithms (separated by '&'), `TS` = TargetScan, `M` = miRanda, `R` = RNAhybrid. *Gain_loss_consensus* indicate whether the variant was predicted to disrupt a binding site (`L` = Loss), or create a new target site (`G` = gain) by the different algorithms |
-| 39. `REGULATORY_ANNOTATION` | Overlap of variant with regulatory elements (VEP) | 
-| 40. `TF_BINDING_SITE_VARIANT` | Indicates whether a variant overlaps a critical/non-critical position of a transcription factor binding site (TFBS) - as provided by VEP's--regulatory option ('Overlap: non-critical motif position' or 'Overlap: critical motif position') |
-| 41. `TF_BINDING_SITE_VARIANT_INFO` | Comma-separated list of transcription factor binding sites affected by variant. Format per factor: `<TRANSCRIPTION_FACTOR>|<MOTIF_NAME>|<MOTIF_POS>|<MOTIF_SCORE_CHANGE>|<HIGH_INF_POS>`. *HIGH_INF_POS* indicates whether the variant overlapped a critical motif position (`Y`), or non-critical motif position (`N`) |
-| 42. `GERP_SCORE` | Genomic conservation score (GERP) |
-| 43. `DBSNP_RSID` | dbSNP identifier (rsid) |
-| 44. `CLINVAR_CLASSIFICATION` | clinical significance of ClinVar-recorded variant |
-| 45. `CLINVAR_MSID` | measureset identifier of ClinVar variant |
-| 46. `CLINVAR_VARIANT_ORIGIN` | variant origin (somatic/germline) of ClinVar variant |
-| 47. `CLINVAR_CONFLICTED` | indicator of conflicting interpretations |
-| 48. `CLINVAR_PHENOTYPE` | associated phenotype(s) for ClinVar variant |
-| 49. `CLINVAR_REVIEW_STATUS_STARS` | Review confidence - number of gold stars |
-| 50. `N_INSILICO_CALLED` | Number of algorithms with effect prediction (damaging/tolerated) from dbNSFP |
-| 51. `N_INSILICO_DAMAGING` | Number of algorithms with damaging prediction from dbNSFP |
-| 52. `N_INSILICO_TOLERATED` | Number of algorithms with tolerated prediction from dbNSFP |
-| 53. `N_INSILICO_SPLICING_NEUTRAL` | Number of algorithms with splicing neutral prediction from dbscSNV |
-| 54. `N_INSILICO_SPLICING_AFFECTED` | Number of algorithms with splicing affected prediction from dbscSNV |
-| 55. `gnomADe_AF` | Global MAF in gnomAD (exome samples) |
-| 56. `FINAL_CLASSIFICATION` | Final variant classification, using either `CLINVAR_CLASSIFICATION` if variant is ClinVar-classified, or `CPSR_CLASSIFICATION` for novel variants |
-| 57. `CPSR_CLASSIFICATION` | Variant clinical significance by CPSR's classification algorithm (P/LP/VUS/LB/B) |
-| 58. `CPSR_PATHOGENICITY_SCORE` | Aggregated pathogenicity score by CPSR's algorithm |
-| 59. `CPSR_CLASSIFICATION_CODE` | Combination of CPSR classification codes assigned to the variant (ACMG) |
-| 60. `CPSR_CLASSIFICATION_DOC` | Descriptions of CPSR classification codes assigned to the variant (ACMG) |
-| 61. `<CUSTOM_POPULATION_GNOMAD`> | Population specific MAF in gnomAD control (non-cancer, population configured by user) |
+| 37. `LOF_FILTER` | Loss-of-function filter |
+| 38. `NULL_VARIANT` | Frameshift or stop-gain variant |
+| 39. `DBMTS` | variant with potential effect on microRNA target sites (dbMTS). Format: `<ensembl_transcript_id>|<microrna_identifier>|<target_prediction_algorithms>|<gain_loss_consensus>`. _Target prediction algorithms_ indicate support by different algorithms (separated by '&'), `TS` = TargetScan, `M` = miRanda, `R` = RNAhybrid. *Gain_loss_consensus* indicate whether the variant was predicted to disrupt a binding site (`L` = Loss), or create a new target site (`G` = gain) by the different algorithms |
+| 40. `REGULATORY_ANNOTATION` | Overlap of variant with regulatory elements (VEP) | 
+| 41. `TF_BINDING_SITE_VARIANT` | Indicates whether a variant overlaps a critical/non-critical position of a transcription factor binding site (TFBS) - as provided by VEP's--regulatory option ('Overlap: non-critical motif position' or 'Overlap: critical motif position') |
+| 42. `TF_BINDING_SITE_VARIANT_INFO` | Comma-separated list of transcription factor binding sites affected by variant. Format per factor: `<TRANSCRIPTION_FACTOR>|<MOTIF_NAME>|<MOTIF_POS>|<MOTIF_SCORE_CHANGE>|<HIGH_INF_POS>`. *HIGH_INF_POS* indicates whether the variant overlapped a critical motif position (`Y`), or non-critical motif position (`N`) |
+| 43. `GERP_SCORE` | Genomic conservation score (GERP) |
+| 44. `DBSNP_RSID` | dbSNP identifier (rsid) |
+| 45. `CLINVAR_CLASSIFICATION` | clinical significance of ClinVar-recorded variant |
+| 46. `CLINVAR_MSID` | measureset identifier of ClinVar variant |
+| 47. `CLINVAR_VARIANT_ORIGIN` | variant origin (somatic/germline) of ClinVar variant |
+| 48. `CLINVAR_CONFLICTED` | indicator of conflicting interpretations |
+| 49. `CLINVAR_PHENOTYPE` | associated phenotype(s) for ClinVar variant |
+| 50. `CLINVAR_REVIEW_STATUS_STARS` | Review confidence - number of gold stars |
+| 51. `N_INSILICO_CALLED` | Number of algorithms with effect prediction (damaging/tolerated) from dbNSFP |
+| 52. `N_INSILICO_DAMAGING` | Number of algorithms with damaging prediction from dbNSFP |
+| 53. `N_INSILICO_TOLERATED` | Number of algorithms with tolerated prediction from dbNSFP |
+| 54. `N_INSILICO_SPLICING_NEUTRAL` | Number of algorithms with splicing neutral prediction from dbscSNV |
+| 55. `N_INSILICO_SPLICING_AFFECTED` | Number of algorithms with splicing affected prediction from dbscSNV |
+| 56. `gnomADe_AF` | Global MAF in gnomAD (exome samples) |
+| 57. `FINAL_CLASSIFICATION` | Final variant classification, using either `CLINVAR_CLASSIFICATION` if variant is ClinVar-classified, or `CPSR_CLASSIFICATION` for novel variants |
+| 58. `CPSR_CLASSIFICATION` | Variant clinical significance by CPSR's classification algorithm (P/LP/VUS/LB/B) |
+| 59. `CPSR_PATHOGENICITY_SCORE` | Aggregated pathogenicity score by CPSR's algorithm |
+| 60. `CPSR_CLASSIFICATION_CODE` | Combination of CPSR classification codes assigned to the variant (ACMG) |
+| 61. `CPSR_CLASSIFICATION_DOC` | Descriptions of CPSR classification codes assigned to the variant (ACMG) |
+| 62. `<CUSTOM_POPULATION_GNOMAD`> | Population specific MAF in gnomAD control (non-cancer, population configured by user) |
 
 **NOTE**: The user has the possibility to append the TSV file with data from other INFO tags in the input VCF (i.e. using the *--retained_info_tags* option)
 
