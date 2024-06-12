@@ -3,6 +3,7 @@
 export(append_cpg_properties)
 export(assign_classification)
 export(assign_pathogenicity_evidence)
+export(bs_icon2)
 export(check_variant2cancer_phenotype)
 export(combine_novel_and_preclassified)
 export(exclude_vars_by_maf)
