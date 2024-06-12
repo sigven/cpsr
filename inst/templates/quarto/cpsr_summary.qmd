@@ -90,7 +90,7 @@ bslib::layout_column_wrap(
       "N = ", 
       cps_report$content$snv_indel$v_stat_cpg$n_p + 
         cps_report$content$snv_indel$v_stat_cpg$n_lp),
-    showcase = bsicons::bs_icon("bullseye"), 
+    showcase = cpsr::bs_icon2("bullseye"),
     theme = bslib::value_box_theme(
       bg = color_lp, fg = "#fff"),
     showcase_layout = "left center"
@@ -98,7 +98,7 @@ bslib::layout_column_wrap(
   bslib::value_box(
     title = "Genes affected by pathogenic variants",
     value = genes_value_box,
-    showcase = bsicons::bs_icon("bullseye"),
+    showcase = cpsr::bs_icon2("bullseye"),
     theme = bslib::value_box_theme(
       bg = color_lp, fg = "#fff"),
     showcase_layout = "left center"
@@ -106,7 +106,7 @@ bslib::layout_column_wrap(
   bslib::value_box(
     title = "Secondary findings",
     value = value_sf,
-    showcase = bsicons::bs_icon("bullseye"),
+    showcase = cpsr::bs_icon2("bullseye"),
     theme = bslib::value_box_theme(
       bg = color_sf, fg = "#fff"),
     showcase_layout = "left center"
@@ -119,7 +119,7 @@ bslib::layout_column_wrap(
   bslib::value_box(
     title = "Pre-classified variants (ClinVar)",
     value = paste0("N = ", n_clinvar),
-    showcase = bsicons::bs_icon("check-square"),
+    showcase = cpsr::bs_icon2("check-square"),
     theme = bslib::value_box_theme(
       bg = color_clinvar, fg = "#fff"),
     showcase_layout = "left center"
@@ -127,7 +127,7 @@ bslib::layout_column_wrap(
   bslib::value_box(
     title = "Novel variants",
     value = paste0("N = ", n_novel),
-    showcase = bsicons::bs_icon("check-square"),
+    showcase = cpsr::bs_icon2("check-square"),
     theme = bslib::value_box_theme(
       bg = color_novel, fg = "#fff"),
     showcase_layout = "left center"
@@ -135,7 +135,7 @@ bslib::layout_column_wrap(
   bslib::value_box(
     title = "VUS variants",
     value = paste0("N = ", n_vus),
-    showcase = bsicons::bs_icon("check-square"),
+    showcase = cpsr::bs_icon2("check-square"),
     theme = bslib::value_box_theme(
       bg = color_vus, fg = "#fff"),
     showcase_layout = "left center"
