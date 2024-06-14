@@ -71,7 +71,9 @@ A VCF file containing annotated, germline calls (single nucleotide variants and 
 | `Feature_type` | Type of feature. Currently one of `Transcript`, `RegulatoryFeature`, `MotifFeature` (picked by VEP's `--flag_pick_allele` option) |
 | `Feature` | Ensembl stable ID of feature (picked by VEP's `--flag_pick_allele` option) |
 | `cDNA_position` | Relative position of base pair in cDNA sequence (picked by VEP's `--flag_pick_allele` option) |
-| `CDS_position` | Relative position of base pair in coding sequence (picked by VEP's `--flag_pick_allele` option) |
+| `CDS_position` | Relative position of base pair in coding
+sequence (picked by VEP's `--flag_pick_allele` option) |
+| `CDS_RELATIVE_POSITION` | Ratio of variant coding position to length of coding sequence |
 | `CDS_CHANGE` | Coding, transcript-specific sequence annotation (picked by VEP's `--flag_pick_allele` option) |
 | `AMINO_ACID_START` | Protein position indicating absolute start of amino acid altered (fetched from `Protein_position`) |
 | `AMINO_ACID_END` |  Protein position indicating absolute end of amino acid altered (fetched from `Protein_position`) |
@@ -104,8 +106,11 @@ A VCF file containing annotated, germline calls (single nucleotide variants and 
 | `INTRON_POSITION`| Relative position of intron variant to nearest exon/intron junction (NearestExonJB VEP plugin) |
 | `EXON_POSITION`| Relative position of exon variant to nearest intron/exon junction (NearestExonJB VEP plugin) |
 | `EXON`| The exon number (out of total number) (picked by VEP's `--flag_pick_allele` option) |
+| `EXON_AFFECTED` | The exon affected by the variant (picked by VEP's `--flag_pick_allele` option) |
 | `LAST_EXON`| Logical indicator for last exon of transcript (picked by VEP's `--flag_pick_allele` option) |
 | `LAST_INTRON`| Logical indicator for last intron of transcript (picked by VEP's `--flag_pick_allele` option) |
+| `INTRON_POSITION` | Relative position of intron variant to nearest exon/intron junction (NearestExonJB VEP plugin) |
+| `EXON_POSITION` | Relative position of exon variant to nearest intron/exon junction (NearestExonJB VEP plugin) |
 | `DISTANCE`| Shortest distance from variant to transcript (picked by VEP's `--flag_pick_allele` option) |
 | `BIOTYPE`| Biotype of transcript or regulatory feature (picked by VEP's `--flag_pick_allele` option) |
 | `TSL`| Transcript support level (picked by VEP's `--flag_pick_allele` option)> |
@@ -119,6 +124,8 @@ A VCF file containing annotated, germline calls (single nucleotide variants and 
 | `EXONIC_STATUS` | Indicates if variant consequence type is 'exonic' or 'nonexonic'. We define 'exonic' as any variants with the following consequences: `stop_gained / stop_lost`, `start_lost`, `frameshift_variant`, `missense_variant`, `splice_donor_variant`, `splice_acceptor_variant`, `inframe_insertion / inframe_deletion`, `synonymous_variant`, `protein_altering` |
 | `CODING_STATUS` | Indicates if primary variant consequence type is 'coding' or 'noncoding'. 'coding' variants are here defined as those with an 'exonic' status, with the exception of synonymous variants |
 | `NULL_VARIANT` | Primary variant consequence type is `frameshift` or `stop_gained`/`stop_lost` |
+| `LOSS_OF_FUNCTION` | Loss-of-function variant |
+| `LOF_FILTER` | Loss-of-function filter |
 | `SPLICE_DONOR_RELEVANT` | Logical indicating if variant is located at a particular location near the splice donor site (`+3A/G`, `+4A` or `+5G`) |
 | `REGULATORY_ANNOTATION` | Comma-separated list of all variant annotations of `Feature_type`, `RegulatoryFeature`, and `MotifFeature`. Format (separated by a `|`): `<Consequence>`, `<Feature_type>`, `<Feature>`, `<BIOTYPE>`, `<MOTIF_NAME>`, `<MOTIF_POS>`, `<HIGH_INF_POS>`, `<MOTIF_SCORE_CHANGE>`, `<TRANSCRIPTION_FACTORS>` |
 

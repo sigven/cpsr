@@ -33,12 +33,15 @@ output: rmarkdown::html_document
   - `--vep_gencode_all` is now named `--vep_gencode_basic`, meaning that the gene variant annotation is now using _all_ GENCODE transcripts by default, not only the _basic_ set)
   - `--preserved_info_tags` is now named `--retained_info_tags`
   - `--basic` is now named `--no_reporting`
+- LOFTEE plugin in VEP removed as loss-of-function variant classifier (due to low level of maintenance, and outdated dependency requirements). For now, a simplified LoF-annotation is used as a replacement, looking primarily at CSQ types (`stop_gained`, `frameshift_variant`, `splice_acceptor_variant`, `splice_donor_variant`). Furthermore, frameshift/stop-gain variants that are found within the last 5% of the coding sequence length are deemed non-LOF, as are splice donor variants not disrupting the canonical site (GC>GT). An even more advanced LoF-annotation is planned for a future release.
+- Biomarkers are matched much more comprehensively than in previous versions, matching at the genomic level, codon, exon, amino acid and gene level (both principal and non-principal transcript matches)
+- Some bugs in the retrieval of secondary variant findings have been fixed
 
 ##### Removed
 
 - Options for configuring Rmarkdown output, i.e. `--report_theme`, `report_nonfloating_toc`, `report_table_display` argument in the `cpsr` command is deprecated
 - `--gwas_p_value`
-- `--no_vcf_validate` - VCF validation is simplified, not relying on _vcf-validator_ anymore
+- `--no_vcf_validate` - VCF validation is simplified, not relying on the strict _vcf-validator_ 
 
 
 #### 
