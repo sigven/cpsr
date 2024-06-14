@@ -50,9 +50,9 @@ get_max_rows_pr_datatable <- function(cps_report) {
 #'
 #' @export
 get_insilico_prediction_statistics <- function(cpg_calls) {
-
   pcgrr::log4r_info(
-    "Summarising insilico variant effect predictions (dbNSFP)")
+    "Summarising insilico variant effect predictions (dbNSFP)"
+  )
 
 
   insilico_pathogenicity_pred_algos <-
@@ -164,13 +164,15 @@ retrieve_secondary_calls <- function(calls) {
       !is.na(.data$GENOTYPE) &
         !is.na(.data$SYMBOL) &
         !is.na(.data$CPG_SOURCE) &
-        stringr::str_detect(.data$CPG_SOURCE,"ACMG_SF") &
+        stringr::str_detect(.data$CPG_SOURCE, "ACMG_SF") &
         .data$PRIMARY_TARGET == FALSE &
         !is.na(.data$CPSR_CLASSIFICATION_SOURCE) &
         .data$CPSR_CLASSIFICATION_SOURCE == "ClinVar" &
         !is.na(.data$FINAL_CLASSIFICATION) &
         stringr::str_detect(
-          .data$FINAL_CLASSIFICATION,"Pathogenic")) |>
+          .data$FINAL_CLASSIFICATION, "Pathogenic"
+        )
+    ) |>
     dplyr::filter(
       .data$GENOTYPE != "undefined"
     )
@@ -218,7 +220,9 @@ retrieve_secondary_calls <- function(calls) {
       if (nrow(genes_lacking_twohit_evidence) > 0) {
         secondary_calls <- secondary_calls |>
           dplyr::anti_join(
-            genes_lacking_twohit_evidence, by = "SYMBOL")
+            genes_lacking_twohit_evidence,
+            by = "SYMBOL"
+          )
       }
     }
   }
@@ -234,9 +238,8 @@ retrieve_secondary_calls <- function(calls) {
 #'
 #' @export
 check_variant2cancer_phenotype <- function(cpg_calls, ref_data) {
-
-  oncotree <- ref_data[['phenotype']][['oncotree']]
-  umls_map <- ref_data[['phenotype']][['umls']] |>
+  oncotree <- ref_data[["phenotype"]][["oncotree"]]
+  umls_map <- ref_data[["phenotype"]][["umls"]] |>
     dplyr::filter(.data$MAIN_TERM == TRUE) |>
     dplyr::select(-c("SOURCE")) |>
     dplyr::distinct()
@@ -256,16 +259,22 @@ check_variant2cancer_phenotype <- function(cpg_calls, ref_data) {
     if (n_clinvar > 0) {
       cpg_calls_traits <- as.data.frame(
         tidyr::separate_rows(
-          cpg_calls, "CLINVAR_UMLS_CUI", sep = ",") |>
+          cpg_calls, "CLINVAR_UMLS_CUI",
+          sep = ","
+        ) |>
           dplyr::select(c("VAR_ID", "CLINVAR_UMLS_CUI")) |>
           dplyr::left_join(
-            umls_map, by = c("CLINVAR_UMLS_CUI" = "CUI"),
-            relationship = "many-to-many") |>
+            umls_map,
+            by = c("CLINVAR_UMLS_CUI" = "CUI"),
+            relationship = "many-to-many"
+          ) |>
           dplyr::distinct() |>
           dplyr::filter(!is.na(.data$CUI_NAME)) |>
           dplyr::left_join(
-            oncotree, by = c("CLINVAR_UMLS_CUI" = "CUI"),
-            relationship = "many-to-many") |>
+            oncotree,
+            by = c("CLINVAR_UMLS_CUI" = "CUI"),
+            relationship = "many-to-many"
+          ) |>
           dplyr::mutate(
             CANCER_PHENOTYPE = dplyr::if_else(
               is.na(.data$CANCER_PHENOTYPE),
@@ -278,17 +287,19 @@ check_variant2cancer_phenotype <- function(cpg_calls, ref_data) {
               dplyr::if_else(
                 !is.na(.data$CUI_NAME) &
                   stringr::str_detect(
-                tolower(.data$CUI_NAME),
-                pcgrr::cancer_phenotypes_regex
-              ),
-              as.integer(1),
-              as.integer(.data$CANCER_PHENOTYPE)
+                    tolower(.data$CUI_NAME),
+                    pcgrr::cancer_phenotypes_regex
+                  ),
+                as.integer(1),
+                as.integer(.data$CANCER_PHENOTYPE)
               )
           ) |>
           dplyr::group_by(.data$VAR_ID) |>
           dplyr::summarise(
             CLINVAR_PHENOTYPE = paste(
-              unique(.data$CUI_NAME), collapse = "; "),
+              unique(.data$CUI_NAME),
+              collapse = "; "
+            ),
             CANCER_PHENOTYPE = max(.data$CANCER_PHENOTYPE),
             .groups = "drop"
           ) |>
