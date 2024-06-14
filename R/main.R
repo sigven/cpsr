@@ -294,8 +294,9 @@ write_cpsr_output <- function(report,
     )
 
   ## Path to CPSR reporting templates
+  templates_dir <- "templates"
   cpsr_rep_template_path <-
-    system.file("templates", package = "cpsr")
+    system.file(templates_dir, package = "cpsr")
   quarto_input <- file.path(
     cpsr_rep_template_path, "cpsr_report.qmd"
   )
@@ -309,6 +310,11 @@ write_cpsr_output <- function(report,
           paste0("quarto_", stringi::stri_rand_strings(1, 15))
         )
         fs::dir_create(tmp_quarto_dir)
+        # files get copied under tmp/templates/
+        fs::dir_copy(cpsr_rep_template_path, tmp_quarto_dir)
+        # so now overwrite the variable
+        tmp_quarto_dir <- file.path(tmp_quarto_dir, templates_dir)
+
         quarto_main_template <-
           file.path(tmp_quarto_dir, "cpsr_report.qmd")
         quarto_main_template_sample <-
@@ -318,7 +324,6 @@ write_cpsr_output <- function(report,
 
         ## Copy all CPSR quarto reporting templates, bibliography, css etc to
         ## the temporary directory for quarto report rendering
-        fs::dir_copy(cpsr_rep_template_path, tmp_quarto_dir)
 
         ## Save sample CPSR report object in temporary quarto rendering directory
         rds_report_path <- file.path(
