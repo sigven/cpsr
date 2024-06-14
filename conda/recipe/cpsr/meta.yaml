@@ -23,6 +23,7 @@ requirements:
     - r-crosstalk
     - r-dplyr
     - r-dt
+    - r-fs
     - r-ggplot2
     - r-glue
     - r-htmltools
@@ -44,6 +45,7 @@ requirements:
     - r-crosstalk
     - r-dplyr
     - r-dt
+    - r-fs
     - r-ggplot2
     - r-glue
     - r-htmltools
