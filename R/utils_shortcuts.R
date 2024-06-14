@@ -12,6 +12,7 @@ utils::globalVariables(c("."))
 #' @noRd
 dummy1 <- function() {
   # Solves R CMD check: Namespaces in Imports field not imported from
+  glue::glue
   DT::datatable
   htmltools::br
   shiny::bootstrapPage
