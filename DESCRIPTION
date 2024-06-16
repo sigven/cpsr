@@ -35,7 +35,6 @@ Imports:
     crosstalk,
     dplyr,
     DT,
-    fs,
     ggplot2,
     glue,
     htmltools,
