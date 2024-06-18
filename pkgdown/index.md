@@ -8,7 +8,7 @@ The *Cancer Predisposition Sequencing Reporter (CPSR)* is a computational workfl
 
 *CPSR* accepts a query file with raw germline variant calls (SNVs/InDels) from a single sample (cancer patient), encoded in the [VCF format ](https://samtools.github.io/hts-specs/VCFv4.2.pdf). CPSR conducts comprehensive gene and variant annotation on the input calls, and generates a dedicated _variant HTML report_, that provides the following main functionality:
 
-1) Flexible **selection of cancer predisposition genes** subject to analysis
+1) Flexible **selection of cancer predisposition genes** subject to analysis and reporting
 2) **Variant classification** (*Pathogenic* to _Benign_) through implementation of ACMG guidelines
 3) **Biomarker matching** of sample variants (prognosis, diagnosis, drug sensitivity/resistance)
 4) Reporting of **secondary/incidental findings** (ACMG recommendations)
@@ -16,7 +16,7 @@ The *Cancer Predisposition Sequencing Reporter (CPSR)* is a computational workfl
 
 The workflow is integrated with the framework that underlies [Personal Cancer Genome Reporter - PCGR ](https://github.com/sigven/pcgr). While *PCGR* is intended for reporting and analysis of somatic variants detected in a tumor, *CPSR* is intended for reporting and ranking of germline variants in protein-coding genes that are implicated in cancer predisposition and inherited cancer syndromes.
 
-Snapshots of sections in the cancer predisposition genome report:
+Snapshots of sections in the [quarto](https://quarto.org)-based cancer predisposition genome report ((artificial sample, with more findings than usual):
 
 ![](img/cpsr_sc.png)
 
@@ -29,10 +29,10 @@ Snapshots of sections in the cancer predisposition genome report:
   - Excel output supported
   - Updated virtual gene panels (Genomics England PanelApp, Cancer Gene Census)
   - Reference data updates, most importantly including 
-    - ClinVar - May 2024
-    - CIViC - May 2024
-    - GENCODE - v45
-  - Software updates - VEP 111
+    - ClinVar - June 2024
+    - CIViC - June 2024
+    - GENCODE - v46
+  - Software updates - VEP 112
   - Extensive code clean-up and re-structuring
 
 * *November 2022*: **1.0.1 release**

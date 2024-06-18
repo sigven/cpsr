@@ -6,21 +6,21 @@ The CPSR workflow is integrated with the framework that underlies the [Personal 
 
 *CPSR* accepts a query file from a single case/patient, containing raw germline variant calls encoded in the [VCF](https://samtools.github.io/hts-specs/VCFv4.2.pdf) format (i.e. SNVs/InDels). A comprehensive set of **virtual cancer predisposition gene panels** harvested from the [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk/) allows the user to flexibly put a restriction on which genes and findings are displayed in the cancer predisposition report.
 
-Snapshots of sections in the cancer predisposition genome report (artificial sample, with more findings than usual) are shown below:
+Snapshots of sections in the [quarto](https://quarto.org)-based cancer predisposition genome report (artificial sample, with more findings than usual) are shown below:
 
 ![CPSR views](pkgdown/assets/img/cpsr_sc.png)
 
 ## News
 
--   *May 2024*: **2.x.x release**
+-   *June 2024*: **2.x.x release**
     -   New HTML report generation and layout with [quarto](https://quarto.org/)
     -   Excel output supported
     -   Updated virtual gene panels (Genomics England PanelApp, Cancer Gene Census)
     -   Reference data updates, most importantly including 
-        - ClinVar - May 2024
-        - CIViC - May 2024
-        - GENCODE - v45
-    -   Software updates - VEP 111
+        - ClinVar - June 2024
+        - CIViC - June 2024
+        - GENCODE - v46
+    -   Software updates - VEP 112
     -   Extensive code clean-up and re-structuring
 
 -   *November 2022*: **1.0.1 release**
