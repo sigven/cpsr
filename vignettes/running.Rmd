@@ -193,7 +193,7 @@ usage:
 
 ## Example run
 
-The *cpsr* R package comes with a test VCF file (GRCh37, not originating as germline calls from a real patient) that can be used to test the CPSR pipeline.
+The *cpsr* R package comes with a test VCF file (calls from the GRCh37 human genome assembly) that can be used to test the CPSR workflow. Please note that these are artificial germline calls, not originating form an actual patient.
 
 Report generation with the example VCF, using the [Adult solid tumours cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/245/) as the virtual gene panel, can be performed through the following command:
 
@@ -218,14 +218,14 @@ Note that the example command also refers to the PCGR data bundle directory (*re
 
 This command will produce the following output files in the _output_ folder:
 
-  1. __example.cpsr.grch37.vcf.gz (.tbi)__ - Bgzipped VCF file with relevant annotations appended by CPSR
-  2. __example.cpsr.grch37.pass.vcf.gz (.tbi)__ - Bgzipped VCF file with relevant annotations appended by CPSR (PASS variants only)
+  1. __example.cpsr.grch37.vcf.gz (.tbi)__ - Bgzipped VCF file with various variant annotations appended by CPSR
+  2. __example.cpsr.grch37.pass.vcf.gz (.tbi)__ - Bgzipped VCF file with various variant annotations appended by CPSR (PASS variants only)
   3. __example.cpsr.grch37.conf.yaml__ - CPSR configuration file - output from pre-reporting annotation (Python) workflow
-  4. __example.cpsr.grch37.pass.tsv.gz__ - Compressed TSV file (generated with [vcf2tsvpy](https://github.com/sigven/vcf2tsvpy)) of VCF content with relevant annotations appended by CPSR
+  4. __example.cpsr.grch37.pass.tsv.gz__ - Compressed TSV file (generated with [vcf2tsvpy](https://github.com/sigven/vcf2tsvpy)) of VCF content with various annotations appended by CPSR
   5. __example.cpsr.grch37.xlsx__ - An Excel workbook that contains
       * _i)_ information on virtual gene panel interrogated for variants
       * _ii)_ classification of clinical significance for variants overlapping with cancer predisposition genes
       * _iii)_ match of variants with existing biomarkers (if any found)
       * _iv)_ secondary findings (if any found)
   6. __example.cpsr.grch37.html__ - Interactive HTML report with clinically relevant variants in cancer predisposition genes
-  7. __example.cpsr.grch37.snvs_indels.classification.tsv.gz__ - TSV file with key annotations of SNVs/InDels classified according to clinical significance
+  7. __example.cpsr.grch37.snvs_indels.classification.tsv.gz__ - TSV file with key annotations of germline SNVs/InDels classified according to clinical significance
