@@ -9,7 +9,7 @@ env:
   atoken: ${{ secrets.ANACONDA_UPLOAD_TOKEN }}
   recipe_path: conda/recipe
   env_yml_path: conda/env/yml
-  VERSION: '1.0.1.9014' # versioned by bump2version
+  VERSION: '1.0.1.9015' # versioned by bump2version
 jobs:
   build_conda_pkgs:
     # When merging to one of the branches above and the commit message matches
@@ -29,8 +29,21 @@ jobs:
       - name: 🐍 Conda pkg build and upload
         run: |
           conda mambabuild ${recipe_path}/cpsr -c pcgr -c conda-forge -c bioconda --token ${atoken}
+      - name: 🔖 Tag creation
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const the_tag_name = 'refs/tags/v' + process.env.VERSION
+            github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: the_tag_name,
+              sha: context.sha
+            })
 
   pkgdown_site:
+    # only build pkgdown site on master
+    if: github.ref_name == 'master'
     name: Deploy pkgdown website
     runs-on: ubuntu-latest
     needs: build_conda_pkgs
@@ -53,14 +66,3 @@ jobs:
             Rscript -e "packageVersion('cpsr')"
             Rscript -e "pkgdown::deploy_to_branch(pkg = '.', commit_message = 'Built CPSR website: https://sigven.github.io/cpsr/', branch = 'gh-pages', new_process = FALSE)"
 
-      - name: Create tag
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const the_tag_name = 'refs/tags/v' + process.env.VERSION
-            github.rest.git.createRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: the_tag_name,
-              sha: context.sha
-            })
