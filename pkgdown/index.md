@@ -24,7 +24,7 @@ Snapshots of sections in the [quarto](https://quarto.org)-based cancer predispos
 
 ### News
 
-* *May 2024*: **2.x.x release**
+* *June 2024*: **2.x.x release**
   - New HTML report generation and layout with [quarto](https://quarto.org/)
   - Excel output supported
   - Updated virtual gene panels (Genomics England PanelApp, Cancer Gene Census)

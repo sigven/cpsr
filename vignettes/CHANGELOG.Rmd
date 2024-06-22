@@ -5,7 +5,7 @@ output: rmarkdown::html_document
 
 ## v2.0.0
 
-* Date: **2024-05-xx**
+* Date: **2024-06-xx**
 * Data updates
   * ClinVar
   * GWAS catalog
