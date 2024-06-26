@@ -1,0 +1,26 @@
+<br><br>
+
+### Virtual gene panel
+
+Variants reported for the sample are limited to the tile of cancer predisposition genes
+shown below. 
+
+   *  __`r cps_report[['settings']][['conf']][['gene_panel']][['description']]`__
+      * Diagnostic-grade genes only (applicable to Genomics England panels): __`r as.logical(cps_report[['settings']][['conf']][['gene_panel']][['diagnostic_grade_only']])`__
+   
+```{r gene_selection, echo = F, eval = T}
+tiles_html <- cpsr::plot_virtual_panels(
+  gene_df = cps_report[["settings"]][["conf"]][["gene_panel"]][["panel_genes"]])
+```
+
+`r tiles_html`
+
+<br>
+
+::: {.callout-note}
+## Note - input data and virtual panel
+
+For the sample in question, `r cps_report$settings$sample_id`, CPSR does **not** perform any interrogation of _which genes that were subject to sequencing_. CPSR classifies only input variants (i.e. as found in the query VCF) within the user-defined __virtual__ gene panel.
+:::
+
+<br>

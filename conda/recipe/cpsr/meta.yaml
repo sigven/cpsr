@@ -1,6 +1,6 @@
 package:
   name: r-cpsr
-  version: 1.0.1 # versioned by bump2version
+  version: 1.0.1.9016 # versioned by bump2version
 
 source:
   path: ../../../
@@ -16,28 +16,46 @@ requirements:
   build:
     - git
   host:
-    - r-base ==4.1.1
-    - r-pcgrr
+    - r-base ==4.3.3
+    - r-assertable
     - r-assertthat
+    - r-bslib
+    - r-crosstalk
     - r-dplyr
+    - r-dt
     - r-ggplot2
-    - r-log4r
-    - r-magrittr
+    - r-glue
+    - r-htmltools
+    - r-openxlsx2
+    - r-pcgrr
+    - r-quarto
+    - quarto
+    - r-readr
     - r-rlang
-    - r-scales
+    - r-shiny
     - r-stringr
+    - r-stringi
     - r-tidyr
   run:
-    - r-base ==4.1.1
-    - r-pcgrr
+    - r-base ==4.3.3
+    - r-assertable
     - r-assertthat
+    - r-bslib
+    - r-crosstalk
     - r-dplyr
+    - r-dt
     - r-ggplot2
-    - r-log4r
-    - r-magrittr
+    - r-glue
+    - r-htmltools
+    - r-openxlsx2
+    - r-pcgrr
+    - r-quarto
+    - quarto
+    - r-readr
     - r-rlang
-    - r-scales
+    - r-shiny
     - r-stringr
+    - r-stringi
     - r-tidyr
 
 test:
@@ -47,11 +65,4 @@ test:
 about:
   home: https://github.com/sigven/cpsr
   license: MIT
-  summary: CPSR is a computational workflow that interprets germline variants identified from
-           next-generation sequencing in the context of cancer predisposition. The workflow is
-           integrated with the framework that underlies the Personal Cancer Genome Reporter
-           (PCGR) (https://github.com/sigven/pcgr), utilizing the Docker environment for
-           encapsulation of code and software dependencies. While PCGR is intended for reporting
-           and analysis of somatic variants detected in a tumor, CPSR is intended for reporting
-           and ranking of germline variants in protein-coding genes that are implicated in cancer
-           predisposition and inherited cancer syndromes.
+  summary: Cancer Predisposition Sequencing Reporter

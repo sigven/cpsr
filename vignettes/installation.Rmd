@@ -4,10 +4,9 @@ output: rmarkdown::html_document
 ---
 
 CPSR is distributed alongside the [Personal Cancer Genome Reporter (PCGR)](https://github.com/sigven/pcgr), so please follow
-the [PCGR installation steps](https://sigven.github.io/pcgr/articles/installation.html) to install CPSR.
+the [PCGR installation steps](https://sigven.github.io/pcgr/articles/installation.html) to install CPSR, either through [Docker](https://docs.docker.com/), [Apptainer/Singularity](https://apptainer.org/docs/user/latest/index.html), or [Conda](https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html).
 
-We recommend [conda](https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html)
-as the simplest framework to install PCGR and CPSR, using either a MacOS or a Linux platform.
+We recommend Conda as the simplest framework to install PCGR and CPSR, using either a MacOS or a Linux platform.
 
 Assuming you have installed the `pcgr` and `pcgrr` conda envs as described in the above links
 at e.g. `/home/user/projects/cpsr_proj1/conda/env/`, you can load the `pcgr` environment and check

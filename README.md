@@ -1,22 +1,28 @@
 # Cancer Predisposition Sequencing Reporter <a href="https://sigven.github.io/cpsr/"><img src="man/figures/logo.png" align="right" height="118" width="100"/></a>
 
-The *Cancer Predisposition Sequencing Reporter (CPSR)* is a computational workflow that **interprets and classifies germline DNA variants** identified from next-generation sequencing **in the context of cancer predisposition and inherited cancer syndromes**. The workflow can also report **incidental findings (ACMG v3.0)** as well as the genotypes of common germline variants associated with cancer risk, as reported in the **NHGRI-EBI GWAS catalog**.
+The *Cancer Predisposition Sequencing Reporter (CPSR)* is a computational workflow that **interprets and classifies the clinical significance of germline DNA variants** identified from next-generation sequencing **in the context of cancer predisposition and inherited cancer syndromes**. The workflow can also report **incidental findings (ACMG v3.2)**.
 
 The CPSR workflow is integrated with the framework that underlies the [Personal Cancer Genome Reporter - PCGR](https://github.com/sigven/pcgr). While *PCGR* is intended for reporting and analysis of somatic variants detected in a tumor, *CPSR* is intended for reporting and ranking of germline variants in protein-coding genes that are implicated in cancer predisposition and inherited cancer syndromes. 
 
 *CPSR* accepts a query file from a single case/patient, containing raw germline variant calls encoded in the [VCF](https://samtools.github.io/hts-specs/VCFv4.2.pdf) format (i.e. SNVs/InDels). A comprehensive set of **virtual cancer predisposition gene panels** harvested from the [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk/) allows the user to flexibly put a restriction on which genes and findings are displayed in the cancer predisposition report.
 
-Snapshots of sections in the cancer predisposition genome report:
+Snapshots of sections in the [quarto](https://quarto.org)-based cancer predisposition genome report (artificial sample, with more findings than usual) are shown below:
 
-![CPSR views](pkgdown/assets/img/cpsr_views.png)
+![CPSR views](pkgdown/assets/img/cpsr_sc.png)
 
 ## News
+
+-   *June 2024*: **2.0.0 release**
+    - New HTML report generation and layout with [quarto](https://quarto.org/)
+    - Excel output supported
+    - Data bundle update
+    - Singularity/Apptainer support
+    - [CHANGELOG](https://sigven.github.io/cpsr/articles/CHANGELOG.html)
 
 -   *November 2022*: **1.0.1 release**
     -   Added CPSR logo (designed by [Hal Nakken](https://halvetica.net))
     
 -   *February 2022*: **1.0.0 release**
-
     -   Complete restructure of code and Conda installation routines, contributed largely by the great [@pdiakumis](https://github.com/pdiakumis)
     -   Updated data bundle
         - ClinVar - Feb 2022
@@ -27,20 +33,10 @@ Snapshots of sections in the cancer predisposition genome report:
     -   Software upgrade (VEP 105, R/BioConductor)
     -   New documentation site ([https://sigven.github.io/cpsr](https://sigven.github.io/cpsr))
 
--   *June 30th 2021*: **0.6.2 release**
-
-    -   Updated bundle (ClinVar, CancerMine, UniprotKB, PanelApp, CIViC, GWAS catalog)
-    -   Software upgrade (VEP, R/BioConductor)
-    -   [CHANGELOG](http://cpsr.readthedocs.io/en/latest/CHANGELOG.html)
-
--   *November 30th 2020*: **0.6.1 release**
-
-    -   Updated bundle (ClinVar, CancerMine, UniprotKB, CIViC, GWAS catalog)
-    -   [CHANGELOG](http://cpsr.readthedocs.io/en/latest/CHANGELOG.html)
 
 ## Example report
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6223386.svg)](https://doi.org/10.5281/zenodo.6223386)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11401491.svg)](https://doi.org/10.5281/zenodo.11401491)
 
 ## Getting started
 

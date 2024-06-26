@@ -1,0 +1,154 @@
+## Documentation
+
+This report is intended for interpretation of inherited DNA variants implicated with cancer susceptibility and inherited cancer syndromes. The set of classified variants are limited to those overlapping a user-defined set of known cancer predisposition target genes (i.e. _virtual panel_), for which the report lists __ONLY__ those variants that are
+
+1. Previously classified in ClinVar (five-level clinical significance scheme: pathogenic/likely pathogenic/VUS/likely benign/benign), or
+2. Coding, non-ClinVar-classified variants with germline population frequency below the user-defined threshold, i.e. 
+    * Minor allele frequency (MAF) < `r cps_report[['settings']][['conf']][['variant_classification']][['maf_upper_threshold']]`) in the user-defined population set in the gnomAD database
+    * The set of novel, _non-ClinVar_ variants are classified using CPSR's dedicated variant classification algorithm, applying the same five-level clinical significance scheme as found in ClinVar
+
+<br>
+
+::: {.panel-tabset}
+
+### Gene/variant annotation resources
+
+The variant interpretation procedures performed in this cancer genome report are relying upon multiple tools and knowledge resources, as outlined below. 
+
+::: {.callout-important}
+## Licensing note
+
+Some resources (highlighted below) demand specific licensing agreements if you plan to utilize their data (and thus this report) in a commercial, non-research setting.
+:::
+
+
+* __PCGR databundle version__
+
+  * __`r cps_report$settings$reference_data$version`__
+
+* __Databases/datasets__ 
+```{r list_db}
+#| echo: false
+#| output: asis
+
+i <- 1
+ref_datasets <- cps_report$settings$reference_data$source_metadata
+for(i in 1:NROW(ref_datasets)){
+  source_full <- ref_datasets[i,"source"]
+  source <- ref_datasets[i,"source_abbreviation"]
+  description <- ref_datasets[i,"source_description"]
+  url <- ref_datasets[i,"source_url"]
+  version <- ref_datasets[i,"source_version"]
+  license <- ref_datasets[i, "source_license"]
+  license_url <- ref_datasets[i, "source_license_url"]
+  
+  ## temporary fix for outdated ACMG URL (geneOncoX needs update):
+  if(source == "acmg_sf"){
+    url <- "https://pubmed.ncbi.nlm.nih.gov/37347242/"
+  }
+  wflow <- ref_datasets[i, "wflow"]
+  if(!(stringr::str_detect(
+    wflow,"cpsr"))){
+    next
+  }
+  
+  s <- ""
+  if(is.na(version)){
+    if(!is.na(license_url)){
+      s <- paste0("    * [", source_full, "](", url, ") - ", description, " - [",
+                  license,"](", license_url, ")")
+    }else{
+      s <- paste0("    * [", source_full, "](", url, ") - ", description, " - ",
+                  license)
+    }
+  }else{
+    if(!is.na(license_url)){
+      if(source == "cgc" | source == "gepa"){
+        s <- paste0("    * [", source_full, "](", url, ") - ", description, " (<b>", version, "</b>)",
+                    " - <b>[", license,"](", license_url, ")</b>")
+      }else{
+        s <- paste0("    * [", source_full, "](", url, ") - ", description, " (<b>", version, "</b>)",
+                    " - [", license,"](", license_url, ")")
+      }
+    }else{
+       s <- paste0("    * [", source_full, "](", url, ") - ", description, " (<b>", version, "</b>)",
+                  " - ", license)
+    }
+  }
+  if(s != ""){
+    cat(s, sep = "\n")
+  }
+}
+
+```
+
+### Variant classification algorithm (ACMG-based)
+
+<br>
+
+All coding, <b>non-ClinVar</b> variants in the set of cancer predisposition genes have been classified according to a <i>five-level pathogenicity scheme</i> (coined <b>CPSR_CLASSIFICATION</b> in the tables above). The scheme has the same five levels as those employed by ClinVar, e.g. pathogenic/likely pathogenic/VUS/likely benign/benign. The classification performed by CPSR is rule-based, implementing refined ACMG criteria, many of which were outlined in [SherLoc](https://www.invitae.com/en/variant-classification/) ([Nykamp et al., Genetics in Medicine, 2017](https://www.ncbi.nlm.nih.gov/pubmed/28492532)). Important attributes of cancer predisposition genes, such as mode of inheritance and mechanism of disease (loss-of-function), have been harvested from [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk/), [Maxwell et al., Am J Hum Genet, 2016](https://www.ncbi.nlm.nih.gov/pubmed/27153395), and [Huang et al., Cell, 2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052)
+
+The ACMG criteria listed in the table below form the basis for the <b>CPSR_CLASSIFICATION</b> implemented in CPSR. Specifically, the <i>score</i> column indicates how much each evidence item contribute to either of the two pathogenicity poles (positive values indicate pathogenic support, negative values indicate benign support). Evidence score along each pole ('B' and 'P') are aggregated, and if there is conflicting or little evidence it will be classified as a VUS. The contribution of ACMG evidence items pr. variant can be seen in the <b>CPSR_CLASSIFICATION_CODE</b> and <b>CPSR_CLASSIFICATION_DOC</b> variables.
+<br><br>
+
+#### Calibration of classification thresholds 
+
+How do we assign classification of novel variants (<i>P, LP, VUS, LB, B</i>) from the aggregated variant pathogenicity score (<i>CPSR_PATHOGENICITY_SCORE</i>)?
+
+We calibrated the thresholds for conversion of pathogenicity scores to categorical variant classification using high-quality ClinVar-classified variants in a core set of cancer predisposition genes (see details in [CPSR manuscript](https://doi.org/10.1002/ijc.33749), and plot below). 
+
+```{r classification_plot}
+#| echo: false
+#| eval: true
+
+classification_calibration_plot_fname_path <- 
+  system.file("extdata", "CPSR_classification_score_thresholds.png", 
+              package = "cpsr")
+```
+
+<img src="`r classification_calibration_plot_fname_path`" title="" alt="" align="center" width="950" height="560"/>
+
+<br>
+<br>
+
+The following thresholds are currently used to assign classifications based on pathogenicity scores:
+
+<br>
+
+`r knitr::kable(cpsr::acmg[['score2tier']])`
+
+<br><br>
+
+In the table below, a detailed description of all evidence criteria that are currently used for variant classification in CPSR (green elements indicate criteria that contribute with a benign effect, red elements contribute with a pathogenic effect):<br><br>
+
+
+```{r acmg_evidence}
+#| echo: false
+#| eval: true
+
+data <- dplyr::filter(
+  cpsr::acmg[["evidence_codes"]],
+  cpsr_evidence_code != "ACMG_BS2_1" &
+    cpsr_evidence_code != "ACMG_BS2_2" &
+    cpsr_evidence_code != "ACMG_BS2_3") |>
+  dplyr::select(-category) |>
+  dplyr::rename(pole = pathogenicity_pole, category = category_long, score = path_score) |>
+  dplyr::arrange(pole)
+
+DT::datatable(data,
+  escape = F, extensions = c("Buttons", "Responsive"),
+  options = list(
+    pageLength = 10,
+    buttons = c("csv", "excel"),
+    dom = "Bfrtip"
+  )
+) |>
+  DT::formatStyle("cpsr_evidence_code", "pole",
+    color = "white",
+    backgroundColor = DT::styleEqual(c("P", "B"), 
+                                     c("#9E0142", "#077009"))
+  )
+```
+
+:::
+

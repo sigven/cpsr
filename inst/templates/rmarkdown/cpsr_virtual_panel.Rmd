@@ -1,0 +1,17 @@
+<br><br>
+
+### Virtual gene panel
+
+Cancer predisposition geneset subject to analysis/screening in this report:
+
+   *  __`r cps_report[['settings']][['conf']][['gene_panel']][['description']]`__
+      * Diagnostic-grade genes (applicable to Genomics England panels only): __`r as.logical(cps_report[['settings']][['conf']][['gene_panel']][['diagnostic_grade_only']])`__
+   
+```{r gene_selection, echo = F, eval = T}
+tiles_html <- cpsr::virtual_panel_display_html(
+  gene_df = cps_report[["settings"]][["conf"]][["gene_panel"]][["panel_genes"]])
+```
+
+`r tiles_html`
+
+<br><br>

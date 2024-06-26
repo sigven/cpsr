@@ -1,0 +1,93 @@
+---
+title: "Cancer Predisposition Genome Report by CPSR"
+date: '`r strftime(Sys.time(), format = "%B %d, %Y")`'
+bibliography: cpsr_bibliography.bib
+nocite: |
+  @Nakken2021-mb, @Huang2018-ah, @Richards2015-kj, @Maxwell2016-mr, 
+  @Amendola2016-pu, @Griffith2017-do, @Martin2019-nq, 
+  @Nykamp2017-rj, Dienstmann2015-od
+output: html_document
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(echo = F, warning = FALSE, dpi = 72, error = F, eval = T)
+options(scipen = 999)
+
+# width_panel <- 14
+# height_panel <- 3 + as.integer((max(0,(NROW(cps_report[['metadata']][['gene_panel']][['genes']]) - 24)) / 16))
+
+width_donut <- 10
+height_donut <- 7
+
+cps_report <- readRDS(file="../../cps_test.rds")
+
+set_all <- NROW(cps_report$content$snv_indel$variant_set$tsv)
+
+
+set_clinvar <- 0
+set_other <- 0
+if (cps_report$content$snv_indel$eval == T) {
+  if (cps_report$content$snv_indel$v_stat$n > 0) {
+    set_clinvar <- NROW(cps_report$content$snv_indel$variant_set$tsv |> dplyr::filter(!is.na(CLINVAR_CLASSIFICATION)))
+    set_other <- NROW(cps_report$content$snv_indel$variant_set$tsv |> dplyr::filter(is.na(CLINVAR_CLASSIFICATION) & !is.na(CPSR_CLASSIFICATION) > 0))
+  }
+}
+
+if (set_other == 0 | set_clinvar == 0) {
+  width_donut <- 6
+  height_donut <- 4
+}
+```
+
+```{r settings_cpsr, child='rmarkdown/cpsr_settings.Rmd'}
+```
+
+
+```{r panel_cpsr, child='rmarkdown/cpsr_virtual_panel.Rmd'}
+```
+
+```{r summary_cpsr, child='rmarkdown/cpsr_summary.Rmd'}
+```
+
+```{r no_variants, eval = !cps_report[['content']][['snv_indel']][['eval']], results = "asis"}
+cat("<br><ul>")
+cat("<li><b>NO</b> variants found in the selected virtual gene panel/custom geneset</li>")
+cat("</ul><br>")
+```
+
+
+```{r conditional_class_1_5, child='rmarkdown/cpsr_tiers.Rmd', eval = cps_report[['content']][['snv_indel']][['eval']]}
+```
+
+<br><br>
+
+```{r conditional_biomarkers, child='rmarkdown/cpsr_biomarkers.Rmd', eval = cps_report[['content']][['snv_indel']][['eval']]}
+```
+
+<br><br>
+
+```{r conditional_secondary, child='rmarkdown/cpsr_secondary_findings.Rmd', eval = as.logical(cps_report$settings$conf$variant_classification$secondary_findings)}
+```
+
+```{r global_options2, include=FALSE}
+options(scipen = 0)
+```
+
+```{r conditional_gwas, child='rmarkdown/cpsr_gwas.Rmd', eval = as.logical(cps_report$settings$conf$variant_classification$gwas_findings)}
+```
+
+```{r conditional_documentation, child='cpsr_rmarkdown/cpsr_documentation.Rmd', eval = TRUE}
+```
+
+<br><br>
+
+
+## References
+
+<div id="refs"></div>
+
+```{r cpsr_disclaimer, eval = TRUE, results="asis"}
+cat("<p><br><br><br><b>MEDICAL DISCLAIMER</b>:<i>The information contained in this cancer predisposition genome report is intended for research purposes only. We make no representations or warranties of any kind, expressed or implied, about the completeness, accuracy, reliability, suitability or availability with respect to the sequencing report or the information, products, services, for interpretation or use in clinical practice, or otherwise contained in the report for any purpose. Any reliance you place on information in the report is therefore strictly at your own risk. In no event will we be liable for any loss or damage including without limitation, indirect or consequential loss or damage, or any loss or damage whatsoever arising from loss of data or profits arising out of, or in connection with, the use of this genome report.</i><br><br></p>")
+
+```
+

@@ -49,13 +49,14 @@ h2, #TOC>ul>li {
 */
 
 .exploratory {
-  background: #000;
+  background: #2c313c;
   border-radius: 5px;
 
 }
 
 .app_combo {
-  background: #084594;
+  background: #007a74;
+  /*background: #084594;*/
   border-radius: 5px;
   color: white;
 
@@ -77,7 +78,6 @@ h2, #TOC>ul>li {
   background: #b8b8ba;
   border-radius: 5px;
 
-
 }
 
 .amber {
@@ -87,7 +87,8 @@ h2, #TOC>ul>li {
 }
 
 .custom {
-  background: darkmagenta;
+  /*background: darkmagenta;*/
+  background: #2c313c;
   border-radius: 5px;
 
 }
@@ -124,4 +125,41 @@ h2, #TOC>ul>li {
   text-decoration: none;
   color: white;
 }
+
+
+.panel-tabset > .nav-tabs > .nav-item > .nav-link{
+  color: #007a74;
+}
+
+.tabset-margin-container{
+  color: white;
+  background-color: #007a74;
+}
+/*
+.sidebar .margin-sidebar .toc-active .nav-link a {
+  color: #007a74
+}
+*/
+
+.sidebar nav[role="doc-toc"] ul > li > a.active a.hover {
+    color: #007a74 !important;
+}
+
+/*
+.quarto-title-block .quarto-title-banner {
+  /*background-image: url(../../man/figures/logo.png);
+  background-size: 150px;
+  background-position: left;
+  background-repeat: no-repeat;
+  padding-left: 10px;
+  background-origin: content-box;
+}
+*/
+
+/*
+.nav .navbar li.nav-item a.nav-link span {
+  color: #007a74 !important;
+  background-color: #007a74 !important;
+}
+*/
 

@@ -40,3 +40,6 @@ vignettes/*.pdf
 
 /outputs
 docs
+inst/doc
+
+data-raw/variant_classification

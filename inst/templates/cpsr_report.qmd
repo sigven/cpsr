@@ -1,0 +1,128 @@
+---
+title: "<SAMPLE_NAME>"
+subtitle: " - _functional interpretation of cancer-predisposing DNA variants by CPSR_"
+date: '`r strftime(Sys.time(), format = "%B %d, %Y")`'
+bibliography: cpsr_bibliography.bib
+title-block-banner: "#007a74"
+title-block-banner-color: "white"
+linkcolor: "#007a74"
+include-in-header:
+  - text: |
+      <link rel="shortcut icon" href="favicon-16x16.png" />
+      <style>
+      .panel-tabset > .tab-content {
+        border: none;
+      }
+      </style>
+nocite: |
+  @Nakken2021-mb, @Huang2018-ah, @Richards2015-kj, 
+  @Maxwell2016-mr, @Amendola2016-pu, @Griffith2017-do, 
+  @Martin2019-nq, @Nykamp2017-rj, Dienstmann2015-od
+format: 
+  html:
+    link-external-newwindow: true
+    embed-resources: true
+    smooth-scroll: true
+    page-layout: full
+    fontsize: 0.93em
+    toc: true
+    toc-depth: 3
+    toc-expqand: 3
+    toc-title: Contents
+    grid:
+      body-width: 940px
+css: cpsr.css
+
+---
+
+```{r global_options}
+#| include: false
+#| eval: true
+
+knitr::opts_chunk$set(echo = F, warning = FALSE, dpi = 72, error = F, eval = T)
+options(scipen = 999)
+
+cps_report <- readRDS(file="<CPSR_REPORT_OBJECT.rds>")
+no_content <- !(as.logical(cps_report[['content']][['snv_indel']][['eval']]))
+
+logo_fname_path <- system.file("extdata", "logo.png", package = "cpsr")
+
+```
+
+<a href="https://sigven.github.io/cpsr">
+  <img src="`r logo_fname_path`" title="" alt="" align="right" width="80"/>
+</a>
+
+```{r settings_cpsr}
+#| child: 'quarto/cpsr_settings.qmd'
+```
+
+
+```{r panel_cpsr}
+#| child: 'quarto/cpsr_virtual_panel.qmd'
+```
+
+```{r summary_cpsr}
+#| child: 'quarto/cpsr_summary.qmd'
+```
+
+```{r no_variants}
+#| eval: !expr no_content
+#| output: asis
+cat("<br><ul>")
+cat("<li><b>NO</b> variants found in the selected virtual gene panel/custom geneset</li>")
+cat("</ul><br>")
+```
+
+
+```{r classification_cpsr}
+#| child: 'quarto/cpsr_classification.qmd'
+#| eval: !expr as.logical(cps_report$content$snv_indel$eval)
+```
+
+<br>
+
+```{r biomarkers_cpsr} 
+#| child: 'quarto/cpsr_biomarkers.qmd'
+#| eval: !expr as.logical(cps_report$content$snv_indel$eval)
+```
+
+<br>
+
+```{r secondary_findings_cpsr}
+#| child: 'quarto/cpsr_secondary_findings.qmd'
+#| eval: !expr as.logical(cps_report$settings$conf$variant_classification$secondary_findings)
+```
+
+```{r update_global_options}
+#| include: false
+options(scipen = 0)
+```
+
+```{r gwas_cpsr}
+#| child: 'quarto/cpsr_gwas.qmd'
+#| eval: !expr as.logical(cps_report$settings$conf$variant_classification$gwas_findings)
+```
+
+```{r documentation_cpsr, child='quarto/cpsr_documentation.qmd', eval = TRUE}
+```
+
+<br>
+
+<font size="-1">
+
+## References
+
+::: {#refs}
+:::
+
+</font>
+
+```{r cpsr_disclaimer}
+#| eval: true
+#| output: asis
+
+cat('<br><br><br>\n\n::: {.callout-important}\n## Medical Disclaimer\n\n<i>The information contained in this cancer predisposition genome report is intended for research purposes only. We make no representations or warranties of any kind, expressed or implied, about the completeness, accuracy, reliability, suitability or availability with respect to the sequencing report or the information, products, services, for interpretation or use in clinical practice, or otherwise contained in the report for any purpose. Any reliance you place on information in the report is therefore strictly at your own risk. In no event will we be liable for any loss or damage including without limitation, indirect or consequential loss or damage, or any loss or damage whatsoever arising from loss of data or profits arising out of, or in connection with, the use of this genome report.</i><br>\n\n:::')
+
+```
+

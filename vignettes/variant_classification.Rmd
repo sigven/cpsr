@@ -31,13 +31,13 @@ The refined ACMG/AMP criteria listed below form the basis for the tier assigned 
 | 12. `ACMG_BP1` (**-0.5**) | Missense variant in a gene for which primarily truncating variants (>90% of pathogenic variants) are known to cause disease (ClinVar) |
 | 13. `ACMG_PM2_1` (**0.5**) | Allele count within pathogenic range (MAF <= 0.005% in the population-specific non-cancer gnomAD subset) |
 | 14. `ACMG_PM2_2` (**1**) | Alternate allele absent in the population-specific non-cancer gnomAD subset |
-| 15. `ACMG_PVS1_1` (**5**) | Null variant (frameshift/nonsense) - predicted as LoF by LOFTEE - within pathogenic range - LoF established for gene |
-| 16. `ACMG_PVS1_2` (**2.5**) | Null variant (frameshift/nonsense) - not predicted as LoF by LOFTEE - within pathogenic range - LoF established for gene |
-| 17. `ACMG_PVS1_3` (**2**) | Null variant (frameshift/nonsense) - predicted as LoF by LOFTEE - within pathogenic range - LoF not established for gene |
-| 18. `ACMG_PVS1_4` (**0**) | Null variant (frameshift/nonsense) - not predicted as LoF by LOFTEE -- within pathogenic range - LoF not established for gene |
+| 15. `ACMG_PVS1_1` (**5**) | Null variant (frameshift/nonsense) - classified as loss-of-function - within pathogenic range - LoF established for gene |
+| 16. `ACMG_PVS1_2` (**2.5**) | Null variant (frameshift/nonsense) - not classified as loss-of-function - within pathogenic range - LoF established for gene |
+| 17. `ACMG_PVS1_3` (**2**) | Null variant (frameshift/nonsense) - classified as loss-of-function - within pathogenic range - LoF not established for gene |
+| 18. `ACMG_PVS1_4` (**0**) | Null variant (frameshift/nonsense) - not classified as loss-of-function -- within pathogenic range - LoF not established for gene |
 | 19. `ACMG_PVS1_5` (**2.5**) | Start (initiator methionine) lost - within pathogenic range - Lof established for gene |
 | 20. `ACMG_PVS1_6` (**2**) | Start (initiator methionine) lost - within pathogenic range - LoF not established for gene |
-| 21. `ACMG_PVS1_7` (**4**) | Donor/acceptor variant - predicted as LoF by LOFTEE - within pathogenic range - not last intron - LoF established for gene |
+| 21. `ACMG_PVS1_7` (**4**) | Donor/acceptor variant - classified as loss-of-function - within pathogenic range - not last intron - LoF established for gene |
 | 22. `ACMG_PVS1_8` (**2.5**) | Donor/acceptor variant - last intron - within pathogenic range - LoF established for gene |
 | 23. `ACMG_PVS1_9` (**2**) | Donor/acceptor variant - not last intron - within pathogenic range - LoF not established for gene |
 | 24. `ACMG_PVS1_10` (**2**) | Donor variant at located at the +3, +4 or +5 position of the intron -  within the pathogenic range |
