@@ -5,7 +5,7 @@ output: rmarkdown::html_document
 
 ## v2.0.0
 
-* Date: **2024-06-xx**
+* Date: **2024-06-26**
 * Data updates
   * ClinVar
   * GWAS catalog
@@ -27,6 +27,7 @@ output: rmarkdown::html_document
   - An HTML report with an overview of the contents of the data bundle is shipped with the reference data itself, also available [here (grch38)](https://rpubs.com/sigven/pcgr_refdata).
 - Cleaned up code base for reporting and classification
 - A multi-sheet Excel workbook output with variant classifications and biomarker findings are provided, suitable e.g. for aggregation of results across samples
+- Singularity/Apptainer support
 - argument name changes to `cpsr`:
   - `--pcgr_dir` is now named `--refdata_dir`
   - `--clinvar_ignore_noncancer` is now named `--clinvar_report_noncancer`, meaning that variants found in ClinVar, yet attributed to _non-cancer related_ phenotypes, are now excluded from reporting by default)

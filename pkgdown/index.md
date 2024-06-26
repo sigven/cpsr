@@ -24,16 +24,12 @@ Snapshots of sections in the [quarto](https://quarto.org)-based cancer predispos
 
 ### News
 
-* *June 2024*: **2.x.x release**
+* *June 2024*: **2.0.0 release**
   - New HTML report generation and layout with [quarto](https://quarto.org/)
   - Excel output supported
-  - Updated virtual gene panels (Genomics England PanelApp, Cancer Gene Census)
-  - Reference data updates, most importantly including 
-    - ClinVar - June 2024
-    - CIViC - June 2024
-    - GENCODE - v46
-  - Software updates - VEP 112
-  - Extensive code clean-up and re-structuring
+  - Data bundle update
+  - Singularity/Apptainer support
+  - [CHANGELOG](http://cpsr.readthedocs.io/en/latest/CHANGELOG.html)
 
 * *November 2022*: **1.0.1 release**
   * Added CPSR logo (designed by [Hal Nakken](https://halvetica.net))

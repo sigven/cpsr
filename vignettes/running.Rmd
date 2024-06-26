@@ -193,7 +193,7 @@ usage:
 
 ## Example run
 
-The *cpsr* R package comes with a test VCF file (calls from the GRCh37 human genome assembly) that can be used to test the CPSR workflow. Please note that these are artificial germline calls, not originating form an actual patient.
+The *cpsr* R package comes with a test VCF file (calls from the GRCh37 human genome assembly) that can be used to test the CPSR workflow. Please note that these are artificial germline calls, not originating from an actual patient.
 
 Report generation with the example VCF, using the [Adult solid tumours cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/245/) as the virtual gene panel, can be performed through the following command:
 
