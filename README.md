@@ -17,7 +17,7 @@ Snapshots of sections in the [quarto](https://quarto.org)-based cancer predispos
     - Excel output supported
     - Data bundle update
     - Singularity/Apptainer support
-    - [CHANGELOG](http://cpsr.readthedocs.io/en/latest/CHANGELOG.html)
+    - [CHANGELOG](https://sigven.github.io/cpsr/articles/CHANGELOG.html)
 
 -   *November 2022*: **1.0.1 release**
     -   Added CPSR logo (designed by [Hal Nakken](https://halvetica.net))
