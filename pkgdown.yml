@@ -1,16 +1,16 @@
-pandoc: 2.19.2
-pkgdown: 2.0.6
+pandoc: 3.1.11.1
+pkgdown: 2.0.9
 pkgdown_sha: ~
 articles:
-  CHANGELOG: CHANGELOG.html
   annotation_resources: annotation_resources.html
+  CHANGELOG: CHANGELOG.html
   input: input.html
   installation: installation.html
   output: output.html
   running: running.html
   variant_classification: variant_classification.html
   virtual_panels: virtual_panels.html
-last_built: 2022-11-11T22:04Z
+last_built: 2024-06-26T15:03Z
 urls:
   reference: https://sigven.github.io/cpsr/reference
   article: https://sigven.github.io/cpsr/articles
