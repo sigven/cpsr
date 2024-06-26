@@ -212,7 +212,7 @@ cpsr \
 	 --force_overwrite
 ```
 
-Note that the example command refers to the PCGR data bundle directory (*refdata_dir*), which contains the data bundle that are necessary for both *PCGR* and *CPSR*.
+Note that the example command refers to the PCGR data bundle directory (*refdata_dir*), which contains the data necessary for both *PCGR* and *CPSR*.
 
 This command will produce the following output files in the _output_ folder:
 

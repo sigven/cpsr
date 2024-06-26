@@ -71,8 +71,7 @@ A VCF file containing annotated, germline calls (single nucleotide variants and 
 | `Feature_type` | Type of feature. Currently one of `Transcript`, `RegulatoryFeature`, `MotifFeature` (picked by VEP's `--flag_pick_allele` option) |
 | `Feature` | Ensembl stable ID of feature (picked by VEP's `--flag_pick_allele` option) |
 | `cDNA_position` | Relative position of base pair in cDNA sequence (picked by VEP's `--flag_pick_allele` option) |
-| `CDS_position` | Relative position of base pair in coding
-sequence (picked by VEP's `--flag_pick_allele` option) |
+| `CDS_position` | Relative position of base pair in coding sequence (picked by VEP's `--flag_pick_allele` option) |
 | `CDS_RELATIVE_POSITION` | Ratio of variant coding position to length of coding sequence |
 | `CDS_CHANGE` | Coding, transcript-specific sequence annotation (picked by VEP's `--flag_pick_allele` option) |
 | `AMINO_ACID_START` | Protein position indicating absolute start of amino acid altered (fetched from `Protein_position`) |
@@ -218,42 +217,42 @@ sequence (picked by VEP's `--flag_pick_allele` option) |
 | `gnomADe_NFE_AF` | Non-Finnish European germline allele frequency ([gnomAD release 2.1](http://gnomad.broadinstitute.org/)) |
 | `gnomADe_OTH_AF` | Other germline allele frequency ([gnomAD release 2.1](http://gnomad.broadinstitute.org/)) |
 | `gnomADe_ASJ_AF` | Ashkenazi Jewish allele frequency ([gnomAD release 2.1](http://gnomad.broadinstitute.org/)) |
-| `gnomaADe_non_cancer_ASJ_AF` | Alternate allele frequency for samples of Ashkenazi Jewish ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
-| `gnomaADe_non_cancer_EAS_AF` | Alternate allele frequency for samples of East Asian ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
-| `gnomaADe_non_cancer_AFR_AF` | Alternate allele frequency for samples of African-American/African ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
-| `gnomaADe_non_cancer_AMR_AF` | Alternate allele frequency for samples of Latino ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
-| `gnomaADe_non_cancer_OTH_AF` | Alternate allele frequency for samples of Other ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
-| `gnomaADe_non_cancer_NFE_AF` | Alternate allele frequency for samples of Non-Finnish European ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
-| `gnomaADe_non_cancer_FIN_AF` | Alternate allele frequency for samples of Finnish ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
-| `gnomaADe_non_cancer_SAS_AF` | Alternate allele frequency for samples of South Asian ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
-| `gnomaADe_non_cancer_AF` | Alternate allele frequency in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
-| `gnomaADe_non_cancer_ASJ_AC` | Alternate allele count for samples of Ashkenazi Jewish ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
-| `gnomaADe_non_cancer_EAS_AC` | Alternate allele count for samples of East Asian ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
-| `gnomaADe_non_cancer_AFR_AC` | Alternate allele count for samples of African-American/African ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
-| `gnomaADe_non_cancer_AMR_AC` | Alternate allele count for samples of Latino ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
-| `gnomaADe_non_cancer_OTH_AC` | Alternate allele count for samples of Other ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
-| `gnomaADe_non_cancer_NFE_AC` | Alternate allele frequency for samples of Non-Finnish European ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
-| `gnomaADe_non_cancer_FIN_AC` | Alternate allele count for samples of Finnish ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
-| `gnomaADe_non_cancer_SAS_AC` | Alternate allele count for samples of South Asian ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
-| `gnomaADe_non_cancer_AC` | Alternate allele count in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
-| `gnomaADe_non_cancer_ASJ_AN` | Total number of alleles in samples of Ashkenazi Jewish ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
-| `gnomaADe_non_cancer_EAS_AN` | Total number of alleles in samples of East Asian ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
-| `gnomaADe_non_cancer_AFR_AN` | Total number of alleles in samples of African-American/African ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
-| `gnomaADe_non_cancer_AMR_AN` | Total number of alleles in samples of Latino ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
-| `gnomaADe_non_cancer_OTH_AN` | Total number of alleles in samples of Other ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
-| `gnomaADe_non_cancer_NFE_AN` | Total number of alleles in samples of Non-Finnish European ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
-| `gnomaADe_non_cancer_FIN_AN` | Total number of alleles in samples of Finnish ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
-| `gnomaADe_non_cancer_SAS_AN` | Total number of alleles in samples of South Asian ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
-| `gnomaADe_non_cancer_AN` | Total number of alleles in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
-| `gnomaADe_non_cancer_ASJ_NHOMALT` | Count of homozygous individuals in samples of Ashkenazi Jewish ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
-| `gnomaADe_non_cancer_EAS_NHOMALT` | Count of homozygous individuals in samples of East Asian ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
-| `gnomaADe_non_cancer_AFR_NHOMALT` | Count of homozygous individuals in samples of African-American/African ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
-| `gnomaADe_non_cancer_AMR_NHOMALT` | Count of homozygous individuals in samples of Latino ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
-| `gnomaADe_non_cancer_OTH_NHOMALT` | Count of homozygous individuals in samples of Other ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
-| `gnomaADe_non_cancer_NFE_NHOMALT` | Count of homozygous individuals in samples of Non-Finnish European ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
-| `gnomaADe_non_cancer_FIN_NHOMALT` | Count of homozygous individuals in samples of Finnish ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
-| `gnomaADe_non_cancer_SAS_NHOMALT` | Count of homozygous individuals in samples of South Asian ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
-| `gnomaADe_non_cancer_NHOMALT` | Count of homozygous individuals in samples in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
+| `gnomADe_non_cancer_ASJ_AF` | Alternate allele frequency for samples of Ashkenazi Jewish ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
+| `gnomADe_non_cancer_EAS_AF` | Alternate allele frequency for samples of East Asian ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
+| `gnomADe_non_cancer_AFR_AF` | Alternate allele frequency for samples of African-American/African ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
+| `gnomADe_non_cancer_AMR_AF` | Alternate allele frequency for samples of Latino ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
+| `gnomADe_non_cancer_OTH_AF` | Alternate allele frequency for samples of Other ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
+| `gnomADe_non_cancer_NFE_AF` | Alternate allele frequency for samples of Non-Finnish European ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
+| `gnomADe_non_cancer_FIN_AF` | Alternate allele frequency for samples of Finnish ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
+| `gnomADe_non_cancer_SAS_AF` | Alternate allele frequency for samples of South Asian ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
+| `gnomADe_non_cancer_AF` | Alternate allele frequency in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
+| `gnomADe_non_cancer_ASJ_AC` | Alternate allele count for samples of Ashkenazi Jewish ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
+| `gnomADe_non_cancer_EAS_AC` | Alternate allele count for samples of East Asian ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
+| `gnomADe_non_cancer_AFR_AC` | Alternate allele count for samples of African-American/African ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
+| `gnomADe_non_cancer_AMR_AC` | Alternate allele count for samples of Latino ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
+| `gnomADe_non_cancer_OTH_AC` | Alternate allele count for samples of Other ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
+| `gnomADe_non_cancer_NFE_AC` | Alternate allele frequency for samples of Non-Finnish European ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
+| `gnomADe_non_cancer_FIN_AC` | Alternate allele count for samples of Finnish ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
+| `gnomADe_non_cancer_SAS_AC` | Alternate allele count for samples of South Asian ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
+| `gnomADe_non_cancer_AC` | Alternate allele count in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
+| `gnomADe_non_cancer_ASJ_AN` | Total number of alleles in samples of Ashkenazi Jewish ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
+| `gnomADe_non_cancer_EAS_AN` | Total number of alleles in samples of East Asian ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
+| `gnomADe_non_cancer_AFR_AN` | Total number of alleles in samples of African-American/African ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
+| `gnomADe_non_cancer_AMR_AN` | Total number of alleles in samples of Latino ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
+| `gnomADe_non_cancer_OTH_AN` | Total number of alleles in samples of Other ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
+| `gnomADe_non_cancer_NFE_AN` | Total number of alleles in samples of Non-Finnish European ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
+| `gnomADe_non_cancer_FIN_AN` | Total number of alleles in samples of Finnish ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
+| `gnomADe_non_cancer_SAS_AN` | Total number of alleles in samples of South Asian ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
+| `gnomADe_non_cancer_AN` | Total number of alleles in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
+| `gnomADe_non_cancer_ASJ_NHOMALT` | Count of homozygous individuals in samples of Ashkenazi Jewish ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
+| `gnomADe_non_cancer_EAS_NHOMALT` | Count of homozygous individuals in samples of East Asian ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
+| `gnomADe_non_cancer_AFR_NHOMALT` | Count of homozygous individuals in samples of African-American/African ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
+| `gnomADe_non_cancer_AMR_NHOMALT` | Count of homozygous individuals in samples of Latino ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
+| `gnomADe_non_cancer_OTH_NHOMALT` | Count of homozygous individuals in samples of Other ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
+| `gnomADe_non_cancer_NFE_NHOMALT` | Count of homozygous individuals in samples of Non-Finnish European ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
+| `gnomADe_non_cancer_FIN_NHOMALT` | Count of homozygous individuals in samples of Finnish ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
+| `gnomADe_non_cancer_SAS_NHOMALT` | Count of homozygous individuals in samples of South Asian ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
+| `gnomADe_non_cancer_NHOMALT` | Count of homozygous individuals in samples in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
 | `DBSNP_RSID` | [dbSNP](http://www.ncbi.nlm.nih.gov/SNP/) reference ID, as provided by VEP |
 
 <br>
