@@ -12,6 +12,10 @@ Snapshots of sections in the [quarto](https://quarto.org)-based cancer predispos
 
 ## News
 
+-   *July 2024*: **2.0.1 release**
+    - patch with bug fix for mitochondrial input variants ([pr245](https://github.com/sigven/pcgr/pull/245))
+    - [CHANGELOG](https://sigven.github.io/cpsr/articles/CHANGELOG.html)
+
 -   *June 2024*: **2.0.0 release**
     - New HTML report generation and layout with [quarto](https://quarto.org/)
     - Excel output supported
