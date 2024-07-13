@@ -4,19 +4,20 @@
 
 <br><br>
 
-The *Cancer Predisposition Sequencing Reporter (CPSR)* is a computational workflow that **interprets germline variants** identified from next-generation sequencing **in the context of cancer predisposition**. 
+The *Cancer Predisposition Sequencing Reporter (CPSR)* is a computational workflow that **interprets DNA sequence variants** identified from next-generation sequencing **in the context of cancer predisposition**. 
 
-*CPSR* accepts a query file with raw germline variant calls (SNVs/InDels) from a single sample (cancer patient), encoded in the [VCF format ](https://samtools.github.io/hts-specs/VCFv4.2.pdf). CPSR conducts comprehensive gene and variant annotation on the input calls, and generates a dedicated _variant HTML report_, that provides the following main functionality:
+*CPSR* accepts a query file with _germline_ variant calls (SNVs/InDels) from a single sample (i.e. cancer patient), encoded in the [VCF format ](https://samtools.github.io/hts-specs/VCFv4.2.pdf). Through comprehensive gene and variant annotation procedures, CPSR offers the following main functionalities to the user:
 
-1) Flexible **selection of cancer predisposition genes** subject to analysis and reporting
-2) **Variant classification** (*Pathogenic* to _Benign_) through implementation of ACMG guidelines
-3) **Biomarker matching** of sample variants (prognosis, diagnosis, drug sensitivity/resistance)
-4) Reporting of **secondary/incidental findings** (ACMG recommendations)
+1) Flexible **selection of cancer predisposition genes** subject to analysis and reporting - through the use of virtual gene panels
+2) **Variant classification** (*Pathogenic* to _Benign_) through a dedicated implementation of [ACMG/AMP guidelines](https://pubmed.ncbi.nlm.nih.gov/25741868/)
+3) **Detection of germline biomarkers** - for prognosis, diagnosis, or drug sensitivity/resistance
+4) Reporting of **secondary/incidental findings** ([ACMG recommendations](https://pubmed.ncbi.nlm.nih.gov/37347242/))
+5) **Interactive HTML output report** with detailed variant information, gene annotations, and external links to relevant databases
 
 
-The workflow is integrated with the framework that underlies [Personal Cancer Genome Reporter - PCGR ](https://github.com/sigven/pcgr). While *PCGR* is intended for reporting and analysis of somatic variants detected in a tumor, *CPSR* is intended for reporting and ranking of germline variants in protein-coding genes that are implicated in cancer predisposition and inherited cancer syndromes.
+The CPSR workflow is integrated with the framework that underlies [Personal Cancer Genome Reporter - PCGR ](https://github.com/sigven/pcgr). While *PCGR* is intended for reporting and analysis of somatic variants detected in a tumor, *CPSR* is intended for reporting and ranking of germline variants in protein-coding genes that are implicated in cancer predisposition and inherited cancer syndromes.
 
-Snapshots of sections in the [quarto](https://quarto.org)-based cancer predisposition genome report ((artificial sample, with more findings than usual):
+Snapshots of sections in the [quarto](https://quarto.org)-based cancer predisposition genome report (artificial sample, with more findings than usual):
 
 ![](img/cpsr_sc.png)
 
@@ -44,18 +45,10 @@ Snapshots of sections in the [quarto](https://quarto.org)-based cancer predispos
   * Software upgrade (VEP, R/BioConductor)
   * New documentation site (https://sigven.github.io/cpsr)
 
-* *June 30th 2021*: **0.6.2 release**
-  * Updated bundle (ClinVar, CancerMine, UniprotKB, PanelApp, CIViC, GWAS catalog)
-  * Software upgrade (VEP, R/BioConductor)
-  * [CHANGELOG](http://cpsr.readthedocs.io/en/latest/CHANGELOG.html)
-* *November 30th 2020*: **0.6.1 release**
-  * Updated bundle (ClinVar, CancerMine, UniprotKB, CIViC, GWAS catalog)
-  * [CHANGELOG](http://cpsr.readthedocs.io/en/latest/CHANGELOG.html)
-
 
 ### Example report
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11401491.svg)](https://doi.org/10.5281/zenodo.11401491)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.12734384.svg)](https://doi.org/10.5281/zenodo.12734384)
 
 ### Getting started
 
