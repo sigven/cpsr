@@ -1,5 +1,5 @@
-pandoc: 3.1.11.1
-pkgdown: 2.0.9
+pandoc: 3.1.12.3
+pkgdown: 2.1.0
 pkgdown_sha: ~
 articles:
   annotation_resources: annotation_resources.html
@@ -10,8 +10,7 @@ articles:
   running: running.html
   variant_classification: variant_classification.html
   virtual_panels: virtual_panels.html
-last_built: 2024-07-07T21:06Z
+last_built: 2024-08-01T13:08Z
 urls:
   reference: https://sigven.github.io/cpsr/reference
   article: https://sigven.github.io/cpsr/articles
-

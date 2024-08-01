@@ -1,108 +1,38 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://sigven.github.io/cpsr/404.html</loc>
-  </url>
-  <url>
-    <loc>https://sigven.github.io/cpsr/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://sigven.github.io/cpsr/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://sigven.github.io/cpsr/articles/CHANGELOG.html</loc>
-  </url>
-  <url>
-    <loc>https://sigven.github.io/cpsr/articles/annotation_resources.html</loc>
-  </url>
-  <url>
-    <loc>https://sigven.github.io/cpsr/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://sigven.github.io/cpsr/articles/input.html</loc>
-  </url>
-  <url>
-    <loc>https://sigven.github.io/cpsr/articles/installation.html</loc>
-  </url>
-  <url>
-    <loc>https://sigven.github.io/cpsr/articles/output.html</loc>
-  </url>
-  <url>
-    <loc>https://sigven.github.io/cpsr/articles/running.html</loc>
-  </url>
-  <url>
-    <loc>https://sigven.github.io/cpsr/articles/variant_classification.html</loc>
-  </url>
-  <url>
-    <loc>https://sigven.github.io/cpsr/articles/virtual_panels.html</loc>
-  </url>
-  <url>
-    <loc>https://sigven.github.io/cpsr/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://sigven.github.io/cpsr/index.html</loc>
-  </url>
-  <url>
-    <loc>https://sigven.github.io/cpsr/reference/acmg.html</loc>
-  </url>
-  <url>
-    <loc>https://sigven.github.io/cpsr/reference/append_cpg_properties.html</loc>
-  </url>
-  <url>
-    <loc>https://sigven.github.io/cpsr/reference/assign_classification.html</loc>
-  </url>
-  <url>
-    <loc>https://sigven.github.io/cpsr/reference/assign_pathogenicity_evidence.html</loc>
-  </url>
-  <url>
-    <loc>https://sigven.github.io/cpsr/reference/bs_icon2.html</loc>
-  </url>
-  <url>
-    <loc>https://sigven.github.io/cpsr/reference/check_variant2cancer_phenotype.html</loc>
-  </url>
-  <url>
-    <loc>https://sigven.github.io/cpsr/reference/col_format_output.html</loc>
-  </url>
-  <url>
-    <loc>https://sigven.github.io/cpsr/reference/combine_novel_and_preclassified.html</loc>
-  </url>
-  <url>
-    <loc>https://sigven.github.io/cpsr/reference/exclude_vars_by_maf.html</loc>
-  </url>
-  <url>
-    <loc>https://sigven.github.io/cpsr/reference/exclude_vars_non_cancer.html</loc>
-  </url>
-  <url>
-    <loc>https://sigven.github.io/cpsr/reference/exclude_vars_noncoding.html</loc>
-  </url>
-  <url>
-    <loc>https://sigven.github.io/cpsr/reference/generate_cpsr_report.html</loc>
-  </url>
-  <url>
-    <loc>https://sigven.github.io/cpsr/reference/get_insilico_prediction_statistics.html</loc>
-  </url>
-  <url>
-    <loc>https://sigven.github.io/cpsr/reference/get_max_rows_pr_datatable.html</loc>
-  </url>
-  <url>
-    <loc>https://sigven.github.io/cpsr/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://sigven.github.io/cpsr/reference/load_germline_snv_indel.html</loc>
-  </url>
-  <url>
-    <loc>https://sigven.github.io/cpsr/reference/plot_summary_statistics.html</loc>
-  </url>
-  <url>
-    <loc>https://sigven.github.io/cpsr/reference/plot_virtual_panels.html</loc>
-  </url>
-  <url>
-    <loc>https://sigven.github.io/cpsr/reference/retrieve_secondary_calls.html</loc>
-  </url>
-  <url>
-    <loc>https://sigven.github.io/cpsr/reference/tidyeval.html</loc>
-  </url>
-  <url>
-    <loc>https://sigven.github.io/cpsr/reference/write_cpsr_output.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://sigven.github.io/cpsr/404.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/LICENSE-text.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/LICENSE.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/articles/CHANGELOG.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/articles/annotation_resources.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/articles/index.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/articles/input.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/articles/installation.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/articles/output.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/articles/running.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/articles/variant_classification.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/articles/virtual_panels.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/authors.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/index.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/reference/acmg.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/reference/append_cpg_properties.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/reference/assign_classification.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/reference/assign_pathogenicity_evidence.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/reference/bs_icon2.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/reference/check_variant2cancer_phenotype.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/reference/col_format_output.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/reference/combine_novel_and_preclassified.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/reference/exclude_vars_by_maf.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/reference/exclude_vars_non_cancer.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/reference/exclude_vars_noncoding.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/reference/generate_cpsr_report.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/reference/get_insilico_prediction_statistics.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/reference/get_max_rows_pr_datatable.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/reference/index.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/reference/load_germline_snv_indel.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/reference/plot_summary_statistics.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/reference/plot_virtual_panels.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/reference/retrieve_secondary_calls.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/reference/tidyeval.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/reference/write_cpsr_output.html</loc></url>
 </urlset>
+
