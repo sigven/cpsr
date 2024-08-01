@@ -3,7 +3,7 @@ title: "Changelog"
 output: rmarkdown::html_document
 ---
 
-## v2.0.2
+## v2.0.3
 
 - Date: **2024-08-01**
 - Fixed [bug](https://github.com/sigven/cpsr/issues/61) for properly copying in quarto templates

@@ -18,7 +18,7 @@ Snapshots of sections in the [quarto](https://quarto.org)-based cancer predispos
 
 ## News
 
--   *August 2024*: **2.0.2 release**
+-   *August 2024*: **2.0.3 release**
     -   patch with bug fix for copying in quarto templates ([pr62](https://github.com/sigven/cpsr/pull/62))
     -   [CHANGELOG](https://sigven.github.io/cpsr/articles/CHANGELOG.html)
 -   *July 2024*: **2.0.1 release**
