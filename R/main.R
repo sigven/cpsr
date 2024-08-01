@@ -311,7 +311,9 @@ write_cpsr_output <- function(report,
         )
         pcgrr::mkdir(tmp_quarto_dir1)
         # files get copied under tmp/templates/
-        file.copy(cpsr_rep_template_path, tmp_quarto_dir1, recursive = TRUE, overwrite = TRUE)
+        # see https://github.com/sigven/cpsr/issues/61
+        # file.copy(cpsr_rep_template_path, tmp_quarto_dir1, recursive = TRUE, overwrite = TRUE)
+        system2("cp", args = c("-r", shQuote(cpsr_rep_template_path), shQuote(tmp_quarto_dir1)))
         # so now overwrite the variable
         tmp_quarto_dir <- file.path(tmp_quarto_dir1, templates_dir)
 
