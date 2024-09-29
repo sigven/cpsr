@@ -6,13 +6,15 @@ col_format_output[['html_tier']] <-
     "SYMBOL",
     "CLINVAR_PHENOTYPE",
     "CONSEQUENCE",
-    "PROTEIN_CHANGE",
+    "ALTERATION",
     "GENOTYPE",
     "GENENAME",
     "PROTEIN_DOMAIN",
     "DP_CONTROL",
+    "PROTEIN_CHANGE",
     "HGVSp",
     "HGVSc",
+    "HGVSc_RefSeq",
     "ENSEMBL_GENE_ID",
     "REFSEQ_TRANSCRIPT_ID",
     "ENSEMBL_TRANSCRIPT_ID",
@@ -53,13 +55,15 @@ col_format_output[['html_sf']] <-
     "CONSEQUENCE",
     "FINAL_CLASSIFICATION",
     "CLINVAR_PHENOTYPE",
-    "PROTEIN_CHANGE",
+    "ALTERATION",
     "GENOTYPE",
     "GENENAME",
     "PROTEIN_DOMAIN",
     "DP_CONTROL",
+    "PROTEIN_CHANGE",
     "HGVSp",
     "HGVSc",
+    "HGVSc_RefSeq",
     "ENSEMBL_GENE_ID",
     "REFSEQ_TRANSCRIPT_ID",
     "ENSEMBL_TRANSCRIPT_ID",
@@ -86,15 +90,17 @@ col_format_output[['html_gwas']] <-
     "SYMBOL",
     "CONSEQUENCE",
     "GWAS_PHENOTYPE",
-    "PROTEIN_CHANGE",
+    "ALTERATION",
     "GENOTYPE",
     "LOSS_OF_FUNCTION",
     "GENENAME",
     "PROTEIN_DOMAIN",
     "DP_CONTROL",
+    "PROTEIN_CHANGE",
     "GWAS_CITATION",
     "HGVSp",
     "HGVSc",
+    "HGVSc_RefSeq",
     "ENSEMBL_GENE_ID",
     "REFSEQ_TRANSCRIPT_ID",
     "ENSEMBL_TRANSCRIPT_ID",
@@ -134,10 +140,13 @@ col_format_output[['tsv']] <-
     "ONCOGENE",
     "TUMOR_SUPPRESSOR",
     "CONSEQUENCE",
+    "ALTERATION",
     "PROTEIN_CHANGE",
+    "PFAM_DOMAIN",
     "PFAM_DOMAIN_NAME",
     "HGVSp",
     "HGVSc",
+    "HGVSc_RefSeq",
     "CDS_CHANGE",
     "LAST_EXON",
     "EXON",
@@ -181,13 +190,14 @@ col_format_output[['tsv']] <-
 col_format_output[['html_bm']] <-
   c('SYMBOL',
     'GENENAME',
-    'PROTEIN_CHANGE',
+    'ALTERATION',
     'CONSEQUENCE',
     'BM_EVIDENCE_LEVEL',
     'BM_MOLECULAR_PROFILE',
     'BM_REFERENCE',
     'GENOTYPE',
-    "DP_CONTROL",
+    'PROTEIN_CHANGE',
+    'DP_CONTROL',
     'BM_CANCER_TYPE',
     'BM_DISEASE_ONTOLOGY_ID',
     'BM_PRIMARY_SITE',
@@ -205,6 +215,7 @@ col_format_output[['html_bm']] <-
     'PROTEIN_DOMAIN',
     'CDS_CHANGE',
     'HGVSc',
+    "HGVSc_RefSeq",
     'HGVSp',
     'FINAL_CLASSIFICATION',
     'PREDICTED_EFFECT',
@@ -242,6 +253,7 @@ col_format_output[['xlsx_classification']] <-
     "PFAM_DOMAIN_NAME",
     "HGVSp",
     "HGVSc",
+    "HGVSc_RefSeq",
     "CDS_CHANGE",
     "CODING_STATUS",
     "MUTATION_HOTSPOT",
@@ -287,6 +299,7 @@ col_format_output[['xlsx_secondary']] <-
     "PFAM_DOMAIN_NAME",
     "HGVSp",
     "HGVSc",
+    "HGVSc_RefSeq",
     "CDS_CHANGE",
     "CODING_STATUS",
     "MUTATION_HOTSPOT",
@@ -351,29 +364,39 @@ acmg[["pathogenic_range_gnomad"]][["min_an"]] <- 12000
 acmg[["insilico_pred_min_majority"]] <- 8
 acmg[["insilico_pred_max_minority"]] <- 2
 
+acmg[['score_thresholds']] <- list()
+acmg[['score_thresholds']][['p_lower']] <- 4.5
+acmg[['score_thresholds']][['lp_upper']] <- 4.0
+acmg[['score_thresholds']][['lp_lower']] <- 2.0
+acmg[['score_thresholds']][['vus_upper']] <- 1.5
+acmg[['score_thresholds']][['vus_lower']] <- -1.0
+acmg[['score_thresholds']][['lb_upper']] <- -1.5
+acmg[['score_thresholds']][['lb_lower']] <- -2.5
+acmg[['score_thresholds']][['b_upper']] <- -3.0
+
 acmg[["score2tier"]] <-
   data.frame("CPSR_CLASSIFICATION" = "Pathogenic",
-             "CPSR_PATHOGENICITY_SCORE" = "<b>[5, ]</b>")
+             "CPSR_PATHOGENICITY_SCORE" = "<b>[4.5, ]</b>")
 acmg[["score2tier"]] <-
   dplyr::bind_rows(
     acmg[["score2tier"]],
     data.frame("CPSR_CLASSIFICATION" = "Likely Pathogenic",
-               "CPSR_PATHOGENICITY_SCORE" = "<b>[2.5, 4.5]</b>"))
+               "CPSR_PATHOGENICITY_SCORE" = "<b>[2.0, 4.0]</b>"))
 acmg[["score2tier"]] <-
   dplyr::bind_rows(
     acmg[["score2tier"]],
     data.frame("CPSR_CLASSIFICATION" = "VUS",
-               "CPSR_PATHOGENICITY_SCORE" = "<b>[-1.0, 2.0]</b>"))
+               "CPSR_PATHOGENICITY_SCORE" = "<b>[-1.0, 1.5]</b>"))
 acmg[["score2tier"]] <-
   dplyr::bind_rows(
     acmg[["score2tier"]],
     data.frame("CPSR_CLASSIFICATION" = "Likely Benign",
-               "CPSR_PATHOGENICITY_SCORE" = "<b>[-4.5, -1.5]</b>"))
+               "CPSR_PATHOGENICITY_SCORE" = "<b>[-2.5, -1.5]</b>"))
 acmg[["score2tier"]] <-
   dplyr::bind_rows(
     acmg[["score2tier"]],
     data.frame("CPSR_CLASSIFICATION" = "Benign",
-               "CPSR_PATHOGENICITY_SCORE" = "<b>[, -5]</b>"))
+               "CPSR_PATHOGENICITY_SCORE" = "<b>[, -3.0]</b>"))
 
 
 usethis::use_data(acmg, overwrite = T)
