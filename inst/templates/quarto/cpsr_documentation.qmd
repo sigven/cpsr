@@ -132,7 +132,9 @@ data <- dplyr::filter(
     cpsr_evidence_code != "ACMG_BS2_2" &
     cpsr_evidence_code != "ACMG_BS2_3") |>
   dplyr::select(-category) |>
-  dplyr::rename(pole = pathogenicity_pole, category = category_long, score = path_score) |>
+  dplyr::rename(pole = pathogenicity_pole, 
+                category = category_long, 
+                score = path_score) |>
   dplyr::arrange(pole)
 
 DT::datatable(data,

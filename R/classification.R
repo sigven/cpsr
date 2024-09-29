@@ -79,14 +79,23 @@ assign_classification <- function(var_calls) {
     i <- i + 1
   }
 
-  lb_upper_limit <- -1.5
-  lb_lower_limit <- -4.5
-  b_upper_limit <- -5.0
-  vus_lower_limit <- -1.0
-  vus_upper_limit <- 2.0
-  lp_lower_limit <- 2.5
-  lp_upper_limit <- 4.5
-  p_lower_limit <- 5.0
+  p_lower_limit <- cpsr::acmg[['score_thresholds']][['p_lower']]
+  lp_upper_limit <- cpsr::acmg[['score_thresholds']][['lp_upper']]
+  lp_lower_limit <- cpsr::acmg[['score_thresholds']][['lp_lower']]
+  vus_upper_limit <- cpsr::acmg[['score_thresholds']][['vus_upper']]
+  vus_lower_limit <- cpsr::acmg[['score_thresholds']][['vus_lower']]
+  lb_upper_limit <- cpsr::acmg[['score_thresholds']][['lb_upper']]
+  lb_lower_limit <- cpsr::acmg[['score_thresholds']][['lb_lower']]
+  b_upper_limit <- cpsr::acmg[['score_thresholds']][['b_upper']]
+
+  #lb_upper_limit <- -1.5
+  #lb_lower_limit <- -4.5
+  #b_upper_limit <- -5.0
+  #vus_lower_limit <- -1.0
+  #vus_upper_limit <- 1.5
+  #lp_lower_limit <- 2.0
+  #lp_upper_limit <- 4.5
+  #p_lower_limit <- 5.0
 
 
   var_calls <- var_calls |>
@@ -748,7 +757,9 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
             (as.integer(.data$EXON_POSITION) > 0 & as.integer(.data$EXON_POSITION) > 1)) &
             stringr::str_detect(
               .data$CONSEQUENCE,
-              "^(synonymous_variant|intron_variant|splice_region_variant)"
+              paste0(
+                "^(synonymous_variant|intron_variant|upstream_gene_variant",
+                "|downstream_gene_variant|splice_region_variant)")
             ),
           TRUE, FALSE, FALSE
         )
