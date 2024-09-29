@@ -188,10 +188,12 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
     ),
     collapse = ", "
   )
-  pcgrr::log4r_info(paste0(
-    "Variants were found in the following cancer ",
-    "predisposition genes: ", gene_hits
-  ))
+  if(nchar(gene_hits) > 0){
+    pcgrr::log4r_info(paste0(
+      "Variants were found in the following cancer ",
+      "predisposition genes: ", gene_hits
+    ))
+  }
 
   if (cps_report$content$snv_indel$v_stat_sf$n > 0) {
     sf_hits <- paste(
@@ -212,7 +214,7 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
     )
 
   pcgrr::log4r_info(
-    "Generating hyperlinked annotations for output data frames"
+    "Generating hyperlinked annotations for output data tables"
   )
   for (c in c("sf", "cpg_non_sf", "gwas", "bm")) {
     if (NROW(

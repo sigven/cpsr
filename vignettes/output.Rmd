@@ -65,7 +65,7 @@ A VCF file containing annotated, germline calls (single nucleotide variants and 
 
 | Tag | Description |
 |-----|-------------|
-| `CSQ` | Complete consequence annotations from VEP. Format (separated by a `|`): `Allele`, `Consequence`, `IMPACT`, `SYMBOL`, `Gene`, `Feature_type`, `Feature`, `BIOTYPE`, `EXON`, `INTRON`, `HGVSc`, `HGVSp`, `cDNA_position`, `CDS_position`, `Protein_position`, `Amino_acids`, `Codons`, `Existing_variation`, `ALLELE_NUM`, `DISTANCE`, `STRAND`, `FLAGS`, `PICK`, `VARIANT_CLASS`, `SYMBOL_SOURCE`, `HGNC_ID`, `CANONICAL`, `MANE_SELECT`, `MANE_PLUS_CLINICAL`, `TSL`, `APPRIS`, `CCDS`, `ENSP`, `SWISSPROT`, `TREMBL`, `UNIPARC`, `RefSeq`, `DOMAINS`, `HGVS_OFFSET`, `gnomADe_AF`, `gnomADe_AFR_AF`, `gnomADe_AMR_AF`, `gnomADe_ASJ_AF`, `gnomADe_EAS_AF`, `gnomADe_FIN_AF`, `gnomADe_NFE_AF`, `gnomADe_OTH_AF`, `gnomADe_SAS_AF`, `CLIN_SIG`, `SOMATIC`, `PHENO`, `CHECK_REF`, `MOTIF_NAME`, `MOTIF_POS`, `HIGH_INF_POS`, `MOTIF_SCORE_CHANGE`, `TRANSCRIPTION_FACTORS`, `NearestExonJB`, `LoF`, `LoF_filter`, `LoF_flags`, `LoF_info` |
+| `CSQ` | Complete consequence annotations from VEP. Format (separated by a `|`): `Allele`, `Consequence`, `IMPACT`, `SYMBOL`, `Gene`, `Feature_type`, `Feature`, `BIOTYPE`, `EXON`, `INTRON`, `HGVSc`, `HGVSp`, `cDNA_position`, `CDS_position`, `Protein_position`, `Amino_acids`, `Codons`, `Existing_variation`, `ALLELE_NUM`, `DISTANCE`, `STRAND`, `FLAGS`, `PICK`, `VARIANT_CLASS`, `SYMBOL_SOURCE`, `HGNC_ID`, `CANONICAL`, `MANE_SELECT`, `MANE_PLUS_CLINICAL`, `TSL`, `APPRIS`, `CCDS`, `ENSP`, `SWISSPROT`, `TREMBL`, `UNIPARC`, `RefSeq`, `DOMAINS`, `HGVS_OFFSET`, `gnomADe_AF`, `gnomADe_AFR_AF`, `gnomADe_AMR_AF`, `gnomADe_ASJ_AF`, `gnomADe_EAS_AF`, `gnomADe_FIN_AF`, `gnomADe_NFE_AF`, `gnomADe_OTH_AF`, `gnomADe_SAS_AF`, `CLIN_SIG`, `SOMATIC`, `PHENO`, `CHECK_REF`, `MOTIF_NAME`, `MOTIF_POS`, `HIGH_INF_POS`, `MOTIF_SCORE_CHANGE`, `TRANSCRIPTION_FACTORS`, `NearestExonJB` |
 | `Consequence` | Impact modifier for the consequence type (picked by VEP's `--flag_pick_allele` option) |
 | `Gene` | Ensembl stable ID of affected gene (picked by VEP's `--flag_pick_allele` option) |
 | `Feature_type` | Type of feature. Currently one of `Transcript`, `RegulatoryFeature`, `MotifFeature` (picked by VEP's `--flag_pick_allele` option) |
@@ -74,6 +74,7 @@ A VCF file containing annotated, germline calls (single nucleotide variants and 
 | `CDS_position` | Relative position of base pair in coding sequence (picked by VEP's `--flag_pick_allele` option) |
 | `CDS_RELATIVE_POSITION` | Ratio of variant coding position to length of coding sequence |
 | `CDS_CHANGE` | Coding, transcript-specific sequence annotation (picked by VEP's `--flag_pick_allele` option) |
+| `ALTERATION` | HGVSp/HGVSc identifier |
 | `AMINO_ACID_START` | Protein position indicating absolute start of amino acid altered (fetched from `Protein_position`) |
 | `AMINO_ACID_END` |  Protein position indicating absolute end of amino acid altered (fetched from `Protein_position`) |
 | `Protein_position`| Relative position of amino acid in protein (picked by VEP's `--flag_pick_allele` option) |
@@ -90,6 +91,7 @@ A VCF file containing annotated, germline calls (single nucleotide variants and 
 | `TREMBL`| Best match UniProtKB/TrEMBL accession of protein product (picked by VEP's `--flag_pick_allele` option) |
 | `UNIPARC`| Best match UniParc accession of protein product (picked by VEP's `--flag_pick_allele` option) |
 | `HGVSc`| The HGVS coding sequence name (picked by VEP's `--flag_pick_allele` option) |
+| `HGVSc_RefSeq`| The HGVSc coding sequence name using RefSeq transcript identifiers (MANE select) - picked by VEP's `--flag_pick_allele` option) |
 | `HGVSp`| The HGVS protein sequence name (picked by VEP's `--flag_pick_allele` option) |
 | `HGVSp_short`| The HGVS protein sequence name, short version (picked by VEP's `--flag_pick_allele` option) |
 | `HGVS_OFFSET`| Indicates by how many bases the HGVS notations for this variant have been shifted (picked by VEP's `--flag_pick_allele` option) |
@@ -126,7 +128,7 @@ A VCF file containing annotated, germline calls (single nucleotide variants and 
 | `LOSS_OF_FUNCTION` | Loss-of-function variant |
 | `LOF_FILTER` | Loss-of-function filter |
 | `SPLICE_DONOR_RELEVANT` | Logical indicating if variant is located at a particular location near the splice donor site (`+3A/G`, `+4A` or `+5G`) |
-| `BIOMARKER_MATCH` | Variant matches with germline biomarker evidence in CIViC/CGI. Format: <db_source>\|<db_variant_id>\|<db_evidence_id>:<tumor_site>:<clinical_significance>:<evidence_level>:<evidence_type><germline_somatic>\|<matching_type>. Multiple evidence items are separated by '&'. Example: civic|174|EID445:Colon/Rectum:Sensitivity/Response:D:Predictive:Germline&EID446:Colon/Rectum:Sensitivity/Response:D:Predictive:Germline|by_gene_mut. Matching type can be any of `by_genomic_coord`, `by_hgvsp_principal`, `by_hgvsc_principal`,  `by_hgvsp_nonprincipal`, `by_hgvsc_nonprincipal`, `by_codon_principal`, `by_exon_mut_principal`, `by_gene_mut_lof`, `by_gene_mut` |
+| `BIOMARKER_MATCH` | Variant matches with germline biomarker evidence in CIViC/CGI. Format: `<db_source>|<db_variant_id>|<db_evidence_id>:<tumor_site>:<clinical_significance>:<evidence_level>:<evidence_type><germline_somatic>|<matching_type>`. Multiple evidence items are separated by '&'. Example: civic&#124;174&#124;EID445:Colon/Rectum:Sensitivity/Response:D:Predictive:Germline&EID446:Colon/Rectum:Sensitivity/Response:D:Predictive:Germline&#124;by_gene_mut. Matching type can be any of `by_genomic_coord`, `by_hgvsp_principal`, `by_hgvsc_principal`,  `by_hgvsp_nonprincipal`, `by_hgvsc_nonprincipal`, `by_codon_principal`, `by_exon_mut_principal`, `by_gene_mut_lof`, `by_gene_mut` |
 | `REGULATORY_ANNOTATION` | Comma-separated list of all variant annotations of `Feature_type`, `RegulatoryFeature`, and `MotifFeature`. Format (separated by a `|`): `<Consequence>`, `<Feature_type>`, `<Feature>`, `<BIOTYPE>`, `<MOTIF_NAME>`, `<MOTIF_POS>`, `<HIGH_INF_POS>`, `<MOTIF_SCORE_CHANGE>`, `<TRANSCRIPTION_FACTORS>` |
 
 <br>
@@ -137,8 +139,8 @@ A VCF file containing annotated, germline calls (single nucleotide variants and 
 |-----|-------------|
 | `ENTREZGENE` | [Entrez](http://www.ncbi.nlm.nih.gov/gene) gene identifier |
 | `APPRIS` | Principal isoform flags according to the [APPRIS principal isoform database](http://appris.bioinfo.cnio.es/#/downloads) |
-| `MANE_SELECT` | Indicating if the transcript is the MANE Select transcript for the gene (picked by VEP's `--flag_pick_allele_gene` option) |
-| `MANE_PLUS_CLINICAL` | Indicating if the transcript is the MANE Plus Clinical transcript for the gene (picked by VEP's `--flag_pick_allele_gene` option) |
+| `MANE_SELECT` | Indicating if the transcript is the MANE Select for the gene (picked by VEP's `--flag_pick_allele_gene` option) |
+| `MANE_PLUS_CLINICAL` | Indicating if the transcript is MANE Plus Clinical, as required for clinical variant reporting (picked by VEP's `--flag_pick_allele_gene` option) |
 | `UNIPROT_ID` | [UniProt](http://www.uniprot.org) identifier |
 | `UNIPROT_ACC` | [UniProt](http://www.uniprot.org) accession(s) |
 | `ENSEMBL_GENE_ID` | Ensembl gene identifier for VEP's picked transcript (*ENSGXXXXXXX*) |
@@ -146,8 +148,8 @@ A VCF file containing annotated, germline calls (single nucleotide variants and 
 | `ENSEMBL_PROTEIN_ID` | Ensembl corresponding protein identifier for VEP's picked transcript |
 | `REFSEQ_TRANSCRIPT_ID` | Corresponding RefSeq transcript(s) identifier for VEP's picked transcript (*NM_XXXXX*) |
 | `REFSEQ_PROTEIN_ID` | RefSeq protein/peptide identifier for VEP's picked transcript (*NP_XXXXXX*) |
-| `TRANSCRIPT_MANE_SELECT` | MANE select transcript identifer: one high-quality representative transcript per protein-coding gene that is well-supported by experimental data and represents the biology of the gene |
-| `TRANSCRIPT_MANE_PLUS_CLINICAL` | transcripts chosen to supplement MANE Select when needed for clinical variant reporting |
+| `MANE_SELECT2` | MANE select transcript identifer: one high-quality representative transcript per protein-coding gene that is well-supported by experimental data and represents the biology of the gene - provided through BioMart |
+| `MANE_PLUS_CLINICAL2` | transcripts chosen to supplement MANE Select when needed for clinical variant reporting - provided through BioMart |
 | `GENCODE_TAG` | tag for GENCODE transcript (basic etc) |
 | `GENCODE_TRANSCRIPT_TYPE` | type of transcript (protein-coding etc.) |
 | `TSG` | Indicates whether gene is predicted as a tumor suppressor gene, from Network of Cancer Genes (NCG) & the CancerMine text-mining resource |
@@ -183,7 +185,12 @@ A VCF file containing annotated, germline calls (single nucleotide variants and 
 | `MUTATION_HOTSPOT_MATCH` | Type of hotspot match (by_hgvsp_principal, by_hgvsc_principal, by_hgvsp_nonprincipal, by_hgvsc_nonprincipal, by_codon_principal, by_codon_nonprincipal) |
 | `MUTATION_HOTSPOT_CANCERTYPE` | hotspot-associated cancer types (from cancerhotspots.org) |
 | `PFAM_DOMAIN` | Pfam domain identifier (from VEP) |
-| `EFFECT_PREDICTIONS` | All predictions of effect of variant on protein function and pre-mRNA splicing from [database of non-synonymous functional predictions - dbNSFP v4.2](https://sites.google.com/site/jpopgen/dbNSFP). Predicted effects are provided by different sources/algorithms (separated by `&`), `T` = Tolerated, `N` = Neutral, `D` = Damaging: 1.[SIFT](https://sift.bii.a-star.edu.sg/), 2.[MutationTaster](http://www.mutationtaster.org/) (data release Nov 2015), 3.[MutationAssessor](http://mutationassessor.org/) (release 3), 4.[FATHMM](http://fathmm.biocompute.org.uk) (v2.3), 5.[PROVEAN](http://provean.jcvi.org/index.php) (v1.1 Jan 2015), 6.[FATHMM\_MKL](http://fathmm.biocompute.org.uk/fathmmMKL.htm), 7.[PRIMATEAI](https://www.nature.com/articles/s41588-018-0167-z), 8.[DEOGEN2](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5570203/), 9.[DBNSFP\_CONSENSUS\_RNN](https://www.biorxiv.org/content/10.1101/2021.04.09.438706v1) (Ensembl/consensus prediction, based on deep learning), 10.[SPLICE\_SITE\_EFFECT\_ADA](http://nar.oxfordjournals.org/content/42/22/13534) (Ensembl/consensus prediction of splice-altering SNVs, based on adaptive boosting), 11.[SPLICE\_SITE\_EFFECT\_RF](http://nar.oxfordjournals.org/content/42/22/13534) (Ensembl/consensus prediction of splice-altering SNVs, based on random forest), 12.[M-CAP](http://bejerano.stanford.edu/MCAP), 13.[MutPred](http://mutpred.mutdb.org), 14.[GERP](http://mendel.stanford.edu/SidowLab/downloads/gerp/), 15.[BayesDel](https://doi.org/10.1002/humu.23158), 16.[LIST-S2](https://doi.org/10.1093/nar/gkaa288), 17.[ALoFT](https://www.nature.com/articles/s41467-017-00443-5) |
+| `EFFECT_PREDICTIONS` | All predictions of effect of variant on protein function and pre-mRNA splicing from [database of non-synonymous functional predictions - dbNSFP v4.2](https://sites.google.com/site/jpopgen/dbNSFP). Predicted effects are provided by different sources/algorithms (separated by `&`), `T` = Tolerated, `N` = Neutral, `D` = Damaging: 1. [SIFT](https://sift.bii.a-star.edu.sg/), 2. [MutationTaster](http://www.mutationtaster.org/) (data release Nov 2015), 3. [MutationAssessor](http://mutationassessor.org/) (release 3), 4. [FATHMM](http://fathmm.biocompute.org.uk) (v2.3), 5. [PROVEAN](http://provean.jcvi.org/index.php) (v1.1 Jan 2015), 6. [FATHMM\_MKL](http://fathmm.biocompute.org.uk/fathmmMKL.htm), 7. [PRIMATEAI](https://www.nature.com/articles/s41588-018-0167-z), 8. [DEOGEN2](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5570203/), 9. [DBNSFP\_CONSENSUS\_RNN](https://www.biorxiv.org/content/10.1101/2021.04.09.438706v1) (Ensembl/consensus prediction, based on deep learning), 10. [SPLICE\_SITE\_EFFECT\_ADA](http://nar.oxfordjournals.org/content/42/22/13534) (Ensembl/consensus prediction of splice-altering SNVs, based on adaptive boosting), 11. [SPLICE\_SITE\_EFFECT\_RF](http://nar.oxfordjournals.org/content/42/22/13534) (Ensembl/consensus prediction of splice-altering SNVs, based on random forest), 12. [M-CAP](http://bejerano.stanford.edu/MCAP), 
+13. [MutPred](http://mutpred.mutdb.org), 14. [GERP](http://mendel.stanford.edu/SidowLab/downloads/gerp/), 15. [BayesDel](https://doi.org/10.1002/humu.23158), 16. [LIST-S2](https://doi.org/10.1093/nar/gkaa288), 17. [ALoFT](https://www.nature.com/articles/s41467-017-00443-5),
+18. [AlphaMissense](https://console.cloud.google.com/storage/browser/dm_alphamissense),
+19. [ESM1b](https://huggingface.co/spaces/ntranoslab/esm_variants/tree/main),
+20. [PHACTboost](https://github.com/CompGenomeLab/PHACTboost),
+21. [MutFormer](https://github.com/WGLab/mutformer) |
 | `DBNSFP_BAYESDEL_ADDAF` | predicted effect from BayesDel (dbNSFP) |
 | `DBNSFP_LIST_S2` | predicted effect from LIST-S2 (dbNSFP) |
 | `DBNSFP_SIFT` | predicted effect from SIFT (dbNSFP) |
@@ -196,6 +203,10 @@ A VCF file containing annotated, germline calls (single nucleotide variants and 
 | `DBNSFP_FATHMM` | predicted effect from FATHMM (dbNSFP) |
 | `DBNSFP_PRIMATEAI` | predicted effect from PRIMATEAI (dbNSFP) |
 | `DBNSFP_DEOGEN2` | predicted effect from DEOGEN2 (dbNSFP) |
+| `DBNSFP_PHACTBOOST` | predicted effect from PHACTboost (dbNSFP) |
+| `DBNSFP_ALPHA_MISSENSE` | predicted effect from AlphaMissense (dbNSFP) |
+| `DBNSFP_MUTFORMER` | predicted effect from MutFormer (dbNSFP) |
+| `DBNSFP_ESM1B` | predicted effect from ESM1b (dbNSFP) |
 | `DBNSFP_GERP` | evolutionary constraint measure from GERP (dbNSFP) |
 | `DBNSFP_FATHMM_MKL` | predicted effect from FATHMM-mkl (dbNSFP) |
 | `DBNSFP_META_RNN` | predicted effect from ensemble prediction (deep learning - dbNSFP) |
@@ -336,48 +347,51 @@ The following variables are included in the tiered TSV file (VCF tags in the que
 | 18. `ONCOGENE` | Gene is predicted as an oncogene according to Network of Cancer Genes (NCG)/Cancer Gene Census (CGC) and CancerMine |
 | 19. `TUMOR_SUPPRESSOR` | Gene is predicted as a tumor suppressor gene according to Network of Cancer Genes (NCG)/Cancer Gene Census (CGC) and CancerMine |
 | 20. `CONSEQUENCE` | Variant consequence |
-| 21. `PROTEIN_CHANGE` | Protein change - one letter abbreviation (HGVSp) |
-| 22. `PFAM_DOMAIN_NAME` | Protein domain name (Pfam) |
-| 23. `HGVSp` | The HGVS protein sequence name |
-| 24. `HGVSc` | The HGVS coding sequence name |
-| 25. `CDS_CHANGE` | Coding, transcript-specific sequence annotation |
-| 26. `LAST_EXON` | Last exon in gene |
-| 27. `EXON`| Exon of variant/total number of exons in transcript (from VEP) |
-| 28. `EXON_AFFECTED` | Transcript exon of variant (from VEP) | 
-| 29. `EXON_POSITION` | Relative position of exon variant to nearest intron/exon junction (NearestExonJB plugin) |
-| 30. `INTRON_POSITION` | Relative position of intron variant to nearest intron/exon junction (NearestExonJB plugin) |
-| 31. `VEP_ALL_CSQ` | All VEP transcript block consequences |
-| 32. `CANCER_PHENOTYPE` | For variants with a ClinVar classification, indication of cancer-associated disease/phenotype (1) or not (0) |
-| 33. `MUTATION_HOTSPOT` | Cancer mutation hotspot (cancerhotspots.org) |
-| 34. `RMSK_HIT` | RepeatMasker hit |
-| 35. `EFFECT_PREDICTIONS` | Functional effect predictions from multiple algorithms (dbNSFP) |
-| 36. `LOSS_OF_FUNCTION` | Loss-of-function variant |
-| 37. `LOF_FILTER` | Loss-of-function filter |
-| 38. `NULL_VARIANT` | Frameshift or stop-gain variant |
-| 39. `DBMTS` | variant with potential effect on microRNA target sites (dbMTS). Format: `<ensembl_transcript_id>|<microrna_identifier>|<target_prediction_algorithms>|<gain_loss_consensus>`. _Target prediction algorithms_ indicate support by different algorithms (separated by '&'), `TS` = TargetScan, `M` = miRanda, `R` = RNAhybrid. *Gain_loss_consensus* indicate whether the variant was predicted to disrupt a binding site (`L` = Loss), or create a new target site (`G` = gain) by the different algorithms |
-| 40. `REGULATORY_ANNOTATION` | Overlap of variant with regulatory elements (VEP) | 
-| 41. `TF_BINDING_SITE_VARIANT` | Indicates whether a variant overlaps a critical/non-critical position of a transcription factor binding site (TFBS) - as provided by VEP's--regulatory option ('Overlap: non-critical motif position' or 'Overlap: critical motif position') |
-| 42. `TF_BINDING_SITE_VARIANT_INFO` | Comma-separated list of transcription factor binding sites affected by variant. Format per factor: `<TRANSCRIPTION_FACTOR>|<MOTIF_NAME>|<MOTIF_POS>|<MOTIF_SCORE_CHANGE>|<HIGH_INF_POS>`. *HIGH_INF_POS* indicates whether the variant overlapped a critical motif position (`Y`), or non-critical motif position (`N`) |
-| 43. `GERP_SCORE` | Genomic conservation score (GERP) |
-| 44. `DBSNP_RSID` | dbSNP identifier (rsid) |
-| 45. `CLINVAR_CLASSIFICATION` | clinical significance of ClinVar-recorded variant |
-| 46. `CLINVAR_MSID` | measureset identifier of ClinVar variant |
-| 47. `CLINVAR_VARIANT_ORIGIN` | variant origin (somatic/germline) of ClinVar variant |
-| 48. `CLINVAR_CONFLICTED` | indicator of conflicting interpretations |
-| 49. `CLINVAR_PHENOTYPE` | associated phenotype(s) for ClinVar variant |
-| 50. `CLINVAR_REVIEW_STATUS_STARS` | Review confidence - number of gold stars |
-| 51. `N_INSILICO_CALLED` | Number of algorithms with effect prediction (damaging/tolerated) from dbNSFP |
-| 52. `N_INSILICO_DAMAGING` | Number of algorithms with damaging prediction from dbNSFP |
-| 53. `N_INSILICO_TOLERATED` | Number of algorithms with tolerated prediction from dbNSFP |
-| 54. `N_INSILICO_SPLICING_NEUTRAL` | Number of algorithms with splicing neutral prediction from dbscSNV |
-| 55. `N_INSILICO_SPLICING_AFFECTED` | Number of algorithms with splicing affected prediction from dbscSNV |
-| 56. `gnomADe_AF` | Global MAF in gnomAD (exome samples) |
-| 57. `FINAL_CLASSIFICATION` | Final variant classification, using either `CLINVAR_CLASSIFICATION` if variant is ClinVar-classified, or `CPSR_CLASSIFICATION` for novel variants |
-| 58. `CPSR_CLASSIFICATION` | Variant clinical significance by CPSR's classification algorithm (P/LP/VUS/LB/B) |
-| 59. `CPSR_PATHOGENICITY_SCORE` | Aggregated pathogenicity score by CPSR's algorithm |
-| 60. `CPSR_CLASSIFICATION_CODE` | Combination of CPSR classification codes assigned to the variant (ACMG) |
-| 61. `CPSR_CLASSIFICATION_DOC` | Descriptions of CPSR classification codes assigned to the variant (ACMG) |
-| 62. `<CUSTOM_POPULATION_GNOMAD`> | Population specific MAF in gnomAD control (non-cancer, population configured by user) |
+| 21. `ALTERATION` | Molecular alteration (HGVSp or HGVSc pending on consequence) |
+| 22. `PROTEIN_CHANGE` | Protein change - one letter abbreviation (HGVSp) |
+| 23. `PFAM_DOMAIN` | Protein domain (Pfam identifier) |
+| 24. `PFAM_DOMAIN_NAME` | Protein domain name (Pfam) |
+| 25. `HGVSp` | The HGVS protein sequence name |
+| 26. `HGVSc` | The HGVS coding sequence name |
+| 27. `HGVSc_RefSeq` | The HGVS coding sequence name (RefSeq - MANE Select) |
+| 28. `CDS_CHANGE` | Coding, transcript-specific sequence annotation |
+| 29. `LAST_EXON` | Last exon in gene |
+| 30. `EXON`| Exon of variant/total number of exons in transcript (from VEP) |
+| 31. `EXON_AFFECTED` | Transcript exon of variant (from VEP) | 
+| 32. `EXON_POSITION` | Relative position of exon variant to nearest intron/exon junction (NearestExonJB plugin) |
+| 33. `INTRON_POSITION` | Relative position of intron variant to nearest intron/exon junction (NearestExonJB plugin) |
+| 34. `VEP_ALL_CSQ` | All VEP transcript block consequences |
+| 35. `CANCER_PHENOTYPE` | For variants with a ClinVar classification, indication of cancer-associated disease/phenotype (1) or not (0) |
+| 36. `MUTATION_HOTSPOT` | Cancer mutation hotspot (cancerhotspots.org) |
+| 37. `RMSK_HIT` | RepeatMasker hit |
+| 38. `EFFECT_PREDICTIONS` | Functional effect predictions from multiple algorithms (dbNSFP) |
+| 39. `LOSS_OF_FUNCTION` | Loss-of-function variant |
+| 40. `LOF_FILTER` | Loss-of-function filter |
+| 41. `NULL_VARIANT` | Frameshift or stop-gain variant |
+| 42. `DBMTS` | variant with potential effect on microRNA target sites (dbMTS). Format: `<ensembl_transcript_id>|<microrna_identifier>|<target_prediction_algorithms>|<gain_loss_consensus>`. _Target prediction algorithms_ indicate support by different algorithms (separated by '&'), `TS` = TargetScan, `M` = miRanda, `R` = RNAhybrid. *Gain_loss_consensus* indicate whether the variant was predicted to disrupt a binding site (`L` = Loss), or create a new target site (`G` = gain) by the different algorithms |
+| 43. `REGULATORY_ANNOTATION` | Overlap of variant with regulatory elements (VEP) | 
+| 44. `TF_BINDING_SITE_VARIANT` | Indicates whether a variant overlaps a critical/non-critical position of a transcription factor binding site (TFBS) - as provided by VEP's--regulatory option ('Overlap: non-critical motif position' or 'Overlap: critical motif position') |
+| 45. `TF_BINDING_SITE_VARIANT_INFO` | Comma-separated list of transcription factor binding sites affected by variant. Format per factor: `<TRANSCRIPTION_FACTOR>|<MOTIF_NAME>|<MOTIF_POS>|<MOTIF_SCORE_CHANGE>|<HIGH_INF_POS>`. *HIGH_INF_POS* indicates whether the variant overlapped a critical motif position (`Y`), or non-critical motif position (`N`) |
+| 46. `GERP_SCORE` | Genomic conservation score (GERP) |
+| 47. `DBSNP_RSID` | dbSNP identifier (rsid) |
+| 48. `CLINVAR_CLASSIFICATION` | clinical significance of ClinVar-recorded variant |
+| 49. `CLINVAR_MSID` | measureset identifier of ClinVar variant |
+| 50. `CLINVAR_VARIANT_ORIGIN` | variant origin (somatic/germline) of ClinVar variant |
+| 51. `CLINVAR_CONFLICTED` | indicator of conflicting interpretations |
+| 52. `CLINVAR_PHENOTYPE` | associated phenotype(s) for ClinVar variant |
+| 53. `CLINVAR_REVIEW_STATUS_STARS` | Review confidence - number of gold stars |
+| 54. `N_INSILICO_CALLED` | Number of algorithms with effect prediction (damaging/tolerated) from dbNSFP |
+| 55. `N_INSILICO_DAMAGING` | Number of algorithms with damaging prediction from dbNSFP |
+| 56. `N_INSILICO_TOLERATED` | Number of algorithms with tolerated prediction from dbNSFP |
+| 57. `N_INSILICO_SPLICING_NEUTRAL` | Number of algorithms with splicing neutral prediction from dbscSNV |
+| 58. `N_INSILICO_SPLICING_AFFECTED` | Number of algorithms with splicing affected prediction from dbscSNV |
+| 59. `gnomADe_AF` | Global MAF in gnomAD (exome samples) |
+| 60. `FINAL_CLASSIFICATION` | Final variant classification, using either `CLINVAR_CLASSIFICATION` if variant is ClinVar-classified, or `CPSR_CLASSIFICATION` for novel variants |
+| 61. `CPSR_CLASSIFICATION` | Variant clinical significance by CPSR's classification algorithm (P/LP/VUS/LB/B) |
+| 62. `CPSR_PATHOGENICITY_SCORE` | Aggregated pathogenicity score by CPSR's algorithm |
+| 63. `CPSR_CLASSIFICATION_CODE` | Combination of CPSR classification codes assigned to the variant (ACMG) |
+| 64. `CPSR_CLASSIFICATION_DOC` | Descriptions of CPSR classification codes assigned to the variant (ACMG) |
+| 65. `<CUSTOM_POPULATION_GNOMAD`> | Population specific MAF in gnomAD control (non-cancer, population configured by user) |
 
 **NOTE**: The user has the possibility to append the TSV file with data from other INFO tags in the input VCF (i.e. using the *--retained_info_tags* option)
 

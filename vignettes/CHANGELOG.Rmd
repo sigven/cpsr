@@ -3,6 +3,17 @@ title: "Changelog"
 output: rmarkdown::html_document
 ---
 
+## v2.1.0
+
+- Date: **2024-09-29**
+- Major data updates
+  - ClinVar (2024-09)
+  - dbNSFP (v4.8)
+  - CIViC (2024-09-18)
+- Adjusted thresholds for CPSR variant classification based on calibration against ClinVar (Sept 2024 release)
+- Added link to chosen virtual panel in HTML report
+- Created new column `ALTERATION` in variant tables of HTML report, a joint annotation of `HGVSp` and `HGVSc`
+
 ## v2.0.3
 
 - Date: **2024-08-01**

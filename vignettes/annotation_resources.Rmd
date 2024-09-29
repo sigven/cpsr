@@ -7,7 +7,7 @@ output: rmarkdown::html_document
   * [VEP v112](http://www.ensembl.org/info/docs/tools/vep/index.html) - Variant Effect Predictor ([GENCODE v46](https://www.gencodegenes.org/human/) as gene reference database (v19 for grch37))
 
 ###  *Insilico* predictions of effect of coding variants
-  * [dBNSFP](https://sites.google.com/site/jpopgen/dbNSFP) - database of non-synonymous functional predictions (v4.5, November 2023)
+  * [dBNSFP](https://sites.google.com/site/jpopgen/dbNSFP) - database of non-synonymous functional predictions (v4.8, June 2024)
 
 ###  Variant frequency databases
   * [gnomAD](http://exac.broadinstitute.org/) - germline variant frequencies exome-wide (r2.1, October 2018)
@@ -15,19 +15,19 @@ output: rmarkdown::html_document
   * [Cancer Hotspots](http://cancerhotspots.org) - a resource for statistically significant mutations in cancer (v2, 2017)
 
 ### Variant databases of clinical utility
-  * [ClinVar](http://www.ncbi.nlm.nih.gov/clinvar/) - database of clinically related variants (June 2024)
-  * [CIViC](https://civicdb.org) - clinical interpretations of variants in cancer (June 21st 2024)
+  * [ClinVar](http://www.ncbi.nlm.nih.gov/clinvar/) - database of clinically related variants (September 2024)
+  * [CIViC](https://civicdb.org) - clinical interpretations of variants in cancer (September 18th 2024)
 
 ### Protein domains/functional features
-  * [UniProt/SwissProt KnowledgeBase](http://www.uniprot.org) - resource on protein sequence and functional information (2024_03)
-  * [Pfam](http://pfam.xfam.org) - database of protein families and domains (v35.0, November 2021)
+  * [UniProt/SwissProt KnowledgeBase](http://www.uniprot.org) - resource on protein sequence and functional information (2024_04)
+  * [Pfam](http://pfam.xfam.org) - database of protein families and domains (v37.0)
 
 ### Cancer gene knowledge bases
   * [CancerMine](http://bionlp.bcgsc.ca/cancermine/) - Literature-mined database of tumor suppressor genes/proto-oncogenes (v50, March 2023)
-  * [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk) - cancer phenotype panels as of June 2024
+  * [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk) - cancer phenotype panels as of August 2024
   * [Cancer Gene Census](https://www.sanger.ac.uk/data/cancer-gene-census/) - genes implicated with cancer susceptibility (v100)
 
 ### Phenotype ontologies
-  * [UMLS/MedGen](https://www.ncbi.nlm.nih.gov/medgen/) - May 2024
-  * [Disease Ontology](https://disease-ontology.org/) - April 2024
-  * [Experimental Factor Ontology](https://github.com/EBISPOT/efo) - v3.66.0
+  * [UMLS/MedGen](https://www.ncbi.nlm.nih.gov/medgen/) - August 2024
+  * [Disease Ontology](https://disease-ontology.org/) - August 2024
+  * [Experimental Factor Ontology](https://github.com/EBISPOT/efo) - v3.69.0

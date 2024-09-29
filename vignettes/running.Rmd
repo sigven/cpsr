@@ -169,7 +169,7 @@ VEP options:
   --vep_gencode_basic   Consider basic GENCODE transcript set only with Variant Effect Predictor (VEP) (option '--gencode_basic' in VEP).
   --vep_pick_order VEP_PICK_ORDER
                         Comma-separated string of ordered transcript properties for primary variant pick
-                         ( option '--pick_order' in VEP), default: mane_select,mane_plus_clinical,canonical,appris,tsl,biotype,ccds,rank,length
+                         ( option '--pick_order' in VEP), default: mane_select,mane_plus_clinical,canonical,biotype,ccds,rank,tsl,appris,length
   --vep_no_intergenic   Skip intergenic variants during processing (option '--no_intergenic' in VEP), default: False
 
 vcfanno options:
@@ -181,6 +181,7 @@ Other options:
                          You can force the overwrite of existing result files by using this flag, default: False
   --version             show program's version number and exit
   --no_reporting        Run functional variant annotation on VCF through VEP/vcfanno, omit classification/report generation (STEP 4), default: False
+  --no_html             Do not generate HTML report (default: False)
   --retained_info_tags RETAINED_INFO_TAGS
                         Comma-separated string of VCF INFO tags from query VCF that should be kept in CPSR output TSV
   --ignore_noncoding    Ignore non-coding (i.e. non protein-altering) variants in report, default: False
