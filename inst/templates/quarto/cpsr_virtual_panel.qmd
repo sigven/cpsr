@@ -2,10 +2,34 @@
 
 ### Virtual gene panel
 
+
+```{r prepare_panel_url}
+#| echo: false
+#| results: asis
+
+panel_link <- cps_report[['settings']][['conf']][['gene_panel']][['description']]
+if(cps_report[['settings']][['conf']][['gene_panel']][['panel_id']] != "-1" &
+   !stringr::str_detect(cps_report[['settings']][['conf']][['gene_panel']][['url']], ",")){
+  description <- cps_report[['settings']][['conf']][['gene_panel']][['description']]
+  description_trait <- 
+    cps_report[['settings']][['conf']][['gene_panel']][['description_trait']]
+  url_raw <- cps_report[['settings']][['conf']][['gene_panel']][['url']]
+  description_full <- paste0(description,': ', description_trait)
+  if(cps_report[['settings']][['conf']][['gene_panel']][['panel_id']] == "0"){
+    description_full <- description
+  }
+  panel_link <- paste0("<a href='", url_raw, "' target='_blank'>", 
+                       description_full, 
+                       "</a>")
+}
+
+```
+
+
 Variants reported for the sample are limited to the tile of cancer predisposition genes
 shown below. 
 
-   *  __`r cps_report[['settings']][['conf']][['gene_panel']][['description']]`__
+   *  __`r panel_link`__
       * Diagnostic-grade genes only (applicable to Genomics England panels): __`r as.logical(cps_report[['settings']][['conf']][['gene_panel']][['diagnostic_grade_only']])`__
    
 ```{r gene_selection, echo = F, eval = T}
