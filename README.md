@@ -6,7 +6,7 @@ The *Cancer Predisposition Sequencing Reporter (CPSR)* is a computational workfl
 
 1)  Flexible **selection of cancer predisposition genes** subject to analysis and reporting - through the use of virtual gene panels
 2)  **Variant classification** (*Pathogenic* to *Benign*) through a dedicated implementation of [ACMG/AMP guidelines](https://pubmed.ncbi.nlm.nih.gov/25741868/)
-3)  **Detection of germline biomarkers** - for prognosis, diagnosis, or drug sensitivity/resistance
+3)  **Detection of germline biomarkers** - for prognosis, diagnosis, or drug sensitivity/resistance in cancer
 4)  Reporting of **secondary/incidental findings** ([ACMG recommendations](https://pubmed.ncbi.nlm.nih.gov/37347242/))
 5)  **Interactive HTML output report** with detailed variant information, gene annotations, and external links to relevant databases
 
@@ -18,6 +18,10 @@ Snapshots of sections in the [quarto](https://quarto.org)-based cancer predispos
 
 ## News
 
+-  *September 2024*: **2.1.0 release**
+    -  data bundle upgrade
+    -  re-calibration of classification tresholds
+    -  [CHANGELOG](https://sigven.github.io/cpsr/articles/CHANGELOG.html)
 -   *August 2024*: **2.0.3 release**
     -   patch with bug fix for copying in quarto templates ([pr62](https://github.com/sigven/cpsr/pull/62))
     -   [CHANGELOG](https://sigven.github.io/cpsr/articles/CHANGELOG.html)
@@ -32,20 +36,11 @@ Snapshots of sections in the [quarto](https://quarto.org)-based cancer predispos
     -   [CHANGELOG](https://sigven.github.io/cpsr/articles/CHANGELOG.html)
 -   *November 2022*: **1.0.1 release**
     -   Added CPSR logo (designed by [Hal Nakken](https://halvetica.net))
--   *February 2022*: **1.0.0 release**
-    -   Complete restructure of code and Conda installation routines, contributed largely by the great [\@pdiakumis](https://github.com/pdiakumis)
-    -   Updated data bundle
-        -   ClinVar - Feb 2022
-        -   CancerMine - Dec 2021
-        -   UniprotKB - Nov 2021
-        -   CIViC - Feb 2022
-        -   GWAS catalog - Dec 2021
-    -   Software upgrade (VEP 105, R/BioConductor)
-    -   New documentation site (<https://sigven.github.io/cpsr>)
 
 ## Example report
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.12734384.svg)](https://doi.org/10.5281/zenodo.12734384)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.13855978.svg)](https://doi.org/10.5281/zenodo.13855978)
+
 
 ## Getting started
 
