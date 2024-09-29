@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">CPSR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -162,9 +162,9 @@ site</td>
 </tr>
 <tr class="odd">
 <td>9. <code>ACMG_BP4</code> (<strong>-1</strong>)</td>
-<td>Multiple lines (&gt;=5) of computational evidence support a benign
-effect on the gene or gene product (conservation, evolutionary, splicing
-impact, etc. - from dbNSFP</td>
+<td>Multiple lines of computational evidence (&gt;=8) algorithmssupport
+a benign effect on the gene or gene product (conservation, evolutionary,
+splicing impact, etc. - from dbNSFP</td>
 </tr>
 <tr class="even">
 <td>10. <code>ACMG_BMC1</code> (<strong>0</strong>)</td>
@@ -251,7 +251,7 @@ variant (ClinVar) regardless of nucleotide change</td>
 <tr class="even">
 <td>26. <code>ACMG_PP2</code> (<strong>0.5</strong>)</td>
 <td>Missense variant in a gene that has a relatively low rate of benign
-missense variation (&lt;30%) and where missense variants are a common
+missense variation (&lt;10%) and where missense variants are a common
 mechanism of disease (&gt;50% P/LP (ClinVar))</td>
 </tr>
 <tr class="odd">
@@ -279,18 +279,19 @@ missense change determined to be pathogenic has been seen before
 </tr>
 <tr class="odd">
 <td>31. <code>ACMG_PP3</code> (<strong>0.5</strong>)</td>
-<td>Multiple lines (&gt;=5) of computational evidence support a
-deleterious effect on the gene or gene product (conservation,
+<td>Multiple lines of computational evidence (&gt;=8) algorithms support
+a deleterious effect on the gene or gene product (conservation,
 evolutionary, splicing impact, etc. - from dbNSFP</td>
 </tr>
 </tbody>
 </table>
-<p>Currently, the <strong>CPSR_CLASSIFICATION</strong> is determined
-based on the following ranges of pathogenicity scores:</p>
+<p><br> Currently (as of 2024-09), based on a calibration against
+ClinVar-classified variants (minimum two review status stars) in n = 105
+core cancer predisposition genes, the clinical significance
+(<strong>CPSR_CLASSIFICATION</strong>) is determined based on the
+following ranges of pathogenicity scores:</p>
 <p><br></p>
-<div class="float">
-<img src="../img/cpsr_classification.png" alt="Classification Scores"><div class="figcaption">Classification Scores</div>
-</div>
+<p><img src="../img/cpsr_classification.png"></p>
   </main>
 </div>
 
@@ -301,7 +302,7 @@ based on the following ranges of pathogenicity scores:</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer>
