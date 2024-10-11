@@ -13,9 +13,58 @@ Below, we will outline some key settings that are important for the generation o
 
 ### Virtual gene panel
 
-The user can choose the set of cancer predisposition genes for which input variants should be subject to classification and reporting. The input VCF with germline variants may thus come from any sequencing assay (whole-genome, whole-exome or targeted assay), yet the results shown in the report will always be restricted by the choice of a [virtual gene panel](virtual_panels.html):
+The user can flexibly choose the set of cancer predisposition genes for which input variants should be subject to classification and reporting. The input VCF with germline variants may thus come from any sequencing assay (whole-genome, whole-exome or targeted assay), yet the results shown in the report will always be restricted by the choice of a [virtual gene panel](virtual_panels.html):
 
 * `--panel_id <panel_number>`
+
+The user can choose from a range of pre-defined gene panels, selected from the following list of panel identifiers:
+
+- **0**:  [Exploratory panel - all cancer predisposition gene](https://sigven.github.io/cpsr/articles/virtual_panels.html)
+- **1**:  [Adult solid tumours cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/245/)
+- **2**:  [Adult solid tumours for rare disease](https://panelapp.genomicsengland.co.uk/panels/391/)
+- **3**:  [Bladder cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/208/)
+- **4**:  [Brain cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/166/)
+- **5**:  [Breast cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/55/)
+- **6**:  [Childhood solid tumours cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/259/)
+- **7**:  [Colorectal cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/244/)
+- **8**:  [Endometrial cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/271/)
+- **9**:  [Familial Tumours Syndromes of the central & peripheral Nervous system](https://panelapp.genomicsengland.co.uk/panels/167/)
+- **10**:  [Familial breast cancer](https://panelapp.genomicsengland.co.uk/panels/158/)
+- **11**:  [Familial melanoma](https://panelapp.genomicsengland.co.uk/panels/522/)
+- **12**:  [Familial prostate cancer](https://panelapp.genomicsengland.co.uk/panels/318/)
+- **13**:  [Familial rhabdomyosarcoma](https://panelapp.genomicsengland.co.uk/panels/290/)
+- **14**:  [GI tract tumours](https://panelapp.genomicsengland.co.uk/panels/254/)
+- **15**:  [Genodermatoses with malignancies](https://panelapp.genomicsengland.co.uk/panels/201/)
+- **16**:  [Haematological malignancies cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/59/)
+- **17**:  [Haematological malignancies for rare disease](https://panelapp.genomicsengland.co.uk/panels/407/)
+- **18**:  [Head and neck cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/115/)
+- **19**:  [Inherited MMR deficiency (Lynch syndrome)](https://panelapp.genomicsengland.co.uk/panels/503/)
+- **20**:  [Inherited non-medullary thyroid cancer](https://panelapp.genomicsengland.co.uk/panels/171/)
+- **21**:  [Inherited ovarian cancer (without breast cancer)](https://panelapp.genomicsengland.co.uk/panels/143/)
+- **22**:  [Inherited pancreatic cancer](https://panelapp.genomicsengland.co.uk/panels/524/)
+- **23**:  [Inherited polyposis](https://panelapp.genomicsengland.co.uk/panels/504/)
+- **24**:  [Inherited predisposition to acute myeloid leukaemia (AML)](https://panelapp.genomicsengland.co.uk/panels/525/)
+- **25**:  [Inherited susceptibility to acute lymphoblastoid leukaemia (ALL)](https://panelapp.genomicsengland.co.uk/panels/1349/)
+- **26**:  [Inherited predisposition to GIST](https://panelapp.genomicsengland.co.uk/panels/523/)
+- **27**:  [Inherited renal cancer](https://panelapp.genomicsengland.co.uk/panels/521/)
+- **28**:  [Inherited phaeochromocytoma and paraganglioma](https://panelapp.genomicsengland.co.uk/panels/97/)
+- **29**:  [Melanoma pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/133/)
+- **30**:  [Multiple endocrine tumours](https://panelapp.genomicsengland.co.uk/panels/36/)
+- **31**:  [Multiple monogenic benign skin tumours](https://panelapp.genomicsengland.co.uk/panels/558/)
+- **32**:  [Neuroendocrine cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/183/)
+- **33**:  [Neurofibromatosis Type 1](https://panelapp.genomicsengland.co.uk/panels/255/)
+- **34**:  [Ovarian cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/117/)
+- **35**:  [Parathyroid Cancer](https://panelapp.genomicsengland.co.uk/panels/86/)
+- **36**:  [Prostate cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/17/)
+- **37**:  [Renal cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/154/)
+- **38**:  [Rhabdoid tumour predisposition](https://panelapp.genomicsengland.co.uk/panels/600/)
+- **39**:  [Sarcoma cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/217/)
+- **40**:  [Sarcoma susceptibility](https://panelapp.genomicsengland.co.uk/panels/734/)
+- **41**:  [Thyroid cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/421/)
+- **42**:  [Tumour predisposition - childhood onset](https://panelapp.genomicsengland.co.uk/panels/243/)
+- **43**:  [Upper gastrointestinal cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/273/)
+- **44**:  [DNA repair genes pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/256/)
+
 
 #### Custom-made virtual gene panels
 
@@ -24,11 +73,9 @@ CPSR allows users to create custom virtual gene panels for reporting.  Any set o
 * `--custom_list <custom_list_tsv>`
 * `--custom_list_name <custom_list_name`
 
-The [examples](https://github.com/sigven/cpsr/tree/master/examples) folder contains an example file for a custom-made virtual gene panel.
+### ACMG/AMP variant classification
 
-### ACMG variant classification
-
-The ACMG classification criteria rely heavily upon variant population frequencies from [gnomAD](https://gnomad.broadinstitute.org/). The user can specify the preferred population when it comes to variant allele frequencies used by CPSR:
+The ACMG/AMP classification criteria rely heavily upon variant population frequencies from [gnomAD](https://gnomad.broadinstitute.org/). The user can specify the preferred population when it comes to variant allele frequencies used by CPSR:
 
 * `--pop_gnomad <pop_code>`
 

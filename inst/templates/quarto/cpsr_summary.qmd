@@ -142,6 +142,7 @@ bslib::layout_column_wrap(
   )
 )
 ```
+<b>
 
 ### Variant statistics 
 
@@ -162,4 +163,4 @@ Variant numbers in the targeted cancer predisposition genes (n = `r NROW(primary
 * Number of InDels: __`r cps_report[['content']][['snv_indel']][['v_stat_cpg']][['n_indel']]`__
 * Number of protein-coding variants: __`r cps_report[['content']][['snv_indel']][['v_stat_cpg']][['n_coding']]`__
 
-<br><br>
+<br>

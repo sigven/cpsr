@@ -34,7 +34,7 @@ The report is structured in multiple sections, described briefly below:
         - See section below for [details of biomarker annotations](#biomarker-annotations)
 		  
   5. __Secondary findings__
-     * Pathogenic variants in the [ACMG recommended list of genes for report of secondary/incidental findings](https://www.ncbi.nlm.nih.gov/clinvar/docs/acmg/)
+     * Pathogenic variants in the [ACMG-recommended list of genes for report of secondary/incidental findings](https://www.ncbi.nlm.nih.gov/clinvar/docs/acmg/)
 	    
   6. __GWAS hits__
      * Status of relatively common, low-risk variants found in genome-wide association studies of cancer phenotypes (NHGRI-EBI Catalog)
