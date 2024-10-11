@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">CPSR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -93,13 +93,199 @@ generation of variant reports with CPSR.</p>
 <div class="section level3">
 <h3 id="virtual-gene-panel">Virtual gene panel<a class="anchor" aria-label="anchor" href="#virtual-gene-panel"></a>
 </h3>
-<p>The user can choose the set of cancer predisposition genes for which
-input variants should be subject to classification and reporting. The
-input VCF with germline variants may thus come from any sequencing assay
-(whole-genome, whole-exome or targeted assay), yet the results shown in
-the report will always be restricted by the choice of a <a href="virtual_panels.html">virtual gene panel</a>:</p>
+<p>The user can flexibly choose the set of cancer predisposition genes
+for which input variants should be subject to classification and
+reporting. The input VCF with germline variants may thus come from any
+sequencing assay (whole-genome, whole-exome or targeted assay), yet the
+results shown in the report will always be restricted by the choice of a
+<a href="virtual_panels.html">virtual gene panel</a>:</p>
 <ul>
 <li><code>--panel_id &lt;panel_number&gt;</code></li>
+</ul>
+<p>The user can choose from a range of pre-defined gene panels, selected
+from the following list of panel identifiers:</p>
+<ul>
+<li>
+<strong>0</strong>: <a href="https://sigven.github.io/cpsr/articles/virtual_panels.html">Exploratory
+panel - all cancer predisposition gene</a>
+</li>
+<li>
+<strong>1</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/245/" class="external-link">Adult solid
+tumours cancer susceptibility</a>
+</li>
+<li>
+<strong>2</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/391/" class="external-link">Adult solid
+tumours for rare disease</a>
+</li>
+<li>
+<strong>3</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/208/" class="external-link">Bladder cancer
+pertinent cancer susceptibility</a>
+</li>
+<li>
+<strong>4</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/166/" class="external-link">Brain cancer
+pertinent cancer susceptibility</a>
+</li>
+<li>
+<strong>5</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/55/" class="external-link">Breast cancer
+pertinent cancer susceptibility</a>
+</li>
+<li>
+<strong>6</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/259/" class="external-link">Childhood
+solid tumours cancer susceptibility</a>
+</li>
+<li>
+<strong>7</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/244/" class="external-link">Colorectal
+cancer pertinent cancer susceptibility</a>
+</li>
+<li>
+<strong>8</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/271/" class="external-link">Endometrial
+cancer pertinent cancer susceptibility</a>
+</li>
+<li>
+<strong>9</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/167/" class="external-link">Familial
+Tumours Syndromes of the central &amp; peripheral Nervous
+system</a>
+</li>
+<li>
+<strong>10</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/158/" class="external-link">Familial
+breast cancer</a>
+</li>
+<li>
+<strong>11</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/522/" class="external-link">Familial
+melanoma</a>
+</li>
+<li>
+<strong>12</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/318/" class="external-link">Familial
+prostate cancer</a>
+</li>
+<li>
+<strong>13</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/290/" class="external-link">Familial
+rhabdomyosarcoma</a>
+</li>
+<li>
+<strong>14</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/254/" class="external-link">GI tract
+tumours</a>
+</li>
+<li>
+<strong>15</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/201/" class="external-link">Genodermatoses
+with malignancies</a>
+</li>
+<li>
+<strong>16</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/59/" class="external-link">Haematological
+malignancies cancer susceptibility</a>
+</li>
+<li>
+<strong>17</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/407/" class="external-link">Haematological
+malignancies for rare disease</a>
+</li>
+<li>
+<strong>18</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/115/" class="external-link">Head and neck
+cancer pertinent cancer susceptibility</a>
+</li>
+<li>
+<strong>19</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/503/" class="external-link">Inherited MMR
+deficiency (Lynch syndrome)</a>
+</li>
+<li>
+<strong>20</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/171/" class="external-link">Inherited
+non-medullary thyroid cancer</a>
+</li>
+<li>
+<strong>21</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/143/" class="external-link">Inherited
+ovarian cancer (without breast cancer)</a>
+</li>
+<li>
+<strong>22</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/524/" class="external-link">Inherited
+pancreatic cancer</a>
+</li>
+<li>
+<strong>23</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/504/" class="external-link">Inherited
+polyposis</a>
+</li>
+<li>
+<strong>24</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/525/" class="external-link">Inherited
+predisposition to acute myeloid leukaemia (AML)</a>
+</li>
+<li>
+<strong>25</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/1349/" class="external-link">Inherited
+susceptibility to acute lymphoblastoid leukaemia (ALL)</a>
+</li>
+<li>
+<strong>26</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/523/" class="external-link">Inherited
+predisposition to GIST</a>
+</li>
+<li>
+<strong>27</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/521/" class="external-link">Inherited
+renal cancer</a>
+</li>
+<li>
+<strong>28</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/97/" class="external-link">Inherited
+phaeochromocytoma and paraganglioma</a>
+</li>
+<li>
+<strong>29</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/133/" class="external-link">Melanoma
+pertinent cancer susceptibility</a>
+</li>
+<li>
+<strong>30</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/36/" class="external-link">Multiple
+endocrine tumours</a>
+</li>
+<li>
+<strong>31</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/558/" class="external-link">Multiple
+monogenic benign skin tumours</a>
+</li>
+<li>
+<strong>32</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/183/" class="external-link">Neuroendocrine
+cancer pertinent cancer susceptibility</a>
+</li>
+<li>
+<strong>33</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/255/" class="external-link">Neurofibromatosis
+Type 1</a>
+</li>
+<li>
+<strong>34</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/117/" class="external-link">Ovarian cancer
+pertinent cancer susceptibility</a>
+</li>
+<li>
+<strong>35</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/86/" class="external-link">Parathyroid
+Cancer</a>
+</li>
+<li>
+<strong>36</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/17/" class="external-link">Prostate cancer
+pertinent cancer susceptibility</a>
+</li>
+<li>
+<strong>37</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/154/" class="external-link">Renal cancer
+pertinent cancer susceptibility</a>
+</li>
+<li>
+<strong>38</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/600/" class="external-link">Rhabdoid
+tumour predisposition</a>
+</li>
+<li>
+<strong>39</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/217/" class="external-link">Sarcoma cancer
+susceptibility</a>
+</li>
+<li>
+<strong>40</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/734/" class="external-link">Sarcoma
+susceptibility</a>
+</li>
+<li>
+<strong>41</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/421/" class="external-link">Thyroid cancer
+pertinent cancer susceptibility</a>
+</li>
+<li>
+<strong>42</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/243/" class="external-link">Tumour
+predisposition - childhood onset</a>
+</li>
+<li>
+<strong>43</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/273/" class="external-link">Upper
+gastrointestinal cancer pertinent cancer susceptibility</a>
+</li>
+<li>
+<strong>44</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/256/" class="external-link">DNA repair
+genes pertinent cancer susceptibility</a>
+</li>
 </ul>
 <div class="section level4">
 <h4 id="custom-made-virtual-gene-panels">Custom-made virtual gene panels<a class="anchor" aria-label="anchor" href="#custom-made-virtual-gene-panels"></a>
@@ -114,16 +300,13 @@ panel:</p>
 <li><code>--custom_list &lt;custom_list_tsv&gt;</code></li>
 <li><code>--custom_list_name &lt;custom_list_name</code></li>
 </ul>
-<p>The <a href="https://github.com/sigven/cpsr/tree/master/examples" class="external-link">examples</a>
-folder contains an example file for a custom-made virtual gene
-panel.</p>
 </div>
 </div>
 <div class="section level3">
-<h3 id="acmg-variant-classification">ACMG variant classification<a class="anchor" aria-label="anchor" href="#acmg-variant-classification"></a>
+<h3 id="acmgamp-variant-classification">ACMG/AMP variant classification<a class="anchor" aria-label="anchor" href="#acmgamp-variant-classification"></a>
 </h3>
-<p>The ACMG classification criteria rely heavily upon variant population
-frequencies from <a href="https://gnomad.broadinstitute.org/" class="external-link">gnomAD</a>. The user can
+<p>The ACMG/AMP classification criteria rely heavily upon variant
+population frequencies from <a href="https://gnomad.broadinstitute.org/" class="external-link">gnomAD</a>. The user can
 specify the preferred population when it comes to variant allele
 frequencies used by CPSR:</p>
 <ul>
