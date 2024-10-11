@@ -3,6 +3,12 @@ title: "Changelog"
 output: rmarkdown::html_document
 ---
 
+## v2.1.1
+
+- Date: **2024-10-11**
+
+- Cosmetic fixes in HTML report
+
 ## v2.1.0
 
 - Date: **2024-09-29**
@@ -179,8 +185,8 @@ output: rmarkdown::html_document
   * Classifications of genes as tumor suppressors/oncogenes are now based on a combination of CancerMine citation count and presence in Network of Cancer Genes
 
 ##### Added
-  * Missing ACMG criterion for classification of silent and intronic variants outside of splice regions (_ACMG_BP7_)
-  * Missing ACMG criterion for classification of variants in promoter and untranslated regions (_ACMG_BP3_)
+  * Missing ACMG/AMP criterion for classification of silent and intronic variants outside of splice regions (_ACMG_BP7_)
+  * Missing ACMG/AMP criterion for classification of variants in promoter and untranslated regions (_ACMG_BP3_)
   * Possibility to create custom virtual panel - any combination of genes from panel 0 provided as a single-column text file with argument `--custom_list`
   * Ensured that non-empty datatables pr. tier (__ClinVar__ and __Non-ClinVar__) are set as the active tab
   * Improved documentation of variant classification in the __References__ section
@@ -210,7 +216,7 @@ output: rmarkdown::html_document
 * Date: **2019-09-23**
 
 ##### Fixed
-  * Bug in implementation of ACMG criteria; genes without a known loss-of-function mechanism were handled inappropriately
+  * Bug in implementation of ACMG/AMP criteria; genes without a known loss-of-function mechanism were handled inappropriately
   * Bug in assignment of heterozygous/homozygous states (input VCF)
   * Bug in implementation of ACMG_PS1 - Same amino acid change as previously pathogenic variant
   * Improved consequence prioritisation for variants with transcript consequences in multiple, distinct cancer predisposition genes

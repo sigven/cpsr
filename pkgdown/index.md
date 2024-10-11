@@ -25,6 +25,8 @@ Snapshots of sections in the [quarto](https://quarto.org)-based cancer predispos
 
 ### News
 
+* *October 2024*: **2.1.1 release**
+  - cosmetic fixes in HTML report
 
 * *September 2024*: **2.1.0 release**
   - data bundle upgrade
