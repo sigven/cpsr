@@ -18,8 +18,10 @@ Snapshots of sections in the [quarto](https://quarto.org)-based cancer predispos
 
 ## News
 
--  *October 2024*: **2.1.1 release**
+-  *October 2024*: **2.1.2 release**
     -  cosmetic fixes in HTML report
+    -  fix for VEP consequence pick exception
+    -  [CHANGELOG](https://sigven.github.io/cpsr/articles/CHANGELOG.html)
 -  *September 2024*: **2.1.0 release**
     -  data bundle upgrade
     -  re-calibration of classification tresholds
