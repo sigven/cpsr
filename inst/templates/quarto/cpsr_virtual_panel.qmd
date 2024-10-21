@@ -33,11 +33,16 @@ shown below.
       * Diagnostic-grade genes only (applicable to Genomics England panels): __`r as.logical(cps_report[['settings']][['conf']][['gene_panel']][['diagnostic_grade_only']])`__
    
 ```{r gene_selection, echo = F, eval = T}
+#| echo: false
+#| eval: true
+
 tiles_html <- cpsr::plot_virtual_panels(
   gene_df = cps_report[["settings"]][["conf"]][["gene_panel"]][["panel_genes"]])
 ```
 
+<div align="center">
 `r tiles_html`
+</div>
 
 <br>
 

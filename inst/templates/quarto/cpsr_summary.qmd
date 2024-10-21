@@ -142,7 +142,7 @@ bslib::layout_column_wrap(
   )
 )
 ```
-<b>
+<br>
 
 ### Variant statistics 
 
