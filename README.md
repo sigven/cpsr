@@ -2,7 +2,7 @@
 
 The *Cancer Predisposition Sequencing Reporter (CPSR)* is a computational workflow that **interprets DNA sequence variants** identified from next-generation sequencing **in the context of cancer predisposition**. 
 
-*CPSR* accepts a query file with _germline_ variant calls (SNVs/InDels) from a single sample (i.e. cancer patient), encoded in the [VCF format ](https://samtools.github.io/hts-specs/VCFv4.2.pdf). Through comprehensive gene and variant annotation procedures, CPSR offers the following main functionalities to the user:
+*CPSR* accepts a query file with _germline_ variant calls (SNVs/InDels) from a single sample (i.e. cancer patient), encoded in the [VCF format ](https://samtools.github.io/hts-specs/VCFv4.2.pdf). Through comprehensive gene and variant annotation procedures, CPSR offers the following functionalities to the user:
 
 1)  Flexible **selection of cancer predisposition genes** subject to analysis and reporting - through the use of virtual gene panels
 2)  **Variant classification** (*Pathogenic* to *Benign*) through a dedicated implementation of [ACMG/AMP guidelines](https://pubmed.ncbi.nlm.nih.gov/25741868/)
@@ -18,28 +18,30 @@ Snapshots of sections in the [quarto](https://quarto.org)-based cancer predispos
 
 ## News
 
--  *October 2024*: **2.1.2 release**
+*  *February 2025*: **2.1.3 release**
+    -  more predisposition genes in panel zero 
+    -  optional reporting of pharmacogenomics-related variants (TPMT, DPYD, NUDT15)
+    -  [CHANGELOG](https://sigven.github.io/cpsr/articles/CHANGELOG.html)
+
+*  *October 2024*: **2.1.2 release**
     -  cosmetic fixes in HTML report
     -  fix for VEP consequence pick exception
     -  [CHANGELOG](https://sigven.github.io/cpsr/articles/CHANGELOG.html)
--  *September 2024*: **2.1.0 release**
+    
+*  *September 2024*: **2.1.0 release**
     -  data bundle upgrade
     -  re-calibration of classification tresholds
     -  [CHANGELOG](https://sigven.github.io/cpsr/articles/CHANGELOG.html)
--   *August 2024*: **2.0.3 release**
-    -   patch with bug fix for copying in quarto templates ([pr62](https://github.com/sigven/cpsr/pull/62))
-    -   [CHANGELOG](https://sigven.github.io/cpsr/articles/CHANGELOG.html)
--   *July 2024*: **2.0.1 release**
-    -   patch with bug fix for mitochondrial input variants ([pr245](https://github.com/sigven/pcgr/pull/245))
-    -   [CHANGELOG](https://sigven.github.io/cpsr/articles/CHANGELOG.html)
--   *June 2024*: **2.0.0 release**
-    -   New HTML report generation and layout with [quarto](https://quarto.org/)
-    -   Excel output supported
-    -   Data bundle update
-    -   Singularity/Apptainer support
-    -   [CHANGELOG](https://sigven.github.io/cpsr/articles/CHANGELOG.html)
--   *November 2022*: **1.0.1 release**
-    -   Added CPSR logo (designed by [Hal Nakken](https://halvetica.net))
+
+*  *June 2024*: **2.0.0 release**
+    -  New HTML report generation and layout with [quarto](https://quarto.org/)
+    -  Excel output supported
+    -  Data bundle update
+    -  Singularity/Apptainer support
+    -  [CHANGELOG](http://cpsr.readthedocs.io/en/latest/CHANGELOG.html)
+
+*  *November 2022*: **1.0.1 release**
+    -  Added CPSR logo (designed by [Hal Nakken](https://halvetica.net))
 
 ## Example report
 

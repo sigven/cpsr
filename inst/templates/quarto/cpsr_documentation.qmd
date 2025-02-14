@@ -17,10 +17,11 @@ The variant interpretation procedures performed in this cancer genome report are
 
 ::: {.callout-important title="Licensing note"}
 
-Some resources (highlighted below) demand specific licensing agreements if you plan to utilize their data (and thus this report) in a commercial, non-research setting.
+Some resources, specifically highlighted in _Dataset versions_ below, demand specific licensing agreements if you plan to utilize their data (and thus this report) in a commercial, non-research setting.
 
 :::
 
+::: {.callout-note title="Dataset versions" collapse="true"}
 
 * __PCGR databundle version__
 
@@ -82,9 +83,9 @@ for(i in 1:NROW(ref_datasets)){
 
 ```
 
-### Variant classification algorithm (ACMG/AMP-based)
+:::
 
-<br>
+### Variant classification algorithm (ACMG/AMP-based)
 
 All coding, <b>non-ClinVar</b> variants in the set of cancer predisposition genes have been classified according to a <i>five-level pathogenicity scheme</i> (coined <b>CPSR_CLASSIFICATION</b> in the tables above). The scheme has the same five levels as those employed by ClinVar, e.g. pathogenic/likely pathogenic/VUS/likely benign/benign. The classification performed by CPSR is rule-based, implementing refined ACMG/AMP criteria, many of which were outlined in [SherLoc](https://www.invitae.com/en/variant-classification/) ([Nykamp et al., Genetics in Medicine, 2017](https://www.ncbi.nlm.nih.gov/pubmed/28492532)). Important attributes of cancer predisposition genes, such as mode of inheritance and mechanism of disease (loss-of-function), have been harvested from [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk/), [Maxwell et al., Am J Hum Genet, 2016](https://www.ncbi.nlm.nih.gov/pubmed/27153395), and [Huang et al., Cell, 2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052)
 

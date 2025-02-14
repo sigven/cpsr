@@ -96,7 +96,7 @@ The user may opt to show CPSR's classification of the variants which are already
 
 * `--classify_all`
 
-In the final classification, note that CPSR's classification will not overrule the classification reported by ClinVar, which takes precedence for variants with a record here.
+In the final classification, note that CPSR's classification will not overrule the classification reported by ClinVar, which takes precedence for any variant with a record there.
 
 <hr>
 
@@ -106,8 +106,9 @@ By default, CPSR do not report variants in the input sample that are found in ca
 
 ### Optional report contents
 
-CPSR allows users to report recommended [incidental findings](https://www.ncbi.nlm.nih.gov/clinvar/docs/acmg/), and also the genotypes of reported cancer risk loci from [genome-wide association studies (GWAS)](https://www.ebi.ac.uk/gwas/):
+CPSR allows users to report recommended [incidental findings](https://www.ncbi.nlm.nih.gov/clinvar/docs/acmg/), the occurrence of important variants with respec to chemotherapy toxicity, and also the genotypes of reported cancer risk loci from [genome-wide association studies (GWAS)](https://www.ebi.ac.uk/gwas/):
 
+* `--pgx_findings`
 * `--secondary_findings`
 * `--gwas_findings`
 
@@ -198,6 +199,7 @@ Panel options:
 
 Variant classification options:
   --secondary_findings  Include variants found in ACMG-recommended list for secondary findings (v3.2), default: False
+  --pgx_findings        Report overlap with variants associated with chemotherapy toxicity (PgX findings, CPIC), default: False
   --gwas_findings       Report overlap with low to moderate cancer risk variants (tag SNPs) identified from genome-wide association studies, default: False
   --pop_gnomad {afr,amr,eas,sas,asj,nfe,fin,global}
                         Population source in gnomAD (non-cancer subset) used for variant frequency assessment (ACMG classification), default: nfe

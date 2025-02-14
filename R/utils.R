@@ -24,10 +24,12 @@ get_max_rows_pr_datatable <- function(cps_report) {
       } else {
         t1 <- cps_report[["content"]][["snv_indel"]][["disp"]][[c]]
         num_rows_clinvar <- t1 |>
-          dplyr::filter(.data$CPSR_CLASSIFICATION_SOURCE == "ClinVar") |>
+          dplyr::filter(
+            .data$CPSR_CLASSIFICATION_SOURCE == "ClinVar") |>
           nrow()
         num_rows_other <- t1 |>
-          dplyr::filter(.data$CPSR_CLASSIFICATION_SOURCE == "CPSR_ACMG") |>
+          dplyr::filter(
+            .data$CPSR_CLASSIFICATION_SOURCE == "CPSR_ACMG") |>
           nrow()
         if (num_rows_other > max_row_nr) {
           max_row_nr <- num_rows_other
@@ -60,12 +62,17 @@ get_insilico_prediction_statistics <- function(cpg_calls) {
       "DBNSFP_SIFT",
       "DBNSFP_PROVEAN",
       "DBNSFP_META_RNN",
-      "DBNSFP_FATHMM",
       "DBNSFP_MUTATIONTASTER",
       "DBNSFP_DEOGEN2",
       "DBNSFP_PRIMATEAI",
+      "DBNSFP_PHACTBOOST",
+      "DBNSFP_ESM1B",
       "DBNSFP_MUTATIONASSESSOR",
-      "DBNSFP_FATHMM_MKL",
+      "DBNSFP_CLINPRED",
+      "DBNSFP_MUTFORMER",
+      "DBNSFP_ALPHA_MISSENSE",
+      "DBNSFP_POLYPHEN_HVAR",
+      "DBNSFP_FATHMM_XF",
       "DBNSFP_M_CAP",
       "DBNSFP_LIST_S2",
       "DBNSFP_BAYESDEL_ADDAF",
@@ -228,6 +235,102 @@ retrieve_secondary_calls <- function(calls) {
   }
 
   return(secondary_calls)
+}
+
+#' Function that retrieves variants in genes recommended for secondary
+#' findings
+#'
+#' @param calls data frame with all calls found
+#'
+#' @export
+retrieve_pgx_calls <- function(calls) {
+  assertable::assert_colnames(
+    calls,
+    colnames = c(
+      "CPG_SOURCE",
+      "FINAL_CLASSIFICATION",
+      "CPSR_CLASSIFICATION_SOURCE",
+      "PRIMARY_TARGET",
+      "GENOTYPE",
+      "SYMBOL",
+      "GENOMIC_CHANGE",
+      "LOSS_OF_FUNCTION",
+      "PROTEIN_CHANGE",
+      "CLINVAR_PHENOTYPE",
+      "CLINVAR_REVIEW_STATUS_STARS",
+      "CLINVAR_NUM_SUBMITTERS"
+    ),
+    only_colnames = F, quiet = T
+  )
+
+  pgx_calls <- calls |>
+    ## do not consider pharmacogenomics-related variants if
+    ## genotypes have not been retrieved properly
+    dplyr::filter(
+      !is.na(.data$GENOTYPE) &
+        !is.na(.data$SYMBOL) &
+        !is.na(.data$CPG_SOURCE) &
+        stringr::str_detect(.data$CPG_SOURCE, "CPIC_PGX_ONCOLOGY") &
+        .data$PRIMARY_TARGET == FALSE &
+        !is.na(.data$CPSR_CLASSIFICATION_SOURCE) &
+        .data$CPSR_CLASSIFICATION_SOURCE == "ClinVar" &
+        !is.na(.data$CLINVAR_CLASSIFICATION) &
+        stringr::str_detect(
+          tolower(
+            .data$CLINVAR_CLASSIFICATION), "drug|pathogenic"
+        )
+    ) |>
+    dplyr::filter(
+      .data$GENOTYPE != "undefined"
+    )
+
+
+  if (NROW(pgx_calls) == 0) {
+    return(pgx_calls)
+  }else{
+    pgx_calls <- pgx_calls |>
+      dplyr::arrange(
+        dplyr::desc(.data$CLINVAR_REVIEW_STATUS_STARS),
+        dplyr::desc(.data$CLINVAR_NUM_SUBMITTERS))
+
+    clinvar_phenotypes <- pgx_calls |>
+      dplyr::select(c("GENOMIC_CHANGE",
+                      "CLINVAR_PHENOTYPE")) |>
+      tidyr::separate_rows(
+        .data$CLINVAR_PHENOTYPE, sep = "; ") |>
+      dplyr::filter(
+        stringr::str_detect(
+          .data$CLINVAR_PHENOTYPE,
+          "^(Fluorouracil|Dihydropyrimidine|Thiopurine)") |
+          stringr::str_detect(
+            .data$CLINVAR_PHENOTYPE,
+            "^$"
+          )
+      ) |>
+      dplyr::distinct() |>
+      dplyr::group_by(
+        .data$GENOMIC_CHANGE
+      ) |>
+      dplyr::summarise(
+        CLINVAR_PHENOTYPE = paste(
+          sort(unique(.data$CLINVAR_PHENOTYPE)),
+          collapse = "; "),
+        .groups = "drop"
+      )
+
+    pgx_calls <- pgx_calls |>
+      dplyr::select(-c("CLINVAR_PHENOTYPE")) |>
+      dplyr::left_join(
+        clinvar_phenotypes,
+        by = "GENOMIC_CHANGE"
+      ) |>
+      dplyr::filter(!is.na(.data$CLINVAR_PHENOTYPE)) |>
+      dplyr::distinct()
+
+
+  }
+
+  return(pgx_calls)
 }
 
 #' Function that retrieves variants in cancer predisposition genes linked

@@ -7,6 +7,7 @@
 #| eval: true
 
 dtable_pageLength <- 6
+dt_max_rows <- 500
 dtable_scrollY <- "700px"
 
 show_class_filters <- list()
@@ -78,9 +79,9 @@ formula_gnomad <- as.formula(paste0("~", rlang::sym(tag_gnomad)))
    *  A total of __N = `r tot_variants[['class5']][['ClinVar']]`__ variants are registered with a <i>Pathogenic</i> clinical significance in the [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) database.
    *  A total of __N = `r tot_variants[['class5']][['CPSR_ACMG']]`__ <i><b>non-ClinVar</b></i> variants (i.e. not submitted to/recorded in ClinVar) are classified with a <i>Pathogenic</i> clinical significance by CPSR (refined ACMG/AMP criteria - based on population frequency and variant effect).
 
-::: {.callout-note title="Note - output limitations"}
+::: {.callout-note title="Note - output limitations" collapse="true"}
 
-In order to maintain responsiveness of client-side data interaction, variants displayed here constitute the top 2,000 variants for each of the ClinVar and non-ClinVar variant sets.
+In order to maintain responsiveness of client-side data interaction, variants displayed here constitute the top `r dt_max_rows` variants for each of the ClinVar and non-ClinVar variant sets.
 
 :::
 
@@ -120,7 +121,7 @@ variants_class5_clinvar <-
     cps_report[["content"]][["snv_indel"]]$callset$variant_display$cpg_non_sf, 
     CPSR_CLASSIFICATION_SOURCE == "ClinVar" & 
       CLINVAR_CLASSIFICATION == "Pathogenic") |>
-  head(2000) |>
+  head(dt_max_rows) |>
   dplyr::select(
     -dplyr::any_of(
       c("CPSR_CLASSIFICATION", "CPSR_PATHOGENICITY_SCORE",
@@ -161,7 +162,10 @@ DT::datatable(variants_class5_1,
     dom = "Bfrtip",
     initComplete = DT::JS(
       "function(settings, json) {",
-      "$(this.api().table().header()).css({'background-color':'#9E0142', 'color': '#fff'});",
+      paste0(
+        "$(this.api().table().header()).css({'background-color':'",
+        pcgrr::color_palette$pathogenicity$values[1],
+        "', 'color': '#fff'});"),
       "}"
     )
   )
@@ -199,7 +203,7 @@ variants_class5_other <-
     cps_report[["content"]][["snv_indel"]]$callset$variant_display$cpg_non_sf, 
     CPSR_CLASSIFICATION_SOURCE == "CPSR_ACMG" & 
       CPSR_CLASSIFICATION == "Pathogenic") |>
-  head(2000) |>
+  head(dt_max_rows) |>
   dplyr::select(
     -dplyr::any_of(
       c("CLINVAR", 
@@ -245,7 +249,10 @@ DT::datatable(variants_class5_2,
     dom = "Bfrtip",
     initComplete = DT::JS(
       "function(settings, json) {",
-      "$(this.api().table().header()).css({'background-color':'#9E0142', 'color': '#fff'});",
+      paste0(
+        "$(this.api().table().header()).css({'background-color':'",
+        pcgrr::color_palette$pathogenicity$values[1],
+        "', 'color': '#fff'});"),
       "}"
     )
   )
@@ -263,9 +270,9 @@ htmltools::br()
 *  A total of __N = `r tot_variants[['class4']][['ClinVar']]`__ variants are recorded with a <i>Likely Pathogenic</i> clinical significance in the [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) database.
 *  A total of __N = `r tot_variants[['class4']][['CPSR_ACMG']]`__ <i><b>non-ClinVar</b></i> variants (i.e. not submitted to/recorded in ClinVar) are classified with a <i>Likely Pathogenic</i> clinical significance by CPSR (refined ACMG/AMP criteria - based on population frequency and variant effect).
 
-::: {.callout-note title="Note - output limitations"}
+::: {.callout-note title="Note - output limitations" collapse="true"}
 
-In order to maintain responsiveness of client-side data interaction, variants displayed here constitute the top 2,000 variants for each of the ClinVar and non-ClinVar variant sets.
+In order to maintain responsiveness of client-side data interaction, variants displayed here constitute the top `r dt_max_rows` variants for each of the ClinVar and non-ClinVar variant sets.
 
 :::
 
@@ -303,7 +310,7 @@ variants_class4_clinvar <-
     cps_report[["content"]][["snv_indel"]]$callset$variant_display$cpg_non_sf, 
     CPSR_CLASSIFICATION_SOURCE == "ClinVar" & 
       CLINVAR_CLASSIFICATION == "Likely_Pathogenic") |>
-  head(2000) |>
+  head(dt_max_rows) |>
   dplyr::select(
     -dplyr::any_of(
       c("CPSR_CLASSIFICATION", 
@@ -347,7 +354,10 @@ DT::datatable(variants_class4_1,
     dom = "Bfrtip",
     initComplete = DT::JS(
       "function(settings, json) {",
-      "$(this.api().table().header()).css({'background-color':'#D53E4F', 'color': '#fff'});",
+      paste0(
+        "$(this.api().table().header()).css({'background-color':'",
+        pcgrr::color_palette$pathogenicity$values[2],
+        "', 'color': '#fff'});"),
       "}"
     )
   )
@@ -401,7 +411,7 @@ variants_class4_other <-
     cps_report[["content"]][["snv_indel"]]$callset$variant_display$cpg_non_sf, 
     CPSR_CLASSIFICATION_SOURCE == "CPSR_ACMG" & 
       CPSR_CLASSIFICATION == "Likely_Pathogenic") |>
-  head(2000) |>
+  head(dt_max_rows) |>
   dplyr::select(
     -dplyr::any_of(
       c("CLINVAR", 
@@ -445,7 +455,10 @@ DT::datatable(variants_class4_2,
     dom = "Bfrtip",
     initComplete = DT::JS(
       "function(settings, json) {",
-      "$(this.api().table().header()).css({'background-color':'#D53E4F', 'color': '#fff'});",
+      paste0(
+        "$(this.api().table().header()).css({'background-color':'",
+        pcgrr::color_palette$pathogenicity$values[2],
+        "', 'color': '#fff'});"),
       "}"
     )
   )
@@ -472,9 +485,9 @@ htmltools::br()
 *  A total of __N = `r tot_variants[['class3']][['ClinVar']]`__ variants are recorded with a <i>VUS</i> clinical significance in the [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) database.
 *  A total of __N = `r tot_variants[['class3']][['CPSR_ACMG']]`__ <i><b>non-ClinVar</b></i> variants (i.e. not submitted to/recorded in ClinVar) are classified with a <i>VUS</i> clinical significance by CPSR (refined ACMG/AMP criteria - based on population frequency and variant effect).
 
-::: {.callout-note title="Note - output limitations"}
+::: {.callout-note title="Note - output limitations" collapse="true"}
 
-In order to maintain responsiveness of client-side data interaction, variants displayed here constitute the top 2,000 variants for each of the ClinVar and non-ClinVar variant sets.
+In order to maintain responsiveness of client-side data interaction, variants displayed here constitute the top `r dt_max_rows` variants for each of the ClinVar and non-ClinVar variant sets.
 
 :::
 
@@ -512,7 +525,7 @@ variants_class3_clinvar <-
     cps_report[["content"]][["snv_indel"]]$callset$variant_display$cpg_non_sf, 
     CPSR_CLASSIFICATION_SOURCE == "ClinVar" & 
       CLINVAR_CLASSIFICATION == "VUS") |>
-  head(2000) |>
+  head(dt_max_rows) |>
   dplyr::select(
     -dplyr::any_of(
       c("CPSR_CLASSIFICATION", "CPSR_PATHOGENICITY_SCORE",
@@ -561,7 +574,10 @@ DT::datatable(variants_class3_1,
     dom = "Bfrtip",
     initComplete = DT::JS(
       "function(settings, json) {",
-      "$(this.api().table().header()).css({'background-color':'#2c313c', 'color': '#fff'});",
+      paste0(
+        "$(this.api().table().header()).css({'background-color':'",
+        pcgrr::color_palette$pathogenicity$values[3],
+        "', 'color': '#fff'});"),
       "}"
     )
   )
@@ -601,7 +617,7 @@ variants_class3_other <-
     cps_report[["content"]][["snv_indel"]]$callset$variant_display$cpg_non_sf, 
     CPSR_CLASSIFICATION_SOURCE == "CPSR_ACMG" & 
       CPSR_CLASSIFICATION == "VUS") |>
-  head(2000) |>
+  head(dt_max_rows) |>
   dplyr::select(
     -dplyr::any_of(
       c("CLINVAR", 
@@ -650,7 +666,10 @@ DT::datatable(variants_class3_2,
     dom = "Bfrtip",
     initComplete = DT::JS(
       "function(settings, json) {",
-      "$(this.api().table().header()).css({'background-color':'#000000', 'color': '#fff'});",
+      paste0(
+        "$(this.api().table().header()).css({'background-color':'",
+        pcgrr::color_palette$pathogenicity$values[3],
+        "', 'color': '#fff'});"),
       "}"
     )
   )
@@ -677,9 +696,9 @@ htmltools::br()
 *  A total of __N = `r tot_variants[['class2']][['ClinVar']]`__ variants are recorded with a <i>Likely Benign</i> clinical significance in the [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) database.
 *  A total of __N = `r tot_variants[['class2']][['CPSR_ACMG']]`__ <i><b>non-ClinVar</b></i> variants (i.e. not submitted to/recorded in ClinVar) are classified with a <i>Likely Benign</i> clinical significance by CPSR (refined ACMG/AMP criteria - based on population frequency and variant effect).
 
-::: {.callout-note title="Note - output limitations"}
+::: {.callout-note title="Note - output limitations" collapse="true"}
 
-In order to maintain responsiveness of client-side data interaction, variants displayed here constitute the top 2,000 variants for each of the ClinVar and non-ClinVar variant sets.
+In order to maintain responsiveness of client-side data interaction, variants displayed here constitute the top `r dt_max_rows` variants for each of the ClinVar and non-ClinVar variant sets.
 
 :::
 
@@ -718,7 +737,7 @@ variants_class2_clinvar <-
     cps_report[["content"]][["snv_indel"]]$callset$variant_display$cpg_non_sf, 
     CPSR_CLASSIFICATION_SOURCE == "ClinVar" & 
       CLINVAR_CLASSIFICATION == "Likely_Benign") |>
-  head(2000) |>
+  head(dt_max_rows) |>
   dplyr::select(
     -dplyr::any_of(
       c("CPSR_CLASSIFICATION", 
@@ -761,7 +780,10 @@ DT::datatable(variants_class2_1,
     dom = "Bfrtip",
     initComplete = DT::JS(
       "function(settings, json) {",
-      "$(this.api().table().header()).css({'background-color':'#78C679', 'color': '#fff'});",
+      paste0(
+        "$(this.api().table().header()).css({'background-color':'",
+        pcgrr::color_palette$pathogenicity$values[4],
+        "', 'color': '#fff'});"),
       "}"
     )
   )
@@ -801,7 +823,7 @@ variants_class2_other <-
     cps_report[["content"]][["snv_indel"]]$callset$variant_display$cpg_non_sf, 
     CPSR_CLASSIFICATION_SOURCE == "CPSR_ACMG" & 
       CPSR_CLASSIFICATION == "Likely_Benign") |>
-  head(2000) |>
+  head(dt_max_rows) |>
   dplyr::select(
     -dplyr::any_of(
       c("CLINVAR", 
@@ -846,7 +868,10 @@ DT::datatable(variants_class2_2,
     dom = "Bfrtip",
     initComplete = DT::JS(
       "function(settings, json) {",
-      "$(this.api().table().header()).css({'background-color':'#78C679', 'color': '#fff'});",
+      paste0(
+        "$(this.api().table().header()).css({'background-color':'",
+        pcgrr::color_palette$pathogenicity$values[4],
+        "', 'color': '#fff'});"),
       "}"
     )
   )
@@ -863,9 +888,9 @@ htmltools::br()
 *  A total of __N = `r tot_variants[['class1']][['ClinVar']]`__ variants are recorded with a <i>Benign</i> clinical significance in the [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) database.
 *  A total of __N = `r tot_variants[['class1']][['CPSR_ACMG']]`__ <i><b>non-ClinVar</b></i> variants (i.e. not submitted to/recorded in ClinVar) are classified with a <i>Benign</i> clinical significance by CPSR (refined ACMG/AMP criteria - based on population frequency and variant effect).
 
-::: {.callout-note title="Note - output limitations"}
+::: {.callout-note title="Note - output limitations" collapse="true"}
 
-In order to maintain responsiveness of client-side data interaction, variants displayed here constitute the top 2,000 variants for each of the ClinVar and non-ClinVar variant sets.
+In order to maintain responsiveness of client-side data interaction, variants displayed here constitute the top `r dt_max_rows` variants for each of the ClinVar and non-ClinVar variant sets.
 
 :::
 
@@ -904,11 +929,13 @@ variants_class1_clinvar <-
     cps_report[["content"]][["snv_indel"]]$callset$variant_display$cpg_non_sf, 
     CPSR_CLASSIFICATION_SOURCE == "ClinVar" & 
       CLINVAR_CLASSIFICATION == "Benign") |>
-  head(2000) |>
+  head(dt_max_rows) |>
   dplyr::select(
     -dplyr::any_of(
-      c("CPSR_CLASSIFICATION", "CPSR_PATHOGENICITY_SCORE",
-        "CPSR_CLASSIFICATION_DOC", "CPSR_CLASSIFICATION_CODE")
+      c("CPSR_CLASSIFICATION", 
+        "CPSR_PATHOGENICITY_SCORE",
+        "CPSR_CLASSIFICATION_DOC", 
+        "CPSR_CLASSIFICATION_CODE")
     )
   )
 
@@ -947,7 +974,10 @@ DT::datatable(variants_class1_1,
     dom = "Bfrtip",
     initComplete = DT::JS(
       "function(settings, json) {",
-      "$(this.api().table().header()).css({'background-color':'#077009', 'color': '#fff'});",
+      paste0(
+        "$(this.api().table().header()).css({'background-color':'",
+        pcgrr::color_palette$pathogenicity$values[5],
+        "', 'color': '#fff'});"),
       "}"
     )
   )
@@ -987,7 +1017,7 @@ variants_class1_other <-
     cps_report[["content"]][["snv_indel"]]$callset$variant_display$cpg_non_sf, 
     CPSR_CLASSIFICATION_SOURCE == "CPSR_ACMG" & 
       CPSR_CLASSIFICATION == "Benign") |>
-  head(2000) |>
+  head(dt_max_rows) |>
   dplyr::select(
     -dplyr::any_of(
       c("CLINVAR", 
@@ -1029,12 +1059,14 @@ DT::datatable(variants_class1_2,
     scrollCollapse = T,
     buttons = c("csv", "excel"),
     dom = "Bfrtip",
-    initComplete =
-      DT::JS(
-        "function(settings, json) {",
-        "$(this.api().table().header()).css({'background-color':'#077009', 'color': '#fff'});",
-        "}"
-      )
+    initComplete = DT::JS(
+      "function(settings, json) {",
+      paste0(
+        "$(this.api().table().header()).css({'background-color':'",
+        pcgrr::color_palette$pathogenicity$values[5],
+        "', 'color': '#fff'});"),
+      "}"
+    )
   )
 )
 

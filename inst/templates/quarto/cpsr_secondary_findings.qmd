@@ -11,13 +11,13 @@ acmg_version <- cps_report$settings$reference_data$source_metadata[
   cps_report$settings$reference_data$source_metadata$source_abbreviation == "acmg_sf","source_version"]
 acmg_url <- cps_report$settings$reference_data$source_metadata[
   cps_report$settings$reference_data$source_metadata$source_abbreviation == "acmg_sf","source_url"]
-genotypes_unavailable <- !(as.logical(
+sf_genotypes_unavailable <- !(as.logical(
   cps_report$settings$conf$sample_properties$gt_detected))
 
 ```
 
-```{r gt_unavailable}
-#| eval: !expr genotypes_unavailable
+```{r sf_gt_unavailable}
+#| eval: !expr sf_genotypes_unavailable
 #| output: asis
 #| echo: false
 
@@ -48,11 +48,23 @@ DT::datatable(
     dom = "Bfrtip",
     initComplete = DT::JS(
       "function(settings, json) {",
-      "$(this.api().table().header()).css({'background-color': '#8E9092', 'color': '#fff'});",
+      paste0(
+        "$(this.api().table().header()).css({'background-color':'",
+        cpsr::color_palette[['report']],
+        "', 'color': '#fff'});"),
       "}"
     )
+  )) |>
+  DT::formatStyle(
+    color = "white",
+    "GENOTYPE",
+    "GENOTYPE",
+    backgroundColor = 
+      DT::styleEqual(
+        cpsr::color_palette[['genotypes']][['levels']],
+        cpsr::color_palette[['genotypes']][['values']]
+      )
   )
-)
 
 htmltools::br()
 htmltools::br()

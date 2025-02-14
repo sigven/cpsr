@@ -88,16 +88,6 @@ assign_classification <- function(var_calls) {
   lb_lower_limit <- cpsr::acmg[['score_thresholds']][['lb_lower']]
   b_upper_limit <- cpsr::acmg[['score_thresholds']][['b_upper']]
 
-  #lb_upper_limit <- -1.5
-  #lb_lower_limit <- -4.5
-  #b_upper_limit <- -5.0
-  #vus_lower_limit <- -1.0
-  #vus_upper_limit <- 1.5
-  #lp_lower_limit <- 2.0
-  #lp_upper_limit <- 4.5
-  #p_lower_limit <- 5.0
-
-
   var_calls <- var_calls |>
     dplyr::mutate(
       CPSR_CLASSIFICATION_CODE =
@@ -396,15 +386,15 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
   ## Assign logical ACMG evidence indicators
   #
   #
-  # ACMG_PP3 - Multiple lines (>=5) of insilico evidence support a
+  # ACMG_PP3 - Multiple lines (>=8) of insilico evidence support a
   #             deleterious effect on the gene or gene product
   ##           (conservation, evolutionary, splicing impact, etc.)
-  # ACMG_BP4 - Multiple lines (>=5) of insilico evidence support a benign effect.
+  # ACMG_BP4 - Multiple lines (>=8) of insilico evidence support a benign effect.
   #
   # Computational evidence for deleterious/benign effect is taken from
   # invidual algorithm predictions in dbNSFP: SIFT,Provean,MutationTaster,
-  # MutationAssessor,M_CAP,MutPred,FATHMM,FATHMM-mkl,DBNSFP_RNN,dbscSNV_RF,
-  # dbscSNV_AdaBoost
+  # MutationAssessor,M_CAP,MutPred,FATHMM_XF, DBNSFP_RNN,dbscSNV_RF,
+  # dbscSNV_AdaBoost, AlphaMissense, ClinPred, phactBOOST, PrimateAI, REVEL,
   # Default scheme (from default TOML file):
   # 1) Damaging: Among all possible protein variant effect predictions, at
   #              least six algorithms must have made a call,

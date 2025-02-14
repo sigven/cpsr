@@ -84,6 +84,39 @@ col_format_output[['html_sf']] <-
     "GENOME_VERSION"
   )
 
+## define tags/variables to display in data tables (PGx findings)
+col_format_output[['html_pgx']] <-
+  c(
+    "SYMBOL",
+    "ALTERATION",
+    "CLINVAR_CLASSIFICATION",
+    "CLINVAR_PHENOTYPE",
+    "GENOTYPE",
+    "GENENAME",
+    "CONSEQUENCE",
+    "PROTEIN_DOMAIN",
+    "DP_CONTROL",
+    "PROTEIN_CHANGE",
+    "HGVSp",
+    "HGVSc",
+    "HGVSc_RefSeq",
+    "ENSEMBL_GENE_ID",
+    "REFSEQ_TRANSCRIPT_ID",
+    "ENSEMBL_TRANSCRIPT_ID",
+    "CDS_CHANGE",
+    "PREDICTED_EFFECT",
+    "LOSS_OF_FUNCTION",
+    "LOF_FILTER",
+    "DBSNP_RSID",
+    "CLINVAR",
+    "CLINVAR_REVIEW_STATUS_STARS",
+    "CLINVAR_CONFLICTED",
+    "gnomADe_AF",
+    "GENOMIC_CHANGE",
+    "GENOME_VERSION"
+  )
+
+
 ## define tags/variables to display in data tables (GWAS findings)
 col_format_output[['html_gwas']] <-
   c(
@@ -311,6 +344,42 @@ col_format_output[['xlsx_secondary']] <-
     "gnomADe_AF"
   )
 
+## define tags/variables to display in output Excel
+col_format_output[['xlsx_pgx']] <-
+  c("SAMPLE_ID",
+    "GENOMIC_CHANGE",
+    "GENOTYPE",
+    "DP_CONTROL",
+    "GENOME_VERSION",
+    "VARIANT_CLASS",
+    "SYMBOL",
+    "GENENAME",
+    "CONSEQUENCE",
+    "PROTEIN_CHANGE",
+    "CLINVAR_CLASSIFICATION",
+    "CLINVAR_MSID",
+    "CLINVAR_VARIANT_ORIGIN",
+    "CLINVAR_CONFLICTED",
+    "CLINVAR_PHENOTYPE",
+    "CLINVAR_REVIEW_STATUS_STARS",
+    "ENSEMBL_GENE_ID",
+    "ENSEMBL_TRANSCRIPT_ID",
+    "REFSEQ_TRANSCRIPT_ID",
+    "PFAM_DOMAIN_NAME",
+    "HGVSp",
+    "HGVSc",
+    "HGVSc_RefSeq",
+    "CDS_CHANGE",
+    "CODING_STATUS",
+    "MUTATION_HOTSPOT",
+    "EFFECT_PREDICTIONS",
+    "LOSS_OF_FUNCTION",
+    "LOF_FILTER",
+    "NULL_VARIANT",
+    "DBSNP_RSID",
+    "gnomADe_AF"
+  )
+
 
 ## define tags/variables to display in output Excel
 col_format_output[['xlsx_biomarker']] <-
@@ -399,9 +468,21 @@ acmg[["score2tier"]] <-
                "CPSR_PATHOGENICITY_SCORE" = "<b>[, -3.0]</b>"))
 
 
+color_palette <- list()
+color_palette[['report']] <- "#007a74"
+color_palette[['none']] <- "#8B8989"
+color_palette[['genotypes']] <- list()
+color_palette[['genotypes']][['values']] <- c('#bdbdbd','#bdbdbd','#007a74','#252525')
+color_palette[['genotypes']][['levels']] <- c('undefined','hom_ref','het','hom_alt')
+
+
+usethis::use_data(color_palette, overwrite = T)
 usethis::use_data(acmg, overwrite = T)
 usethis::use_data(col_format_output, overwrite = T)
-#
+
+
+
+
 # my_log4r_layout <- function(level, ...) {
 #   paste0(format(Sys.time()), " - cpsr-report-generation - ",
 #          level, " - ", ..., "\n", collapse = "")
@@ -420,13 +501,14 @@ usethis::use_data(col_format_output, overwrite = T)
 #     pcgr_db_assembly_dir =
 #       file.path(
 #         "/Users/sigven/project_data/data/data__pcgrdb/dev/pcgrdb",
-#         "20240530/data",
+#         "20250217/data",
 #         build),
 #     genome_assembly = build
 #   )
 #
 #   set1 <- ref_data$gene$cpg |>
-#     dplyr::filter(CPG_SOURCE != "ACMG_SF") |>
+#     dplyr::filter(CPG_SOURCE != "ACMG_SF" &
+#                     CPG_SOURCE != "CPIC_PGX_ONCOLOGY") |>
 #     dplyr::filter(!is.na(ENSEMBL_GENE_ID)) |>
 #     dplyr::inner_join(
 #       dplyr::select(ref_data$gene$gene_xref,
@@ -442,7 +524,8 @@ usethis::use_data(col_format_output, overwrite = T)
 #     )
 #
 #   set2 <- ref_data$gene$cpg |>
-#     dplyr::filter(CPG_SOURCE != "ACMG_SF") |>
+#     dplyr::filter(CPG_SOURCE != "ACMG_SF" &
+#                     CPG_SOURCE != "CPIC_PGX_ONCOLOGY") |>
 #     dplyr::filter(is.na(ENSEMBL_GENE_ID)) |>
 #     dplyr::select(-c("ENSEMBL_GENE_ID")) |>
 #     dplyr::inner_join(
@@ -461,7 +544,7 @@ usethis::use_data(col_format_output, overwrite = T)
 #   panel_zero[[build]] <- dplyr::bind_rows(set1, set2) |>
 #     dplyr::mutate(
 #       PANEL_NAME = "CPSR superpanel of cancer predisposition genes",
-#       PANEL_VERSION = "v2024_05") |>
+#       PANEL_VERSION = "v2025_02") |>
 #     dplyr::rename(
 #       TUMOR_SUPPRESSOR = TSG,
 #       TUMOR_SUPPRESSOR_SUPPORT = TSG_SUPPORT
@@ -525,7 +608,7 @@ usethis::use_data(col_format_output, overwrite = T)
 #
 # openxlsx2::wb_save(
 #   wb = workbook,
-#   "pkgdown/assets/cpsr_superpanel_2024_05.xlsx",
+#   "pkgdown/assets/cpsr_superpanel_2025_02.xlsx",
 #   overwrite = TRUE)
 #
 # #

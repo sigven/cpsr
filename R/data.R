@@ -33,3 +33,15 @@
 #' @format A list object with four elements: 'html_tier', 'html_sf',
 #' 'tsv','html_gwas'
 "col_format_output"
+
+#' CPSR color palette
+#'
+#' @format A list object with three elements: 'report', 'none', 'genotypes'
+#'
+"color_palette"
+
+#' CPSR report color
+#'
+#' @format a character (color code)
+#'
+"report_color"

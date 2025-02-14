@@ -1,0 +1,72 @@
+
+###  Pharmacogenetic findings
+
+```{r prepare_pgx_data}
+#| output: asis
+#| echo: false
+
+tot_pgx_variants <- NROW(
+  cps_report[["content"]][["snv_indel"]]$callset$variant_display$pgx)
+pgx_genotypes_unavailable <- !(as.logical(
+  cps_report$settings$conf$sample_properties$gt_detected))
+
+```
+
+```{r pgx_gt_unavailable}
+#| eval: !expr pgx_genotypes_unavailable
+#| output: asis
+#| echo: false
+
+cat("::: {.callout-warning}\n## Warning - genotype data missing\n\n*Pharmacogenetic variants not assessed due to lacking genotype information among sample variants*. CPSR was unable to pull this data from the input VCF (<i>'GT'</i> FORMAT tag not present within sample genotype information)\n\n:::")
+
+```
+
+*  For the sample in question, a total of __N = `r tot_pgx_variants`__ variants were detected in a selected group of genes ([DPYD](https://www.ncbi.nlm.nih.gov/gene/1806), [TPMT](https://www.ncbi.nlm.nih.gov/gene/7172), [NUDT15](https://www.ncbi.nlm.nih.gov/gene/55270)) that may have implications for drug dosaging or adverse events/toxicity effects from commonly used chemotherapies.
+   * Only variants with a _Pathogenic_, _Likely pathogenic_, or _Drug response_ clinical significance in ClinVar are considered here
+
+```{r pgx_cancer}
+#| eval: !expr tot_pgx_variants > 0
+#| output: asis
+#| echo: false
+
+htmltools::br()
+htmltools::br()
+
+pgx_vars <- 
+  crosstalk::SharedData$new(
+    cps_report[["content"]][["snv_indel"]]$callset$variant_display$pgx)
+crosstalk::bscols(
+    crosstalk::filter_select("SYMBOL", "Gene", pgx_vars, ~SYMBOL),
+    crosstalk::filter_select("GENOTYPE", "Genotype", pgx_vars, ~GENOTYPE)
+)
+
+DT::datatable(
+  pgx_vars,
+  escape = F, extensions = c("Buttons", "Responsive"),
+  options = list(
+    pageLength = 6,
+    buttons = c("csv", "excel"),
+    dom = "Bfrtip",
+    initComplete = DT::JS(
+      "function(settings, json) {",
+      paste0(
+        "$(this.api().table().header()).css({'background-color':'",
+        cpsr::color_palette[['report']],
+        "', 'color': '#fff'});"),
+      "}"
+    )
+  )) |>
+  DT::formatStyle(
+    color = "white",
+    "GENOTYPE",
+    "GENOTYPE",
+    backgroundColor = 
+      DT::styleEqual(
+        cpsr::color_palette[['genotypes']][['levels']],
+        cpsr::color_palette[['genotypes']][['values']]
+      )
+  )
+
+htmltools::br()
+htmltools::br()
+```
