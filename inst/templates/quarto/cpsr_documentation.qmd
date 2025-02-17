@@ -85,40 +85,18 @@ for(i in 1:NROW(ref_datasets)){
 
 :::
 
-### Variant classification algorithm (ACMG/AMP-based)
+### Variant classification
 
-All coding, <b>non-ClinVar</b> variants in the set of cancer predisposition genes have been classified according to a <i>five-level pathogenicity scheme</i> (coined <b>CPSR_CLASSIFICATION</b> in the tables above). The scheme has the same five levels as those employed by ClinVar, e.g. pathogenic/likely pathogenic/VUS/likely benign/benign. The classification performed by CPSR is rule-based, implementing refined ACMG/AMP criteria, many of which were outlined in [SherLoc](https://www.invitae.com/en/variant-classification/) ([Nykamp et al., Genetics in Medicine, 2017](https://www.ncbi.nlm.nih.gov/pubmed/28492532)). Important attributes of cancer predisposition genes, such as mode of inheritance and mechanism of disease (loss-of-function), have been harvested from [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk/), [Maxwell et al., Am J Hum Genet, 2016](https://www.ncbi.nlm.nih.gov/pubmed/27153395), and [Huang et al., Cell, 2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052)
 
-The ACMG/AMP criteria listed in the table below form the basis for the <b>CPSR_CLASSIFICATION</b> implemented in CPSR. Specifically, the <i>score</i> column indicates how much each evidence item contribute to either of the two pathogenicity poles (positive values indicate pathogenic support, negative values indicate benign support). Evidence score along each pole ('B' and 'P') are aggregated, and if there is conflicting or little evidence it will be classified as a VUS. The contribution of ACMG/AMP evidence items pr. variant can be seen in the <b>CPSR_CLASSIFICATION_CODE</b> and <b>CPSR_CLASSIFICATION_DOC</b> variables.
-<br><br>
+::: {.callout-note title="Synopsis" collapse="false"}
 
-#### Calibration of classification thresholds 
+All coding, <b>non-ClinVar</b> variants in the set of cancer predisposition genes are classified according to a <i>five-level pathogenicity scheme</i> (*CPSR_CLASSIFICATION* in the interactive variant classification tables). The scheme has the same five levels as those employed by ClinVar, e.g. pathogenic/likely pathogenic/VUS/likely benign/benign. The classification performed by CPSR is rule-based, implementing a refined set of proposed **ACMG/AMP criteria**, many of which were originally outlined in [SherLoc](https://www.invitae.com/en/variant-classification/) ([Nykamp et al., Genetics in Medicine, 2017](https://www.ncbi.nlm.nih.gov/pubmed/28492532)). Important attributes of cancer predisposition genes, such as mode of inheritance and mechanism of disease (loss-of-function), have been harvested from [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk/), [Maxwell et al., Am J Hum Genet, 2016](https://www.ncbi.nlm.nih.gov/pubmed/27153395), and [Huang et al., Cell, 2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052)
 
-How do we assign classification of novel variants (<i>P, LP, VUS, LB, B</i>) from the aggregated variant pathogenicity score (<i>CPSR_PATHOGENICITY_SCORE</i>)?
+The ACMG/AMP criteria listed in @nte-table-criteria form the basis for the *CPSR_CLASSIFICATION* variable provided by CPSR. Specifically, the <i>score</i> column indicates how much each evidence item contribute to either of the two pathogenicity poles (positive values indicate pathogenic support, negative values indicate benign support). Evidence score along each pole ('B' and 'P') are aggregated, and represented through the *CPSR_PATHOGENICITY_SCORE* variable. See @nte-threshold-calibration on how CPSR establishes optimal thresholds for conversion of pathogenicity scores to categorical variant classification levels. 
 
-We calibrated the thresholds for conversion of pathogenicity scores to categorical variant classification using high-quality ClinVar-classified variants in a core set of cancer predisposition genes (see details in [CPSR manuscript](https://doi.org/10.1002/ijc.33749), and plot below). 
+:::
 
-```{r classification_plot}
-#| echo: false
-#| eval: true
-
-classification_calibration_plot_fname_path <- 
-  system.file("extdata", "CPSR_classification_score_thresholds.png", 
-              package = "cpsr")
-```
-
-<img src="`r classification_calibration_plot_fname_path`" title="" alt="" align="center" width="950" height="560"/>
-
-<br>
-<br>
-
-The following thresholds are currently used to assign classifications based on pathogenicity scores:
-
-<br>
-
-`r knitr::kable(cpsr::acmg[['score2tier']])`
-
-<br><br>
+::: {.callout-note title="Implemented evidence criteria - ACMG/AMP" collapse="true" #nte-table-criteria}
 
 In the table below, a detailed description of all evidence criteria that are currently used for variant classification in CPSR (green elements indicate criteria that contribute with a benign effect, red elements contribute with a pathogenic effect):<br><br>
 
@@ -152,6 +130,38 @@ DT::datatable(data,
                                      c("#9E0142", "#077009"))
   )
 ```
+
+
+:::
+
+::: {.callout-note title="Calibration of classification thresholds - ACMG/AMP" collapse="true" #nte-threshold-calibration}
+
+How does CPSR assign classification of novel variants (<i>P, LP, VUS, LB, B</i>) from the aggregated variant pathogenicity score (<i>CPSR_PATHOGENICITY_SCORE</i>)?
+
+Optimal thresholds for conversion of pathogenicity scores to categorical variant classification were calibrated through high-quality ClinVar-classified variants (__minimum two gold stars__ with respect to review status) in a core set of cancer predisposition genes (see details in [CPSR manuscript](https://doi.org/10.1002/ijc.33749), and plot below). 
+
+```{r classification_plot}
+#| echo: false
+#| eval: true
+
+classification_calibration_plot_fname_path <- 
+  system.file("extdata", "CPSR_classification_score_thresholds.png", 
+              package = "cpsr")
+```
+
+<img src="`r classification_calibration_plot_fname_path`" title="" alt="" align="center" width="950" height="420"/>
+
+<br>
+
+The following thresholds are currently used to assign classifications based on pathogenicity scores:
+
+<br>
+
+`r knitr::kable(cpsr::acmg[['score2tier']])`
+
+<br>
+
+:::
 
 :::
 
