@@ -175,6 +175,7 @@ col_format_output[['tsv']] <-
     "CONSEQUENCE",
     "ALTERATION",
     "PROTEIN_CHANGE",
+    "GRANTHAM_DISTANCE",
     "PFAM_DOMAIN",
     "PFAM_DOMAIN_NAME",
     "HGVSp",
@@ -258,6 +259,23 @@ col_format_output[['html_bm']] <-
     'REFSEQ_TRANSCRIPT_ID',
     'GENOMIC_CHANGE',
     'GENOME_VERSION')
+
+## define tags/variables to display in output Excel
+col_format_output[['xlsx_panel']] <-
+  c("SYMBOL",
+    "ENSEMBL_GENE_ID",
+    "ENTREZGENE",
+    "GENE_BIOTYPE",
+    "PRIMARY_TARGET",
+    "MOI",
+    "MOD",
+    "ID",
+    "PANEL_NAME",
+    "PANEL_URL",
+    "PANEL_VERSION",
+    "CONFIDENCE_LEVEL",
+    "CPG_SOURCE"
+    )
 
 ## define tags/variables to display in output Excel
 col_format_output[['xlsx_classification']] <-
@@ -472,8 +490,10 @@ color_palette <- list()
 color_palette[['report']] <- "#007a74"
 color_palette[['none']] <- "#8B8989"
 color_palette[['genotypes']] <- list()
-color_palette[['genotypes']][['values']] <- c('#bdbdbd','#bdbdbd','#007a74','#252525')
-color_palette[['genotypes']][['levels']] <- c('undefined','hom_ref','het','hom_alt')
+color_palette[['genotypes']][['values']] <-
+  c('#bdbdbd','#bdbdbd','#007a74','#252525')
+color_palette[['genotypes']][['levels']] <-
+  c('undefined','hom_ref','het','hom_alt')
 
 
 usethis::use_data(color_palette, overwrite = T)
@@ -482,7 +502,7 @@ usethis::use_data(col_format_output, overwrite = T)
 
 
 
-
+#
 # my_log4r_layout <- function(level, ...) {
 #   paste0(format(Sys.time()), " - cpsr-report-generation - ",
 #          level, " - ", ..., "\n", collapse = "")
@@ -635,6 +655,11 @@ usethis::use_data(col_format_output, overwrite = T)
 #     )
 #   ) |>
 #   dplyr::mutate(
+#     CPG_SOURCE = stringr::str_replace_all(
+#       CPG_SOURCE, "^, ", ""
+#     )
+#   ) |>
+#   dplyr::mutate(
 #     GENE = paste0(
 #       "<a href='https://www.ncbi.nlm.nih.gov/gene/",
 #       .data$ENTREZGENE,
@@ -647,7 +672,7 @@ usethis::use_data(col_format_output, overwrite = T)
 #       "CPG_MOD", "CPG_MOI", "GENENAME",
 #       "CPG_SOURCE", "CPG_PHENOTYPES")
 #   )
-# #
+#
 # readr::write_tsv(
 #   panel_zero_display, file = "inst/extdata/panel_zero.tsv.gz",
 #   na = "NA", col_names = T,quote = "none"

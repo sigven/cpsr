@@ -403,7 +403,12 @@ write_cpsr_output <- function(report,
       openxlsx2::wb_add_worksheet(sheet = "VIRTUAL_PANEL") |>
       openxlsx2::wb_add_data_table(
         sheet = "VIRTUAL_PANEL",
-        x = report$settings$conf$gene_panel$panel_genes,
+        x = dplyr::select(
+          report$settings$conf$gene_panel$panel_genes,
+          dplyr::any_of(
+            cpsr::col_format_output[["xlsx_panel"]]
+          )
+        ),
         start_row = 1,
         start_col = 1,
         col_names = TRUE,
