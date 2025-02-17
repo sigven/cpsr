@@ -9,7 +9,7 @@ The cancer predisposition report can show variants found in a number of well-kno
 
   * **Panel 0** is a non-conservative, research-based _superpanel_ assembled through multiple sources on cancer predisposition genes:
 	* A list of 152 genes that were curated and established within TCGA’s pan-cancer study ([Huang et al., *Cell*, 2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052))
-	* A list of 113 protein-coding genes that has been manually curated in COSMIC’s [Cancer Gene Census v100](https://cancer.sanger.ac.uk/census),
+	* A list of 114 protein-coding genes that has been manually curated in COSMIC’s [Cancer Gene Census v100](https://cancer.sanger.ac.uk/census),
 	* Genes from all [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk/) panels for inherited cancers and tumor syndromes, as well as DNA repair genes (detailed below)
 	* Additional genes deemed relevant for cancer predisposition (i.e. contributed by CPSR users)
 

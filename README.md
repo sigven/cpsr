@@ -18,11 +18,6 @@ Snapshots of sections in the [quarto](https://quarto.org)-based cancer predispos
 
 ## News
 
-*  *February 2025*: **2.1.3 release**
-    -  more predisposition genes in panel zero 
-    -  optional reporting of pharmacogenomics-related variants (TPMT, DPYD, NUDT15)
-    -  [CHANGELOG](https://sigven.github.io/cpsr/articles/CHANGELOG.html)
-
 *  *October 2024*: **2.1.2 release**
     -  cosmetic fixes in HTML report
     -  fix for VEP consequence pick exception
