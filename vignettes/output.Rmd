@@ -307,12 +307,13 @@ We provide an Excel workbook with **four** sheets that lists main findings and a
 
 - `<sample_id>.cpsr.<genome_assembly>.xlsx`
 
-The Excel workbook is populated with the following sheets (pending that data is available):
+The Excel workbook is populated with the following sheets (the last three sheets will only
+be present if any data is found):
 
  - *VIRTUAL_PANEL* - details on the the chosen virtual gene panel 
  - *CLASSIFICATION* - variant classifications and corresponding gene annotations
  - *BIOMARKER_EVIDENCE* - matches of variants with genomic biomarkers
- - *SECONDARY_FINDINGS* - potential secondary findings
+ - *SECONDARY_FINDINGS* - secondary findings (ACMG recommendations)
  - *PHARMACOGENETIC_FINDINGS* - drug toxicity findings (DPYD, TPMT, NUDT15)
 
 <br><br>

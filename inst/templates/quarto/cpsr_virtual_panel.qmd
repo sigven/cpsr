@@ -9,7 +9,7 @@
 
 panel_link <- cps_report[['settings']][['conf']][['gene_panel']][['description']]
 if(cps_report[['settings']][['conf']][['gene_panel']][['panel_id']] != "-1" &
-   !stringr::str_detect(cps_report[['settings']][['conf']][['gene_panel']][['url']], ",")){
+   cps_report[['settings']][['conf']][['gene_panel']][['url']] != "None"){
   description <- cps_report[['settings']][['conf']][['gene_panel']][['description']]
   description_trait <- 
     cps_report[['settings']][['conf']][['gene_panel']][['description_trait']]
