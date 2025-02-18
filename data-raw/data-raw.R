@@ -289,6 +289,7 @@ col_format_output[['xlsx_classification']] <-
     "GENENAME",
     "CONSEQUENCE",
     "PROTEIN_CHANGE",
+    "GRANTHAM_DISTANCE",
     "FINAL_CLASSIFICATION",
     "CPSR_CLASSIFICATION_SOURCE",
     "CLINVAR_CLASSIFICATION",
