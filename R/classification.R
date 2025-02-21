@@ -59,7 +59,8 @@ assign_classification <- function(var_calls) {
               .data$CPSR_CLASSIFICATION_DOC,
               dplyr::if_else(
                 !!rlang::sym(cpsr_evidence_code) == T,
-                paste0("- ", description), ""
+                paste0("- <i>", cpsr_evidence_code,
+                       "</i>: ", description, " (<b>", score, "</b>)"), ""
               ),
               sep = "<br>"
             )
@@ -300,6 +301,8 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
       ## Novel missense change at an amino acid residue where a different
       ## missense change determined to be pathogenic
       ## has been seen before (ClinVar)
+      "ACMG_PM6",
+      ## Essential nucleotide - pathogenic nucleotides
       "ACMG_PP3",
       ## Multiple lines of computational evidence support a
       ## deleterious effect on the gene or gene product
@@ -354,33 +357,63 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
     dplyr::filter(.data$GOLD_STARS >= 2 & .data$PATHOGENIC == 1) |>
     dplyr::select(c("ENTREZGENE", "HGVSP", "PATHOGENIC", "VAR_ID")) |>
     dplyr::filter(!is.na(.data$ENTREZGENE) & !is.na(.data$HGVSP)) |>
-    dplyr::rename(PATHOGENIC_PEPTIDE_CHANGE = .data$PATHOGENIC,
-                  VAR_ID_PATH_CHANGE = .data$VAR_ID) |>
+    dplyr::rename("PATHOGENIC_PEPTIDE_CHANGE" = "PATHOGENIC",
+                  "VAR_ID_PATH_CHANGE" = "VAR_ID") |>
     dplyr::distinct()
+
+  essential_nucleotides <-
+    ref_data[['variant']][['clinvar_sites']] |>
+    dplyr::filter(.data$GOLD_STARS >= 2 & .data$PATHOGENIC == 1) |>
+    dplyr::select(c("ENTREZGENE", "PATHOGENIC", "VAR_ID")) |>
+    dplyr::rename("ESSENTIAL_NUCLEOTIDE" = "PATHOGENIC") |>
+    tidyr::separate_rows(.data$VAR_ID, sep=";") |>
+    tidyr::separate(
+      "VAR_ID", c("CHROM","POS","REF","ALT"), sep="_", remove = F) |>
+    dplyr::mutate(NUC_SITE = paste(
+      .data$CHROM, .data$POS, .data$REF, sep="_"
+    )) |>
+    dplyr::filter(nchar(.data$REF) <= 2) |>
+    dplyr::select(
+      c("ENTREZGENE","NUC_SITE", "ESSENTIAL_NUCLEOTIDE")
+    ) |>
+    dplyr::distinct()
+
 
   benign_codons <- as.data.frame(
     ref_data[['variant']][['clinvar_sites']] |>
-    dplyr::filter(.data$GOLD_STARS >= 2 & .data$BENIGN == 1) |>
-    dplyr::select(c("ENTREZGENE", "CODON", "BENIGN", "VAR_ID")) |>
-    dplyr::filter(!is.na(.data$ENTREZGENE) & !is.na(.data$CODON)) |>
-    dplyr::group_by(.data$ENTREZGENE, .data$CODON) |>
-    dplyr::reframe(VAR_ID = paste(.data$VAR_ID, collapse=";"),
-                   BENIGN = paste(unique(.data$BENIGN), collapse=";")) |>
-    dplyr::rename(BENIGN_CODON = .data$BENIGN,
-                  VAR_ID_BENIGN_CODON = .data$VAR_ID) |>
-    dplyr::distinct()
+      dplyr::filter(.data$GOLD_STARS >= 2 & .data$BENIGN == 1) |>
+      dplyr::select(c("ENTREZGENE", "CODON", "BENIGN", "VAR_ID")) |>
+      tidyr::separate_rows("VAR_ID", sep=";") |>
+      dplyr::filter(!is.na(.data$ENTREZGENE) & !is.na(.data$CODON)) |>
+      dplyr::distinct() |>
+      dplyr::group_by(.data$ENTREZGENE, .data$CODON) |>
+      dplyr::reframe(
+        VAR_ID = paste(unique(.data$VAR_ID), collapse=";"),
+        BENIGN = paste(unique(.data$BENIGN), collapse=";")) |>
+      dplyr::rename(
+        "BENIGN_CODON" = "BENIGN",
+        "VAR_ID_BENIGN_CODON" = "VAR_ID") |>
+      dplyr::distinct()
   )
 
   pathogenic_codons <-
     ref_data[['variant']][['clinvar_sites']] |>
-    dplyr::filter(.data$GOLD_STARS >= 2 & .data$PATHOGENIC == 1) |>
-    dplyr::select(c("ENTREZGENE", "CODON", "PATHOGENIC", "VAR_ID")) |>
-    dplyr::filter(!is.na(.data$ENTREZGENE) & !is.na(.data$CODON)) |>
-    dplyr::group_by(.data$ENTREZGENE, .data$CODON) |>
-    dplyr::reframe(VAR_ID = paste(.data$VAR_ID, collapse=";"),
-                   PATHOGENIC = paste(unique(.data$PATHOGENIC), collapse=";")) |>
-    dplyr::rename(PATHOGENIC_CODON = .data$PATHOGENIC,
-                  VAR_ID_PATH_CODON = .data$VAR_ID) |>
+    dplyr::filter(
+      .data$GOLD_STARS >= 2 & .data$PATHOGENIC == 1) |>
+    dplyr::select(
+      c("ENTREZGENE", "CODON", "PATHOGENIC", "VAR_ID")) |>
+    tidyr::separate_rows("VAR_ID", sep=";") |>
+    dplyr::filter(
+      !is.na(.data$ENTREZGENE) & !is.na(.data$CODON)) |>
+    dplyr::distinct() |>
+    dplyr::group_by(.data$ENTREZGENE,  .data$CODON) |>
+    dplyr::reframe(
+      VAR_ID = paste(unique(.data$VAR_ID), collapse=";"),
+      PATHOGENIC = paste(
+        unique(.data$PATHOGENIC), collapse=";")) |>
+    dplyr::rename(
+      "PATHOGENIC_CODON" = "PATHOGENIC",
+      "VAR_ID_PATH_CODON" = "VAR_ID") |>
     dplyr::distinct()
 
   ## Assign logical ACMG evidence indicators
@@ -588,8 +621,10 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
         dplyr::if_else(
           .data$NULL_VARIANT == T &
             .data$LOSS_OF_FUNCTION == T &
-            (is.na(.data$CPG_MOD) | .data$CPG_MOD != "LoF") &
-            (.data$ACMG_PM2_1 == TRUE | .data$ACMG_PM2_2 == TRUE),
+            (is.na(.data$CPG_MOD) |
+               .data$CPG_MOD != "LoF") &
+            (.data$ACMG_PM2_1 == TRUE |
+               .data$ACMG_PM2_2 == TRUE),
           TRUE, FALSE, FALSE
         )
     ) |>
@@ -599,7 +634,8 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
           .data$NULL_VARIANT == T &
             .data$LOSS_OF_FUNCTION == F &
             .data$CPG_MOD == "LoF" &
-            (.data$ACMG_PM2_1 == TRUE | .data$ACMG_PM2_2 == TRUE),
+            (.data$ACMG_PM2_1 == TRUE |
+               .data$ACMG_PM2_2 == TRUE),
           TRUE, FALSE, FALSE
         )
     ) |>
@@ -608,8 +644,10 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
         dplyr::if_else(
           .data$NULL_VARIANT == T &
             .data$LOSS_OF_FUNCTION == F &
-            (is.na(.data$CPG_MOD) | .data$CPG_MOD != "LoF") &
-            (.data$ACMG_PM2_1 == TRUE | .data$ACMG_PM2_2 == TRUE),
+            (is.na(.data$CPG_MOD) |
+               .data$CPG_MOD != "LoF") &
+            (.data$ACMG_PM2_1 == TRUE |
+               .data$ACMG_PM2_2 == TRUE),
           TRUE, FALSE, FALSE
         )
     ) |>
@@ -618,7 +656,8 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
         dplyr::if_else(
           .data$CONSEQUENCE == "start_lost" &
             .data$CPG_MOD == "LoF" &
-            (.data$ACMG_PM2_1 == TRUE | .data$ACMG_PM2_2 == TRUE),
+            (.data$ACMG_PM2_1 == TRUE |
+               .data$ACMG_PM2_2 == TRUE),
           TRUE, FALSE, FALSE
         )
     ) |>
@@ -626,8 +665,10 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
       ACMG_PVS1_6 =
         dplyr::if_else(
           .data$CONSEQUENCE == "start_lost" &
-            (is.na(.data$CPG_MOD) |.data$CPG_MOD != "LoF") &
-            (.data$ACMG_PM2_1 == TRUE | .data$ACMG_PM2_2 == TRUE),
+            (is.na(.data$CPG_MOD) |
+               .data$CPG_MOD != "LoF") &
+            (.data$ACMG_PM2_1 == TRUE |
+               .data$ACMG_PM2_2 == TRUE),
           TRUE, FALSE, FALSE
         )
     ) |>
@@ -635,9 +676,12 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
       ACMG_PVS1_7 =
         dplyr::if_else(
           .data$LOSS_OF_FUNCTION == T &
-            stringr::str_detect(.data$CONSEQUENCE, "_donor|_acceptor") &
-            .data$LAST_INTRON == F & .data$CPG_MOD == "LoF" &
-            (.data$ACMG_PM2_1 == TRUE | .data$ACMG_PM2_2 == TRUE),
+            stringr::str_detect(
+              .data$CONSEQUENCE, "_donor|_acceptor") &
+            .data$LAST_INTRON == F &
+            .data$CPG_MOD == "LoF" &
+            (.data$ACMG_PM2_1 == TRUE |
+               .data$ACMG_PM2_2 == TRUE),
           TRUE, FALSE, FALSE
         )
     ) |>
@@ -645,9 +689,12 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
       ACMG_PVS1_8 =
         dplyr::if_else(
           .data$LOSS_OF_FUNCTION == T &
-            stringr::str_detect(.data$CONSEQUENCE, "_donor|_acceptor") &
-            .data$LAST_INTRON == T & .data$CPG_MOD == "LoF" &
-            (.data$ACMG_PM2_1 == TRUE | .data$ACMG_PM2_2 == TRUE),
+            stringr::str_detect(
+              .data$CONSEQUENCE, "_donor|_acceptor") &
+            .data$LAST_INTRON == T &
+            .data$CPG_MOD == "LoF" &
+            (.data$ACMG_PM2_1 == TRUE |
+               .data$ACMG_PM2_2 == TRUE),
           TRUE, FALSE, FALSE
         )
     ) |>
@@ -655,17 +702,23 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
       ACMG_PVS1_9 =
         dplyr::if_else(
           .data$LOSS_OF_FUNCTION == T &
-            stringr::str_detect(.data$CONSEQUENCE, "_donor|_acceptor") &
-            .data$LAST_INTRON == F & (is.na(.data$CPG_MOD) | .data$CPG_MOD != "LoF") &
-            (.data$ACMG_PM2_1 == TRUE | .data$ACMG_PM2_2 == TRUE),
+            stringr::str_detect(
+              .data$CONSEQUENCE, "_donor|_acceptor") &
+            .data$LAST_INTRON == F
+          & (is.na(.data$CPG_MOD) |
+               .data$CPG_MOD != "LoF") &
+            (.data$ACMG_PM2_1 == TRUE |
+               .data$ACMG_PM2_2 == TRUE),
           TRUE, FALSE, FALSE
         )
     ) |>
     dplyr::mutate(
       ACMG_PVS1_10 =
         dplyr::if_else(
-          .data$SPLICE_DONOR_RELEVANT == T & .data$ACMG_PP3 == TRUE &
-            (.data$ACMG_PM2_1 == TRUE | .data$ACMG_PM2_2 == TRUE),
+          .data$SPLICE_DONOR_RELEVANT == T &
+            .data$ACMG_PP3 == TRUE &
+            (.data$ACMG_PM2_1 == TRUE |
+               .data$ACMG_PM2_2 == TRUE),
           TRUE, FALSE, FALSE
         )
     )
@@ -690,9 +743,10 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
         ACMG_PM4 =
           dplyr::if_else(
             stringr::str_detect(
-              .data$CONSEQUENCE, "stop_lost|inframe_deletion|inframe_insertion"
-            ) &
-              is.na(.data$RMSK_HIT) & .data$CPG_MOI == "AD",
+              .data$CONSEQUENCE,
+              "stop_lost|inframe_deletion|inframe_insertion") &
+              is.na(.data$RMSK_HIT) &
+              .data$CPG_MOI == "AD",
             TRUE, FALSE, FALSE
           )
       ) |>
@@ -700,9 +754,11 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
         ACMG_PPC1 =
           dplyr::if_else(
             stringr::str_detect(
-              .data$CONSEQUENCE, "stop_lost|inframe_deletion|inframe_insertion"
-            ) &
-              is.na(.data$RMSK_HIT) & (.data$CPG_MOI == "AR" | is.na(.data$CPG_MOI)),
+              .data$CONSEQUENCE,
+              "stop_lost|inframe_deletion|inframe_insertion") &
+              is.na(.data$RMSK_HIT) &
+              (.data$CPG_MOI == "AR" |
+                 is.na(.data$CPG_MOI)),
             TRUE, FALSE, FALSE
           )
       )
@@ -716,9 +772,12 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
     dplyr::mutate(
       ACMG_PP2 =
         dplyr::if_else(
-          (is.na(.data$BENIGN_MISSENSE_FRAC) | .data$BENIGN_MISSENSE_FRAC <= 0.1) &
-            (is.na(.data$PATH_TRUNC_FRAC) | .data$PATH_TRUNC_FRAC < 0.5) &
-            stringr::str_detect(.data$CONSEQUENCE, "^missense_variant"),
+          (is.na(.data$BENIGN_MISSENSE_FRAC) |
+             .data$BENIGN_MISSENSE_FRAC <= 0.1) &
+            (is.na(.data$PATH_TRUNC_FRAC) |
+               .data$PATH_TRUNC_FRAC < 0.5) &
+            stringr::str_detect(
+              .data$CONSEQUENCE, "^missense_variant"),
           TRUE, FALSE, FALSE
         )
     )
@@ -729,9 +788,11 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
   var_calls <- var_calls |>
     dplyr::mutate(
       ACMG_BP1 =
-        dplyr::if_else(.data$PATH_TRUNC_FRAC > 0.90 &
-                         stringr::str_detect(.data$CONSEQUENCE, "^missense_variant"),
-                       TRUE, FALSE, FALSE
+        dplyr::if_else(
+          .data$PATH_TRUNC_FRAC > 0.90 &
+            stringr::str_detect(
+              .data$CONSEQUENCE, "^missense_variant"),
+          TRUE, FALSE, FALSE
         )
     )
 
@@ -741,15 +802,23 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
     dplyr::mutate(
       ACMG_BP7 =
         dplyr::if_else((
-          (as.integer(.data$INTRON_POSITION) < 0 & as.integer(.data$INTRON_POSITION) < -3) |
-            (as.integer(.data$INTRON_POSITION) > 0 & as.integer(.data$INTRON_POSITION) > 6) |
-            (as.integer(.data$EXON_POSITION) < 0 & as.integer(.data$EXON_POSITION) < -2) |
-            (as.integer(.data$EXON_POSITION) > 0 & as.integer(.data$EXON_POSITION) > 1)) &
+          (as.integer(.data$INTRON_POSITION) < 0 &
+             as.integer(.data$INTRON_POSITION) < -3) |
+            (as.integer(.data$INTRON_POSITION) > 0 &
+               as.integer(.data$INTRON_POSITION) > 6) |
+            (as.integer(.data$EXON_POSITION) < 0 &
+               as.integer(.data$EXON_POSITION) < -2) |
+            (as.integer(.data$EXON_POSITION) > 0 &
+               as.integer(.data$EXON_POSITION) > 1)) &
+            !stringr::str_detect(
+              .data$CONSEQUENCE,
+              "splice_(acceptor|donor)|stop_gained"
+            ) &
             stringr::str_detect(
               .data$CONSEQUENCE,
               paste0(
-                "^(synonymous_variant|intron_variant|upstream_gene_variant",
-                "|downstream_gene_variant|splice_region_variant)")
+                "^(synonymous_variant|intron_variant|",
+                "splice_region_variant)")
             ),
           TRUE, FALSE, FALSE
         )
@@ -777,12 +846,18 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
   # ACMG_BSC1 - coinciding with known benign missense variants
   # ACMG_BMC1 - occurs at the same codon as a known benign missense variant
 
+  var_calls$ACMG_PM6 <- FALSE
   var_calls$ACMG_PM5 <- FALSE
   var_calls$ACMG_BMC1 <- FALSE
   var_calls$ACMG_PS1 <- FALSE
   var_calls$ACMG_BSC1 <- FALSE
 
   var_calls <- var_calls |>
+    dplyr::mutate(
+      NUC_SITE = paste(
+        CHROM, POS, REF, sep="_"
+      )
+    ) |>
     dplyr::mutate(
       CODON = dplyr::if_else(
         !is.na(.data$CONSEQUENCE) &
@@ -799,39 +874,58 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
         as.character(NA)
       )
     ) |>
+    tidyr::separate("HGVSp",c("tmpENSP","HGVSp_long"),sep=":") |>
     dplyr::left_join(
-      pathogenic_codons, by = c("ENTREZGENE","CODON")) |>
+      essential_nucleotides,
+      by = c("ENTREZGENE", "NUC_SITE")
+    ) |>
     dplyr::left_join(
-      pathogenic_peptide_changes, by = c("ENTREZGENE","HGVSP")) |>
+      pathogenic_codons,
+      by = c("ENTREZGENE","CODON")) |>
     dplyr::left_join(
-      benign_peptide_changes, by = c("ENTREZGENE","HGVSP")) |>
+      pathogenic_peptide_changes,
+      by = c("ENTREZGENE" = "ENTREZGENE",
+             "HGVSp_long" = "HGVSP")) |>
     dplyr::left_join(
-      benign_codons, by = c("ENTREZGENE","CODON")) |>
+      benign_peptide_changes,
+      by = c("ENTREZGENE" = "ENTREZGENE",
+             "HGVSp_long" = "HGVSP")) |>
+    dplyr::left_join(
+      benign_codons,
+      by = c("ENTREZGENE","CODON")) |>
+
+    ## at same codon, but not the same variant (VAR_ID)
     dplyr::mutate(ACMG_PM5 = dplyr::if_else(
       !is.na(.data$PATHOGENIC_CODON) &
       !is.na(.data$VAR_ID_PATH_CODON) &
         !stringr::str_detect(
-          .data$VAR_ID, .data$VAR_ID_PATH_CODON),
+        .data$VAR_ID_PATH_CODON, .data$VAR_ID),
+      TRUE, FALSE, FALSE
+    )) |>
+    dplyr::mutate(ACMG_PM6 = dplyr::if_else(
+      !is.na(.data$ESSENTIAL_NUCLEOTIDE),
       TRUE, FALSE, FALSE
     )) |>
     dplyr::mutate(ACMG_BMC1 = dplyr::if_else(
       !is.na(.data$BENIGN_CODON) &
         !is.na(.data$VAR_ID_BENIGN_CODON) &
         !stringr::str_detect(
-          .data$VAR_ID, .data$VAR_ID_BENIGN_CODON),
+          .data$VAR_ID_BENIGN_CODON, .data$VAR_ID),
       TRUE, FALSE, FALSE
     )) |>
+
+    ## identical amino acid change, different variant (VAR_ID)
     dplyr::mutate(ACMG_PS1 = dplyr::if_else(
       !is.na(.data$PATHOGENIC_PEPTIDE_CHANGE) &
         !is.na(.data$VAR_ID_PATH_CHANGE) &
         !stringr::str_detect(
-          .data$VAR_ID, .data$VAR_ID_PATH_CHANGE),
+         .data$VAR_ID_PATH_CHANGE, .data$VAR_ID),
       TRUE, FALSE, FALSE)) |>
     dplyr::mutate(ACMG_BSC1 = dplyr::if_else(
       !is.na(.data$BENIGN_PEPTIDE_CHANGE) &
         !is.na(.data$VAR_ID_BENIGN_CHANGE) &
         !stringr::str_detect(
-          .data$VAR_ID, .data$VAR_ID_BENIGN_CHANGE),
+          .data$VAR_ID_BENIGN_CHANGE, .data$VAR_ID),
       TRUE, FALSE, FALSE))
 
   ## if previously found coinciding with pathogenic variant (ACMG_PS1),
@@ -864,9 +958,12 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
     var_calls <- var_calls |>
       tidyr::separate(
         .data$MUTATION_HOTSPOT,
-        c("hotspot_region", "hotspot_entrezgene",
-          "hotspot_symbol", "hotspot_codon",
-          "hotspot_aa", "hotspot_pvalue"),
+        c("hotspot_region",
+          "hotspot_symbol",
+          "hotspot_entrezgene",
+          "hotspot_codon",
+          "hotspot_aa",
+          "hotspot_pvalue"),
         sep = "\\|", remove = F, extra = "drop"
       ) |>
       dplyr::mutate(
@@ -900,6 +997,8 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
       cnames = c(
         "PATHOGENIC_CODON",
         "BENIGN_CODON",
+        "NUC_SITE",
+        "ESSENTIAL_NUCLEOTIDE",
         "PATHOGENIC_PEPTIDE_CHANGE",
         "BENIGN_PEPTIDE_CHANGE",
         "VAR_ID_PATH_CHANGE",

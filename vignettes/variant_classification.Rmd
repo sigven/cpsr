@@ -15,42 +15,29 @@ The classification performed by CPSR is rule-based, implementing most of the ACM
 
 The refined ACMG/AMP criteria listed below form the basis for the tier assigned to the **CPSR_CLASSIFICATION** variable. Specifically, the **score** in parenthesis indicates how much each evidence item contributes to either of the two pathogenicity poles (positive values indicate pathogenic support, negative values indicate benign support). Evidence score along each pole ('B' and 'P') are aggregated, and if there is conflicting or little evidence it will be classified as a VUS. This classification scheme has been adopted by the one outlined in [SherLoc](https://www.ncbi.nlm.nih.gov/pubmed/28492532).
 
-| Tag | Description |
-|-------|-------------|
-| 1.  `ACMG_BA1_AD` (**-5**) | Very high MAF (> 0.5% in gnomAD non-cancer pop subset) - min AN = 12,000 - Dominant mechanism of disease |
-| 2.  `ACMG_BS1_1_AD` (**-3**) | High MAF (> 0.1% in gnomAD non-cancer pop subset) - min AN = 12,000 - Dominant mechanism of disease |
-| 3.  `ACMG_BS1_2_AD` (**-1**) | Somewhat high MAF (> 0.005% in gnomAD non-cancer pop subset) - Dominant mechanism of disease |
-| 4.  `ACMG_BA1_AR` (**-5**) | Very high MAF (> 1% in gnomAD non-cancer pop subset) - min AN = 12,000 - Recessive mechanism of disease |
-| 5.  `ACMG_BS1_1_AR` (**-3**) | High MAF (> 0.3% in gnomAD non-cancer pop subset) - min AN = 12,000 - Recessive mechanism of disease |
-| 6.  `ACMG_BS1_2_AR` (**-1**) | Somewhat high MAF (> 0.005% in gnomAD non-cancer pop subset) - Recessive mechanism of disease |
-| 7.  `ACMG_BP3` (**-2.5**) | Non-coding variant in the UTR or promoter region |
-| 8.  `ACMG_BP7` (**-2.5**) | Silent and intronic changes outside of the consensus splice site |
-| 9.  `ACMG_BP4` (**-1**) | Multiple lines of computational evidence (>=8) algorithmssupport a benign effect on the gene or gene product (conservation, evolutionary, splicing impact, etc. - from dbNSFP |
-| 10. `ACMG_BMC1` (**0**) | Peptide change is at the same location of a known benign change (ClinVar) |
-| 11. `ACMG_BSC1` (**-3**) | Peptide change is reported as benign (ClinVar) |
-| 12. `ACMG_BP1` (**-0.5**) | Missense variant in a gene for which primarily truncating variants (>90% of pathogenic variants) are known to cause disease (ClinVar) |
-| 13. `ACMG_PM2_1` (**0.5**) | Allele count within pathogenic range (MAF <= 0.005% in the population-specific non-cancer gnomAD subset) |
-| 14. `ACMG_PM2_2` (**1**) | Alternate allele absent in the population-specific non-cancer gnomAD subset |
-| 15. `ACMG_PVS1_1` (**5**) | Null variant (frameshift/nonsense) - classified as loss-of-function - within pathogenic range - LoF established for gene |
-| 16. `ACMG_PVS1_2` (**2.5**) | Null variant (frameshift/nonsense) - not classified as loss-of-function - within pathogenic range - LoF established for gene |
-| 17. `ACMG_PVS1_3` (**2**) | Null variant (frameshift/nonsense) - classified as loss-of-function - within pathogenic range - LoF not established for gene |
-| 18. `ACMG_PVS1_4` (**0**) | Null variant (frameshift/nonsense) - not classified as loss-of-function -- within pathogenic range - LoF not established for gene |
-| 19. `ACMG_PVS1_5` (**2.5**) | Start (initiator methionine) lost - within pathogenic range - Lof established for gene |
-| 20. `ACMG_PVS1_6` (**2**) | Start (initiator methionine) lost - within pathogenic range - LoF not established for gene |
-| 21. `ACMG_PVS1_7` (**4**) | Donor/acceptor variant - classified as loss-of-function - within pathogenic range - not last intron - LoF established for gene |
-| 22. `ACMG_PVS1_8` (**2.5**) | Donor/acceptor variant - last intron - within pathogenic range - LoF established for gene |
-| 23. `ACMG_PVS1_9` (**2**) | Donor/acceptor variant - not last intron - within pathogenic range - LoF not established for gene |
-| 24. `ACMG_PVS1_10` (**2**) | Donor variant at located at the +3, +4 or +5 position of the intron -  within the pathogenic range |
-| 25. `ACMG_PS1` (**4**) | Same amino acid change as a previously established pathogenic variant (ClinVar) regardless of nucleotide change |
-| 26. `ACMG_PP2` (**0.5**) | Missense variant in a gene that has a relatively low rate of benign missense variation (<10%) and where missense variants are a common mechanism of disease (>50% P/LP (ClinVar)) |
-| 27. `ACMG_PM1` (**2**) | Missense variant in a somatic mutation hotspot as determined by cancerhotspots.org |
-| 28. `ACMG_PM4` (**0**) | Protein length changes due to inframe indels or nonstop variant in non-repetitive regions of genes that harbor variants with a dominant mode of inheritance. |
-| 29. `ACMG_PPC1` (**0**) | Protein length changes due to inframe indels or nonstop variant in non-repetitive regions of genes that harbor variants with a recessive mode of inheritance. |
-| 30. `ACMG_PM5` (**1.5**) | Novel missense change at an amino acid residue where a different missense change determined to be pathogenic has been seen before (ClinVar) |
-| 31. `ACMG_PP3` (**0.5**) | Multiple lines of computational evidence (>=8) algorithms support a deleterious effect on the gene or gene product (conservation, evolutionary, splicing impact, etc. - from dbNSFP |
+```{r, echo=FALSE, results='asis'}
+
+i <- 1
+j <- 1
+cat("| Tag | Description |\n|-------|-------------|\n")
+while(i <= NROW(cpsr::acmg$evidence_codes)){
+  ev <- cpsr::acmg$evidence_codes[i,]
+  ## ACMG_BS2_* not implemented in CPSR
+  if(!startsWith(ev$cpsr_evidence_code,"ACMG_BS2_")){
+    line <- glue::glue(
+      "| {j}. `{ev$cpsr_evidence_code}` (**{ev$path_score}**) | ",
+      "{ev$description} |")
+    cat(line,"\n")
+    j <- j + 1
+  }
+  i <- i + 1
+}
+
+
+```
 
 <br>
-Currently (as of 2024-09), based on a calibration against ClinVar-classified variants (minimum two review status stars) in n = 105 core cancer predisposition genes, the clinical significance (**CPSR_CLASSIFICATION**) is determined based on the following ranges of pathogenicity scores:
+Currently (as of 2025-02), based on a calibration against ClinVar-classified variants (minimum two review status stars) in n = 105 core cancer predisposition genes, the clinical significance (**CPSR_CLASSIFICATION**) is determined based on the following ranges of pathogenicity scores:
 
 <br>
 

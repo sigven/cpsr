@@ -21,7 +21,7 @@ cat("::: {.callout-warning}\n## Warning - genotype data missing\n\n*Pharmacogene
 
 ```
 
-*  For the sample in question, a total of __N = `r tot_pgx_variants`__ variants were detected in a selected group of genes ([DPYD](https://www.ncbi.nlm.nih.gov/gene/1806), [TPMT](https://www.ncbi.nlm.nih.gov/gene/7172), [NUDT15](https://www.ncbi.nlm.nih.gov/gene/55270)) that may have implications for drug dosaging or adverse events/toxicity effects from commonly used chemotherapies.
+*  For the sample in question, a total of __N = `r tot_pgx_variants`__ variants were detected in a selected group of genes ([DPYD](https://www.ncbi.nlm.nih.gov/gene/1806), [TPMT](https://www.ncbi.nlm.nih.gov/gene/7172), [NUDT15](https://www.ncbi.nlm.nih.gov/gene/55270)) that may have implications for drug dosing and/or adverse events/toxicity effects from commonly used chemotherapies.
    * Only variants with a _Pathogenic_, _Likely pathogenic_, or _Drug response_ clinical significance in ClinVar are considered here
 
 ```{r pgx_cancer}

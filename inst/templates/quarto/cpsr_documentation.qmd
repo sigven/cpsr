@@ -37,6 +37,7 @@ ref_datasets <- cps_report$settings$reference_data$source_metadata
 for(i in 1:NROW(ref_datasets)){
   source_full <- ref_datasets[i,"source"]
   source <- ref_datasets[i,"source_abbreviation"]
+  source_type <- ref_datasets[i, "source_type"]
   description <- ref_datasets[i,"source_description"]
   url <- ref_datasets[i,"source_url"]
   version <- ref_datasets[i,"source_version"]
@@ -53,6 +54,10 @@ for(i in 1:NROW(ref_datasets)){
     next
   }
   
+  if(source == "dbnsfp" & source_type == "gene"){
+    next
+  }
+  
   s <- ""
   if(is.na(version)){
     if(!is.na(license_url)){
@@ -64,9 +69,9 @@ for(i in 1:NROW(ref_datasets)){
     }
   }else{
     if(!is.na(license_url)){
-      if(source == "cgc" | source == "gepa"){
+      if(source == "cgc" | source == "gepa" | source == "dbnsfp"){
         s <- paste0("    * [", source_full, "](", url, ") - ", description, " (<b>", version, "</b>)",
-                    " - <b>[", license,"](", license_url, ")</b>")
+                    " - [<b>", license,"</b>](", license_url, ")")
       }else{
         s <- paste0("    * [", source_full, "](", url, ") - ", description, " (<b>", version, "</b>)",
                     " - [", license,"](", license_url, ")")

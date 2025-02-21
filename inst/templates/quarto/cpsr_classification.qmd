@@ -392,7 +392,7 @@ if (missing_class_items[["class4"]][["ClinVar"]] == T &
 
 htmltools::br()
 
-cat('\n::: {.callout-important}\nNovel variants with a CPSR pathogenicity score of 2.0 (minimum score for likely pathogenic in CPSR) represent a challenging collection of variants. Based on calibration of CPSR score thresholds with high-confident ClinVar variants, we discovered that many of these are classified as VUS in ClinVar. Specifically, we observe many splice donor region variants (+3,+4,+5) that are predicted to affect the splice site and thus classified as likely pathogenic by CPSR. We also find a large number of missense variants (with insilico predictions for damaging effects) that occur in genes with low rates of benign missense variants. In any case, we still recommend that these variants should be prioritized for careful examination, and any such cases are <mark style="background-color:#ff7518; font-weight:bold; color:black">conveniently higlighted</mark> in the table below.\n\n:::')
+cat('\n::: {.callout-important}\nNovel variants with a CPSR pathogenicity score of 2.0 (minimum score for likely pathogenic in CPSR) represent a challenging collection of variants. Based on calibration of CPSR score thresholds with high-confident ClinVar variants, we discovered that this collection of variants contain a fairly large fraction of VUS variants in ClinVar. We thus recommend that these variants should be prioritized for careful examination, and any such cases are <mark style="background-color:#ff7518; font-weight:bold; color:white">&nbsp; conveniently higlighted &nbsp;</mark> in the table below.\n\n:::')
 
 htmltools::br()
 ```
@@ -464,12 +464,16 @@ DT::datatable(variants_class4_2,
   )
 ) |>
   DT::formatStyle(
-    color = "black",
+    #color = "black",
     columns = "SYMBOL",
     valueColumns = "CPSR_PATHOGENICITY_SCORE",
     backgroundColor = DT::styleEqual(
       c(2.0, 2.5, 3.0, 3.5, 4.0),
       c("#ff7518","#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF" )
+    ),
+    color = DT::styleEqual(
+      c(2.0, 2.5, 3.0, 3.5, 4.0),
+      c("#ffffff","#000000", "#000000", "#000000", "#000000")
     )
   )
 
