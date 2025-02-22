@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - chemo_toxicity
 env:
   atoken: ${{ secrets.ANACONDA_UPLOAD_TOKEN }}
   recipe_path: conda/recipe
