@@ -874,7 +874,8 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
         as.character(NA)
       )
     ) |>
-    tidyr::separate("HGVSp",c("tmpENSP","HGVSp_long"),sep=":") |>
+    tidyr::separate(
+      "HGVSp",c("tmpENSP","HGVSp_long"),sep=":", remove = F) |>
     dplyr::left_join(
       essential_nucleotides,
       by = c("ENTREZGENE", "NUC_SITE")
@@ -893,6 +894,12 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
     dplyr::left_join(
       benign_codons,
       by = c("ENTREZGENE","CODON")) |>
+    dplyr::rename(
+      "HGVSp_short" = "HGVSP"
+    ) |>
+    dplyr::select(
+      -c("HGVSp_long","tmpENSP")
+    ) |>
 
     ## at same codon, but not the same variant (VAR_ID)
     dplyr::mutate(ACMG_PM5 = dplyr::if_else(

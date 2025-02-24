@@ -1,6 +1,6 @@
 
 h1.title {
-  font-size: 34px;
+  font-size: 30px;
   color: black;
 }
 
@@ -16,6 +16,12 @@ h2, #TOC>ul>li {
   color: black;
 }
 
+.quarto-title-banner {
+  /*height: 120px;*/
+  margin-left: -15px;
+  margin-right: -15px;
+  margin-top: 0px;
+}
 
 #container {
     /*border: 2px dashed #444;*/
@@ -126,40 +132,9 @@ h2, #TOC>ul>li {
   color: white;
 }
 
-
-.panel-tabset > .nav-tabs > .nav-item > .nav-link{
-  color: #007a74;
-}
-
-.tabset-margin-container{
-  color: white;
-  background-color: #007a74;
-}
-/*
-.sidebar .margin-sidebar .toc-active .nav-link a {
-  color: #007a74
-}
-*/
-
 .sidebar nav[role="doc-toc"] ul > li > a.active a.hover {
     color: #007a74 !important;
 }
 
-/*
-.quarto-title-block .quarto-title-banner {
-  /*background-image: url(../../man/figures/logo.png);
-  background-size: 150px;
-  background-position: left;
-  background-repeat: no-repeat;
-  padding-left: 10px;
-  background-origin: content-box;
-}
-*/
 
-/*
-.nav .navbar li.nav-item a.nav-link span {
-  color: #007a74 !important;
-  background-color: #007a74 !important;
-}
-*/
 

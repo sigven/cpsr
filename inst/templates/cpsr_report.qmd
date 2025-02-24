@@ -27,7 +27,7 @@ format:
     fontsize: 0.93em
     toc: true
     toc-depth: 3
-    toc-expqand: 3
+    toc-expand: 3
     toc-title: Contents
     grid:
       body-width: 940px
@@ -83,7 +83,6 @@ cat("</ul><br>")
 #| eval: !expr as.logical(cps_report$content$snv_indel$eval)
 ```
 
-<br>
 
 ```{r biomarkers_cpsr} 
 #| child: 'quarto/cpsr_biomarkers.qmd'
