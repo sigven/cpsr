@@ -10,13 +10,13 @@ output: rmarkdown::html_document
   * [dBNSFP](https://sites.google.com/site/jpopgen/dbNSFP) - database of non-synonymous functional predictions (v5.0, January 2025)
 
 ###  Variant frequency databases
-  * [gnomAD](http://exac.broadinstitute.org/) - germline variant frequencies exome-wide (r4.1, April 2024)
+  * [gnomAD](http://exac.broadinstitute.org/) - germline variant frequencies exome-wide (r2.1.1 (non-cancer subject allele frequencies), r4.1)
   * [dbSNP](http://www.ncbi.nlm.nih.gov/SNP/) - database of short genetic variants (build 156)
   * [Cancer Hotspots](http://cancerhotspots.org) - a resource for statistically significant mutations in cancer (v2, 2017)
 
 ### Variant databases of clinical utility
   * [ClinVar](http://www.ncbi.nlm.nih.gov/clinvar/) - database of clinically related variants (February 2025)
-  * [CIViC](https://civicdb.org) - clinical interpretations of variants in cancer (February 8th 2025)
+  * [CIViC](https://civicdb.org) - clinical interpretations of variants in cancer (February 27th 2025)
 
 ### Protein domains/functional features
   * [UniProt/SwissProt KnowledgeBase](http://www.uniprot.org) - resource on protein sequence and functional information (2025_01)
@@ -29,5 +29,5 @@ output: rmarkdown::html_document
 
 ### Phenotype ontologies
   * [UMLS/MedGen](https://www.ncbi.nlm.nih.gov/medgen/) - January 2025
-  * [Disease Ontology](https://disease-ontology.org/) - January 2025
-  * [Experimental Factor Ontology](https://github.com/EBISPOT/efo) - v3.74.0
+  * [Disease Ontology](https://disease-ontology.org/) - February 2025
+  * [Experimental Factor Ontology](https://github.com/EBISPOT/efo) - v3.75.0

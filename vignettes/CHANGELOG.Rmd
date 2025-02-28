@@ -3,13 +3,13 @@ title: "Changelog"
 output: rmarkdown::html_document
 ---
 
-## v2.1.3
+## v2.2.0
 
-- Date: **2025-02-24**
+- Date: **2025-03-XX**
 - Major data updates
   - ClinVar (2025-02)
   - dbNSFP (v5.0)
-  - CIViC (2025-02-08)
+  - CIViC (2025-02-27)
   - GENCODE v47 (VEP v113)
   - PanelApp (2025-02)
   - UniProt KB (2025-01)
@@ -17,10 +17,10 @@ output: rmarkdown::html_document
 - Added more cancer susceptibility genes in panel zero (ATG12, BIK, CHD1L, CMTR2, 
 CPAP, HAVCR2, LLGL2, MYO3A, MYO5B, PAH, TTC7A)
 - Added a pharmacogenetic findings option (`--pgx_findings`), which will include pharmacogenetic findings in the HTML report (within the `Genomic biomarkers` section)
-   - For now, this is implemented very simple, not considering star alleles, but merely focusing on pathogenic variants or drug-response related variants in DPYD, TPMT and NUDT15
+   - For now, this is implemented very simple, not considering star alleles, but merely focusing on pathogenic variants or drug-response related variants in DPYD, TPMT, and NUDT15
 - Multiple cosmetic changes to HTML report - e.g. collapsed call-outs
 - Improved the variant classification algorithm
-   - addition of new criterion: disruption of esssential nucleotides (ACMG_PM6)
+   - addition of new criterion: disruption of essential nucleotides (ACMG_PM6)
    - improved matching against pathogenic/benign codons (ClinVar)
 
 ## v2.1.2

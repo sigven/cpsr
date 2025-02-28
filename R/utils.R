@@ -71,7 +71,7 @@ get_insilico_prediction_statistics <- function(cpg_calls) {
       "DBNSFP_CLINPRED",
       "DBNSFP_MUTFORMER",
       "DBNSFP_ALPHA_MISSENSE",
-      "DBNSFP_POLYPHEN_HVAR",
+      "DBNSFP_POLYPHEN2_HVAR",
       "DBNSFP_FATHMM_XF",
       "DBNSFP_M_CAP",
       "DBNSFP_LIST_S2",
