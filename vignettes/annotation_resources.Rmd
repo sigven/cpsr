@@ -15,8 +15,8 @@ output: rmarkdown::html_document
   * [Cancer Hotspots](http://cancerhotspots.org) - a resource for statistically significant mutations in cancer (v2, 2017)
 
 ### Variant databases of clinical utility
-  * [ClinVar](http://www.ncbi.nlm.nih.gov/clinvar/) - database of clinically related variants (February 2025)
-  * [CIViC](https://civicdb.org) - clinical interpretations of variants in cancer (February 27th 2025)
+  * [ClinVar](http://www.ncbi.nlm.nih.gov/clinvar/) - database of clinically related variants (March 2025)
+  * [CIViC](https://civicdb.org) - clinical interpretations of variants in cancer (March 13th 2025)
 
 ### Protein domains/functional features
   * [UniProt/SwissProt KnowledgeBase](http://www.uniprot.org) - resource on protein sequence and functional information (2025_01)
