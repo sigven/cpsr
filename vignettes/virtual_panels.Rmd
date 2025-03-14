@@ -73,6 +73,6 @@ The cancer predisposition report can show variants found in a number of well-kno
 
 ## Panel 0
 
-[Download the complete set of CPSR superpanel genes, grch37/grch38 versions (xlsx)](https://sigven.github.io/cpsr/cpsr_superpanel_2025_02.xlsx)
+[Download the complete set of CPSR superpanel genes, grch37/grch38 versions (xlsx)](https://sigven.github.io/cpsr/cpsr_superpanel_2025_03.xlsx)
 
 
