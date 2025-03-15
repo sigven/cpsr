@@ -27,8 +27,8 @@ ACMG_PM4	funcvar	P	Functional - variant effect	Protein length changes due to inf
 ACMG_PPC1	funcvar	P	Functional - variant effect	Protein length changes due to inframe indels or nonstop variant in non-repetitive regions (as identified by RepeatMasker) of genes that harbor variants with a recessive mode of inheritance.	NA	0
 ACMG_PM5	funcvar	P	Functional - variant effect	Novel missense change at an amino acid residue where a different missense change determined to be pathogenic has been seen before (ClinVar - minimum two review stars)	EV0044	1.5
 ACMG_PM6	funcvar	P	Functional - variant effect	Disruption of essential nucleotide	EV0139	1.5
-ACMG_PP3	funccomp	P	Functional - computational & predictive	Multiple lines of computational evidence (>=8 algorithms) support a deleterious effect on the gene or gene product (conservation, evolutionary, splicing impact, etc. - from dbNSFP)	EV0122	0.5
-ACMG_BP4	funccomp	B	Functional - computational & predictive	Multiple lines of computational evidence (>=8 algorithms) support a benign effect on the gene or gene product (conservation, evolutionary, splicing impact, etc. - from dbNSFP)	EV0126	-1
+ACMG_PP3	funccomp	P	Functional - computational & predictive	Multiple lines of computational evidence support a deleterious effect on the gene or gene product (conservation, evolutionary, splicing impact, etc. - from dbNSFP)	EV0122	0.5
+ACMG_BP4	funccomp	B	Functional - computational & predictive	Multiple lines of computational evidence support a benign effect on the gene or gene product (conservation, evolutionary, splicing impact, etc. - from dbNSFP)	EV0126	-1
 ACMG_BMC1	funcvar	B	Functional - variant effect	Peptide change is at the same location of a known benign change (ClinVar - minimum two review stars)	NA	0
 ACMG_BSC1	funcvar	B	Functional - variant effect	Peptide change is reported as benign (ClinVar - minimum two review stars)	EV0112	-3
 ACMG_BP1	funcvar	B	Functional - variant effect	Missense variant in a gene for which primarily truncating variants (>= 90% of pathogenic variants) are known to cause disease (ClinVar)	NA	-0.5
