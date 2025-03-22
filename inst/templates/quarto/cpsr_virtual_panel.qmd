@@ -1,4 +1,4 @@
-<br><br>
+<br>
 
 ### Virtual gene panel
 
@@ -9,7 +9,7 @@
 
 panel_link <- cps_report[['settings']][['conf']][['gene_panel']][['description']]
 if(cps_report[['settings']][['conf']][['gene_panel']][['panel_id']] != "-1" &
-   !stringr::str_detect(cps_report[['settings']][['conf']][['gene_panel']][['url']], ",")){
+   cps_report[['settings']][['conf']][['gene_panel']][['url']] != "None"){
   description <- cps_report[['settings']][['conf']][['gene_panel']][['description']]
   description_trait <- 
     cps_report[['settings']][['conf']][['gene_panel']][['description_trait']]
@@ -26,8 +26,7 @@ if(cps_report[['settings']][['conf']][['gene_panel']][['panel_id']] != "-1" &
 ```
 
 
-Variants reported for the sample are limited to the tile of cancer predisposition genes
-shown below. 
+Sample variants that are subject for variant classification are limited to the ones found within the tile of cancer predisposition genes shown below. 
 
    *  __`r panel_link`__
       * Diagnostic-grade genes only (applicable to Genomics England panels): __`r as.logical(cps_report[['settings']][['conf']][['gene_panel']][['diagnostic_grade_only']])`__
@@ -46,10 +45,10 @@ tiles_html <- cpsr::plot_virtual_panels(
 
 <br>
 
-::: {.callout-note}
+::: {.callout-note collapse="true"}
 ## Note - input data and virtual panel
 
-For the sample in question, `r cps_report$settings$sample_id`, CPSR does **not** perform any interrogation of _which genes that were subject to sequencing_. CPSR classifies only input variants (i.e. as found in the query VCF) within the user-defined __virtual__ gene panel.
+For the sample in question, _`r cps_report$settings$sample_id`_, CPSR **does not** perform any interrogation of _which genes that were subject to sequencing_. The input VCF may thus originate from WGS, WES, or even targeted gene panel assays. Specifically, CPSR considers the user-defined __virtual gene panel__ to restrict the set of input variants that are subject to annotation and classification (i.e. listed within the _Variant classification_ section below). In this manner, the tool has a distinct focus on variants in genes implicated with cancer susceptibility.
 :::
 
 <br>

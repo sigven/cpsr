@@ -22,6 +22,7 @@ col_format_output[['html_tier']] <-
     "MUTATION_HOTSPOT",
     "RMSK_HIT",
     "PREDICTED_EFFECT",
+    "SPLICE_EFFECT",
     "miRNA_TARGET_HIT",
     "miRNA_TARGET_HIT_PREDICTION",
     "TF_BINDING_SITE_VARIANT",
@@ -52,11 +53,11 @@ col_format_output[['html_tier']] <-
 col_format_output[['html_sf']] <-
   c(
     "SYMBOL",
-    "CONSEQUENCE",
-    "FINAL_CLASSIFICATION",
-    "CLINVAR_PHENOTYPE",
     "ALTERATION",
+    "CLINVAR_CLASSIFICATION",
+    "CLINVAR_PHENOTYPE",
     "GENOTYPE",
+    "CONSEQUENCE",
     "GENENAME",
     "PROTEIN_DOMAIN",
     "DP_CONTROL",
@@ -69,10 +70,10 @@ col_format_output[['html_sf']] <-
     "ENSEMBL_TRANSCRIPT_ID",
     "CDS_CHANGE",
     "PREDICTED_EFFECT",
+    "SPLICE_EFFECT",
     "LOSS_OF_FUNCTION",
     "LOF_FILTER",
     "DBSNP_RSID",
-    "CLINVAR_CLASSIFICATION",
     "CLINVAR",
     "CLINVAR_REVIEW_STATUS_STARS",
     "CLINVAR_CONFLICTED",
@@ -83,6 +84,40 @@ col_format_output[['html_sf']] <-
     "GENOMIC_CHANGE",
     "GENOME_VERSION"
   )
+
+## define tags/variables to display in data tables (PGx findings)
+col_format_output[['html_pgx']] <-
+  c(
+    "SYMBOL",
+    "ALTERATION",
+    "CLINVAR_CLASSIFICATION",
+    "CLINVAR_PHENOTYPE",
+    "GENOTYPE",
+    "CONSEQUENCE",
+    "GENENAME",
+    "PROTEIN_DOMAIN",
+    "DP_CONTROL",
+    "PROTEIN_CHANGE",
+    "HGVSp",
+    "HGVSc",
+    "HGVSc_RefSeq",
+    "ENSEMBL_GENE_ID",
+    "REFSEQ_TRANSCRIPT_ID",
+    "ENSEMBL_TRANSCRIPT_ID",
+    "CDS_CHANGE",
+    "PREDICTED_EFFECT",
+    "SPLICE_EFFECT",
+    "LOSS_OF_FUNCTION",
+    "LOF_FILTER",
+    "DBSNP_RSID",
+    "CLINVAR",
+    "CLINVAR_REVIEW_STATUS_STARS",
+    "CLINVAR_CONFLICTED",
+    "gnomADe_AF",
+    "GENOMIC_CHANGE",
+    "GENOME_VERSION"
+  )
+
 
 ## define tags/variables to display in data tables (GWAS findings)
 col_format_output[['html_gwas']] <-
@@ -139,12 +174,15 @@ col_format_output[['tsv']] <-
     "REFSEQ_TRANSCRIPT_ID",
     "ONCOGENE",
     "TUMOR_SUPPRESSOR",
+    "CPG_MOD",
+    "CPG_MOI",
     "CONSEQUENCE",
     "ALTERATION",
     "PROTEIN_CHANGE",
     "PFAM_DOMAIN",
     "PFAM_DOMAIN_NAME",
     "HGVSp",
+    "GRANTHAM_DISTANCE",
     "HGVSc",
     "HGVSc_RefSeq",
     "CDS_CHANGE",
@@ -158,6 +196,7 @@ col_format_output[['tsv']] <-
     "MUTATION_HOTSPOT",
     "RMSK_HIT",
     "EFFECT_PREDICTIONS",
+    "SPLICE_EFFECT",
     "LOSS_OF_FUNCTION",
     "LOF_FILTER",
     "NULL_VARIANT",
@@ -183,7 +222,6 @@ col_format_output[['tsv']] <-
     "CPSR_CLASSIFICATION",
     "CPSR_PATHOGENICITY_SCORE",
     "CPSR_CLASSIFICATION_CODE",
-    "CPSR_CLASSIFICATION_DOC",
     "CPSR_CLASSIFICATION_SOURCE"
   )
 
@@ -227,6 +265,23 @@ col_format_output[['html_bm']] <-
     'GENOME_VERSION')
 
 ## define tags/variables to display in output Excel
+col_format_output[['xlsx_panel']] <-
+  c("SYMBOL",
+    "ENSEMBL_GENE_ID",
+    "ENTREZGENE",
+    "GENE_BIOTYPE",
+    "PRIMARY_TARGET",
+    "MOI",
+    "MOD",
+    "ID",
+    "PANEL_NAME",
+    "PANEL_URL",
+    "PANEL_VERSION",
+    "CONFIDENCE_LEVEL",
+    "CPG_SOURCE"
+    )
+
+## define tags/variables to display in output Excel
 col_format_output[['xlsx_classification']] <-
   c("SAMPLE_ID",
     "GENOMIC_CHANGE",
@@ -234,9 +289,11 @@ col_format_output[['xlsx_classification']] <-
     "DP_CONTROL",
     "GENOME_VERSION",
     "VARIANT_CLASS",
+    "CODING_STATUS",
     "SYMBOL",
     "GENENAME",
     "CONSEQUENCE",
+    "ALTERATION",
     "PROTEIN_CHANGE",
     "FINAL_CLASSIFICATION",
     "CPSR_CLASSIFICATION_SOURCE",
@@ -250,14 +307,17 @@ col_format_output[['xlsx_classification']] <-
     "REFSEQ_TRANSCRIPT_ID",
     "ONCOGENE",
     "TUMOR_SUPPRESSOR",
+    "CPG_MOD",
+    "CPG_MOI",
     "PFAM_DOMAIN_NAME",
     "HGVSp",
+    "GRANTHAM_DISTANCE",
     "HGVSc",
     "HGVSc_RefSeq",
     "CDS_CHANGE",
-    "CODING_STATUS",
     "MUTATION_HOTSPOT",
     "EFFECT_PREDICTIONS",
+    "SPLICE_EFFECT",
     "LOSS_OF_FUNCTION",
     "LOF_FILTER",
     "NULL_VARIANT",
@@ -304,6 +364,44 @@ col_format_output[['xlsx_secondary']] <-
     "CODING_STATUS",
     "MUTATION_HOTSPOT",
     "EFFECT_PREDICTIONS",
+    "SPLICE_EFFECT",
+    "LOSS_OF_FUNCTION",
+    "LOF_FILTER",
+    "NULL_VARIANT",
+    "DBSNP_RSID",
+    "gnomADe_AF"
+  )
+
+## define tags/variables to display in output Excel
+col_format_output[['xlsx_pgx']] <-
+  c("SAMPLE_ID",
+    "GENOMIC_CHANGE",
+    "GENOTYPE",
+    "DP_CONTROL",
+    "GENOME_VERSION",
+    "VARIANT_CLASS",
+    "SYMBOL",
+    "GENENAME",
+    "CONSEQUENCE",
+    "PROTEIN_CHANGE",
+    "CLINVAR_CLASSIFICATION",
+    "CLINVAR_MSID",
+    "CLINVAR_VARIANT_ORIGIN",
+    "CLINVAR_CONFLICTED",
+    "CLINVAR_PHENOTYPE",
+    "CLINVAR_REVIEW_STATUS_STARS",
+    "ENSEMBL_GENE_ID",
+    "ENSEMBL_TRANSCRIPT_ID",
+    "REFSEQ_TRANSCRIPT_ID",
+    "PFAM_DOMAIN_NAME",
+    "HGVSp",
+    "HGVSc",
+    "HGVSc_RefSeq",
+    "CDS_CHANGE",
+    "CODING_STATUS",
+    "MUTATION_HOTSPOT",
+    "EFFECT_PREDICTIONS",
+    "SPLICE_EFFECT",
     "LOSS_OF_FUNCTION",
     "LOF_FILTER",
     "NULL_VARIANT",
@@ -399,9 +497,23 @@ acmg[["score2tier"]] <-
                "CPSR_PATHOGENICITY_SCORE" = "<b>[, -3.0]</b>"))
 
 
+color_palette <- list()
+color_palette[['report']] <- "#007a74"
+color_palette[['none']] <- "#8B8989"
+color_palette[['genotypes']] <- list()
+color_palette[['genotypes']][['values']] <-
+  c('#bdbdbd','#bdbdbd','#007a74','#252525')
+color_palette[['genotypes']][['levels']] <-
+  c('undefined','hom_ref','het','hom_alt')
+
+
+usethis::use_data(color_palette, overwrite = T)
 usethis::use_data(acmg, overwrite = T)
 usethis::use_data(col_format_output, overwrite = T)
-#
+
+
+
+
 # my_log4r_layout <- function(level, ...) {
 #   paste0(format(Sys.time()), " - cpsr-report-generation - ",
 #          level, " - ", ..., "\n", collapse = "")
@@ -420,13 +532,14 @@ usethis::use_data(col_format_output, overwrite = T)
 #     pcgr_db_assembly_dir =
 #       file.path(
 #         "/Users/sigven/project_data/data/data__pcgrdb/dev/pcgrdb",
-#         "20240530/data",
+#         "20250314/data",
 #         build),
 #     genome_assembly = build
 #   )
 #
 #   set1 <- ref_data$gene$cpg |>
-#     dplyr::filter(CPG_SOURCE != "ACMG_SF") |>
+#     dplyr::filter(CPG_SOURCE != "ACMG_SF" &
+#                     CPG_SOURCE != "CPIC_PGX_ONCOLOGY") |>
 #     dplyr::filter(!is.na(ENSEMBL_GENE_ID)) |>
 #     dplyr::inner_join(
 #       dplyr::select(ref_data$gene$gene_xref,
@@ -442,7 +555,8 @@ usethis::use_data(col_format_output, overwrite = T)
 #     )
 #
 #   set2 <- ref_data$gene$cpg |>
-#     dplyr::filter(CPG_SOURCE != "ACMG_SF") |>
+#     dplyr::filter(CPG_SOURCE != "ACMG_SF" &
+#                     CPG_SOURCE != "CPIC_PGX_ONCOLOGY") |>
 #     dplyr::filter(is.na(ENSEMBL_GENE_ID)) |>
 #     dplyr::select(-c("ENSEMBL_GENE_ID")) |>
 #     dplyr::inner_join(
@@ -461,7 +575,7 @@ usethis::use_data(col_format_output, overwrite = T)
 #   panel_zero[[build]] <- dplyr::bind_rows(set1, set2) |>
 #     dplyr::mutate(
 #       PANEL_NAME = "CPSR superpanel of cancer predisposition genes",
-#       PANEL_VERSION = "v2024_05") |>
+#       PANEL_VERSION = "v2025_03") |>
 #     dplyr::rename(
 #       TUMOR_SUPPRESSOR = TSG,
 #       TUMOR_SUPPRESSOR_SUPPORT = TSG_SUPPORT
@@ -525,7 +639,7 @@ usethis::use_data(col_format_output, overwrite = T)
 #
 # openxlsx2::wb_save(
 #   wb = workbook,
-#   "pkgdown/assets/cpsr_superpanel_2024_05.xlsx",
+#   "pkgdown/assets/cpsr_superpanel_2025_03.xlsx",
 #   overwrite = TRUE)
 #
 # #
@@ -552,6 +666,11 @@ usethis::use_data(col_format_output, overwrite = T)
 #     )
 #   ) |>
 #   dplyr::mutate(
+#     CPG_SOURCE = stringr::str_replace_all(
+#       CPG_SOURCE, "^, ", ""
+#     )
+#   ) |>
+#   dplyr::mutate(
 #     GENE = paste0(
 #       "<a href='https://www.ncbi.nlm.nih.gov/gene/",
 #       .data$ENTREZGENE,
@@ -564,9 +683,9 @@ usethis::use_data(col_format_output, overwrite = T)
 #       "CPG_MOD", "CPG_MOI", "GENENAME",
 #       "CPG_SOURCE", "CPG_PHENOTYPES")
 #   )
-# #
+#
 # readr::write_tsv(
 #   panel_zero_display, file = "inst/extdata/panel_zero.tsv.gz",
 #   na = "NA", col_names = T,quote = "none"
 # )
-
+#

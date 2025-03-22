@@ -17,10 +17,11 @@ The variant interpretation procedures performed in this cancer genome report are
 
 ::: {.callout-important title="Licensing note"}
 
-Some resources (highlighted below) demand specific licensing agreements if you plan to utilize their data (and thus this report) in a commercial, non-research setting.
+Some resources, specifically highlighted in _Dataset versions_ below, demand specific licensing agreements if you plan to utilize their data (and thus this report) in a commercial, non-research setting.
 
 :::
 
+::: {.callout-note title="Dataset versions" collapse="true"}
 
 * __PCGR databundle version__
 
@@ -36,6 +37,7 @@ ref_datasets <- cps_report$settings$reference_data$source_metadata
 for(i in 1:NROW(ref_datasets)){
   source_full <- ref_datasets[i,"source"]
   source <- ref_datasets[i,"source_abbreviation"]
+  source_type <- ref_datasets[i, "source_type"]
   description <- ref_datasets[i,"source_description"]
   url <- ref_datasets[i,"source_url"]
   version <- ref_datasets[i,"source_version"]
@@ -52,6 +54,10 @@ for(i in 1:NROW(ref_datasets)){
     next
   }
   
+  if(source == "dbnsfp" & source_type == "gene"){
+    next
+  }
+  
   s <- ""
   if(is.na(version)){
     if(!is.na(license_url)){
@@ -63,9 +69,9 @@ for(i in 1:NROW(ref_datasets)){
     }
   }else{
     if(!is.na(license_url)){
-      if(source == "cgc" | source == "gepa"){
+      if(source == "cgc" | source == "gepa" | source == "dbnsfp"){
         s <- paste0("    * [", source_full, "](", url, ") - ", description, " (<b>", version, "</b>)",
-                    " - <b>[", license,"](", license_url, ")</b>")
+                    " - [<b>", license,"</b>](", license_url, ")")
       }else{
         s <- paste0("    * [", source_full, "](", url, ") - ", description, " (<b>", version, "</b>)",
                     " - [", license,"](", license_url, ")")
@@ -82,42 +88,45 @@ for(i in 1:NROW(ref_datasets)){
 
 ```
 
-### Variant classification algorithm (ACMG/AMP-based)
+:::
 
-<br>
+### Variant classification
 
-All coding, <b>non-ClinVar</b> variants in the set of cancer predisposition genes have been classified according to a <i>five-level pathogenicity scheme</i> (coined <b>CPSR_CLASSIFICATION</b> in the tables above). The scheme has the same five levels as those employed by ClinVar, e.g. pathogenic/likely pathogenic/VUS/likely benign/benign. The classification performed by CPSR is rule-based, implementing refined ACMG/AMP criteria, many of which were outlined in [SherLoc](https://www.invitae.com/en/variant-classification/) ([Nykamp et al., Genetics in Medicine, 2017](https://www.ncbi.nlm.nih.gov/pubmed/28492532)). Important attributes of cancer predisposition genes, such as mode of inheritance and mechanism of disease (loss-of-function), have been harvested from [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk/), [Maxwell et al., Am J Hum Genet, 2016](https://www.ncbi.nlm.nih.gov/pubmed/27153395), and [Huang et al., Cell, 2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052)
 
-The ACMG/AMP criteria listed in the table below form the basis for the <b>CPSR_CLASSIFICATION</b> implemented in CPSR. Specifically, the <i>score</i> column indicates how much each evidence item contribute to either of the two pathogenicity poles (positive values indicate pathogenic support, negative values indicate benign support). Evidence score along each pole ('B' and 'P') are aggregated, and if there is conflicting or little evidence it will be classified as a VUS. The contribution of ACMG/AMP evidence items pr. variant can be seen in the <b>CPSR_CLASSIFICATION_CODE</b> and <b>CPSR_CLASSIFICATION_DOC</b> variables.
-<br><br>
+::: {.callout-note title="Synopsis" collapse="false"}
 
-#### Calibration of classification thresholds 
+All coding, <b>non-ClinVar</b> variants in the set of cancer predisposition genes are classified according to a <i>five-level pathogenicity scheme</i> (*CPSR_CLASSIFICATION* in the interactive variant classification tables). The scheme has the same five levels as those employed by ClinVar, e.g. pathogenic/likely pathogenic/VUS/likely benign/benign. The classification performed by CPSR is rule-based, implementing a refined set of proposed **ACMG/AMP criteria**, many of which were originally outlined in [SherLoc](https://www.invitae.com/en/variant-classification/) ([Nykamp et al., Genetics in Medicine, 2017](https://www.ncbi.nlm.nih.gov/pubmed/28492532)). Important attributes of cancer predisposition genes, such as mode of inheritance and mechanism of disease (loss-of-function), have been harvested from [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk/), [Maxwell et al., Am J Hum Genet, 2016](https://www.ncbi.nlm.nih.gov/pubmed/27153395), and [Huang et al., Cell, 2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052)
 
-How do we assign classification of novel variants (<i>P, LP, VUS, LB, B</i>) from the aggregated variant pathogenicity score (<i>CPSR_PATHOGENICITY_SCORE</i>)?
+The ACMG/AMP criteria listed in @nte-table-criteria form the basis for the *CPSR_CLASSIFICATION* variable provided by CPSR. Specifically, the <i>score</i> column indicates how much each evidence item contribute to either of the two pathogenicity poles (positive values indicate pathogenic support, negative values indicate benign support). Evidence score along each pole ('B' and 'P') are aggregated, and represented through the *CPSR_PATHOGENICITY_SCORE* variable. See @nte-threshold-calibration on how CPSR establishes optimal thresholds for conversion of pathogenicity scores to categorical variant classification levels. 
 
-We calibrated the thresholds for conversion of pathogenicity scores to categorical variant classification using high-quality ClinVar-classified variants in a core set of cancer predisposition genes (see details in [CPSR manuscript](https://doi.org/10.1002/ijc.33749), and plot below). 
+:::
 
-```{r classification_plot}
-#| echo: false
-#| eval: true
+::: {.callout-note title="Variant loss-of-function annotation" collapse="true" #nte-lof-annotation}
 
-classification_calibration_plot_fname_path <- 
-  system.file("extdata", "CPSR_classification_score_thresholds.png", 
-              package = "cpsr")
-```
+For SNVs and InDels, CPSR considers the following consequence types as candidates for loss-of-function variation:
 
-<img src="`r classification_calibration_plot_fname_path`" title="" alt="" align="center" width="950" height="560"/>
+  * Stop gains - [SO:0001587](http://www.sequenceontology.org/miso/current_svn/term/SO:0001587)
+ * Frameshift variants - [SO:0001589](http://www.sequenceontology.org/miso/current_svn/term/SO:0001589)
+ * Splice-site disruptions (2bp donor/acceptor site) - [SO:0001574](http://www.sequenceontology.org/miso/current_svn/term/SO:0001574),
+ [SO:0001575](http://www.sequenceontology.org/miso/current_svn/term/SO:0001575)
+ * Splice donor 5th base disruptions - [SO:0001787](http://www.sequenceontology.org/miso/current_svn/term/SO:0001787)
+ * Start losses - [SO:0002012](http://www.sequenceontology.org/miso/current_svn/term/SO:0002012)
 
-<br>
-<br>
+If variants of other consequence types (e.g. synonymous variants, or splice site variants beyond the canonical 2bp site/5th donor base) are found to affect splicing, specifically through records in [MutSpliceDB](https://brb.nci.nih.gov/splicing/), these are also marked as loss-of-function candidates.
+ 
+A collection of filters is next applied, which can potentialy remove the loss-of-function property for candidates identified above:
 
-The following thresholds are currently used to assign classifications based on pathogenicity scores:
+ * Frameshifts/stop gains within the last 5% of the CDS
+ * Splice site variants that are not predicted to affect a donor site (GC -> GT)
+ * Variants where [MaxEntScan](https://pubmed.ncbi.nlm.nih.gov/15285897/) does not predict an effect on splicing
+    - A MaxEntScan score difference (between reference and alternative allele) of at least 6 is considered disruptive for donor sites, while 7 is required for acceptor sites (thresholds adopted from [LOFTEE](https://github.com/konradjk/loftee))
+    - Annotations in MutSpliceDB will have precedence if any conflicting evidence with MaxEntScan output is found
 
-<br>
+If a variant is filtered as non-LoF through any of these criteria, this will be evident from the `LOF_FILTER` variable (found in the interactive tables of the HTML report as well as the TSV/Excel output).
 
-`r knitr::kable(cpsr::acmg[['score2tier']])`
+:::
 
-<br><br>
+::: {.callout-note title="Implemented evidence criteria - ACMG/AMP" collapse="true" #nte-table-criteria}
 
 In the table below, a detailed description of all evidence criteria that are currently used for variant classification in CPSR (green elements indicate criteria that contribute with a benign effect, red elements contribute with a pathogenic effect):<br><br>
 
@@ -151,6 +160,38 @@ DT::datatable(data,
                                      c("#9E0142", "#077009"))
   )
 ```
+
+
+:::
+
+::: {.callout-note title="Calibration of classification thresholds - ACMG/AMP" collapse="true" #nte-threshold-calibration}
+
+How does CPSR assign classification of novel variants (<i>P, LP, VUS, LB, B</i>) from the aggregated variant pathogenicity score (<i>CPSR_PATHOGENICITY_SCORE</i>)?
+
+Optimal thresholds for conversion of pathogenicity scores to categorical variant classification were calibrated through high-quality ClinVar-classified variants (__minimum two gold stars__ with respect to review status) in a core set of cancer predisposition genes (see details in [CPSR manuscript](https://doi.org/10.1002/ijc.33749), and plot below). 
+
+```{r classification_plot}
+#| echo: false
+#| eval: true
+
+classification_calibration_plot_fname_path <- 
+  system.file("extdata", "CPSR_classification_score_thresholds.png", 
+              package = "cpsr")
+```
+
+<img src="`r classification_calibration_plot_fname_path`" title="" alt="" align="center" width="950" height="420"/>
+
+<br>
+
+The following thresholds are currently used to assign classifications based on pathogenicity scores:
+
+<br>
+
+`r knitr::kable(cpsr::acmg[['score2tier']])`
+
+<br>
+
+:::
 
 :::
 

@@ -1,0 +1,40 @@
+[tool.bumpversion]
+current_version = "2.1.2.9004"
+search = "{current_version}"
+replace = "{new_version}"
+message = "Bump version: {current_version} → {new_version}"
+regex = false
+ignore_missing_version = false
+ignore_missing_files = false
+commit = true
+parse = """(?x)
+    (?P<major>0|[1-9]\\d*)\\.
+    (?P<minor>0|[1-9]\\d*)\\.
+    (?P<patch>0|[1-9]\\d*)
+    (?:\\.(?P<dev>\\d+))?
+"""
+
+serialize = [
+    "{major}.{minor}.{patch}.{dev}",
+    "{major}.{minor}.{patch}",
+]
+
+[[tool.bumpversion.files]]
+filename = "DESCRIPTION"
+search = "Version: {current_version}"
+replace = "Version: {new_version}"
+
+[[tool.bumpversion.files]]
+filename = "conda/recipe/cpsr/meta.yaml"
+search = "version: {current_version}"
+replace = "version: {new_version}"
+
+[[tool.bumpversion.files]]
+filename = "conda/env/yml/pkgdown.yml"
+search = "cpsr =={current_version}"
+replace = "cpsr =={new_version}"
+
+[[tool.bumpversion.files]]
+filename = ".github/workflows/build_conda.yaml"
+search = "VERSION: '{current_version}'"
+replace = "VERSION: '{new_version}'"

@@ -6,72 +6,138 @@
 #| echo: false
 #| eval: true
 
+color_clinvar <- cpsr::color_palette[['report']]
+color_novel <- cpsr::color_palette[['report']]
+color_none <- cpsr::color_palette[['none']]
+color_vus <- pcgrr::color_palette$pathogenicity$values[3]
 
-color_none <- "#8B8989"
-color_report <- "#007a74"
-
-color_clinvar <- color_report
-color_novel <- color_report
-color_vus <- "#2c313c"
-
-n_clinvar <- 0
-n_novel <- 0
+n_path_clinvar <- 0
+n_path_novel <- 0
 n_vus <- 0
-genes_affected <- data.frame()
+biomarker_genes_affected <- data.frame()
+path_genes_affected <- data.frame()
+pgx_genes_affected <- data.frame()
+sf_genes_affected <- data.frame()
 
 if(NROW(cps_report$content$snv_indel$callset$variant_display$cpg_non_sf) > 0){
-  n_clinvar <- cps_report$content$snv_indel$callset$variant_display$cpg_non_sf |>
-    dplyr::filter(.data$CPSR_CLASSIFICATION_SOURCE == "ClinVar") |>
+  n_path_clinvar <- cps_report$content$snv_indel$callset$variant_display$cpg_non_sf |>
+    dplyr::filter(.data$CPSR_CLASSIFICATION_SOURCE == "ClinVar" &
+                    (.data$CLINVAR_CLASSIFICATION == "Pathogenic" |
+                    .data$CLINVAR_CLASSIFICATION == "Likely_Pathogenic")) |>
     NROW()
-  n_novel <- cps_report$content$snv_indel$callset$variant_display$cpg_non_sf |>
-    dplyr::filter(.data$CPSR_CLASSIFICATION_SOURCE == "CPSR_ACMG") |>
+  n_path_novel <- cps_report$content$snv_indel$callset$variant_display$cpg_non_sf |>
+    dplyr::filter(.data$CPSR_CLASSIFICATION_SOURCE == "CPSR_ACMG" & 
+                    (.data$CPSR_CLASSIFICATION == "Pathogenic" |
+                    .data$CPSR_CLASSIFICATION == "Likely_Pathogenic")) |>
     NROW()
   n_vus <- cps_report$content$snv_indel$callset$variant_display$cpg_non_sf |>
     dplyr::filter(.data$FINAL_CLASSIFICATION == "VUS") |>
     NROW()
   
-  genes_affected <- 
-  dplyr::filter(
-    cps_report$content$snv_indel$callset$variant$cpg_non_sf, 
-    .data$FINAL_CLASSIFICATION == "Pathogenic" |
-      .data$FINAL_CLASSIFICATION == "Likely_Pathogenic") |> 
-  dplyr::select("SYMBOL") |>
-  dplyr::distinct() |>
-  head(3)
+  path_genes_affected <- 
+    dplyr::filter(
+      cps_report$content$snv_indel$callset$variant$cpg_non_sf, 
+      .data$FINAL_CLASSIFICATION == "Pathogenic" |
+        .data$FINAL_CLASSIFICATION == "Likely_Pathogenic") |> 
+    dplyr::select("SYMBOL") |>
+    dplyr::distinct() |>
+    utils::head(3)
+  
 }
 
-if(n_clinvar == 0){
+
+if(NROW(cps_report$content$snv_indel$callset$biomarker_evidence$items) > 0){
+  biomarker_genes_affected <- 
+    cps_report$content$snv_indel$callset$biomarker_evidence$items |>
+    dplyr::select("SYMBOL") |>
+    dplyr::distinct() |>
+    utils::head(3)
+    
+}
+
+if(NROW(cps_report$content$snv_indel$callset$variant_display$sf) > 0){
+  sf_genes_affected <- 
+    cps_report$content$snv_indel$callset$variant$sf |> 
+    dplyr::select("SYMBOL") |>
+    dplyr::distinct() |>
+    utils::head(3)
+}
+  
+if(NROW(cps_report$content$snv_indel$callset$variant_display$pgx) > 0){
+  pgx_genes_affected <- 
+    cps_report$content$snv_indel$callset$variant$pgx |> 
+    dplyr::select("SYMBOL") |>
+    dplyr::distinct() |>
+    utils::head(3)
+}
+
+if(n_path_clinvar == 0){
   color_clinvar <- color_none
 }
-if(n_novel == 0){
+if(n_path_novel == 0){
   color_novel <- color_none
 }
 if(n_vus == 0){
   color_vus <- color_none
 }
 
-genes_value_box <- "None"
-if(NROW(genes_affected) > 0){
-  genes_value_box = 
-    paste(genes_affected$SYMBOL, collapse="/")
-  if(NROW(genes_affected) == 3){
-    genes_value_box = "> 2"
+value_path_genes <- "None"
+color_path_genes <- color_none
+
+if(NROW(path_genes_affected) > 0){
+  value_path_genes <- 
+    paste(path_genes_affected$SYMBOL, collapse="/")
+  color_path_genes <- 
+    pcgrr::color_palette$pathogenicity$values[1]
+  if(NROW(path_genes_affected) == 3){
+    value_path_genes = "> 2"
   }
 }
 
-color_lp <- color_none
-if(genes_value_box != "None"){
-  color_lp <- 
-    pcgrr::color_palette$pathogenicity$values[1]
-}
 color_sf <- color_none
 value_sf <- "Not determined"
 if(as.logical(cps_report$settings$conf$variant_classification$secondary_findings) == TRUE){
-  value_sf <- "N = 0"
-  if(cps_report$content$snv_indel$v_stat_sf$n > 0){
-    value_sf <- paste0("N = ", cps_report$content$snv_indel$v_stat_sf$n)
+  value_sf <- "None"
+  if(cps_report$content$snv_indel$v_stat_sf$n > 0 & NROW(sf_genes_affected) > 0){
+    value_sf = 
+      paste(sf_genes_affected$SYMBOL, collapse="/")
+    if(NROW(sf_genes_affected) == 3){
+      value_sf = "> 2"
+    }
     color_sf <- pcgrr::color_palette$pathogenicity$values[1]
   }
+}
+
+# color_pgx <- color_none
+# value_pgx <- "Not determined"
+# if(as.logical(cps_report$settings$conf$variant_classification$pgx_findings) == TRUE){
+#   value_pgx <- "None"
+#   if(cps_report$content$snv_indel$v_stat_pgx$n > 0 & NROW(pgx_genes_affected) > 0){
+#     value_pgx = 
+#       paste(pgx_genes_affected$SYMBOL, collapse="/")
+#     if(NROW(pgx_genes_affected) > 2){
+#       value_pgx = "> 2"
+#     }
+#     color_pgx <- pcgrr::color_palette$pathogenicity$values[1]
+#   }
+# }
+
+
+color_biomarker_pgx <- color_none
+value_biomarker_pgx <- "None"
+if(NROW(biomarker_genes_affected) > 0 | NROW(pgx_genes_affected) > 0){
+  biomarker_pgx_genes_affected <- 
+    dplyr::bind_rows(
+      biomarker_genes_affected,
+      pgx_genes_affected
+    )
+  
+  value_biomarker_pgx = 
+    paste(biomarker_pgx_genes_affected$SYMBOL, collapse="/")
+  if(NROW(biomarker_pgx_genes_affected) > 2){
+    value_biomarker_pgx = "> 2"
+  }
+  color_biomarker_pgx <- pcgrr::color_palette$pathogenicity$values[1]
 }
 
 ```
@@ -85,26 +151,23 @@ bslib::layout_column_wrap(
   width = 1/3,
   height = 120,
   bslib::value_box(
-    title = "Pathogenic/likely pathogenic variants",
-    value = paste0(
-      "N = ", 
-      cps_report$content$snv_indel$v_stat_cpg$n_p + 
-        cps_report$content$snv_indel$v_stat_cpg$n_lp),
+    title = "Genes with pathogenic variants",
+    value = value_path_genes,
     showcase = cpsr::bs_icon2("bullseye"),
     theme = bslib::value_box_theme(
-      bg = color_lp, fg = "#fff"),
+      bg = color_path_genes, fg = "#fff"),
     showcase_layout = "left center"
   ),
   bslib::value_box(
-    title = "Genes affected by pathogenic variants",
-    value = genes_value_box,
+    title = "Genes with biomarkers or pharmacogenetic findings",
+    value = value_biomarker_pgx,
     showcase = cpsr::bs_icon2("bullseye"),
     theme = bslib::value_box_theme(
-      bg = color_lp, fg = "#fff"),
+      bg = color_biomarker_pgx, fg = "#fff"),
     showcase_layout = "left center"
   ),
   bslib::value_box(
-    title = "Secondary findings",
+    title = "Genes with secondary findings",
     value = value_sf,
     showcase = cpsr::bs_icon2("bullseye"),
     theme = bslib::value_box_theme(
@@ -117,16 +180,16 @@ bslib::layout_column_wrap(
   width = 1/3,
   height = 120,
   bslib::value_box(
-    title = "Pre-classified variants (ClinVar)",
-    value = paste0("N = ", n_clinvar),
+    title = "Pre-classified pathogenic variants",
+    value = paste0("N = ", n_path_clinvar),
     showcase = cpsr::bs_icon2("check-square"),
     theme = bslib::value_box_theme(
       bg = color_clinvar, fg = "#fff"),
     showcase_layout = "left center"
   ),
   bslib::value_box(
-    title = "Novel variants",
-    value = paste0("N = ", n_novel),
+    title = "Novel pathogenic variants",
+    value = paste0("N = ", n_path_novel),
     showcase = cpsr::bs_icon2("check-square"),
     theme = bslib::value_box_theme(
       bg = color_novel, fg = "#fff"),
@@ -159,8 +222,8 @@ primary_targets <-
 
 Variant numbers in the targeted cancer predisposition genes (n = `r NROW(primary_targets)`)
 
-* Number of SNVs: __`r cps_report[['content']][['snv_indel']][['v_stat_cpg']][['n_snv']]`__
-* Number of InDels: __`r cps_report[['content']][['snv_indel']][['v_stat_cpg']][['n_indel']]`__
-* Number of protein-coding variants: __`r cps_report[['content']][['snv_indel']][['v_stat_cpg']][['n_coding']]`__
+* Number of SNVs: __`r cps_report$content$snv_indel[['v_stat_cpg_non_sf']][['n_snv']]`__
+* Number of InDels: __`r cps_report$content$snv_indel[['v_stat_cpg_non_sf']][['n_indel']]`__
+* Number of protein-coding variants: __`r cps_report$content$snv_indel[['v_stat_cpg_non_sf']][['n_coding']]`__
 
 <br>

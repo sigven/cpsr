@@ -143,6 +143,7 @@ load_germline_snv_indel <- function(
     dplyr::semi_join(primary_targets, by = "ENTREZGENE")
   cpsr_callset[['variant']][['sf']] <- data.frame()
   cpsr_callset[['variant']][['gwas']] <- data.frame()
+  cpsr_callset[['variant']][['pgx']] <- data.frame()
   cpsr_callset[['retained_info_tags']] <-
     callset$retained_info_tags
   cpsr_callset[['biomarker_evidence']] <-
@@ -161,6 +162,25 @@ load_germline_snv_indel <- function(
       if(NROW(cpsr_callset$variant$all) > 0){
         cpsr_callset[['variant']][['sf']] <-
           cpsr::retrieve_secondary_calls(
+            cpsr_callset[['variant']][['all']]
+          )
+      }
+    }
+  }
+
+  ## Fetch chemotherapeutic toxicity variants (DPYD - CPIC)
+  if (as.logical(
+    conf$variant_classification$pgx_findings) == TRUE) {
+    if(as.logical(
+      conf$sample_properties$gt_detected) == F){
+      pcgrr::log4r_warn(paste0(
+        "Assessment of pharmacogenetic variants (Chemotherapy toxicity) ",
+        "NOT possible - variant genotype information unavailable"
+      ))
+    }else{
+      if(NROW(cpsr_callset$variant$all) > 0){
+        cpsr_callset[['variant']][['pgx']] <-
+          cpsr::retrieve_pgx_calls(
             cpsr_callset[['variant']][['all']]
           )
       }

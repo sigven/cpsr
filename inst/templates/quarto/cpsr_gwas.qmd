@@ -1,7 +1,5 @@
 ## GWAS hits 
 
-<br>
-
 ```{r prepare_gwas_data}
 #| echo: false
 #| results: asis
@@ -20,7 +18,7 @@ if (NROW(cps_report[["content"]][["snv_indel"]]$callset$variant_display$gwas) > 
 #| results: asis
 #| eval: !expr show_gwas_filters
 
-cat("A total of N = <b>", NROW(cps_report[["content"]][["snv_indel"]]$callset$variant_display$gwas), "</b> other germline variant(s) in the query VCF are associated with cancer phenotypes, as found through [genome-wide association studies](https://www.ebi.ac.uk/gwas/):")
+cat("* For the sample in question, a total of <b>N = ", NROW(cps_report[["content"]][["snv_indel"]]$callset$variant_display$gwas), "</b> variants in the query VCF overlap with cancer susceptibility SNPs, as recorded in the [GWAS Catalog](https://www.ebi.ac.uk/gwas/):")
 cat("\n")
 htmltools::br()
 htmltools::br()
@@ -54,8 +52,28 @@ htmltools::br()
 
 DT::datatable(variants_gwas_cancer,
   escape = F, extensions = c("Buttons", "Responsive"),
-  options = list(buttons = c("csv", "excel"), dom = "Bfrtip")
-)
+  options = list(
+    buttons = c("csv", "excel"), 
+    dom = "Bfrtip",
+    initComplete = DT::JS(
+      "function(settings, json) {",
+      paste0(
+        "$(this.api().table().header()).css({'background-color':'",
+        cpsr::color_palette[['report']],
+        "', 'color': '#fff'});"),
+      "}"
+    )
+  )) |>
+  DT::formatStyle(
+    color = "white",
+    "GENOTYPE",
+    "GENOTYPE",
+    backgroundColor = 
+      DT::styleEqual(
+        cpsr::color_palette[['genotypes']][['levels']],
+        cpsr::color_palette[['genotypes']][['values']]
+      )
+  )
 
 
 # htmltools::br()
@@ -66,7 +84,7 @@ DT::datatable(variants_gwas_cancer,
 #| results: asis
 #| eval: !expr missing_gwas_items
 
-cat("<i><b>NO</b> GWAS tag SNPs were found beyond the variants reported in the targeted cancer predisposition genes </i>", sep = "\n")
+cat("* For the sample in question, the status of <b>N = 0</b> GWAS tag SNPs were detected beyond the variants reported in the targeted cancer predisposition genes.", sep = "\n")
 cat("\n")
 ```
 <br><br>

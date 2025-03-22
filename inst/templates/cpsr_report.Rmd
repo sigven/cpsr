@@ -27,7 +27,7 @@ set_all <- NROW(cps_report$content$snv_indel$variant_set$tsv)
 set_clinvar <- 0
 set_other <- 0
 if (cps_report$content$snv_indel$eval == T) {
-  if (cps_report$content$snv_indel$v_stat$n > 0) {
+  if (cps_report$content$snv_indel$v_stat_all$n > 0) {
     set_clinvar <- NROW(cps_report$content$snv_indel$variant_set$tsv |> dplyr::filter(!is.na(CLINVAR_CLASSIFICATION)))
     set_other <- NROW(cps_report$content$snv_indel$variant_set$tsv |> dplyr::filter(is.na(CLINVAR_CLASSIFICATION) & !is.na(CPSR_CLASSIFICATION) > 0))
   }

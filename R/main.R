@@ -27,14 +27,11 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
       settings = cps_report$settings
     )
 
-  cps_report$content$snv_indel[["callset"]]$variant$all <-
-    callset_cpsr[["variant"]][["all"]]
-  cps_report$content$snv_indel[["callset"]]$variant$sf <-
-    callset_cpsr[["variant"]][["sf"]]
-  cps_report$content$snv_indel[["callset"]]$variant$cpg_non_sf <-
-    callset_cpsr$variant$cpg_non_sf
-  cps_report$content$snv_indel[["callset"]]$variant$gwas <-
-    callset_cpsr$variant$gwas
+  for(cat in c('all','sf','cpg_non_sf','gwas','pgx')){
+    cps_report$content$snv_indel[["callset"]]$variant[[cat]] <-
+      callset_cpsr[["variant"]][[cat]]
+  }
+
   cps_report$content$snv_indel[["callset"]]$retained_info_tags <-
     callset_cpsr[["retained_info_tags"]]
   cps_report$content$snv_indel[["callset"]]$biomarker_evidence <-
@@ -53,8 +50,7 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
   if (cps_report$content$snv_indel[["callset"]]$retained_info_tags != "") {
     tags <- stringr::str_split(
       cps_report$content$snv_indel[["callset"]]$retained_info_tags,
-      pattern = ","
-    )[[1]]
+      pattern = ",")[[1]]
     for (t in tags) {
       if (t %in% colnames(cps_report$content$snv_indel[["callset"]]$variant$cpg_non_sf)) {
         col_format_output[["tsv"]] <- c(
@@ -87,9 +83,10 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
       )
 
     if (NROW(cps_report$content$snv_indel[["callset"]]$variant$cpg_non_sf) == 0 &
-      NROW(cps_report$content$snv_indel[["callset"]]$variant$sf)) {
+        NROW(cps_report$content$snv_indel[["callset"]]$variant$sf) == 0 &
+        NROW(cps_report$content$snv_indel[["callset"]]$variant$pgx) == 0) {
       pcgrr::log4r_warn(paste0(
-        "There are zero remaining variants (target genes/secondary findings)",
+        "There are zero remaining variants (main/secondary/pgx targets)",
         "- no report will be produced"
       ))
       return(NULL)
@@ -106,79 +103,47 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
       )
 
     if (NROW(cps_report$content$snv_indel[["callset"]]$variant$cpg_non_sf) == 0 &
-      NROW(cps_report$content$snv_indel[["callset"]]$variant$sf)) {
+      NROW(cps_report$content$snv_indel[["callset"]]$variant$sf) == 0 &
+      NROW(cps_report$content$snv_indel[["callset"]]$variant$pgx) == 0) {
       pcgrr::log4r_warn(paste0(
-        "There are zero remaining variants (target genes/secondary findings)",
+        "There are zero remaining variants (main/secondary/pgx targets)",
         "- no report will be produced"
       ))
       return(NULL)
     }
   }
 
-
-  ## get overall call statistics
-  callset_all <- list()
-  callset_all[["variant"]] <-
-    cps_report$content$snv_indel[["callset"]]$variant$all
-  if (NROW(callset_all[["variant"]]) > 0) {
-    cps_report$content$snv_indel$v_stat <-
-      pcgrr::variant_stats_report(
-        callset = callset_all,
-        name = "v_stat"
-      )$v_stat
-  }
-
-  ## get overall call statistics (cpg targets only)
-  callset_cpg <- list()
-  callset_cpg[["variant"]] <-
-    cps_report$content$snv_indel[["callset"]]$variant$cpg_non_sf
-  if (NROW(callset_cpg[["variant"]]) > 0) {
-    cps_report$content$snv_indel$v_stat_cpg <-
-      pcgrr::variant_stats_report(
-        callset = callset_cpg,
-        name = "v_stat_cpg"
-      )$v_stat_cpg
-  }
-
-  ## get overall call statistics (sf targets only)
-  callset_sf <- list()
-  callset_sf[["variant"]] <-
-    cps_report$content$snv_indel[["callset"]]$variant$sf
-  if (NROW(callset_sf[["variant"]]) > 0) {
-    cps_report$content$snv_indel$v_stat_sf <-
-      pcgrr::variant_stats_report(
-        callset = callset_sf,
-        name = "v_stat_sf"
-      )$v_stat_sf
-  }
-
-  callset_bm <- list()
-  callset_bm[["variant"]] <-
-    cps_report$content$snv_indel[["callset"]]$variant$bm
-  if (NROW(callset_bm[["variant"]]) > 0) {
-    cps_report$content$snv_indel$v_stat_bm <-
-      pcgrr::variant_stats_report(
-        callset = callset_bm,
-        name = "v_stat_bm"
-      )$v_stat_bm
+  ## get call statistics for different variant categories
+  for(cat in c('all','cpg_non_sf','sf','pgx','bm')){
+    stat_name <- paste0('v_stat_',cat)
+    if (NROW(cps_report$content$snv_indel[["callset"]]$variant[[cat]]) > 0) {
+      target_callset <- list()
+      target_callset[['variant']] <-
+        cps_report$content$snv_indel[["callset"]]$variant[[cat]]
+      cps_report$content$snv_indel[[stat_name]] <-
+        pcgrr::variant_stats_report(
+          callset = target_callset,
+          name = stat_name
+        )[[stat_name]]
+    }
   }
 
   pcgrr::log4r_info(
     paste0(
       "Total number of variants in target cancer predisposition genes: ",
-      "N = ", cps_report$content$snv_indel[["v_stat_cpg"]][["n"]]
+      "N = ", cps_report$content$snv_indel[["v_stat_cpg_non_sf"]][["n"]]
     )
   )
   pcgrr::log4r_info(
     paste0(
       "Number of coding variants in target cancer predisposition genes: ",
-      "N = ", cps_report$content$snv_indel[["v_stat_cpg"]][["n_coding"]]
+      "N = ", cps_report$content$snv_indel[["v_stat_cpg_non_sf"]][["n_coding"]]
     )
   )
   pcgrr::log4r_info(
     paste0(
       "Number of non-coding variants in cancer predisposition genes: ",
-      "N = ", cps_report$content$snv_indel[["v_stat_cpg"]][["n_noncoding"]]
+      "N = ", cps_report$content$snv_indel[["v_stat_cpg_non_sf"]][["n_noncoding"]]
     )
   )
 
@@ -207,6 +172,18 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
     ))
   }
 
+  if (cps_report$content$snv_indel$v_stat_pgx$n > 0) {
+    pgx_hits <- paste(
+      unique(
+        sort(cps_report[["content"]][["snv_indel"]][["callset"]]$variant$pgx$SYMBOL)
+      ),
+      collapse = ", "
+    )
+    pcgrr::log4r_info(paste0(
+      "Potential pharmagenomics findings were found in the following genes: ", pgx_hits
+    ))
+  }
+
   cps_report$content$snv_indel[["callset"]][["tsv"]] <-
     dplyr::select(
       cps_report$content$snv_indel[["callset"]][["variant"]]$cpg_non_sf,
@@ -216,10 +193,9 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
   pcgrr::log4r_info(
     "Generating hyperlinked annotations for output data tables"
   )
-  for (c in c("sf", "cpg_non_sf", "gwas", "bm")) {
+  for (c in c("sf", "cpg_non_sf", "gwas", "bm", "pgx")) {
     if (NROW(
-      cps_report$content$snv_indel[["callset"]]$variant[[c]]
-    ) > 0) {
+      cps_report$content$snv_indel[["callset"]]$variant[[c]]) > 0) {
       cps_report$content$snv_indel[["callset"]]$variant_display[[c]] <-
         cps_report$content$snv_indel[["callset"]]$variant[[c]] |>
         pcgrr::append_cancer_gene_evidence(
@@ -239,6 +215,9 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
         }
         if (c == "bm") {
           col_format <- col_format_output$html_bm
+        }
+        if (c == "pgx") {
+          col_format <- col_format_output$html_pgx
         }
         cps_report$content$snv_indel[["callset"]]$variant_display[[c]] <-
           dplyr::select(
@@ -281,6 +260,25 @@ write_cpsr_output <- function(report,
         ".classification.tsv.gz"
       )
     )
+  fnames[["tsv_bm"]] <-
+    file.path(
+      output_dir,
+      paste0(
+        sample_fname_pattern,
+        ".biomarker_evidence.tsv.gz"
+      )
+    )
+
+  fnames[["tsv_pgx"]] <-
+    file.path(
+      output_dir,
+      paste0(
+        sample_fname_pattern,
+        ".pgx_findings.tsv.gz"
+      )
+    )
+
+
   fnames[["xlsx"]] <-
     file.path(
       output_dir,
@@ -304,7 +302,7 @@ write_cpsr_output <- function(report,
   )
 
   if (output_format == "html") {
-    if (report$content$snv_indel$v_stat_cpg$n < 15000) {
+    if (report$content$snv_indel$v_stat_cpg_non_sf$n < 15000) {
       if (file.exists(quarto_input)) {
         ## make temporary directory for quarto report rendering
         tmp_quarto_dir1 <- file.path(
@@ -393,12 +391,11 @@ write_cpsr_output <- function(report,
 
   if (output_format == "tsv") {
     if (NROW(
-      report[["content"]][["snv_indel"]]$callset$tsv
-    ) > 0) {
+      report[["content"]][["snv_indel"]]$callset$tsv) > 0) {
       pcgrr::log4r_info("------")
       pcgrr::log4r_info(
         paste0(
-          "Generating SNV/InDel tab-separated values file (.tsv.gz) ",
+          "Generating tab-separated values file (.tsv.gz) ",
           "with variant findings"
         )
       )
@@ -410,6 +407,57 @@ write_cpsr_output <- function(report,
         na = "."
       )
     }
+    ## Biomarker TSV
+    if (NROW(report$content$snv_indel$callset$variant$bm) > 0) {
+      biomarker_tsv <- report$content$snv_indel$callset$variant$bm |>
+        dplyr::mutate(
+          BM_MOLECULAR_PROFILE = pcgrr::strip_html(
+            .data$BM_MOLECULAR_PROFILE
+          )
+        ) |>
+        dplyr::select(
+          dplyr::any_of(
+            cpsr::col_format_output[["xlsx_biomarker"]]
+          ))
+
+      pcgrr::log4r_info("------")
+      pcgrr::log4r_info(
+        paste0(
+          "Generating tab-separated values file (.tsv.gz) ",
+          "with biomarker evidence"
+        )
+      )
+      readr::write_tsv(
+        biomarker_tsv,
+        file = fnames[["tsv_bm"]],
+        col_names = T,
+        quote = "none",
+        na = "."
+      )
+    }
+
+    if (NROW(report[["content"]]$snv_indel$callset$variant$pgx) > 0) {
+      pgx_tsv <- report[["content"]]$snv_indel$callset$variant$pgx |>
+        dplyr::select(
+          dplyr::any_of(
+            cpsr::col_format_output[["xlsx_pgx"]]
+          ))
+      pcgrr::log4r_info("------")
+      pcgrr::log4r_info(
+        paste0(
+          "Generating tab-separated values file (.tsv.gz) ",
+          "with pharmacogenomic evidence"
+        )
+      )
+      readr::write_tsv(
+        pgx_tsv,
+        file = fnames[["tsv_pgx"]],
+        col_names = T,
+        quote = "none",
+        na = "."
+      )
+    }
+
   }
 
   if (output_format == "xlsx") {
@@ -424,7 +472,12 @@ write_cpsr_output <- function(report,
       openxlsx2::wb_add_worksheet(sheet = "VIRTUAL_PANEL") |>
       openxlsx2::wb_add_data_table(
         sheet = "VIRTUAL_PANEL",
-        x = report$settings$conf$gene_panel$panel_genes,
+        x = dplyr::select(
+          report$settings$conf$gene_panel$panel_genes,
+          dplyr::any_of(
+            cpsr::col_format_output[["xlsx_panel"]]
+          )
+        ),
         start_row = 1,
         start_col = 1,
         col_names = TRUE,
@@ -516,6 +569,31 @@ write_cpsr_output <- function(report,
           widths = "auto"
         )
     }
+
+    if (NROW(report[["content"]]$snv_indel$callset$variant$pgx) > 0) {
+      workbook <- workbook |>
+        openxlsx2::wb_add_worksheet(sheet = "PHARMACOGENETIC_FINDINGS") |>
+        openxlsx2::wb_add_data_table(
+          sheet = "PHARMACOGENETIC_FINDINGS",
+          x = dplyr::select(
+            report[["content"]]$snv_indel$callset$variant$pgx,
+            dplyr::any_of(
+              cpsr::col_format_output[["xlsx_pgx"]]
+            )
+          ),
+          start_row = 1,
+          start_col = 1,
+          col_names = TRUE,
+          na.strings = "",
+          table_style = "TableStyleMedium19"
+        ) |>
+        openxlsx2::wb_set_col_widths(
+          sheet = "PHARMACOGENETIC_FINDINGS",
+          cols = 1:length(cpsr::col_format_output[["xlsx_pgx"]]),
+          widths = "auto"
+        )
+    }
+
 
     openxlsx2::wb_save(
       wb = workbook,
