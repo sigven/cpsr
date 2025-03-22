@@ -18,7 +18,9 @@ output: rmarkdown::html_document
 CPAP, HAVCR2, LLGL2, MYO3A, MYO5B, PAH, TTC7A)
 - Added a pharmacogenetic findings option (`--pgx_findings`), which will include pharmacogenetic findings in the HTML report (within the `Genomic biomarkers` section)
    - For now, this is implemented very simple, not considering star alleles, but merely focusing on pathogenic variants or drug-response related variants in DPYD, TPMT, and NUDT15
-- Multiple cosmetic changes to HTML report - e.g. collapsed call-outs
+- Two new TSV output files: `<sample_id>.cpsr.<genome_assembly>.pgx_findings.tsv.gz` and `<sample_id>.cpsr.<genome_assembly>.biomarker_evidence.tsv.gz`
+- Cleaned the display of virtual panel genes in Excel output, added `PHARMACOGENETIC_FINDINGS` sheet
+- Multiple cosmetic changes to HTML report - e.g. collapsed call-out blocks
 - Improved the variant classification algorithm
    - addition of new criterion: disruption of essential nucleotides (ACMG_PM6)
    - improved matching against pathogenic/benign codons (ClinVar)

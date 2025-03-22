@@ -423,7 +423,7 @@ We provide a compressed tab-separated values file with variants implicated with 
 
 ### Biomarker annotations
 
-The interactive HTML report (section *Genomic biomarkers*) and the Excel workbook (sheet *BIOMARKER_EVIDENCE* contains information on matches between potential pathogenic/likely pathogenic sample variants and reported biomarkers, the latter referring to clinical evidence items that relate genomic genomic aberrations to prognosis, diagnosis or sensitivity/resistance to particular treatments. All biomarker annotations are prefixed with **BM_**, and the following is provided per evidence item:
+The TSV biomarker evidence output, the interactive HTML report (section *Genomic biomarkers*), and the Excel workbook (sheet *BIOMARKER_EVIDENCE*), contains information on matches between potential pathogenic/likely pathogenic sample variants and reported biomarkers, the latter referring to clinical evidence items that relate genomic genomic aberrations to prognosis, diagnosis or sensitivity/resistance to particular treatments. All biomarker annotations are prefixed with **BM_**, and the following is provided per evidence item:
 
 | Variable | Description |
 |----------|-------------|
