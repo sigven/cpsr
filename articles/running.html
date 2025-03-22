@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Running">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-FYKTRC4655"></script><script>
    window.dataLayer = window.dataLayer || [];
@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">CPSR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -107,7 +107,7 @@ from the following list of panel identifiers:</p>
 <ul>
 <li>
 <strong>0</strong>: <a href="https://sigven.github.io/cpsr/articles/virtual_panels.html">Exploratory
-panel - all cancer predisposition gene</a>
+panel - all cancer predisposition genes</a>
 </li>
 <li>
 <strong>1</strong>: <a href="https://panelapp.genomicsengland.co.uk/panels/245/" class="external-link">Adult solid
@@ -287,6 +287,7 @@ gastrointestinal cancer pertinent cancer susceptibility</a>
 genes pertinent cancer susceptibility</a>
 </li>
 </ul>
+<p><br></p>
 <div class="section level4">
 <h4 id="custom-made-virtual-gene-panels">Custom-made virtual gene panels<a class="anchor" aria-label="anchor" href="#custom-made-virtual-gene-panels"></a>
 </h4>
@@ -294,8 +295,8 @@ genes pertinent cancer susceptibility</a>
 Any set of genes found in the <a href="virtual_panels.html#panel-0">CPSR
 superpanel (panel 0)</a> can be used to design a custom virtual gene
 panel. Technically, the users need to create a simple one-column text
-file with Ensembl gene identifiers, and provide a name for the custom
-panel:</p>
+(TSV) file with Ensembl gene identifiers, and provide a name for the
+custom panel, using the following command line options:</p>
 <ul>
 <li><code>--custom_list &lt;custom_list_tsv&gt;</code></li>
 <li><code>--custom_list_name &lt;custom_list_name</code></li>
@@ -335,7 +336,7 @@ are already attributed with classifications in ClinVar (i.e. set
 </ul>
 <p>In the final classification, note that CPSR’s classification will not
 overrule the classification reported by ClinVar, which takes precedence
-for variants with a record here.</p>
+for any variant with a record there.</p>
 <hr>
 <p>By default, CPSR do not report variants in the input sample that are
 found in cancer predisposition genes, yet <em>not</em> associated with
@@ -345,15 +346,18 @@ through a dedicated option:</p>
 <ul>
 <li><code>--clinvar_report_noncancer</code></li>
 </ul>
+<p><br></p>
 </div>
 <div class="section level3">
 <h3 id="optional-report-contents">Optional report contents<a class="anchor" aria-label="anchor" href="#optional-report-contents"></a>
 </h3>
 <p>CPSR allows users to report recommended <a href="https://www.ncbi.nlm.nih.gov/clinvar/docs/acmg/" class="external-link">incidental
-findings</a>, and also the genotypes of reported cancer risk loci from
-<a href="https://www.ebi.ac.uk/gwas/" class="external-link">genome-wide association studies
-(GWAS)</a>:</p>
+findings</a>, the occurrence of important variants with respec to
+chemotherapy toxicity, and also the genotypes of reported cancer risk
+loci from <a href="https://www.ebi.ac.uk/gwas/" class="external-link">genome-wide association
+studies (GWAS)</a>:</p>
 <ul>
+<li><code>--pgx_findings</code></li>
 <li><code>--secondary_findings</code></li>
 <li><code>--gwas_findings</code></li>
 </ul>
@@ -392,7 +396,7 @@ Panel options:
   --panel_id VIRTUAL_PANEL_ID
                         Comma-separated string with identifier(s) of predefined virtual cancer predisposition gene panels,
                         choose any combination of the following identifiers (GEP = Genomics England PanelApp):
-                        0 = CPSR exploratory cancer predisposition panel (PanelApp genes / TCGA's germline study / Cancer Gene Census / Other)
+                        0 = CPSR exploratory cancer predisposition panel (PanelApp genes / TCGA's germline study / Cancer Gene Census / Other )
                         1 = Adult solid tumours cancer susceptibility (GEP)
                         2 = Adult solid tumours for rare disease (GEP)
                         3 = Bladder cancer pertinent cancer susceptibility (GEP)
@@ -447,6 +451,7 @@ Panel options:
 
 Variant classification options:
   --secondary_findings  Include variants found in ACMG-recommended list for secondary findings (v3.2), default: False
+  --pgx_findings        Report overlap with variants associated with chemotherapy toxicity (PgX findings, CPIC), default: False
   --gwas_findings       Report overlap with low to moderate cancer risk variants (tag SNPs) identified from genome-wide association studies, default: False
   --pop_gnomad {afr,amr,eas,sas,asj,nfe,fin,global}
                         Population source in gnomAD (non-cancer subset) used for variant frequency assessment (ACMG classification), default: nfe
@@ -498,17 +503,18 @@ performed through the following command:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">$</span> <span class="er">(</span><span class="ex">base</span><span class="kw">)</span> <span class="ex">conda</span> activate pcgr</span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="ex">$</span> <span class="er">(</span><span class="ex">pcgr</span><span class="kw">)</span></span>
 <span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="ex">cpsr</span> <span class="dt">\</span></span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>     <span class="at">--input_vcf</span> ~/cpsr-2.0.0/inst/examples/example.vcf.gz <span class="dt">\</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>     <span class="at">--input_vcf</span> ~/cpsr-2.2.0/inst/examples/example.vcf.gz <span class="dt">\</span></span>
 <span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>     <span class="at">--vep_dir</span> ~/.vep <span class="dt">\</span></span>
 <span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>     <span class="at">--refdata_dir</span> ~/pcgr_ref_data <span class="dt">\</span></span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>     <span class="at">--output_dir</span> ~/cpsr-2.0.0/ <span class="dt">\</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>     <span class="at">--output_dir</span> ~/cpsr-2.2.0/ <span class="dt">\</span></span>
 <span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>     <span class="at">--genome_assembly</span> grch37 <span class="dt">\</span></span>
 <span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>     <span class="at">--panel_id</span> 1 <span class="dt">\</span></span>
 <span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>     <span class="at">--sample_id</span> example <span class="dt">\</span></span>
 <span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>     <span class="at">--secondary_findings</span> <span class="dt">\</span></span>
-<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>     <span class="at">--classify_all</span> <span class="dt">\</span></span>
-<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>     <span class="at">--maf_upper_threshold</span> 0.2 <span class="dt">\</span></span>
-<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>     <span class="at">--force_overwrite</span></span></code></pre></div>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>     <span class="at">--pgx_findings</span> <span class="dt">\</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>     <span class="at">--classify_all</span> <span class="dt">\</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>     <span class="at">--maf_upper_threshold</span> 0.2 <span class="dt">\</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>     <span class="at">--force_overwrite</span></span></code></pre></div>
 <p>Note that the example command refers to the PCGR data bundle
 directory (<em>refdata_dir</em>), which contains the data necessary for
 both <em>PCGR</em> and <em>CPSR</em>.</p>
@@ -540,10 +546,13 @@ variants</li>
 <em>ii)</em> classification of clinical significance for variants
 overlapping with cancer predisposition genes</li>
 <li>
-<em>iii)</em> match of variants with existing biomarkers (if any
+<em>iii)</em> secondary findings (if any found)</li>
+<li>
+<em>iv)</em> match of variants with existing biomarkers (if any
 found)</li>
 <li>
-<em>iv)</em> secondary findings (if any found)</li>
+<em>v)</em> overlap with pharmacogenomic variants (if any
+found)</li>
 </ul>
 </li>
 <li>

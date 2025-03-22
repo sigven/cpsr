@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Changelog">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-FYKTRC4655"></script><script>
    window.dataLayer = window.dataLayer || [];
@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">CPSR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,6 +82,53 @@
 
     
     
+<div class="section level2">
+<h2 id="v2-2-0">v2.2.0<a class="anchor" aria-label="anchor" href="#v2-2-0"></a>
+</h2>
+<ul>
+<li>Date: <strong>2025-03-22</strong>
+</li>
+<li>Major data updates
+<ul>
+<li>ClinVar (2025-03)</li>
+<li>dbNSFP (v5.0)</li>
+<li>CIViC (2025-03-13)</li>
+<li>GENCODE v47 (VEP v113)</li>
+<li>PanelApp (2025-02)</li>
+<li>UniProt KB (2025-01)</li>
+<li>Cancer Gene Census (v101)</li>
+</ul>
+</li>
+<li>Added more cancer susceptibility genes to panel zero (ATG12, BIK,
+CHD1L, CMTR2, CPAP, HAVCR2, LLGL2, MYO3A, MYO5B, PAH, TTC7A)</li>
+<li>Added a pharmacogenetic findings option
+(<code>--pgx_findings</code>), which will include pharmacogenetic
+findings in the HTML report (within the <code>Genomic biomarkers</code>
+section)
+<ul>
+<li>For now, this is implemented very simple, not considering star
+alleles, but merely focusing on pathogenic variants or drug-response
+related variants in DPYD, TPMT, and NUDT15</li>
+</ul>
+</li>
+<li>Two new TSV output files:
+<code>&lt;sample_id&gt;.cpsr.&lt;genome_assembly&gt;.pgx_findings.tsv.gz</code>
+and
+<code>&lt;sample_id&gt;.cpsr.&lt;genome_assembly&gt;.biomarker_evidence.tsv.gz</code>
+</li>
+<li>Cleaned the display of virtual panel genes in Excel output, added
+<code>PHARMACOGENETIC_FINDINGS</code> sheet</li>
+<li>Multiple cosmetic changes to HTML report - e.g. collapsed call-out
+blocks</li>
+<li>Improved the variant classification algorithm
+<ul>
+<li>addition of new criterion: disruption of essential nucleotides
+(ACMG_PM6)</li>
+<li>improved matching against pathogenic/benign codons (ClinVar)</li>
+</ul>
+</li>
+</ul>
+</div>
 <div class="section level2">
 <h2 id="v2-1-2">v2.1.2<a class="anchor" aria-label="anchor" href="#v2-1-2"></a>
 </h2>

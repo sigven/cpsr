@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Output files">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-FYKTRC4655"></script><script>
    window.dataLayer = window.dataLayer || [];
@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">CPSR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -138,13 +138,8 @@ significance (<strong>ClinVar</strong> and <strong>non-ClinVar
 <ul>
 <li>Reported clinical evidence items from <a href="https://civicdb.org" class="external-link">CIViC</a> that match with variants in the
 query set are reported in four distinct tabs (Predictive / Prognostic /
-Diagnostic / Predisposing)
-<ul>
-<li>See section below for <a href="#biomarker-annotations">details of
-biomarker annotations</a>
-</li>
-</ul>
-</li>
+Diagnostic / Predisposing)</li>
+<li>Pharmacogenetic findings (DPYD, TPMT, NUDT15)</li>
 </ul>
 </li>
 <li>
@@ -178,8 +173,9 @@ versions and licensing requirements</li>
 </li>
 <li>Variant classification
 <ul>
-<li>Overview of how CPSR performs variant classification of variants not
-recorded in ClinVar, listing ACMG criteria and associated scores</li>
+<li>Overview of how CPSR performs variant annotation and classification
+of variants not recorded in ClinVar, listing ACMG criteria and
+associated scores, calibration of classification thresholds etc.</li>
 </ul>
 </li>
 </ul>
@@ -188,7 +184,7 @@ recorded in ClinVar, listing ACMG criteria and associated scores</li>
 <strong>References</strong>
 <ul>
 <li>Supporting scientific literature - knowledge resources, guideline
-references etc.)</li>
+references etc.</li>
 </ul>
 </li>
 </ol>
@@ -197,9 +193,9 @@ references etc.)</li>
 <div class="section level3">
 <h3 id="variant-call-format---vcf">Variant call format - VCF<a class="anchor" aria-label="anchor" href="#variant-call-format---vcf"></a>
 </h3>
-<p>A VCF file containing annotated, germline calls (single nucleotide
-variants and insertions/deletions) is generated with the following
-naming convention:</p>
+<p>A VCF file containing annotated, germline variant calls (single
+nucleotide variants and insertions/deletions) is generated with the
+following naming convention:</p>
 <ul>
 <li>
 <code>&lt;sample_id&gt;.cpsr.&lt;genome_assembly&gt;.vcf.gz (.tbi)</code>
@@ -245,14 +241,15 @@ after processing with the CPSR annotation pipeline:</li>
 <code>CANONICAL</code>, <code>MANE_SELECT</code>,
 <code>MANE_PLUS_CLINICAL</code>, <code>TSL</code>, <code>APPRIS</code>,
 <code>CCDS</code>, <code>ENSP</code>, <code>SWISSPROT</code>,
-<code>TREMBL</code>, <code>UNIPARC</code>, <code>RefSeq</code>,
-<code>DOMAINS</code>, <code>HGVS_OFFSET</code>, <code>gnomADe_AF</code>,
-<code>gnomADe_AFR_AF</code>, <code>gnomADe_AMR_AF</code>,
-<code>gnomADe_ASJ_AF</code>, <code>gnomADe_EAS_AF</code>,
-<code>gnomADe_FIN_AF</code>, <code>gnomADe_NFE_AF</code>,
-<code>gnomADe_OTH_AF</code>, <code>gnomADe_SAS_AF</code>,
-<code>CLIN_SIG</code>, <code>SOMATIC</code>, <code>PHENO</code>,
-<code>CHECK_REF</code>, <code>MOTIF_NAME</code>, <code>MOTIF_POS</code>,
+<code>TREMBL</code>, <code>UNIPARC</code>, <code>UNIPROT_ISOFORM</code>,
+<code>RefSeq</code>, <code>DOMAINS</code>, <code>HGVS_OFFSET</code>,
+<code>gnomADe_AF</code>, <code>gnomADe_AFR_AF</code>,
+<code>gnomADe_AMR_AF</code>, <code>gnomADe_ASJ_AF</code>,
+<code>gnomADe_EAS_AF</code>, <code>gnomADe_FIN_AF</code>,
+<code>gnomADe_NFE_AF</code>, <code>gnomADe_OTH_AF</code>,
+<code>gnomADe_SAS_AF</code>, <code>CLIN_SIG</code>,
+<code>SOMATIC</code>, <code>PHENO</code>, <code>CHECK_REF</code>,
+<code>MOTIF_NAME</code>, <code>MOTIF_POS</code>,
 <code>HIGH_INF_POS</code>, <code>MOTIF_SCORE_CHANGE</code>,
 <code>TRANSCRIPTION_FACTORS</code>, <code>NearestExonJB</code>
 </td>
@@ -322,60 +319,69 @@ VEP’s <code>--flag_pick_allele</code> option)</td>
 (picked by VEP’s <code>--flag_pick_allele</code> option)</td>
 </tr>
 <tr class="odd">
+<td><code>GRANTHAM_DISTANCE</code></td>
+<td>Grantham distance between the reference and variant amino acids</td>
+</tr>
+<tr class="even">
 <td><code>Codons</code></td>
 <td>The alternative codons with the variant base in upper case (picked
 by VEP’s <code>--flag_pick_allele</code> option)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>IMPACT</code></td>
 <td>Impact modifier for the consequence type (picked by VEP’s
 <code>--flag_pick_allele</code> option)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>VARIANT_CLASS</code></td>
 <td>Sequence Ontology variant class (picked by VEP’s
 <code>--flag_pick_allele</code> option)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>SYMBOL</code></td>
 <td>Gene symbol (picked by VEP’s <code>--flag_pick_allele</code>
 option)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>SYMBOL_SOURCE</code></td>
 <td>The source of the gene symbol (picked by VEP’s
 <code>--flag_pick_allele</code> option)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>STRAND</code></td>
 <td>The DNA strand (1 or -1) on which the transcript/feature lies
 (picked by VEP’s <code>--flag_pick_allele</code> option)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>ENSP</code></td>
 <td>The Ensembl protein identifier of the affected transcript (picked by
 VEP’s <code>--flag_pick_allele</code> option)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>FLAGS</code></td>
 <td>Transcript quality flags: <code>cds_start_NF</code>: CDS 5’,
 incomplete <code>cds_end_NF</code>: CDS 3’ incomplete (picked by VEP’s
 <code>--flag_pick_allele</code> option)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>SWISSPROT</code></td>
 <td>Best match UniProtKB/Swiss-Prot accession of protein product (picked
 by VEP’s <code>--flag_pick_allele</code> option)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>TREMBL</code></td>
 <td>Best match UniProtKB/TrEMBL accession of protein product (picked by
 VEP’s <code>--flag_pick_allele</code> option)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>UNIPARC</code></td>
 <td>Best match UniParc accession of protein product (picked by VEP’s
 <code>--flag_pick_allele</code> option)</td>
+</tr>
+<tr class="odd">
+<td><code>UNIPROT_ISOFORM</code></td>
+<td>Best match UniProtKB isoform accession of protein product (picked by
+VEP’s <code>--flag_pick_allele</code> option)</td>
 </tr>
 <tr class="even">
 <td><code>HGVSc</code></td>
@@ -550,7 +556,7 @@ VEP</td>
 <tr class="even">
 <td><code>EXONIC_STATUS</code></td>
 <td>Indicates if variant consequence type is ‘exonic’ or ‘nonexonic’. We
-define ‘exonic’ as any variants with the following consequences:
+define ‘exonic’ as any variants with the following consequence types:
 <code>stop_gained / stop_lost</code>, <code>start_lost</code>,
 <code>frameshift_variant</code>, <code>missense_variant</code>,
 <code>splice_donor_variant</code>, <code>splice_acceptor_variant</code>,
@@ -561,22 +567,29 @@ define ‘exonic’ as any variants with the following consequences:
 <tr class="odd">
 <td><code>CODING_STATUS</code></td>
 <td>Indicates if primary variant consequence type is ‘coding’ or
-‘noncoding’. ‘coding’ variants are here defined as those with an
-‘exonic’ status, with the exception of synonymous variants</td>
+‘noncoding’. ‘coding’ variants are here defined as those consequence
+types with an ‘exonic’ status, with the exception of synonymous
+variants. All other consequence types are considered ‘noncoding’</td>
 </tr>
 <tr class="even">
 <td><code>NULL_VARIANT</code></td>
 <td>Primary variant consequence type is <code>frameshift</code> or
-<code>stop_gained</code>/<code>stop_lost</code>
+<code>stop_gained</code>
 </td>
 </tr>
 <tr class="odd">
 <td><code>LOSS_OF_FUNCTION</code></td>
-<td>Loss-of-function variant</td>
+<td>Loss-of-function variant - primary variant consequence being either
+<code>stop_gained / stop_lost</code>, <code>start_lost</code>,
+<code>frameshift_variant</code>, <code>splice_donor_variant</code>, or
+<code>splice_acceptor_variant</code>
+</td>
 </tr>
 <tr class="even">
 <td><code>LOF_FILTER</code></td>
-<td>Loss-of-function filter</td>
+<td>Loss-of-function filter - exceptions to putative LOF variants - GC
+to GT at splice donor sites or truncations within the last 5% of coding
+sequence</td>
 </tr>
 <tr class="odd">
 <td><code>SPLICE_DONOR_RELEVANT</code></td>
@@ -878,65 +891,129 @@ by_codon_nonprincipal)</td>
 <td>Pfam domain identifier (from VEP)</td>
 </tr>
 <tr class="odd">
+<td><code>SPLICE_EFFECT</code></td>
+<td>Effect of splicing, from MutSpliceDB and/or MaxEntScan. Format:
+<entrezgene></entrezgene>
+</td>
+</tr>
+<tr class="even">
+<td>MES</td>
+<td><score_diff></score_diff></td>
+</tr>
+<tr class="odd">
 <td><code>EFFECT_PREDICTIONS</code></td>
-<td>All predictions of effect of variant on protein function and
-pre-mRNA splicing from <a href="https://sites.google.com/site/jpopgen/dbNSFP" class="external-link">database of
-non-synonymous functional predictions - dbNSFP v4.2</a>. Predicted
+<td>Insilico predictions variant effect on protein function and pre-mRNA
+splicing from <a href="https://www.dbnsfp.org/" class="external-link">database of
+non-synonymous functional predictions - dbNSFP v5.0</a>. Predicted
 effects are provided by different sources/algorithms (separated by
 <code>&amp;</code>), <code>T</code> = Tolerated, <code>N</code> =
-Neutral, <code>D</code> = Damaging: 1. <a href="https://sift.bii.a-star.edu.sg/" class="external-link">SIFT</a>, 2. <a href="http://www.mutationtaster.org/" class="external-link">MutationTaster</a> (data release
-Nov 2015), 3. <a href="http://mutationassessor.org/" class="external-link">MutationAssessor</a> (release 3), 4.
-<a href="http://fathmm.biocompute.org.uk" class="external-link">FATHMM</a> (v2.3), 5. <a href="http://provean.jcvi.org/index.php" class="external-link">PROVEAN</a> (v1.1 Jan 2015), 6.
-<a href="http://fathmm.biocompute.org.uk/fathmmMKL.htm" class="external-link">FATHMM_MKL</a>,
-7. <a href="https://www.nature.com/articles/s41588-018-0167-z" class="external-link">PRIMATEAI</a>,
-8. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5570203/" class="external-link">DEOGEN2</a>,
-9. <a href="https://www.biorxiv.org/content/10.1101/2021.04.09.438706v1" class="external-link">DBNSFP_CONSENSUS_RNN</a>
-(Ensembl/consensus prediction, based on deep learning), 10. <a href="http://nar.oxfordjournals.org/content/42/22/13534" class="external-link">SPLICE_SITE_EFFECT_ADA</a>
-(Ensembl/consensus prediction of splice-altering SNVs, based on adaptive
-boosting), 11. <a href="http://nar.oxfordjournals.org/content/42/22/13534" class="external-link">SPLICE_SITE_EFFECT_RF</a>
-(Ensembl/consensus prediction of splice-altering SNVs, based on random
-forest), 12. <a href="http://bejerano.stanford.edu/MCAP" class="external-link">M-CAP</a>,</td>
+Neutral, <code>D</code> = Damaging</td>
+</tr>
+<tr class="even">
+<td><code>DBNSFP_BAYESDEL_ADDAF</code></td>
+<td>predicted effect from BayesDel (dbNSFP)</td>
+</tr>
+<tr class="odd">
+<td><code>DBNSFP_LIST_S2</code></td>
+<td>predicted effect from LIST-S2 (dbNSFP)</td>
+</tr>
+<tr class="even">
+<td><code>DBNSFP_SIFT</code></td>
+<td>predicted effect from SIFT (dbNSFP)</td>
+</tr>
+<tr class="odd">
+<td><code>DBNSFP_POLYPHEN2_HVAR</code></td>
+<td>predicted effect from PolyPhen2 (dbNSFP)</td>
+</tr>
+<tr class="even">
+<td><code>DBNSFP_PROVEAN</code></td>
+<td>predicted effect from PROVEAN (dbNSFP)</td>
+</tr>
+<tr class="odd">
+<td><code>DBNSFP_MUTATIONTASTER</code></td>
+<td>predicted effect from MUTATIONTASTER (dbNSFP)</td>
+</tr>
+<tr class="even">
+<td><code>DBNSFP_MUTATIONASSESSOR</code></td>
+<td>predicted effect from MUTATIONASSESSOR (dbNSFP)</td>
+</tr>
+<tr class="odd">
+<td><code>DBNSFP_M_CAP</code></td>
+<td>predicted effect from M-CAP (dbNSFP)</td>
+</tr>
+<tr class="even">
+<td><code>DBNSFP_ALOFT</code></td>
+<td>predicted effect from ALoFT (dbNSFP)</td>
+</tr>
+<tr class="odd">
+<td><code>DBNSFP_MUTPRED</code></td>
+<td>score from MUTPRED (dbNSFP)</td>
+</tr>
+<tr class="even">
+<td><code>DBNSFP_CLINPRED</code></td>
+<td>predicted effect from ClinPred (dbNSFP)</td>
+</tr>
+<tr class="odd">
+<td><code>DBNSFP_FATHMM</code></td>
+<td>predicted effect from FATHMM-XF (dbNSFP)</td>
+</tr>
+<tr class="even">
+<td><code>DBNSFP_PRIMATEAI</code></td>
+<td>predicted effect from PRIMATEAI (dbNSFP)</td>
+</tr>
+<tr class="odd">
+<td><code>DBNSFP_DEOGEN2</code></td>
+<td>predicted effect from DEOGEN2 (dbNSFP)</td>
+</tr>
+<tr class="even">
+<td><code>DBNSFP_PHACTBOOST</code></td>
+<td>predicted effect from PHACTboost (dbNSFP)</td>
+</tr>
+<tr class="odd">
+<td><code>DBNSFP_ALPHA_MISSENSE</code></td>
+<td>predicted effect from AlphaMissense (dbNSFP)</td>
+</tr>
+<tr class="even">
+<td><code>DBNSFP_MUTFORMER</code></td>
+<td>predicted effect from MutFormer (dbNSFP)</td>
+</tr>
+<tr class="odd">
+<td><code>DBNSFP_ESM1B</code></td>
+<td>predicted effect from ESM1b (dbNSFP)</td>
+</tr>
+<tr class="even">
+<td><code>DBNSFP_GERP</code></td>
+<td>evolutionary constraint measure from GERP (dbNSFP)</td>
+</tr>
+<tr class="odd">
+<td><code>DBNSFP_CADD</code></td>
+<td>Combined Annotation Dependent Depletion (CADD) score (dbNSFP)</td>
+</tr>
+<tr class="even">
+<td><code>DBNSFP_VEST4</code></td>
+<td>VEST4 score (dbNSFP)</td>
+</tr>
+<tr class="odd">
+<td><code>DBNSFP_FATHMM_XF</code></td>
+<td>predicted effect from FATHMM-XF (dbNSFP)</td>
+</tr>
+<tr class="even">
+<td><code>DBNSFP_META_RNN</code></td>
+<td>predicted effect from ensemble prediction (deep learning -
+dbNSFP)</td>
+</tr>
+<tr class="odd">
+<td><code>DBNSFP_SPLICE_SITE_RF</code></td>
+<td>predicted effect of splice site disruption, using random forest
+(dbscSNV)</td>
+</tr>
+<tr class="even">
+<td><code>DBNSFP_SPLICE_SITE_ADA</code></td>
+<td>predicted effect of splice site disruption, using boosting
+(dbscSNV)</td>
 </tr>
 </tbody>
 </table>
-<ol start="13" style="list-style-type: decimal">
-<li>
-<a href="http://mutpred.mutdb.org" class="external-link">MutPred</a>, 14. <a href="http://mendel.stanford.edu/SidowLab/downloads/gerp/" class="external-link">GERP</a>, 15.
-<a href="https://doi.org/10.1002/humu.23158" class="external-link">BayesDel</a>, 16. <a href="https://doi.org/10.1093/nar/gkaa288" class="external-link">LIST-S2</a>, 17. <a href="https://www.nature.com/articles/s41467-017-00443-5" class="external-link">ALoFT</a>,</li>
-<li>
-<a href="https://console.cloud.google.com/storage/browser/dm_alphamissense" class="external-link">AlphaMissense</a>,</li>
-<li>
-<a href="https://huggingface.co/spaces/ntranoslab/esm_variants/tree/main" class="external-link">ESM1b</a>,</li>
-<li>
-<a href="https://github.com/CompGenomeLab/PHACTboost" class="external-link">PHACTboost</a>,</li>
-<li>
-<a href="https://github.com/WGLab/mutformer" class="external-link">MutFormer</a> | |
-<code>DBNSFP_BAYESDEL_ADDAF</code> | predicted effect from BayesDel
-(dbNSFP) | | <code>DBNSFP_LIST_S2</code> | predicted effect from LIST-S2
-(dbNSFP) | | <code>DBNSFP_SIFT</code> | predicted effect from SIFT
-(dbNSFP) | | <code>DBNSFP_PROVEAN</code> | predicted effect from PROVEAN
-(dbNSFP) | | <code>DBNSFP_MUTATIONTASTER</code> | predicted effect from
-MUTATIONTASTER (dbNSFP) | | <code>DBNSFP_MUTATIONASSESSOR</code> |
-predicted effect from MUTATIONASSESSOR (dbNSFP) | |
-<code>DBNSFP_M_CAP</code> | predicted effect from M-CAP (dbNSFP) | |
-<code>DBNSFP_ALOFTPRED</code> | predicted effect from ALoFT (dbNSFP) | |
-<code>DBNSFP_MUTPRED</code> | score from MUTPRED (dbNSFP) | |
-<code>DBNSFP_FATHMM</code> | predicted effect from FATHMM (dbNSFP) | |
-<code>DBNSFP_PRIMATEAI</code> | predicted effect from PRIMATEAI (dbNSFP)
-| | <code>DBNSFP_DEOGEN2</code> | predicted effect from DEOGEN2 (dbNSFP)
-| | <code>DBNSFP_PHACTBOOST</code> | predicted effect from PHACTboost
-(dbNSFP) | | <code>DBNSFP_ALPHA_MISSENSE</code> | predicted effect from
-AlphaMissense (dbNSFP) | | <code>DBNSFP_MUTFORMER</code> | predicted
-effect from MutFormer (dbNSFP) | | <code>DBNSFP_ESM1B</code> | predicted
-effect from ESM1b (dbNSFP) | | <code>DBNSFP_GERP</code> | evolutionary
-constraint measure from GERP (dbNSFP) | | <code>DBNSFP_FATHMM_MKL</code>
-| predicted effect from FATHMM-mkl (dbNSFP) | |
-<code>DBNSFP_META_RNN</code> | predicted effect from ensemble prediction
-(deep learning - dbNSFP) | | <code>DBNSFP_SPLICE_SITE_RF</code> |
-predicted effect of splice site disruption, using random forest
-(dbscSNV) | | <code>DBNSFP_SPLICE_SITE_ADA</code> | predicted effect of
-splice site disruption, using boosting (dbscSNV) |</li>
-</ol>
 <p><br></p>
 </div>
 <div class="section level5">
@@ -956,39 +1033,39 @@ databases</em><a class="anchor" aria-label="anchor" href="#variant-allele-freque
 <tbody>
 <tr class="odd">
 <td><code>gnomADe_AFR_AF</code></td>
-<td>African/American germline allele frequency (<a href="http://gnomad.broadinstitute.org/" class="external-link">gnomAD release 2.1</a>)</td>
+<td>African/American germline allele frequency (<a href="http://gnomad.broadinstitute.org/" class="external-link">gnomAD release 4.1</a>)</td>
 </tr>
 <tr class="even">
 <td><code>gnomADe_AMR_AF</code></td>
-<td>American germline allele frequency (<a href="http://gnomad.broadinstitute.org/" class="external-link">gnomAD release 2.1</a>)</td>
+<td>American germline allele frequency (<a href="http://gnomad.broadinstitute.org/" class="external-link">gnomAD release 4.1</a>)</td>
 </tr>
 <tr class="odd">
 <td><code>gnomADe_AF</code></td>
-<td>Adjusted global germline allele frequency (<a href="http://gnomad.broadinstitute.org/" class="external-link">gnomAD release 2.1</a>)</td>
+<td>Adjusted global germline allele frequency (<a href="http://gnomad.broadinstitute.org/" class="external-link">gnomAD release 4.1</a>)</td>
 </tr>
 <tr class="even">
 <td><code>gnomADe_SAS_AF</code></td>
-<td>South Asian germline allele frequency (<a href="http://gnomad.broadinstitute.org/" class="external-link">gnomAD release 2.1</a>)</td>
+<td>South Asian germline allele frequency (<a href="http://gnomad.broadinstitute.org/" class="external-link">gnomAD release 4.1</a>)</td>
 </tr>
 <tr class="odd">
 <td><code>gnomADe_EAS_AF</code></td>
-<td>East Asian germline allele frequency (<a href="http://gnomad.broadinstitute.org/" class="external-link">gnomAD release 2.1</a>)</td>
+<td>East Asian germline allele frequency (<a href="http://gnomad.broadinstitute.org/" class="external-link">gnomAD release 4.1</a>)</td>
 </tr>
 <tr class="even">
 <td><code>gnomADe_FIN_AF</code></td>
-<td>Finnish germline allele frequency (<a href="http://gnomad.broadinstitute.org/" class="external-link">gnomAD release 2.1</a>)</td>
+<td>Finnish germline allele frequency (<a href="http://gnomad.broadinstitute.org/" class="external-link">gnomAD release 4.1</a>)</td>
 </tr>
 <tr class="odd">
 <td><code>gnomADe_NFE_AF</code></td>
-<td>Non-Finnish European germline allele frequency (<a href="http://gnomad.broadinstitute.org/" class="external-link">gnomAD release 2.1</a>)</td>
+<td>Non-Finnish European germline allele frequency (<a href="http://gnomad.broadinstitute.org/" class="external-link">gnomAD release 4.1</a>)</td>
 </tr>
 <tr class="even">
 <td><code>gnomADe_OTH_AF</code></td>
-<td>Other germline allele frequency (<a href="http://gnomad.broadinstitute.org/" class="external-link">gnomAD release 2.1</a>)</td>
+<td>Other germline allele frequency (<a href="http://gnomad.broadinstitute.org/" class="external-link">gnomAD release 4.1</a>)</td>
 </tr>
 <tr class="odd">
 <td><code>gnomADe_ASJ_AF</code></td>
-<td>Ashkenazi Jewish allele frequency (<a href="http://gnomad.broadinstitute.org/" class="external-link">gnomAD release 2.1</a>)</td>
+<td>Ashkenazi Jewish allele frequency (<a href="http://gnomad.broadinstitute.org/" class="external-link">gnomAD release 4.1</a>)</td>
 </tr>
 <tr class="even">
 <td><code>gnomADe_non_cancer_ASJ_AF</code></td>
@@ -1323,8 +1400,8 @@ file has the following naming convention:</p>
 <ul>
 <li><code>&lt;sample_id&gt;.cpsr.&lt;genome_assembly&gt;.xlsx</code></li>
 </ul>
-<p>The Excel workbook is populated with the following sheets (pending
-that data is available):</p>
+<p>The Excel workbook is populated with the following sheets (the last
+three sheets will only be present if any data is found):</p>
 <ul>
 <li>
 <em>VIRTUAL_PANEL</em> - details on the the chosen virtual gene
@@ -1336,13 +1413,21 @@ gene annotations</li>
 <em>BIOMARKER_EVIDENCE</em> - matches of variants with genomic
 biomarkers</li>
 <li>
-<em>SECONDARY_FINDINGS</em> - potential secondary findings</li>
+<em>SECONDARY_FINDINGS</em> - secondary findings (ACMG
+recommendations)</li>
+<li>
+<em>PHARMACOGENETIC_FINDINGS</em> - drug toxicity findings (DPYD,
+TPMT, NUDT15)</li>
 </ul>
 <p><br><br></p>
 </div>
 <div class="section level3">
 <h3 id="tab-separated-values---tsv">Tab-separated values - TSV<a class="anchor" aria-label="anchor" href="#tab-separated-values---tsv"></a>
 </h3>
+<div class="section level4">
+<h4 id="variant-classification">
+<em>Variant classification</em><a class="anchor" aria-label="anchor" href="#variant-classification"></a>
+</h4>
 <p>We provide a compressed tab-separated values file with variant
 classifications and the most essential variant/gene annotations. The
 file has the following naming convention:</p>
@@ -1389,7 +1474,7 @@ e.g. <code>1:g.152382569A&gt;G</code>. Format:
 <tr class="odd">
 <td>5. <code>GENOTYPE</code>
 </td>
-<td>Variant genotype (het/hom_ref/hom_af)</td>
+<td>Variant genotype (het/hom_ref/hom_alt)</td>
 </tr>
 <tr class="even">
 <td>6. <code>DP_CONTROL</code>
@@ -1466,120 +1551,141 @@ Genes (NCG)/Cancer Gene Census (CGC) and CancerMine</td>
 Cancer Genes (NCG)/Cancer Gene Census (CGC) and CancerMine</td>
 </tr>
 <tr class="even">
-<td>20. <code>CONSEQUENCE</code>
+<td>20. <code>CPG_MOD</code>
+</td>
+<td>Gene - cancer predisposition mechanism of disease (e.g. LoF)</td>
+</tr>
+<tr class="odd">
+<td>21. <code>CPG_MOI</code>
+</td>
+<td>Gene - cancer predisposition mode of inheritance</td>
+</tr>
+<tr class="even">
+<td>22. <code>CONSEQUENCE</code>
 </td>
 <td>Variant consequence</td>
 </tr>
 <tr class="odd">
-<td>21. <code>ALTERATION</code>
+<td>23. <code>ALTERATION</code>
 </td>
 <td>Molecular alteration (HGVSp or HGVSc pending on consequence)</td>
 </tr>
 <tr class="even">
-<td>22. <code>PROTEIN_CHANGE</code>
+<td>24. <code>PROTEIN_CHANGE</code>
 </td>
 <td>Protein change - one letter abbreviation (HGVSp)</td>
 </tr>
 <tr class="odd">
-<td>23. <code>PFAM_DOMAIN</code>
+<td>25. <code>PFAM_DOMAIN</code>
 </td>
 <td>Protein domain (Pfam identifier)</td>
 </tr>
 <tr class="even">
-<td>24. <code>PFAM_DOMAIN_NAME</code>
+<td>26. <code>PFAM_DOMAIN_NAME</code>
 </td>
 <td>Protein domain name (Pfam)</td>
 </tr>
 <tr class="odd">
-<td>25. <code>HGVSp</code>
+<td>27. <code>HGVSp</code>
 </td>
 <td>The HGVS protein sequence name</td>
 </tr>
 <tr class="even">
-<td>26. <code>HGVSc</code>
+<td>28. <code>GRANTHAM_DISTANCE</code>
+</td>
+<td>Grantham distance for amino acid change (Grantham score)</td>
+</tr>
+<tr class="odd">
+<td>29. <code>HGVSc</code>
 </td>
 <td>The HGVS coding sequence name</td>
 </tr>
-<tr class="odd">
-<td>27. <code>HGVSc_RefSeq</code>
+<tr class="even">
+<td>30. <code>HGVSc_RefSeq</code>
 </td>
 <td>The HGVS coding sequence name (RefSeq - MANE Select)</td>
 </tr>
-<tr class="even">
-<td>28. <code>CDS_CHANGE</code>
+<tr class="odd">
+<td>31. <code>CDS_CHANGE</code>
 </td>
 <td>Coding, transcript-specific sequence annotation</td>
 </tr>
-<tr class="odd">
-<td>29. <code>LAST_EXON</code>
+<tr class="even">
+<td>32. <code>LAST_EXON</code>
 </td>
 <td>Last exon in gene</td>
 </tr>
-<tr class="even">
-<td>30. <code>EXON</code>
+<tr class="odd">
+<td>33. <code>EXON</code>
 </td>
 <td>Exon of variant/total number of exons in transcript (from VEP)</td>
 </tr>
-<tr class="odd">
-<td>31. <code>EXON_AFFECTED</code>
+<tr class="even">
+<td>34. <code>EXON_AFFECTED</code>
 </td>
 <td>Transcript exon of variant (from VEP)</td>
 </tr>
-<tr class="even">
-<td>32. <code>EXON_POSITION</code>
+<tr class="odd">
+<td>35. <code>EXON_POSITION</code>
 </td>
 <td>Relative position of exon variant to nearest intron/exon junction
 (NearestExonJB plugin)</td>
 </tr>
-<tr class="odd">
-<td>33. <code>INTRON_POSITION</code>
+<tr class="even">
+<td>36. <code>INTRON_POSITION</code>
 </td>
 <td>Relative position of intron variant to nearest intron/exon junction
 (NearestExonJB plugin)</td>
 </tr>
-<tr class="even">
-<td>34. <code>VEP_ALL_CSQ</code>
+<tr class="odd">
+<td>37. <code>VEP_ALL_CSQ</code>
 </td>
 <td>All VEP transcript block consequences</td>
 </tr>
-<tr class="odd">
-<td>35. <code>CANCER_PHENOTYPE</code>
+<tr class="even">
+<td>38. <code>CANCER_PHENOTYPE</code>
 </td>
 <td>For variants with a ClinVar classification, indication of
 cancer-associated disease/phenotype (1) or not (0)</td>
 </tr>
-<tr class="even">
-<td>36. <code>MUTATION_HOTSPOT</code>
+<tr class="odd">
+<td>39. <code>MUTATION_HOTSPOT</code>
 </td>
 <td>Cancer mutation hotspot (cancerhotspots.org)</td>
 </tr>
-<tr class="odd">
-<td>37. <code>RMSK_HIT</code>
+<tr class="even">
+<td>40. <code>RMSK_HIT</code>
 </td>
 <td>RepeatMasker hit</td>
 </tr>
-<tr class="even">
-<td>38. <code>EFFECT_PREDICTIONS</code>
+<tr class="odd">
+<td>41. <code>EFFECT_PREDICTIONS</code>
 </td>
 <td>Functional effect predictions from multiple algorithms (dbNSFP)</td>
 </tr>
+<tr class="even">
+<td>42. <code>SPLICE_EFFECT</code>
+</td>
+<td>Splice effect annotations from MutSpliceDB and MaxEntScan (see
+details above)</td>
+</tr>
 <tr class="odd">
-<td>39. <code>LOSS_OF_FUNCTION</code>
+<td>43. <code>LOSS_OF_FUNCTION</code>
 </td>
 <td>Loss-of-function variant</td>
 </tr>
 <tr class="even">
-<td>40. <code>LOF_FILTER</code>
+<td>44. <code>LOF_FILTER</code>
 </td>
 <td>Loss-of-function filter</td>
 </tr>
 <tr class="odd">
-<td>41. <code>NULL_VARIANT</code>
+<td>45. <code>NULL_VARIANT</code>
 </td>
 <td>Frameshift or stop-gain variant</td>
 </tr>
 <tr class="even">
-<td>42. <code>DBMTS</code>
+<td>46. <code>DBMTS</code>
 </td>
 <td>variant with potential effect on microRNA target sites (dbMTS).
 Format:
@@ -1592,12 +1698,12 @@ to disrupt a binding site (<code>L</code> = Loss), or create a new
 target site (<code>G</code> = gain) by the different algorithms</td>
 </tr>
 <tr class="odd">
-<td>43. <code>REGULATORY_ANNOTATION</code>
+<td>47. <code>REGULATORY_ANNOTATION</code>
 </td>
 <td>Overlap of variant with regulatory elements (VEP)</td>
 </tr>
 <tr class="even">
-<td>44. <code>TF_BINDING_SITE_VARIANT</code>
+<td>48. <code>TF_BINDING_SITE_VARIANT</code>
 </td>
 <td>Indicates whether a variant overlaps a critical/non-critical
 position of a transcription factor binding site (TFBS) - as provided by
@@ -1605,7 +1711,7 @@ VEP’s–regulatory option (‘Overlap: non-critical motif position’ or
 ‘Overlap: critical motif position’)</td>
 </tr>
 <tr class="odd">
-<td>45. <code>TF_BINDING_SITE_VARIANT_INFO</code>
+<td>49. <code>TF_BINDING_SITE_VARIANT_INFO</code>
 </td>
 <td>Comma-separated list of transcription factor binding sites affected
 by variant. Format per factor:
@@ -1615,110 +1721,104 @@ critical motif position (<code>Y</code>), or non-critical motif position
 (<code>N</code>)</td>
 </tr>
 <tr class="even">
-<td>46. <code>GERP_SCORE</code>
+<td>50. <code>GERP_SCORE</code>
 </td>
 <td>Genomic conservation score (GERP)</td>
 </tr>
 <tr class="odd">
-<td>47. <code>DBSNP_RSID</code>
+<td>51. <code>DBSNP_RSID</code>
 </td>
 <td>dbSNP identifier (rsid)</td>
 </tr>
 <tr class="even">
-<td>48. <code>CLINVAR_CLASSIFICATION</code>
+<td>52. <code>CLINVAR_CLASSIFICATION</code>
 </td>
 <td>clinical significance of ClinVar-recorded variant</td>
 </tr>
 <tr class="odd">
-<td>49. <code>CLINVAR_MSID</code>
+<td>53. <code>CLINVAR_MSID</code>
 </td>
-<td>measureset identifier of ClinVar variant</td>
+<td>Measureset identifier of ClinVar variant</td>
 </tr>
 <tr class="even">
-<td>50. <code>CLINVAR_VARIANT_ORIGIN</code>
+<td>54. <code>CLINVAR_VARIANT_ORIGIN</code>
 </td>
-<td>variant origin (somatic/germline) of ClinVar variant</td>
+<td>Variant origin (somatic/germline) of ClinVar variant</td>
 </tr>
 <tr class="odd">
-<td>51. <code>CLINVAR_CONFLICTED</code>
+<td>55. <code>CLINVAR_CONFLICTED</code>
 </td>
-<td>indicator of conflicting interpretations</td>
+<td>Indicator of conflicting interpretations</td>
 </tr>
 <tr class="even">
-<td>52. <code>CLINVAR_PHENOTYPE</code>
+<td>56. <code>CLINVAR_PHENOTYPE</code>
 </td>
-<td>associated phenotype(s) for ClinVar variant</td>
+<td>Associated phenotype(s) for ClinVar variant</td>
 </tr>
 <tr class="odd">
-<td>53. <code>CLINVAR_REVIEW_STATUS_STARS</code>
+<td>57. <code>CLINVAR_REVIEW_STATUS_STARS</code>
 </td>
 <td>Review confidence - number of gold stars</td>
 </tr>
 <tr class="even">
-<td>54. <code>N_INSILICO_CALLED</code>
+<td>58. <code>N_INSILICO_CALLED</code>
 </td>
 <td>Number of algorithms with effect prediction (damaging/tolerated)
 from dbNSFP</td>
 </tr>
 <tr class="odd">
-<td>55. <code>N_INSILICO_DAMAGING</code>
+<td>59. <code>N_INSILICO_DAMAGING</code>
 </td>
 <td>Number of algorithms with damaging prediction from dbNSFP</td>
 </tr>
 <tr class="even">
-<td>56. <code>N_INSILICO_TOLERATED</code>
+<td>60. <code>N_INSILICO_TOLERATED</code>
 </td>
 <td>Number of algorithms with tolerated prediction from dbNSFP</td>
 </tr>
 <tr class="odd">
-<td>57. <code>N_INSILICO_SPLICING_NEUTRAL</code>
+<td>61. <code>N_INSILICO_SPLICING_NEUTRAL</code>
 </td>
 <td>Number of algorithms with splicing neutral prediction from
 dbscSNV</td>
 </tr>
 <tr class="even">
-<td>58. <code>N_INSILICO_SPLICING_AFFECTED</code>
+<td>62. <code>N_INSILICO_SPLICING_AFFECTED</code>
 </td>
 <td>Number of algorithms with splicing affected prediction from
 dbscSNV</td>
 </tr>
 <tr class="odd">
-<td>59. <code>gnomADe_AF</code>
+<td>63. <code>gnomADe_AF</code>
 </td>
 <td>Global MAF in gnomAD (exome samples)</td>
 </tr>
 <tr class="even">
-<td>60. <code>FINAL_CLASSIFICATION</code>
+<td>64. <code>FINAL_CLASSIFICATION</code>
 </td>
 <td>Final variant classification, using either
 <code>CLINVAR_CLASSIFICATION</code> if variant is ClinVar-classified, or
 <code>CPSR_CLASSIFICATION</code> for novel variants</td>
 </tr>
 <tr class="odd">
-<td>61. <code>CPSR_CLASSIFICATION</code>
+<td>65. <code>CPSR_CLASSIFICATION</code>
 </td>
 <td>Variant clinical significance by CPSR’s classification algorithm
 (P/LP/VUS/LB/B)</td>
 </tr>
 <tr class="even">
-<td>62. <code>CPSR_PATHOGENICITY_SCORE</code>
+<td>66. <code>CPSR_PATHOGENICITY_SCORE</code>
 </td>
 <td>Aggregated pathogenicity score by CPSR’s algorithm</td>
 </tr>
 <tr class="odd">
-<td>63. <code>CPSR_CLASSIFICATION_CODE</code>
+<td>67. <code>CPSR_CLASSIFICATION_CODE</code>
 </td>
 <td>Combination of CPSR classification codes assigned to the variant
 (ACMG)</td>
 </tr>
 <tr class="even">
-<td>64. <code>CPSR_CLASSIFICATION_DOC</code>
-</td>
-<td>Descriptions of CPSR classification codes assigned to the variant
-(ACMG)</td>
-</tr>
-<tr class="odd">
-<td>65. <code>&lt;CUSTOM_POPULATION_GNOMAD</code>&gt;</td>
+<td>68. <code>&lt;CUSTOM_POPULATION_GNOMAD</code>&gt;</td>
 <td>Population specific MAF in gnomAD control (non-cancer, population
 configured by user)</td>
 </tr>
@@ -1727,19 +1827,43 @@ configured by user)</td>
 <p><strong>NOTE</strong>: The user has the possibility to append the TSV
 file with data from other INFO tags in the input VCF (i.e. using the
 <em>–retained_info_tags</em> option)</p>
+</div>
+<div class="section level4">
+<h4 id="biomarker-evidence">
+<em>Biomarker evidence</em><a class="anchor" aria-label="anchor" href="#biomarker-evidence"></a>
+</h4>
+<p>We provide a compressed tab-separated values file with variants
+implicated as germline biomarkers. The file has the following naming
+convention:</p>
+<ul>
+<li><code>&lt;sample_id&gt;.cpsr.&lt;genome_assembly&gt;.biomarker_evidence.tsv.gz</code></li>
+</ul>
+</div>
+<div class="section level4">
+<h4 id="pharmacogenetic-findings">
+<em>Pharmacogenetic findings</em><a class="anchor" aria-label="anchor" href="#pharmacogenetic-findings"></a>
+</h4>
+<p>We provide a compressed tab-separated values file with variants
+implicated with drug toxicity/dosage effects of cancer chemotherapies.
+The file has the following naming convention:</p>
+<ul>
+<li><code>&lt;sample_id&gt;.cpsr.&lt;genome_assembly&gt;.pgx_findings.tsv.gz</code></li>
+</ul>
 <p><br><br></p>
+</div>
 </div>
 <div class="section level3">
 <h3 id="biomarker-annotations">Biomarker annotations<a class="anchor" aria-label="anchor" href="#biomarker-annotations"></a>
 </h3>
-<p>The interactive HTML report (section <em>Genomic biomarkers</em>) and
-the Excel workbook (sheet <em>BIOMARKER_EVIDENCE</em> contains
-information on matches between potential pathogenic/likely pathogenic
-sample variants and reported biomarkers, the latter referring to
-clinical evidence items that relate genomic genomic aberrations to
-prognosis, diagnosis or sensitivity/resistance to particular treatments.
-All biomarker annotations are prefixed with <strong>BM_</strong>, and
-the following is provided per evidence item:</p>
+<p>The TSV biomarker evidence output, the interactive HTML report
+(section <em>Genomic biomarkers</em>), and the Excel workbook (sheet
+<em>BIOMARKER_EVIDENCE</em>), contains information on matches between
+potential pathogenic/likely pathogenic sample variants and reported
+biomarkers, the latter referring to clinical evidence items that relate
+genomic genomic aberrations to prognosis, diagnosis or
+sensitivity/resistance to particular treatments. All biomarker
+annotations are prefixed with <strong>BM_</strong>, and the following is
+provided per evidence item:</p>
 <table class="table">
 <colgroup>
 <col width="43%">

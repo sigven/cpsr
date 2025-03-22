@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Cancer Predisposition Sequencing Reporter (CPSR)">
 <meta name="description" content="CPSR is a computational workflow that interprets germline variants identified from next-generation sequencing in the context of cancer predisposition. The workflow is integrated with the framework that underlies the Personal Cancer Genome Reporter (PCGR - https://github.com/sigven/pcgr). While PCGR is intended for reporting and analysis of somatic variants detected in a tumor, CPSR is intended for reporting and ranking of germline variants in protein-coding genes that are implicated in cancer predisposition and inherited cancer syndromes.">
 <meta property="og:description" content="CPSR is a computational workflow that interprets germline variants identified from next-generation sequencing in the context of cancer predisposition. The workflow is integrated with the framework that underlies the Personal Cancer Genome Reporter (PCGR - https://github.com/sigven/pcgr). While PCGR is intended for reporting and analysis of somatic variants detected in a tumor, CPSR is intended for reporting and ranking of germline variants in protein-coding genes that are implicated in cancer predisposition and inherited cancer syndromes.">
@@ -36,7 +36,7 @@
 
     <a class="navbar-brand me-2" href="index.html">CPSR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,15 +78,16 @@
 </h2>
 <p><br><br></p>
 <p>The <em>Cancer Predisposition Sequencing Reporter (CPSR)</em> is a computational workflow that <strong>interprets DNA sequence variants</strong> identified from next-generation sequencing <strong>in the context of cancer predisposition</strong>.</p>
-<p><em>CPSR</em> accepts a query file with <em>germline</em> variant calls (SNVs/InDels) from a single sample (i.e. cancer patient), encoded in the <a href="https://samtools.github.io/hts-specs/VCFv4.2.pdf" class="external-link">VCF format</a>. Through comprehensive gene and variant annotation procedures, CPSR offers the following main functionalities to the user:</p>
+<p><em>CPSR</em> accepts a query file with <em>germline</em> variant calls (SNVs/InDels) from a single sample (i.e. cancer patient), encoded in the <a href="https://samtools.github.io/hts-specs/VCFv4.2.pdf" class="external-link">VCF format</a>. Through comprehensive gene and variant annotation procedures, CPSR offers the following functionalities to the user:</p>
 <ol style="list-style-type: decimal">
-<li>Flexible <strong>selection of cancer predisposition genes</strong> subject to analysis and reporting - through the use of virtual gene panels</li>
+<li>Flexible <strong>selection of cancer predisposition genes</strong> that restricts variant classification and reporting - through the use of virtual gene panels</li>
 <li>
-<strong>Variant classification</strong> (<em>Pathogenic</em> to <em>Benign</em>) through a dedicated implementation of <a href="https://pubmed.ncbi.nlm.nih.gov/25741868/" class="external-link">ACMG/AMP guidelines</a>
+<strong>Variant classification</strong> (<em>Pathogenic</em> to <em>Benign</em>) through a dedicated and well-performing implementation of <a href="https://pubmed.ncbi.nlm.nih.gov/25741868/" class="external-link">ACMG/AMP guidelines</a>
 </li>
 <li>
-<strong>Detection of germline biomarkers</strong> - for prognosis, diagnosis, or drug sensitivity/resistance in cancer</li>
-<li>Reporting of <strong>secondary/incidental findings</strong> (<a href="https://pubmed.ncbi.nlm.nih.gov/37347242/" class="external-link">ACMG recommendations</a>)</li>
+<strong>Detection of biomarkers</strong> - variants with prognostic, diagnostic, or drug sensitivity/resistance implications in cancer, as well as optional detection of variants related to adverse events/toxicity for common chemotherapies<br>
+</li>
+<li>Optional reporting of <strong>secondary/incidental findings</strong> (<a href="https://pubmed.ncbi.nlm.nih.gov/37347242/" class="external-link">ACMG recommendations</a>)</li>
 <li>
 <strong>Interactive HTML output report</strong> with detailed variant information, gene annotations, and external links to relevant databases</li>
 </ol>
@@ -98,6 +99,14 @@
 <h3 id="news">News<a class="anchor" aria-label="anchor" href="#news"></a>
 </h3>
 <ul>
+<li>
+<em>March 2025</em>: <strong>2.2.0 release</strong>
+<ul>
+<li>more predisposition genes in panel zero</li>
+<li>optional reporting of pharmacogenomics-related variants (TPMT, DPYD, NUDT15)</li>
+<li><a href="https://sigven.github.io/cpsr/articles/CHANGELOG.html">CHANGELOG</a></li>
+</ul>
+</li>
 <li>
 <em>October 2024</em>: <strong>2.1.2 release</strong>
 <ul>
@@ -111,20 +120,6 @@
 <ul>
 <li>data bundle upgrade</li>
 <li>re-calibration of classification tresholds</li>
-<li><a href="https://sigven.github.io/cpsr/articles/CHANGELOG.html">CHANGELOG</a></li>
-</ul>
-</li>
-<li>
-<em>August 2024</em>: <strong>2.0.3 release</strong>
-<ul>
-<li>patch with bug fix for copying in quarto templates (<a href="https://github.com/sigven/cpsr/pull/62" class="external-link">pr62</a>)</li>
-<li><a href="https://sigven.github.io/cpsr/articles/CHANGELOG.html">CHANGELOG</a></li>
-</ul>
-</li>
-<li>
-<em>July 2024</em>: <strong>2.0.1 release</strong>
-<ul>
-<li>patch with bug fix for mitochondrial input variants (<a href="https://github.com/sigven/pcgr/pull/245" class="external-link">pr245</a>)</li>
 <li><a href="https://sigven.github.io/cpsr/articles/CHANGELOG.html">CHANGELOG</a></li>
 </ul>
 </li>
@@ -150,7 +145,7 @@
 <div class="section level3">
 <h3 id="example-report">Example report<a class="anchor" aria-label="anchor" href="#example-report"></a>
 </h3>
-<p><a href="https://doi.org/10.5281/zenodo.13855978" class="external-link"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.13855978.svg" alt="DOI"></a></p>
+<p><a href="https://doi.org/10.5281/zenodo.15050542" class="external-link"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.15050542.svg" alt="DOI"></a></p>
 </div>
 <div class="section level3">
 <h3 id="getting-started">Getting started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
