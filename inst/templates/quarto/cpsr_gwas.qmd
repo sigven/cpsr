@@ -70,8 +70,8 @@ DT::datatable(variants_gwas_cancer,
     "GENOTYPE",
     backgroundColor = 
       DT::styleEqual(
-        "hom_ref",
-        "grey"
+        cpsr::color_palette[['genotypes']][['levels']],
+        cpsr::color_palette[['genotypes']][['values']]
       )
   )
 

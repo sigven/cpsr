@@ -19,7 +19,7 @@ The user can flexibly choose the set of cancer predisposition genes for which in
 
 The user can choose from a range of pre-defined gene panels, selected from the following list of panel identifiers:
 
-- **0**:  [Exploratory panel - all cancer predisposition gene](https://sigven.github.io/cpsr/articles/virtual_panels.html)
+- **0**:  [Exploratory panel - all cancer predisposition genes](https://sigven.github.io/cpsr/articles/virtual_panels.html)
 - **1**:  [Adult solid tumours cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/245/)
 - **2**:  [Adult solid tumours for rare disease](https://panelapp.genomicsengland.co.uk/panels/391/)
 - **3**:  [Bladder cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/208/)
@@ -65,10 +65,11 @@ The user can choose from a range of pre-defined gene panels, selected from the f
 - **43**:  [Upper gastrointestinal cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/273/)
 - **44**:  [DNA repair genes pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/256/)
 
+<br>
 
 #### Custom-made virtual gene panels
 
-CPSR allows users to create custom virtual gene panels for reporting.  Any set of genes found in the [CPSR superpanel (panel 0)](virtual_panels.html#panel-0) can be used to design a custom virtual gene panel. Technically, the users need to create a simple one-column text file with Ensembl gene identifiers, and provide a name for the custom panel:
+CPSR allows users to create custom virtual gene panels for reporting.  Any set of genes found in the [CPSR superpanel (panel 0)](virtual_panels.html#panel-0) can be used to design a custom virtual gene panel. Technically, the users need to create a simple one-column text (TSV) file with Ensembl gene identifiers, and provide a name for the custom panel, using the following command line options:
 
 * `--custom_list <custom_list_tsv>`
 * `--custom_list_name <custom_list_name`
@@ -103,6 +104,8 @@ In the final classification, note that CPSR's classification will not overrule t
 By default, CPSR do not report variants in the input sample that are found in cancer predisposition genes, yet _not_ associated with diseases or syndromes that are cancer relevant. The user may choose to show all reported ClinVar variants in cancer predisposition genes through a dedicated option:
 
 * `--clinvar_report_noncancer`
+
+<br>
 
 ### Optional report contents
 
@@ -144,7 +147,7 @@ Panel options:
   --panel_id VIRTUAL_PANEL_ID
                         Comma-separated string with identifier(s) of predefined virtual cancer predisposition gene panels,
                         choose any combination of the following identifiers (GEP = Genomics England PanelApp):
-                        0 = CPSR exploratory cancer predisposition panel (PanelApp genes / TCGA's germline study / Cancer Gene Census / Other)
+                        0 = CPSR exploratory cancer predisposition panel (PanelApp genes / TCGA's germline study / Cancer Gene Census / Other )
                         1 = Adult solid tumours cancer susceptibility (GEP)
                         2 = Adult solid tumours for rare disease (GEP)
                         3 = Bladder cancer pertinent cancer susceptibility (GEP)
@@ -249,14 +252,15 @@ Report generation with the example VCF, using the [Adult solid tumours cancer su
 $ (base) conda activate pcgr
 $ (pcgr)
 cpsr \
-	 --input_vcf ~/cpsr-2.0.0/inst/examples/example.vcf.gz \
+	 --input_vcf ~/cpsr-2.2.0/inst/examples/example.vcf.gz \
 	 --vep_dir ~/.vep \
 	 --refdata_dir ~/pcgr_ref_data \
-	 --output_dir ~/cpsr-2.0.0/ \
+	 --output_dir ~/cpsr-2.2.0/ \
 	 --genome_assembly grch37 \
 	 --panel_id 1 \
 	 --sample_id example \
 	 --secondary_findings \
+	 --pgx_findings \
 	 --classify_all \
 	 --maf_upper_threshold 0.2 \
 	 --force_overwrite
@@ -273,7 +277,9 @@ This command will produce the following output files in the _output_ folder:
   5. __example.cpsr.grch37.xlsx__ - An Excel workbook that contains
       * _i)_ information on virtual gene panel interrogated for variants
       * _ii)_ classification of clinical significance for variants overlapping with cancer predisposition genes
-      * _iii)_ match of variants with existing biomarkers (if any found)
-      * _iv)_ secondary findings (if any found)
+      * _iii)_ secondary findings (if any found)
+      * _iv)_ match of variants with existing biomarkers (if any found)
+      * _v)_ overlap with pharmacogenomic variants (if any found)
+     
   6. __example.cpsr.grch37.html__ - Interactive HTML report with clinically relevant variants in cancer predisposition genes
   7. __example.cpsr.grch37.snvs_indels.classification.tsv.gz__ - TSV file with key annotations of germline SNVs/InDels classified according to clinical significance

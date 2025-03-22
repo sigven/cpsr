@@ -45,16 +45,17 @@ The report is structured in multiple sections, described briefly below:
 	    * Annotation resources
 	       * Information on annotation sources utilized by CPSR, including versions and licensing requirements
 	    * Variant classification
-	       * Overview of how CPSR performs variant classification of variants not recorded in ClinVar, listing ACMG criteria and associated scores
+	       * Overview of how CPSR performs variant annotation and classification of variants not recorded in ClinVar, 
+	         listing ACMG criteria and associated scores, calibration of classification thresholds etc.
   
   8. __References__
-	    * Supporting scientific literature - knowledge resources, guideline references etc.)
+	    * Supporting scientific literature - knowledge resources, guideline references etc.
 
 <br><br>
 
 ### Variant call format - VCF
 
-A VCF file containing annotated, germline calls (single nucleotide variants and insertions/deletions) is generated with the following naming convention:
+A VCF file containing annotated, germline variant calls (single nucleotide variants and insertions/deletions) is generated with the following naming convention:
 
 - `<sample_id>.cpsr.<genome_assembly>.vcf.gz (.tbi)`
   - The __sample_id__ is provided as input by the user, and reflects a unique identifier of the sample to be analyzed. Following common standards, the annotated VCF file is compressed with [bgzip](http://www.htslib.org/doc/bgzip.html) and indexed with [tabix](http://www.htslib.org/doc/tabix.html). Below follows a description of all annotations/tags present in the VCF INFO column after processing with the CPSR annotation pipeline:
@@ -322,6 +323,8 @@ be present if any data is found):
 
 ### Tab-separated values - TSV
 
+#### _Variant classification_
+
 We provide a compressed tab-separated values file with variant classifications and the most essential variant/gene annotations. The file has the following naming convention:
 
 - `<sample_id>.cpsr.<genome_assembly>.classification.tsv.gz`
@@ -402,6 +405,19 @@ The following variables are included in the tiered TSV file (VCF tags in the que
 | 68. `<CUSTOM_POPULATION_GNOMAD`> | Population specific MAF in gnomAD control (non-cancer, population configured by user) |
 
 **NOTE**: The user has the possibility to append the TSV file with data from other INFO tags in the input VCF (i.e. using the *--retained_info_tags* option)
+
+#### _Biomarker evidence_
+
+We provide a compressed tab-separated values file with variants implicated as germline biomarkers. The file has the following naming convention:
+
+- `<sample_id>.cpsr.<genome_assembly>.biomarker_evidence.tsv.gz`
+
+#### _Pharmacogenetic findings_
+
+We provide a compressed tab-separated values file with variants implicated with drug toxicity/dosage effects of cancer chemotherapies. The file has the following naming convention:
+
+- `<sample_id>.cpsr.<genome_assembly>.pgx_findings.tsv.gz`
+
 
 <br><br>
 

@@ -5,7 +5,7 @@ output: rmarkdown::html_document
 
 ## v2.2.0
 
-- Date: **2025-03-XX**
+- Date: **2025-03-22**
 - Major data updates
   - ClinVar (2025-03)
   - dbNSFP (v5.0)
@@ -14,7 +14,7 @@ output: rmarkdown::html_document
   - PanelApp (2025-02)
   - UniProt KB (2025-01)
   - Cancer Gene Census (v101)
-- Added more cancer susceptibility genes in panel zero (ATG12, BIK, CHD1L, CMTR2, 
+- Added more cancer susceptibility genes to panel zero (ATG12, BIK, CHD1L, CMTR2, 
 CPAP, HAVCR2, LLGL2, MYO3A, MYO5B, PAH, TTC7A)
 - Added a pharmacogenetic findings option (`--pgx_findings`), which will include pharmacogenetic findings in the HTML report (within the `Genomic biomarkers` section)
    - For now, this is implemented very simple, not considering star alleles, but merely focusing on pathogenic variants or drug-response related variants in DPYD, TPMT, and NUDT15

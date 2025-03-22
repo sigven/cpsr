@@ -260,6 +260,25 @@ write_cpsr_output <- function(report,
         ".classification.tsv.gz"
       )
     )
+  fnames[["tsv_bm"]] <-
+    file.path(
+      output_dir,
+      paste0(
+        sample_fname_pattern,
+        ".biomarker_evidence.tsv.gz"
+      )
+    )
+
+  fnames[["tsv_pgx"]] <-
+    file.path(
+      output_dir,
+      paste0(
+        sample_fname_pattern,
+        ".pgx_findings.tsv.gz"
+      )
+    )
+
+
   fnames[["xlsx"]] <-
     file.path(
       output_dir,
@@ -372,12 +391,11 @@ write_cpsr_output <- function(report,
 
   if (output_format == "tsv") {
     if (NROW(
-      report[["content"]][["snv_indel"]]$callset$tsv
-    ) > 0) {
+      report[["content"]][["snv_indel"]]$callset$tsv) > 0) {
       pcgrr::log4r_info("------")
       pcgrr::log4r_info(
         paste0(
-          "Generating SNV/InDel tab-separated values file (.tsv.gz) ",
+          "Generating tab-separated values file (.tsv.gz) ",
           "with variant findings"
         )
       )
@@ -389,6 +407,57 @@ write_cpsr_output <- function(report,
         na = "."
       )
     }
+    ## Biomarker TSV
+    if (NROW(report$content$snv_indel$callset$variant$bm) > 0) {
+      biomarker_tsv <- report$content$snv_indel$callset$variant$bm |>
+        dplyr::mutate(
+          BM_MOLECULAR_PROFILE = pcgrr::strip_html(
+            .data$BM_MOLECULAR_PROFILE
+          )
+        ) |>
+        dplyr::select(
+          dplyr::any_of(
+            cpsr::col_format_output[["xlsx_biomarker"]]
+          ))
+
+      pcgrr::log4r_info("------")
+      pcgrr::log4r_info(
+        paste0(
+          "Generating tab-separated values file (.tsv.gz) ",
+          "with biomarker evidence"
+        )
+      )
+      readr::write_tsv(
+        biomarker_tsv,
+        file = fnames[["tsv_bm"]],
+        col_names = T,
+        quote = "none",
+        na = "."
+      )
+    }
+
+    if (NROW(report[["content"]]$snv_indel$callset$variant$pgx) > 0) {
+      pgx_tsv <- report[["content"]]$snv_indel$callset$variant$pgx |>
+        dplyr::select(
+          dplyr::any_of(
+            cpsr::col_format_output[["xlsx_pgx"]]
+          ))
+      pcgrr::log4r_info("------")
+      pcgrr::log4r_info(
+        paste0(
+          "Generating tab-separated values file (.tsv.gz) ",
+          "with pharmacogenomic evidence"
+        )
+      )
+      readr::write_tsv(
+        pgx_tsv,
+        file = fnames[["tsv_pgx"]],
+        col_names = T,
+        quote = "none",
+        na = "."
+      )
+    }
+
   }
 
   if (output_format == "xlsx") {
