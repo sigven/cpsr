@@ -398,7 +398,8 @@ The following variables are included in the tiered TSV file (VCF tags in the que
 | 61. `N_INSILICO_SPLICING_NEUTRAL` | Number of algorithms with splicing neutral prediction from dbscSNV |
 | 62. `N_INSILICO_SPLICING_AFFECTED` | Number of algorithms with splicing affected prediction from dbscSNV |
 | 63. `gnomADe_AF` | Global MAF in gnomAD (exome samples) |
-| 64. `FINAL_CLASSIFICATION` | Final variant classification, using either `CLINVAR_CLASSIFICATION` if variant is ClinVar-classified, or `CPSR_CLASSIFICATION` for novel variants |
+| 64. `FINAL_CLASSIFICATION` | Final variant classification, using either `CLINVAR_CLASSIFICATION` if variant is ClinVar-classified, or `CPSR_CLASSIFICATION` for novel variants. _Note_: ClinVar-classified
+variants annotated with _Drug Response_ or _Risk Factor_ clinical significance are provided a `VUS` final classification |
 | 65. `CPSR_CLASSIFICATION` | Variant clinical significance by CPSR's classification algorithm (P/LP/VUS/LB/B) |
 | 66. `CPSR_PATHOGENICITY_SCORE` | Aggregated pathogenicity score by CPSR's algorithm |
 | 67. `CPSR_CLASSIFICATION_CODE` | Combination of CPSR classification codes assigned to the variant (ACMG) |

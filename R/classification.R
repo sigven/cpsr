@@ -1082,6 +1082,19 @@ combine_novel_and_preclassified <-
           TRUE ~ as.character(NA)
         )
       ) |>
+      dplyr::mutate(FINAL_CLASSIFICATION = dplyr::if_else(
+        FINAL_CLASSIFICATION != "Benign" &
+          FINAL_CLASSIFICATION != "Likely_Benign" &
+          FINAL_CLASSIFICATION != "VUS" &
+          FINAL_CLASSIFICATION != "Likely_Pathogenic" &
+          FINAL_CLASSIFICATION != "Pathogenic",
+        "VUS",
+        as.character(FINAL_CLASSIFICATION)
+      )) |>
+      dplyr::mutate(FINAL_CLASSIFICATION = dplyr::if_else(
+        is.na(FINAL_CLASSIFICATION),"VUS",
+        as.character(FINAL_CLASSIFICATION)
+      )) |>
       dplyr::mutate(FINAL_CLASSIFICATION = factor(
         .data$FINAL_CLASSIFICATION,
         levels = c("Benign","Likely_Benign","VUS",

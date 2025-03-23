@@ -38,10 +38,12 @@ for (c in c("class1", "class2", "class3", "class4", "class5")) {
     show_class_filters[[c]][[m]] <- F
     missing_class_items[[c]][[m]] <- T
     if(NROW(callset_cpg) > 0){
-      if (NROW(callset_cpg[callset_cpg$CPSR_CLASSIFICATION_SOURCE == m & 
+      if (NROW(callset_cpg[callset_cpg$CPSR_CLASSIFICATION_SOURCE == m &
+                           !is.na(callset_cpg$FINAL_CLASSIFICATION) &
                            callset_cpg$FINAL_CLASSIFICATION == path_level,]) > 0) {
         tot_variants[[c]][[m]] <- 
-          NROW(callset_cpg[callset_cpg$CPSR_CLASSIFICATION_SOURCE == m & 
+          NROW(callset_cpg[callset_cpg$CPSR_CLASSIFICATION_SOURCE == m &
+                          !is.na(callset_cpg$FINAL_CLASSIFICATION) &
                            callset_cpg$FINAL_CLASSIFICATION == path_level,])
       }
       if (tot_variants[[c]][[m]] > 0) {
@@ -120,7 +122,7 @@ variants_class5_clinvar <-
   dplyr::filter(
     cps_report[["content"]][["snv_indel"]]$callset$variant_display$cpg_non_sf, 
     CPSR_CLASSIFICATION_SOURCE == "ClinVar" & 
-      CLINVAR_CLASSIFICATION == "Pathogenic") |>
+      FINAL_CLASSIFICATION == "Pathogenic") |>
   head(dt_max_rows) |>
   dplyr::select(
     -dplyr::any_of(
@@ -202,7 +204,7 @@ variants_class5_other <-
   dplyr::filter(
     cps_report[["content"]][["snv_indel"]]$callset$variant_display$cpg_non_sf, 
     CPSR_CLASSIFICATION_SOURCE == "CPSR_ACMG" & 
-      CPSR_CLASSIFICATION == "Pathogenic") |>
+      FINAL_CLASSIFICATION == "Pathogenic") |>
   head(dt_max_rows) |>
   dplyr::select(
     -dplyr::any_of(
@@ -309,7 +311,7 @@ variants_class4_clinvar <-
   dplyr::filter(
     cps_report[["content"]][["snv_indel"]]$callset$variant_display$cpg_non_sf, 
     CPSR_CLASSIFICATION_SOURCE == "ClinVar" & 
-      CLINVAR_CLASSIFICATION == "Likely_Pathogenic") |>
+      FINAL_CLASSIFICATION == "Likely_Pathogenic") |>
   head(dt_max_rows) |>
   dplyr::select(
     -dplyr::any_of(
@@ -410,7 +412,7 @@ variants_class4_other <-
   dplyr::filter(
     cps_report[["content"]][["snv_indel"]]$callset$variant_display$cpg_non_sf, 
     CPSR_CLASSIFICATION_SOURCE == "CPSR_ACMG" & 
-      CPSR_CLASSIFICATION == "Likely_Pathogenic") |>
+      FINAL_CLASSIFICATION == "Likely_Pathogenic") |>
   head(dt_max_rows) |>
   dplyr::select(
     -dplyr::any_of(
@@ -495,6 +497,12 @@ In order to maintain responsiveness of client-side data interaction, variants di
 
 :::
 
+::: {.callout-important title="Drug response and risk factor variants" collapse="true"}
+
+A minor proportion of all ClinVar-registered variants (some 0.07%) does not align with the five standard levels of clinical significance (Benign, Likely Benign, VUS, Pathogenic, Likely Pathogenic), specifically _Drug Response_ and _Risk Factor_ variants. These variants are organized in the __VUS__ tab, and <mark style="background-color:#ff7518; font-weight:bold; color:white">&nbsp; highlighted &nbsp;</mark> for convenience in the table below.
+
+:::
+
 <br>
 
 ::: {.panel-tabset}
@@ -528,7 +536,7 @@ variants_class3_clinvar <-
   dplyr::filter(
     cps_report[["content"]][["snv_indel"]]$callset$variant_display$cpg_non_sf, 
     CPSR_CLASSIFICATION_SOURCE == "ClinVar" & 
-      CLINVAR_CLASSIFICATION == "VUS") |>
+      FINAL_CLASSIFICATION == "VUS") |>
   head(dt_max_rows) |>
   dplyr::select(
     -dplyr::any_of(
@@ -585,7 +593,20 @@ DT::datatable(variants_class3_1,
       "}"
     )
   )
-)
+) |>
+  DT::formatStyle(
+    #color = "black",
+    columns = "SYMBOL",
+    valueColumns = "CLINVAR_CLASSIFICATION",
+    backgroundColor = DT::styleEqual(
+      c("Drug_Response","Risk_Factor","No_Classification", "VUS"),
+      c("#ff7518","#ff7518", "#FFFFFF", "#FFFFFF")
+    ),
+    color = DT::styleEqual(
+      c("Drug_Response","Risk_Factor","No_Classification", "VUS"),
+      c("#ffffff","#ffffff", "#000000", "#000000")
+    )
+  )
 
 htmltools::br()
 htmltools::br()
@@ -620,7 +641,7 @@ variants_class3_other <-
   dplyr::filter(
     cps_report[["content"]][["snv_indel"]]$callset$variant_display$cpg_non_sf, 
     CPSR_CLASSIFICATION_SOURCE == "CPSR_ACMG" & 
-      CPSR_CLASSIFICATION == "VUS") |>
+      FINAL_CLASSIFICATION == "VUS") |>
   head(dt_max_rows) |>
   dplyr::select(
     -dplyr::any_of(
@@ -740,7 +761,7 @@ variants_class2_clinvar <-
   dplyr::filter(
     cps_report[["content"]][["snv_indel"]]$callset$variant_display$cpg_non_sf, 
     CPSR_CLASSIFICATION_SOURCE == "ClinVar" & 
-      CLINVAR_CLASSIFICATION == "Likely_Benign") |>
+      FINAL_CLASSIFICATION == "Likely_Benign") |>
   head(dt_max_rows) |>
   dplyr::select(
     -dplyr::any_of(
@@ -826,7 +847,7 @@ variants_class2_other <-
   dplyr::filter(
     cps_report[["content"]][["snv_indel"]]$callset$variant_display$cpg_non_sf, 
     CPSR_CLASSIFICATION_SOURCE == "CPSR_ACMG" & 
-      CPSR_CLASSIFICATION == "Likely_Benign") |>
+      FINAL_CLASSIFICATION == "Likely_Benign") |>
   head(dt_max_rows) |>
   dplyr::select(
     -dplyr::any_of(
@@ -932,7 +953,7 @@ variants_class1_clinvar <-
   dplyr::filter(
     cps_report[["content"]][["snv_indel"]]$callset$variant_display$cpg_non_sf, 
     CPSR_CLASSIFICATION_SOURCE == "ClinVar" & 
-      CLINVAR_CLASSIFICATION == "Benign") |>
+      FINAL_CLASSIFICATION == "Benign") |>
   head(dt_max_rows) |>
   dplyr::select(
     -dplyr::any_of(
@@ -1020,7 +1041,7 @@ variants_class1_other <-
   dplyr::filter(
     cps_report[["content"]][["snv_indel"]]$callset$variant_display$cpg_non_sf, 
     CPSR_CLASSIFICATION_SOURCE == "CPSR_ACMG" & 
-      CPSR_CLASSIFICATION == "Benign") |>
+      FINAL_CLASSIFICATION == "Benign") |>
   head(dt_max_rows) |>
   dplyr::select(
     -dplyr::any_of(
