@@ -3,6 +3,11 @@ title: "Changelog"
 output: rmarkdown::html_document
 ---
 
+## v2.2.1
+
+- Date: **2025-03-23**
+- Patch to fix bug with non-standard ClinVar significance levels (Drug Response, Risk Factor)
+
 ## v2.2.0
 
 - Date: **2025-03-22**

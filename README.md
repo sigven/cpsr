@@ -18,7 +18,10 @@ Snapshots of sections in the [quarto](https://quarto.org)-based cancer predispos
 
 ## News
 
-*  *March 2025*: **2.2.0 release**
+*  *March 23rd 2025*: **2.2.1 release**
+    -  patch to fix bug with non-standard ClinVar significance levels (Drug Response, Risk Factor)
+
+*  *March 22nd 2025*: **2.2.0 release**
     -  more predisposition genes in panel zero 
     -  optional reporting of pharmacogenomics-related variants (TPMT, DPYD, NUDT15)
     -  [CHANGELOG](https://sigven.github.io/cpsr/articles/CHANGELOG.html)
