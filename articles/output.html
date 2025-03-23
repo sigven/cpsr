@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">CPSR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.2.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -1798,26 +1798,33 @@ dbscSNV</td>
 </td>
 <td>Final variant classification, using either
 <code>CLINVAR_CLASSIFICATION</code> if variant is ClinVar-classified, or
-<code>CPSR_CLASSIFICATION</code> for novel variants</td>
+<code>CPSR_CLASSIFICATION</code> for novel variants. <em>Note</em>:
+ClinVar-classified</td>
 </tr>
 <tr class="odd">
+<td>variants annotated with <em>Drug Response</em> or <em>Risk
+Factor</em> clinical significance are provided a <code>VUS</code> final
+classification</td>
+<td></td>
+</tr>
+<tr class="even">
 <td>65. <code>CPSR_CLASSIFICATION</code>
 </td>
 <td>Variant clinical significance by CPSR’s classification algorithm
 (P/LP/VUS/LB/B)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>66. <code>CPSR_PATHOGENICITY_SCORE</code>
 </td>
 <td>Aggregated pathogenicity score by CPSR’s algorithm</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>67. <code>CPSR_CLASSIFICATION_CODE</code>
 </td>
 <td>Combination of CPSR classification codes assigned to the variant
 (ACMG)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>68. <code>&lt;CUSTOM_POPULATION_GNOMAD</code>&gt;</td>
 <td>Population specific MAF in gnomAD control (non-cancer, population
 configured by user)</td>
