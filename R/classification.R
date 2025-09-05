@@ -943,7 +943,7 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
       TRUE, FALSE, FALSE))
 
   ## if previously found coinciding with pathogenic variant (ACMG_PS1),
-  # set ACMG_PM5 to false
+  # set ACMG_PM5 to false, if ACMG_PM6 was also true, set to false
   var_calls <- var_calls |>
     dplyr::mutate(
       ACMG_PM5 =
