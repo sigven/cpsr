@@ -217,12 +217,12 @@ col_format_output[['tsv']] <-
     "N_INSILICO_TOLERATED",
     "N_INSILICO_SPLICING_NEUTRAL",
     "N_INSILICO_SPLICING_AFFECTED",
-    "gnomADe_AF",
     "FINAL_CLASSIFICATION",
     "CPSR_CLASSIFICATION",
     "CPSR_PATHOGENICITY_SCORE",
     "CPSR_CLASSIFICATION_CODE",
-    "CPSR_CLASSIFICATION_SOURCE"
+    "CPSR_CLASSIFICATION_SOURCE",
+    "gnomADe_AF"
   )
 
 col_format_output[['html_bm']] <-
@@ -450,6 +450,9 @@ col_format_output[['xlsx_biomarker']] <-
 
 #---- acmg ----#
 acmg <- list()
+acmg[['gnomAD_pops']] <-
+  c("GLOBAL","NFE","AMR","AFR","SAS","EAS","FIN")
+
 acmg[["score2tier"]] <- data.frame()
 acmg[["evidence_codes"]] <-
   utils::read.table(file = "data-raw/acmg_evidence.tsv",
@@ -457,8 +460,8 @@ acmg[["evidence_codes"]] <-
                     comment.char = "", na.strings = c("NA"),
                     sep = "\t")
 acmg[["pathogenic_range_gnomad"]] <- list()
-acmg[["pathogenic_range_gnomad"]][["af"]] <- 0.0005
-acmg[["pathogenic_range_gnomad"]][["min_an"]] <- 12000
+acmg[["pathogenic_range_gnomad"]][["af"]] <- 0.00005
+acmg[["pathogenic_range_gnomad"]][["min_an"]] <- 4000
 acmg[["insilico_pred_min_majority"]] <- 8
 acmg[["insilico_pred_max_minority"]] <- 2
 
@@ -511,8 +514,10 @@ usethis::use_data(color_palette, overwrite = T)
 usethis::use_data(acmg, overwrite = T)
 usethis::use_data(col_format_output, overwrite = T)
 
-
-
+# #---- create CPSR curated transcripts ----#
+curated_transcripts <-
+  data.frame('symbol' = 'MEN1', id = 'NM_130803.3')
+usethis::use_data(curated_transcripts, overwrite = T)
 
 # my_log4r_layout <- function(level, ...) {
 #   paste0(format(Sys.time()), " - cpsr-report-generation - ",
@@ -532,7 +537,7 @@ usethis::use_data(col_format_output, overwrite = T)
 #     pcgr_db_assembly_dir =
 #       file.path(
 #         "/Users/sigven/project_data/data/data__pcgrdb/dev/pcgrdb",
-#         "20250314/data",
+#         "20250512/data",
 #         build),
 #     genome_assembly = build
 #   )
@@ -575,7 +580,7 @@ usethis::use_data(col_format_output, overwrite = T)
 #   panel_zero[[build]] <- dplyr::bind_rows(set1, set2) |>
 #     dplyr::mutate(
 #       PANEL_NAME = "CPSR superpanel of cancer predisposition genes",
-#       PANEL_VERSION = "v2025_03") |>
+#       PANEL_VERSION = "v2025_05") |>
 #     dplyr::rename(
 #       TUMOR_SUPPRESSOR = TSG,
 #       TUMOR_SUPPRESSOR_SUPPORT = TSG_SUPPORT
@@ -639,7 +644,7 @@ usethis::use_data(col_format_output, overwrite = T)
 #
 # openxlsx2::wb_save(
 #   wb = workbook,
-#   "pkgdown/assets/cpsr_superpanel_2025_03.xlsx",
+#   "pkgdown/assets/cpsr_superpanel_2025_05.xlsx",
 #   overwrite = TRUE)
 #
 # #

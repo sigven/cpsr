@@ -397,13 +397,12 @@ The following variables are included in the tiered TSV file (VCF tags in the que
 | 60. `N_INSILICO_TOLERATED` | Number of algorithms with tolerated prediction from dbNSFP |
 | 61. `N_INSILICO_SPLICING_NEUTRAL` | Number of algorithms with splicing neutral prediction from dbscSNV |
 | 62. `N_INSILICO_SPLICING_AFFECTED` | Number of algorithms with splicing affected prediction from dbscSNV |
-| 63. `gnomADe_AF` | Global MAF in gnomAD (exome samples) |
-| 64. `FINAL_CLASSIFICATION` | Final variant classification, using either `CLINVAR_CLASSIFICATION` if variant is ClinVar-classified, or `CPSR_CLASSIFICATION` for novel variants. _Note_: ClinVar-classified
-variants annotated with _Drug Response_ or _Risk Factor_ clinical significance are provided a `VUS` final classification |
-| 65. `CPSR_CLASSIFICATION` | Variant clinical significance by CPSR's classification algorithm (P/LP/VUS/LB/B) |
-| 66. `CPSR_PATHOGENICITY_SCORE` | Aggregated pathogenicity score by CPSR's algorithm |
-| 67. `CPSR_CLASSIFICATION_CODE` | Combination of CPSR classification codes assigned to the variant (ACMG) |
-| 68. `<CUSTOM_POPULATION_GNOMAD`> | Population specific MAF in gnomAD control (non-cancer, population configured by user) |
+| 63. `FINAL_CLASSIFICATION` | Final variant classification, using either `CLINVAR_CLASSIFICATION` if variant is ClinVar-classified, or `CPSR_CLASSIFICATION` for novel variants. _Note_: ClinVar-classified variants annotated with _Drug Response_ or _Risk Factor_ clinical significance are provided a `VUS` final classification |
+| 64. `CPSR_CLASSIFICATION` | Variant clinical significance by CPSR's classification algorithm (P/LP/VUS/LB/B) |
+| 65. `CPSR_PATHOGENICITY_SCORE` | Aggregated pathogenicity score by CPSR's algorithm |
+| 66. `CPSR_CLASSIFICATION_CODE` | Combination of CPSR classification codes assigned to the variant (ACMG) |
+| 67. `gnomADe_AF` | Global MAF in gnomAD controls (exome subset) |
+| 68. `gnomADe_non_cancer_<CUSTOM_POP>_AF`> | Population-specific MAF in gnomAD controls (exome subset, non-cancer subects only, population configured by user) |
 
 **NOTE**: The user has the possibility to append the TSV file with data from other INFO tags in the input VCF (i.e. using the *--retained_info_tags* option)
 

@@ -41,12 +41,15 @@ load_germline_snv_indel <- function(
 
   if(NROW(callset[['variant']]) > 0){
     callset[['variant']] <- callset[['variant']] |>
+      pcgrr::append_protein_domains(
+        ref_data = ref_data) |>
       cpsr::append_cpg_properties(ref_data = ref_data) |>
       cpsr::get_insilico_prediction_statistics() |>
       pcgrr::append_tfbs_annotation() |>
+      pcgrr::popmax_af_gnomad() |>
       pcgrr::append_gwas_citation_phenotype(
        ref_data = ref_data) |>
-      cpsr::assign_pathogenicity_evidence(
+      cpsr::assign_acmg_evidence(
         ref_data = ref_data,
         settings = settings) |>
       cpsr::assign_classification() |>
@@ -59,11 +62,12 @@ load_germline_snv_indel <- function(
 
 
     population_tags <- unique(
-      c("gnomADe_AF",
+      c("gnomADg_AF",
+        "gnomADe_AF",
         conf$variant_classification$vcftag_gnomad_AF)
     )
 
-    ## set missing population frequences to zero
+    ## set missing population frequencies to zero
     for (tag in population_tags) {
       if (tag %in% colnames(callset[['variant']])) {
         if (nrow(callset[['variant']][is.na(

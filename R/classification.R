@@ -9,6 +9,7 @@
 #' @export
 assign_classification <- function(var_calls) {
 
+
   evidence_codes <- cpsr::acmg[["evidence_codes"]]
 
   pcgrr::log4r_info(paste0(
@@ -192,538 +193,89 @@ assign_classification <- function(var_calls) {
 #' @return calls
 #'
 #' @export
-assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
+assign_acmg_evidence <- function(var_calls, settings, ref_data) {
 
   invisible(assertthat::assert_that(!is.null(var_calls)))
   invisible(assertthat::assert_that(!is.null(settings)))
   invisible(assertthat::assert_that(!is.null(settings$conf)))
-  invisible(assertthat::assert_that(!is.null(settings$conf$variant_classification)))
+  invisible(assertthat::assert_that(
+    !is.null(settings$conf$variant_classification)))
   invisible(assertthat::assert_that(!is.null(ref_data)))
   invisible(assertthat::assert_that(is.data.frame(var_calls)))
-  #pcgrr::validate_settings(settings)
 
   pcgrr::log4r_info(
     "Assigning variant classification codes according to refined ACMG criteria")
   classification_settings <-
     settings$conf$variant_classification
 
-  gad_population <- toupper(classification_settings[["pop_gnomad"]])
-  gad_AN_tag <- classification_settings[['vcftag_gnomad_AN']]
-  gad_AF_tag <- classification_settings[['vcftag_gnomad_AF']]
-  gad_NHOMALT_tag <- classification_settings[['vcftag_gnomad_NHOMALT']]
-  gad_AC_tag <- classification_settings[['vcftag_gnomad_AC']]
-
-  # pathogenic_range_ac <- 20
-  pathogenic_range_af <- cpsr::acmg[["pathogenic_range_gnomad"]][["af"]]
-  min_an <- cpsr::acmg[["pathogenic_range_gnomad"]][["min_an"]]
-
   acmg_ev_codes <-
     c(
-      "ACMG_BA1_AD",
-      ## Very high MAF (> 0.5% in gnomAD non-cancer pop subset) -
-      ## min AN = 12,000, - Dominant mechanism of disease
-      "ACMG_BS1_1_AD",
-      ## High MAF (> 0.1% in gnomAD non-cancer pop subset) -
-      ## min AN = 12,000 - Dominant mechanism of disease
-      "ACMG_BS1_2_AD",
-      ## Somewhat high MAF (> 0.005% in gnomAD non-cancer pop subset) -
-      ## min AN = 12,000 - Dominant mechanism of disease
-      "ACMG_BA1_AR",
-      ## Very high MAF (> 1% in gnomAD non-cancer pop subset) -
-      ## min AN = 12,000 - Recessive mechanism of disease
-      "ACMG_BS1_1_AR",
-      ## High MAF (> 0.3% in gnomAD non-cancer pop subset) -
-      ## min AN = 12,000 - Recessive mechanism of disease
-      "ACMG_BS1_2_AR",
-      ## Somewhat high MAF (> 0.005% in gnomAD non-cancer pop subset) -
-      ## min AN = 12,000 - Recessive mechanism of disease
-      # "ACMG_BS2_1",
-      ## 1 homozygote in gnomAD non-cancer pop subset -
-      ## severe, early onset, highly penetrant
-      # "ACMG_BS2_2",
-      ## 2 homozygotes in gnomAD non-cancer pop subset -
-      ## severe, early onset, highly penetrant
-      # "ACMG_BS2_3",
-      ## 2 homozygotes in gnomAD non-cancer pop subset -
-      ## moderate, early onset, variably penetrant
-      "ACMG_PM2_1",
-      ## Allele count within pathogenic range (MAF < 0.005% in the
-      ## population-specific non-cancer gnomAD subset, min AN = 12,000)
-      "ACMG_PM2_2",
-      ## Alternate allele absent in the population-specific
-      ## non-cancer gnomAD subset
-      "ACMG_PVS1_1",
-      ## Null variant - predicted as LoF - within pathogenic range
-      ## - LoF established for gene
-      "ACMG_PVS1_2",
-      ## Null variant - not predicted as LoF -
-      ## within pathogenic range - LoF established for gene
-      "ACMG_PVS1_3",
-      ## Null variant - predicted as LoF - within pathogenic range -
-      ## LoF not established for gene
-      "ACMG_PVS1_4",
-      ## Null variant - not predicted as LoF --
-      ## within pathogenic range - LoF not established for gene
-      "ACMG_PVS1_5",
-      ## start lost - within pathogenic range - Lof established for gene
-      "ACMG_PVS1_6",
-      ## start lost - within pathogenic range - LoF not established for gene
-      "ACMG_PVS1_7",
-      ## donor/acceptor variant - predicted as LoF -
-      ## within pathogenic range
-      ## - not last intron - LoF established for gene
-      "ACMG_PVS1_8",
-      ## donor/acceptor variant - last intron - within pathogenic range -
-      ## LoF established for gene
-      "ACMG_PVS1_9",
-      ## donor/acceptor variant - not last intron - within pathogenic range
-      ## - LoF not established for gene
-      "ACMG_PVS1_10",
-      ## donor variant at located at the +3, +4 or +5 position of the intron -
-      ## within the pathogenic range (i.e. MAF < 0.005% in gnOMAD))
+      "ACMG_PM1_MOD",
+      "ACMG_PM1_SUPP",
+      "ACMG_PM2_SUPP",
+      "ACMG_BA1",
+      "ACMG_BS1",
+      "ACMG_BS1_SUPP",
+      "ACMG_PVS1",
+      "ACMG_PVS1_STR",
+      "ACMG_PVS1_MOD",
       "ACMG_PS1",
-      ## Same amino acid change as a previously established pathogenic
-      ## variant (ClinVar) regardless of nucleotide change
-      "ACMG_PP2",
-      ## Missense variant in a gene that has a relatively low rate of
-      ## benign missense variation (<20%) and
-      ## where missense variants are a common mechanism of disease
-      ## (>50% of high-confidence pathogenic variants (ClinVar))
-      "ACMG_PM4",
-      ## Protein length changes due to inframe indels or nonstop variant
-      ## in non-repetitive regions of genes
-      ## that harbor variants with a dominant mode of inheritance.
-      "ACMG_PPC1",
-      ## Protein length changes due to inframe indels or nonstop variant
-      ## in non-repetitive regions of genes
-      ## that harbor variants with a recessive mode of inheritance.
-      "ACMG_PM5",
-      ## Novel missense change at an amino acid residue where a different
-      ## missense change determined to be pathogenic
-      ## has been seen before (ClinVar)
-      "ACMG_PM6",
-      ## Essential nucleotide - pathogenic nucleotides
       "ACMG_PP3",
-      ## Multiple lines of computational evidence support a
-      ## deleterious effect on the gene or gene product
-      ## (conservation, evolutionary, splicing impact, etc. - from dbNSFP
+      "ACMG_PS1",
+      "ACMG_PM5",
+      "ACMG_PP3",
       "ACMG_BP4",
-      ## Multiple lines of computational evidence support a benign
-      ## effect on the gene or gene product
-      ## (conservation, evolutionary, splicing impact, etc. - from dbNSFP
-      "ACMG_BMC1",
-      ## Peptide change is at the same location of a
-      ## known benign change (ClinVar)
-      "ACMG_BSC1",
-      ## Peptide change is reported as benign (ClinVar),
-      "ACMG_BP3",
-      ## Variants in promoter or untranslated regions
       "ACMG_BP7",
-      ## Silent/intronic variant outside of the splice site consensus
-      "ACMG_BP1"
     )
-  ## Missense variant in a gene for which primarily truncating
-  ## variants are known to cause disease (ClinVar)
 
+  var_calls <- var_calls[, !(colnames(var_calls) %in% acmg_ev_codes)]
 
-  path_columns <-
-    c(
-      acmg_ev_codes,
-      "CODON",
-      "PATHOGENIC_CODON",
-      "PATHOGENIC_PEPTIDE_CHANGE",
-      "BENIGN_CODON",
-      "BENIGN_PEPTIDE_CHANGE",
-      "hotspot_region",
-      "hotspot_symbol",
-      "hotspot_entrezgene",
-      "hotspot_codon",
-      "hotspot_aa",
-      "hotspot_pvalue"
-    )
-  var_calls <- var_calls[, !(colnames(var_calls) %in% path_columns)]
-
-  benign_peptide_changes <-
-    ref_data[['variant']][['clinvar_sites']] |>
-    dplyr::filter(.data$GOLD_STARS >= 2 & .data$BENIGN == 1) |>
-    dplyr::select(c("ENTREZGENE", "HGVSP", "BENIGN", "VAR_ID")) |>
-    dplyr::filter(!is.na(.data$ENTREZGENE) & !is.na(.data$HGVSP)) |>
-    dplyr::rename(BENIGN_PEPTIDE_CHANGE = .data$BENIGN,
-                  VAR_ID_BENIGN_CHANGE = .data$VAR_ID) |>
-    dplyr::distinct()
-
-  pathogenic_peptide_changes <-
-    ref_data[['variant']][['clinvar_sites']] |>
-    dplyr::filter(.data$GOLD_STARS >= 2 & .data$PATHOGENIC == 1) |>
-    dplyr::select(c("ENTREZGENE", "HGVSP", "PATHOGENIC", "VAR_ID")) |>
-    dplyr::filter(!is.na(.data$ENTREZGENE) & !is.na(.data$HGVSP)) |>
-    dplyr::rename("PATHOGENIC_PEPTIDE_CHANGE" = "PATHOGENIC",
-                  "VAR_ID_PATH_CHANGE" = "VAR_ID") |>
-    dplyr::distinct()
-
-  essential_nucleotides <-
-    ref_data[['variant']][['clinvar_sites']] |>
-    dplyr::filter(.data$GOLD_STARS >= 2 & .data$PATHOGENIC == 1) |>
-    dplyr::select(c("ENTREZGENE", "PATHOGENIC", "VAR_ID")) |>
-    dplyr::rename("ESSENTIAL_NUCLEOTIDE" = "PATHOGENIC") |>
-    tidyr::separate_rows(.data$VAR_ID, sep=";") |>
-    tidyr::separate(
-      "VAR_ID", c("CHROM","POS","REF","ALT"), sep="_", remove = F) |>
-    dplyr::mutate(NUC_SITE = paste(
-      .data$CHROM, .data$POS, .data$REF, sep="_"
-    )) |>
-    dplyr::filter(nchar(.data$REF) <= 2) |>
-    dplyr::select(
-      c("ENTREZGENE","NUC_SITE", "ESSENTIAL_NUCLEOTIDE")
-    ) |>
-    dplyr::distinct()
-
-
-  benign_codons <- as.data.frame(
-    ref_data[['variant']][['clinvar_sites']] |>
-      dplyr::filter(.data$GOLD_STARS >= 2 & .data$BENIGN == 1) |>
-      dplyr::select(c("ENTREZGENE", "CODON", "BENIGN", "VAR_ID")) |>
-      tidyr::separate_rows("VAR_ID", sep=";") |>
-      dplyr::filter(!is.na(.data$ENTREZGENE) & !is.na(.data$CODON)) |>
-      dplyr::distinct() |>
-      dplyr::group_by(.data$ENTREZGENE, .data$CODON) |>
-      dplyr::reframe(
-        VAR_ID = paste(unique(.data$VAR_ID), collapse=";"),
-        BENIGN = paste(unique(.data$BENIGN), collapse=";")) |>
-      dplyr::rename(
-        "BENIGN_CODON" = "BENIGN",
-        "VAR_ID_BENIGN_CODON" = "VAR_ID") |>
-      dplyr::distinct()
-  )
-
-  pathogenic_codons <-
-    ref_data[['variant']][['clinvar_sites']] |>
-    dplyr::filter(
-      .data$GOLD_STARS >= 2 & .data$PATHOGENIC == 1) |>
-    dplyr::select(
-      c("ENTREZGENE", "CODON", "PATHOGENIC", "VAR_ID")) |>
-    tidyr::separate_rows("VAR_ID", sep=";") |>
-    dplyr::filter(
-      !is.na(.data$ENTREZGENE) & !is.na(.data$CODON)) |>
-    dplyr::distinct() |>
-    dplyr::group_by(.data$ENTREZGENE,  .data$CODON) |>
-    dplyr::reframe(
-      VAR_ID = paste(unique(.data$VAR_ID), collapse=";"),
-      PATHOGENIC = paste(
-        unique(.data$PATHOGENIC), collapse=";")) |>
-    dplyr::rename(
-      "PATHOGENIC_CODON" = "PATHOGENIC",
-      "VAR_ID_PATH_CODON" = "VAR_ID") |>
-    dplyr::distinct()
-
-  ## Assign logical ACMG evidence indicators
-  #
-  #
-  # ACMG_PP3 - Multiple lines (>=8) of insilico evidence support a
-  #             deleterious effect on the gene or gene product
-  ##           (conservation, evolutionary, splicing impact, etc.)
-  # ACMG_BP4 - Multiple lines (>=8) of insilico evidence support a benign effect.
-  #
-  # Computational evidence for deleterious/benign effect is taken from
-  # invidual algorithm predictions in dbNSFP: SIFT,Provean,MutationTaster,
-  # MutationAssessor,M_CAP,MutPred,FATHMM_XF, DBNSFP_RNN,dbscSNV_RF,
-  # dbscSNV_AdaBoost, AlphaMissense, ClinPred, phactBOOST, PrimateAI, REVEL,
-  # Default scheme (from default TOML file):
-  # 1) Damaging: Among all possible protein variant effect predictions, at
-  #              least six algorithms must have made a call,
-  #              with at least 8 predicted as damaging/D
-  #              (possibly_damaging/PD), and at most two
-  #              predicted as tolerated/T (PP3)
-  #       - at most 1 prediction for a splicing neutral effect
-  #    Exception: if both splice site predictions indicate damaging effects;
-  #    ignore other criteria
-  # 2) Tolerated: Among all possible protein variant effect predictions, at
-  #    least six algorithms must have made a call,
-  #    with at least 8 predicted as tolerated, and at most 2
-  #    predicted as damaging (BP4)
-  #    - 0 predictions of splice site affected
-
-  dbnsfp_min_majority <- cpsr::acmg[["insilico_pred_min_majority"]]
-  dbnsfp_max_minority <- cpsr::acmg[["insilico_pred_max_minority"]]
-  dbnsfp_min_called <- dbnsfp_min_majority
-
-  var_calls <- var_calls |>
-    dplyr::mutate(
-      ACMG_PP3 =
-        dplyr::if_else(
-          .data$N_INSILICO_CALLED >= dbnsfp_min_called &
-            .data$N_INSILICO_DAMAGING >= dbnsfp_min_majority &
-            .data$N_INSILICO_TOLERATED <= dbnsfp_max_minority &
-            .data$N_INSILICO_SPLICING_NEUTRAL <= 1, TRUE,
-          FALSE, FALSE
-        )
-    ) |>
-    dplyr::mutate(
-      ACMG_BP4 = dplyr::if_else(
-        .data$N_INSILICO_CALLED >= dbnsfp_min_called &
-          .data$N_INSILICO_TOLERATED >= dbnsfp_min_majority &
-          .data$N_INSILICO_DAMAGING <= dbnsfp_max_minority &
-          .data$N_INSILICO_SPLICING_AFFECTED == 0, TRUE,
-        FALSE, FALSE
-      )
-    ) |>
-    dplyr::mutate(ACMG_PP3 = dplyr::case_when(
-      .data$N_INSILICO_SPLICING_AFFECTED == 2 ~ TRUE,
-      TRUE ~ as.logical(.data$ACMG_PP3)
-    ))
-
-  ## Assign logical ACMG evidence indicators based on population frequency
-  ## data in non-cancer samples from gnomAD (Dominant vs. recessive
-  ## modes of inheritance)
-  # 'ACMG_BA1_AD'   - Very high MAF (> 0.5% in gnomAD non-cancer pop subset) -
-  #                   min AN = 12,000 - Dominant mechanism of disease
-  # 'ACMG_BS1_1_AD' - High MAF (> 0.1% in gnomAD non-cancer pop subset) -
-  #                   min AN = 12,000 - Dominant mechanism of disease
-  # 'ACMG_BS1_2_AD' - Somewhat high MAF (> 0.005% in gnomAD non-cancer pop
-  #                   subset) - Dominant mechanism of disease
-  # 'ACMG_BA1_AR'   - Very high MAF (> 1% in gnomAD non-cancer pop subset) -
-  #                   min AN = 12,000 - Recessive mechanism of disease
-  # 'ACMG_BS1_1_AR' - High MAF (> 0.3% in gnomAD non-cancer pop subset) -
-  #                   min AN = 12,000 - Recessive mechanism of disease
-  # 'ACMG_BS1_2_AR' - Somewhat high MAF (> 0.005% in gnomAD non-cancer pop
-  #                   subset) - Recessive mechanism of disease
-  # 'ACMG_PM2_1'    - Allele count within pathogenic range (MAF <= 0.005%
-  #                   in the population-specific non-cancer gnomAD subset,
-  #                   min AN = 12,000)
-  # 'ACMG_PM2_2'    - Alternate allele absent in the population-specific
-  #                   non-cancer gnomAD subset
-  if (gad_AN_tag %in% colnames(var_calls) &
-      gad_AC_tag %in% colnames(var_calls) &
-      gad_NHOMALT_tag %in% colnames(var_calls)) {
-
+  if("CONSEQUENCE" %in% colnames(var_calls) &
+     "HGVSP" %in% colnames(var_calls) &
+     "HGVSp" %in% colnames(var_calls) &
+     "ENTREZGENE" %in% colnames(var_calls)){
     var_calls <- var_calls |>
       dplyr::mutate(
-        gad_af =
-          dplyr::if_else(
-            !!rlang::sym(gad_AN_tag) >= min_an,
-            as.double(!!rlang::sym(gad_AC_tag) /
-                        !!rlang::sym(gad_AN_tag)),
-            as.double(NA), as.double(NA)
-          )
-      ) |>
-      dplyr::mutate(
-        ACMG_PM2_1 =
-          dplyr::if_else(
-            !!rlang::sym(gad_AN_tag) >= min_an &
-              !is.na(!!rlang::sym(gad_AC_tag)) &
-              .data$gad_af <= pathogenic_range_af,
-            TRUE, FALSE, FALSE
-          )
-      ) |>
-      dplyr::mutate(
-        ACMG_PM2_2 = dplyr::if_else(
-          is.na(!!rlang::sym(gad_AC_tag)),
-                                    TRUE, FALSE, FALSE
+        CODON = dplyr::if_else(
+          !is.na(.data$CONSEQUENCE) &
+            stringr::str_detect(
+              .data$CONSEQUENCE,
+              "^missense_variant"
+            ) &
+            !is.na(.data$ENTREZGENE) &
+            !is.na(.data$HGVSP),
+          stringr::str_match(
+            .data$HGVSP,
+            "p\\.[A-Z]{1}[0-9]{1,}"
+          )[,1],
+          as.character(NA)
         )
       ) |>
-      dplyr::mutate(
-        ACMG_BA1_AD = dplyr::if_else(
-          .data$ACMG_PM2_2 == FALSE &
-            .data$gad_af >= 0.005 &
-            .data$CPG_MOI == "AD",
-          TRUE, FALSE, FALSE
-        )
-      ) |>
-      dplyr::mutate(
-        ACMG_BS1_1_AD = dplyr::if_else(
-          .data$ACMG_BA1_AD == FALSE &
-            .data$ACMG_PM2_2 == FALSE &
-            .data$gad_af >= 0.001 &
-            .data$CPG_MOI == "AD",
-          TRUE, FALSE, FALSE
-        )
-      ) |>
-      dplyr::mutate(
-        ACMG_BS1_2_AD = dplyr::if_else(
-          .data$ACMG_BS1_1_AD == FALSE &
-            .data$ACMG_BA1_AD == FALSE &
-            .data$ACMG_PM2_2 == FALSE &
-            .data$gad_af > pathogenic_range_af &
-            .data$CPG_MOI == "AD",
-          TRUE, FALSE, FALSE
-        )
-      ) |>
-      dplyr::mutate(
-        ACMG_BA1_AR = dplyr::if_else(
-          .data$ACMG_PM2_2 == FALSE &
-            .data$gad_af >= 0.01 &
-            (.data$CPG_MOI == "AR" |
-               is.na(.data$CPG_MOI)),
-          TRUE, FALSE, FALSE
-        )
-      ) |>
-      dplyr::mutate(
-        ACMG_BS1_1_AR = dplyr::if_else(
-          .data$ACMG_BA1_AR == FALSE &
-            .data$ACMG_PM2_2 == FALSE &
-            .data$gad_af >= 0.003 &
-            (.data$CPG_MOI == "AR" |
-               is.na(.data$CPG_MOI)),
-          TRUE, FALSE, FALSE
-        )
-      ) |>
-      dplyr::mutate(
-        ACMG_BS1_2_AR = dplyr::if_else(
-          .data$ACMG_BA1_AR == FALSE &
-            .data$ACMG_BS1_1_AR == FALSE &
-            .data$ACMG_PM2_2 == FALSE &
-            .data$gad_af > pathogenic_range_af &
-            (.data$CPG_MOI == "AR" |
-               is.na(.data$CPG_MOI)),
-          TRUE, FALSE, FALSE
-        )
-      )
+      tidyr::separate(
+        "HGVSp",c("tmpENSP","HGVSp_long"),sep=":", remove = F) |>
+      dplyr::rename("HGVSP_query" = "HGVSp_long") |>
+      dplyr::select(-c("tmpENSP"))
   }
 
-  ## Assign logical ACMG evidence indicators on NULL variants in known
-  # predisposition genes (LoF established as mechanism of disease or not,
-  # presumed loss of mRNA/protein (LOFTEE) or not)
-  #
-  # 'ACMG_PVS1_1' - Null variant (frameshift, nonsense) -
-  #  predicted as LoF - within pathogenic range - LoF established
-  # 'ACMG_PVS1_2' - Null variant (frameshift, nonsense) -
-  # not predicted as LoF - within pathogenic range - LoF established
-  # 'ACMG_PVS1_3' - Null variant (frameshift, nonsense) -
-  # predicted as LoF - within pathogenic range - LoF not established
-  # 'ACMG_PVS1_4' - Null variant (frameshift, nonsense) -
-  # not predicted as LoF -- within pathogenic range - LoF not
-  # established for gene
-  # 'ACMG_PVS1_5' - start lost - within pathogenic range - Lof established
-  # 'ACMG_PVS1_6' - start lost - within pathogenic range - LoF not established
-  # 'ACMG_PVS1_7' - splice acceptor/donor variant - predicted as LoF
-  # - not last intron - within pathogenic range - Lof established
-  # 'ACMG_PVS1_8' - splice acceptor/donor variant - predicted as LoF
-  # - last intron - within pathogenic range - Lof established
-  # 'ACMG_PVS1_9' - splice acceptor/donor variant - predicted as LoF
-  # - not last intron - within pathogenic range - Lof established
-  # 'ACMG_PVS1_10' - splice variant involving a donor at +3A/G, +4A or +5G -
-  # predicted as damaging by insilico predictions - within pathogenic range
+  known_sites <- cpsr::known_path_benign_sites(
+    ref_data = ref_data
+  )
 
-  var_calls <- var_calls |>
-    dplyr::mutate(
-      ACMG_PVS1_1 =
-        dplyr::if_else(
-          .data$NULL_VARIANT == T &
-            .data$LOSS_OF_FUNCTION == T &
-            .data$CPG_MOD == "LoF" &
-            (.data$ACMG_PM2_1 == TRUE |
-               .data$ACMG_PM2_2 == TRUE),
-          TRUE, FALSE, FALSE
-        )
-    ) |>
-    dplyr::mutate(
-      ACMG_PVS1_3 =
-        dplyr::if_else(
-          .data$NULL_VARIANT == T &
-            .data$LOSS_OF_FUNCTION == T &
-            (is.na(.data$CPG_MOD) |
-               .data$CPG_MOD != "LoF") &
-            (.data$ACMG_PM2_1 == TRUE |
-               .data$ACMG_PM2_2 == TRUE),
-          TRUE, FALSE, FALSE
-        )
-    ) |>
-    dplyr::mutate(
-      ACMG_PVS1_2 =
-        dplyr::if_else(
-          .data$NULL_VARIANT == T &
-            .data$LOSS_OF_FUNCTION == F &
-            .data$CPG_MOD == "LoF" &
-            (.data$ACMG_PM2_1 == TRUE |
-               .data$ACMG_PM2_2 == TRUE),
-          TRUE, FALSE, FALSE
-        )
-    ) |>
-    dplyr::mutate(
-      ACMG_PVS1_4 =
-        dplyr::if_else(
-          .data$NULL_VARIANT == T &
-            .data$LOSS_OF_FUNCTION == F &
-            (is.na(.data$CPG_MOD) |
-               .data$CPG_MOD != "LoF") &
-            (.data$ACMG_PM2_1 == TRUE |
-               .data$ACMG_PM2_2 == TRUE),
-          TRUE, FALSE, FALSE
-        )
-    ) |>
-    dplyr::mutate(
-      ACMG_PVS1_5 =
-        dplyr::if_else(
-          .data$CONSEQUENCE == "start_lost" &
-            .data$CPG_MOD == "LoF" &
-            (.data$ACMG_PM2_1 == TRUE |
-               .data$ACMG_PM2_2 == TRUE),
-          TRUE, FALSE, FALSE
-        )
-    ) |>
-    dplyr::mutate(
-      ACMG_PVS1_6 =
-        dplyr::if_else(
-          .data$CONSEQUENCE == "start_lost" &
-            (is.na(.data$CPG_MOD) |
-               .data$CPG_MOD != "LoF") &
-            (.data$ACMG_PM2_1 == TRUE |
-               .data$ACMG_PM2_2 == TRUE),
-          TRUE, FALSE, FALSE
-        )
-    ) |>
-    dplyr::mutate(
-      ACMG_PVS1_7 =
-        dplyr::if_else(
-          .data$LOSS_OF_FUNCTION == T &
-            stringr::str_detect(
-              .data$CONSEQUENCE, "_donor|_acceptor") &
-            .data$LAST_INTRON == F &
-            .data$CPG_MOD == "LoF" &
-            (.data$ACMG_PM2_1 == TRUE |
-               .data$ACMG_PM2_2 == TRUE),
-          TRUE, FALSE, FALSE
-        )
-    ) |>
-    dplyr::mutate(
-      ACMG_PVS1_8 =
-        dplyr::if_else(
-          .data$LOSS_OF_FUNCTION == T &
-            stringr::str_detect(
-              .data$CONSEQUENCE, "_donor|_acceptor") &
-            .data$LAST_INTRON == T &
-            .data$CPG_MOD == "LoF" &
-            (.data$ACMG_PM2_1 == TRUE |
-               .data$ACMG_PM2_2 == TRUE),
-          TRUE, FALSE, FALSE
-        )
-    ) |>
-    dplyr::mutate(
-      ACMG_PVS1_9 =
-        dplyr::if_else(
-          .data$LOSS_OF_FUNCTION == T &
-            stringr::str_detect(
-              .data$CONSEQUENCE, "_donor|_acceptor") &
-            .data$LAST_INTRON == F
-          & (is.na(.data$CPG_MOD) |
-               .data$CPG_MOD != "LoF") &
-            (.data$ACMG_PM2_1 == TRUE |
-               .data$ACMG_PM2_2 == TRUE),
-          TRUE, FALSE, FALSE
-        )
-    ) |>
-    dplyr::mutate(
-      ACMG_PVS1_10 =
-        dplyr::if_else(
-          .data$SPLICE_DONOR_RELEVANT == T &
-            .data$ACMG_PP3 == TRUE &
-            (.data$ACMG_PM2_1 == TRUE |
-               .data$ACMG_PM2_2 == TRUE),
-          TRUE, FALSE, FALSE
-        )
+  var_calls3 <- var_calls |>
+    cpsr::assign_BA1_evidence() |>
+    cpsr::assign_BS1_evidence() |>
+    cpsr::assign_PM2_evidence() |>
+    cpsr::assign_PM1_evidence() |>
+    cpsr::assign_PVS1_evidence() |>
+    cpsr::assign_PP3_evidence() |>
+    cpsr::assign_BP4_evidence() |>
+    cpsr::assign_PM5_evidence(
+      pathogenic_codons = known_sites[['pathogenic_codon']]) |>
+    cpsr::assign_PS1_evidence(
+      pathogenic_codons = known_sites[['pathogenic_codon']],
+      pathogenic_nucleotides =
+        known_sites[['pathogenic_nucleotide']]
     )
-
-
 
   # Assign logical ACMG evidence indicators
   # # TODO - BA1 -  exceptions for high population germline frequency
@@ -734,9 +286,6 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
   # inframe indels or nonstop variant of genes that harbor variants with
   # a dominant mode of inheritance
   #
-  # PPC1 - Protein length changes (in non-repetitive regions) due to
-  # inframe indels or nonstop variant of genes that harbor variants with a
-  # recessive mode of inheritance (and unknown CPG_MOI) - PPC1
   if ("RMSK_HIT" %in% colnames(var_calls)) {
     var_calls <- var_calls |>
       dplyr::mutate(
@@ -747,18 +296,6 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
               "stop_lost|inframe_deletion|inframe_insertion") &
               is.na(.data$RMSK_HIT) &
               .data$CPG_MOI == "AD",
-            TRUE, FALSE, FALSE
-          )
-      ) |>
-      dplyr::mutate(
-        ACMG_PPC1 =
-          dplyr::if_else(
-            stringr::str_detect(
-              .data$CONSEQUENCE,
-              "stop_lost|inframe_deletion|inframe_insertion") &
-              is.na(.data$RMSK_HIT) &
-              (.data$CPG_MOI == "AR" |
-                 is.na(.data$CPG_MOI)),
             TRUE, FALSE, FALSE
           )
       )
@@ -796,235 +333,216 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
         )
     )
 
-  ## Assign a logical ACMG evidence indicator
-  # ACMG_BP7 - Silent/intronic variant outside of the splice site consensus
-  var_calls <- var_calls |>
-    dplyr::mutate(
-      ACMG_BP7 =
-        dplyr::if_else((
-          (as.integer(.data$INTRON_POSITION) < 0 &
-             as.integer(.data$INTRON_POSITION) < -3) |
-            (as.integer(.data$INTRON_POSITION) > 0 &
-               as.integer(.data$INTRON_POSITION) > 6) |
-            (as.integer(.data$EXON_POSITION) < 0 &
-               as.integer(.data$EXON_POSITION) < -2) |
-            (as.integer(.data$EXON_POSITION) > 0 &
-               as.integer(.data$EXON_POSITION) > 1)) &
-            !stringr::str_detect(
-              .data$CONSEQUENCE,
-              "splice_(acceptor|donor)|stop_gained"
-            ) &
-            stringr::str_detect(
-              .data$CONSEQUENCE,
-              paste0(
-                "^(synonymous_variant|intron_variant|",
-                "splice_region_variant)")
-            ),
-          TRUE, FALSE, FALSE
-        )
-    )
 
-  ## Assign a logical ACMG evidence indicator
-  # ACMG_BP3 - Variants in promoter or untranslated regions
-  var_calls <- var_calls |>
-    dplyr::mutate(
-      ACMG_BP3 =
-        dplyr::if_else(
-          stringr::str_detect(
-            .data$CONSEQUENCE,
-            "^(downstream|upstream|5_prime_UTR_variant|3_prime_UTR_variant)"
-          ),
-          TRUE, FALSE, FALSE
-        )
-    )
-
-
-  ## Assign logical ACMG evidence indicators
-  # ACMG_PS1 - coinciding with known pathogenic missense variants
-  # (yet with different nucleotide change)
-  # ACMG_PM5 - occurs at the same codon as a known pathogenic missense variant
-  # ACMG_BSC1 - coinciding with known benign missense variants
-  # ACMG_BMC1 - occurs at the same codon as a known benign missense variant
-
-  var_calls$ACMG_PM6 <- FALSE
-  var_calls$ACMG_PM5 <- FALSE
-  var_calls$ACMG_BMC1 <- FALSE
-  var_calls$ACMG_PS1 <- FALSE
-  var_calls$ACMG_BSC1 <- FALSE
-
-  var_calls <- var_calls |>
-    dplyr::mutate(
-      NUC_SITE = paste(
-        CHROM, POS, REF, sep="_"
-      )
-    ) |>
-    dplyr::mutate(
-      CODON = dplyr::if_else(
-        !is.na(.data$CONSEQUENCE) &
-          stringr::str_detect(
-            .data$CONSEQUENCE,
-            "^missense_variant"
-          ) &
-          !is.na(.data$ENTREZGENE) &
-          !is.na(.data$HGVSP),
-        stringr::str_match(
-          .data$HGVSP,
-          "p\\.[A-Z]{1}[0-9]{1,}"
-        )[,1],
-        as.character(NA)
-      )
-    ) |>
-    tidyr::separate(
-      "HGVSp",c("tmpENSP","HGVSp_long"),sep=":", remove = F) |>
-    dplyr::left_join(
-      essential_nucleotides,
-      by = c("ENTREZGENE", "NUC_SITE")
-    ) |>
-    dplyr::left_join(
-      pathogenic_codons,
-      by = c("ENTREZGENE","CODON")) |>
-    dplyr::left_join(
-      pathogenic_peptide_changes,
-      by = c("ENTREZGENE" = "ENTREZGENE",
-             "HGVSp_long" = "HGVSP")) |>
-    dplyr::left_join(
-      benign_peptide_changes,
-      by = c("ENTREZGENE" = "ENTREZGENE",
-             "HGVSp_long" = "HGVSP")) |>
-    dplyr::left_join(
-      benign_codons,
-      by = c("ENTREZGENE","CODON")) |>
-    dplyr::rename(
-      "HGVSp_short" = "HGVSP"
-    ) |>
-    dplyr::select(
-      -c("HGVSp_long","tmpENSP")
-    ) |>
-
-    ## at same codon, but not the same variant (VAR_ID)
-    dplyr::mutate(ACMG_PM5 = dplyr::if_else(
-      !is.na(.data$PATHOGENIC_CODON) &
-      !is.na(.data$VAR_ID_PATH_CODON) &
-        !stringr::str_detect(
-        .data$VAR_ID_PATH_CODON, .data$VAR_ID),
-      TRUE, FALSE, FALSE
-    )) |>
-    dplyr::mutate(ACMG_PM6 = dplyr::if_else(
-      !is.na(.data$ESSENTIAL_NUCLEOTIDE),
-      TRUE, FALSE, FALSE
-    )) |>
-    dplyr::mutate(ACMG_BMC1 = dplyr::if_else(
-      !is.na(.data$BENIGN_CODON) &
-        !is.na(.data$VAR_ID_BENIGN_CODON) &
-        !stringr::str_detect(
-          .data$VAR_ID_BENIGN_CODON, .data$VAR_ID),
-      TRUE, FALSE, FALSE
-    )) |>
-
-    ## identical amino acid change, different variant (VAR_ID)
-    dplyr::mutate(ACMG_PS1 = dplyr::if_else(
-      !is.na(.data$PATHOGENIC_PEPTIDE_CHANGE) &
-        !is.na(.data$VAR_ID_PATH_CHANGE) &
-        !stringr::str_detect(
-         .data$VAR_ID_PATH_CHANGE, .data$VAR_ID),
-      TRUE, FALSE, FALSE)) |>
-    dplyr::mutate(ACMG_BSC1 = dplyr::if_else(
-      !is.na(.data$BENIGN_PEPTIDE_CHANGE) &
-        !is.na(.data$VAR_ID_BENIGN_CHANGE) &
-        !stringr::str_detect(
-          .data$VAR_ID_BENIGN_CHANGE, .data$VAR_ID),
-      TRUE, FALSE, FALSE))
-
-  ## if previously found coinciding with pathogenic variant (ACMG_PS1),
-  # set ACMG_PM5 to false
-  var_calls <- var_calls |>
-    dplyr::mutate(
-      ACMG_PM5 =
-        dplyr::case_when(
-          .data$ACMG_PM5 == T &
-            .data$ACMG_PS1 == T ~ FALSE,
-          TRUE ~ as.logical(.data$ACMG_PM5)
-        )
-    ) |>
-    ## if previously found coinciding with benign variant (ACMG_BSC1),
-    ##  set ACMG_BMC1 to false
-    dplyr::mutate(
-      ACMG_BMC1 =
-        dplyr::case_when(
-          .data$ACMG_BMC1 == T &
-            .data$ACMG_BSC1 == T ~ FALSE,
-          TRUE ~ as.logical(.data$ACMG_BMC1)
-        )
-    )
-
-  ## Assign logical ACMG level
-  # PM1 - missense variant in a somatic mutation hotspot as
-  # determined by cancerhotspots.org (v2)
-  var_calls$ACMG_PM1 <- FALSE
-  if(NROW(var_calls[!is.na(var_calls$MUTATION_HOTSPOT),]) > 0){
-    var_calls <- var_calls |>
-      tidyr::separate(
-        .data$MUTATION_HOTSPOT,
-        c("hotspot_region",
-          "hotspot_symbol",
-          "hotspot_entrezgene",
-          "hotspot_codon",
-          "hotspot_aa",
-          "hotspot_pvalue"),
-        sep = "\\|", remove = F, extra = "drop"
-      ) |>
-      dplyr::mutate(
-        hotspot_entrezgene = as.character(
-          .data$hotspot_entrezgene)
-      ) |>
-      dplyr::mutate(
-        hotspot_codon =
-          dplyr::if_else(
-            !is.na(.data$hotspot_codon),
-            paste0("p.", .data$hotspot_codon),
-            as.character(NA)
-          )
-      ) |>
-      dplyr::mutate(
-        ACMG_PM1 =
-          dplyr::if_else(
-            !is.na(.data$hotspot_codon) &
-              !is.na(.data$hotspot_entrezgene) &
-              !is.na(.data$CODON) &
-              !is.na(.data$ENTREZGENE) &
-              .data$hotspot_entrezgene == .data$ENTREZGENE &
-              .data$hotspot_codon == .data$CODON,
-            TRUE, FALSE
-          )
-      )
-  }
-
-  var_calls <- var_calls |>
-    pcgrr::remove_cols_from_df(
-      cnames = c(
-        "PATHOGENIC_CODON",
-        "BENIGN_CODON",
-        "NUC_SITE",
-        "ESSENTIAL_NUCLEOTIDE",
-        "PATHOGENIC_PEPTIDE_CHANGE",
-        "BENIGN_PEPTIDE_CHANGE",
-        "VAR_ID_PATH_CHANGE",
-        "VAR_ID_BENIGN_CHANGE",
-        "VAR_ID_PATH_CODON",
-        "VAR_ID_BENIGN_CODON",
-        "CODON",
-        "gad_af",
-        "hotspot_region",
-        "hotspot_entrezgene",
-        "hotspot_symbol",
-        "hotspot_codon",
-        "hotspot_aa",
-        "hotspot_pvalue"
-      )
-    ) |>
-    dplyr::distinct()
+  # var_calls <- var_calls |>
+  #   pcgrr::remove_cols_from_df(
+  #     cnames = c(
+  #       "PATHOGENIC_CODON",
+  #       "BENIGN_CODON",
+  #       "NUC_SITE",
+  #       "ESSENTIAL_NUCLEOTIDE",
+  #       "PATHOGENIC_PEPTIDE_CHANGE",
+  #       "BENIGN_PEPTIDE_CHANGE",
+  #       "VAR_ID_PATH_CHANGE",
+  #       "VAR_ID_BENIGN_CHANGE",
+  #       "VAR_ID_PATH_CODON",
+  #       "VAR_ID_BENIGN_CODON",
+  #       "CODON",
+  #       "gad_af",
+  #       "hotspot_region",
+  #       "hotspot_entrezgene",
+  #       "hotspot_symbol",
+  #       "hotspot_codon",
+  #       "hotspot_aa",
+  #       "hotspot_pvalue"
+  #     )
+  #   ) |>
+  #   dplyr::distinct()
 
   return(var_calls)
+}
+
+#' Function that assigns a summary string of
+#' all ACMG evidence codes met for a given variant
+#' (e.g. "PVS1|PS1|PM2_supporting|PP3")
+#'
+#' @param var_calls data frame with variant calls in predisposition genes
+#'
+#' @return var_calls data frame with ACMG_CONCENSUS column appended
+#' @export
+#'
+assign_acmg_concensus <- function(
+    var_calls = NULL){
+
+  if(is.data.frame(var_calls) &
+     all(c("ACMG_PVS1",
+           "ACMG_PVS1_STR",
+           "ACMG_PVS1_MOD",
+           "ACMG_PS1",
+           "ACMG_PM1",
+           "ACMG_PM1_SUPP",
+           "ACMG_PM2_SUPP",
+           "ACMG_PM5",
+           "ACMG_PP3",
+           "ACMG_BS1",
+           "ACMG_BS1_SUPP",
+           "ACMG_BP4",
+           "ACMG_BP7") %in%
+         colnames(var_calls))){
+
+    var_calls$ACMG_CONCENSUS <- ""
+
+    var_calls <- var_calls |>
+      dplyr::mutate(ACMG_CONCENSUS = dplyr::if_else(
+        .data$ACMG_PVS1 == TRUE,
+        paste0(.data$ACMG_CONCENSUS, "PVS1|"),
+        as.character(.data$ACMG_CONCENSUS)
+      )) |>
+      dplyr::mutate(ACMG_CONCENSUS = dplyr::if_else(
+        .data$ACMG_PVS1_STR == TRUE,
+        paste0(.data$ACMG_CONCENSUS, "PVS1_strong|"),
+        as.character(.data$ACMG_CONCENSUS)
+      )) |>
+      dplyr::mutate(ACMG_CONCENSUS = dplyr::if_else(
+        .data$ACMG_PVS1_MOD == TRUE,
+        paste0(.data$ACMG_CONCENSUS, "PVS1_moderate|"),
+        as.character(.data$ACMG_CONCENSUS)
+      )) |>
+      dplyr::mutate(ACMG_CONCENSUS = dplyr::if_else(
+        .data$ACMG_PS1 == TRUE,
+        paste0(.data$ACMG_CONCENSUS, "PS1|"),
+        as.character(.data$ACMG_CONCENSUS)
+      )) |>
+      dplyr::mutate(ACMG_CONCENSUS = dplyr::if_else(
+        .data$ACMG_PM1 == TRUE,
+        paste0(.data$ACMG_CONCENSUS, "PM1|"),
+        as.character(.data$ACMG_CONCENSUS)
+      )) |>
+      dplyr::mutate(ACMG_CONCENSUS = dplyr::if_else(
+        .data$ACMG_PM1_SUPP == TRUE,
+        paste0(.data$ACMG_CONCENSUS, "PM1_supporting|"),
+        as.character(.data$ACMG_CONCENSUS)
+      )) |>
+      dplyr::mutate(ACMG_CONCENSUS = dplyr::if_else(
+        .data$ACMG_PM2_SUPP == TRUE,
+        paste0(.data$ACMG_CONCENSUS, "PM2_supporting|"),
+        as.character(.data$ACMG_CONCENSUS)
+      )) |>
+      dplyr::mutate(ACMG_CONCENSUS = dplyr::if_else(
+        .data$ACMG_PM5 == TRUE,
+        paste0(.data$ACMG_CONCENSUS, "PM5|"),
+        as.character(.data$ACMG_CONCENSUS)
+      )) |>
+      dplyr::mutate(ACMG_CONCENSUS = dplyr::if_else(
+        .data$ACMG_PP3 == TRUE,
+        paste0(.data$ACMG_CONCENSUS, "PP3|"),
+        as.character(.data$ACMG_CONCENSUS)
+      )) |>
+      dplyr::mutate(ACMG_CONCENSUS = dplyr::if_else(
+        .data$ACMG_BA1 == TRUE,
+        paste0(.data$ACMG_CONCENSUS, "BA1|"),
+        as.character(.data$ACMG_CONCENSUS)
+      )) |>
+      dplyr::mutate(ACMG_CONCENSUS = dplyr::if_else(
+        .data$ACMG_BS1 == TRUE,
+        paste0(.data$ACMG_CONCENSUS, "BS1|"),
+        as.character(.data$ACMG_CONCENSUS)
+      )) |>
+      dplyr::mutate(ACMG_CONCENSUS = dplyr::if_else(
+        .data$ACMG_BS1_SUPP == TRUE,
+        paste0(.data$ACMG_CONCENSUS, "BS1_supporting|"),
+        as.character(.data$ACMG_CONCENSUS)
+      )) |>
+      dplyr::mutate(ACMG_CONCENSUS = dplyr::if_else(
+        .data$ACMG_BP4 == TRUE,
+        paste0(.data$ACMG_CONCENSUS, "BP4|"),
+        as.character(.data$ACMG_CONCENSUS)
+      )) |>
+      dplyr::mutate(ACMG_CONCENSUS = dplyr::if_else(
+        .data$ACMG_BP7 == TRUE,
+        paste0(.data$ACMG_CONCENSUS, "BP7|"),
+        as.character(.data$ACMG_CONCENSUS)
+      )) |>
+      dplyr::mutate(ACMG_CONCENSUS = stringr::str_replace_all(
+        .data$ACMG_CONCENSUS,
+        "(\\|$)", ""
+      ))
+
+    var_calls <- var_calls |>
+      dplyr::mutate(CPSR_CLASSIFICATION_SCORE = 0) |>
+      dplyr::mutate(CPSR_CLASSIFICATION_SCORE = dplyr::if_else(
+        .data$ACMG_PVS1 == TRUE,
+        .data$CPSR_CLASSIFICATION_SCORE + 8,
+        .data$CPSR_CLASSIFICATION_SCORE
+      )) |>
+      dplyr::mutate(CPSR_CLASSIFICATION_SCORE = dplyr::if_else(
+        .data$ACMG_PVS1_STR == TRUE,
+        .data$CPSR_CLASSIFICATION_SCORE + 4,
+        .data$CPSR_CLASSIFICATION_SCORE
+      )) |>
+      dplyr::mutate(CPSR_CLASSIFICATION_SCORE = dplyr::if_else(
+        .data$ACMG_PVS1_MOD == TRUE,
+        .data$CPSR_CLASSIFICATION_SCORE + 2,
+        .data$CPSR_CLASSIFICATION_SCORE
+      )) |>
+      dplyr::mutate(CPSR_CLASSIFICATION_SCORE = dplyr::if_else(
+        .data$ACMG_PS1 == TRUE,
+        .data$CPSR_CLASSIFICATION_SCORE + 4,
+        .data$CPSR_CLASSIFICATION_SCORE
+      )) |>
+      dplyr::mutate(CPSR_CLASSIFICATION_SCORE = dplyr::if_else(
+        .data$ACMG_PM1 == TRUE,
+        .data$CPSR_CLASSIFICATION_SCORE + 2,
+        .data$CPSR_CLASSIFICATION_SCORE
+      )) |>
+      dplyr::mutate(CPSR_CLASSIFICATION_SCORE = dplyr::if_else(
+        .data$ACMG_PM1_SUPP == TRUE,
+        .data$CPSR_CLASSIFICATION_SCORE + 1,
+        .data$CPSR_CLASSIFICATION_SCORE
+      )) |>
+      dplyr::mutate(CPSR_CLASSIFICATION_SCORE = dplyr::if_else(
+        .data$ACMG_PM2_SUPP == TRUE,
+        .data$CPSR_CLASSIFICATION_SCORE + 0,
+        .data$CPSR_CLASSIFICATION_SCORE
+      )) |>
+      dplyr::mutate(CPSR_CLASSIFICATION_SCORE = dplyr::if_else(
+        .data$ACMG_PM5 == TRUE,
+        .data$CPSR_CLASSIFICATION_SCORE + 2,
+        .data$CPSR_CLASSIFICATION_SCORE
+      )) |>
+      dplyr::mutate(CPSR_CLASSIFICATION_SCORE = dplyr::if_else(
+        .data$ACMG_PP3 == TRUE,
+        .data$CPSR_CLASSIFICATION_SCORE + 1,
+        .data$CPSR_CLASSIFICATION_SCORE
+      )) |>
+      dplyr::mutate(CPSR_CLASSIFICATION_SCORE = dplyr::if_else(
+        .data$ACMG_BA1 == TRUE,
+        CPSR_CLASSIFICATION_SCORE - 8,
+        CPSR_CLASSIFICATION_SCORE
+      )) |>
+      dplyr::mutate(CPSR_CLASSIFICATION_SCORE = dplyr::if_else(
+        .data$ACMG_BS1 == TRUE,
+        CPSR_CLASSIFICATION_SCORE - 4,
+        CPSR_CLASSIFICATION_SCORE
+      )) |>
+      dplyr::mutate(CPSR_CLASSIFICATION_SCORE = dplyr::if_else(
+        .data$ACMG_BS1_SUPP == TRUE,
+        CPSR_CLASSIFICATION_SCORE - 1,
+        CPSR_CLASSIFICATION_SCORE
+      )) |>
+      dplyr::mutate(CPSR_CLASSIFICATION_SCORE = dplyr::if_else(
+        .data$ACMG_BP4 == TRUE,
+        CPSR_CLASSIFICATION_SCORE - 1,
+        CPSR_CLASSIFICATION_SCORE
+      )) |>
+      dplyr::mutate(CPSR_CLASSIFICATION_SCORE = dplyr::if_else(
+        .data$ACMG_BP7 == TRUE,
+        CPSR_CLASSIFICATION_SCORE - 1,
+        CPSR_CLASSIFICATION_SCORE
+      ))
+  }
+  return(var_calls)
+
 }
 
 
@@ -1174,6 +692,1441 @@ combine_novel_and_preclassified <-
     return(var_calls)
   }
 
+#' Function that assigns ACMG evidence indicators for
+#' BA1
+#' @param var_calls variants in cancer predisposition genes
+#' @return data.frame with ACMG evidence indicators
+#'
+#' @export
+#'
+assign_BA1_evidence <- function(
+    var_calls = NULL){
+
+  var_calls$ACMG_BA1 <- FALSE
+
+  ## Assign logical ACMG evidence indicator
+  ## BA1 -
+  if(is.data.frame(var_calls) &
+     "gnomAD_NC_FAF_GRPMAX" %in% colnames(var_calls) &
+     "gnomADj_FAF_GRPMAX" %in% colnames(var_calls) &
+     "CPG_MOI" %in% colnames(var_calls)){
+
+    var_calls <- var_calls |>
+      dplyr::mutate(
+        ACMG_BA1 = dplyr::if_else(
+          ((.data$gnomADj_FAF_GRPMAX >= 0.001 &
+              !(.data$SYMBOL %in% c("BRCA1", "BRCA2", "PALB2","ATM","PTEN",
+                                  "MSH2", "MLH1", "MSH6", "PMS2","APC","TP53")) &
+              .data$CPG_MOI == "AD") |
+             (.data$gnomADj_FAF_GRPMAX >= 0.01 &
+                !(.data$SYMBOL %in% c("BRCA1", "BRCA2", "PALB2","ATM","PTEN",
+                                      "MSH2", "MLH1", "MSH6", "PMS2","APC","TP53")) &
+             (.data$CPG_MOI == "AR" |
+                is.na(.data$CPG_MOI)))),
+          TRUE, FALSE, FALSE
+        )
+      ) |>
+
+      ## gene-specific BA1 thresholds for core cancer predisposition genes
+      ## - as found in ClinGen VCEPs
+      dplyr::mutate(
+        ACMG_BA1 = dplyr::case_when(
+          .data$SYMBOL == "TP53" & .data$gnomADj_FAF_GRPMAX >= 0.001 ~ TRUE,
+          .data$SYMBOL == "BRCA1" & .data$gnomAD_NC_FAF_GRPMAX > 0.001 ~ TRUE,
+          .data$SYMBOL == "BRCA2" & .data$gnomAD_NC_FAF_GRPMAX > 0.001 ~ TRUE,
+          .data$SYMBOL == "PALB2" & .data$gnomAD_NC_FAF_GRPMAX > 0.001 ~ TRUE,
+          .data$SYMBOL == "ATM" & .data$gnomADj_FAF_GRPMAX > 0.005 ~ TRUE,
+          .data$SYMBOL == "APC" & .data$gnomAD_NC_FAF_GRPMAX >= 0.001 ~ TRUE,
+          .data$SYMBOL == "MLH1" & .data$gnomADj_FAF_GRPMAX >= 0.001 ~ TRUE,
+          .data$SYMBOL == "MSH2" & .data$gnomADj_FAF_GRPMAX >= 0.001 ~ TRUE,
+          .data$SYMBOL == "PTEN" & .data$gnomADj_FAF_GRPMAX > 0.00056 ~ TRUE,
+          .data$SYMBOL == "MSH6" & .data$gnomADj_FAF_GRPMAX >= 0.0022 ~ TRUE,
+          .data$SYMBOL == "PMS2" & .data$gnomADj_FAF_GRPMAX >= 0.0028 ~ TRUE,
+          TRUE ~ as.logical(.data$ACMG_BA1)
+        ))
+  }
+  return(var_calls)
+}
+
+#' Function that assigns ACMG evidence indicators for
+#' BS1_ST and BS1_SUP
+#'
+#' @param var_calls variants in cancer predisposition genes
+#' @return data.frame with ACMG evidence indicators
+#'
+#' @export
+assign_BS1_evidence <- function(
+    var_calls = NULL){
+
+  var_calls$ACMG_BS1 <- FALSE
+  var_calls$ACMG_BS1_SUPP <- FALSE
+
+  ## Assign logical ACMG evidence indicators
+  ## BS1_strong
+  ## BS1_supporting
+  if(is.data.frame(var_calls) &
+     "gnomAD_NC_FAF_GRPMAX" %in% colnames(var_calls) &
+     "gnomADj_FAF_GRPMAX" %in% colnames(var_calls) &
+     "ACMG_BA1" %in% colnames(var_calls) &
+     "CPG_MOI" %in% colnames(var_calls)){
+
+    var_calls <- var_calls |>
+      dplyr::mutate(
+        ACMG_BS1 = dplyr::if_else(
+          ((.data$gnomADj_FAF_GRPMAX >= 0.0001 &
+              .data$CPG_MOI == "AD" &
+              !(.data$SYMBOL %in%
+                  c("BRCA1", "BRCA2", "PALB2",
+                    "ATM","PTEN", "MSH2", "MLH1",
+                    "MSH6", "PMS2","APC", "TP53")) &
+              .data$ACMG_BA1 == FALSE) |
+             (.data$gnomADj_FAF_GRPMAX >= 0.001 &
+             .data$ACMG_BA1 == FALSE &
+               !(.data$SYMBOL %in%
+                   c("BRCA1", "BRCA2", "PALB2",
+                     "ATM","PTEN","MSH2", "MLH1",
+                     "MSH6", "PMS2","APC","TP53")) &
+             (.data$CPG_MOI == "AR" |
+                is.na(.data$CPG_MOI)))),
+          TRUE, FALSE, FALSE
+        )
+      ) |>
+      ## gene-specific BS1 thresholds for core cancer predisposition genes
+      dplyr::mutate(
+        ACMG_BS1 = dplyr::case_when(
+          .data$SYMBOL == "TP53" & .data$gnomADj_FAF_GRPMAX > 0.0003 &
+            .data$gnomADj_FAF_GRPMAX < 0.001 &
+            .data$ACMG_BA1 == FALSE ~ TRUE,
+          .data$SYMBOL == "BRCA1" & .data$gnomAD_NC_FAF_GRPMAX > 0.0001 &
+            .data$ACMG_BA1 == FALSE ~ TRUE,
+          .data$SYMBOL == "BRCA2" & .data$gnomAD_NC_FAF_GRPMAX > 0.0001 &
+            .data$ACMG_BA1 == FALSE ~ TRUE,
+          .data$SYMBOL == "PALB2" & .data$gnomAD_NC_FAF_GRPMAX > 0.0001 &
+            .data$ACMG_BA1 == FALSE ~ TRUE,
+          .data$SYMBOL == "ATM" & .data$gnomADj_FAF_GRPMAX > 0.0005 &
+            .data$ACMG_BA1 == FALSE ~ TRUE,
+          .data$SYMBOL == "APC" & .data$gnomAD_NC_FAF_GRPMAX >= 0.0001 &
+            .data$ACMG_BA1 == FALSE ~ TRUE,
+          .data$SYMBOL == "MLH1" & .data$gnomADj_FAF_GRPMAX >= 0.0001 &
+            .data$gnomADj_FAF_GRPMAX < 0.001 ~ TRUE,
+          .data$SYMBOL == "MSH2" & .data$gnomADj_FAF_GRPMAX >= 0.0001 &
+            .data$gnomADj_FAF_GRPMAX < 0.001 ~ TRUE,
+          .data$SYMBOL == "PTEN" & .data$gnomADj_FAF_GRPMAX > 0.000043 &
+            .data$gnomADj_FAF_GRPMAX <= 0.00056 ~ TRUE,
+          .data$SYMBOL == "MSH6" & .data$gnomADj_FAF_GRPMAX >= 0.00022 &
+            .data$gnomADj_FAF_GRPMAX < 0.0022 ~ TRUE,
+          .data$SYMBOL == "PMS2" & .data$gnomADj_FAF_GRPMAX >= 0.0001 &
+            .data$gnomADj_FAF_GRPMAX < 0.001 ~ TRUE,
+          TRUE ~ as.logical(.data$ACMG_BS1)
+        )) |>
+      dplyr::mutate(
+        ACMG_BS1_SUPP = dplyr::case_when(
+          .data$SYMBOL == "BRCA1" &
+            .data$gnomAD_NC_FAF_GRPMAX > 0.00002 &
+            .data$gnomAD_NC_FAF_GRPMAX <= 0.0001 &
+            .data$ACMG_BS1 == FALSE ~ TRUE,
+          .data$SYMBOL == "BRCA2" &
+            .data$gnomAD_NC_FAF_GRPMAX > 0.00002 &
+            .data$gnomAD_NC_FAF_GRPMAX <= 0.0001 &
+            .data$ACMG_BS1 == FALSE ~ TRUE,
+          TRUE ~ as.logical(.data$ACMG_BS1_SUPP)
+        ))
+  }
+  return(var_calls)
+
+
+}
+
+#' Function that assigns ACMG evidence indicators for
+#' BP4
+#'
+#' @param var_calls variants in cancer predisposition genes
+#' @return data.frame with ACMG evidence indicators
+#' @export
+#'
+assign_BP4_evidence <- function(var_calls = NULL){
+
+  ## Assign logical ACMG evidence indicators
+  #
+  # ACMG_BP4 - Multiple lines (>=8) of insilico evidence support a benign effect.
+  #
+  # Computational evidence for deleterious/benign effect is taken from
+  # invidual algorithm predictions in dbNSFP: SIFT,Provean,MutationTaster,
+  # MutationAssessor,M_CAP,MutPred,FATHMM_XF, DBNSFP_RNN,dbscSNV_RF,
+  # dbscSNV_AdaBoost, AlphaMissense, ClinPred, phactBOOST, PrimateAI, REVEL,
+  # Tolerated: Among all possible protein variant effect predictions, at
+  #    least six algorithms must have made a call,
+  #    with at least 8 predicted as tolerated, and at most 2
+  #    predicted as damaging (BP4)
+  #    - 0 predictions of splice site affected
+
+  dbnsfp_min_majority <- cpsr::acmg[["insilico_pred_min_majority"]]
+  dbnsfp_max_minority <- cpsr::acmg[["insilico_pred_max_minority"]]
+  dbnsfp_min_called <- dbnsfp_min_majority
+
+  var_calls$ACMG_BP <- NULL
+  var_calls_bp4 <- data.frame()
+
+  if(is.data.frame(var_calls) &
+     "N_INSILICO_CALLED" %in% colnames(var_calls) &
+     "N_INSILICO_DAMAGING" %in% colnames(var_calls) &
+     "N_INSILICO_TOLERATED" %in% colnames(var_calls) &
+     "N_INSILICO_SPLICING_AFFECTED" %in% colnames(var_calls) &
+     "N_INSILICO_SPLICING_NEUTRAL" %in% colnames(var_calls)){
+
+    var_calls_bp4 <- var_calls |>
+      dplyr::mutate(
+        ACMG_BP4 = dplyr::if_else(
+          .data$N_INSILICO_CALLED >= dbnsfp_min_called &
+            .data$N_INSILICO_TOLERATED >= dbnsfp_min_majority &
+            .data$N_INSILICO_DAMAGING <= dbnsfp_max_minority &
+            .data$N_INSILICO_SPLICING_AFFECTED == 0,
+          TRUE,
+          FALSE
+        )
+      ) |>
+      dplyr::mutate(
+        ACMG_BP4 = dplyr::if_else(
+          .data$N_INSILICO_SPLICING_NEUTRAL == 2 &
+            .data$N_INSILICO_SPLICING_AFFECTED == 0 &
+            .data$N_INSILICO_CALLED == 2,
+          TRUE,
+          as.logical(.data$ACMG_BP4)
+        )
+      ) |>
+
+      ## Remove BP4 if MES_PERCENT_CHANGE indicates
+      ## splice site effect (lost or gained)
+      dplyr::mutate(
+        ACMG_BP4 = dplyr::if_else(
+          !is.na(.data$MES_PERCENT_CHANGE) &
+            (.data$MES_PERCENT_CHANGE <= -20 |
+               .data$MES_PERCENT_CHANGE >= 60),
+          FALSE,
+          as.logical(.data$ACMG_BP4)
+        )
+      ) |>
+      dplyr::select(
+        c("VAR_ID","ACMG_BP4")
+      )
+  }
+  if(nrow(var_calls_bp4) > 0){
+    var_calls <- dplyr::left_join(
+      var_calls,
+      var_calls_bp4,
+      by = "VAR_ID") |>
+      dplyr::mutate(
+        ACMG_BP4 = dplyr::if_else(
+          is.na(.data$ACMG_BP4),
+          FALSE,
+          as.logical(.data$ACMG_BP4)
+        )
+      ) |>
+    dplyr::distinct()
+  } else {
+    var_calls$ACMG_BP4 <- FALSE
+  }
+  return(var_calls)
+}
+
+#' Function that assigns ACMG evidence indicators for
+#' BP7
+#' @param var_calls variants in cancer predisposition genes
+#' @return data.frame with ACMG evidence indicators
+#' @export
+#'
+#'
+assign_BP7_evidence <- function(var_calls = NULL){
+
+  var_calls$ACMG_BP7 <- FALSE
+
+  ## Assign logical ACMG evidence indicator
+  # ACMG_BP7 - Silent/intronic variant outside of the splice site consensus
+  #.          also 3_prime and 5_prime UTR variants included
+  if(is.data.frame(var_calls) &
+     "INTRON_POSITION" %in% colnames(var_calls) &
+     "EXON_POSITION" %in% colnames(var_calls) &
+     "MES_PERCENT_CHANGE" %in% colnames(var_calls) &
+     "CONSEQUENCE" %in% colnames(var_calls)){
+
+    var_calls <- var_calls |>
+      dplyr::mutate(
+        ACMG_BP7 =
+          dplyr::if_else((
+            (as.integer(.data$INTRON_POSITION) < 0 &
+               as.integer(.data$INTRON_POSITION) < -3) |
+              (as.integer(.data$INTRON_POSITION) > 0 &
+                 as.integer(.data$INTRON_POSITION) > 6) |
+              (as.integer(.data$EXON_POSITION) < 0 &
+                 as.integer(.data$EXON_POSITION) < -2) |
+              (as.integer(.data$EXON_POSITION) > 0 &
+                 as.integer(.data$EXON_POSITION) > 1)) &
+              (is.na(MES_PERCENT_CHANGE) |
+                 (!is.na(MES_PERCENT_CHANGE) &
+                    MES_PERCENT_CHANGE > -20 &
+                    MES_PERCENT_CHANGE < 30)) &
+              !stringr::str_detect(
+                .data$CONSEQUENCE,
+                "splice_(acceptor|donor)|stop_gained|5th"
+              ) &
+              stringr::str_detect(
+                .data$CONSEQUENCE,
+                paste0(
+                  "^(synonymous_variant|intron_variant|",
+                  "splice_region_variant)")
+              ),
+            TRUE, FALSE, FALSE
+          )
+      ) |>
+      dplyr::mutate(
+        ACMG_BP7 = dplyr::if_else(
+          !is.na(.data$INTRON_POSITION) &
+            .data$INTRON_POSITION == 0 &
+            !is.na(.data$EXON_POSITION) &
+            .data$EXON_POSITION == 0 &
+            stringr::str_detect(
+              .data$CONSEQUENCE,
+              paste0(
+                "^(3_prime_UTR_variant|
+                  5_prime_UTR_variant)")
+            ),
+          TRUE, as.logical(.data$ACMG_BP7), FALSE
+        )
+      )
+  }
+  return(var_calls)
+}
+
+#' Function that assigns ACMG evidence indicators for
+#' PVS1 ('ACMG_PVS1', 'ACMG_PVS1_STR', 'ACMG_PVS1_MOD')
+#' @param var_calls variants in cancer predisposition genes
+#' @return data.frame with ACMG evidence indicators
+#' @export
+#'
+assign_PVS1_evidence <- function(
+    var_calls = NULL){
+
+  var_calls$ACMG_PVS1 <- FALSE
+  var_calls$ACMG_PVS1_STR <- FALSE
+  var_calls$ACMG_PVS1_MOD <- FALSE
+
+  ## Assign logical ACMG evidence indicator
+  # PVS1 - Null variant in a gene where loss-of-function
+  # is a known mechanism of disease
+  if(is.data.frame(var_calls) &
+     "LOSS_OF_FUNCTION" %in% colnames(var_calls) &
+     "LOF_FILTER" %in% colnames(var_calls) &
+     "REFSEQ_TRANSCRIPT_ID" %in% colnames(var_calls) &
+     "PROTEIN_RELATIVE_POSITION" %in% colnames(var_calls) &
+     "NMD" %in% colnames(var_calls) &
+     "EXONIC_STATUS" %in% colnames(var_calls) &
+     "NULL_VARIANT" %in% colnames(var_calls) &
+     "INTRON_POSITION" %in% colnames(var_calls) &
+     "LAST_INTRON" %in% colnames(var_calls) &
+     "CPG_MOD" %in% colnames(var_calls) &
+     "MANE_SELECT" %in% colnames(var_calls) &
+     "MANE_SELECT2" %in% colnames(var_calls) &
+     "MANE_PLUS_CLINICAL" %in% colnames(var_calls) &
+     "MANE_PLUS_CLINICAL2" %in% colnames(var_calls) &
+     "PFAM_DOMAIN_NAME" %in% colnames(var_calls) &
+     "PROTEIN_RELATIVE_POSITION" %in% colnames(var_calls) &
+     "MAXENTSCAN" %in% colnames(var_calls) &
+     "CONSEQUENCE" %in% colnames(var_calls)){
+
+
+    var_calls <- var_calls |>
+      dplyr::mutate(
+        ## Frameshift and stop-gain variants (null variants)
+        ## - Classified as loss-of-function
+        ## - Predicted NOT to escape NMD
+        ## - Loss-of-function known mechanism of disease for gene
+        ## - biologically relevant transcript (MANE Select)
+        ## -  or in curated set missing in MANE for grch37 (e.g. MEN1)
+        ## ---> VeryStrong (PVS1)
+        ACMG_PVS1 = dplyr::if_else(
+          .data$NULL_VARIANT == TRUE &
+            is.na(.data$NMD) &
+            (.data$LOSS_OF_FUNCTION == TRUE |
+               (.data$LOSS_OF_FUNCTION == FALSE &
+                  (!is.na(.data$LOF_FILTER) &
+                     .data$LOF_FILTER == "END_TRUNCATION") &
+                  (!is.na(.data$PROTEIN_RELATIVE_POSITION) &
+                     as.numeric(
+                       .data$PROTEIN_RELATIVE_POSITION) < 0.975))) &
+            (!is.na(.data$CPG_MOD) &
+               .data$CPG_MOD == "LoF") &
+            .data$EXONIC_STATUS == "exonic" &
+            (!is.na(.data$MANE_SELECT) |
+               !is.na(.data$MANE_SELECT2) |
+               !is.na(.data$MANE_PLUS_CLINICAL) |
+               !is.na(.data$MANE_PLUS_CLINICAL2) |
+               .data$REFSEQ_TRANSCRIPT_ID %in%
+               cpsr::curated_transcripts$id),
+          TRUE,
+          as.logical(.data$ACMG_PVS1)
+        )) |>
+      dplyr::mutate(
+        ACMG_PVS1 = dplyr::if_else(
+
+          ## Splice-donor/acceptor variants (+/- 2bp)
+          ## - Exonic location (includes splice siste)
+          ## - Not last intron
+          ## - Not a null variant (stop-gain/frameshift)
+          ## - Intron position +/- 1 or 2
+          ## - Classified as loss-of-function
+          ## - Loss-of-function known mechanism of disease for gene
+          ## - Biologically relevant transcript (MANE Select)
+          ## ---> VeryStrong (PVS1)
+          .data$EXONIC_STATUS == "exonic" &
+            .data$LAST_INTRON == FALSE &
+            .data$NULL_VARIANT == FALSE &
+            (.data$INTRON_POSITION == -2 |
+               .data$INTRON_POSITION == -1 |
+               .data$INTRON_POSITION == 1 |
+               .data$INTRON_POSITION == 2) &
+            (.data$CONSEQUENCE == "splice_acceptor_variant" |
+               .data$CONSEQUENCE == "splice_donor_variant") &
+            .data$LOSS_OF_FUNCTION == TRUE &
+            (!is.na(.data$CPG_MOD) &
+               .data$CPG_MOD == "LoF") &
+            (!is.na(.data$MANE_SELECT) |
+               !is.na(.data$MANE_SELECT2) |
+               !is.na(.data$MANE_PLUS_CLINICAL) |
+               !is.na(.data$MANE_PLUS_CLINICAL2) |
+               .data$REFSEQ_TRANSCRIPT_ID %in%
+               cpsr::curated_transcripts$id),
+          TRUE,
+          as.logical(.data$ACMG_PVS1)
+        )) |>
+
+      dplyr::mutate(
+        ## Frameshift and stop-gain variants (null variants)
+        ## - Predicted to escape NMD
+        ## - Loss-of-function known mechanism of disease for gene
+        ## - Biologically relevant transcript (MANE Select)
+        ## - Position overlapping protein domain OR
+        ##     removing > 10% of protein
+        ## ---> Strong (PVS1_STR)
+        ACMG_PVS1_STR = dplyr::case_when(
+          .data$NULL_VARIANT == TRUE &
+            (!is.na(.data$NMD) &
+            .data$NMD == "NMD_escaping_variant") &
+            (!is.na(.data$CPG_MOD) &
+               .data$CPG_MOD == "LoF") &
+            (!is.na(.data$MANE_SELECT) |
+               !is.na(.data$MANE_SELECT2) |
+               !is.na(.data$MANE_PLUS_CLINICAL) |
+               !is.na(.data$MANE_PLUS_CLINICAL2) |
+               .data$REFSEQ_TRANSCRIPT_ID %in%
+               cpsr::curated_transcripts$id) &
+            (!is.na(.data$PFAM_DOMAIN_NAME) |
+               (!is.na(.data$PROTEIN_RELATIVE_POSITION) &
+                  as.numeric(.data$PROTEIN_RELATIVE_POSITION) < 0.9)) ~ TRUE,
+
+          ## Splice-donor/acceptor variants (+/- 2bp)
+          ## - Exonic location (includes splice site)
+          ## - Not a null variant (stop-gain/frameshift)
+          ## - Classified as loss-of-function
+          ## - Intron position +/- 1 or 2
+          ## - Last intron (proxy for NMD escaping)
+          ## - Loss-of-function known mechanism of disease for gene
+          ## - Biologically relevant transcript (MANE Select)
+          ## - Position overlapping protein domain OR
+          ##     removing > 10% of protein
+          ## ---> Strong (PVS1_STR)
+          .data$NULL_VARIANT == FALSE &
+            .data$LOSS_OF_FUNCTION == TRUE &
+            ((.data$INTRON_POSITION == -2 |
+               .data$INTRON_POSITION == -1 |
+               .data$INTRON_POSITION == 1 |
+               .data$INTRON_POSITION == 2) &
+               (.data$CONSEQUENCE == "splice_acceptor_variant" |
+                  .data$CONSEQUENCE == "splice_donor_variant")) &
+            .data$EXONIC_STATUS == "exonic" &
+            .data$LAST_INTRON == TRUE &
+            (!is.na(.data$CPG_MOD) &
+               .data$CPG_MOD == "LoF") &
+            (!is.na(.data$MANE_SELECT) |
+               !is.na(.data$MANE_SELECT2) |
+               !is.na(.data$MANE_PLUS_CLINICAL) |
+               !is.na(.data$MANE_PLUS_CLINICAL2) |
+               .data$REFSEQ_TRANSCRIPT_ID %in%
+               cpsr::curated_transcripts$id) ~ TRUE,
+            #(!is.na(.data$PFAM_DOMAIN_NAME) |
+               #(!is.na(.data$PROTEIN_RELATIVE_POSITION) &
+                  #as.numeric(.data$PROTEIN_RELATIVE_POSITION) < 0.9)) ~ TRUE,
+          TRUE ~ as.logical(.data$ACMG_PVS1_STR)
+        )
+      ) |>
+
+      dplyr::mutate(
+        ## Frameshift and stop-gain variants
+        ## - Predicted to escape NMD
+        ## - Loss-of-function known mechanism of disease for gene
+        ## - Biologically relevant transcript (MANE Select)
+        ## - Position NOT overlapping protein domain AND
+        ##     removing > 10% of protein
+        ## ---> Moderate (PVS1_MOD)
+        ACMG_PVS1_MOD = dplyr::case_when(
+          .data$NULL_VARIANT == TRUE &
+            !is.na(.data$NMD) &
+            .data$NMD == "NMD_escaping_variant" &
+            (!is.na(.data$CPG_MOD) &
+               .data$CPG_MOD == "LoF") &
+            (!is.na(.data$MANE_SELECT) |
+               !is.na(.data$MANE_SELECT2) |
+               !is.na(.data$MANE_PLUS_CLINICAL) |
+               !is.na(.data$MANE_PLUS_CLINICAL2) |
+               .data$REFSEQ_TRANSCRIPT_ID %in%
+               cpsr::curated_transcripts$id) &
+            is.na(.data$PFAM_DOMAIN_NAME) &
+            (!is.na(.data$PROTEIN_RELATIVE_POSITION) &
+               as.numeric(.data$PROTEIN_RELATIVE_POSITION) > 0.9) ~ TRUE,
+
+          ## Splice-donor/acceptor variants (+/- 2bp)
+          ## - Exonic location (includes splice site)
+          ## - Not a null variant (stop-gain/frameshift)
+          ## - Intron position +/- 1 or 2
+          ## - Last intron (proxy for NMD escaping)
+          ## - Loss-of-function known mechanism of disease for gene
+          ## - Biologically relevant transcript (MANE Select)
+          ## - Position NOT overlapping protein domain AND
+          ##     removing < 10% of protein
+          ## ---> Moderate (PVS1_MOD)
+          # .data$NULL_VARIANT == FALSE &
+          #   ((.data$INTRON_POSITION == -2 |
+          #       .data$INTRON_POSITION == -1 |
+          #       .data$INTRON_POSITION == 1 |
+          #       .data$INTRON_POSITION == 2) |
+          #      (.data$CONSEQUENCE == "splice_acceptor_variant" |
+          #         .data$CONSEQUENCE == "splice_donor_variant")) &
+          #   .data$EXONIC_STATUS == "exonic" &
+          #   .data$LAST_INTRON == TRUE &
+          #   (!is.na(.data$CPG_MOD) &
+          #      .data$CPG_MOD == "LoF") &
+          #   (!is.na(.data$MANE_SELECT) |
+          #      !is.na(.data$MANE_SELECT2) |
+          #      !is.na(.data$MANE_PLUS_CLINICAL) |
+          #      !is.na(.data$MANE_PLUS_CLINICAL2) |
+          #      .data$REFSEQ_TRANSCRIPT_ID %in%
+          #      cpsr::curated_transcripts$id) ~ TRUE,
+          #   #is.na(.data$PFAM_DOMAIN_NAME) &
+          #   #(!is.na(.data$PROTEIN_RELATIVE_POSITION) &
+          #      #as.numeric(.data$PROTEIN_RELATIVE_POSITION) > 0.9) ~ TRUE,
+          TRUE ~ as.logical(.data$ACMG_PVS1_MOD)
+        )
+      ) |>
+      dplyr::mutate(
+        ACMG_PVS1_MOD = dplyr::if_else(
+          stringr::str_detect(
+            .data$CONSEQUENCE,
+            "^(start_lost|intron_variant&splice_donor_5th_base_variant)$"
+          ),
+          TRUE,
+          as.logical(.data$ACMG_PVS1_MOD)
+        )
+      )
+
+  }
+  return(var_calls)
+
+}
+
+#' Function that assigns ACMG evidence indicators for
+#' PS1 ('ACMG_PS1')
+#' @param var_calls variants in cancer predisposition genes
+#' @param pathogenic_codons data.frame with known pathogenic codons
+#' pathogenic variants have been observed (from ClinVar)
+#' @param pathogenic_nucleotides data.frame with pathogenic
+#' nucleotides (non-coding, e.g. splice)
+#' @return data.frame with ACMG evidence indicators
+#' @export
+#'
+assign_PS1_evidence <- function(
+    var_calls = NULL,
+    pathogenic_codons = NULL,
+    pathogenic_nucleotides = NULL){
+
+
+  var_calls$ACMG_PS1 <- NULL
+
+  var_calls_ps1 <- data.frame()
+  ## Assign logical ACMG evidence indicator
+  # PS1 - Same amino acid change as a previously established
+  # pathogenic variant regardless of nucleotide change
+  if(is.data.frame(var_calls) &
+     NROW(var_calls) > 0 &
+     "ENTREZGENE" %in% colnames(var_calls) &
+     "CONSEQUENCE" %in% colnames(var_calls) &
+     "HGVSP_query" %in% colnames(var_calls) &
+     "GRANTHAM_DISTANCE" %in% colnames(var_calls) &
+     "VAR_ID" %in% colnames(var_calls) &
+     "SYMBOL" %in% colnames(var_calls) &
+     "CODON" %in% colnames(var_calls) &
+
+     is.data.frame(pathogenic_codons) &
+     "ENTREZGENE" %in% colnames(pathogenic_codons) &
+     "CODON" %in% colnames(pathogenic_codons) &
+     "NUM_PATHOGENIC_AA" %in% colnames(pathogenic_codons) &
+     "MIN_GRANTHAM_DISTANCE" %in% colnames(pathogenic_codons) &
+     "PATH_HGVSP" %in% colnames(pathogenic_codons) &
+     "PATH_VAR_ID" %in% colnames(pathogenic_codons) &
+     NROW(pathogenic_codons) > 0 &
+
+     is.data.frame(pathogenic_nucleotides) &
+     "ENTREZGENE" %in% colnames(pathogenic_nucleotides) &
+     "PATH_VAR_ID_NUC" %in% colnames(pathogenic_nucleotides) &
+     "PATH_NUC_SITE" %in% colnames(pathogenic_nucleotides) &
+     NROW(pathogenic_nucleotides) > 0){
+
+    var_calls <-
+      var_calls[, !(colnames(var_calls) %in%
+                      c("PATH_VAR_ID_NUC",
+                        "PATH_NUC_SITE",
+                        "NUM_PATHOGENIC_AA",
+                        "MIN_GRANTHAM_DISTANCE",
+                        "PATH_HGVSP",
+                        "PATH_VAR_ID"))]
+
+    var_calls_ps1 <- var_calls |>
+      dplyr::select(
+        c("CONSEQUENCE","ENTREZGENE","GRANTHAM_DISTANCE",
+          "SYMBOL","CODON","VAR_ID","HGVSP_query")
+      ) |>
+      dplyr::left_join(
+        pathogenic_codons,
+        by = c("ENTREZGENE","CODON")) |>
+      tidyr::separate(
+        "VAR_ID", c("CHROM","POS","REF","ALT"),
+        sep="_", remove = F) |>
+      dplyr::mutate(
+        PATH_NUC_SITE = paste(
+          .data$CHROM, .data$POS,
+          .data$REF, sep="_"
+        )
+      ) |>
+      dplyr::left_join(
+        pathogenic_nucleotides,
+        by = c("ENTREZGENE",
+               "PATH_NUC_SITE")
+      ) |>
+
+      ## Check for variants at pathogenic codon/sites
+      ## ensuring that
+      ## i) amino acid change for query variant is known, AND
+      ## iii) not the same genomic variant (VAR_ID)
+      dplyr::mutate(ACMG_PS1 = dplyr::if_else(
+        !is.na(.data$NUM_PATHOGENIC_AA) &
+          .data$NUM_PATHOGENIC_AA >= 1 &
+          !is.na(.data$PATH_HGVSP) &
+          !is.na(.data$HGVSP_query) &
+          ## amino acid change same as known pathogenic
+          stringr::str_detect(
+            .data$PATH_HGVSP, .data$HGVSP_query) &
+          !is.na(.data$PATH_VAR_ID) &
+          ## not same variant (VAR_ID)
+          !stringr::str_detect(
+            .data$PATH_VAR_ID,
+            paste0("(",.data$VAR_ID,"(;|$))")),
+        TRUE, FALSE, FALSE
+      )) |>
+
+      ## Check for variants at essential splice nucleotide sites
+      ## - ensure that PS1 has not already been assigned
+      ## - ensure that genomic variant is not the same as
+      ##   those recorded (VAR_ID)
+      dplyr::mutate(ACMG_PS1 = dplyr::if_else(
+        .data$ACMG_PS1 == FALSE &
+          !is.na(.data$PATH_NUC_SITE) &
+          !stringr::str_detect(
+            .data$PATH_VAR_ID_NUC,
+            paste0("(",.data$VAR_ID,"(;|$))")),
+        TRUE, FALSE, FALSE
+      )) |>
+      dplyr::select(
+        c("VAR_ID","ACMG_PS1")
+      ) |>
+      dplyr::distinct()
+
+  }
+
+  if(NROW(var_calls_ps1) > 0){
+    var_calls <- var_calls |>
+      dplyr::left_join(
+        var_calls_ps1,
+        by = c("VAR_ID")
+      ) |>
+      dplyr::mutate(
+        ACMG_PS1 = dplyr::if_else(
+          is.na(.data$ACMG_PS1),
+          FALSE,
+          as.logical(.data$ACMG_PS1)
+        )
+      )
+  }else{
+    var_calls$ACMG_PS1 <- FALSE
+  }
+
+  return(var_calls)
+}
+
+
+#' Function that assigns ACMG evidence indicators for
+#' PM1 ('ACMG_PM1' and 'ACMG_PM1_SUPP')
+#'
+#' @param var_calls variants in cancer predisposition genes
+#' @return data.frame with ACMG evidence indicators
+#' @export
+#'
+assign_PM1_evidence <- function(var_calls = NULL){
+
+  var_calls_hotspot <- data.frame()
+  var_calls_motifs <- data.frame()
+
+  if(!is.null(var_calls) & is.data.frame(var_calls)){
+    var_calls$ACMG_PM1 <- FALSE
+    var_calls$ACMG_PM1_SUPP <- FALSE
+
+    if("MUTATION_HOTSPOT" %in% colnames(var_calls) &
+       "MUTATION_HOTSPOT_CANCERTYPE" %in% colnames(var_calls) &
+       "AMINO_ACID_START" %in% colnames(var_calls) &
+       "CODON" %in% colnames(var_calls) &
+       "SYMBOL" %in% colnames(var_calls) &
+       "CONSEQUENCE" %in% colnames(var_calls) &
+       "HGVSP" %in% colnames(var_calls) &
+       "VAR_ID" %in% colnames(var_calls) &
+       "AMINO_ACID_END" %in% colnames(var_calls) &
+       "ENTREZGENE" %in% colnames(var_calls)){
+
+
+      ## Make data.frame with sites overlapping with
+      ## somatic mutation hotspots (cancerhotspots.org)
+      ## foundation for PM1
+      var_calls_hotspot <- var_calls |>
+        dplyr::filter(
+          !is.na(MUTATION_HOTSPOT) &
+            stringr::str_detect(
+              .data$MUTATION_HOTSPOT,
+              "^exonic") &
+            stringr::str_detect(
+              .data$CONSEQUENCE,
+              "^missense_variant"
+            ))
+
+      if(NROW(var_calls_hotspot) > 0){
+        var_calls_hotspot <- var_calls_hotspot |>
+          dplyr::select(
+            c("VAR_ID",
+              "SYMBOL",
+              "AMINO_ACID_END",
+              "ENTREZGENE",
+              "CONSEQUENCE",
+              "MUTATION_HOTSPOT",
+              "MUTATION_HOTSPOT_CANCERTYPE",
+              "AMINO_ACID_START",
+              "HGVSP",
+              "CODON")
+          ) |>
+          tidyr::separate_rows(
+            "MUTATION_HOTSPOT_CANCERTYPE",
+            sep=","
+          ) |>
+          tidyr::separate(
+            .data$MUTATION_HOTSPOT_CANCERTYPE,
+            c("hotspot_site",
+              "hotspot_site_num",
+              "hotspot_aa_num"),
+            sep = "\\|",
+            remove = F,
+            extra = "drop"
+          ) |>
+          dplyr::mutate(
+            hotspot_aa_num = dplyr::case_when(
+              nchar(hotspot_aa_num) == 0 ~ NA_integer_,
+              TRUE ~ as.integer(.data$hotspot_aa_num)
+            )
+          ) |>
+          dplyr::group_by(
+            .data$ENTREZGENE,
+            .data$SYMBOL,
+            .data$CONSEQUENCE,
+            .data$MUTATION_HOTSPOT,
+            .data$VAR_ID,
+            .data$HGVSP,
+            .data$CODON,
+            .data$AMINO_ACID_START,
+            .data$AMINO_ACID_END
+          ) |>
+          dplyr::summarise(
+            MUTATION_HOTSPOT_AA_NUM = sum(.data$hotspot_aa_num),
+            .groups = "drop"
+          ) |>
+          dplyr::filter(
+            .data$MUTATION_HOTSPOT_AA_NUM >= 2
+          )
+
+        if(NROW(var_calls_hotspot) > 0){
+          var_calls_hotspot <- var_calls_hotspot |>
+            tidyr::separate(
+              .data$MUTATION_HOTSPOT,
+              c("hotspot_region",
+                "hotspot_symbol",
+                "hotspot_entrezgene",
+                "hotspot_codon",
+                "hotspot_aa",
+                "hotspot_pvalue"),
+              sep = "\\|", remove = F, extra = "drop"
+            ) |>
+            dplyr::filter(
+              !stringr::str_detect(
+                .data$hotspot_codon, "-"
+              ))
+
+          if(NROW(var_calls_hotspot) > 0){
+            var_calls_hotspot <- var_calls_hotspot |>
+              dplyr::mutate(
+                hotspot_entrezgene = as.character(
+                  .data$hotspot_entrezgene)
+              ) |>
+              dplyr::mutate(
+                hotspot_codon =
+                  dplyr::if_else(
+                    !is.na(.data$hotspot_codon),
+                    paste0("p.", .data$hotspot_codon),
+                    as.character(NA)
+                  )
+              ) |>
+              dplyr::filter(
+                !is.na(.data$hotspot_codon) &
+                  !is.na(.data$hotspot_entrezgene) &
+                  !is.na(.data$CODON) &
+                  !is.na(.data$ENTREZGENE) &
+                  .data$hotspot_entrezgene == .data$ENTREZGENE &
+                  .data$hotspot_codon == .data$CODON
+              )
+
+            if(NROW(var_calls_hotspot) > 0){
+              var_calls_hotspot <- var_calls_hotspot |>
+                dplyr::select(
+                  c("VAR_ID",
+                    "SYMBOL",
+                    "MUTATION_HOTSPOT_AA_NUM"))
+            }
+          }
+        }
+      }
+    }
+
+
+    if("AMINO_ACID_START" %in% colnames(var_calls) &
+       "SYMBOL" %in% colnames(var_calls) &
+       "CONSEQUENCE" %in% colnames(var_calls) &
+       "AMINO_ACID_END" %in% colnames(var_calls) &
+       "VAR_ID" %in% colnames(var_calls)){
+
+      ## Make data.frame with sites overlapping with
+      ## functional motifs in PTEN and TP53 - PM1
+      var_calls_motifs <- var_calls |>
+        dplyr::filter(
+          !is.na(.data$AMINO_ACID_START) &
+            !is.na(.data$AMINO_ACID_END) &
+            stringr::str_detect(
+              .data$CONSEQUENCE,
+              "^missense_variant"
+            ))
+
+      if(NROW(var_calls_motifs) > 0){
+        var_calls_motifs <- var_calls_motifs |>
+
+          ## PTEN catalytic motifs: 90-94, 123-130, 166-168
+          ## TP53 codons: 175, 245, 248, 249, 273, 282
+          dplyr::filter(
+            (.data$SYMBOL == "PTEN" &
+               ((.data$AMINO_ACID_START >= 90 &
+                  .data$AMINO_ACID_START <= 94) |
+                  (.data$AMINO_ACID_START >= 123 &
+               .data$AMINO_ACID_START <= 130) |
+                  (.data$AMINO_ACID_START >= 166 &
+                     .data$AMINO_ACID_START <= 168))) |
+              (.data$SYMBOL == "TP53" &
+                 (.data$AMINO_ACID_START %in% c(175, 245, 248, 249, 273, 282)))
+          )
+
+        if(NROW(var_calls_motifs) > 0){
+          var_calls_motifs <- var_calls_motifs |>
+            dplyr::mutate(VAR_FUNCTIONAL_MOTIF = T) |>
+            dplyr::select(
+              c("VAR_ID",
+                "SYMBOL",
+                "VAR_FUNCTIONAL_MOTIF",
+              ))
+        }
+      }
+    }
+
+    var_calls_pm1 <- var_calls |>
+      dplyr::select(
+        c("VAR_ID","SYMBOL")
+      )
+
+    if(NROW(var_calls_hotspot) > 0){
+      var_calls_pm1 <- var_calls |>
+        dplyr::select(
+          c("VAR_ID","SYMBOL")
+        ) |>
+        dplyr::left_join(
+          var_calls_hotspot,
+          by = c("VAR_ID", "SYMBOL")
+        )
+    }else{
+      var_calls_pm1$MUTATION_HOTSPOT_AA_NUM <- NA_integer_
+    }
+
+    if(NROW(var_calls_motifs) > 0){
+      var_calls_pm1 <- var_calls_pm1 |>
+        dplyr::left_join(
+          var_calls_motifs,
+          by = c("VAR_ID", "SYMBOL")
+        ) |>
+        dplyr::mutate(
+          VAR_FUNCTIONAL_MOTIF = dplyr::if_else(
+            is.na(.data$VAR_FUNCTIONAL_MOTIF),
+            FALSE,
+            as.logical(.data$VAR_FUNCTIONAL_MOTIF)
+          )
+        )
+    }else{
+      var_calls_pm1$VAR_FUNCTIONAL_MOTIF <- FALSE
+    }
+
+    if(NROW(var_calls_pm1) > 0){
+      var_calls <- var_calls |>
+        dplyr::left_join(
+          var_calls_pm1,
+          by = c("VAR_ID", "SYMBOL")
+        ) |>
+        dplyr::mutate(
+          ACMG_PM1 = dplyr::if_else(
+            (!(.data$SYMBOL %in%
+                 c("BRCA1", "BRCA2",
+                   "PALB2","ATM",
+                   "MSH2", "MLH1", "MSH6",
+                   "PMS2","APC")) &
+               ((!is.na(.data$MUTATION_HOTSPOT_AA_NUM) &
+                   .data$MUTATION_HOTSPOT_AA_NUM >= 10) |
+                  .data$VAR_FUNCTIONAL_MOTIF == TRUE)),
+            TRUE,
+            FALSE
+          )
+        ) |>
+        dplyr::mutate(
+          ACMG_PM1_SUPP = dplyr::if_else(
+            (!(.data$SYMBOL %in%
+                 c("BRCA1", "BRCA2",
+                   "PALB2", "ATM",
+                   "MSH2", "MLH1", "MSH6",
+                   "PMS2","APC")) &
+               .data$ACMG_PM1 == FALSE &
+               ((!is.na(.data$MUTATION_HOTSPOT_AA_NUM) &
+                   .data$MUTATION_HOTSPOT_AA_NUM >= 2 &
+                   .data$MUTATION_HOTSPOT_AA_NUM <= 9))),
+            TRUE,
+            FALSE
+          )
+        ) |>
+        pcgrr::remove_cols_from_df(
+          cnames = c("MUTATION_HOTSPOT_AA_NUM",
+                 "VAR_FUNCTIONAL_MOTIF")
+        )
+    }
+  }
+
+
+  return(var_calls)
+
+}
+
+#' Function that assigns ACMG evidence indicators for
+#' PM2_supporting
+#'
+#' @param var_calls variants in cancer predisposition genes
+#' @return data.frame with ACMG evidence indicators
+#'
+#' @export
+#'
+assign_PM2_evidence <- function(
+    var_calls = NULL){
+
+  var_calls$ACMG_PM2_SUPP <- FALSE
+
+  ## Assign logical ACMG evidence indicator
+  # PM2 - Absence of variant in population databases
+  if(is.data.frame(var_calls) &
+     "gnomAD_NC_AF_POPMAX" %in% colnames(var_calls) &
+     "gnomAD_NC_AC_POPMAX" %in% colnames(var_calls) &
+     "gnomAD_AF_POPMAX" %in% colnames(var_calls)){
+
+    var_calls <-
+      var_calls |>
+      dplyr::mutate(
+        ACMG_PM2_SUPP =
+          dplyr::if_else(
+            ## safeguard with gnomAD total population (< 1e-6)
+            ## - check that allele frequency is very low
+            !(.data$SYMBOL %in%
+                c("PALB2","ATM","PTEN",
+                  "MSH2", "MLH1", "MSH6",
+                  "PMS2","APC","TP53")) &
+            ((is.na(.data$gnomAD_NC_AC_POPMAX) |
+              (!is.na(.data$gnomAD_NC_AC_POPMAX) &
+                 (.data$gnomAD_NC_AC_POPMAX == 0 |
+                    .data$gnomAD_NC_AC_POPMAX > 0 &
+                    .data$gnomAD_NC_AF_POPMAX < 0.00001))) &
+                 (is.na(.data$gnomAD_AF_POPMAX) |
+                    (!is.na(.data$gnomAD_AF_POPMAX) &
+                       .data$gnomAD_AF_POPMAX < 0.000001))),
+            TRUE, FALSE, FALSE
+          )
+      ) |>
+      dplyr::mutate(
+        ACMG_PM2_SUPP = dplyr::case_when(
+          .data$SYMBOL == "TP53" &
+            (.data$gnomAD_AF_POPMAX < 0.00003 |
+               is.na(.data$gnomAD_AF_POPMAX)) ~ TRUE,
+          .data$SYMBOL == "PALB2" &
+            (.data$gnomAD_AF_POPMAX < 0.00000333 |
+               is.na(.data$gnomAD_AF_POPMAX)) ~ TRUE,
+          .data$SYMBOL == "ATM" &
+            (.data$gnomAD_AF_POPMAX <= 0.00001 |
+               is.na(.data$gnomAD_AF_POPMAX)) ~ TRUE,
+          .data$SYMBOL == "APC" &
+            ((.data$gnomAD_NC_AF_POPMAX < 0.000003 &
+               .data$gnomAD_NC_AC_POPMAX > 1) |
+            (.data$gnomAD_NC_AF_POPMAX < 0.00001 &
+               .data$gnomAD_NC_AC_POPMAX <= 1) |
+               is.na(.data$gnomAD_NC_AF_POPMAX)) ~ TRUE,
+          (.data$SYMBOL == "MLH1" |
+             .data$SYMBOL == "MSH2" |
+             .data$SYMBOL == "MSH6" |
+             .data$SYMBOL == "PMS2") &
+            (.data$gnomAD_AF_POPMAX < 0.00002 |
+               is.na(.data$gnomAD_AF_POPMAX)) ~ TRUE,
+          .data$SYMBOL == "PTEN" &
+            (.data$gnomAD_AF_POPMAX < 0.00001 |
+               is.na(.data$gnomAD_AF_POPMAX)) ~ TRUE,
+          TRUE ~ as.logical(.data$ACMG_PM2_SUPP)
+        )
+      )
+  }
+  return(var_calls)
+}
+
+
+#' Function that assigns ACMG evidence indicators for
+#' PM4
+#'
+#' @param var_calls variants in cancer predisposition genes
+#' @return data.frame with ACMG evidence indicators
+#' #' @export
+#'
+assign_PM4_evidence <- function(
+    var_calls = NULL){
+
+  var_calls$ACMG_PM4 <- FALSE
+
+  ## Assign logical ACMG evidence indicator
+  # PM4 - Protein length changes due to in-frame deletions/insertions
+  # in a non-repeat region or stop-loss variants
+  if(is.data.frame(var_calls) &
+     "CONSEQUENCE" %in% colnames(var_calls) &
+     "RMSK_HIT" %in% colnames(var_calls) &
+     "PFAM_DOMAIN_NAME" %in% colnames(var_calls)){
+
+    var_calls <- var_calls |>
+      dplyr::mutate(
+        ACMG_PM4 = dplyr::case_when(
+          (((.data$CONSEQUENCE == "inframe_deletion" |
+             .data$CONSEQUENCE == "inframe_insertion" &
+             is.na(.data$RMSKHIT))
+          | .data$CONSEQUENCE == "stop_lost") &
+            !is.na(.data$PFAM_DOMAIN_NAME)) ~ TRUE,
+          TRUE ~ as.logical(.data$ACMG_PM4)
+        )
+      )
+  }
+  return(var_calls)
+
+}
+
+
+
+#' Function that assigns ACMG evidence indicators for
+#' PM5
+#' @param var_calls variants in cancer predisposition genes
+#' @param pathogenic_codons data.frame with codons where
+#' pathogenic variants have been observed (from ClinVar)
+#' @return data.frame with ACMG evidence indicators
+#' @export
+#'
+assign_PM5_evidence <- function(
+    var_calls = NULL,
+    pathogenic_codons = NULL){
+
+  var_calls_pm5 <- data.frame()
+  var_calls$ACMG_PM5 <- NULL
+
+  ## Assign logical ACMG evidence indicator
+  # PM5 - Novel missense change at an amino acid residue
+  # where a different missense change determined to be
+  # pathogenic has been seen before
+  if(is.data.frame(var_calls) &
+     NROW(var_calls) > 0 &
+     "ENTREZGENE" %in% colnames(var_calls) &
+     "CONSEQUENCE" %in% colnames(var_calls) &
+     "HGVSP_query" %in% colnames(var_calls) &
+     "GRANTHAM_DISTANCE" %in% colnames(var_calls) &
+     "VAR_ID" %in% colnames(var_calls) &
+     "SYMBOL" %in% colnames(var_calls) &
+
+     is.data.frame(pathogenic_codons) &
+     "ENTREZGENE" %in% colnames(pathogenic_codons) &
+     "CODON" %in% colnames(pathogenic_codons) &
+     "NUM_PATHOGENIC_AA" %in% colnames(pathogenic_codons) &
+     "MIN_GRANTHAM_DISTANCE" %in% colnames(pathogenic_codons) &
+     "PATH_HGVSP" %in% colnames(pathogenic_codons) &
+     "PATH_VAR_ID" %in% colnames(pathogenic_codons) &
+     NROW(pathogenic_codons) > 0){
+
+    var_calls_pm5 <- var_calls |>
+      dplyr::select(
+        c("CONSEQUENCE","ENTREZGENE","GRANTHAM_DISTANCE",
+          "SYMBOL","CODON","VAR_ID","HGVSP_query")
+      ) |>
+      dplyr::left_join(
+        pathogenic_codons,
+        by = c("ENTREZGENE","CODON")) |>
+
+      ## Check for variants at pathogenic codon/sites
+      ## ensuring that
+      ## i) amino acid change for query variant is novel, AND
+      ## ii) Grantham distance >= minimum for what is found
+      ##     among pathogenic variants at the given codon
+      ## iii) not the same variant (VAR_ID)
+      dplyr::mutate(ACMG_PM5 = dplyr::if_else(
+        !is.na(.data$NUM_PATHOGENIC_AA) &
+          .data$NUM_PATHOGENIC_AA >= 1 &
+          !is.na(.data$PATH_HGVSP) &
+          !is.na(.data$HGVSP_query) &
+          ## not same aa change
+          !stringr::str_detect(
+            .data$PATH_HGVSP, .data$HGVSP_query) &
+          ## Grantham distance check
+          .data$GRANTHAM_DISTANCE >= .data$MIN_GRANTHAM_DISTANCE &
+          !is.na(.data$PATH_VAR_ID) &
+          ## not same variant (VAR_ID)
+          !stringr::str_detect(
+            .data$PATH_VAR_ID, .data$VAR_ID),
+        TRUE, FALSE, FALSE
+      )) |>
+      dplyr::select(
+        c("VAR_ID","ACMG_PM5")
+      )
+
+  }
+
+  if(NROW(var_calls_pm5) > 0){
+    var_calls <- var_calls |>
+      dplyr::left_join(
+        var_calls_pm5,
+        by = c("VAR_ID")
+      ) |>
+      dplyr::mutate(
+        ACMG_PM5 = dplyr::if_else(
+          is.na(.data$ACMG_PM5),
+          FALSE,
+          as.logical(.data$ACMG_PM5)
+        )
+      )
+  }else{
+    var_calls$ACMG_PM5 <- FALSE
+  }
+
+  return(var_calls)
+
+}
+
+#' Function that assigns ACMG evidence indicators for
+#' PP3
+#'
+#' @param var_calls variants in cancer predisposition genes
+#' @return data.frame with ACMG evidence indicators
+#' @export
+#'
+assign_PP3_evidence <- function(
+    var_calls = NULL){
+
+  ## Assign logical ACMG evidence indicators
+  #
+  # ACMG_PP3 - Multiple lines (>=8) of insilico evidence support a
+  #             deleterious effect on the gene or gene product
+  #          (conservation, evolutionary, splicing impact, etc.)
+  #
+  # Computational evidence for deleterious/benign effect is taken from
+  # invidual algorithm predictions in dbNSFP: SIFT,Provean,MutationTaster,
+  # MutationAssessor,M_CAP,MutPred,FATHMM_XF, DBNSFP_RNN,dbscSNV_RF,
+  # dbscSNV_AdaBoost, AlphaMissense, ClinPred, phactBOOST, PrimateAI, REVEL,
+  # Default scheme (from default TOML file):
+  # 1) Damaging: Among all possible protein variant effect predictions, at
+  #              least six algorithms must have made a call,
+  #              with at least 8 predicted as damaging/D
+  #              (possibly_damaging/PD), and at most two
+  #              predicted as tolerated/T (PP3)
+  #       - at most 1 prediction for a splicing neutral effect
+  #    Exception: if both splice site predictions indicate damaging effects;
+  #    ignore other criteria
+
+  dbnsfp_min_majority <- cpsr::acmg[["insilico_pred_min_majority"]]
+  dbnsfp_max_minority <- cpsr::acmg[["insilico_pred_max_minority"]]
+  dbnsfp_min_called <- dbnsfp_min_majority
+
+  var_calls_pp3 <- data.frame()
+  var_calls$ACMG_PP3 <- NULL
+
+  if(is.data.frame(var_calls) &
+     "N_INSILICO_CALLED" %in% colnames(var_calls) &
+     "N_INSILICO_DAMAGING" %in% colnames(var_calls) &
+     "N_INSILICO_TOLERATED" %in% colnames(var_calls) &
+     "N_INSILICO_SPLICING_AFFECTED" %in% colnames(var_calls) &
+     "N_INSILICO_SPLICING_NEUTRAL" %in% colnames(var_calls)){
+
+    var_calls_pp3 <- var_calls |>
+      ## Missense predictions
+      dplyr::mutate(
+        ACMG_PP3 =
+          dplyr::if_else(
+            .data$N_INSILICO_CALLED >= dbnsfp_min_called &
+              .data$N_INSILICO_DAMAGING >= dbnsfp_min_majority &
+              .data$N_INSILICO_TOLERATED <= dbnsfp_max_minority &
+              .data$N_INSILICO_SPLICING_NEUTRAL <= 1, TRUE,
+            FALSE, FALSE
+          )
+      ) |>
+
+      ## Splice site effect only
+      dplyr::mutate(
+        ACMG_PP3 = dplyr::case_when(
+        .data$N_INSILICO_SPLICING_AFFECTED == 2 &
+          .data$N_INSILICO_CALLED >= 2 &
+          .data$N_INSILICO_TOLERATED == 0 ~ TRUE,
+        TRUE ~ as.logical(.data$ACMG_PP3)
+      )) |>
+      dplyr::select(c("VAR_ID","ACMG_PP3")) |>
+      dplyr::distinct()
+  }
+
+  if(NROW(var_calls_pp3) > 0){
+    var_calls <- var_calls |>
+      dplyr::left_join(
+        var_calls_pp3,
+        by = c("VAR_ID")
+      ) |>
+      dplyr::mutate(
+        ACMG_PP3 = dplyr::if_else(
+          is.na(.data$ACMG_PP3),
+          FALSE,
+          as.logical(.data$ACMG_PP3)
+        )
+      )
+  }else{
+    var_calls$ACMG_PP3 <- FALSE
+  }
+
+  return(var_calls)
+}
+
+#' Function that calculates the closest distance
+#' to a known pathogenic variant in the same gene
+#'
+#' @param var_calls variants in cancer predisposition genes
+#' @param ref_data reference data object with ClinVar
+#' annotations
+#' @return data.frame with closest distance to known
+#' pathogenic variant in same gene
+#'
+#' @export
+#'
+min_distance_to_pathogenic <- function(
+    var_calls = NULL,
+    ref_data = NULL){
+
+  distance_df <- data.frame()
+  var_calls$MIN_DISTANCE_TO_PATHOGENIC <- NULL
+  ## Calculate minimum distance to known pathogenic
+
+  if(is.data.frame(var_calls) &
+     NROW(var_calls) > 0 &
+     "ENTREZGENE" %in% colnames(var_calls) &
+     "CONSEQUENCE" %in% colnames(var_calls) &
+     "CODON" %in% colnames(var_calls) &
+     "VAR_ID" %in% colnames(var_calls) &
+
+     is.list(ref_data) &
+     "variant" %in% names(ref_data) &
+     is.list(ref_data[['variant']]) &
+     "clinvar_aa_sites" %in% names(ref_data[['variant']]) &
+     is.data.frame(ref_data[['variant']][['clinvar_aa_sites']]) &
+     "ENTREZGENE" %in% colnames(ref_data[['variant']][['clinvar_aa_sites']]) &
+     "CODON" %in% colnames(ref_data[['variant']][['clinvar_aa_sites']]) &
+     "PATHOGENIC" %in% colnames(ref_data[['variant']][['clinvar_aa_sites']]) &
+     NROW(ref_data[['variant']][['clinvar_aa_sites']]) > 0){
+
+    pathogenic_df <- ref_data[['variant']][['clinvar_aa_sites']] |>
+      dplyr::filter(.data$PATHOGENIC == 1) |>
+      dplyr::select(c("ENTREZGENE", "CODON")) |>
+      dplyr::filter(!is.na(.data$ENTREZGENE) & !is.na(.data$CODON)) |>
+      dplyr::distinct()
+
+    query_df <- var_calls |>
+      dplyr::select(c("ENTREZGENE", "CODON","VAR_ID","CONSEQUENCE")) |>
+      dplyr::filter(!is.na(.data$ENTREZGENE) & !is.na(.data$CODON)) |>
+      dplyr::distinct()
+
+    if(NROW(query_df) == 0){
+      var_calls$MIN_DISTANCE_TO_PATHOGENIC <- NA_integer_
+      return(var_calls)
+    }
+
+    query_df <- query_df |>
+      dplyr::filter(
+        .data$CONSEQUENCE == "missense_variant"
+      )
+
+    if(NROW(query_df) == 0){
+      var_calls$MIN_DISTANCE_TO_PATHOGENIC <- NA_integer_
+      return(var_calls)
+    }
+
+    query_df <- query_df |>
+      dplyr::mutate(
+        CODON_POSITION = as.numeric(
+          gsub("[^0-9]", "", .data$CODON)
+      ))
+
+    pathogenic_df <- pathogenic_df |>
+      dplyr::mutate(
+        CODON_POSITION_PATH = as.numeric(
+          gsub("[^0-9]", "", .data$CODON)
+      ))
+
+
+    # Join on gene
+    distance_df <- query_df |>
+      dplyr::select(
+        c("VAR_ID", "ENTREZGENE", "CODON_POSITION")
+      ) |>
+      dplyr::inner_join(pathogenic_df, by = "ENTREZGENE",
+                        relationship = "many-to-many")
+
+    if(NROW(distance_df) > 0){
+      distance_df <- distance_df |>
+        dplyr::mutate(distance_to_path = abs(
+          .data$CODON_POSITION - .data$CODON_POSITION_PATH
+        )) |>
+        dplyr::group_by(VAR_ID, ENTREZGENE) |>
+        dplyr::summarise(
+          MIN_DISTANCE_TO_PATHOGENIC = min(distance_to_path), .groups = "drop") |>
+        dplyr::filter(.data$MIN_DISTANCE_TO_PATHOGENIC > 0 &
+                        .data$MIN_DISTANCE_TO_PATHOGENIC <= 50) |>
+        dplyr::distinct() |>
+        dplyr::select(c("VAR_ID", "MIN_DISTANCE_TO_PATHOGENIC"))
+    }
+
+  }
+
+  if(NROW(distance_df) > 0){
+    var_calls <- var_calls |>
+      dplyr::left_join(
+        distance_df,
+        by = c("VAR_ID")
+      )
+  }
+  return(var_calls)
+
+}
+
+#' Function that extracts known benign peptide changes
+#' from ClinVar (>= 2 gold stars), as well as known
+#' pathogenic nucleotide and codon sites
+#'
+#' @param ref_data reference data object with ClinVar
+#' annotations
+#' @return list with data.frames for benign peptide changes,
+#' pathogenic nucleotide sites, and pathogenic codon sites
+#' @export
+#'
+known_path_benign_sites <- function(
+    ref_data = NULL){
+
+  known_sites <- list()
+  known_sites[['benign_peptide']] <- data.frame()
+  known_sites[['pathogenic_nucleotide']] <- data.frame()
+  known_sites[['pathogenic_codon']] <- data.frame()
+
+  if(is.null(ref_data) |
+     !is.list(ref_data) |
+     !("variant" %in% names(ref_data)) |
+     !is.list(ref_data[['variant']]) |
+     !("clinvar_aa_sites" %in% names(ref_data[['variant']])) |
+     !is.data.frame(ref_data[['variant']][['clinvar_aa_sites']]) |
+     !("clinvar_nuc_sites" %in% names(ref_data[['variant']])) |
+     !is.data.frame(ref_data[['variant']][['clinvar_nuc_sites']])){
+    return(known_sites)
+  }
+
+  known_sites[['benign_peptide']] <-
+    ref_data[['variant']][['clinvar_aa_sites']] |>
+    dplyr::filter(.data$GOLD_STARS >= 2 & .data$BENIGN == 1) |>
+    dplyr::select(c("ENTREZGENE", "HGVSP", "BENIGN", "VAR_ID")) |>
+    dplyr::filter(!is.na(.data$ENTREZGENE) & !is.na(.data$HGVSP)) |>
+    dplyr::rename(BENIGN_PEPTIDE_CHANGE = "BENIGN",
+                  BENIGN_VAR_ID = "VAR_ID") |>
+    dplyr::distinct()
+
+  known_sites[['pathogenic_nucleotide']] <-
+    ref_data[['variant']][['clinvar_nuc_sites']] |>
+    dplyr::filter(.data$GOLD_STARS >= 2) |>
+    dplyr::select(c("ENTREZGENE", "PATH_NUC_SITE",
+                    "PATH_VAR_ID_NUC"))
+
+  known_sites[['pathogenic_codon']] <-
+    ref_data[['variant']][['clinvar_aa_sites']] |>
+    dplyr::filter(.data$SYMBOL == "MSH2") |>
+    dplyr::filter(.data$PATHOGENIC == 1) |>
+    dplyr::select(
+      c("ENTREZGENE", "CODON",
+        "PATHOGENIC","GOLD_STARS",
+        "VAR_ID","GRANTHAM_DISTANCE","HGVSP")) |>
+    tidyr::separate_rows("VAR_ID", sep=";") |>
+    dplyr::filter(
+      !is.na(.data$ENTREZGENE) &
+        !is.na(.data$CODON) &
+        !is.na(GRANTHAM_DISTANCE)) |>
+    dplyr::distinct() |>
+    dplyr::group_by(.data$ENTREZGENE,  .data$CODON) |>
+    dplyr::reframe(
+      MIN_GRANTHAM_DISTANCE = min(.data$GRANTHAM_DISTANCE, na.rm=TRUE),
+      MAX_GOLD_STARS = max(.data$GOLD_STARS, na.rm=TRUE),
+      PATH_HGVSP = paste(unique(.data$HGVSP), collapse=";"),
+      PATH_VAR_ID = paste(unique(.data$VAR_ID), collapse=";")) |>
+    dplyr::mutate(
+      NUM_PATHOGENIC_AA = stringr::str_count(.data$PATH_HGVSP,";") + 1
+    ) |>
+    dplyr::filter(MAX_GOLD_STARS >= 2) |>
+    dplyr::distinct()
+
+  return(known_sites)
+}
+
 
 #' Function that filters novel (non-ClinVar) variants based
 #' on a MAF threshold in gnomAD
@@ -1188,7 +2141,7 @@ exclude_vars_by_maf <- function(
 
   if(is.data.frame(var_calls) &
      "CPSR_CLASSIFICATION_SOURCE" %in% colnames(var_calls) &
-     "gnomADe_AF" %in% colnames(var_calls) &
+     "POPMAX_AF_GNOMAD" %in% colnames(var_calls) &
      "FINAL_CLASSIFICATION" %in% colnames(var_calls) &
      "CPSR_PATHOGENICITY_SCORE" %in% colnames(var_calls) &
      "CANCER_PHENOTYPE" %in% colnames(var_calls) &
@@ -1207,16 +2160,17 @@ exclude_vars_by_maf <- function(
         non_clinvar_vars_maf_filtered <-
           non_clinvar_vars |>
           dplyr::filter(
-            is.na(.data$gnomADe_AF) |
-              .data$gnomADe_AF <=
-              conf[["variant_classification"]][["maf_upper_threshold"]])
+            is.na(.data$POPMAX_AF_GNOMAD) |
+              (!is.na(.data$POPMAX_AF_GNOMAD) &
+                 .data$POPMAX_AF_GNOMAD <=
+              conf[["variant_classification"]][["max_af_gnomad"]]))
 
         pcgrr::log4r_info(
           paste0(
             "Ignoring n = ",
             NROW(non_clinvar_vars) - NROW(non_clinvar_vars_maf_filtered),
             " unclassified variants with a global MAF frequency above ",
-            conf[["variant_classification"]][["maf_upper_threshold"]]
+            conf[["variant_classification"]][["max_af_gnomad"]]
           )
         )
       }
