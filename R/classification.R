@@ -608,8 +608,8 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
     dplyr::mutate(
       ACMG_PVS1_1 =
         dplyr::if_else(
-          .data$NULL_VARIANT == T &
-            .data$LOSS_OF_FUNCTION == T &
+          .data$NULL_VARIANT == TRUE &
+            .data$LOSS_OF_FUNCTION == TRUE &
             .data$CPG_MOD == "LoF" &
             (.data$ACMG_PM2_1 == TRUE |
                .data$ACMG_PM2_2 == TRUE),
@@ -619,8 +619,8 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
     dplyr::mutate(
       ACMG_PVS1_3 =
         dplyr::if_else(
-          .data$NULL_VARIANT == T &
-            .data$LOSS_OF_FUNCTION == T &
+          .data$NULL_VARIANT == TRUE &
+            .data$LOSS_OF_FUNCTION == TRUE &
             (is.na(.data$CPG_MOD) |
                .data$CPG_MOD != "LoF") &
             (.data$ACMG_PM2_1 == TRUE |
@@ -642,8 +642,8 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
     dplyr::mutate(
       ACMG_PVS1_4 =
         dplyr::if_else(
-          .data$NULL_VARIANT == T &
-            .data$LOSS_OF_FUNCTION == F &
+          .data$NULL_VARIANT == TRUE &
+            .data$LOSS_OF_FUNCTION == FALSE &
             (is.na(.data$CPG_MOD) |
                .data$CPG_MOD != "LoF") &
             (.data$ACMG_PM2_1 == TRUE |
@@ -675,10 +675,11 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
     dplyr::mutate(
       ACMG_PVS1_7 =
         dplyr::if_else(
-          .data$LOSS_OF_FUNCTION == T &
+          .data$LOSS_OF_FUNCTION == TRUE &
+            .data$NULL_VARIANT == FALSE &
             stringr::str_detect(
               .data$CONSEQUENCE, "_donor|_acceptor") &
-            .data$LAST_INTRON == F &
+            .data$LAST_INTRON == FALSE &
             .data$CPG_MOD == "LoF" &
             (.data$ACMG_PM2_1 == TRUE |
                .data$ACMG_PM2_2 == TRUE),
@@ -688,10 +689,11 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
     dplyr::mutate(
       ACMG_PVS1_8 =
         dplyr::if_else(
-          .data$LOSS_OF_FUNCTION == T &
+          .data$LOSS_OF_FUNCTION == TRUE &
+            .data$NULL_VARIANT == FALSE &
             stringr::str_detect(
               .data$CONSEQUENCE, "_donor|_acceptor") &
-            .data$LAST_INTRON == T &
+            .data$LAST_INTRON == TRUE &
             .data$CPG_MOD == "LoF" &
             (.data$ACMG_PM2_1 == TRUE |
                .data$ACMG_PM2_2 == TRUE),
@@ -701,7 +703,8 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
     dplyr::mutate(
       ACMG_PVS1_9 =
         dplyr::if_else(
-          .data$LOSS_OF_FUNCTION == T &
+          .data$LOSS_OF_FUNCTION == TRUE &
+            .data$NULL_VARIANT == FALSE &
             stringr::str_detect(
               .data$CONSEQUENCE, "_donor|_acceptor") &
             .data$LAST_INTRON == F
@@ -715,7 +718,11 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
     dplyr::mutate(
       ACMG_PVS1_10 =
         dplyr::if_else(
-          .data$SPLICE_DONOR_RELEVANT == T &
+          #.data$LOSS_OF_FUNCTION == TRUE &
+          .data$NULL_VARIANT == FALSE &
+          .data$SPLICE_DONOR_RELEVANT == TRUE &
+            !stringr::str_detect(
+              .data$CONSEQUENCE, "_donor|_acceptor") &
             .data$ACMG_PP3 == TRUE &
             (.data$ACMG_PM2_1 == TRUE |
                .data$ACMG_PM2_2 == TRUE),
@@ -936,14 +943,22 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
       TRUE, FALSE, FALSE))
 
   ## if previously found coinciding with pathogenic variant (ACMG_PS1),
-  # set ACMG_PM5 to false
+  # set ACMG_PM5 to false, if ACMG_PM6 was also true, set to false
   var_calls <- var_calls |>
     dplyr::mutate(
       ACMG_PM5 =
         dplyr::case_when(
-          .data$ACMG_PM5 == T &
-            .data$ACMG_PS1 == T ~ FALSE,
+          .data$ACMG_PM5 == TRUE &
+            .data$ACMG_PS1 == TRUE ~ FALSE,
           TRUE ~ as.logical(.data$ACMG_PM5)
+        )
+    ) |>
+    dplyr::mutate(
+      ACMG_PM6 =
+        dplyr::case_when(
+          .data$ACMG_PM5 == TRUE &
+            .data$ACMG_PM6 == TRUE ~ FALSE,
+          TRUE ~ as.logical(.data$ACMG_PM6)
         )
     ) |>
     ## if previously found coinciding with benign variant (ACMG_BSC1),
