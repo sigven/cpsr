@@ -3,6 +3,11 @@ title: "Changelog"
 output: rmarkdown::html_document
 ---
 
+## v2.2.4
+
+- Date: **2025-09-28**
+- Patch to avoid duplicate matches of PVS1 criteria
+
 ## v2.2.1
 
 - Date: **2025-03-23**

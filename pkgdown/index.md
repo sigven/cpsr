@@ -25,6 +25,9 @@ Snapshots of sections in the [quarto](https://quarto.org)-based cancer predispos
 
 ### News
 
+*  *September 8th 2024*: **2.2.4 release**
+    -  patch to avoid duplicate matching of PVS1 criteria
+
 *  *March 23rd 2025*: **2.2.1 release**
     -  patch to fix bug with non-standard ClinVar significance levels (Drug Response, Risk Factor)
     
