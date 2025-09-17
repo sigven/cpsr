@@ -343,6 +343,8 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
     )
   var_calls <- var_calls[, !(colnames(var_calls) %in% path_columns)]
 
+  #cat(colnames(var_calls), sep = "\n")
+
   benign_peptide_changes <-
     ref_data[['variant']][['clinvar_sites']] |>
     dplyr::filter(.data$GOLD_STARS >= 2 & .data$BENIGN == 1) |>
@@ -494,6 +496,8 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
   #                   non-cancer gnomAD subset
   if (gad_AN_tag %in% colnames(var_calls) &
       gad_AC_tag %in% colnames(var_calls) &
+      "gnomADg_AF" %in% colnames(var_calls) &
+      "gnomADe_AF" %in% colnames(var_calls) &
       gad_NHOMALT_tag %in% colnames(var_calls)) {
 
     var_calls <- var_calls |>
@@ -511,20 +515,54 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
           dplyr::if_else(
             !!rlang::sym(gad_AN_tag) >= min_an &
               !is.na(!!rlang::sym(gad_AC_tag)) &
+              !!rlang::sym(gad_AC_tag) > 0 &
               .data$gad_af <= pathogenic_range_af,
             TRUE, FALSE, FALSE
           )
       ) |>
       dplyr::mutate(
+        ACMG_PM2_1 = dplyr::if_else(
+          .data$ACMG_PM2_1 == TRUE &
+            ((!is.na(.data$gnomADg_AF) &
+                .data$gnomADg_AF >
+                pathogenic_range_af) |
+               ((!is.na(.data$gnomADe_AF) &
+                   .data$gnomADe_AF >
+                   pathogenic_range_af))),
+          FALSE,
+          .data$ACMG_PM2_1,
+          .data$ACMG_PM2_1
+        )
+      ) |>
+      dplyr::mutate(
         ACMG_PM2_2 = dplyr::if_else(
-          is.na(!!rlang::sym(gad_AC_tag)),
-                                    TRUE, FALSE, FALSE
+          is.na(!!rlang::sym(gad_AC_tag)) |
+            !!rlang::sym(gad_AC_tag) == 0,
+          TRUE, FALSE, FALSE
+        )
+      ) |>
+      dplyr::mutate(
+        ACMG_PM2_2 = dplyr::if_else(
+          .data$ACMG_PM2_2 == TRUE &
+            ((!is.na(.data$gnomADg_AF) &
+                  .data$gnomADg_AF >
+                pathogenic_range_af) |
+            ((!is.na(.data$gnomADe_AF) &
+               .data$gnomADe_AF >
+                pathogenic_range_af))),
+          FALSE,
+          .data$ACMG_PM2_2,
+          .data$ACMG_PM2_2
         )
       ) |>
       dplyr::mutate(
         ACMG_BA1_AD = dplyr::if_else(
           .data$ACMG_PM2_2 == FALSE &
-            .data$gad_af >= 0.005 &
+            (.data$gad_af >= 0.005 |
+               ((!is.na(.data$gnomADe_AF) &
+                   .data$gnomADe_AF >= 0.005) |
+                  (!is.na(.data$gnomADg_AF) &
+                     .data$gnomADg_AF >= 0.005))) &
             .data$CPG_MOI == "AD",
           TRUE, FALSE, FALSE
         )
@@ -533,7 +571,11 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
         ACMG_BS1_1_AD = dplyr::if_else(
           .data$ACMG_BA1_AD == FALSE &
             .data$ACMG_PM2_2 == FALSE &
-            .data$gad_af >= 0.001 &
+            (.data$gad_af >= 0.001 |
+               ((!is.na(.data$gnomADe_AF) &
+                   .data$gnomADe_AF >= 0.001) |
+                  (!is.na(.data$gnomADg_AF) &
+                     .data$gnomADg_AF >= 0.001))) &
             .data$CPG_MOI == "AD",
           TRUE, FALSE, FALSE
         )
@@ -543,7 +585,11 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
           .data$ACMG_BS1_1_AD == FALSE &
             .data$ACMG_BA1_AD == FALSE &
             .data$ACMG_PM2_2 == FALSE &
-            .data$gad_af > pathogenic_range_af &
+            (.data$gad_af > pathogenic_range_af |
+               ((!is.na(.data$gnomADe_AF) &
+                   .data$gnomADe_AF > pathogenic_range_af) |
+                  (!is.na(.data$gnomADg_AF) &
+                     .data$gnomADg_AF > pathogenic_range_af))) &
             .data$CPG_MOI == "AD",
           TRUE, FALSE, FALSE
         )
@@ -551,7 +597,11 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
       dplyr::mutate(
         ACMG_BA1_AR = dplyr::if_else(
           .data$ACMG_PM2_2 == FALSE &
-            .data$gad_af >= 0.01 &
+            (.data$gad_af >= 0.01 |
+               ((!is.na(.data$gnomADe_AF) &
+               .data$gnomADe_AF >= 0.01) |
+               (!is.na(.data$gnomADg_AF) &
+                  .data$gnomADg_AF >= 0.01))) &
             (.data$CPG_MOI == "AR" |
                is.na(.data$CPG_MOI)),
           TRUE, FALSE, FALSE
@@ -561,7 +611,11 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
         ACMG_BS1_1_AR = dplyr::if_else(
           .data$ACMG_BA1_AR == FALSE &
             .data$ACMG_PM2_2 == FALSE &
-            .data$gad_af >= 0.003 &
+            (.data$gad_af >= 0.003 |
+               ((!is.na(.data$gnomADe_AF) &
+                   .data$gnomADe_AF >= 0.003) |
+                  (!is.na(.data$gnomADg_AF) &
+                     .data$gnomADg_AF >= 0.003))) &
             (.data$CPG_MOI == "AR" |
                is.na(.data$CPG_MOI)),
           TRUE, FALSE, FALSE
@@ -572,7 +626,11 @@ assign_pathogenicity_evidence <- function(var_calls, settings, ref_data) {
           .data$ACMG_BA1_AR == FALSE &
             .data$ACMG_BS1_1_AR == FALSE &
             .data$ACMG_PM2_2 == FALSE &
-            .data$gad_af > pathogenic_range_af &
+            (.data$gad_af > pathogenic_range_af |
+               ((!is.na(.data$gnomADe_AF) &
+                   .data$gnomADe_AF > pathogenic_range_af) |
+                  (!is.na(.data$gnomADg_AF) &
+                     .data$gnomADg_AF > pathogenic_range_af))) &
             (.data$CPG_MOI == "AR" |
                is.na(.data$CPG_MOI)),
           TRUE, FALSE, FALSE

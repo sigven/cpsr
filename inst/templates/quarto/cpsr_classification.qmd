@@ -134,19 +134,39 @@ variants_class5_clinvar <-
 variants_class5_1 <- crosstalk::SharedData$new(variants_class5_clinvar)
 crosstalk::bscols(
   list(
-    crosstalk::filter_select("CONSEQUENCE", "Consequence", variants_class5_1, ~CONSEQUENCE),
-    crosstalk::filter_checkbox("GENOTYPE", "Genotype", variants_class5_1, ~GENOTYPE),
+    crosstalk::filter_select(
+      "CONSEQUENCE", "Consequence", 
+      variants_class5_1, ~CONSEQUENCE),
+    crosstalk::filter_checkbox(
+      "GENOTYPE", "Genotype", 
+      variants_class5_1, ~GENOTYPE),
     if(cps_report$settings$conf$sample_properties$dp_detected == 1){
-      crosstalk::filter_slider("DP_CONTROL", "Variant sequencing depth", 
-                             variants_class5_1, ~DP_CONTROL)
+      crosstalk::filter_slider(
+        "DP_CONTROL", "Variant sequencing depth", 
+        variants_class5_1, ~DP_CONTROL)
     },
-    crosstalk::filter_select("SYMBOL", "Gene", variants_class5_1, ~SYMBOL)
+    crosstalk::filter_select(
+      "SYMBOL", "Gene", variants_class5_1, ~SYMBOL),
+    crosstalk::filter_slider(
+      "gnomADe_AF", "gnomAD MAF - global (exomes)", 
+      variants_class5_1, ~gnomADe_AF, 
+      sep = "", ticks = F)
   ),
   list(
-    crosstalk::filter_select("CLINVAR_PHENOTYPE", "ClinVar phenotype(s)", variants_class5_1, ~CLINVAR_PHENOTYPE),
-    crosstalk::filter_slider("CLINVAR_REVIEW_STATUS_STARS", "ClinVar review status stars", variants_class5_1, ~CLINVAR_REVIEW_STATUS_STARS, min = 0, max = 4, step = 1, ticks = T),
-    crosstalk::filter_select("CLINVAR_CONFLICTED", "ClinVar conflicting interpretations", variants_class5_1, ~CLINVAR_CONFLICTED),
-    crosstalk::filter_slider(tag_gnomad, paste0("MAF gnomAD (", desc_gnomad, ")"), variants_class5_1, formula_gnomad, sep = "", ticks = F)
+    crosstalk::filter_select(
+      "CLINVAR_PHENOTYPE", "ClinVar phenotype(s)", 
+      variants_class5_1, ~CLINVAR_PHENOTYPE),
+    crosstalk::filter_slider(
+      "CLINVAR_REVIEW_STATUS_STARS", "ClinVar review status stars", 
+      variants_class5_1, ~CLINVAR_REVIEW_STATUS_STARS, 
+      min = 0, max = 4, step = 1, ticks = T),
+    crosstalk::filter_select(
+      "CLINVAR_CONFLICTED", "ClinVar conflicting interpretations", 
+      variants_class5_1, ~CLINVAR_CONFLICTED),
+    crosstalk::filter_slider(
+      tag_gnomad, paste0("gnomAD MAF (", desc_gnomad, ")"), 
+      variants_class5_1, formula_gnomad, 
+      sep = "", ticks = F)
   )
 )
 
@@ -221,18 +241,36 @@ variants_class5_other <-
 variants_class5_2 <- crosstalk::SharedData$new(variants_class5_other)
 crosstalk::bscols(
   list(
-    crosstalk::filter_select("CONSEQUENCE", "Consequence", variants_class5_2, ~CONSEQUENCE),
-    crosstalk::filter_checkbox("GENOTYPE", "Genotype", variants_class5_2, ~GENOTYPE),
+    crosstalk::filter_select(
+      "CONSEQUENCE", "Consequence", 
+      variants_class5_2, ~CONSEQUENCE),
+    crosstalk::filter_checkbox(
+      "GENOTYPE", "Genotype", 
+      variants_class5_2, ~GENOTYPE),
     if(cps_report$settings$conf$sample_properties$dp_detected == 1){
-      crosstalk::filter_slider("DP_CONTROL", "Variant sequencing depth", 
-                             variants_class5_2, ~DP_CONTROL)
+      crosstalk::filter_slider(
+        "DP_CONTROL", "Variant sequencing depth", 
+        variants_class5_2, ~DP_CONTROL)
     },
-    crosstalk::filter_select("SYMBOL", "Gene", variants_class5_2, ~SYMBOL)
+    crosstalk::filter_select(
+      "SYMBOL", "Gene", variants_class5_2, ~SYMBOL),
+    crosstalk::filter_slider(
+      "gnomADe_AF", "gnomAD MAF - global (exomes)", 
+      variants_class5_2, ~gnomADe_AF, 
+      sep = "", ticks = F)
   ),
   list(
-    crosstalk::filter_select("CPSR_CLASSIFICATION_CODE", "CPSR classification (ACMG/AMP criteria codes)", variants_class5_2, ~CPSR_CLASSIFICATION_CODE),
-    crosstalk::filter_slider("CPSR_PATHOGENICITY_SCORE", "CPSR pathogenicity score", variants_class5_2, ~CPSR_PATHOGENICITY_SCORE, step = 0.5, ticks = T),
-    crosstalk::filter_slider(tag_gnomad, paste0("MAF gnomAD (", desc_gnomad, ")"), variants_class5_2, formula_gnomad, sep = "", ticks = F)
+    crosstalk::filter_select(
+      "CPSR_CLASSIFICATION_CODE", "CPSR classification (ACMG/AMP criteria codes)", 
+      variants_class5_2, ~CPSR_CLASSIFICATION_CODE),
+    crosstalk::filter_slider(
+      "CPSR_PATHOGENICITY_SCORE", "CPSR pathogenicity score", 
+      variants_class5_2, ~CPSR_PATHOGENICITY_SCORE, 
+      step = 0.5, ticks = T),
+    crosstalk::filter_slider(
+      tag_gnomad, paste0("gnomAD MAF (", desc_gnomad, ")"), 
+      variants_class5_2, formula_gnomad, 
+      sep = "", ticks = F)
   )
 )
 
@@ -325,19 +363,39 @@ variants_class4_clinvar <-
 variants_class4_1 <- crosstalk::SharedData$new(variants_class4_clinvar)
 crosstalk::bscols(
   list(
-    crosstalk::filter_select("CONSEQUENCE", "Consequence", variants_class4_1, ~CONSEQUENCE),
-    crosstalk::filter_checkbox("GENOTYPE", "Genotype", variants_class4_1, ~GENOTYPE),
+    crosstalk::filter_select(
+      "CONSEQUENCE", "Consequence", 
+      variants_class4_1, ~CONSEQUENCE),
+    crosstalk::filter_checkbox(
+      "GENOTYPE", "Genotype", 
+      variants_class4_1, ~GENOTYPE),
     if(cps_report$settings$conf$sample_properties$dp_detected == 1){
-      crosstalk::filter_slider("DP_CONTROL", "Variant sequencing depth", 
-                             variants_class4_1, ~DP_CONTROL)
+      crosstalk::filter_slider(
+        "DP_CONTROL", "Variant sequencing depth", 
+        variants_class4_1, ~DP_CONTROL)
     },
-    crosstalk::filter_select("SYMBOL", "Gene", variants_class4_1, ~SYMBOL)
+    crosstalk::filter_select(
+      "SYMBOL", "Gene", variants_class4_1, ~SYMBOL),
+    crosstalk::filter_slider(
+      "gnomADe_AF", "gnomAD MAF - global (exomes)", 
+      variants_class4_1, ~gnomADe_AF, 
+      sep = "", ticks = F)
   ),
   list(
-    crosstalk::filter_select("CLINVAR_PHENOTYPE", "ClinVar phenotype(s)", variants_class4_1, ~CLINVAR_PHENOTYPE),
-    crosstalk::filter_slider("CLINVAR_REVIEW_STATUS_STARS", "ClinVar review status stars", variants_class4_1, ~CLINVAR_REVIEW_STATUS_STARS, min = 0, max = 4, step = 1, ticks = T),
-    crosstalk::filter_select("CLINVAR_CONFLICTED", "ClinVar conflicting interpretations", variants_class4_1, ~CLINVAR_CONFLICTED),
-    crosstalk::filter_slider(tag_gnomad, paste0("MAF gnomAD (", desc_gnomad, ")"), variants_class4_1, formula_gnomad, sep = "", ticks = F)
+    crosstalk::filter_select(
+      "CLINVAR_PHENOTYPE", "ClinVar phenotype(s)", 
+      variants_class4_1, ~CLINVAR_PHENOTYPE),
+    crosstalk::filter_slider(
+      "CLINVAR_REVIEW_STATUS_STARS", "ClinVar review status stars", 
+      variants_class4_1, ~CLINVAR_REVIEW_STATUS_STARS, 
+      min = 0, max = 4, step = 1, ticks = T),
+    crosstalk::filter_select(
+      "CLINVAR_CONFLICTED", "ClinVar conflicting interpretations", 
+      variants_class4_1, ~CLINVAR_CONFLICTED),
+    crosstalk::filter_slider(
+      tag_gnomad, paste0("gnomAD MAF (", desc_gnomad, ")"), 
+      variants_class4_1, formula_gnomad, 
+      sep = "", ticks = F)
   )
 )
 
@@ -428,18 +486,36 @@ variants_class4_other <-
 variants_class4_2 <- crosstalk::SharedData$new(variants_class4_other)
 crosstalk::bscols(
   list(
-    crosstalk::filter_select("CONSEQUENCE", "Consequence", variants_class4_2, ~CONSEQUENCE),
-    crosstalk::filter_checkbox("GENOTYPE", "Genotype", variants_class4_2, ~GENOTYPE),
+    crosstalk::filter_select(
+      "CONSEQUENCE", "Consequence", 
+      variants_class4_2, ~CONSEQUENCE),
+    crosstalk::filter_checkbox(
+      "GENOTYPE", "Genotype", 
+      variants_class4_2, ~GENOTYPE),
     if(cps_report$settings$conf$sample_properties$dp_detected == 1){
-      crosstalk::filter_slider("DP_CONTROL", "Variant sequencing depth", 
-                             variants_class4_2, ~DP_CONTROL)
+      crosstalk::filter_slider(
+        "DP_CONTROL", "Variant sequencing depth", 
+        variants_class4_2, ~DP_CONTROL)
     },
-    crosstalk::filter_select("SYMBOL", "Gene", variants_class4_2, ~SYMBOL)
+    crosstalk::filter_select(
+      "SYMBOL", "Gene", variants_class4_2, ~SYMBOL),
+    crosstalk::filter_slider(
+      "gnomADe_AF", "gnomAD MAF - global (exomes)", 
+      variants_class4_2, ~gnomADe_AF, 
+      sep = "", ticks = F)
   ),
   list(
-    crosstalk::filter_select("CPSR_CLASSIFICATION_CODE", "CPSR classification (ACMG/AMP criteria codes)", variants_class4_2, ~CPSR_CLASSIFICATION_CODE),
-    crosstalk::filter_slider("CPSR_PATHOGENICITY_SCORE", "CPSR pathogenicity score", variants_class4_2, ~CPSR_PATHOGENICITY_SCORE, step = 0.5, ticks = T),
-    crosstalk::filter_slider(tag_gnomad, paste0("MAF gnomAD (", desc_gnomad, ")"), variants_class4_2, formula_gnomad, sep = "", ticks = F)
+    crosstalk::filter_select(
+      "CPSR_CLASSIFICATION_CODE", "CPSR classification (ACMG/AMP criteria codes)", 
+      variants_class4_2, ~CPSR_CLASSIFICATION_CODE),
+    crosstalk::filter_slider(
+      "CPSR_PATHOGENICITY_SCORE", "CPSR pathogenicity score", 
+      variants_class4_2, ~CPSR_PATHOGENICITY_SCORE, 
+      step = 0.5, ticks = T),
+    crosstalk::filter_slider(
+      tag_gnomad, paste0("gnomAD MAF (", desc_gnomad, ")"), 
+      variants_class4_2, formula_gnomad, 
+      sep = "", ticks = F)
   )
 )
 
@@ -548,27 +624,51 @@ variants_class3_clinvar <-
 variants_class3_1 <- crosstalk::SharedData$new(variants_class3_clinvar)
 crosstalk::bscols(
   list(
-    crosstalk::filter_select("CONSEQUENCE", "Consequence", variants_class3_1, ~CONSEQUENCE),
-    crosstalk::filter_checkbox("GENOTYPE", "Genotype", variants_class3_1, ~GENOTYPE),
+    crosstalk::filter_select(
+      "CONSEQUENCE", "Consequence", 
+      variants_class3_1, ~CONSEQUENCE),
+    crosstalk::filter_checkbox(
+      "GENOTYPE", "Genotype", 
+      variants_class3_1, ~GENOTYPE),
     if(cps_report$settings$conf$sample_properties$dp_detected == 1){
-      crosstalk::filter_slider("DP_CONTROL", "Variant sequencing depth", 
-                             variants_class3_1, ~DP_CONTROL)
+      crosstalk::filter_slider(
+        "DP_CONTROL", "Variant sequencing depth", 
+        variants_class3_1, ~DP_CONTROL)
     },
-    crosstalk::filter_select("SYMBOL", "Gene", variants_class3_1, ~SYMBOL),
-    crosstalk::filter_slider("GERP_SCORE", "Genomic conservation score (GERP)", 
-                             variants_class3_1, ~GERP_SCORE,
+    crosstalk::filter_select(
+      "SYMBOL", "Gene", 
+      variants_class3_1, ~SYMBOL),
+    crosstalk::filter_slider(
+      "GERP_SCORE", "Genomic conservation score (GERP)", 
+      variants_class3_1, ~GERP_SCORE,
       min = -12.3, max = 6.17, ticks = T
     ),
     crosstalk::filter_slider(
-      tag_gnomad, paste0("MAF gnomAD (", desc_gnomad, ")"), 
-      variants_class3_1, formula_gnomad, sep = "", ticks = F)
+      tag_gnomad, paste0("gnomAD MAF (", desc_gnomad, ")"), 
+      variants_class3_1, formula_gnomad, 
+      sep = "", ticks = F),
+    crosstalk::filter_slider(
+      "gnomADe_AF", "gnomAD MAF - global (exomes)", 
+      variants_class3_1, ~gnomADe_AF, 
+      sep = "", ticks = F)
   ),
   list(
-    crosstalk::filter_select("miRNA_TARGET_HIT", "miRNA target gain/loss", variants_class3_1, ~miRNA_TARGET_HIT),
-    crosstalk::filter_select("TF_BINDING_SITE_VARIANT", "TF binding site alteration", variants_class3_1, ~TF_BINDING_SITE_VARIANT),
-    crosstalk::filter_select("CLINVAR_PHENOTYPE", "ClinVar phenotype(s)", variants_class3_1, ~CLINVAR_PHENOTYPE),
-    crosstalk::filter_slider("CLINVAR_REVIEW_STATUS_STARS", "ClinVar review status stars", variants_class3_1, ~CLINVAR_REVIEW_STATUS_STARS, min = 0, max = 4, step = 1, ticks = T),
-    crosstalk::filter_select("CLINVAR_CONFLICTED", "ClinVar conflicting interpretations", variants_class3_1, ~CLINVAR_CONFLICTED)
+    crosstalk::filter_select(
+      "miRNA_TARGET_HIT", "miRNA target gain/loss", 
+      variants_class3_1, ~miRNA_TARGET_HIT),
+    crosstalk::filter_select(
+      "TF_BINDING_SITE_VARIANT", "TF binding site alteration", 
+      variants_class3_1, ~TF_BINDING_SITE_VARIANT),
+    crosstalk::filter_select(
+      "CLINVAR_PHENOTYPE", "ClinVar phenotype(s)", 
+      variants_class3_1, ~CLINVAR_PHENOTYPE),
+    crosstalk::filter_slider(
+      "CLINVAR_REVIEW_STATUS_STARS", "ClinVar review status stars", 
+      variants_class3_1, ~CLINVAR_REVIEW_STATUS_STARS, 
+      min = 0, max = 4, step = 1, ticks = T),
+    crosstalk::filter_select(
+      "CLINVAR_CONFLICTED", "ClinVar conflicting interpretations", 
+      variants_class3_1, ~CLINVAR_CONFLICTED)
   )
 )
 
@@ -595,7 +695,6 @@ DT::datatable(variants_class3_1,
   )
 ) |>
   DT::formatStyle(
-    #color = "black",
     columns = "SYMBOL",
     valueColumns = "CLINVAR_CLASSIFICATION",
     backgroundColor = DT::styleEqual(
@@ -657,23 +756,47 @@ variants_class3_other <-
 variants_class3_2 <- crosstalk::SharedData$new(variants_class3_other)
 crosstalk::bscols(
   list(
-    crosstalk::filter_select("CONSEQUENCE", "Consequence", variants_class3_2, ~CONSEQUENCE),
-    crosstalk::filter_checkbox("GENOTYPE", "Genotype", variants_class3_2, ~GENOTYPE),
+    crosstalk::filter_select(
+      "CONSEQUENCE", "Consequence", 
+      variants_class3_2, ~CONSEQUENCE),
+    crosstalk::filter_checkbox(
+      "GENOTYPE", "Genotype", 
+      variants_class3_2, ~GENOTYPE),
     if(cps_report$settings$conf$sample_properties$dp_detected == 1){
-      crosstalk::filter_slider("DP_CONTROL", "Variant sequencing depth", 
-                             variants_class3_2, ~DP_CONTROL)
+      crosstalk::filter_slider(
+        "DP_CONTROL", "Variant sequencing depth", 
+        variants_class3_2, ~DP_CONTROL)
     },
-    crosstalk::filter_select("SYMBOL", "Gene", variants_class3_2, ~SYMBOL),
-    crosstalk::filter_slider("GERP_SCORE", "Genomic conservation score (GERP)", variants_class3_2, ~GERP_SCORE,
+    crosstalk::filter_select(
+      "SYMBOL", "Gene", 
+      variants_class3_2, ~SYMBOL),
+    crosstalk::filter_slider(
+      "GERP_SCORE", "Genomic conservation score (GERP)", 
+      variants_class3_2, ~GERP_SCORE,
       min = -12.3, max = 6.17, ticks = T
-    )
+    ),
+    crosstalk::filter_slider(
+      "gnomADe_AF", "gnomAD MAF - global (exomes)", 
+      variants_class3_2, ~gnomADe_AF, 
+      sep = "", ticks = F)
   ),
   list(
-    crosstalk::filter_select("miRNA_TARGET_HIT", "miRNA target gain/loss", variants_class3_2, ~miRNA_TARGET_HIT),
-    crosstalk::filter_select("TF_BINDING_SITE_VARIANT", "TF binding site alteration", variants_class3_2, ~TF_BINDING_SITE_VARIANT),
-    crosstalk::filter_select("CPSR_CLASSIFICATION_CODE", "CPSR classification (ACMG/AMP criteria codes)", variants_class3_2, ~CPSR_CLASSIFICATION_CODE),
-    crosstalk::filter_slider("CPSR_PATHOGENICITY_SCORE", "CPSR pathogenicity score", variants_class3_2, ~CPSR_PATHOGENICITY_SCORE, step = 0.5, ticks = T),
-    crosstalk::filter_slider(tag_gnomad, paste0("MAF gnomAD (", desc_gnomad, ")"), variants_class3_2, formula_gnomad, sep = "", ticks = F)
+    crosstalk::filter_select(
+      "miRNA_TARGET_HIT", "miRNA target gain/loss", 
+      variants_class3_2, ~miRNA_TARGET_HIT),
+    crosstalk::filter_select(
+      "TF_BINDING_SITE_VARIANT", "TF binding site alteration", 
+      variants_class3_2, ~TF_BINDING_SITE_VARIANT),
+    crosstalk::filter_select(
+      "CPSR_CLASSIFICATION_CODE", "CPSR classification (ACMG/AMP criteria codes)", 
+      variants_class3_2, ~CPSR_CLASSIFICATION_CODE),
+    crosstalk::filter_slider(
+      "CPSR_PATHOGENICITY_SCORE", "CPSR pathogenicity score", 
+      variants_class3_2, ~CPSR_PATHOGENICITY_SCORE, step = 0.5, ticks = T),
+    crosstalk::filter_slider(
+      tag_gnomad, paste0("gnomAD MAF (", desc_gnomad, ")"), 
+      variants_class3_2, formula_gnomad, 
+      sep = "", ticks = F)
   )
 )
 
@@ -775,19 +898,39 @@ variants_class2_clinvar <-
 variants_class2_1 <- crosstalk::SharedData$new(variants_class2_clinvar)
 crosstalk::bscols(
   list(
-    crosstalk::filter_select("CONSEQUENCE", "Consequence", variants_class2_1, ~CONSEQUENCE),
-    crosstalk::filter_checkbox("GENOTYPE", "Genotype", variants_class2_1, ~GENOTYPE),
+    crosstalk::filter_select(
+      "CONSEQUENCE", "Consequence", 
+      variants_class2_1, ~CONSEQUENCE),
+    crosstalk::filter_checkbox(
+      "GENOTYPE", "Genotype", 
+      variants_class2_1, ~GENOTYPE),
     if(cps_report$settings$conf$sample_properties$dp_detected == 1){
-      crosstalk::filter_slider("DP_CONTROL", "Variant sequencing depth", 
-                             variants_class2_1, ~DP_CONTROL)
+      crosstalk::filter_slider(
+        "DP_CONTROL", "Variant sequencing depth", 
+        variants_class2_1, ~DP_CONTROL)
     },
-    crosstalk::filter_select("SYMBOL", "Gene", variants_class2_1, ~SYMBOL)
+    crosstalk::filter_select(
+      "SYMBOL", "Gene", variants_class2_1, ~SYMBOL),
+    crosstalk::filter_slider(
+      "gnomADe_AF", "gnomAD MAF - global (exomes)", 
+      variants_class2_1, ~gnomADe_AF, 
+      sep = "", ticks = F)
   ),
   list(
-    crosstalk::filter_select("CLINVAR_PHENOTYPE", "ClinVar phenotype(s)", variants_class2_1, ~CLINVAR_PHENOTYPE),
-    crosstalk::filter_slider("CLINVAR_REVIEW_STATUS_STARS", "ClinVar review status stars", variants_class2_1, ~CLINVAR_REVIEW_STATUS_STARS, min = 0, max = 4, step = 1, ticks = T),
-    crosstalk::filter_select("CLINVAR_CONFLICTED", "ClinVar conflicting interpretations", variants_class2_1, ~CLINVAR_CONFLICTED),
-    crosstalk::filter_slider(tag_gnomad, paste0("MAF gnomAD (", desc_gnomad, ")"), variants_class2_1, formula_gnomad, sep = "", ticks = F)
+    crosstalk::filter_select(
+      "CLINVAR_PHENOTYPE", "ClinVar phenotype(s)", 
+      variants_class2_1, ~CLINVAR_PHENOTYPE),
+    crosstalk::filter_slider(
+      "CLINVAR_REVIEW_STATUS_STARS", "ClinVar review status stars", 
+      variants_class2_1, ~CLINVAR_REVIEW_STATUS_STARS, 
+      min = 0, max = 4, step = 1, ticks = T),
+    crosstalk::filter_select(
+      "CLINVAR_CONFLICTED", "ClinVar conflicting interpretations", 
+      variants_class2_1, ~CLINVAR_CONFLICTED),
+    crosstalk::filter_slider(
+      tag_gnomad, paste0("gnomAD MAF (", desc_gnomad, ")"), 
+      variants_class2_1, formula_gnomad, 
+      sep = "", ticks = F)
   )
 )
 
@@ -864,18 +1007,36 @@ variants_class2_2 <- crosstalk::SharedData$new(
   variants_class2_other)
 crosstalk::bscols(
   list(
-    crosstalk::filter_select("CONSEQUENCE", "Consequence", variants_class2_2, ~CONSEQUENCE),
-    crosstalk::filter_checkbox("GENOTYPE", "Genotype", variants_class2_2, ~GENOTYPE),
+    crosstalk::filter_select(
+      "CONSEQUENCE", "Consequence", 
+      variants_class2_2, ~CONSEQUENCE),
+    crosstalk::filter_checkbox(
+      "GENOTYPE", "Genotype", 
+      variants_class2_2, ~GENOTYPE),
     if(cps_report$settings$conf$sample_properties$dp_detected == 1){
-      crosstalk::filter_slider("DP_CONTROL", "Variant sequencing depth", 
-                             variants_class2_2, ~DP_CONTROL)
+      crosstalk::filter_slider(
+        "DP_CONTROL", "Variant sequencing depth", 
+        variants_class2_2, ~DP_CONTROL)
     },
-    crosstalk::filter_select("SYMBOL", "Gene", variants_class2_2, ~SYMBOL)
+    crosstalk::filter_select(
+      "SYMBOL", "Gene", variants_class2_2, ~SYMBOL),
+    crosstalk::filter_slider(
+      "gnomADe_AF", "gnomAD MAF - global (exomes)", 
+      variants_class2_2, ~gnomADe_AF, 
+      sep = "", ticks = F)
   ),
   list(
-    crosstalk::filter_select("CPSR_CLASSIFICATION_CODE", "CPSR classification (ACMG/AMP criteria codes)", variants_class2_2, ~CPSR_CLASSIFICATION_CODE),
-    crosstalk::filter_slider("CPSR_PATHOGENICITY_SCORE", "CPSR pathogenicity score", variants_class2_2, ~CPSR_PATHOGENICITY_SCORE, step = 0.5, ticks = T),
-    crosstalk::filter_slider(tag_gnomad, paste0("MAF gnomAD (", desc_gnomad, ")"), variants_class2_2, formula_gnomad, sep = "", ticks = F)
+    crosstalk::filter_select(
+      "CPSR_CLASSIFICATION_CODE", "CPSR classification (ACMG/AMP criteria codes)", 
+      variants_class2_2, ~CPSR_CLASSIFICATION_CODE),
+    crosstalk::filter_slider(
+      "CPSR_PATHOGENICITY_SCORE", "CPSR pathogenicity score", 
+      variants_class2_2, ~CPSR_PATHOGENICITY_SCORE, 
+      step = 0.5, ticks = T),
+    crosstalk::filter_slider(
+      tag_gnomad, paste0("gnomAD MAF (", desc_gnomad, ")"), 
+      variants_class2_2, formula_gnomad, 
+      sep = "", ticks = F)
   )
 )
 
@@ -967,20 +1128,39 @@ variants_class1_clinvar <-
 variants_class1_1 <- crosstalk::SharedData$new(variants_class1_clinvar)
 crosstalk::bscols(
   list(
-    crosstalk::filter_select("CONSEQUENCE", "Consequence", variants_class1_1, ~CONSEQUENCE),
-    crosstalk::filter_checkbox("GENOTYPE", "Genotype", variants_class1_1, ~GENOTYPE),
+    crosstalk::filter_select(
+      "CONSEQUENCE", "Consequence", 
+      variants_class1_1, ~CONSEQUENCE),
+    crosstalk::filter_checkbox(
+      "GENOTYPE", "Genotype", 
+      variants_class1_1, ~GENOTYPE),
     if(cps_report$settings$conf$sample_properties$dp_detected == 1){
-      crosstalk::filter_slider("DP_CONTROL", "Variant sequencing depth", 
-                             variants_class1_1, ~DP_CONTROL)
+      crosstalk::filter_slider(
+        "DP_CONTROL", "Variant sequencing depth", 
+        variants_class1_1, ~DP_CONTROL)
     },
-    crosstalk::filter_select("SYMBOL", "Gene", variants_class1_1, ~SYMBOL)
+    crosstalk::filter_select(
+      "SYMBOL", "Gene", variants_class1_1, ~SYMBOL),
+    crosstalk::filter_slider(
+      "gnomADe_AF", "gnomAD MAF - global (exomes)", 
+      variants_class1_1, ~gnomADe_AF, 
+      sep = "", ticks = F)
   ),
   list(
-    crosstalk::filter_select("CLINVAR_PHENOTYPE", "ClinVar phenotype(s)", variants_class1_1, ~CLINVAR_PHENOTYPE),
-    crosstalk::filter_slider("CLINVAR_REVIEW_STATUS_STARS", "ClinVar review status stars", variants_class1_1, ~CLINVAR_REVIEW_STATUS_STARS, min = 0, max = 4, step = 1, ticks = T),
-    crosstalk::filter_select("CLINVAR_CONFLICTED", "ClinVar conflicting interpretations", variants_class1_1, ~CLINVAR_CONFLICTED),
-    crosstalk::filter_slider(tag_gnomad, paste0("MAF gnomAD (", desc_gnomad, ")"), 
-                             variants_class1_1, formula_gnomad, sep = "", ticks = F)
+    crosstalk::filter_select(
+      "CLINVAR_PHENOTYPE", "ClinVar phenotype(s)", 
+      variants_class1_1, ~CLINVAR_PHENOTYPE),
+    crosstalk::filter_slider(
+      "CLINVAR_REVIEW_STATUS_STARS", "ClinVar review status stars", 
+      variants_class1_1, ~CLINVAR_REVIEW_STATUS_STARS, 
+      min = 0, max = 4, step = 1, ticks = T),
+    crosstalk::filter_select(
+      "CLINVAR_CONFLICTED", "ClinVar conflicting interpretations", 
+      variants_class1_1, ~CLINVAR_CONFLICTED),
+    crosstalk::filter_slider(
+      tag_gnomad, paste0("gnomAD MAF (", desc_gnomad, ")"), 
+      variants_class1_1, formula_gnomad, 
+      sep = "", ticks = F)
   )
 )
 
@@ -1057,18 +1237,37 @@ variants_class1_other <-
 variants_class1_2 <- crosstalk::SharedData$new(variants_class1_other)
 crosstalk::bscols(
   list(
-    crosstalk::filter_select("CONSEQUENCE", "Consequence", variants_class1_2, ~CONSEQUENCE),
-    crosstalk::filter_checkbox("GENOTYPE", "Genotype", variants_class1_2, ~GENOTYPE),
+    crosstalk::filter_select(
+      "CONSEQUENCE", "Consequence", 
+      variants_class1_2, ~CONSEQUENCE),
+    crosstalk::filter_checkbox(
+      "GENOTYPE", "Genotype", 
+      variants_class1_2, ~GENOTYPE),
     if(cps_report$settings$conf$sample_properties$dp_detected == 1){
-      crosstalk::filter_slider("DP_CONTROL", "Variant sequencing depth", 
-                             variants_class1_2, ~DP_CONTROL)
+      crosstalk::filter_slider(
+        "DP_CONTROL", "Variant sequencing depth", 
+        variants_class1_2, ~DP_CONTROL)
     },
-    crosstalk::filter_select("SYMBOL", "Gene", variants_class1_2, ~SYMBOL)
+    crosstalk::filter_select(
+      "SYMBOL", "Gene", 
+      variants_class1_2, ~SYMBOL),
+    crosstalk::filter_slider(
+      "gnomADe_AF", "gnomAD MAF - global (exomes)", 
+      variants_class1_2, ~gnomADe_AF, 
+      sep = "", ticks = F)
   ),
   list(
-    crosstalk::filter_select("CPSR_CLASSIFICATION_CODE", "CPSR classification (ACMG/AMP criteria codes)", variants_class1_2, ~CPSR_CLASSIFICATION_CODE),
-    crosstalk::filter_slider("CPSR_PATHOGENICITY_SCORE", "CPSR pathogenicity score", variants_class1_2, ~CPSR_PATHOGENICITY_SCORE, step = 0.5, ticks = T),
-    crosstalk::filter_slider(tag_gnomad, paste0("MAF gnomAD (", desc_gnomad, ")"), variants_class1_2, formula_gnomad, sep = "", ticks = F)
+    crosstalk::filter_select(
+      "CPSR_CLASSIFICATION_CODE", "CPSR classification (ACMG/AMP criteria codes)", 
+      variants_class1_2, ~CPSR_CLASSIFICATION_CODE),
+    crosstalk::filter_slider(
+      "CPSR_PATHOGENICITY_SCORE", "CPSR pathogenicity score", 
+      variants_class1_2, ~CPSR_PATHOGENICITY_SCORE, 
+      step = 0.5, ticks = T),
+    crosstalk::filter_slider(
+      tag_gnomad, paste0("gnomAD MAF (", desc_gnomad, ")"), 
+      variants_class1_2, formula_gnomad, 
+      sep = "", ticks = F)
   )
 )
 

@@ -31,7 +31,7 @@ Sample variants that are subject for variant classification are limited to the o
    *  __`r panel_link`__
       * Diagnostic-grade genes only (applicable to Genomics England panels): __`r as.logical(cps_report[['settings']][['conf']][['gene_panel']][['diagnostic_grade_only']])`__
    
-```{r gene_selection, echo = F, eval = T}
+```{r gene_selection}
 #| echo: false
 #| eval: true
 

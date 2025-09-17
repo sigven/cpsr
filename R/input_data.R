@@ -60,6 +60,7 @@ load_germline_snv_indel <- function(
 
     population_tags <- unique(
       c("gnomADe_AF",
+        "gnomADg_AF",
         conf$variant_classification$vcftag_gnomad_AF)
     )
 

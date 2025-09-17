@@ -29,6 +29,7 @@ The report is generated with _[cpsr](https://github.com/sigven/cpsr)_ version `r
 
 * Genome assembly: __`r cps_report[['settings']][['genome_assembly']]`__
 * Control population gnomAD: __`r cps_report[['settings']][['conf']][['variant_classification']][['popdesc_gnomad']]`__
+  * _General/global gnomAD population frequencies used as fallback when missing data is encountered_
 * Upper MAF threshold (gnomAD) for non-ClinVar-classified variants:  __`r cps_report[['settings']][['conf']][['variant_classification']][['maf_upper_threshold']]`__
 * Ignore non-protein-coding variants: __`r !as.logical(cps_report[['settings']][['conf']][['other']][['show_noncoding']])`__
 * Generate CPSR variant classifications also for classified ClinVar variants: __`r as.logical(cps_report[['settings']][['conf']][['variant_classification']][['classify_all']])`__

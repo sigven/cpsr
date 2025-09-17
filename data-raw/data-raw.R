@@ -45,6 +45,7 @@ col_format_output[['html_tier']] <-
     "ONCOGENE",
     "TUMOR_SUPPRESSOR",
     "gnomADe_AF",
+    "gnomADg_AF",
     "GENOMIC_CHANGE",
     "GENOME_VERSION"
   )
@@ -81,6 +82,7 @@ col_format_output[['html_sf']] <-
     "CPSR_PATHOGENICITY_CODE",
     "CPSR_PATHOGENICITY_SCORE",
     "gnomADe_AF",
+    "gnomADg_AF",
     "GENOMIC_CHANGE",
     "GENOME_VERSION"
   )
@@ -114,6 +116,7 @@ col_format_output[['html_pgx']] <-
     "CLINVAR_REVIEW_STATUS_STARS",
     "CLINVAR_CONFLICTED",
     "gnomADe_AF",
+    "gnomADg_AF",
     "GENOMIC_CHANGE",
     "GENOME_VERSION"
   )
@@ -149,6 +152,7 @@ col_format_output[['html_gwas']] <-
     "PREDICTED_EFFECT",
     "DBSNP_RSID",
     "gnomADe_AF",
+    "gnomADg_AF",
     "GENOMIC_CHANGE",
     "GENOME_VERSION"
   )
@@ -218,6 +222,7 @@ col_format_output[['tsv']] <-
     "N_INSILICO_SPLICING_NEUTRAL",
     "N_INSILICO_SPLICING_AFFECTED",
     "gnomADe_AF",
+    "gnomADg_AF",
     "FINAL_CLASSIFICATION",
     "CPSR_CLASSIFICATION",
     "CPSR_PATHOGENICITY_SCORE",
@@ -327,7 +332,8 @@ col_format_output[['xlsx_classification']] <-
     "CLINVAR_CONFLICTED",
     "CLINVAR_PHENOTYPE",
     "CLINVAR_REVIEW_STATUS_STARS",
-    "gnomADe_AF"
+    "gnomADe_AF",
+    "gnomADg_AF"
   )
 
 ## define tags/variables to display in output Excel
@@ -369,7 +375,8 @@ col_format_output[['xlsx_secondary']] <-
     "LOF_FILTER",
     "NULL_VARIANT",
     "DBSNP_RSID",
-    "gnomADe_AF"
+    "gnomADe_AF",
+    "gnomADg_AF"
   )
 
 ## define tags/variables to display in output Excel
@@ -406,7 +413,8 @@ col_format_output[['xlsx_pgx']] <-
     "LOF_FILTER",
     "NULL_VARIANT",
     "DBSNP_RSID",
-    "gnomADe_AF"
+    "gnomADe_AF",
+    "gnomADg_AF"
   )
 
 
@@ -457,7 +465,7 @@ acmg[["evidence_codes"]] <-
                     comment.char = "", na.strings = c("NA"),
                     sep = "\t")
 acmg[["pathogenic_range_gnomad"]] <- list()
-acmg[["pathogenic_range_gnomad"]][["af"]] <- 0.0005
+acmg[["pathogenic_range_gnomad"]][["af"]] <- 0.00005
 acmg[["pathogenic_range_gnomad"]][["min_an"]] <- 12000
 acmg[["insilico_pred_min_majority"]] <- 8
 acmg[["insilico_pred_max_minority"]] <- 2
