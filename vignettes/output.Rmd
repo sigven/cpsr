@@ -223,15 +223,25 @@ MES|<SCORE_DIFF>|SCORE_REF>|<SCORE_ALT>|EFFECT (MaxEntScan). |
 
 | Tag | Description |
 |-----|-------------|
-| `gnomADe_AFR_AF` | African/American germline allele frequency ([gnomAD release 4.1](http://gnomad.broadinstitute.org/)) |
-| `gnomADe_AMR_AF` | American germline allele frequency ([gnomAD release 4.1](http://gnomad.broadinstitute.org/)) |
-| `gnomADe_AF` | Adjusted global germline allele frequency ([gnomAD release 4.1](http://gnomad.broadinstitute.org/)) |
-| `gnomADe_SAS_AF` | South Asian germline allele frequency ([gnomAD release 4.1](http://gnomad.broadinstitute.org/)) |
-| `gnomADe_EAS_AF` | East Asian germline allele frequency ([gnomAD release 4.1](http://gnomad.broadinstitute.org/)) |
-| `gnomADe_FIN_AF` | Finnish germline allele frequency ([gnomAD release 4.1](http://gnomad.broadinstitute.org/)) |
-| `gnomADe_NFE_AF` | Non-Finnish European germline allele frequency ([gnomAD release 4.1](http://gnomad.broadinstitute.org/)) |
-| `gnomADe_OTH_AF` | Other germline allele frequency ([gnomAD release 4.1](http://gnomad.broadinstitute.org/)) |
-| `gnomADe_ASJ_AF` | Ashkenazi Jewish allele frequency ([gnomAD release 4.1](http://gnomad.broadinstitute.org/)) |
+| `gnomADe_AFR_AF` | African/American germline allele frequency - exome set ([gnomAD release 4.1](http://gnomad.broadinstitute.org/)) |
+| `gnomADe_AMR_AF` | Latino/Admixed American germline allele frequency - exome set ([gnomAD release 4.1](http://gnomad.broadinstitute.org/)) |
+| `gnomADe_AF` | Adjusted global germline allele frequency - exome set ([gnomAD release 4.1](http://gnomad.broadinstitute.org/)) |
+| `gnomADe_SAS_AF` | South Asian germline allele frequency - exome set ([gnomAD release 4.1](http://gnomad.broadinstitute.org/)) |
+| `gnomADe_EAS_AF` | East Asian germline allele frequency - exome set ([gnomAD release 4.1](http://gnomad.broadinstitute.org/)) |
+| `gnomADe_FIN_AF` | Finnish germline allele frequency - exome set ([gnomAD release 4.1](http://gnomad.broadinstitute.org/)) |
+| `gnomADe_NFE_AF` | Non-Finnish European germline allele frequency - exome set ([gnomAD release 4.1](http://gnomad.broadinstitute.org/)) |
+| `gnomADe_OTH_AF` | Other germline allele frequency - exome set ([gnomAD release 4.1](http://gnomad.broadinstitute.org/)) |
+| `gnomADe_ASJ_AF` | Ashkenazi Jewish allele frequency - exome set ([gnomAD release 4.1](http://gnomad.broadinstitute.org/)) |
+| `gnomADg_AFR_AF` | African/American germline allele frequency - genome set ([gnomAD release 4.1](http://gnomad.broadinstitute.org/)) |
+| `gnomADg_AMR_AF` | Latino/Admixed American germline allele frequency - genome set ([gnomAD release 4.1](http://gnomad.broadinstitute.org/)) |
+| `gnomADg_AF` | Adjusted global germline allele frequency - genome set ([gnomAD release 4.1](http://gnomad.broadinstitute.org/)) |
+| `gnomADg_SAS_AF` | South Asian germline allele frequency - genome set ([gnomAD release 4.1](http://gnomad.broadinstitute.org/)) |
+| `gnomADg_EAS_AF` | East Asian germline allele frequency - genome set ([gnomAD release 4.1](http://gnomad.broadinstitute.org/)) |
+| `gnomADg_FIN_AF` | Finnish germline allele frequency - genome set ([gnomAD release 4.1](http://gnomad.broadinstitute.org/)) |
+| `gnomADg_NFE_AF` | Non-Finnish European germline allele frequency - genome set ([gnomAD release 4.1](http://gnomad.broadinstitute.org/)) |
+| `gnomADg_MID_AF` | Middle Eastern germline allele frequency - genome set ([gnomAD release 4.1](http://gnomad.broadinstitute.org/)) |
+| `gnomADg_OTH_AF` | Other germline allele frequency - genome set ([gnomAD release 4.1](http://gnomad.broadinstitute.org/)) |
+| `gnomADg_ASJ_AF` | Ashkenazi Jewish allele frequency - genome set ([gnomAD release 4.1](http://gnomad.broadinstitute.org/)) |
 | `gnomADe_non_cancer_ASJ_AF` | Alternate allele frequency for samples of Ashkenazi Jewish ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
 | `gnomADe_non_cancer_EAS_AF` | Alternate allele frequency for samples of East Asian ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
 | `gnomADe_non_cancer_AFR_AF` | Alternate allele frequency for samples of African-American/African ancestry in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
@@ -398,12 +408,13 @@ The following variables are included in the tiered TSV file (VCF tags in the que
 | 61. `N_INSILICO_SPLICING_NEUTRAL` | Number of algorithms with splicing neutral prediction from dbscSNV |
 | 62. `N_INSILICO_SPLICING_AFFECTED` | Number of algorithms with splicing affected prediction from dbscSNV |
 | 63. `gnomADe_AF` | Global MAF in gnomAD (exome samples) |
-| 64. `FINAL_CLASSIFICATION` | Final variant classification, using either `CLINVAR_CLASSIFICATION` if variant is ClinVar-classified, or `CPSR_CLASSIFICATION` for novel variants. _Note_: ClinVar-classified
+| 64. `gnomADg_AF` | Global MAF in gnomAD (genome samples) |
+| 65. `FINAL_CLASSIFICATION` | Final variant classification, using either `CLINVAR_CLASSIFICATION` if variant is ClinVar-classified, or `CPSR_CLASSIFICATION` for novel variants. _Note_: ClinVar-classified
 variants annotated with _Drug Response_ or _Risk Factor_ clinical significance are provided a `VUS` final classification |
-| 65. `CPSR_CLASSIFICATION` | Variant clinical significance by CPSR's classification algorithm (P/LP/VUS/LB/B) |
-| 66. `CPSR_PATHOGENICITY_SCORE` | Aggregated pathogenicity score by CPSR's algorithm |
-| 67. `CPSR_CLASSIFICATION_CODE` | Combination of CPSR classification codes assigned to the variant (ACMG) |
-| 68. `<CUSTOM_POPULATION_GNOMAD`> | Population specific MAF in gnomAD control (non-cancer, population configured by user) |
+| 66. `CPSR_CLASSIFICATION` | Variant clinical significance by CPSR's classification algorithm (P/LP/VUS/LB/B) |
+| 67. `CPSR_PATHOGENICITY_SCORE` | Aggregated pathogenicity score by CPSR's algorithm |
+| 68. `CPSR_CLASSIFICATION_CODE` | Combination of CPSR classification codes assigned to the variant (ACMG) |
+| 69. `<CUSTOM_POPULATION_GNOMAD`> | Population specific MAF in gnomAD control (non-cancer, population configured by user) |
 
 **NOTE**: The user has the possibility to append the TSV file with data from other INFO tags in the input VCF (i.e. using the *--retained_info_tags* option)
 

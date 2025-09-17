@@ -3,9 +3,20 @@ title: "Changelog"
 output: rmarkdown::html_document
 ---
 
+## v2.2.5
+
+- Date: **2025-09-17**
+- Patch to safeguard missing gnomAD frequencies in the non-cancer subset, 
+  using the general/global gnomAD frequencies as a fallback - improved
+  assignment of ACMG criteria BA1/BS1/PM2
+  - Supplement gnomAD exome AFs with genome-based AF's when running in VEP, 
+    i.e. adding the `--af_gnomadg` by default
+  - Added interactive filtering for global gnomAD frequencies in HTML datatables
+  - Added `gnomADg_AF` (global gnomAD MAF) column in TSV output files
+
 ## v2.2.4
 
-- Date: **2025-09-28**
+- Date: **2025-09-08**
 - Patch to avoid duplicate matches of PVS1 criteria
 
 ## v2.2.1

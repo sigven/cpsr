@@ -37,7 +37,7 @@ while(i <= NROW(cpsr::acmg$evidence_codes)){
 ```
 
 <br>
-Currently (as of March 2025), based on a calibration against ClinVar-classified variants (minimum two review status stars) in n = 105 core cancer predisposition genes, the clinical significance (**CPSR_CLASSIFICATION**) is determined based on the following ranges of pathogenicity scores:
+As of September 2025, based on a calibration against ClinVar-classified variants (minimum two review status stars) in n = 105 core cancer predisposition genes, the clinical significance (**CPSR_CLASSIFICATION**) is determined based on the following ranges of pathogenicity scores:
 
 <br>
 
