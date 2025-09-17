@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">CPSR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.2.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.2.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,10 +82,30 @@
     
     
 <div class="section level2">
+<h2 id="v2-2-5">v2.2.5<a class="anchor" aria-label="anchor" href="#v2-2-5"></a>
+</h2>
+<ul>
+<li>Date: <strong>2025-09-17</strong>
+</li>
+<li>Patch to safeguard missing gnomAD frequencies in the non-cancer
+subset, using the general/global gnomAD frequencies as a fallback -
+improved assignment of ACMG criteria BA1/BS1/PM2
+<ul>
+<li>Supplement gnomAD exome AFs with genome-based AF’s when running in
+VEP, i.e. adding the <code>--af_gnomadg</code> by default</li>
+<li>Added interactive filtering for global gnomAD frequencies in HTML
+datatables</li>
+<li>Added <code>gnomADg_AF</code> (global gnomAD MAF) column in TSV
+output files</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section level2">
 <h2 id="v2-2-4">v2.2.4<a class="anchor" aria-label="anchor" href="#v2-2-4"></a>
 </h2>
 <ul>
-<li>Date: <strong>2025-09-28</strong>
+<li>Date: <strong>2025-09-08</strong>
 </li>
 <li>Patch to avoid duplicate matches of PVS1 criteria</li>
 </ul>
