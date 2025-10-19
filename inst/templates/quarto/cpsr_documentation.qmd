@@ -164,6 +164,17 @@ DT::datatable(data,
 
 :::
 
+
+::: {.callout-note title="Use of gnomAD in variant classification - ACMG/AMP" collapse="true" #nte-gnomad}
+
+CPSR is primarily using the non-cancer subset of gnomAD for variant population frequency estimates in its classification procedure. However,
+in our current version of this dataset (v2.1.1), we have experienced that a considerable number of variants are not found (or failing QC) or reported with zero 
+frequency, although we notice considerable allele frequencies in the general gnomAD database (v4.1). Our current strategy is thus to use the general gnomAD dataset as a safeguard, specifically for the application of the __PM2__, __BA1__ and __BS1__ criteria. Moving forward, we will utilize a more comprehensive
+version of the non-cancer dataset (v3.1.2), although we might still consider the general gnomAD dataset as a safeguard for the mentioned criteria.
+
+:::
+
+
 ::: {.callout-note title="Calibration of classification thresholds - ACMG/AMP" collapse="true" #nte-threshold-calibration}
 
 How does CPSR assign classification of novel variants (<i>P, LP, VUS, LB, B</i>) from the aggregated variant pathogenicity score (<i>CPSR_PATHOGENICITY_SCORE</i>)?

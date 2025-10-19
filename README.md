@@ -18,6 +18,14 @@ Snapshots of sections in the [quarto](https://quarto.org)-based cancer predispos
 
 ## News
 
+*  *September 17th 2025*: **2.2.5 release**
+    -  patch - safeguard against missing data in gnomAD non-cancer variant data
+       using global gnomAD MAF's as fallback
+    -  [CHANGELOG](https://sigven.github.io/cpsr/articles/CHANGELOG.html)
+
+*  *September 8th 2025*: **2.2.4 release**
+    -  patch to avoid duplicate matching of PVS1 criteria
+
 *  *March 23rd 2025*: **2.2.1 release**
     -  patch to fix bug with non-standard ClinVar significance levels (Drug Response, Risk Factor)
 
@@ -48,7 +56,7 @@ Snapshots of sections in the [quarto](https://quarto.org)-based cancer predispos
 
 ## Example report
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15050542.svg)](https://doi.org/10.5281/zenodo.15050542)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17117326.svg)](https://doi.org/10.5281/zenodo.17117326)
 
 
 ## Getting started

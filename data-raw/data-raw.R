@@ -45,6 +45,7 @@ col_format_output[['html_tier']] <-
     "ONCOGENE",
     "TUMOR_SUPPRESSOR",
     "gnomADe_AF",
+    "gnomADg_AF",
     "GENOMIC_CHANGE",
     "GENOME_VERSION"
   )
@@ -81,6 +82,7 @@ col_format_output[['html_sf']] <-
     "CPSR_PATHOGENICITY_CODE",
     "CPSR_PATHOGENICITY_SCORE",
     "gnomADe_AF",
+    "gnomADg_AF",
     "GENOMIC_CHANGE",
     "GENOME_VERSION"
   )
@@ -114,6 +116,7 @@ col_format_output[['html_pgx']] <-
     "CLINVAR_REVIEW_STATUS_STARS",
     "CLINVAR_CONFLICTED",
     "gnomADe_AF",
+    "gnomADg_AF",
     "GENOMIC_CHANGE",
     "GENOME_VERSION"
   )
@@ -149,6 +152,7 @@ col_format_output[['html_gwas']] <-
     "PREDICTED_EFFECT",
     "DBSNP_RSID",
     "gnomADe_AF",
+    "gnomADg_AF",
     "GENOMIC_CHANGE",
     "GENOME_VERSION"
   )
@@ -217,12 +221,13 @@ col_format_output[['tsv']] <-
     "N_INSILICO_TOLERATED",
     "N_INSILICO_SPLICING_NEUTRAL",
     "N_INSILICO_SPLICING_AFFECTED",
+    "gnomADe_AF",
+    "gnomADg_AF",
     "FINAL_CLASSIFICATION",
     "CPSR_CLASSIFICATION",
     "CPSR_PATHOGENICITY_SCORE",
     "CPSR_CLASSIFICATION_CODE",
     "CPSR_CLASSIFICATION_SOURCE",
-    "gnomADe_AF"
   )
 
 col_format_output[['html_bm']] <-
@@ -327,7 +332,8 @@ col_format_output[['xlsx_classification']] <-
     "CLINVAR_CONFLICTED",
     "CLINVAR_PHENOTYPE",
     "CLINVAR_REVIEW_STATUS_STARS",
-    "gnomADe_AF"
+    "gnomADe_AF",
+    "gnomADg_AF"
   )
 
 ## define tags/variables to display in output Excel
@@ -369,7 +375,8 @@ col_format_output[['xlsx_secondary']] <-
     "LOF_FILTER",
     "NULL_VARIANT",
     "DBSNP_RSID",
-    "gnomADe_AF"
+    "gnomADe_AF",
+    "gnomADg_AF"
   )
 
 ## define tags/variables to display in output Excel
@@ -406,7 +413,8 @@ col_format_output[['xlsx_pgx']] <-
     "LOF_FILTER",
     "NULL_VARIANT",
     "DBSNP_RSID",
-    "gnomADe_AF"
+    "gnomADe_AF",
+    "gnomADg_AF"
   )
 
 

@@ -395,7 +395,7 @@ if (missing_germline_items[["diagnostic"]] == F &
 
 <br>
 
-```{r germline_diagnostic, echo=F, results='asis', eval = show_germline_filters[['diagnostic']]}
+```{r germline_diagnostic}
 #| eval: !expr show_germline_filters$diagnostic
 #| output: asis
 #| echo: false
