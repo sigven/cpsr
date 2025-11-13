@@ -3,7 +3,9 @@
 \name{assign_PS1_evidence}
 \alias{assign_PS1_evidence}
 \title{Function that assigns ACMG evidence indicators for
-PS1 ('ACMG_PS1')}
+PS1 ('ACMG_PS1') - Same amino acid change as a previously
+established pathogenic variant regardless of nucleotide
+change}
 \usage{
 assign_PS1_evidence(
   var_calls = NULL,
@@ -25,5 +27,7 @@ data.frame with ACMG evidence indicators
 }
 \description{
 Function that assigns ACMG evidence indicators for
-PS1 ('ACMG_PS1')
+PS1 ('ACMG_PS1') - Same amino acid change as a previously
+established pathogenic variant regardless of nucleotide
+change
 }

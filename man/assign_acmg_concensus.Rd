@@ -12,7 +12,7 @@ assign_acmg_concensus(var_calls = NULL)
 \item{var_calls}{data frame with variant calls in predisposition genes}
 }
 \value{
-var_calls data frame with ACMG_CONCENSUS column appended
+var_calls data frame with CPSR_ACMG_CODE column appended
 }
 \description{
 Function that assigns a summary string of
