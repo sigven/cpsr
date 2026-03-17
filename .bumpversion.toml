@@ -25,7 +25,7 @@ search = "Version: {current_version}"
 replace = "Version: {new_version}"
 
 [[tool.bumpversion.files]]
-filename = "conda/recipe/cpsr/meta.yaml"
+filename = "conda/recipe/cpsr/recipe.yaml"
 search = "version: {current_version}"
 replace = "version: {new_version}"
 

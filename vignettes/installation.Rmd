@@ -10,7 +10,7 @@ the [PCGR installation steps](https://sigven.github.io/pcgr/articles/installatio
 - [Apptainer/Singularity](https://sigven.github.io/pcgr/articles/installation.html#c--singularityapptainer), or 
 - [Conda](https://sigven.github.io/pcgr/articles/installation.html#a--conda).
 
-We recommend Conda as the simplest framework to install PCGR and CPSR, using either a MacOS or a Linux platform.
+If using Linux, we recommend Conda as the simplest framework to install PCGR and CPSR.
 
 Assuming you have installed the `pcgr` and `pcgrr` conda envs as described in the above links
 at e.g. `/home/user/projects/cpsr_proj1/conda/env/`, you can load the `pcgr` environment and check

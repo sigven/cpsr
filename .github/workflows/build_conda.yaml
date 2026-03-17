@@ -35,7 +35,7 @@ jobs:
           DEV_CHANNEL=""
           [[ "${{ github.ref }}" == "refs/heads/dev" ]] && DEV_CHANNEL="--channel ${{ env.conda_org }}/label/dev"
           rattler-build build \
-            --recipe-dir ${conda_recipe}/cpsr \
+            --recipe-dir ${{ env.conda_recipe }}/cpsr \
             ${DEV_CHANNEL} \
             --channel ${{ env.conda_org }} \
             --channel bioconda \
@@ -48,7 +48,7 @@ jobs:
           [[ "${{ github.ref }}" == "refs/heads/dev" ]] && LABEL_ARG="--channel dev"
           rattler-build upload anaconda \
             --owner ${{ env.conda_org }} \
-            --api-key ${conda_token} \
+            --api-key ${{ env.conda_token }} \
             ${LABEL_ARG} \
             ${pkg_path}
       - name: 🔖 Tag creation
@@ -62,7 +62,7 @@ jobs:
               ref: the_tag_name,
               sha: context.sha
             })
-      - name: 👾 Miniforge setup
+      - name: 👾 Miniforge setup (pkgdown)
         uses: conda-incubator/setup-miniconda@v3
         with:
           auto-update-conda: true
