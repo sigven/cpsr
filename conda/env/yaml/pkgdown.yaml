@@ -1,10 +1,10 @@
-name: pkgdown
+name: pkgdown_env
 channels:
   - pcgr
-  - conda-forge
   - bioconda
+  - conda-forge
 dependencies:
   - r-pcgrr
-  - r-cpsr ==2.2.5 # versioned by bump2version
+  - r-cpsr ==2.2.5 # bump
   - r-pkgdown
   - pandoc
