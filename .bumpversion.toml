@@ -31,8 +31,8 @@ replace = "version: {new_version}"
 
 [[tool.bumpversion.files]]
 filename = "conda/env/yaml/pkgdown.yaml"
-search = "cpsr =={current_version}"
-replace = "cpsr =={new_version}"
+search = "r-cpsr =={current_version}"
+replace = "r-cpsr =={new_version}"
 
 [[tool.bumpversion.files]]
 filename = ".github/workflows/build_conda.yaml"
