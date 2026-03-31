@@ -1,22 +1,22 @@
-package:
+context:
   name: r-cpsr
-  version: 2.2.5 # versioned by bump2version
+  version: 2.2.5 # bump
+
+package:
+  name: ${{ name|lower }}
+  version: ${{ version }}
 
 source:
-  path: ../../../
+  path: ../../..
 
 build:
   number: 0
   noarch: generic
-  rpaths:
-    - lib/R/lib/
-    - lib/
+  script: R CMD INSTALL --build .
 
 requirements:
-  build:
-    - git
   host:
-    - r-base ==4.3.3
+    - r-base >=4.5,<4.6
     - r-assertable
     - r-assertthat
     - r-bslib
@@ -37,7 +37,7 @@ requirements:
     - r-stringi
     - r-tidyr
   run:
-    - r-base ==4.3.3
+    - r-base >=4.5,<4.6
     - r-assertable
     - r-assertthat
     - r-bslib
@@ -58,11 +58,19 @@ requirements:
     - r-stringi
     - r-tidyr
 
-test:
-  commands:
-    - $R -e "library('cpsr')"
-
+tests:
+  - r:
+      libraries:
+        - cpsr
 about:
-  home: https://github.com/sigven/cpsr
-  license: MIT
+  homepage: https://sigven.github.io/cpsr
   summary: Cancer Predisposition Sequencing Reporter
+  license: MIT
+  license_file: LICENSE
+  repository: https://github.com/sigven/cpsr
+  documentation: https://sigven.github.io/cpsr
+
+extra:
+  recipe-maintainers:
+    - pdiakumis
+
