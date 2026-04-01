@@ -28,11 +28,9 @@ jobs:
           if [[ "${{ github.ref }}" == "refs/heads/dev" ]]; then
             echo "DEV_CONDA_CHANNEL=--channel ${{ env.conda_org }}/label/dev" >> $GITHUB_ENV
             echo "DEV_UPLOAD_LABEL=--channel dev" >> $GITHUB_ENV
-            echo "PKGDOWN_CHANNELS=${{ env.conda_org }}/label/dev,pcgr,conda-forge,bioconda" >> $GITHUB_ENV
           else
             echo "DEV_CONDA_CHANNEL=" >> $GITHUB_ENV
             echo "DEV_UPLOAD_LABEL=" >> $GITHUB_ENV
-            echo "PKGDOWN_CHANNELS=pcgr,conda-forge,bioconda" >> $GITHUB_ENV
           fi
       - name: 👾 Miniforge setup
         uses: conda-incubator/setup-miniconda@v3
@@ -69,6 +67,26 @@ jobs:
               ref: the_tag_name,
               sha: context.sha
             })
+
+  publish_website:
+    needs: build_conda_pkg
+    name: Publish pkgdown website
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -l {0}
+    steps:
+      - name: 🚚 Checkout tag
+        uses: actions/checkout@v6
+        with:
+          ref: v${{ env.VERSION }}
+      - name: Set pkgdown channels
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/dev" ]]; then
+            echo "PKGDOWN_CHANNELS=${{ env.conda_org }}/label/dev,pcgr,conda-forge,bioconda" >> $GITHUB_ENV
+          else
+            echo "PKGDOWN_CHANNELS=pcgr,conda-forge,bioconda" >> $GITHUB_ENV
+          fi
       - name: 👾 Miniforge setup (pkgdown)
         uses: conda-incubator/setup-miniconda@v3
         with:
@@ -83,4 +101,3 @@ jobs:
           printf "cpsr version:\n"
           Rscript -e "packageVersion('cpsr')"
           Rscript -e "pkgdown::deploy_to_branch(pkg = '.', commit_message = 'Built CPSR website: https://sigven.github.io/cpsr/', branch = 'gh-pages', new_process = FALSE)"
-
