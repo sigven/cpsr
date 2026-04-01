@@ -23,6 +23,17 @@ jobs:
     steps:
       - name: 🚚 Checkout code
         uses: actions/checkout@v6
+      - name: Set branch env vars
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/dev" ]]; then
+            echo "DEV_CONDA_CHANNEL=--channel ${{ env.conda_org }}/label/dev" >> $GITHUB_ENV
+            echo "DEV_UPLOAD_LABEL=--channel dev" >> $GITHUB_ENV
+            echo "PKGDOWN_CHANNELS=${{ env.conda_org }}/label/dev,pcgr,conda-forge,bioconda" >> $GITHUB_ENV
+          else
+            echo "DEV_CONDA_CHANNEL=" >> $GITHUB_ENV
+            echo "DEV_UPLOAD_LABEL=" >> $GITHUB_ENV
+            echo "PKGDOWN_CHANNELS=pcgr,conda-forge,bioconda" >> $GITHUB_ENV
+          fi
       - name: 👾 Miniforge setup
         uses: conda-incubator/setup-miniconda@v3
         with:
@@ -32,11 +43,9 @@ jobs:
           miniforge-version: latest
       - name: 🐍🔧 Conda pkg build
         run: |
-          DEV_CHANNEL=""
-          [[ "${{ github.ref }}" == "refs/heads/dev" ]] && DEV_CHANNEL="--channel ${{ env.conda_org }}/label/dev"
           rattler-build build \
             --recipe-dir ${{ env.conda_recipe }}/cpsr \
-            ${DEV_CHANNEL} \
+            ${{ env.DEV_CONDA_CHANNEL }} \
             --channel ${{ env.conda_org }} \
             --channel conda-forge \
             --channel bioconda \
@@ -44,12 +53,10 @@ jobs:
       - name: 🐍🪁 Conda pkg upload
         run: |
           pkg_path=$(find ${RUNNER_TEMP}/out_cpsr -type f -name "*.conda")
-          LABEL_ARG=""
-          [[ "${{ github.ref }}" == "refs/heads/dev" ]] && LABEL_ARG="--channel dev"
           rattler-build upload anaconda \
             --owner ${{ env.conda_org }} \
             --api-key ${{ env.conda_token }} \
-            ${LABEL_ARG} \
+            ${{ env.DEV_UPLOAD_LABEL }} \
             ${pkg_path}
       - name: 🔖 Tag creation
         uses: actions/github-script@v8
@@ -69,6 +76,8 @@ jobs:
           environment-file: ${{ env.conda_env_yaml }}/pkgdown.yaml
           activate-environment: pkgdown_env
           miniforge-version: latest
+          channels: ${{ env.PKGDOWN_CHANNELS }}
+          channel-priority: strict
       - name: 🌐 Website publish
         run: |
           printf "cpsr version:\n"
