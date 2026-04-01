@@ -38,8 +38,8 @@ jobs:
             --recipe-dir ${{ env.conda_recipe }}/cpsr \
             ${DEV_CHANNEL} \
             --channel ${{ env.conda_org }} \
-            --channel bioconda \
             --channel conda-forge \
+            --channel bioconda \
             --output-dir ${RUNNER_TEMP}/out_cpsr
       - name: 🐍🪁 Conda pkg upload
         run: |
