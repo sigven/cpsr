@@ -1,6 +1,6 @@
 <br>
 
-## Cancer Predisposition Sequencing Reporter <a href="https://sigven.github.io/cpsr/"><img src="man/figures/logo.png" align="right" height="106" width="90"/></a>
+## Cancer Predisposition Sequencing Reporter <a href="https://sigven.github.io/cpsr/"><img src="man/figures/logo.png" align="right" height="106" width="90" alt="cpsr logo" /></a>
 
 <br><br>
 
@@ -19,7 +19,7 @@ The CPSR workflow is integrated with the framework that underlies [Personal Canc
 
 Snapshots of sections in the [quarto](https://quarto.org)-based cancer predisposition genome report (artificial sample, with more findings than usual):
 
-![](img/cpsr_sc.png)
+![CPSR views](img/cpsr_sc.png)
 
 <br>
 
