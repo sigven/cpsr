@@ -94,8 +94,8 @@ jobs:
           environment-file: ${{ env.conda_env_yaml }}/pkgdown.yaml
           activate-environment: pkgdown_env
           miniforge-version: latest
-          channels: ${{ env.PKGDOWN_CHANNELS }}
-          channel-priority: strict
+          #channels: ${{ env.PKGDOWN_CHANNELS }}
+          channel-priority: flexible
       - name: 🌐 Website publish
         run: |
           printf "cpsr version:\n"
