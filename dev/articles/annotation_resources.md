@@ -1,0 +1,54 @@
+# Annotation resources
+
+### Basic variant consequence annotation
+
+- [VEP v113](http://www.ensembl.org/info/docs/tools/vep/index.md) -
+  Variant Effect Predictor ([GENCODE
+  v47](https://www.gencodegenes.org/human/) as gene reference database
+  (v19 for grch37))
+
+### *Insilico* predictions of effect of coding variants
+
+- [dBNSFP](https://sites.google.com/site/jpopgen/dbNSFP) - database of
+  non-synonymous functional predictions (v5.0, January 2025)
+
+### Variant frequency databases
+
+- [gnomAD](http://exac.broadinstitute.org/) - germline variant
+  frequencies exome-wide (r2.1.1 (non-cancer subject allele
+  frequencies), r4.1)
+- [dbSNP](http://www.ncbi.nlm.nih.gov/SNP/) - database of short genetic
+  variants (build 156)
+- [Cancer Hotspots](http://cancerhotspots.org) - a resource for
+  statistically significant mutations in cancer (v2, 2017)
+
+### Variant databases of clinical utility
+
+- [ClinVar](http://www.ncbi.nlm.nih.gov/clinvar/) - database of
+  clinically related variants (March 2025)
+- [CIViC](https://civicdb.org) - clinical interpretations of variants in
+  cancer (March 13th 2025)
+
+### Protein domains/functional features
+
+- [UniProt/SwissProt KnowledgeBase](http://www.uniprot.org) - resource
+  on protein sequence and functional information (2025_01)
+- [Pfam](http://pfam.xfam.org) - database of protein families and
+  domains (v37.0)
+
+### Cancer gene knowledge bases
+
+- [CancerMine](http://bionlp.bcgsc.ca/cancermine/) - Literature-mined
+  database of tumor suppressor genes/proto-oncogenes (v50, March 2023)
+- [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk) -
+  cancer phenotype panels as of February 2025
+- [Cancer Gene
+  Census](https://www.sanger.ac.uk/data/cancer-gene-census/) - genes
+  implicated with cancer susceptibility (v101)
+
+### Phenotype ontologies
+
+- [UMLS/MedGen](https://www.ncbi.nlm.nih.gov/medgen/) - January 2025
+- [Disease Ontology](https://disease-ontology.org/) - February 2025
+- [Experimental Factor Ontology](https://github.com/EBISPOT/efo) -
+  v3.75.0

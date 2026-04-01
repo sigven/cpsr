@@ -1,0 +1,198 @@
+  
+
+## Cancer Predisposition Sequencing Reporter [![cpsr logo](reference/figures/logo.png)](https://sigven.github.io/cpsr/)
+
+  
+  
+
+The *Cancer Predisposition Sequencing Reporter (CPSR)* is a
+computational workflow that **interprets DNA sequence variants**
+identified from next-generation sequencing **in the context of cancer
+predisposition**.
+
+*CPSR* accepts a query file with *germline* variant calls (SNVs/InDels)
+from a single sample (i.e. cancer patient), encoded in the [VCF
+format](https://samtools.github.io/hts-specs/VCFv4.2.pdf). Through
+comprehensive gene and variant annotation procedures, CPSR offers the
+following functionalities to the user:
+
+1.  Flexible **selection of cancer predisposition genes** that restricts
+    variant classification and reporting - through the use of virtual
+    gene panels
+2.  **Variant classification** (*Pathogenic* to *Benign*) through a
+    dedicated and well-performing implementation of [ACMG/AMP
+    guidelines](https://pubmed.ncbi.nlm.nih.gov/25741868/)
+3.  **Detection of biomarkers** - variants with prognostic, diagnostic,
+    or drug sensitivity/resistance implications in cancer, as well as
+    optional detection of variants related to adverse events/toxicity
+    for common chemotherapies  
+4.  Optional reporting of **secondary/incidental findings** ([ACMG
+    recommendations](https://pubmed.ncbi.nlm.nih.gov/37347242/))
+5.  **Interactive HTML output report** with detailed variant
+    information, gene annotations, and external links to relevant
+    databases
+
+The CPSR workflow is integrated with the framework that underlies
+[Personal Cancer Genome Reporter -
+PCGR](https://github.com/sigven/pcgr). While *PCGR* is intended for
+reporting and analysis of somatic variants detected in a tumor, *CPSR*
+is intended for reporting and ranking of germline variants in
+protein-coding genes that are implicated in cancer predisposition and
+inherited cancer syndromes.
+
+Snapshots of sections in the [quarto](https://quarto.org)-based cancer
+predisposition genome report (artificial sample, with more findings than
+usual):
+
+![CPSR views](img/cpsr_sc.png)
+
+CPSR views
+
+  
+
+### News
+
+- *September 17th 2025*: **2.2.5 release**
+  - patch - safeguard against missing data in gnomAD non-cancer variant
+    data
+- *September 8th 2025*: **2.2.4 release**
+  - patch to avoid duplicate matching of PVS1 criteria
+- *March 23rd 2025*: **2.2.1 release**
+  - patch to fix bug with non-standard ClinVar significance levels (Drug
+    Response, Risk Factor)
+- *March 22nd 2025*: **2.2.0 release**
+  - more predisposition genes in panel zero
+  - optional reporting of pharmacogenomics-related variants (TPMT, DPYD,
+    NUDT15)
+  - [CHANGELOG](https://sigven.github.io/cpsr/articles/CHANGELOG.html)
+- *October 2024*: **2.1.2 release**
+  - cosmetic fixes in HTML report
+  - fix for VEP consequence pick exception
+  - [CHANGELOG](https://sigven.github.io/cpsr/articles/CHANGELOG.html)
+- *September 2024*: **2.1.0 release**
+  - data bundle upgrade
+  - re-calibration of classification tresholds
+  - [CHANGELOG](https://sigven.github.io/cpsr/articles/CHANGELOG.html)
+- *June 2024*: **2.0.0 release**
+  - New HTML report generation and layout with
+    [quarto](https://quarto.org/)
+  - Excel output supported
+  - Data bundle update
+  - Singularity/Apptainer support
+  - [CHANGELOG](http://cpsr.readthedocs.io/en/latest/CHANGELOG.md)
+- *November 2022*: **1.0.1 release**
+  - Added CPSR logo (designed by [Hal Nakken](https://halvetica.net))
+
+### Example report
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17117326.svg)](https://doi.org/10.5281/zenodo.17117326)
+
+### Getting started
+
+- [Installation
+  instructions](https://sigven.github.io/cpsr/dev/articles/installation.md)
+
+- [Run through an
+  example](https://sigven.github.io/cpsr/dev/articles/running.html#example-run)
+
+- Learn more about
+
+  1.  Details regarding [CPSR input
+      files](https://sigven.github.io/cpsr/dev/articles/input.md), and
+      how they should be formatted
+  2.  The types and contents of [CPSR output
+      files](https://sigven.github.io/cpsr/dev/articles/output.md)
+  3.  [ACMG variant classification
+      procedure](https://sigven.github.io/cpsr/dev/articles/variant_classification.md)
+      used in CPSR
+  4.  The list of [virtual gene
+      panels](https://sigven.github.io/cpsr/dev/articles/virtual_panels.md)
+      available in CPSR
+
+### Contact
+
+<sigven@ifi.uio.no>
+
+# Package index
+
+## All functions
+
+- [`acmg`](https://sigven.github.io/cpsr/dev/reference/acmg.md) : Scores
+  and documentation of ACMG evidence criteria used for variant
+  classification in CPSR
+- [`append_cpg_properties()`](https://sigven.github.io/cpsr/dev/reference/append_cpg_properties.md)
+  : Function that appends mechanism-of-inheritance (MOI) and mechanism
+  of disease (MOD) annotations to cancer predisposition genes (cpg's),
+  as well as estimated fractions of truncation vs. non-truncating
+  variants etc per predisposition gene (from ClinVar)
+- [`assign_classification()`](https://sigven.github.io/cpsr/dev/reference/assign_classification.md)
+  : Function that assigns final pathogenicity classification (B, LB,
+  VUS, P, LP) based on accumulated scores from different ACMG criteria
+  and pre-defined cutoffs (calibrated against ClinVar)
+- [`assign_pathogenicity_evidence()`](https://sigven.github.io/cpsr/dev/reference/assign_pathogenicity_evidence.md)
+  : Function that assigns variant pathogenicity evidence based on ACMG
+  guidelines
+- [`bs_icon2()`](https://sigven.github.io/cpsr/dev/reference/bs_icon2.md)
+  : Use Bootstrap icons (as inline SVG)
+- [`check_variant2cancer_phenotype()`](https://sigven.github.io/cpsr/dev/reference/check_variant2cancer_phenotype.md)
+  : Function that retrieves variants in cancer predisposition genes
+  linked to cancer-related conditions according to ClinVar
+- [`col_format_output`](https://sigven.github.io/cpsr/dev/reference/col_format_output.md)
+  : Format of CPSR output data frames (HTML, TSV)
+- [`color_palette`](https://sigven.github.io/cpsr/dev/reference/color_palette.md)
+  : CPSR color palette
+- [`combine_novel_and_preclassified()`](https://sigven.github.io/cpsr/dev/reference/combine_novel_and_preclassified.md)
+  : Function that combines classifications of novel and pre-classified
+  variants
+- [`exclude_vars_by_maf()`](https://sigven.github.io/cpsr/dev/reference/exclude_vars_by_maf.md)
+  : Function that filters novel (non-ClinVar) variants based on a MAF
+  threshold in gnomAD
+- [`exclude_vars_non_cancer()`](https://sigven.github.io/cpsr/dev/reference/exclude_vars_non_cancer.md)
+  : Function that ignores/exclude variants attributed to non-cancer
+  related phenotypes in ClinVar
+- [`exclude_vars_noncoding()`](https://sigven.github.io/cpsr/dev/reference/exclude_vars_noncoding.md)
+  : Function that filters novel (non-ClinVar) variants based on a MAF
+  threshold in gnomAD
+- [`generate_cpsr_report()`](https://sigven.github.io/cpsr/dev/reference/generate_cpsr_report.md)
+  : Function that generates variant predisposition report - CPSR
+- [`get_insilico_prediction_statistics()`](https://sigven.github.io/cpsr/dev/reference/get_insilico_prediction_statistics.md)
+  : Function that counts insilico predictions of variant effects (i.e.
+  damaging/tolerated) from dbNSFP
+- [`get_max_rows_pr_datatable()`](https://sigven.github.io/cpsr/dev/reference/get_max_rows_pr_datatable.md)
+  : Function that gets the maximum number of rows across different tier
+  data frames in CPSR report
+- [`load_germline_snv_indel()`](https://sigven.github.io/cpsr/dev/reference/load_germline_snv_indel.md)
+  : Function that reads and validates an annotated germline SNV/InDel
+  file from CPSR pre-reporting pipeline
+- [`plot_summary_statistics()`](https://sigven.github.io/cpsr/dev/reference/plot_summary_statistics.md)
+  : Function that makes a piechart showing the number of variants at
+  each significance level
+- [`plot_virtual_panels()`](https://sigven.github.io/cpsr/dev/reference/plot_virtual_panels.md)
+  : Function that makes a HTML display of virtual gene panel
+- [`report_color`](https://sigven.github.io/cpsr/dev/reference/report_color.md)
+  : CPSR report color
+- [`retrieve_pgx_calls()`](https://sigven.github.io/cpsr/dev/reference/retrieve_pgx_calls.md)
+  : Function that retrieves variants in genes recommended for secondary
+  findings
+- [`retrieve_secondary_calls()`](https://sigven.github.io/cpsr/dev/reference/retrieve_secondary_calls.md)
+  : Function that retrieves variants in genes recommended for secondary
+  findings
+- [`write_cpsr_output()`](https://sigven.github.io/cpsr/dev/reference/write_cpsr_output.md)
+  : Function that writes contents of CPSR report object to various
+  output formats (quarto HTML reports, TSV, XLSX workbooks etc)
+
+# Articles
+
+### All vignettes
+
+- [Annotation
+  resources](https://sigven.github.io/cpsr/dev/articles/annotation_resources.md):
+- [Changelog](https://sigven.github.io/cpsr/dev/articles/CHANGELOG.md):
+- [Input files](https://sigven.github.io/cpsr/dev/articles/input.md):
+- [Installation](https://sigven.github.io/cpsr/dev/articles/installation.md):
+- [Output files](https://sigven.github.io/cpsr/dev/articles/output.md):
+- [Running](https://sigven.github.io/cpsr/dev/articles/running.md):
+- [Variant
+  classification](https://sigven.github.io/cpsr/dev/articles/variant_classification.md):
+- [Virtual gene
+  panels](https://sigven.github.io/cpsr/dev/articles/virtual_panels.md):
