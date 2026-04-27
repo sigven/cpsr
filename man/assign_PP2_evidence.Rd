@@ -13,6 +13,12 @@ assign_PP2_evidence(
 }
 \arguments{
 \item{var_calls}{variants in cancer predisposition genes}
+
+\item{max_benign_missense_frac}{maximum tolerated
+fraction of benign missense variants for gene}
+
+\item{max_truncating_frac}{maximum tolerated
+fraction of pathogenic truncating variants for gene}
 }
 \value{
 data.frame with ACMG evidence indicators

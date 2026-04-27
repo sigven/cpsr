@@ -2,7 +2,9 @@
 % Please edit documentation in R/classification.R
 \name{assign_acmg_evidence}
 \alias{assign_acmg_evidence}
-\title{Function that assigns variant pathogenicity evidence based on ACMG guidelines}
+\title{Function that assigns final pathogenicity classification (B, LB, VUS, P, LP)
+based on accumulated scores from different ACMG criteria and pre-defined
+cutoffs (calibrated against ClinVar)}
 \usage{
 assign_acmg_evidence(var_calls, settings, ref_data)
 }
@@ -17,5 +19,11 @@ assign_acmg_evidence(var_calls, settings, ref_data)
 calls
 }
 \description{
+param var_calls data frame with variant calls in predisposition genes
+}
+\details{
+return var_calls data frame with pathogenicity classification appended
+
+export
 Function that assigns variant pathogenicity evidence based on ACMG guidelines
 }
