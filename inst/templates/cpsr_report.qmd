@@ -43,9 +43,10 @@ knitr::opts_chunk$set(echo = F, warning = FALSE, dpi = 72, error = F, eval = T)
 options(scipen = 999)
 
 cps_report <- readRDS(file="<CPSR_REPORT_OBJECT.rds>")
-no_content <- !(as.logical(cps_report[['content']][['snv_indel']][['eval']]))
+no_content <- isFALSE(as.logical(cps_report$content$snv_indel$eval))
 
-logo_fname_path <- system.file("extdata", "logo.png", package = "cpsr")
+logo_fname_path <- 
+  system.file("extdata", "logo.png", package = "cpsr")
 
 ```
 
@@ -70,7 +71,7 @@ logo_fname_path <- system.file("extdata", "logo.png", package = "cpsr")
 ```
 
 ```{r no_variants}
-#| eval: !expr no_content
+#| eval: !expr isTRUE(no_content)
 #| output: asis
 cat("<br><ul>")
 cat("<li><b>NO</b> variants found in the selected virtual gene panel/custom geneset</li>")
@@ -80,20 +81,20 @@ cat("</ul><br>")
 
 ```{r classification_cpsr}
 #| child: 'quarto/cpsr_classification.qmd'
-#| eval: !expr as.logical(cps_report$content$snv_indel$eval)
+#| eval: !expr isTRUE(as.logical(cps_report$content$snv_indel$eval))
 ```
 
 
-```{r biomarkers_cpsr} 
+```{r biomarkers_cpsr}
 #| child: 'quarto/cpsr_biomarkers.qmd'
-#| eval: !expr as.logical(cps_report$content$snv_indel$eval)
+#| eval: !expr isTRUE(as.logical(cps_report$content$snv_indel$eval))
 ```
 
 <br>
 
 ```{r secondary_findings_cpsr}
 #| child: 'quarto/cpsr_secondary_findings.qmd'
-#| eval: !expr as.logical(cps_report$settings$conf$variant_classification$secondary_findings)
+#| eval: !expr isTRUE(as.logical(cps_report$settings$conf$variant_classification$secondary_findings))
 ```
 
 ```{r update_global_options}
@@ -103,7 +104,7 @@ options(scipen = 0)
 
 ```{r gwas_cpsr}
 #| child: 'quarto/cpsr_gwas.qmd'
-#| eval: !expr as.logical(cps_report$settings$conf$variant_classification$gwas_findings)
+#| eval: !expr isTRUE(as.logical(cps_report$settings$conf$variant_classification$gwas_findings))
 ```
 
 ```{r documentation_cpsr, child='quarto/cpsr_documentation.qmd', eval = TRUE}

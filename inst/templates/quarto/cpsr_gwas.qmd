@@ -71,7 +71,7 @@ DT::datatable(variants_gwas_cancer,
     backgroundColor = 
       DT::styleEqual(
         cpsr::color_palette[['genotypes']][['levels']],
-        cpsr::color_palette[['genotypes']][['values']]
+        cpsr::color_palette[['genotypes']][['bgcolor_values']]
       )
   )
 
@@ -82,7 +82,7 @@ DT::datatable(variants_gwas_cancer,
 ```{r gwas_cancer_missing}
 #| echo: false
 #| results: asis
-#| eval: !expr missing_gwas_items
+#| eval: !expr missing_gwas_items == TRUE
 
 cat("* For the sample in question, the status of <b>N = 0</b> GWAS tag SNPs were detected beyond the variants reported in the targeted cancer predisposition genes.", sep = "\n")
 cat("\n")
