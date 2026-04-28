@@ -345,20 +345,20 @@ assign_acmg_concensus <- function(
       dplyr::ungroup() |>
       dplyr::mutate(
         CPSR_PATHOGENICITY_SCORE =
-          8  * as.numeric(isTRUE(.data$ACMG_PVS1)) +
-          4  * as.numeric(isTRUE(.data$ACMG_PVS1_STR)) +
-          2  * as.numeric(isTRUE(.data$ACMG_PVS1_MOD)) +
-          4  * as.numeric(isTRUE(.data$ACMG_PS1)) +
-          2  * as.numeric(isTRUE(.data$ACMG_PM1)) +
-          1  * as.numeric(isTRUE(.data$ACMG_PM1_SUPP)) +
-          0  * as.numeric(isTRUE(.data$ACMG_PM2_SUPP)) +
-          2  * as.numeric(isTRUE(.data$ACMG_PM5)) +
-          1  * as.numeric(isTRUE(.data$ACMG_PP3)) +
-          -8  * as.numeric(isTRUE(.data$ACMG_BA1)) +
-          -4  * as.numeric(isTRUE(.data$ACMG_BS1)) +
-          -1  * as.numeric(isTRUE(.data$ACMG_BS1_SUPP)) +
-          -1  * as.numeric(isTRUE(.data$ACMG_BP4)) +
-          -1  * as.numeric(isTRUE(.data$ACMG_BP7))
+          8  * as.numeric(!is.na(.data$ACMG_PVS1)     & .data$ACMG_PVS1) +
+          4  * as.numeric(!is.na(.data$ACMG_PVS1_STR) & .data$ACMG_PVS1_STR) +
+          2  * as.numeric(!is.na(.data$ACMG_PVS1_MOD) & .data$ACMG_PVS1_MOD) +
+          4  * as.numeric(!is.na(.data$ACMG_PS1)      & .data$ACMG_PS1) +
+          2  * as.numeric(!is.na(.data$ACMG_PM1)      & .data$ACMG_PM1) +
+          1  * as.numeric(!is.na(.data$ACMG_PM1_SUPP) & .data$ACMG_PM1_SUPP) +
+          0  * as.numeric(!is.na(.data$ACMG_PM2_SUPP) & .data$ACMG_PM2_SUPP) +
+          2  * as.numeric(!is.na(.data$ACMG_PM5)      & .data$ACMG_PM5) +
+          1  * as.numeric(!is.na(.data$ACMG_PP3)      & .data$ACMG_PP3) +
+          -8 * as.numeric(!is.na(.data$ACMG_BA1)      & .data$ACMG_BA1) +
+          -4 * as.numeric(!is.na(.data$ACMG_BS1)      & .data$ACMG_BS1) +
+          -1 * as.numeric(!is.na(.data$ACMG_BS1_SUPP) & .data$ACMG_BS1_SUPP) +
+          -1 * as.numeric(!is.na(.data$ACMG_BP4)      & .data$ACMG_BP4) +
+          -1 * as.numeric(!is.na(.data$ACMG_BP7)      & .data$ACMG_BP7)
       ) |>
 
       ## Adjust scores in cases where only criteria matched
