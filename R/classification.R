@@ -1,188 +1,3 @@
-#' Function that assigns final pathogenicity classification (B, LB, VUS, P, LP)
-#' based on accumulated scores from different ACMG criteria and pre-defined
-#' cutoffs (calibrated against ClinVar)
-#'
-#' param var_calls data frame with variant calls in predisposition genes
-#'
-#' return var_calls data frame with pathogenicity classification appended
-#'
-#' export
-# assign_classification <- function(var_calls) {
-#
-#
-#   evidence_codes <- cpsr::acmg[["evidence_codes"]]
-#
-#   pcgrr::log4r_info(paste0(
-#     "Assigning five-tier classifications (P, LP, VUS, LB, B) based on ",
-#     "aggregated ACMG points"))
-#
-#   path_cols <- c(
-#     "CPSR_CLASSIFICATION",
-#     "CPSR_CLASSIFICATION_DOC",
-#     "CPSR_CLASSIFICATION_CODE",
-#     "cpsr_score_pathogenic",
-#     "cpsr_score_benign"
-#   )
-#   var_calls <- var_calls[, !(colnames(var_calls) %in% path_cols)]
-#
-#   var_calls$CPSR_CLASSIFICATION <- "VUS"
-#   var_calls$CPSR_CLASSIFICATION_DOC <- ""
-#   var_calls$CPSR_CLASSIFICATION_CODE <- ""
-#   var_calls$cpsr_score_pathogenic <- 0
-#   var_calls$cpsr_score_benign <- 0
-#
-#   i <- 1
-#   while (i <= nrow(evidence_codes)) {
-#     category <- evidence_codes[i, ]$category
-#     pole <- evidence_codes[i, ]$pathogenicity_pole
-#     description <- evidence_codes[i, ]$description
-#     cpsr_evidence_code <- evidence_codes[i, ]$cpsr_evidence_code
-#     score <- evidence_codes[i, ]$path_score
-#     if (cpsr_evidence_code %in% colnames(var_calls)) {
-#       var_calls <- var_calls |>
-#         dplyr::mutate(
-#           cpsr_score_benign = .data$cpsr_score_benign +
-#             dplyr::if_else(
-#               pole == "B" & !!rlang::sym(cpsr_evidence_code) == T,
-#               score, 0
-#             )
-#         ) |>
-#         dplyr::mutate(
-#           cpsr_score_pathogenic = .data$cpsr_score_pathogenic +
-#             dplyr::if_else(
-#               pole == "P" & !!rlang::sym(cpsr_evidence_code) == T,
-#               score, 0
-#             )
-#         ) |>
-#         dplyr::mutate(
-#           CPSR_CLASSIFICATION_DOC =
-#             paste0(
-#               .data$CPSR_CLASSIFICATION_DOC,
-#               dplyr::if_else(
-#                 !!rlang::sym(cpsr_evidence_code) == T,
-#                 paste0("- <i>", cpsr_evidence_code,
-#                        "</i>: ", description, " (<b>", score, "</b>)"), ""
-#               ),
-#               sep = "<br>"
-#             )
-#         ) |>
-#         dplyr::mutate(
-#           CPSR_CLASSIFICATION_CODE =
-#             paste0(
-#               .data$CPSR_CLASSIFICATION_CODE,
-#               dplyr::if_else(
-#                 !!rlang::sym(cpsr_evidence_code) == T,
-#                 cpsr_evidence_code, ""
-#               ),
-#               sep = "|"
-#             )
-#         )
-#     }
-#     i <- i + 1
-#   }
-#
-#   p_lower_limit <- cpsr::acmg[['score_thresholds']][['p_lower']]
-#   lp_upper_limit <- cpsr::acmg[['score_thresholds']][['lp_upper']]
-#   lp_lower_limit <- cpsr::acmg[['score_thresholds']][['lp_lower']]
-#   vus_upper_limit <- cpsr::acmg[['score_thresholds']][['vus_upper']]
-#   vus_lower_limit <- cpsr::acmg[['score_thresholds']][['vus_lower']]
-#   lb_upper_limit <- cpsr::acmg[['score_thresholds']][['lb_upper']]
-#   lb_lower_limit <- cpsr::acmg[['score_thresholds']][['lb_lower']]
-#   b_upper_limit <- cpsr::acmg[['score_thresholds']][['b_upper']]
-#
-#   var_calls <- var_calls |>
-#     dplyr::mutate(
-#       CPSR_CLASSIFICATION_CODE =
-#         stringr::str_replace_all(
-#           stringr::str_replace_all(
-#             .data$CPSR_CLASSIFICATION_CODE,
-#             "(\\|{2,})", "|"
-#           ),
-#           "(^\\|)|(\\|$)", ""
-#         )
-#     ) |>
-#     dplyr::mutate(
-#       CPSR_CLASSIFICATION_DOC =
-#         stringr::str_replace_all(
-#           stringr::str_replace_all(
-#             .data$CPSR_CLASSIFICATION_DOC,
-#             "(<br>){2,}", "<br>"
-#           ), "(^(<br>))|((<br>)$)", ""
-#         )
-#     ) |>
-#     ## Adjust scores in cases where critera are acting as a
-#     ## prerequisite for other criteria
-#     dplyr::mutate(
-#       cpsr_score_pathogenic =
-#         dplyr::if_else(
-#           stringr::str_detect(
-#             .data$CPSR_CLASSIFICATION_CODE, "ACMG_PVS") &
-#             stringr::str_detect(
-#               .data$CPSR_CLASSIFICATION_CODE, "ACMG_PM2_2"),
-#           .data$cpsr_score_pathogenic - 1,
-#           .data$cpsr_score_pathogenic
-#         )
-#     ) |>
-#     dplyr::mutate(
-#       cpsr_score_pathogenic =
-#         dplyr::if_else(
-#           stringr::str_detect(
-#             .data$CPSR_CLASSIFICATION_CODE, "ACMG_PVS") &
-#             stringr::str_detect(
-#               .data$CPSR_CLASSIFICATION_CODE, "ACMG_PM2_1"),
-#           .data$cpsr_score_pathogenic - 0.5,
-#           .data$cpsr_score_pathogenic
-#         )
-#     ) |>
-#     dplyr::mutate(
-#       cpsr_score_pathogenic =
-#         dplyr::if_else(
-#           stringr::str_detect(
-#             .data$CPSR_CLASSIFICATION_CODE, "ACMG_PVS1_10") &
-#             stringr::str_detect(
-#               .data$CPSR_CLASSIFICATION_CODE, "ACMG_PP3"),
-#           .data$cpsr_score_pathogenic - 0.5,
-#           .data$cpsr_score_pathogenic
-#         )
-#     ) |>
-#     ## Add scores accumulated with benign criteria and pathogenic criteria
-#     dplyr::mutate(
-#       CPSR_PATHOGENICITY_SCORE =
-#         dplyr::if_else(
-#           .data$cpsr_score_benign == 0,
-#           .data$cpsr_score_pathogenic,
-#           .data$cpsr_score_benign
-#         )
-#     ) |>
-#     dplyr::mutate(
-#       CPSR_PATHOGENICITY_SCORE =
-#         dplyr::if_else(
-#           .data$cpsr_score_benign < 0 &
-#             .data$cpsr_score_pathogenic > 0,
-#           .data$cpsr_score_benign + .data$cpsr_score_pathogenic,
-#           .data$CPSR_PATHOGENICITY_SCORE
-#         )
-#     ) |>
-#     dplyr::mutate(
-#       CPSR_CLASSIFICATION =
-#         dplyr::case_when(
-#           .data$CPSR_PATHOGENICITY_SCORE <= lb_upper_limit &
-#             .data$CPSR_PATHOGENICITY_SCORE >= lb_lower_limit ~ "Likely Benign",
-#           .data$CPSR_PATHOGENICITY_SCORE <= b_upper_limit ~ "Benign",
-#           .data$CPSR_PATHOGENICITY_SCORE <= vus_upper_limit &
-#             .data$CPSR_PATHOGENICITY_SCORE >= vus_lower_limit ~ "VUS",
-#           .data$CPSR_PATHOGENICITY_SCORE >= p_lower_limit ~ "Pathogenic",
-#           .data$CPSR_PATHOGENICITY_SCORE >= lp_lower_limit &
-#             .data$CPSR_PATHOGENICITY_SCORE <= lp_upper_limit ~ "Likely Pathogenic",
-#           TRUE ~ as.character("VUS")
-#         )
-#     ) |>
-#     dplyr::select(-c(.data$cpsr_score_benign,
-#                      .data$cpsr_score_pathogenic))
-#
-#   return(var_calls)
-# }
-
 #' Function that assigns variant pathogenicity evidence based on ACMG guidelines
 #'
 #' @param var_calls sample calls with dbnsfp annotations
@@ -857,6 +672,7 @@ assign_BP4_evidence <- function(var_calls = NULL){
      "N_INSILICO_CALLED" %in% colnames(var_calls) &
      "N_INSILICO_DAMAGING" %in% colnames(var_calls) &
      "N_INSILICO_TOLERATED" %in% colnames(var_calls) &
+     "MAXENTSCAN" %in% colnames(var_calls) &
      "TF_BINDING_SITE_VARIANT_INFO" %in% colnames(var_calls) &
      "REGULATORY_ANNOTATION" %in% colnames(var_calls) &
      "EFFECT_PREDICTIONS" %in% colnames(var_calls) &
@@ -917,9 +733,10 @@ assign_BP4_evidence <- function(var_calls = NULL){
       ## splice site effect (lost or gained)
       dplyr::mutate(
         ACMG_BP4 = dplyr::if_else(
-          !is.na(.data$MAXENTSCAN_PCT_CHANGE) &
-            (.data$MAXENTSCAN_PCT_CHANGE <= -20 |
-               .data$MAXENTSCAN_PCT_CHANGE >= 60),
+          !is.na(.data$MAXENTSCAN) &
+           stringr::str_detect(
+             .data$MAXENTSCAN,
+             "Strong|Moderate|Supporting"),
           FALSE,
           as.logical(.data$ACMG_BP4)
         )
@@ -964,36 +781,46 @@ assign_BP7_evidence <- function(var_calls = NULL){
   if(is.data.frame(var_calls) &
      "INTRON_POSITION" %in% colnames(var_calls) &
      "EXON_POSITION" %in% colnames(var_calls) &
-     "MAXENTSCAN_PCT_CHANGE" %in% colnames(var_calls) &
+     "MAXENTSCAN" %in% colnames(var_calls) &
      "CONSEQUENCE" %in% colnames(var_calls)){
 
     var_calls <- var_calls |>
+      tidyr::separate(
+        MAXENTSCAN,
+        c("tmp_MES","MES_STRATUM","MES_TIER"),
+        sep = "\\|", remove = FALSE
+      ) |>
       dplyr::mutate(
-        ACMG_BP7 =
-          dplyr::if_else((
-            (as.integer(.data$INTRON_POSITION) < 0 &
-               as.integer(.data$INTRON_POSITION) < -3) |
-              (as.integer(.data$INTRON_POSITION) > 0 &
-                 as.integer(.data$INTRON_POSITION) > 6) |
-              (as.integer(.data$EXON_POSITION) < 0 &
-                 as.integer(.data$EXON_POSITION) < -2) |
-              (as.integer(.data$EXON_POSITION) > 0 &
-                 as.integer(.data$EXON_POSITION) > 1)) &
-              (is.na(.data$MAXENTSCAN_PCT_CHANGE) |
-                 (!is.na(.data$MAXENTSCAN_PCT_CHANGE) &
-                    .data$MAXENTSCAN_PCT_CHANGE > -20 &
-                    .data$MAXENTSCAN_PCT_CHANGE < 30)) &
-              !stringr::str_detect(
-                .data$CONSEQUENCE,
-                "splice_(acceptor|donor)|stop_gained|5th"
-              ) &
-              stringr::str_detect(
-                .data$CONSEQUENCE,
-                paste0(
-                  "^(synonymous_variant)")
-              ),
-            TRUE, FALSE, FALSE
-          )
+        MES_STRATUM = dplyr::if_else(
+          .data$MES_STRATUM == ".",
+          as.character(NA),
+          as.character(.data$MES_STRATUM)
+        ),
+        MES_TIER = dplyr::if_else(
+          .data$MES_TIER == ".",
+          as.character(NA),
+          as.character(.data$MES_TIER)
+        )
+      ) |>
+      dplyr::mutate(
+        ACMG_BP7 = dplyr::case_when(
+          ((is.na(.data$MES_STRATUM) &
+            is.na(.data$MES_TIER)) |
+             (.data$MES_STRATUM == "Acceptor_PPT_Distant" &
+                .data$MES_TIER == "No_Call") |
+             (.data$MES_STRATUM == "Acceptor_PPT_Close" &
+                .data$MES_TIER == "No_Call")) &
+            !stringr::str_detect(
+              .data$CONSEQUENCE,
+              "(splice_(acceptor|donor))|(stop_(gained|lost))|5th"
+            ) &
+            stringr::str_detect(
+              .data$CONSEQUENCE,
+              paste0(
+                "(synonymous_variant|intron_variant)")
+            ) ~ TRUE,
+          TRUE ~ as.logical(.data$ACMG_BP7)
+        )
       ) |>
       dplyr::mutate(
         ACMG_BP7 = dplyr::if_else(
@@ -1001,13 +828,24 @@ assign_BP7_evidence <- function(var_calls = NULL){
             .data$INTRON_POSITION == 0 &
             !is.na(.data$EXON_POSITION) &
             .data$EXON_POSITION == 0 &
+            !stringr::str_detect(
+              .data$CONSEQUENCE,
+              "(splice_(acceptor|donor))|(stop_(gained|lost))|5th"
+            ) &
             stringr::str_detect(
               .data$CONSEQUENCE,
               paste0(
                 "^(3_prime_UTR_variant|",
                   "5_prime_UTR_variant)")
             ),
-          TRUE, as.logical(.data$ACMG_BP7), FALSE
+          TRUE,
+          as.logical(.data$ACMG_BP7),
+          FALSE
+        )
+      ) |>
+      dplyr::select(
+        -dplyr::any_of(
+          c("tmp_MES","MES_STRATUM","MES_TIER")
         )
       )
   }
@@ -1063,6 +901,11 @@ assign_PVS1_evidence <- function(
 
     var_calls <- var_calls |>
       dplyr::mutate(
+        tidyr::separate(
+          MAXENTSCAN,
+          c("tmp_MES","MES_STRATUM","MES_TIER"),
+          sep = "\\|", remove = FALSE
+        ) |>
         HGVSC_LOCAL = hgvsc_values,
         PVS1_RELEVANT_TRANSCRIPT =
           !is.na(.data$MANE_SELECT) |
@@ -1147,17 +990,10 @@ assign_PVS1_evidence <- function(
           .data$EXONIC_STATUS == "exonic" &
             .data$LAST_INTRON == FALSE &
             .data$NULL_VARIANT == FALSE &
-            .data$PVS1_SPLICE_HIGH_IMPACT &
-            (.data$LOSS_OF_FUNCTION == TRUE |
-
-               ## MES not discriminatory for splice site variants, so include also
-               ## those not classified as LoF but with high-impact splice consequence
-               ## and no evidence of being benign
-               (.data$LOSS_OF_FUNCTION == FALSE &
-               (.data$LOF_FILTER == "NON_DONOR_DISRUPTING" |
-               .data$LOF_FILTER == "NON_ACCEPTOR_DISRUPTING"))) &
-            .data$PVS1_LOF_GENE &
-            .data$PVS1_RELEVANT_TRANSCRIPT,
+            .data$PVS1_SPLICE_HIGH_IMPACT == TRUE &
+            .data$LOSS_OF_FUNCTION == TRUE &
+            .data$PVS1_LOF_GENE == TRUE &
+            .data$PVS1_RELEVANT_TRANSCRIPT == TRUE,
           TRUE,
           as.logical(.data$ACMG_PVS1)
         )) |>
@@ -1174,7 +1010,7 @@ assign_PVS1_evidence <- function(
           .data$NULL_VARIANT == TRUE &
             (!is.na(.data$NMD) &
             .data$NMD == "NMD_escaping_variant") &
-            .data$PVS1_LOF_GENE &
+            .data$PVS1_LOF_GENE == TRUE &
             .data$PVS1_RELEVANT_TRANSCRIPT &
             (!is.na(.data$PFAM_DOMAIN_NAME) |
                (!is.na(.data$PROTEIN_RELATIVE_POSITION) &
@@ -1192,22 +1028,12 @@ assign_PVS1_evidence <- function(
           ##     removing > 10% of protein
           ## ---> Strong (PVS1_STR)
             .data$NULL_VARIANT == FALSE &
-            (.data$LOSS_OF_FUNCTION == TRUE |
-
-               ## MES not discriminatory for splice site variants, so include also
-               ## those not classified as LoF but with high-impact splice consequence
-               ## and no evidence of being benign
-               (.data$LOSS_OF_FUNCTION == FALSE &
-                  (.data$LOF_FILTER == "NON_DONOR_DISRUPTING" |
-                     .data$LOF_FILTER == "NON_ACCEPTOR_DISRUPTING"))) &
-            .data$PVS1_SPLICE_HIGH_IMPACT &
+            .data$LOSS_OF_FUNCTION == TRUE &
+            .data$PVS1_SPLICE_HIGH_IMPACT == TRUE &
             .data$EXONIC_STATUS == "exonic" &
             .data$LAST_INTRON == TRUE &
-            .data$PVS1_LOF_GENE &
+            .data$PVS1_LOF_GENE == TRUE &
             .data$PVS1_RELEVANT_TRANSCRIPT ~ TRUE,
-            #(!is.na(.data$PFAM_DOMAIN_NAME) |
-               #(!is.na(.data$PROTEIN_RELATIVE_POSITION) &
-                  #as.numeric(.data$PROTEIN_RELATIVE_POSITION) < 0.9)) ~ TRUE,
           TRUE ~ as.logical(.data$ACMG_PVS1_STR)
         )
       ) |>
@@ -1224,57 +1050,34 @@ assign_PVS1_evidence <- function(
           .data$NULL_VARIANT == TRUE &
             !is.na(.data$NMD) &
             .data$NMD == "NMD_escaping_variant" &
-            .data$PVS1_LOF_GENE &
-            .data$PVS1_RELEVANT_TRANSCRIPT &
+            .data$PVS1_LOF_GENE == TRUE &
+            .data$PVS1_RELEVANT_TRANSCRIPT == TRUE &
             is.na(.data$PFAM_DOMAIN_NAME) &
             (!is.na(.data$PROTEIN_RELATIVE_POSITION) &
                as.numeric(.data$PROTEIN_RELATIVE_POSITION) > 0.9) ~ TRUE,
-
-          ## Splice-donor/acceptor variants (+/- 2bp)
-          ## - Exonic location (includes splice site)
-          ## - Not a null variant (stop-gain/frameshift)
-          ## - Intron position +/- 1 or 2
-          ## - Last intron (proxy for NMD escaping)
-          ## - Loss-of-function known mechanism of disease for gene
-          ## - Biologically relevant transcript (MANE Select)
-          ## - Position NOT overlapping protein domain AND
-          ##     removing < 10% of protein
-          ## ---> Moderate (PVS1_MOD)
-          # .data$NULL_VARIANT == FALSE &
-          #   ((.data$INTRON_POSITION == -2 |
-          #       .data$INTRON_POSITION == -1 |
-          #       .data$INTRON_POSITION == 1 |
-          #       .data$INTRON_POSITION == 2) |
-          #      (.data$CONSEQUENCE == "splice_acceptor_variant" |
-          #         .data$CONSEQUENCE == "splice_donor_variant")) &
-          #   .data$EXONIC_STATUS == "exonic" &
-          #   .data$LAST_INTRON == TRUE &
-          #   (!is.na(.data$CPG_MOD) &
-          #      .data$CPG_MOD == "LoF") &
-          #   (!is.na(.data$MANE_SELECT) |
-          #      !is.na(.data$MANE_SELECT2) |
-          #      !is.na(.data$MANE_PLUS_CLINICAL) |
-          #      !is.na(.data$MANE_PLUS_CLINICAL2) |
-          #      .data$REFSEQ_TRANSCRIPT_ID %in%
-          #      cpsr::curated_transcripts$id) ~ TRUE,
-          #   #is.na(.data$PFAM_DOMAIN_NAME) &
-          #   #(!is.na(.data$PROTEIN_RELATIVE_POSITION) &
-          #      #as.numeric(.data$PROTEIN_RELATIVE_POSITION) > 0.9) ~ TRUE,
           TRUE ~ as.logical(.data$ACMG_PVS1_MOD)
         )
       ) |>
       dplyr::mutate(
-        ACMG_PVS1_MOD = dplyr::if_else(
+        ACMG_PVS1_MOD = dplyr::case_when(
           stringr::str_detect(
             .data$CONSEQUENCE,
-            "^(start_lost|intron_variant&splice_donor_5th_base_variant)$"
-          ),
-          TRUE,
-          as.logical(.data$ACMG_PVS1_MOD)
+            "^(start_lost)$") ~ TRUE,
+          (stringr::str_detect(
+            .data$CONSEQUENCE,
+            "intron_variant") &
+          ((.data$MES_STRATUM == "Donor_+5" |
+            .data$MES_STRATUM == "Donor_+3") &
+            (.data$MES_TIER == "Strong" |
+               .data$MES_TIER == "Moderate"))) ~ TRUE,
+          TRUE ~ as.logical(.data$ACMG_PVS1_MOD)
         )
       ) #|>
       # dplyr::select(
       #   -dplyr::any_of(c(
+      #    "tmp_MES",
+      #    "MES_STRATUM",
+      #    "MES_TIER",
       #     "HGVSC_LOCAL",
       #     "PVS1_RELEVANT_TRANSCRIPT",
       #     "PVS1_LOF_GENE",
