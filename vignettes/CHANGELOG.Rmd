@@ -27,6 +27,7 @@ output: rmarkdown::html_document
   - Displayed all virtual panel genes in HTML report in alphabetic order, ignoring confidence levels (PanelApp genes)
   - Added new column *ACMG_CODE* in TSV output files, indicating which ACMG criteria that were met for each variant ('|'-separated list)
   - Renamed column *CPSR_CLASSIFICATION_SOURCE* → *ASSERTION_AUTHORITY* in TSV output to better reflect its role (values: `ClinVar` or `CPSR`)
+  - Renamed column *CANCER_PHENOTYPE* to *CLINVAR_PHENOTYPE_CANCER* in TSV output, to clarify that this annotation is based on ClinVar phenotype associations
   - Added new column *ASSERTION_RATIONALE* in TSV output, providing a human-readable explanation for why a given assertion authority was chosen (e.g. _"Novel variant (absent from ClinVar)"_, _"ClinVar review status: 2 gold stars"_, _"Conflicting ClinVar interpretations"_)
 - New argument `--clinvar_trust_level` (integer, 0–4) replacing `--classify_all`, giving fine-grained 
   control over the degree to which existing ClinVar classifications override CPSR's own ACMG/AMP result:
@@ -38,11 +39,7 @@ output: rmarkdown::html_document
 - Interactive HTML report tables migrated from *DT* (`DT::datatable`) to *reactable* (`reactable::reactable`):
   - All classification, secondary findings, pharmacogenomics, biomarker, and GWAS variant tables now use reactable
   - Tables feature a collapsible detail row per variant with full annotation context, reducing visual clutter in the main view
-  - Classification table retains linked crosstalk filters (gene panel, consequence, genotype, gnomAD AF) wired to a shared data object
-  - Unified dark header theme (`#2c313c`) across secondary findings, pharmacogenomics, and biomarker tables; teal header (`#007a74`) for the main classification table
-  - Clinical significance column rendered as colour-coded pill badges matching the established pathogenicity palette (P/LP/VUS/LB/B)
   - Dedicated hidden search index column aggregates nested evidence text fields (biomarker tables) for full-text search across all evidence items
-  - gnomAD allele frequency displayed in scientific notation with sort order preserved via numeric backing column
 
 ## v2.2.5
 

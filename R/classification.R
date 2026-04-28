@@ -323,22 +323,21 @@ assign_acmg_concensus <- function(
       dplyr::mutate(
         ACMG_CODE = paste0(
           c(
-            if (.data$ACMG_PVS1) "PVS1",
-            if (.data$ACMG_PVS1_STR) "PVS1_strong",
-            if (.data$ACMG_PVS1_MOD) "PVS1_moderate",
-            if (.data$ACMG_PS1) "PS1",
-            if (.data$ACMG_PM1) "PM1",
-            if (.data$ACMG_PM1_SUPP) "PM1_supporting",
-            if (.data$ACMG_PM2_SUPP) "PM2_supporting",
-            if (.data$ACMG_PM5) "PM5",
-            if (.data$ACMG_PM4) "PM4",
-            #if (.data$ACMG_BP1) "BP1",
-            if (.data$ACMG_PP3) "PP3",
-            if (.data$ACMG_BA1) "BA1",
-            if (.data$ACMG_BS1) "BS1",
-            if (.data$ACMG_BS1_SUPP) "BS1_supporting",
-            if (.data$ACMG_BP4) "BP4",
-            if (.data$ACMG_BP7) "BP7"
+            if (isTRUE(.data$ACMG_PVS1)) "PVS1",
+            if (isTRUE(.data$ACMG_PVS1_STR)) "PVS1_strong",
+            if (isTRUE(.data$ACMG_PVS1_MOD)) "PVS1_moderate",
+            if (isTRUE(.data$ACMG_PS1)) "PS1",
+            if (isTRUE(.data$ACMG_PM1)) "PM1",
+            if (isTRUE(.data$ACMG_PM1_SUPP)) "PM1_supporting",
+            if (isTRUE(.data$ACMG_PM2_SUPP)) "PM2_supporting",
+            if (isTRUE(.data$ACMG_PM5)) "PM5",
+            if (isTRUE(.data$ACMG_PM4)) "PM4",
+            if (isTRUE(.data$ACMG_PP3)) "PP3",
+            if (isTRUE(.data$ACMG_BA1)) "BA1",
+            if (isTRUE(.data$ACMG_BS1)) "BS1",
+            if (isTRUE(.data$ACMG_BS1_SUPP)) "BS1_supporting",
+            if (isTRUE(.data$ACMG_BP4)) "BP4",
+            if (isTRUE(.data$ACMG_BP7)) "BP7"
           ),
           collapse = "|"
         )
@@ -346,20 +345,20 @@ assign_acmg_concensus <- function(
       dplyr::ungroup() |>
       dplyr::mutate(
         CPSR_PATHOGENICITY_SCORE =
-          8  * as.numeric(.data$ACMG_PVS1) +
-          4  * as.numeric(.data$ACMG_PVS1_STR) +
-          2  * as.numeric(.data$ACMG_PVS1_MOD) +
-          4  * as.numeric(.data$ACMG_PS1) +
-          2  * as.numeric(.data$ACMG_PM1) +
-          1  * as.numeric(.data$ACMG_PM1_SUPP) +
-          0  * as.numeric(.data$ACMG_PM2_SUPP) +
-          2  * as.numeric(.data$ACMG_PM5) +
-          1  * as.numeric(.data$ACMG_PP3) +
-          -8  * as.numeric(.data$ACMG_BA1) +
-          -4  * as.numeric(.data$ACMG_BS1) +
-          -1  * as.numeric(.data$ACMG_BS1_SUPP) +
-          -1  * as.numeric(.data$ACMG_BP4) +
-          -1  * as.numeric(.data$ACMG_BP7)
+          8  * as.numeric(isTRUE(.data$ACMG_PVS1)) +
+          4  * as.numeric(isTRUE(.data$ACMG_PVS1_STR)) +
+          2  * as.numeric(isTRUE(.data$ACMG_PVS1_MOD)) +
+          4  * as.numeric(isTRUE(.data$ACMG_PS1)) +
+          2  * as.numeric(isTRUE(.data$ACMG_PM1)) +
+          1  * as.numeric(isTRUE(.data$ACMG_PM1_SUPP)) +
+          0  * as.numeric(isTRUE(.data$ACMG_PM2_SUPP)) +
+          2  * as.numeric(isTRUE(.data$ACMG_PM5)) +
+          1  * as.numeric(isTRUE(.data$ACMG_PP3)) +
+          -8  * as.numeric(isTRUE(.data$ACMG_BA1)) +
+          -4  * as.numeric(isTRUE(.data$ACMG_BS1)) +
+          -1  * as.numeric(isTRUE(.data$ACMG_BS1_SUPP)) +
+          -1  * as.numeric(isTRUE(.data$ACMG_BP4)) +
+          -1  * as.numeric(isTRUE(.data$ACMG_BP7))
       ) |>
 
       ## Adjust scores in cases where only criteria matched
@@ -494,7 +493,6 @@ assign_classification_authority <-
         )
       )
 
-    ## Step 2: Build human-readable rationale strings
     ## Step 2: Build human-readable rationale strings
     var_calls <- var_calls |>
       dplyr::rowwise() |>
@@ -1290,6 +1288,17 @@ assign_PVS1_evidence <- function(
       # )
 
   }
+
+  var_calls <- var_calls |>
+    dplyr::mutate(
+      ACMG_PVS1 = dplyr::if_else(
+        is.na(.data$ACMG_PVS1), FALSE, .data$ACMG_PVS1),
+      ACMG_PVS1_STR = dplyr::if_else(
+        is.na(.data$ACMG_PVS1_STR), FALSE, .data$ACMG_PVS1_STR),
+      ACMG_PVS1_MOD = dplyr::if_else(
+        is.na(.data$ACMG_PVS1_MOD), FALSE, .data$ACMG_PVS1_MOD)
+    )
+
   return(var_calls)
 
 }
