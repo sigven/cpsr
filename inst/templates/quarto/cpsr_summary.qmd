@@ -152,7 +152,7 @@ bslib::layout_column_wrap(
     showcase_layout = "left center"
   ),
   bslib::value_box(
-    title = "Genes with Biomarkers/PgX findings",
+    title = "Genes with biomarkers/PgX findings",
     value = value_biomarker_pgx,
     showcase = cpsr::bs_icon2("bullseye"),
     theme = bslib::value_box_theme(

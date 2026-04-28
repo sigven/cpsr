@@ -900,12 +900,12 @@ assign_PVS1_evidence <- function(
 
 
     var_calls <- var_calls |>
+      tidyr::separate(
+        MAXENTSCAN,
+        c("tmp_MES","MES_STRATUM","MES_TIER"),
+        sep = "\\|", remove = FALSE
+      ) |>
       dplyr::mutate(
-        tidyr::separate(
-          MAXENTSCAN,
-          c("tmp_MES","MES_STRATUM","MES_TIER"),
-          sep = "\\|", remove = FALSE
-        ) |>
         HGVSC_LOCAL = hgvsc_values,
         PVS1_RELEVANT_TRANSCRIPT =
           !is.na(.data$MANE_SELECT) |
@@ -944,8 +944,7 @@ assign_PVS1_evidence <- function(
           ),
         PVS1_SPLICE_HIGH_IMPACT =
           .data$PVS1_SPLICE_CONSEQUENCE &
-          (
-            .data$INTRON_POSITION %in% c(-2, -1, 1, 2) |
+          (.data$INTRON_POSITION %in% c(-2, -1, 1, 2) |
             .data$PVS1_HGVSC_CANONICAL_SITE |
             (.data$EXON_INTRON_JUNCTION_SPAN &
                !.data$PVS1_INFRAME_CONSEQUENCE)
@@ -969,9 +968,9 @@ assign_PVS1_evidence <- function(
             (!is.na(.data$PROTEIN_RELATIVE_POSITION) &
                as.numeric(
                  .data$PROTEIN_RELATIVE_POSITION) < 0.975) &
-            .data$PVS1_LOF_GENE &
+            .data$PVS1_LOF_GENE == TRUE &
             .data$EXONIC_STATUS == "exonic" &
-            .data$PVS1_RELEVANT_TRANSCRIPT,
+            .data$PVS1_RELEVANT_TRANSCRIPT == TRUE,
           TRUE,
           as.logical(.data$ACMG_PVS1)
         )) |>
@@ -1003,18 +1002,18 @@ assign_PVS1_evidence <- function(
         ## - Predicted to escape NMD
         ## - Loss-of-function known mechanism of disease for gene
         ## - Biologically relevant transcript (MANE Select)
-        ## - Position overlapping protein domain OR
-        ##     removing > 10% of protein
+        ## - Truncated/altered region in critical region (domain) OR
+        ##.  removing greater than 10% of protein
         ## ---> Strong (PVS1_STR)
         ACMG_PVS1_STR = dplyr::case_when(
           .data$NULL_VARIANT == TRUE &
             (!is.na(.data$NMD) &
             .data$NMD == "NMD_escaping_variant") &
             .data$PVS1_LOF_GENE == TRUE &
-            .data$PVS1_RELEVANT_TRANSCRIPT &
+            .data$PVS1_RELEVANT_TRANSCRIPT == TRUE &
             (!is.na(.data$PFAM_DOMAIN_NAME) |
-               (!is.na(.data$PROTEIN_RELATIVE_POSITION) &
-                  as.numeric(.data$PROTEIN_RELATIVE_POSITION) < 0.9)) ~ TRUE,
+               (is.na(.data$PFAM_DOMAIN_NAME) &
+                  .data$PROTEIN_RELATIVE_POSITION < 0.9)) ~ TRUE,
 
           ## Splice-donor/acceptor variants (+/- 2bp)
           ## - Exonic location (includes splice site)
@@ -1072,23 +1071,22 @@ assign_PVS1_evidence <- function(
                .data$MES_TIER == "Moderate"))) ~ TRUE,
           TRUE ~ as.logical(.data$ACMG_PVS1_MOD)
         )
-      ) #|>
-      # dplyr::select(
-      #   -dplyr::any_of(c(
-      #    "tmp_MES",
-      #    "MES_STRATUM",
-      #    "MES_TIER",
-      #     "HGVSC_LOCAL",
-      #     "PVS1_RELEVANT_TRANSCRIPT",
-      #     "PVS1_LOF_GENE",
-      #     "PVS1_PURELY_INTRONIC",
-      #     "PVS1_SPLICE_CONSEQUENCE",
-      #     "PVS1_INFRAME_CONSEQUENCE",
-      #     "PVS1_HGVSC_CANONICAL_SITE",
-      #     "PVS1_HGVSC_EXON_INTRON_SPAN",
-      #     "PVS1_SPLICE_HIGH_IMPACT"
-      #   ))
-      # )
+      ) |>
+      dplyr::select(
+        -dplyr::any_of(c(
+          "tmp_MES",
+          "MES_STRATUM",
+          "MES_TIER",
+          "HGVSC_LOCAL"
+          #"PVS1_RELEVANT_TRANSCRIPT",
+          #"PVS1_LOF_GENE"
+          #"PVS1_PURELY_INTRONIC",
+          #"PVS1_SPLICE_CONSEQUENCE",
+          #"PVS1_INFRAME_CONSEQUENCE",
+          #"PVS1_HGVSC_CANONICAL_SITE",
+          #"PVS1_SPLICE_HIGH_IMPACT"
+        ))
+      )
 
   }
 
@@ -1489,34 +1487,45 @@ assign_PM1_evidence <- function(var_calls = NULL){
         ) |>
         dplyr::mutate(
           ACMG_PM1 = dplyr::if_else(
-            (!(.data$SYMBOL %in%
-                 c("BRCA1", "BRCA2",
-                   "PALB2","ATM",
-                   "MSH2", "MLH1", "MSH6",
-                   "TP53","PTEN",
-                   "PMS2","APC")) &
-               ((!is.na(.data$MUTATION_HOTSPOT_AA_NUM) &
-                   .data$MUTATION_HOTSPOT_AA_NUM >= 10) |
-                  .data$VAR_FUNCTIONAL_MOTIF == TRUE)),
+            ((!is.na(.data$MUTATION_HOTSPOT_AA_NUM) &
+                .data$MUTATION_HOTSPOT_AA_NUM >= 10) |
+               .data$VAR_FUNCTIONAL_MOTIF == TRUE),
             TRUE,
             FALSE
           )
         ) |>
         dplyr::mutate(
           ACMG_PM1_SUPP = dplyr::if_else(
-            (!(.data$SYMBOL %in%
-                 c("BRCA1", "BRCA2",
-                   "PALB2", "ATM",
-                   "TP53","PTEN",
-                   "MSH2", "MLH1", "MSH6",
-                   "PMS2","APC")) &
-               .data$ACMG_PM1 == FALSE &
-               ((!is.na(.data$MUTATION_HOTSPOT_AA_NUM) &
-                   .data$MUTATION_HOTSPOT_AA_NUM >= 2 &
-                   .data$MUTATION_HOTSPOT_AA_NUM <= 9))),
+            .data$ACMG_PM1 == FALSE &
+              ((!is.na(.data$MUTATION_HOTSPOT_AA_NUM) &
+                  .data$MUTATION_HOTSPOT_AA_NUM >= 2 &
+                  .data$MUTATION_HOTSPOT_AA_NUM <= 9)),
             TRUE,
             FALSE
           )
+        ) |>
+
+        ## Exclude cancer predisposition genes
+        ## that explicitly indicate throu their
+        ## Expert Panel Specifications that PM1
+        ## is not applicable
+        dplyr::mutate(
+          ACMG_PM1 = dplyr::if_else(
+            .data$ACMG_PM1 == TRUE &
+              .data$SYMBOL %in%
+              c("PALB2","ATM","MSH2","MLH1",
+                "MSH6","PMS2","APC","BRCA1","BRCA2"),
+            FALSE,
+            as.logical(.data$ACMG_PM1)
+          ),
+          ACMG_PM1_SUPP = dplyr::if_else(
+            .data$ACMG_PM1_SUPP == TRUE &
+              .data$SYMBOL %in%
+              c("PALB2","ATM","MSH2","MLH1",
+                "MSH6","PMS2","APC","BRCA1","BRCA2"),
+            FALSE,
+            as.logical(.data$ACMG_PM1_SUPP)
+          ),
         ) |>
         pcgrr::remove_cols_from_df(
           cnames = c("MUTATION_HOTSPOT_AA_NUM",

@@ -1,0 +1,30 @@
+# Methods and Settings
+
+```{r settings_pdf_text}
+#| echo: false
+#| eval: true
+
+gencode_meta <- cps_report$settings$reference_data$source_metadata |>
+  dplyr::filter(source_abbreviation == "gencode")
+gencode_label <- paste0(
+  "GENCODE ",
+  if (isTRUE(as.logical(cps_report$settings$conf$vep$vep_gencode_basic)))
+    "basic set" else "all transcripts",
+  " (v", gencode_meta$source_version, ")"
+)
+```
+
+This report was generated with _CPSR_ v`r cps_report$settings$software$cpsr_version`
+(backed by _PCGR_ v`r cps_report$settings$software$pcgr_version`).
+
+| Setting | Value |
+|---|---|
+| Genome assembly | `r cps_report$settings$genome_assembly` |
+| Max gnomAD MAF (non-ClinVar variants) | `r cps_report$settings$conf$variant_classification$max_af_gnomad` |
+| ClinVar trust level | `r cps_report$settings$conf$variant_classification$clinvar_trust_level` |
+| Secondary findings (ACMG) | `r as.logical(cps_report$settings$conf$variant_classification$secondary_findings)` |
+| Pharmacogenomic findings | `r as.logical(cps_report$settings$conf$variant_classification$pgx_findings)` |
+| VEP transcript set | `r gencode_label` |
+| VEP regulatory annotation | `r as.logical(cps_report$settings$conf$vep$vep_regulatory)` |
+
+: Run configuration {tbl-colwidths="[45,55]"}
