@@ -272,6 +272,10 @@ create_unified_variant_filters <- function(
   assertthat::assert_that(
     !is.null(cps_report), msg = "cps_report is NULL")
 
+  if (nrow(shared_data$data()) == 0) {
+    return(htmltools::div())
+  }
+
   crosstalk::bscols(
     list(
       crosstalk::filter_select(
