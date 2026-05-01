@@ -143,25 +143,20 @@ prepare_unified_all_variants <- function(
   all_variants <-
     cps_report[["content"]][["snv_indel"]]$callset$variant_display$cpg_non_sf
 
-  invisible(assertable::assert_colnames(
-    all_variants,
-    c("ASSERTION_AUTHORITY",
-      "CLASSIFICATION",
-      "CLINVAR_GOLD_STARS",
-      "CPSR_PATHOGENICITY_SCORE",
-      "SYMBOL",
-      "GENOMIC_CHANGE",
-      "ALTERATION",
-      "GERP_SCORE",
-      "HGVSc",
-      "HGVSp",
-      "HGVSc_RefSeq",
-      "CLINVAR_PHENOTYPE",
-      "CLINVAR",
-      "PROTEIN_DOMAIN",
-      "GENENAME"),
-    only_colnames = F
-  ))
+  required_cols <- c(
+    "ASSERTION_AUTHORITY", "CLASSIFICATION", "CLINVAR_GOLD_STARS",
+    "CPSR_PATHOGENICITY_SCORE", "SYMBOL", "GENOMIC_CHANGE", "ALTERATION",
+    "GERP_SCORE", "HGVSc", "HGVSp", "HGVSc_RefSeq", "CLINVAR_PHENOTYPE",
+    "CLINVAR", "PROTEIN_DOMAIN", "GENENAME", "CODING_STATUS"
+  )
+
+  if (is.null(all_variants) ||
+      !all(required_cols %in% colnames(all_variants))) {
+    return(
+      data.frame(matrix(ncol = length(required_cols), nrow = 0)) |>
+        setNames(required_cols)
+    )
+  }
 
   all_variants <- all_variants |>
     dplyr::mutate(

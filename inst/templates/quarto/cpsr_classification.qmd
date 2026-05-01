@@ -9,60 +9,68 @@ This section displays all variant classifications, considering both ClinVar and 
 #| output: false
 #| eval: true
 
-# Configuration
+n_cpg_non_sf <- cps_report$content$snv_indel$v_stat_cpg_non_sf$n
 max_rows <- 1000
-
-# Prepare unified dataset (all variants, all classes, both sources)
-unified_variants <- cpsr::prepare_unified_all_variants(
-  cps_report = cps_report,
-  max_rows = max_rows)
-
-# Count summary
-n_clinvar_total <- sum(unified_variants$ASSERTION_AUTHORITY == "ClinVar")
-n_cpsr_total <- sum(unified_variants$ASSERTION_AUTHORITY == "CPSR")
-
-summary_text <- htmltools::HTML(paste0(
-  "<strong>Total variants: ", nrow(unified_variants), "</strong>",
-  " &nbsp;&nbsp; ",
-  "<span style='display:inline-block; border-left:6px solid #0277bd;",
-  " padding-left:6px; color:#0277bd; font-weight:bold;'>ClinVar-asserted",
-  ": ", n_clinvar_total,
-  " </span>&nbsp;&nbsp; ",
-  "<span style='display:inline-block; border-left:6px solid #e65100;",
-  " padding-left:6px; color:#e65100; font-weight:bold;'>CPSR-asserted",
-  ": ", n_cpsr_total," </span>"
-))
-
-
-# Create shared crosstalk data
 variants_shared <- list()
-variants_shared[['coding']] <- crosstalk::SharedData$new(
-  unified_variants |> dplyr::filter(.data$CODING_STATUS == "coding"),
-  key = ~VARKEY_CLASSIFICATION
-)
 
-variants_shared[['noncoding']] <- crosstalk::SharedData$new(
-  unified_variants |> dplyr::filter(.data$CODING_STATUS == "noncoding"),
-  key = ~VARKEY_CLASSIFICATION
-)
+if (n_cpg_non_sf > 0) {
+
+  # Prepare unified dataset (all variants, all classes, both sources)
+  unified_variants <- cpsr::prepare_unified_all_variants(
+    cps_report = cps_report,
+    max_rows = max_rows)
+
+  # Count summary
+  n_clinvar_total <- sum(unified_variants$ASSERTION_AUTHORITY == "ClinVar")
+  n_cpsr_total <- sum(unified_variants$ASSERTION_AUTHORITY == "CPSR")
+
+  summary_text <- htmltools::HTML(paste0(
+    "<strong>Total variants: ", nrow(unified_variants), "</strong>",
+    " &nbsp;&nbsp; ",
+    "<span style='display:inline-block; border-left:6px solid #0277bd;",
+    " padding-left:6px; color:#0277bd; font-weight:bold;'>ClinVar-asserted",
+    ": ", n_clinvar_total,
+    " </span>&nbsp;&nbsp; ",
+    "<span style='display:inline-block; border-left:6px solid #e65100;",
+    " padding-left:6px; color:#e65100; font-weight:bold;'>CPSR-asserted",
+    ": ", n_cpsr_total," </span>"
+  ))
+
+  # Create shared crosstalk data
+  variants_shared <- list()
+  variants_shared[['coding']] <- crosstalk::SharedData$new(
+    unified_variants |> dplyr::filter(.data$CODING_STATUS == "coding"),
+    key = ~VARKEY_CLASSIFICATION
+  )
+
+  variants_shared[['noncoding']] <- crosstalk::SharedData$new(
+    unified_variants |> dplyr::filter(.data$CODING_STATUS == "noncoding"),
+    key = ~VARKEY_CLASSIFICATION
+  )
+}
 
 ```
 
-`r summary_text`
+```{r no_variants_classification}
+#| echo: false
+#| eval: !expr cps_report$content$snv_indel$v_stat_cpg_non_sf$n == 0
 
-::: {.callout-note title="Note - output limitations" collapse="true"}
-For performance, a maximum of `r max_rows` variants per source (ClinVar/CPSR) are displayed. Variants are pre-sorted by clinical significance and review status to prioritize high-evidence variants.
-:::
+htmltools::HTML(paste0(
+  "<p style='color:#888; font-style:italic;'>",
+  "No variants were identified in cancer predisposition genes ",
+  "(virtual panel genes, excluding secondary findings).</p>"
+))
+```
 
-<br>
 
 ::: {.panel-tabset}
 
-### Coding variants 
+### Coding variants
 
 ```{r filters_coding_unified}
 #| echo: false
 #| output: asis
+#| eval: !expr cps_report$content$snv_indel$v_stat_cpg_non_sf$n_coding > 0
 
 cpsr::create_unified_variant_filters(
   shared_data = variants_shared$coding,
@@ -75,17 +83,18 @@ cpsr::create_unified_variant_filters(
 
 ```{r table_unified_coding}
 #| echo: false
+#| eval: !expr cps_report$content$snv_indel$v_stat_cpg_non_sf$n_coding > 0
 
 cpsr::create_unified_variant_reactable(
   shared_data = variants_shared$coding,
-  primary_cols = 
-    c("SYMBOL", 
+  primary_cols =
+    c("SYMBOL",
       "gnomADg_AF",
-      "CONSEQUENCE", 
-      "ALTERATION", 
-      "CLASSIFICATION", 
+      "CONSEQUENCE",
+      "ALTERATION",
+      "CLASSIFICATION",
       "GENOTYPE",
-      "VARKEY_CLASSIFICATION", 
+      "VARKEY_CLASSIFICATION",
       "ASSERTION_AUTHORITY"),
   color_palette = cpsr::color_palette
 )
@@ -96,6 +105,7 @@ cpsr::create_unified_variant_reactable(
 ```{r filters_noncoding_unified}
 #| echo: false
 #| output: asis
+#| eval: !expr cps_report$content$snv_indel$v_stat_cpg_non_sf$n_noncoding > 0
 
 cpsr::create_unified_variant_filters(
   shared_data = variants_shared$noncoding,
@@ -107,18 +117,18 @@ cpsr::create_unified_variant_filters(
 ```{r table_unified_noncoding}
 #| echo: false
 #| output: asis
-#| eval: true
+#| eval: !expr cps_report$content$snv_indel$v_stat_cpg_non_sf$n_noncoding > 0
 
 cpsr::create_unified_variant_reactable(
   shared_data = variants_shared$noncoding,
-  primary_cols = 
-    c("SYMBOL", 
+  primary_cols =
+    c("SYMBOL",
       "gnomADg_AF",
-      "CONSEQUENCE", 
-      "ALTERATION", 
-      "CLASSIFICATION", 
+      "CONSEQUENCE",
+      "ALTERATION",
+      "CLASSIFICATION",
       "GENOTYPE",
-      "VARKEY_CLASSIFICATION", 
+      "VARKEY_CLASSIFICATION",
       "ASSERTION_AUTHORITY"),
   color_palette = cpsr::color_palette
 )

@@ -246,11 +246,18 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
 #'
 #' @param report List object with all report data (CPSR), settings etc.
 #' @param output_format file format of output
-#' (html//tsv/xlsx etc)
+#' (html//tsv/xlsx/pdf)
 
 #' @export
 write_cpsr_output <- function(report,
                               output_format = "html") {
+
+  if(is.null(report)){
+    ## log to console about report generation - report is NULL
+    pcgrr::log4r_info("Report is NULL - no output files written")
+    return(NULL)
+  }
+
   settings <- report[["settings"]]
   output_dir <- settings[["output_dir"]]
   sample_name <- settings[["sample_id"]]
@@ -299,6 +306,11 @@ write_cpsr_output <- function(report,
     file.path(
       output_dir,
       paste0(sample_fname_pattern, ".html")
+    )
+  fnames[["pdf"]] <-
+    file.path(
+      output_dir,
+      paste0(sample_fname_pattern, ".pdf")
     )
 
   ## Path to CPSR reporting templates
@@ -612,5 +624,79 @@ write_cpsr_output <- function(report,
       fnames[["xlsx"]],
       overwrite = TRUE
     )
+  }
+
+  if (output_format == "pdf") {
+    quarto_input_pdf <- file.path(
+      cpsr_rep_template_path, "cpsr_report_pdf.qmd"
+    )
+
+    if (file.exists(quarto_input_pdf)) {
+      ## Temporary directory — same pattern as HTML rendering
+      tmp_quarto_dir1 <- file.path(
+        output_dir,
+        paste0("quarto_", stringi::stri_rand_strings(1, 15))
+      )
+      pcgrr::mkdir(tmp_quarto_dir1)
+      system2("cp", args = c("-r", shQuote(cpsr_rep_template_path), shQuote(tmp_quarto_dir1)))
+      tmp_quarto_dir <- file.path(tmp_quarto_dir1, templates_dir)
+
+      quarto_main_template_pdf <- file.path(tmp_quarto_dir, "cpsr_report_pdf.qmd")
+      quarto_main_template_pdf_sample <- file.path(tmp_quarto_dir, "cpsr_report_pdf_sample.qmd")
+      quarto_pdf <- file.path(tmp_quarto_dir, "cpsr_report_pdf_sample.pdf")
+
+      ## Save report object (strip heavy ref_data before persisting)
+      rds_report_path <- file.path(tmp_quarto_dir, "cps_report.rds")
+      report$ref_data <- NULL
+      saveRDS(report, file = rds_report_path)
+
+      ## Substitute the RDS placeholder in the PDF template
+      readLines(quarto_main_template_pdf) |>
+        stringr::str_replace(
+          pattern = "<CPSR_REPORT_OBJECT.rds>",
+          replacement = rds_report_path
+        ) |>
+        writeLines(con = quarto_main_template_pdf_sample)
+
+      pcgrr::log4r_info("------")
+      pcgrr::log4r_info(
+        paste0(
+          "Generating Typst-based focused PDF report ",
+          "(.pdf) with variant findings"
+        )
+      )
+
+      quarto::quarto_render(
+        input = quarto_main_template_pdf_sample,
+        output_format = "typst",
+        execute_dir = tmp_quarto_dir,
+        quiet = !report$settings$conf$debug
+      )
+
+      ## Move rendered PDF to the designated output path
+      if (file.exists(quarto_pdf)) {
+        file.copy(quarto_pdf, fnames[["pdf"]], overwrite = TRUE)
+      } else {
+        pcgrr::log4r_warn(
+          paste0(
+            "PDF rendering appeared to complete but output file was not found: ",
+            quarto_pdf
+          )
+        )
+      }
+
+      ## Clean up temp dir unless debug mode is on
+      if (!settings$conf$debug) {
+        unlink(c(tmp_quarto_dir, tmp_quarto_dir1), force = TRUE, recursive = TRUE)
+      }
+      pcgrr::log4r_info("------")
+    } else {
+      pcgrr::log4r_warn(
+        paste0(
+          "PDF template not found at: ", quarto_input_pdf,
+          " — skipping PDF generation"
+        )
+      )
+    }
   }
 }

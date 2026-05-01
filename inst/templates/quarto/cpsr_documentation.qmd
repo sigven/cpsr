@@ -91,7 +91,7 @@ for(i in 1:NROW(ref_datasets)){
 
 ### Variant classification
 
-::: {.callout-note title="Synopsis" collapse="false"}
+::: {.callout-note title="Synopsis" collapse="true"}
 
 Variants in the cancer predisposition gene set are classified through two complementary assertion authorities:
 
