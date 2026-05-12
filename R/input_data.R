@@ -157,7 +157,7 @@ load_germline_snv_indel <- function(
 
   pcgrr::log4r_info(
     glue::glue(
-      "Total number of variants limited to selection of cancer ",
+      "Total number of variants in target cancer ",
       "predisposition genes: {NROW(cpsr_callset$variant$cpg_non_sf)}"
     )
   )

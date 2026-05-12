@@ -132,13 +132,6 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
       )
   }
 
-
-  pcgrr::log4r_info(
-    paste0(
-      "Total number of variants in target cancer predisposition genes: ",
-      "N = ", cps_report$content$snv_indel[["v_stat_cpg_non_sf"]][["n"]]
-    )
-  )
   pcgrr::log4r_info(
     paste0(
       "Number of coding variants in target cancer predisposition genes: ",
@@ -147,7 +140,7 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
   )
   pcgrr::log4r_info(
     paste0(
-      "Number of non-coding variants in cancer predisposition genes: ",
+      "Number of non-coding variants in target cancer predisposition genes: ",
       "N = ", cps_report$content$snv_indel[["v_stat_cpg_non_sf"]][["n_noncoding"]]
     )
   )
