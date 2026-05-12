@@ -14,5 +14,6 @@ ACMG_PVS1_MOD	funcvar	P	Functional - variant effect	Moderate evidence for a pred
 ACMG_PS1	funcvar	P	Functional - variant effect	Strong evidence that the variant causes the same amino acid change as a previously established pathogenic variant but via a different nucleotide change.	4
 ACMG_PP3	funccomp	P	Functional - computational & predictive	Supporting evidence that multiple computational tools predict a deleterious effect on the gene or gene product.	1
 ACMG_PM5	funcvar	P	Functional - variant effect	Evidence that the variant causes a novel amino acid change at a residue where another pathogenic missense change has been seen.	2
-ACMG_PM4	funcvar	P	Functional - variant effect	Evidence that the variant results in protein length changes due to in-frame deletions/insertions in a non-repeat region or stop-loss.	0
+ACMG_PM4	funcvar	P	Functional - variant effect	Evidence that the variant results in protein length changes due to in-frame deletions/insertions in a non-repeat region or stop-loss in functional protein domains.	2
+ACMG_PM4_SUPP	funcvar	P	Functional - variant effect	Evidence that the variant results in protein length changes due to in-frame deletions/insertions in a non-repeat region or stop-loss in functional protein domains (single amino acid changes).	1
 ACMG_PP2	funcvar	P	Functional - variant effect	Supporting evidence that a missense variant occurs in a gene with low benign missense variation and where missense variants are a common disease mechanism.	0

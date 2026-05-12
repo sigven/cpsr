@@ -38,10 +38,9 @@ assign_acmg_evidence <- function(var_calls, settings, ref_data) {
       "ACMG_PVS1_MOD",
       "ACMG_PS1",
       "ACMG_PP3",
-      "ACMG_PS1",
       "ACMG_PM5",
-      "ACMG_PP3",
       "ACMG_PM4",
+      "ACMG_PM4_SUPP",
       "ACMG_PP2",
       "HGVSP_query"
     )
@@ -97,6 +96,10 @@ assign_acmg_evidence <- function(var_calls, settings, ref_data) {
 assign_acmg_concensus <- function(
     var_calls = NULL){
 
+  if (!is.data.frame(var_calls)) {
+    return(var_calls)
+  }
+
   p_lower_limit <- cpsr::acmg[['score_thresholds']][['p_lower']]
   lp_upper_limit <- cpsr::acmg[['score_thresholds']][['lp_upper']]
   lp_lower_limit <- cpsr::acmg[['score_thresholds']][['lp_lower']]
@@ -106,107 +109,119 @@ assign_acmg_concensus <- function(
   lb_lower_limit <- cpsr::acmg[['score_thresholds']][['lb_lower']]
   b_upper_limit <- cpsr::acmg[['score_thresholds']][['b_upper']]
 
-  if(is.data.frame(var_calls) &
-     all(c("ACMG_PVS1",
-           "ACMG_PVS1_STR",
-           "ACMG_PVS1_MOD",
-           "ACMG_PS1",
-           "ACMG_PM1",
-           "ACMG_PM1_SUPP",
-           "ACMG_PM2_SUPP",
-           "ACMG_PM5",
-           "ACMG_PM4",
-           "ACMG_BP1",
-           "ACMG_PP3",
-           "ACMG_BA1",
-           "ACMG_BS1",
-           "ACMG_BS1_SUPP",
-           "ACMG_BP4",
-           "ACMG_BP7") %in%
-         colnames(var_calls))){
+  ## Restrict to evidence codes that are present as columns in var_calls
+  ev_codes <- cpsr::acmg[["evidence_codes"]]
+  active_codes <- ev_codes[
+    ev_codes$cpsr_evidence_code %in% colnames(var_calls), ]
 
-    #var_calls$ACMG_CODE <- ""
-    #var_calls$ACMG_DOC <- ""
+  if (nrow(active_codes) == 0) {
+    return(var_calls)
+  }
 
+  ## Derive human-readable display names from internal code names:
+  ##   ACMG_PVS1_STR  -> PVS1_strong
+  ##   ACMG_PVS1_MOD  -> PVS1_moderate
+  ##   ACMG_PM2_SUPP  -> PM2_supporting   (etc.)
+  active_codes$display_code <- active_codes$cpsr_evidence_code |>
+    stringr::str_remove("^ACMG_") |>
+    stringr::str_replace("_STR$", "_strong") |>
+    stringr::str_replace("_MOD$", "_moderate") |>
+    stringr::str_replace("_SUPP$", "_supporting")
+
+  code_names <- active_codes$cpsr_evidence_code
+  disp_names <- active_codes$display_code
+  score_map  <- setNames(active_codes$path_score, code_names)
+
+  var_calls <- var_calls |>
+    dplyr::mutate(
+      ACMG_CODE = "",
+      ACMG_DOC = "",
+      CPSR_PATHOGENICITY_SCORE = 0
+    )
+
+  ## Build ACMG_CODE: pipe-separated labels for all TRUE criteria.
+  ## Construct a character matrix (nrow x n_codes): each cell is the display
+  ## name when the criterion is TRUE, "" otherwise. Then collapse row-wise.
+  code_flags <- do.call(cbind, lapply(seq_along(code_names), function(i) {
+    col <- var_calls[[code_names[i]]]
+    ifelse(!is.na(col) & col, disp_names[i], "")
+  }))
+  var_calls$ACMG_CODE <- apply(code_flags, 1, function(row) {
+    paste(row[nzchar(row)], collapse = "|")
+  })
+
+  ## Accumulate CPSR_PATHOGENICITY_SCORE: vectorized column-by-column
+  for (code in code_names) {
+    score <- score_map[[code]]
+    if (score != 0) {
+      var_calls$CPSR_PATHOGENICITY_SCORE <-
+        var_calls$CPSR_PATHOGENICITY_SCORE +
+        score * as.numeric(!is.na(var_calls[[code]]) & var_calls[[code]])
+    }
+  }
+
+  ## Adjustment: a score driven solely by the single supporting-benign
+  ## criterion BP4 should not tip into Likely Benign
+  bp4_score <- ev_codes$path_score[ev_codes$cpsr_evidence_code == "ACMG_BP4"]
+  if (length(bp4_score) == 1) {
     var_calls <- var_calls |>
-      dplyr::mutate(
-        ACMG_CODE = "",
-        ACMG_DOC = "",
-        CPSR_PATHOGENICITY_SCORE = 0
-      ) |>
-      dplyr::rowwise() |>
-      dplyr::mutate(
-        ACMG_CODE = paste0(
-          c(
-            if (isTRUE(.data$ACMG_PVS1)) "PVS1",
-            if (isTRUE(.data$ACMG_PVS1_STR)) "PVS1_strong",
-            if (isTRUE(.data$ACMG_PVS1_MOD)) "PVS1_moderate",
-            if (isTRUE(.data$ACMG_PS1)) "PS1",
-            if (isTRUE(.data$ACMG_PM1)) "PM1",
-            if (isTRUE(.data$ACMG_PM1_SUPP)) "PM1_supporting",
-            if (isTRUE(.data$ACMG_PM2_SUPP)) "PM2_supporting",
-            if (isTRUE(.data$ACMG_PM5)) "PM5",
-            if (isTRUE(.data$ACMG_PM4)) "PM4",
-            if (isTRUE(.data$ACMG_PP3)) "PP3",
-            if (isTRUE(.data$ACMG_BA1)) "BA1",
-            if (isTRUE(.data$ACMG_BS1)) "BS1",
-            if (isTRUE(.data$ACMG_BS1_SUPP)) "BS1_supporting",
-            if (isTRUE(.data$ACMG_BP4)) "BP4",
-            if (isTRUE(.data$ACMG_BP7)) "BP7"
-          ),
-          collapse = "|"
-        )
-      ) |>
-      dplyr::ungroup() |>
-      dplyr::mutate(
-        CPSR_PATHOGENICITY_SCORE =
-          8  * as.numeric(!is.na(.data$ACMG_PVS1)     & .data$ACMG_PVS1) +
-          4  * as.numeric(!is.na(.data$ACMG_PVS1_STR) & .data$ACMG_PVS1_STR) +
-          2  * as.numeric(!is.na(.data$ACMG_PVS1_MOD) & .data$ACMG_PVS1_MOD) +
-          4  * as.numeric(!is.na(.data$ACMG_PS1)      & .data$ACMG_PS1) +
-          2  * as.numeric(!is.na(.data$ACMG_PM1)      & .data$ACMG_PM1) +
-          1  * as.numeric(!is.na(.data$ACMG_PM1_SUPP) & .data$ACMG_PM1_SUPP) +
-          0  * as.numeric(!is.na(.data$ACMG_PM2_SUPP) & .data$ACMG_PM2_SUPP) +
-          2  * as.numeric(!is.na(.data$ACMG_PM5)      & .data$ACMG_PM5) +
-          1  * as.numeric(!is.na(.data$ACMG_PP3)      & .data$ACMG_PP3) +
-          -8 * as.numeric(!is.na(.data$ACMG_BA1)      & .data$ACMG_BA1) +
-          -4 * as.numeric(!is.na(.data$ACMG_BS1)      & .data$ACMG_BS1) +
-          -1 * as.numeric(!is.na(.data$ACMG_BS1_SUPP) & .data$ACMG_BS1_SUPP) +
-          -1 * as.numeric(!is.na(.data$ACMG_BP4)      & .data$ACMG_BP4) +
-          -1 * as.numeric(!is.na(.data$ACMG_BP7)      & .data$ACMG_BP7)
-      ) |>
-
-      ## Adjust scores in cases where only criteria matched
-      ## are of supportive strength
       dplyr::mutate(CPSR_PATHOGENICITY_SCORE = dplyr::if_else(
-        .data$CPSR_PATHOGENICITY_SCORE == -1 &
+        .data$CPSR_PATHOGENICITY_SCORE == bp4_score &
           stringr::str_detect(.data$ACMG_CODE, "BP4"),
         0,
         as.numeric(.data$CPSR_PATHOGENICITY_SCORE)
-      )) |>
-      dplyr::mutate(CPSR_PATHOGENICITY_SCORE = dplyr::if_else(
-        .data$CPSR_PATHOGENICITY_SCORE == 1 &
-          stringr::str_detect(.data$ACMG_CODE, "PP3"),
-        0,
-        as.numeric(.data$CPSR_PATHOGENICITY_SCORE)
-      )) |>
-      dplyr::mutate(
-        CPSR_CLASSIFICATION =
-          dplyr::case_when(
-            .data$CPSR_PATHOGENICITY_SCORE <= lb_upper_limit &
-              .data$CPSR_PATHOGENICITY_SCORE >= lb_lower_limit ~ "Likely Benign",
-            .data$CPSR_PATHOGENICITY_SCORE <= b_upper_limit ~ "Benign",
-            .data$CPSR_PATHOGENICITY_SCORE <= vus_upper_limit &
-              .data$CPSR_PATHOGENICITY_SCORE >= vus_lower_limit ~ "VUS",
-            .data$CPSR_PATHOGENICITY_SCORE >= p_lower_limit ~ "Pathogenic",
-            .data$CPSR_PATHOGENICITY_SCORE >= lp_lower_limit &
-              .data$CPSR_PATHOGENICITY_SCORE <= lp_upper_limit ~ "Likely Pathogenic",
-            TRUE ~ as.character("VUS")
-          )
-      )
-
-
+      ))
   }
+
+  ## Safeguard: LP/P classification requires converging evidence from at least
+  ## two independent pathogenic criteria, unless a strong/very-strong criterion
+  ## (path_score >= 4: PVS1 family, PS1) is present. A single moderate or
+  ## supporting criterion reaching the LP threshold is a scoring artefact, not
+  ## genuine multi-criterion support (e.g. PM4 alone should remain VUS).
+  pathogenic_codes <- active_codes$cpsr_evidence_code[
+    active_codes$path_score > 0]
+  strong_codes <- active_codes$cpsr_evidence_code[
+    active_codes$path_score >= 4]
+
+  if (length(pathogenic_codes) > 0) {
+    path_matrix <- do.call(cbind, lapply(pathogenic_codes, function(code) {
+      as.numeric(!is.na(var_calls[[code]]) & var_calls[[code]])
+    }))
+    var_calls$.n_pathogenic_criteria <- rowSums(path_matrix)
+  } else {
+    var_calls$.n_pathogenic_criteria <- 0L
+  }
+
+  if (length(strong_codes) > 0) {
+    strong_matrix <- do.call(cbind, lapply(strong_codes, function(code) {
+      as.numeric(!is.na(var_calls[[code]]) & var_calls[[code]])
+    }))
+    var_calls$.has_strong_criterion <- rowSums(strong_matrix) > 0
+  } else {
+    var_calls$.has_strong_criterion <- FALSE
+  }
+
+  var_calls <- var_calls |>
+    dplyr::mutate(
+      CPSR_CLASSIFICATION =
+        dplyr::case_when(
+          ## Safeguard: only moderate/supporting evidence, single criterion
+          .data$CPSR_PATHOGENICITY_SCORE >= lp_lower_limit &
+            !.data$.has_strong_criterion &
+            .data$.n_pathogenic_criteria < 2 ~ "VUS",
+          .data$CPSR_PATHOGENICITY_SCORE <= lb_upper_limit &
+            .data$CPSR_PATHOGENICITY_SCORE >= lb_lower_limit ~ "Likely Benign",
+          .data$CPSR_PATHOGENICITY_SCORE <= b_upper_limit ~ "Benign",
+          .data$CPSR_PATHOGENICITY_SCORE <= vus_upper_limit &
+            .data$CPSR_PATHOGENICITY_SCORE >= vus_lower_limit ~ "VUS",
+          .data$CPSR_PATHOGENICITY_SCORE >= p_lower_limit ~ "Pathogenic",
+          .data$CPSR_PATHOGENICITY_SCORE >= lp_lower_limit &
+            .data$CPSR_PATHOGENICITY_SCORE <= lp_upper_limit ~ "Likely Pathogenic",
+          TRUE ~ as.character("VUS")
+        )
+    ) |>
+    dplyr::select(-c(".n_pathogenic_criteria", ".has_strong_criterion"))
+
   return(var_calls)
 
 }
@@ -881,7 +896,6 @@ assign_PVS1_evidence <- function(
      "LOSS_OF_FUNCTION" %in% colnames(var_calls) &
      "LOF_FILTER" %in% colnames(var_calls) &
      "REFSEQ_TRANSCRIPT_ID" %in% colnames(var_calls) &
-     "PROTEIN_RELATIVE_POSITION" %in% colnames(var_calls) &
      "EXON_INTRON_JUNCTION_SPAN" %in% colnames(var_calls) &
      "NMD" %in% colnames(var_calls) &
      "EXONIC_STATUS" %in% colnames(var_calls) &
@@ -1629,24 +1643,55 @@ assign_PM4_evidence <- function(
     var_calls = NULL){
 
   var_calls$ACMG_PM4 <- FALSE
+  var_calls$ACMG_PM4_SUPP <- FALSE
 
   ## Assign logical ACMG evidence indicator
   # PM4 - Protein length changes due to in-frame deletions/insertions
-  # in a non-repeat region or stop-loss variants
+  # in a non-repeat region or stop-loss variants in
+  # a functional protein domain
   if(is.data.frame(var_calls) &
      "CONSEQUENCE" %in% colnames(var_calls) &
-     "RMSK_HIT" %in% colnames(var_calls) &
-     "PFAM_DOMAIN_NAME" %in% colnames(var_calls)){
+     "SYMBOL" %in% colnames(var_calls) &
+     "ACMG_PVS1" %in% colnames(var_calls) &
+     "ACMG_PVS1_STR" %in% colnames(var_calls) &
+     "ACMG_PVS1_MOD" %in% colnames(var_calls) &
+     "REF" %in% colnames(var_calls) &
+     "ALT" %in% colnames(var_calls) &
+     "RMSK_HIT" %in% colnames(var_calls)){
+
+    has_pfam <- "PFAM_DOMAIN_NAME" %in% colnames(var_calls)
 
     var_calls <- var_calls |>
       dplyr::mutate(
         ACMG_PM4 = dplyr::case_when(
+          .data$ACMG_PVS1 == TRUE |
+            .data$ACMG_PVS1_STR == TRUE |
+            .data$ACMG_PVS1_MOD == TRUE ~ FALSE,
+          .data$SYMBOL == "TP53" ~ FALSE,
           (((.data$CONSEQUENCE == "inframe_deletion" |
-             .data$CONSEQUENCE == "inframe_insertion" &
-             is.na(.data$RMSK_HIT))
-          | .data$CONSEQUENCE == "stop_lost") &
-            !is.na(.data$PFAM_DOMAIN_NAME)) ~ TRUE,
+             .data$CONSEQUENCE == "inframe_insertion") &
+               .data$SYMBOL != "TP53" &
+               .data$SYMBOL != "ATM" &
+             is.na(.data$RMSK_HIT)) |
+           (.data$CONSEQUENCE == "stop_lost" &
+            .data$SYMBOL != "TP53" &
+            has_pfam & !is.na(.data$PFAM_DOMAIN_NAME))) &
+            abs(nchar(.data$REF) - nchar(.data$ALT)) != 3 ~ TRUE,
           TRUE ~ as.logical(.data$ACMG_PM4)
+        ),
+        ACMG_PM4_SUPP = dplyr::case_when(
+          .data$ACMG_PM4 == TRUE ~ FALSE,
+          .data$SYMBOL == "TP53" ~ FALSE,
+          (((.data$CONSEQUENCE == "inframe_deletion" |
+              .data$CONSEQUENCE == "inframe_insertion") &
+              .data$SYMBOL != "TP53" &
+              .data$SYMBOL != "ATM" &
+              is.na(.data$RMSK_HIT)) |
+             (.data$CONSEQUENCE == "stop_lost" &
+                .data$SYMBOL != "TP53" &
+                has_pfam & !is.na(.data$PFAM_DOMAIN_NAME))) &
+            abs(nchar(.data$REF) - nchar(.data$ALT)) == 3 ~ TRUE,
+          TRUE ~ as.logical(.data$ACMG_PM4_SUPP)
         )
       )
   }

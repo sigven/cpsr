@@ -60,6 +60,8 @@ col_format_output[['report_tbl_classification']] <-
     "TF_BINDING_SITE_VARIANT_INFO",
     "GERP_SCORE",
     "LOSS_OF_FUNCTION",
+    "NMD",
+    "EXON_INTRON_JUNCTION_SPAN",
     "LOF_FILTER",
     "DBSNP_RSID",
     "CLINVAR",
@@ -227,6 +229,10 @@ col_format_output[['tsv']] <-
     "EXON_AFFECTED",
     "EXON_POSITION",
     "INTRON_POSITION",
+    "NMD",
+    "EXON_INTRON_JUNCTION_SPAN",
+    "EXONIC_STATUS",
+    "PROTEIN_RELATIVE_POSITION",
     "MUTATION_HOTSPOT",
     "RMSK_HIT",
     "EFFECT_PREDICTIONS",
@@ -644,8 +650,12 @@ usethis::use_data(acmg, overwrite = T)
 usethis::use_data(col_format_output, overwrite = T)
 
 # #---- create CPSR curated transcripts ----#
-curated_transcripts <-
-  data.frame('symbol' = 'MEN1', id = 'NM_130803.3')
+#curated_transcripts <-
+#  data.frame('symbol' = 'MEN1', id = 'NM_130803.3')
+curated_transcripts <- data.frame(
+  'symbol' = c('MEN1',        'BAP1'),
+  id       = c('NM_130803.3', 'NM_004656.4')
+)
 usethis::use_data(curated_transcripts, overwrite = T)
 
 # my_log4r_layout <- function(level, ...) {
