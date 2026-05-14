@@ -5,17 +5,17 @@ output: rmarkdown::html_document
 
 
 ## v2.3.0
-- Date: **2026-05-01**
+- Date: **2026-05-15**
 - Major data updates
-  - ClinVar (2026-04)
+  - ClinVar (2026-05)
   - dbNSFP (v5.3)
-  - CIViC (2026-04-06)
+  - CIViC (2026-03-23)
   - GENCODE v49 (VEP v115)
   - Complete revision and much simplified implementation for ACMG/AMP variant classification, 
     still point-based, but more coherent to criteria outlined in 
     [ClinGen's Criteria Specification Registry](https://cspec.genome.network/cspec/ui/svi/), 
     considering e.g. 
-      * gene-specific allele frequency thresholds for different criteria (BA1/BS1/PM2)
+      * gene-specific allele frequency thresholds for different criteria (BA1/BS1/PM2/PM1/PM4)
       * Not relying on allele frequencies from one specified subpopulation, but rather considering all frequencies across gnomAD subpopulations 
        (groupmax approach, as recommended by ClinGen SVI working group)
       * PM2 supporting not given weight in accumulating pathogenicity score due to limited evidence 
@@ -29,7 +29,10 @@ output: rmarkdown::html_document
   - Renamed column *CPSR_CLASSIFICATION_SOURCE* → *ASSERTION_AUTHORITY* in TSV output to better reflect its role (values: `ClinVar` or `CPSR`)
   - Renamed column *CANCER_PHENOTYPE* to *CLINVAR_PHENOTYPE_CANCER* in TSV output, to clarify that this annotation is based on ClinVar phenotype associations
   - Added new column *ASSERTION_RATIONALE* in TSV output, providing a human-readable explanation for why a given assertion authority was chosen (e.g. _"Novel variant (absent from ClinVar)"_, _"ClinVar review status: 2 gold stars"_, _"Conflicting ClinVar interpretations"_)
-- New argument `--clinvar_trust_level` (integer, 0–4) replacing `--classify_all`, giving fine-grained 
+- Simplified population allele frequency arguments for variant classification:
+  - Removed `--pop_gnomad` (previously required to select a single gnomAD subpopulation, e.g. `nfe`) and `--maf_upper_threshold` (global MAF filter)
+  - Replaced by a single argument `--max_af_gnomad`, which applies an upper frequency threshold across all gnomAD subpopulations rather than one selected population — consistent with the ClinGen SVI groupmax approach already used internally for BA1/BS1/PM2 criteria
+- New argument `--clinvar_trust_level` (integer, 0–4) replacing `--classify_all`, giving fine-grained
   control over the degree to which existing ClinVar classifications override CPSR's own ACMG/AMP result:
   - **0**: ClinVar fully trusted; CPSR only overrides conflicted records (default)
   - **1**: CPSR overrides zero gold star ClinVar records
