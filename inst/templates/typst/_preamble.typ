@@ -68,7 +68,8 @@
 // ---------------------------------------------------------------------------
 // Typography
 // ---------------------------------------------------------------------------
-#set text(size: 10pt, fill: cpsr-dark, font: "Source Sans Pro", fallback: true)
+#set text(font: "Source Sans 3", size: 10pt, fill: cpsr-dark)
+#set text(size: 10pt, fill: cpsr-dark)
 #set par(leading: 0.65em)
 
 // ---------------------------------------------------------------------------
@@ -173,8 +174,9 @@
     row-gutter: 0.55em,
     ..cpsr-meta("Sample ID",         sample_id),
     ..cpsr-meta("Genome assembly",   genome_assembly),
-    ..cpsr-meta("Gene panel",        gene_panel),
-    grid.cell(colspan: 3)[],   // blank right cells on second row
+    // Gene panel label in col 1, value spans cols 2–4 (long names need the room)
+    text(weight: "bold", size: 8.5pt, fill: cpsr-dark)[Gene panel],
+    grid.cell(colspan: 3, text(size: 8.5pt, fill: cpsr-dark)[#gene_panel]),
   )
 
   v(1.8em)

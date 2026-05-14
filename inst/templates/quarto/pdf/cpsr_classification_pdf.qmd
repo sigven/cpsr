@@ -27,10 +27,11 @@ n_vus_pdf <- sum(variants_pdf$CLASSIFICATION == "VUS", na.rm = TRUE)
 # Placeholder: replace body with create_variant_table_pdf() call
 # once R/tables_pdf.R is implemented.
 variants_pdf |>
-  dplyr::filter(CLASSIFICATION %in% c("Pathogenic", "Likely Pathogenic")) |>
+  dplyr::filter(
+    CLASSIFICATION %in% c("Pathogenic", "Likely Pathogenic")) |>
   dplyr::select(
-    SYMBOL, CONSEQUENCE, HGVSc, HGVSp,
-    CLASSIFICATION, ASSERTION_AUTHORITY, VAF
+    SYMBOL, CONSEQUENCE, ALTERATION, GENOTYPE,
+    CLASSIFICATION, ASSERTION_AUTHORITY
   ) |>
   tinytable::tt() |>
   tinytable::theme_tt("tabular")
@@ -52,8 +53,8 @@ cat("*No pathogenic or likely pathogenic variants identified.*")
 variants_pdf |>
   dplyr::filter(CLASSIFICATION == "VUS") |>
   dplyr::select(
-    SYMBOL, CONSEQUENCE, HGVSc, HGVSp,
-    CLASSIFICATION, ASSERTION_AUTHORITY, VAF
+   SYMBOL, CONSEQUENCE, ALTERATION, GENOTYPE,
+    CLASSIFICATION, ASSERTION_AUTHORITY
   ) |>
   tinytable::tt() |>
   tinytable::theme_tt("tabular")

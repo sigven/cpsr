@@ -1,16 +1,16 @@
 # ── Cell renderer factories ──────────────────────────────────────────────────
 
 #' Cell renderer factory for classification column
-#' Returns a function that renders classification values as 
+#' Returns a function that renders classification values as
 #' colored pills based on the provided color palette.
-#' 
-#' @param color_palette CPSR color palette object containing 
+#'
+#' @param color_palette CPSR color palette object containing
 #' pathogenicity styling information
-#' @return A function that takes a classification value and returns 
+#' @return A function that takes a classification value and returns
 #' an HTML span element with appropriate styling
-#' 
+#'
 #' @export
-#' 
+#'
 rt_cell_classification <- function(color_palette) {
   function(value) {
     if (is.na(value)) return("-")
@@ -60,12 +60,12 @@ rt_cell_classification_rank <- function(color_palette) {
 #' Cell renderer factory for genotype column
 #' Returns a function that renders genotype values as colored
 #' pills based on the provided color palette.
-#' 
+#'
 #' @param color_palette CPSR color palette object containing genotype styling information
 #' @return A function that takes a genotype value and returns an HTML span element with appropriate styling
-#' 
+#'
 #' @export
-#' 
+#'
 rt_cell_genotype <- function(color_palette) {
   function(value) {
     if (is.na(value)) return("-")
@@ -85,15 +85,15 @@ rt_cell_genotype <- function(color_palette) {
 }
 
 #' Cell renderer factory for biomarker clinical significance
-#' Returns a function that renders biomarker clinical significance 
+#' Returns a function that renders biomarker clinical significance
 #' values as colored pills based on the provided color palette.
-#' 
+#'
 #' @param color_palette CPSR color palette object containing
 #' biomarker_types styling information
 #' @return A function that takes a biomarker clinical significance value and returns an HTML div element containing styled pills for each significance category
-#' 
+#'
 #' @export
-#' 
+#'
 rt_cell_bm_significance <- function(color_palette) {
   function(value) {
     if (is.na(value) || value == "") return("-")
@@ -495,12 +495,18 @@ create_unified_variant_reactable <- function(
   theme <- create_variant_table_theme(
     color_palette = color_palette)
 
+  ## make primary_cols2 (not including ASSERTION_AUTHORITY)
+  ## - i want this shown in the row details
+  primary_cols2 <- setdiff(primary_cols, "ASSERTION_AUTHORITY")
+
   reactable::reactable(
     shared_data,
     columns = col_defs,
     defaultColDef = reactable::colDef(html = TRUE),
     details = pcgrr::build_rt_row_details(
-      primary_cols = c(primary_cols, "SEARCH_INDEX", "CLASSIFICATION_RANK"),
+      primary_cols = c(primary_cols2,
+                       "SEARCH_INDEX",
+                       "CLASSIFICATION_RANK"),
       font_size = "0.97em"),
     searchable = TRUE,
     filterable = TRUE,

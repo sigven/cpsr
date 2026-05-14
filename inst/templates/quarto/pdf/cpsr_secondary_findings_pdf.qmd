@@ -4,7 +4,8 @@
 #| echo: false
 #| eval: true
 
-variants_sf <- cps_report$content$snv_indel$callset$variant_display$sf
+variants_sf <- 
+  cps_report$content$snv_indel$callset$variant_display$sf
 n_sf <- NROW(variants_sf)
 ```
 
@@ -14,10 +15,13 @@ n_sf <- NROW(variants_sf)
 
 variants_sf |>
   dplyr::select(
-    SYMBOL, CONSEQUENCE, HGVSc, HGVSp,
-    CLASSIFICATION, VAF
+    SYMBOL, CONSEQUENCE, ALTERATION, GENOTYPE,
+    CLINVAR_CLASSIFICATION
   ) |>
   tinytable::tt() |>
+  tinytable::style_tt(
+    i = 0, background = "black", 
+    color = "white", bold = TRUE) |>
   tinytable::theme_tt("tabular")
 ```
 

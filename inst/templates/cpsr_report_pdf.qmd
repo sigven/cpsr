@@ -2,15 +2,15 @@
 format:
   typst:
     include-before-body: typst/_preamble.typ
-    toc: true
+    toc: false
     toc-depth: 2
     toc-title: "Contents"
     papersize: a4
     margin:
-      top: 2.5cm
+      top: 2.2cm
       bottom: 2.2cm
-      left: 2cm
-      right: 2cm
+      left: 1.5cm
+      right: 1.5cm
     section-numbering: ""
 ---
 
@@ -18,11 +18,16 @@ format:
 #| include: false
 #| eval: true
 
-knitr::opts_chunk$set(echo = FALSE, warning = FALSE, error = FALSE, eval = TRUE)
+knitr::opts_chunk$set(
+  echo = FALSE, 
+  warning = FALSE, 
+  error = FALSE, 
+  eval = TRUE)
 options(scipen = 999)
-
-cps_report <- readRDS(file = "<CPSR_REPORT_OBJECT.rds>")
-no_content <- isFALSE(as.logical(cps_report$content$snv_indel$eval))
+cps_report <- readRDS(file = "test.rds")
+#cps_report <- readRDS(file = "<CPSR_REPORT_OBJECT.rds>")
+no_content <- isFALSE(
+  as.logical(cps_report$content$snv_indel$eval))
 ```
 
 ```{r cover_page}
@@ -51,17 +56,20 @@ col_path_genes <- color_none
 col_sf         <- color_none
 col_bm_pgx     <- color_none
 
-variants_cpg <- cps_report$content$snv_indel$callset$variant_display$cpg_non_sf
+variants_cpg <- 
+  cps_report$content$snv_indel$callset$variant_display$cpg_non_sf
 
 if (NROW(variants_cpg) > 0) {
   n_path_clinvar <- sum(
     variants_cpg$ASSERTION_AUTHORITY == "ClinVar" &
-      variants_cpg$CLASSIFICATION %in% c("Pathogenic", "Likely Pathogenic"),
+      variants_cpg$CLASSIFICATION %in% 
+      c("Pathogenic", "Likely Pathogenic"),
     na.rm = TRUE
   )
   n_path_cpsr <- sum(
     variants_cpg$ASSERTION_AUTHORITY == "CPSR" &
-      variants_cpg$CLASSIFICATION %in% c("Pathogenic", "Likely Pathogenic"),
+      variants_cpg$CLASSIFICATION %in% 
+      c("Pathogenic", "Likely Pathogenic"),
     na.rm = TRUE
   )
   n_vus    <- sum(variants_cpg$CLASSIFICATION == "VUS", na.rm = TRUE)
@@ -71,14 +79,16 @@ if (NROW(variants_cpg) > 0) {
   )
 
   path_genes <- cps_report$content$snv_indel$callset$variant$cpg_non_sf |>
-    dplyr::filter(CLASSIFICATION %in% c("Pathogenic", "Likely_Pathogenic")) |>
+    dplyr::filter(
+      CLASSIFICATION %in% c("Pathogenic", "Likely_Pathogenic")) |>
     dplyr::distinct(SYMBOL) |>
     utils::head(3)
 
   if (NROW(path_genes) > 0) {
     path_genes_str <- if (NROW(path_genes) == 3) "> 2" else
       paste(path_genes$SYMBOL, collapse = " / ")
-    col_path_genes <- cpsr::color_palette$pathogenicity$values[5]
+    col_path_genes <- 
+      cpsr::color_palette$pathogenicity$values[5]
   }
 }
 
@@ -91,7 +101,8 @@ if (n_benign > 0)
 
 # Secondary findings
 sf_enabled <- isTRUE(
-  as.logical(cps_report$settings$conf$variant_classification$secondary_findings)
+  as.logical(
+    cps_report$settings$conf$variant_classification$secondary_findings)
 )
 if (sf_enabled) {
   sf_genes_str <- "None"
@@ -157,12 +168,12 @@ cat(glue::glue(
 
 ```{r classification_cpsr_pdf}
 #| child: 'quarto/pdf/cpsr_classification_pdf.qmd'
-#| eval: !expr !isTRUE(no_content)
+#| eval: !expr isFALSE(no_content)
 ```
 
 ```{r secondary_findings_pdf}
 #| child: 'quarto/pdf/cpsr_secondary_findings_pdf.qmd'
-#| eval: !expr isTRUE(sf_enabled) && !isTRUE(no_content)
+#| eval: !expr isTRUE(sf_enabled) && isFALSE(no_content)
 ```
 
 ```{r settings_pdf}

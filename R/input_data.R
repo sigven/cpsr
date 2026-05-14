@@ -94,6 +94,11 @@ load_germline_snv_indel <- function(
           by = "ENTREZGENE")
 
       if(NROW(callset$bm_evidence$eitems) > 0){
+
+        ## Note: this will not have any effect on the
+        ## number of rows, considering that each row has
+        ## a unique evidence ID that is not collapsed here
+        ##
         callset$bm_evidence$eitems <-
           callset$bm_evidence$eitems |>
           dplyr::group_by(
