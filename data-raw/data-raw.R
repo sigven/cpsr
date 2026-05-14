@@ -650,11 +650,13 @@ usethis::use_data(acmg, overwrite = T)
 usethis::use_data(col_format_output, overwrite = T)
 
 # #---- create CPSR curated transcripts ----#
-#curated_transcripts <-
-#  data.frame('symbol' = 'MEN1', id = 'NM_130803.3')
-curated_transcripts <- data.frame(
-  'symbol' = c('MEN1',        'BAP1'),
-  id       = c('NM_130803.3', 'NM_004656.4')
+# MANE Select + MANE Plus Clinical NM_ accessions for all CPG genes (grch38
+# bundle), plus manually curated older accessions used by VEP/ClinVar on
+# GRCh37 where MANE annotations are absent.
+curated_transcripts <- utils::read.table(
+  file = "data-raw/curated_transcripts.tsv",
+  header = TRUE, stringsAsFactors = FALSE,
+  sep = "\t"
 )
 usethis::use_data(curated_transcripts, overwrite = T)
 

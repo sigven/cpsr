@@ -160,6 +160,13 @@ prepare_unified_all_variants <- function(
 
   all_variants <- all_variants |>
     dplyr::mutate(
+      ACMG_CODE = dplyr::if_else(
+        is.na(.data$ACMG_CODE) | .data$ACMG_CODE == "",
+        "—",
+        .data$ACMG_CODE
+      )
+    ) |>
+    dplyr::mutate(
       SEARCH_INDEX = stringr::str_replace_all(
         paste(
           pcgrr::strip_html(.data$PROTEIN_DOMAIN),
@@ -171,6 +178,7 @@ prepare_unified_all_variants <- function(
           .data$CLINVAR_PHENOTYPE,
           pcgrr::strip_html(.data$CLINVAR),
           GENOMIC_CHANGE,
+          .data$ACMG_CODE,
           sep = " "
         ),
         "NA ",""
