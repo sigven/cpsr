@@ -18,6 +18,8 @@ render_actble_bm_table(
 $main must contain ACTIONABILITY_TIER with values 1 and 2.}
 
 \item{variant_category}{One of "snv_indel", "cnv", "fusion"}
+
+\item{color_palette}{color palette for therapeutic biomarkers}
 }
 \value{
 A reactable object with the biomarker table

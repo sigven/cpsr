@@ -95,7 +95,10 @@ for(i in 1:NROW(ref_datasets)){
 
 Variants in the cancer predisposition gene set are classified through two complementary assertion authorities:
 
-- <b style="color:#e65100;">CPSR</b> — All coding variants are classified *de novo* by CPSR according to a <i>five-level pathogenicity scheme</i> (*CPSR_CLASSIFICATION*): pathogenic / likely pathogenic / VUS / likely benign / benign. The classification is rule-based, implementing a key subset of published **ACMG/AMP criteria**. Gene-level attributes relevant to pathogenicity assessment — including mode of inheritance and mechanism of disease (loss-of-function vs. gain-of-function) — are sourced from [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk/), [Maxwell et al., Am J Hum Genet, 2016](https://www.ncbi.nlm.nih.gov/pubmed/27153395), and [Huang et al., Cell, 2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052). Note also that some ACMG criteria have been accomodated with gene-specific recommendations - e.g. BA1/BS1 allele-specific thresholds (as specified in by [ClinGen VCEPs](https://cspec.genome.network/cspec/ui/svi/) for key cancer-predisposing genes).
+- <b style="color:#e65100;">CPSR</b> — All coding variants are classified *de novo* by CPSR according to a <i>five-level pathogenicity scheme</i> (*CPSR_CLASSIFICATION*): pathogenic / likely pathogenic / VUS / likely benign / benign. The classification is rule-based, implementing a key subset of published **ACMG/AMP criteria**. Gene-level attributes relevant to pathogenicity assessment — including mode of inheritance and mechanism of disease (loss-of-function vs. gain-of-function) — are sourced from [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk/), [Maxwell et al., Am J Hum Genet, 2016](https://www.ncbi.nlm.nih.gov/pubmed/27153395), and [Huang et al., Cell, 2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052). Importantly, note that some ACMG/AMP criteria have been accomodated with gene-specific recommendations:
+     * BA1/BS1/PM2 allele-specific thresholds (as specified in by [ClinGen VCEPs](https://cspec.genome.network/cspec/ui/svi/) for key cancer-predisposing genes, i.e. BRCA1/2, MMR genes, PALB2, APC, ATM, PTEN, TP53).
+     * PM4 - exceptions for TP53 and ATM
+     * PM1 - regional considerations for matching against TP53 and PTEN, and exceptions for PALB2, ATM, APC, MMR genes and BRCA1/2
 
 - <b style="color:#0277bd;">ClinVar</b> — For variants with an existing record in [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/), the ClinVar interpretation may override the CPSR-computed classification as the final reported verdict. Whether this override applies depends on the *clinvar_trust_level* setting: at higher trust levels, only classifications backed by expert panel review or multiple submitters with no conflicts are accepted; at lower trust levels, a broader set of ClinVar submissions is considered sufficient to override CPSR. If a variant's ClinVar record does not meet the configured trust threshold, the CPSR rule-based classification is retained as the final call.
 
@@ -118,10 +121,11 @@ In the table below, a detailed description of all evidence criteria that are cur
 #| echo: false
 #| eval: true
 
-data <- dplyr::filter(
-  cpsr::acmg[["evidence_codes"]],
-    cpsr_evidence_code != "ACMG_PP2" &
-    cpsr_evidence_code != "ACMG_PM4") |>
+data <- 
+  cpsr::acmg[["evidence_codes"]] |>
+    #dplyr::filter(
+    #cpsr_evidence_code != "ACMG_PP2" &
+    #cpsr_evidence_code != "ACMG_PM4") |>
   dplyr::select(-category) |>
   dplyr::rename(pole = pathogenicity_pole, 
                 category = category_long, 
@@ -183,6 +187,7 @@ The following thresholds are currently used to assign classifications based on p
 <br>
 
 Although the final CPSR pathogenicity score per variant is derived from a summation of matching evidence scores/weights, certain weights are downgraded in particular contexts. Specifically, the weight provided by supportive computational predictions (e.g. __PP3__, __BP4__) will not count towards the final pathogenicity score if no other weight is provided by other criteria.
+Also, if a variant has only a single (non-strong, i.e. moderate/supporting) pathogenic evidence criterion matching, yet that reaches CPSR's likely pathogenic threshold, it will be downgraded to a VUS, in order to avoid overclassification based on limited evidence (in line with ACMG/AMP guidelines).
 
 Note that the score thresholds above may be subject to change in future CPSR releases, as we continue to refine and optimize our classification algorithm based on emerging evidence and user feedback.
 

@@ -887,7 +887,7 @@ prep_biomarker_tbl <- function(
 #' @param rctbl_recs List with $main and $nested data frames.
 #'   $main must contain ACTIONABILITY_TIER with values 1 and 2.
 #' @param variant_category One of "snv_indel", "cnv", "fusion"
-#' @param color_palette
+#' @param color_palette color palette for therapeutic biomarkers
 #'
 #' @return A reactable object with the biomarker table
 #' @export
