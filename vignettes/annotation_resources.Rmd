@@ -28,6 +28,6 @@ output: rmarkdown::html_document
   * [CanVar UK](https://canvaruk.org/) - genes implicated with cancer susceptibility (v2.2)
 
 ### Phenotype ontologies
-  * [UMLS/MedGen](https://www.ncbi.nlm.nih.gov/medgen/) - January 2025
-  * [Disease Ontology](https://disease-ontology.org/) - February 2025
-  * [Experimental Factor Ontology](https://github.com/EBISPOT/efo) - v3.75.0
+  * [UMLS/MedGen](https://www.ncbi.nlm.nih.gov/medgen/) - March 2026
+  * [Disease Ontology](https://disease-ontology.org/) - February 2026
+  * [Experimental Factor Ontology](https://github.com/EBISPOT/efo) - v3.88.0
