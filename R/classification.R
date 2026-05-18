@@ -93,7 +93,7 @@ assign_acmg_evidence <- function(var_calls, settings, ref_data) {
 #' @return var_calls data frame with ACMG_CODE column appended
 #' @export
 #'
-assign_acmg_concensus <- function(
+assign_acmg_consensus <- function(
     var_calls = NULL){
 
   if (!is.data.frame(var_calls)) {
@@ -252,8 +252,12 @@ assign_classification_authority <-
       only_colnames = F,quiet = T
     )
 
-    clinvar_trust_level <- 1
-      #conf$variant_classification$clinvar_trust_level
+    clinvar_trust_level <- 0
+    if (!is.null(conf) &&
+        !is.null(conf$variant_classification) &&
+        !is.null(conf$variant_classification$clinvar_trust_level)) {
+      clinvar_trust_level <- conf$variant_classification$clinvar_trust_level
+    }
 
     stopifnot(
       is.numeric(clinvar_trust_level),
@@ -569,22 +573,22 @@ assign_BS1_evidence <- function(
           .data$SYMBOL == "TP53" &
             .data$gnomADj_FAF_GRPMAX > 0.0003 &
             .data$gnomADj_FAF_GRPMAX < 0.001 &
-            isFALSE(.data$ACMG_BA1) ~ TRUE,
+            .data$ACMG_BA1 == FALSE ~ TRUE,
           .data$SYMBOL == "BRCA1" &
             .data$gnomAD_NC_FAF_GRPMAX > 0.0001 &
-            isFALSE(.data$ACMG_BA1) ~ TRUE,
+            .data$ACMG_BA1 == FALSE ~ TRUE,
           .data$SYMBOL == "BRCA2" &
             .data$gnomAD_NC_FAF_GRPMAX > 0.0001 &
-            isFALSE(.data$ACMG_BA1) ~ TRUE,
+            .data$ACMG_BA1 == FALSE ~ TRUE,
           .data$SYMBOL == "PALB2" &
             .data$gnomAD_NC_FAF_GRPMAX > 0.0001 &
-            isFALSE(.data$ACMG_BA1) ~ TRUE,
+            .data$ACMG_BA1 == FALSE ~ TRUE,
           .data$SYMBOL == "ATM" &
             .data$gnomADj_FAF_GRPMAX > 0.0005 &
-            isFALSE(.data$ACMG_BA1) ~ TRUE,
+            .data$ACMG_BA1 == FALSE ~ TRUE,
           .data$SYMBOL == "APC" &
             .data$gnomAD_NC_FAF_GRPMAX >= 0.0001 &
-            isFALSE(.data$ACMG_BA1) ~ TRUE,
+            .data$ACMG_BA1 == FALSE ~ TRUE,
           .data$SYMBOL == "MLH1" &
             .data$gnomADj_FAF_GRPMAX >= 0.0001 &
             .data$gnomADj_FAF_GRPMAX < 0.001 ~ TRUE,
@@ -1520,7 +1524,7 @@ assign_PM1_evidence <- function(var_calls = NULL){
         ) |>
 
         ## Exclude cancer predisposition genes
-        ## that explicitly indicate throu their
+        ## that explicitly indicate through their
         ## Expert Panel Specifications that PM1
         ## is not applicable
         dplyr::mutate(
@@ -2139,7 +2143,7 @@ known_path_benign_sites <- function(
 
   known_sites[['pathogenic_nucleotide']] <-
     ref_data[['variant']][['clinvar_nuc_sites']] |>
-    dplyr::filter(.data$GOLD_STARS >= 2) |>
+    dplyr::filter(.data$GOLD_STARS >= min_gold_stars) |>
     dplyr::select(c("ENTREZGENE", "PATH_NUC_SITE",
                     "PATH_VAR_ID_NUC"))
 

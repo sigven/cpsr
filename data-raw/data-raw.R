@@ -1,7 +1,7 @@
 
 insilico_path_predictors <-
   c(
-    "DBNFSP_ALOFT",
+    "DBNSFP_ALOFT",
     "DBNSFP_ALPHA_MISSENSE",
     "DBNSFP_BAYESDEL_ADDAF",
     "DBNSFP_CLINPRED",

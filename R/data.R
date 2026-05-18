@@ -48,7 +48,7 @@
 
 #' Curated transcripts
 #'
-#' @format A data frame with curated transcripts for MEN1
+#' @format A data frame with curated canonical RefSeq transcript identifiers (grch37 support)
 #'
 "curated_transcripts"
 

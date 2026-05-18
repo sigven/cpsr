@@ -144,10 +144,18 @@ prepare_unified_all_variants <- function(
     cps_report[["content"]][["snv_indel"]]$callset$variant_display$cpg_non_sf
 
   required_cols <- c(
-    "ASSERTION_AUTHORITY", "CLASSIFICATION", "CLINVAR_GOLD_STARS",
-    "CPSR_PATHOGENICITY_SCORE", "SYMBOL", "GENOMIC_CHANGE", "ALTERATION",
-    "GERP_SCORE", "HGVSc", "HGVSp", "HGVSc_RefSeq", "CLINVAR_PHENOTYPE",
-    "CLINVAR", "PROTEIN_DOMAIN", "GENENAME", "CODING_STATUS"
+    "ASSERTION_AUTHORITY",
+    "CLASSIFICATION",
+    "CLINVAR_GOLD_STARS",
+    "CPSR_PATHOGENICITY_SCORE",
+    "SYMBOL", "GENOMIC_CHANGE",
+    "ALTERATION",
+    "GERP_SCORE", "HGVSc",
+    "HGVSp", "HGVSc_RefSeq",
+    "CLINVAR_PHENOTYPE",
+    "CLINVAR", "PROTEIN_DOMAIN",
+    "GENENAME", "CODING_STATUS",
+    "ACMG_CODE","PROTEIN_CHANGE"
   )
 
   if (is.null(all_variants) ||
@@ -674,7 +682,7 @@ prep_biomarker_tbl <- function(
 
   if (NROW(vars) == 0) {
     pcgrr::log4r_info(
-      paste0("No tier ", paste(tier, collapse = "/"), " variants found."))
+      paste0("No bioimarker variants found."))
     return(list(main = data.frame(), nested = data.frame()))
   }
 
@@ -889,11 +897,10 @@ prep_biomarker_tbl <- function(
 
 
 #' Build biomarker reactable with category-aware styling
-#' Combines tier 1 and tier 2 records in one table.
-#' Header uses tier 1 color; THERAPY_MATCH cell background
-#' reflects the row's tier (1 or 2).
-#' @param rctbl_recs List with $main and $nested data frames.
-#'   $main must contain ACTIONABILITY_TIER with values 1 and 2.
+#'
+#' @param rctbl_recs List with $main and $nested data frames
+#'   containing prepared biomarker table records, for example as
+#'   returned by [prep_biomarker_tbl()].
 #' @param variant_category One of "snv_indel", "cnv", "fusion"
 #' @param color_palette color palette for therapeutic biomarkers
 #'

@@ -27,7 +27,9 @@ append_cpg_properties <- function(cpg_calls, ref_data = NULL){
     }
   }
 
-  cpg_calls[,"POPMAX_AF_GNOMAD_PATH"] <- NULL
+  if("POPMAX_AF_GNOMAD_PATH" %in% colnames(cpg_calls)){
+    cpg_calls[, "POPMAX_AF_GNOMAD_PATH"] <- NULL
+  }
 
   gene_pathogenic_af_range_properties <-
     ref_data[['gene']][['cpg_pathogenic_range']] |>

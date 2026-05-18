@@ -80,7 +80,7 @@ if (NROW(variants_cpg) > 0) {
 
   path_genes <- cps_report$content$snv_indel$callset$variant$cpg_non_sf |>
     dplyr::filter(
-      CLASSIFICATION %in% c("Pathogenic", "Likely_Pathogenic")) |>
+      CLASSIFICATION %in% c("Pathogenic", "Likely Pathogenic")) |>
     dplyr::distinct(SYMBOL) |>
     utils::head(3)
 

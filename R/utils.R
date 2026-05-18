@@ -170,7 +170,7 @@ retrieve_secondary_calls <- function(calls) {
     ## only LOF for TTN
     dplyr::filter(.data$SYMBOL != "TTN" |
       (.data$SYMBOL == "TTN" &
-        isTRUE(.data$LOSS_OF_FUNCTION))) |>
+        .data$LOSS_OF_FUNCTION == TRUE)) |>
     ## only homozygotes p.Cys282Tyr HFE carriers
     dplyr::filter(.data$SYMBOL != "HFE" |
       (.data$SYMBOL == "HFE" &
@@ -251,10 +251,10 @@ retrieve_pgx_calls <- function(calls) {
         .data$PRIMARY_TARGET == FALSE &
         !is.na(.data$ASSERTION_AUTHORITY) &
         .data$ASSERTION_AUTHORITY == "ClinVar" &
-        !is.na(.data$CLINVAR_CLASSIFICATION) &
+        !is.na(.data$CLASSIFICATION) &
         stringr::str_detect(
           tolower(
-            .data$CLINVAR_CLASSIFICATION), "drug|pathogenic"
+            .data$CLASSIFICATION), "drug|pathogenic"
         )
     ) |>
     dplyr::filter(

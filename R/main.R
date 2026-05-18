@@ -40,7 +40,7 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
     callset_cpsr[["bm_evidence"]]$eitems
 
   col_format_output <- cpsr::col_format_output
-  for (f in c("report_tbl_tier", "tsv")) {
+  for (f in c("report_tbl_classification", "tsv")) {
     col_format_output[[f]] <- c(
       col_format_output[[f]],
       conf[["variant_classification"]][["vcftag_gnomad_AF"]]
@@ -58,8 +58,8 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
           col_format_output[["tsv"]],
           t
         )
-        col_format_output[["report_tbl_tier"]] <- c(
-          col_format_output[["report_tbl_tier"]],
+        col_format_output[["report_tbl_classification"]] <- c(
+          col_format_output[["report_tbl_classification"]],
           t
         )
       } else {

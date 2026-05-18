@@ -56,7 +56,7 @@ load_germline_snv_indel <- function(
       cpsr::assign_acmg_evidence(
         ref_data = ref_data,
         settings = settings) |>
-      cpsr::assign_acmg_concensus() |>
+      cpsr::assign_acmg_consensus() |>
       cpsr::is_clinvar_cancer_phenotype(
         ref_data = ref_data
       ) |>
