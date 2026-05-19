@@ -13,7 +13,7 @@ pgx_genotypes_unavailable <- !(as.logical(
 ```
 
 ```{r pgx_gt_unavailable}
-#| eval: !expr pgx_genotypes_unavailable
+#| eval: !expr pgx_genotypes_unavailable == TRUE
 #| output: asis
 #| echo: false
 
@@ -26,47 +26,14 @@ cat("::: {.callout-warning}\n## Warning - genotype data missing\n\n*Pharmacogene
 
 ```{r pgx_cancer}
 #| eval: !expr tot_pgx_variants > 0
-#| output: asis
 #| echo: false
 
 htmltools::br()
-htmltools::br()
 
-pgx_vars <- 
-  crosstalk::SharedData$new(
-    cps_report[["content"]][["snv_indel"]]$callset$variant_display$pgx)
-crosstalk::bscols(
-    crosstalk::filter_select("SYMBOL", "Gene", pgx_vars, ~SYMBOL),
-    crosstalk::filter_select("GENOTYPE", "Genotype", pgx_vars, ~GENOTYPE)
+cpsr::create_clinvar_reactable(
+  data = cps_report[["content"]][["snv_indel"]]$callset$variant_display$pgx,
+  color_palette = cpsr::color_palette
 )
 
-DT::datatable(
-  pgx_vars,
-  escape = F, extensions = c("Buttons", "Responsive"),
-  options = list(
-    pageLength = 6,
-    buttons = c("csv", "excel"),
-    dom = "Bfrtip",
-    initComplete = DT::JS(
-      "function(settings, json) {",
-      paste0(
-        "$(this.api().table().header()).css({'background-color':'",
-        cpsr::color_palette[['report']],
-        "', 'color': '#fff'});"),
-      "}"
-    )
-  )) |>
-  DT::formatStyle(
-    color = "white",
-    "GENOTYPE",
-    "GENOTYPE",
-    backgroundColor = 
-      DT::styleEqual(
-        cpsr::color_palette[['genotypes']][['levels']],
-        cpsr::color_palette[['genotypes']][['values']]
-      )
-  )
-
-htmltools::br()
 htmltools::br()
 ```

@@ -45,3 +45,16 @@
 #' @format a character (color code)
 #'
 "report_color"
+
+#' Curated transcripts
+#'
+#' @format A data frame with curated canonical RefSeq transcript identifiers (grch37 support)
+#'
+"curated_transcripts"
+
+#' Insilico protein impact prediction methods
+#'
+#' @format A character vector with names of insilico protein impact prediction methods
+#' used in CPSR (from dbNSFP)
+#'
+"insilico_path_predictors"

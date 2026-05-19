@@ -34,13 +34,13 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
 
   cps_report$content$snv_indel[["callset"]]$retained_info_tags <-
     callset_cpsr[["retained_info_tags"]]
-  cps_report$content$snv_indel[["callset"]]$biomarker_evidence <-
-    callset_cpsr[["biomarker_evidence"]]
-  cps_report$content$snv_indel[["callset"]]$variant$bm <-
-    callset_cpsr[["biomarker_evidence"]]$items
+  cps_report$content$snv_indel[["callset"]]$bm_evidence <-
+    callset_cpsr[["bm_evidence"]]
+  cps_report$content$snv_indel[["callset"]]$variant$biomarker <-
+    callset_cpsr[["bm_evidence"]]$eitems
 
   col_format_output <- cpsr::col_format_output
-  for (f in c("html_tier", "tsv")) {
+  for (f in c("report_tbl_classification", "tsv")) {
     col_format_output[[f]] <- c(
       col_format_output[[f]],
       conf[["variant_classification"]][["vcftag_gnomad_AF"]]
@@ -52,13 +52,14 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
       cps_report$content$snv_indel[["callset"]]$retained_info_tags,
       pattern = ",")[[1]]
     for (t in tags) {
-      if (t %in% colnames(cps_report$content$snv_indel[["callset"]]$variant$cpg_non_sf)) {
+      if (t %in% colnames(
+        cps_report$content$snv_indel[["callset"]]$variant$cpg_non_sf)) {
         col_format_output[["tsv"]] <- c(
           col_format_output[["tsv"]],
           t
         )
-        col_format_output[["html_tier"]] <- c(
-          col_format_output[["html_tier"]],
+        col_format_output[["report_tbl_classification"]] <- c(
+          col_format_output[["report_tbl_classification"]],
           t
         )
       } else {
@@ -74,8 +75,8 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
       conf = conf
     )
 
-  ## Exclude non-coding variants (if option set by user)
-  if (conf$other$show_noncoding == F) {
+  ## Exclude non-coding variants by default (if not option set by user)
+  if (isFALSE(conf$other$show_noncoding)) {
     cps_report$content$snv_indel[["callset"]]$variant$cpg_non_sf <-
       cps_report$content$snv_indel[["callset"]]$variant$cpg_non_sf |>
       cpsr::exclude_vars_noncoding(
@@ -114,26 +115,23 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
   }
 
   ## get call statistics for different variant categories
-  for(cat in c('all','cpg_non_sf','sf','pgx','bm')){
+  for(cat in c('all','cpg_non_sf','sf','pgx')){
     stat_name <- paste0('v_stat_',cat)
     if (NROW(cps_report$content$snv_indel[["callset"]]$variant[[cat]]) > 0) {
-      target_callset <- list()
-      target_callset[['variant']] <-
-        cps_report$content$snv_indel[["callset"]]$variant[[cat]]
       cps_report$content$snv_indel[[stat_name]] <-
-        pcgrr::variant_stats_report(
-          callset = target_callset,
-          name = stat_name
-        )[[stat_name]]
+        pcgrr::stats_report_germline(
+          var_df = cps_report$content$snv_indel[["callset"]]$variant[[cat]]
+        )
     }
   }
 
-  pcgrr::log4r_info(
-    paste0(
-      "Total number of variants in target cancer predisposition genes: ",
-      "N = ", cps_report$content$snv_indel[["v_stat_cpg_non_sf"]][["n"]]
-    )
-  )
+  if(NROW(cps_report$content$snv_indel[["callset"]]$variant$biomarker) > 0){
+    cps_report$content$snv_indel[['v_stat_biomarker']] <-
+      pcgrr::stats_report_germline(
+        var_df = cps_report$content$snv_indel[["callset"]]$variant$biomarker
+      )
+  }
+
   pcgrr::log4r_info(
     paste0(
       "Number of coding variants in target cancer predisposition genes: ",
@@ -142,7 +140,7 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
   )
   pcgrr::log4r_info(
     paste0(
-      "Number of non-coding variants in cancer predisposition genes: ",
+      "Number of non-coding variants in target cancer predisposition genes: ",
       "N = ", cps_report$content$snv_indel[["v_stat_cpg_non_sf"]][["n_noncoding"]]
     )
   )
@@ -193,7 +191,7 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
   pcgrr::log4r_info(
     "Generating hyperlinked annotations for output data tables"
   )
-  for (c in c("sf", "cpg_non_sf", "gwas", "bm", "pgx")) {
+  for (c in c("sf", "cpg_non_sf", "gwas", "biomarker", "pgx")) {
     if (NROW(
       cps_report$content$snv_indel[["callset"]]$variant[[c]]) > 0) {
       cps_report$content$snv_indel[["callset"]]$variant_display[[c]] <-
@@ -203,21 +201,24 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
         ) |>
         pcgrr::append_dbnsfp_var_link() |>
         pcgrr::append_annotation_links() |>
-        pcgrr::append_dbmts_var_link()
+        pcgrr::append_dbmts_var_link() |>
+        dplyr::mutate(
+          CONSEQUENCE = stringr::str_replace_all(
+            .data$CONSEQUENCE,"&",", "))
 
       if (c != "all") {
-        col_format <- col_format_output$html_tier
+        col_format <- col_format_output$report_tbl_classification
         if (c == "sf") {
-          col_format <- col_format_output$html_sf
+          col_format <- col_format_output$report_tbl_sf
         }
         if (c == "gwas") {
-          col_format <- col_format_output$html_gwas
+          col_format <- col_format_output$report_tbl_gwas
         }
-        if (c == "bm") {
-          col_format <- col_format_output$html_bm
+        if (c == "biomarker") {
+          col_format <- col_format_output$report_tbl_biomarker
         }
         if (c == "pgx") {
-          col_format <- col_format_output$html_pgx
+          col_format <- col_format_output$report_tbl_pgx
         }
         cps_report$content$snv_indel[["callset"]]$variant_display[[c]] <-
           dplyr::select(
@@ -238,11 +239,18 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
 #'
 #' @param report List object with all report data (CPSR), settings etc.
 #' @param output_format file format of output
-#' (html//tsv/xlsx etc)
+#' (html//tsv/xlsx/pdf)
 
 #' @export
 write_cpsr_output <- function(report,
                               output_format = "html") {
+
+  if(is.null(report)){
+    ## log to console about report generation - report is NULL
+    pcgrr::log4r_info("Report is NULL - no output files written")
+    return(NULL)
+  }
+
   settings <- report[["settings"]]
   output_dir <- settings[["output_dir"]]
   sample_name <- settings[["sample_id"]]
@@ -260,7 +268,7 @@ write_cpsr_output <- function(report,
         ".classification.tsv.gz"
       )
     )
-  fnames[["tsv_bm"]] <-
+  fnames[["tsv_biomarker"]] <-
     file.path(
       output_dir,
       paste0(
@@ -292,6 +300,11 @@ write_cpsr_output <- function(report,
       output_dir,
       paste0(sample_fname_pattern, ".html")
     )
+  fnames[["pdf"]] <-
+    file.path(
+      output_dir,
+      paste0(sample_fname_pattern, ".pdf")
+    )
 
   ## Path to CPSR reporting templates
   templates_dir <- "templates"
@@ -302,7 +315,7 @@ write_cpsr_output <- function(report,
   )
 
   if (output_format == "html") {
-    if (report$content$snv_indel$v_stat_cpg_non_sf$n < 15000) {
+    if (report$content$snv_indel$v_stat_cpg_non_sf$n < 150000) {
       if (file.exists(quarto_input)) {
         ## make temporary directory for quarto report rendering
         tmp_quarto_dir1 <- file.path(
@@ -408,8 +421,8 @@ write_cpsr_output <- function(report,
       )
     }
     ## Biomarker TSV
-    if (NROW(report$content$snv_indel$callset$variant$bm) > 0) {
-      biomarker_tsv <- report$content$snv_indel$callset$variant$bm |>
+    if (NROW(report$content$snv_indel$callset$variant$biomarker) > 0) {
+      biomarker_tsv <- report$content$snv_indel$callset$variant$biomarker |>
         dplyr::mutate(
           BM_MOLECULAR_PROFILE = pcgrr::strip_html(
             .data$BM_MOLECULAR_PROFILE
@@ -429,7 +442,7 @@ write_cpsr_output <- function(report,
       )
       readr::write_tsv(
         biomarker_tsv,
-        file = fnames[["tsv_bm"]],
+        file = fnames[["tsv_biomarker"]],
         col_names = T,
         quote = "none",
         na = "."
@@ -477,7 +490,11 @@ write_cpsr_output <- function(report,
           dplyr::any_of(
             cpsr::col_format_output[["xlsx_panel"]]
           )
-        ),
+        ) |>
+          dplyr::mutate(dplyr::across(
+            dplyr::where(is.character),
+            ~ dplyr::na_if(.x, "nan")
+          )),
         start_row = 1,
         start_col = 1,
         col_names = TRUE,
@@ -539,8 +556,8 @@ write_cpsr_output <- function(report,
         )
     }
 
-    if (NROW(report$content$snv_indel$callset$variant$bm) > 0) {
-      bm_excel <- report$content$snv_indel$callset$variant$bm |>
+    if (NROW(report$content$snv_indel$callset$variant$biomarker) > 0) {
+      bm_excel <- report$content$snv_indel$callset$variant$biomarker |>
         dplyr::mutate(
           BM_MOLECULAR_PROFILE = pcgrr::strip_html(
             .data$BM_MOLECULAR_PROFILE
@@ -570,13 +587,13 @@ write_cpsr_output <- function(report,
         )
     }
 
-    if (NROW(report[["content"]]$snv_indel$callset$variant$pgx) > 0) {
+    if (NROW(report$content$snv_indel$callset$variant$pgx) > 0) {
       workbook <- workbook |>
         openxlsx2::wb_add_worksheet(sheet = "PHARMACOGENETIC_FINDINGS") |>
         openxlsx2::wb_add_data_table(
           sheet = "PHARMACOGENETIC_FINDINGS",
           x = dplyr::select(
-            report[["content"]]$snv_indel$callset$variant$pgx,
+            report$content$snv_indel$callset$variant$pgx,
             dplyr::any_of(
               cpsr::col_format_output[["xlsx_pgx"]]
             )
@@ -600,5 +617,79 @@ write_cpsr_output <- function(report,
       fnames[["xlsx"]],
       overwrite = TRUE
     )
+  }
+
+  if (output_format == "pdf") {
+    quarto_input_pdf <- file.path(
+      cpsr_rep_template_path, "cpsr_report_pdf.qmd"
+    )
+
+    if (file.exists(quarto_input_pdf)) {
+      ## Temporary directory — same pattern as HTML rendering
+      tmp_quarto_dir1 <- file.path(
+        output_dir,
+        paste0("quarto_", stringi::stri_rand_strings(1, 15))
+      )
+      pcgrr::mkdir(tmp_quarto_dir1)
+      system2("cp", args = c("-r", shQuote(cpsr_rep_template_path), shQuote(tmp_quarto_dir1)))
+      tmp_quarto_dir <- file.path(tmp_quarto_dir1, templates_dir)
+
+      quarto_main_template_pdf <- file.path(tmp_quarto_dir, "cpsr_report_pdf.qmd")
+      quarto_main_template_pdf_sample <- file.path(tmp_quarto_dir, "cpsr_report_pdf_sample.qmd")
+      quarto_pdf <- file.path(tmp_quarto_dir, "cpsr_report_pdf_sample.pdf")
+
+      ## Save report object (strip heavy ref_data before persisting)
+      rds_report_path <- file.path(tmp_quarto_dir, "cps_report.rds")
+      report$ref_data <- NULL
+      saveRDS(report, file = rds_report_path)
+
+      ## Substitute the RDS placeholder in the PDF template
+      readLines(quarto_main_template_pdf) |>
+        stringr::str_replace(
+          pattern = "<CPSR_REPORT_OBJECT.rds>",
+          replacement = rds_report_path
+        ) |>
+        writeLines(con = quarto_main_template_pdf_sample)
+
+      pcgrr::log4r_info("------")
+      pcgrr::log4r_info(
+        paste0(
+          "Generating Typst-based focused PDF report ",
+          "(.pdf) with variant findings"
+        )
+      )
+
+      quarto::quarto_render(
+        input = quarto_main_template_pdf_sample,
+        output_format = "typst",
+        execute_dir = tmp_quarto_dir,
+        quiet = !report$settings$conf$debug
+      )
+
+      ## Move rendered PDF to the designated output path
+      if (file.exists(quarto_pdf)) {
+        file.copy(quarto_pdf, fnames[["pdf"]], overwrite = TRUE)
+      } else {
+        pcgrr::log4r_warn(
+          paste0(
+            "PDF rendering appeared to complete but output file was not found: ",
+            quarto_pdf
+          )
+        )
+      }
+
+      ## Clean up temp dir unless debug mode is on
+      if (!settings$conf$debug) {
+        unlink(c(tmp_quarto_dir, tmp_quarto_dir1), force = TRUE, recursive = TRUE)
+      }
+      pcgrr::log4r_info("------")
+    } else {
+      pcgrr::log4r_warn(
+        paste0(
+          "PDF template not found at: ", quarto_input_pdf,
+          " — skipping PDF generation"
+        )
+      )
+    }
   }
 }

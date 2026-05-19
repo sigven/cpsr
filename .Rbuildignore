@@ -1,6 +1,6 @@
 ^cpsr\.Rproj$
 ^\.Rproj\.user$
-^\.bumpversion\.cfg$
+^\.bumpversion\.toml$
 ^\.github$
 ^examples
 ^data-raw$
@@ -12,3 +12,5 @@
 ^_pkgdown\.yml$
 ^\.pre-commit-config\.yaml$
 ^vignettes$
+^\.positai$
+^\.claude$

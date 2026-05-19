@@ -25,11 +25,11 @@ get_max_rows_pr_datatable <- function(cps_report) {
         t1 <- cps_report[["content"]][["snv_indel"]][["disp"]][[c]]
         num_rows_clinvar <- t1 |>
           dplyr::filter(
-            .data$CPSR_CLASSIFICATION_SOURCE == "ClinVar") |>
+            .data$ASSERTION_AUTHORITY == "ClinVar") |>
           nrow()
         num_rows_other <- t1 |>
           dplyr::filter(
-            .data$CPSR_CLASSIFICATION_SOURCE == "CPSR_ACMG") |>
+            .data$ASSERTION_AUTHORITY == "CPSR") |>
           nrow()
         if (num_rows_other > max_row_nr) {
           max_row_nr <- num_rows_other
@@ -56,40 +56,16 @@ get_insilico_prediction_statistics <- function(cpg_calls) {
     "Summarising insilico variant effect predictions (dbNSFP)"
   )
 
-
-  insilico_pathogenicity_pred_algos <-
-    c(
-      "DBNSFP_SIFT",
-      "DBNSFP_PROVEAN",
-      "DBNSFP_META_RNN",
-      "DBNSFP_MUTATIONTASTER",
-      "DBNSFP_DEOGEN2",
-      "DBNSFP_PRIMATEAI",
-      "DBNSFP_PHACTBOOST",
-      "DBNSFP_ESM1B",
-      "DBNSFP_MUTATIONASSESSOR",
-      "DBNSFP_CLINPRED",
-      "DBNSFP_MUTFORMER",
-      "DBNSFP_ALPHA_MISSENSE",
-      "DBNSFP_POLYPHEN2_HVAR",
-      "DBNSFP_FATHMM_XF",
-      "DBNSFP_M_CAP",
-      "DBNSFP_LIST_S2",
-      "DBNSFP_BAYESDEL_ADDAF",
-      "DBNSFP_SPLICE_SITE_ADA",
-      "DBNSFP_SPLICE_SITE_RF"
-    )
   for (v in c(
     "CALLED",
     "DAMAGING",
     "TOLERATED",
     "SPLICING_NEUTRAL",
-    "SPLICING_AFFECTED"
-  )) {
+    "SPLICING_AFFECTED")) {
     cpg_calls[, paste0("N_INSILICO_", v)] <- 0
   }
 
-  for (algo in insilico_pathogenicity_pred_algos) {
+  for (algo in cpsr::insilico_path_predictors) {
     if (algo %in% colnames(cpg_calls)) {
       cpg_calls[!is.na(cpg_calls[, algo]) &
         cpg_calls[, algo] != ".", "N_INSILICO_CALLED"] <-
@@ -153,8 +129,9 @@ retrieve_secondary_calls <- function(calls) {
     calls,
     colnames = c(
       "CPG_SOURCE",
-      "FINAL_CLASSIFICATION",
-      "CPSR_CLASSIFICATION_SOURCE",
+      "CLASSIFICATION",
+      "ASSERTION_AUTHORITY",
+      "CLINVAR_GOLD_STARS",
       "PRIMARY_TARGET",
       "GENOTYPE",
       "SYMBOL",
@@ -173,11 +150,11 @@ retrieve_secondary_calls <- function(calls) {
         !is.na(.data$CPG_SOURCE) &
         stringr::str_detect(.data$CPG_SOURCE, "ACMG_SF") &
         .data$PRIMARY_TARGET == FALSE &
-        !is.na(.data$CPSR_CLASSIFICATION_SOURCE) &
-        .data$CPSR_CLASSIFICATION_SOURCE == "ClinVar" &
-        !is.na(.data$FINAL_CLASSIFICATION) &
+        !is.na(.data$ASSERTION_AUTHORITY) &
+        .data$ASSERTION_AUTHORITY == "ClinVar" &
+        !is.na(.data$CLASSIFICATION) &
         stringr::str_detect(
-          .data$FINAL_CLASSIFICATION, "Pathogenic"
+          .data$CLASSIFICATION, "Pathogenic"
         )
     ) |>
     dplyr::filter(
@@ -193,7 +170,7 @@ retrieve_secondary_calls <- function(calls) {
     ## only LOF for TTN
     dplyr::filter(.data$SYMBOL != "TTN" |
       (.data$SYMBOL == "TTN" &
-        .data$LOSS_OF_FUNCTION == T)) |>
+        .data$LOSS_OF_FUNCTION == TRUE)) |>
     ## only homozygotes p.Cys282Tyr HFE carriers
     dplyr::filter(.data$SYMBOL != "HFE" |
       (.data$SYMBOL == "HFE" &
@@ -248,8 +225,8 @@ retrieve_pgx_calls <- function(calls) {
     calls,
     colnames = c(
       "CPG_SOURCE",
-      "FINAL_CLASSIFICATION",
-      "CPSR_CLASSIFICATION_SOURCE",
+      "CLASSIFICATION",
+      "ASSERTION_AUTHORITY",
       "PRIMARY_TARGET",
       "GENOTYPE",
       "SYMBOL",
@@ -257,7 +234,7 @@ retrieve_pgx_calls <- function(calls) {
       "LOSS_OF_FUNCTION",
       "PROTEIN_CHANGE",
       "CLINVAR_PHENOTYPE",
-      "CLINVAR_REVIEW_STATUS_STARS",
+      "CLINVAR_GOLD_STARS",
       "CLINVAR_NUM_SUBMITTERS"
     ),
     only_colnames = F, quiet = T
@@ -272,12 +249,12 @@ retrieve_pgx_calls <- function(calls) {
         !is.na(.data$CPG_SOURCE) &
         stringr::str_detect(.data$CPG_SOURCE, "CPIC_PGX_ONCOLOGY") &
         .data$PRIMARY_TARGET == FALSE &
-        !is.na(.data$CPSR_CLASSIFICATION_SOURCE) &
-        .data$CPSR_CLASSIFICATION_SOURCE == "ClinVar" &
-        !is.na(.data$CLINVAR_CLASSIFICATION) &
+        !is.na(.data$ASSERTION_AUTHORITY) &
+        .data$ASSERTION_AUTHORITY == "ClinVar" &
+        !is.na(.data$CLASSIFICATION) &
         stringr::str_detect(
           tolower(
-            .data$CLINVAR_CLASSIFICATION), "drug|pathogenic"
+            .data$CLASSIFICATION), "drug|pathogenic"
         )
     ) |>
     dplyr::filter(
@@ -290,7 +267,7 @@ retrieve_pgx_calls <- function(calls) {
   }else{
     pgx_calls <- pgx_calls |>
       dplyr::arrange(
-        dplyr::desc(.data$CLINVAR_REVIEW_STATUS_STARS),
+        dplyr::desc(.data$CLINVAR_GOLD_STARS),
         dplyr::desc(.data$CLINVAR_NUM_SUBMITTERS))
 
     clinvar_phenotypes <- pgx_calls |>
@@ -340,31 +317,71 @@ retrieve_pgx_calls <- function(calls) {
 #' @param ref_data object with PCGR/CPSR reference data
 #'
 #' @export
-check_variant2cancer_phenotype <- function(cpg_calls, ref_data) {
+is_clinvar_cancer_phenotype <- function(cpg_calls, ref_data) {
   oncotree <- ref_data[["phenotype"]][["oncotree"]]
   umls_map <- ref_data[["phenotype"]][["umls"]] |>
     dplyr::filter(.data$MAIN_TERM == TRUE) |>
+    dplyr::mutate(CUI_NAME_LC = tolower(.data$CUI_NAME)) |>
     dplyr::select(-c("SOURCE")) |>
     dplyr::distinct()
 
   if (nrow(cpg_calls) > 0 &
     "CLINVAR_UMLS_CUI" %in% colnames(cpg_calls) &
+    "CLINVAR_TRAITS" %in% colnames(cpg_calls) &
     "VAR_ID" %in% colnames(cpg_calls)) {
     oncotree <- oncotree |>
       dplyr::select("CUI") |>
-      dplyr::mutate(CANCER_PHENOTYPE = 1) |>
+      dplyr::mutate(CLINVAR_PHENOTYPE_CANCER = 1) |>
       dplyr::distinct()
 
-    n_clinvar <- cpg_calls |>
+    n_clinvar_with_cui <- cpg_calls |>
       dplyr::filter(!is.na(.data$CLINVAR_UMLS_CUI)) |>
-      nrow()
+      NROW()
 
-    if (n_clinvar > 0) {
+    n_clinvar_with_trait_only <-
+      cpg_calls |>
+      dplyr::filter(
+        is.na(.data$CLINVAR_UMLS_CUI) &
+          !is.na(.data$CLINVAR_TRAITS)
+      ) |>
+      NROW()
+
+    cpg_calls_traits <- data.frame()
+    cpg_calls_trait_only <- data.frame()
+
+    ## Handle variants with traits but no CUIs separately
+    if(n_clinvar_with_trait_only > 0){
+      cpg_calls_trait_only <-
+        cpg_calls |>
+        dplyr::filter(
+          is.na(.data$CLINVAR_UMLS_CUI) &
+            !is.na(.data$CLINVAR_TRAITS)
+        ) |>
+        dplyr::select(c("VAR_ID", "CLINVAR_TRAITS")) |>
+        dplyr::mutate(CLINVAR_PHENOTYPE_CANCER = dplyr::if_else(
+          stringr::str_detect(
+            tolower(.data$CLINVAR_TRAITS),
+            pcgrr::cancer_phenotypes_regex),
+          as.integer(1),
+          as.integer(0)
+        )) |>
+        dplyr::group_by(.data$VAR_ID) |>
+        dplyr::summarise(
+          CLINVAR_PHENOTYPE = paste(
+            unique(.data$CLINVAR_TRAITS),
+            collapse = "; "
+          ),
+          CLINVAR_PHENOTYPE_CANCER = max(
+            .data$CLINVAR_PHENOTYPE_CANCER, na.rm = TRUE),
+          .groups = "drop"
+        )
+    }
+
+    ## Handle variants with CUIs
+    if (n_clinvar_with_cui > 0) {
       cpg_calls_traits <- as.data.frame(
         tidyr::separate_rows(
-          cpg_calls, "CLINVAR_UMLS_CUI",
-          sep = ","
-        ) |>
+          cpg_calls, "CLINVAR_UMLS_CUI", sep = ",") |>
           dplyr::select(c("VAR_ID", "CLINVAR_UMLS_CUI")) |>
           dplyr::left_join(
             umls_map,
@@ -379,14 +396,14 @@ check_variant2cancer_phenotype <- function(cpg_calls, ref_data) {
             relationship = "many-to-many"
           ) |>
           dplyr::mutate(
-            CANCER_PHENOTYPE = dplyr::if_else(
-              is.na(.data$CANCER_PHENOTYPE),
+            CLINVAR_PHENOTYPE_CANCER = dplyr::if_else(
+              is.na(.data$CLINVAR_PHENOTYPE_CANCER),
               as.integer(0),
-              as.integer(.data$CANCER_PHENOTYPE)
+              as.integer(.data$CLINVAR_PHENOTYPE_CANCER)
             )
           ) |>
           dplyr::mutate(
-            CANCER_PHENOTYPE =
+            CLINVAR_PHENOTYPE_CANCER =
               dplyr::if_else(
                 !is.na(.data$CUI_NAME) &
                   stringr::str_detect(
@@ -394,7 +411,7 @@ check_variant2cancer_phenotype <- function(cpg_calls, ref_data) {
                     pcgrr::cancer_phenotypes_regex
                   ),
                 as.integer(1),
-                as.integer(.data$CANCER_PHENOTYPE)
+                as.integer(.data$CLINVAR_PHENOTYPE_CANCER)
               )
           ) |>
           dplyr::group_by(.data$VAR_ID) |>
@@ -403,27 +420,38 @@ check_variant2cancer_phenotype <- function(cpg_calls, ref_data) {
               unique(.data$CUI_NAME),
               collapse = "; "
             ),
-            CANCER_PHENOTYPE = max(.data$CANCER_PHENOTYPE),
+            CLINVAR_PHENOTYPE_CANCER = max(
+              .data$CLINVAR_PHENOTYPE_CANCER, na.rm = TRUE),
             .groups = "drop"
-          ) |>
-          dplyr::mutate(
-            CANCER_PHENOTYPE =
-              dplyr::if_else(
-                stringr::str_detect(
-                  .data$CLINVAR_PHENOTYPE,
-                  "^(not specified; not provided|not specified|not provided)"
-                ),
-                as.integer(1),
-                as.integer(.data$CANCER_PHENOTYPE)
-              )
           )
       )
+    }
+
+    if(NROW(cpg_calls_trait_only) > 0 | NROW(cpg_calls_traits) > 0){
+      cpg_calls_traits <- dplyr::bind_rows(
+        cpg_calls_traits,
+        cpg_calls_trait_only) |>
+        dplyr::mutate(
+          CLINVAR_PHENOTYPE_CANCER = dplyr::if_else(
+            is.na(.data$CLINVAR_PHENOTYPE_CANCER),
+            as.integer(0),
+            as.integer(.data$CLINVAR_PHENOTYPE_CANCER)
+          )
+        )
 
       cpg_calls <- cpg_calls |>
-        dplyr::left_join(cpg_calls_traits, by = "VAR_ID")
+        dplyr::left_join(
+          cpg_calls_traits, by = "VAR_ID") |>
+        dplyr::mutate(
+          CLINVAR_PHENOTYPE_CANCER = dplyr::if_else(
+            is.na(.data$CLINVAR_PHENOTYPE_CANCER),
+            as.integer(0),
+            as.integer(.data$CLINVAR_PHENOTYPE_CANCER)
+          )
+        )
     } else {
       cpg_calls$CLINVAR_PHENOTYPE <- NA
-      cpg_calls$CANCER_PHENOTYPE <- NA
+      cpg_calls$CLINVAR_PHENOTYPE_CANCER <- NA
     }
   }
   return(cpg_calls)
