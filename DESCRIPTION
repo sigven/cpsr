@@ -38,6 +38,7 @@ Imports:
     glue,
     htmltools,
     openxlsx2,
+    reactable,
     pcgrr,
     quarto,
     readr,
