@@ -43,4 +43,4 @@ As of September 2025, based on a calibration against ClinVar-classified variants
 
 <br>
 
-![](../img/cpsr_classification.png)
+![cpsr classification](../img/cpsr_classification.png)
