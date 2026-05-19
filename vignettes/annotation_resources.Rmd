@@ -4,7 +4,7 @@ output: rmarkdown::html_document
 ---
 
 ### Basic variant consequence annotation
-  * [VEP v115](http://www.ensembl.org/info/docs/tools/vep/index.html) - Variant Effect Predictor ([GENCODE v49(https://www.gencodegenes.org/human/) as gene reference database (v19 for grch37))
+  * [VEP v115](http://www.ensembl.org/info/docs/tools/vep/index.html) - Variant Effect Predictor ([GENCODE v49](https://www.gencodegenes.org/human/) as gene reference database (v19 for grch37))
 
 ###  *Insilico* predictions of effect of coding variants
   * [dBNSFP](https://sites.google.com/site/jpopgen/dbNSFP) - database of non-synonymous functional predictions (v5.3, October 2025)

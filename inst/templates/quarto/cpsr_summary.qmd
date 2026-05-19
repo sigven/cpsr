@@ -46,7 +46,7 @@ if(NROW(cps_report$content$snv_indel$callset$variant_display$cpg_non_sf) > 0){
     dplyr::filter(
       cps_report$content$snv_indel$callset$variant$cpg_non_sf, 
       .data$CLASSIFICATION == "Pathogenic" |
-        .data$CLASSIFICATION == "Likely_Pathogenic") |> 
+        .data$CLASSIFICATION == "Likely Pathogenic") |> 
     dplyr::select("SYMBOL") |>
     dplyr::distinct() |>
     utils::head(3)

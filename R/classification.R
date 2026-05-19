@@ -1805,7 +1805,7 @@ assign_PM5_evidence <- function(
 }
 
 #' Function that assigns ACMG evidence indicators for
-#' PP3
+#' PP2
 #'
 #' @param var_calls variants in cancer predisposition genes
 #' @param max_benign_missense_frac maximum tolerated
@@ -2187,6 +2187,9 @@ exclude_vars_by_maf <- function(
     var_calls = NULL,
     conf = NULL){
 
+  non_clinvar_vars_maf_filtered <- data.frame()
+  clinvar_vars <- data.frame()
+
   if(is.data.frame(var_calls) &
      "ASSERTION_AUTHORITY" %in% colnames(var_calls) &
      "POPMAX_AF_GNOMAD" %in% colnames(var_calls) &
@@ -2199,6 +2202,8 @@ exclude_vars_by_maf <- function(
         var_calls |>
         dplyr::filter(
           .data$ASSERTION_AUTHORITY == "CPSR")
+
+      non_clinvar_vars_maf_filtered <- non_clinvar_vars
       clinvar_vars <-
         var_calls |>
         dplyr::filter(
@@ -2225,7 +2230,7 @@ exclude_vars_by_maf <- function(
 
       var_calls <-
         dplyr::bind_rows(
-          non_clinvar_vars, clinvar_vars) |>
+          non_clinvar_vars_maf_filtered, clinvar_vars) |>
         dplyr::arrange(
           dplyr::desc(
             .data$CLASSIFICATION),

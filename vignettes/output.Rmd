@@ -23,12 +23,12 @@ The report is structured in multiple sections, described briefly below:
 
   3. __Variant classification__
      * For all coding and non-coding variants in the selected cancer predisposition geneset, 
-       interactive variant tables are shown, with variants highlightd by their clinical significance:
+       interactive variant tables are shown, with variants highlighted by their clinical significance:
          * Pathogenic
-	      * Likely Pathogenic
-	      * Variants of Uncertain Significance (VUS)
-	      * Likely Benign
-	      * Benign
+	       * Likely Pathogenic
+	       * Variants of Uncertain Significance (VUS)
+	       * Likely Benign
+	       * Benign
 
   4. __Genomic biomarkers__
      * Reported clinical evidence items from [CIViC](https://civicdb.org) that match with variants in the query set are reported
@@ -442,7 +442,7 @@ We provide a compressed tab-separated values file with variants implicated with 
 ### Biomarker annotations
 
 The TSV biomarker evidence output, the interactive HTML report (section *Genomic biomarkers*), and the 
-Excel workbook (sheet *BIOMARKER_EVIDENCE*), contains information on matches between potential 
+Excel workbook (sheet *BIOMARKER_EVIDENCE*), contain information on matches between potential 
 pathogenic/likely pathogenic sample variants and reported biomarkers, the latter referring to 
 clinical evidence items that relate genomic genomic aberrations to prognosis, diagnosis or 
 sensitivity/resistance to particular treatments. All biomarker annotations are prefixed 

@@ -22,7 +22,7 @@ output: rmarkdown::html_document
         for pathogenicity by mere rarity
       * refined handling of PVS1 criterion for loss-of-function (LOF) variants according to
         PVS1 decision tree
-      * revised MaxEntScan (MES) thresholds for LOF variants at in the neighbourhood of canonical 
+      * revised MaxEntScan (MES) thresholds for LOF variants in the neighbourhood of canonical 
         splice donor/acceptor sites. 
   - Displayed all virtual panel genes in HTML report in alphabetic order, ignoring confidence levels (PanelApp genes)
   - Added new column *ACMG_CODE* in TSV output files, indicating which ACMG criteria that were met for each variant ('|'-separated list)
