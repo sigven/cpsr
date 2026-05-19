@@ -3,7 +3,7 @@
 \name{assign_PP2_evidence}
 \alias{assign_PP2_evidence}
 \title{Function that assigns ACMG evidence indicators for
-PP3}
+PP2}
 \usage{
 assign_PP2_evidence(
   var_calls = NULL,
@@ -25,5 +25,5 @@ data.frame with ACMG evidence indicators
 }
 \description{
 Function that assigns ACMG evidence indicators for
-PP3
+PP2
 }
