@@ -2,10 +2,7 @@
 % Please edit documentation in R/reactable.R
 \name{render_actble_bm_table}
 \alias{render_actble_bm_table}
-\title{Build biomarker reactable with category-aware styling
-Combines tier 1 and tier 2 records in one table.
-Header uses tier 1 color; THERAPY_MATCH cell background
-reflects the row's tier (1 or 2).}
+\title{Build biomarker reactable with category-aware styling}
 \usage{
 render_actble_bm_table(
   rctbl_recs = NULL,
@@ -14,8 +11,9 @@ render_actble_bm_table(
 )
 }
 \arguments{
-\item{rctbl_recs}{List with $main and $nested data frames.
-$main must contain ACTIONABILITY_TIER with values 1 and 2.}
+\item{rctbl_recs}{List with $main and $nested data frames
+containing prepared biomarker table records, for example as
+returned by \code{\link[=prep_biomarker_tbl]{prep_biomarker_tbl()}}.}
 
 \item{variant_category}{One of "snv_indel", "cnv", "fusion"}
 
@@ -26,7 +24,4 @@ A reactable object with the biomarker table
 }
 \description{
 Build biomarker reactable with category-aware styling
-Combines tier 1 and tier 2 records in one table.
-Header uses tier 1 color; THERAPY_MATCH cell background
-reflects the row's tier (1 or 2).
 }

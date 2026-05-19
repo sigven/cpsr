@@ -5,7 +5,7 @@
 \alias{curated_transcripts}
 \title{Curated transcripts}
 \format{
-A data frame with curated transcripts for MEN1
+A data frame with curated canonical RefSeq transcript identifiers (grch37 support)
 }
 \usage{
 curated_transcripts
