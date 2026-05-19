@@ -16,7 +16,7 @@ build:
 
 requirements:
   host:
-    - conda-forge::r-base >=4.5,<4.6
+    - conda-forge::r-base >=4.3,<4.6
     - conda-forge::r-assertable
     - conda-forge::r-assertthat
     - conda-forge::r-bslib
@@ -30,6 +30,7 @@ requirements:
     - r-pcgrr
     - conda-forge::r-quarto
     - conda-forge::quarto
+    - conda-forge::r-reactable
     - conda-forge::r-readr
     - conda-forge::r-rlang
     - conda-forge::r-shiny
@@ -37,7 +38,7 @@ requirements:
     - conda-forge::r-stringi
     - conda-forge::r-tidyr
   run:
-    - conda-forge::r-base >=4.5,<4.6
+    - conda-forge::r-base >=4.3,<4.6
     - conda-forge::r-assertable
     - conda-forge::r-assertthat
     - conda-forge::r-bslib
@@ -51,6 +52,7 @@ requirements:
     - r-pcgrr
     - conda-forge::r-quarto
     - conda-forge::quarto
+    - conda-forge::r-reactable
     - conda-forge::r-readr
     - conda-forge::r-rlang
     - conda-forge::r-shiny
