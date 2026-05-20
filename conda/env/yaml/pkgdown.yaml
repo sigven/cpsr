@@ -6,6 +6,6 @@ channels:
   - conda-forge
 dependencies:
   - r-pcgrr
-  - r-cpsr ==2.2.5.9006 # bump
+  - r-cpsr ==2.2.5.9007 # bump
   - r-pkgdown
   - pandoc
