@@ -130,7 +130,7 @@ assign_acmg_consensus <- function(
 
   code_names <- active_codes$cpsr_evidence_code
   disp_names <- active_codes$display_code
-  score_map  <- setNames(active_codes$path_score, code_names)
+  score_map  <- stats::setNames(active_codes$path_score, code_names)
 
   var_calls <- var_calls |>
     dplyr::mutate(
@@ -286,7 +286,6 @@ assign_classification_authority <-
 
     var_calls <- var_calls |>
       dplyr::mutate(
-
         ## -- individual override reason flags --
         .clinvar_novel = is.na(.data$CLINVAR_CLASSIFICATION),
         .clinvar_conflicted = (!is.na(.data$CLINVAR_CONFLICTED) &
@@ -298,20 +297,21 @@ assign_classification_authority <-
         .clinvar_single_star = (!is.na(.data$CLINVAR_GOLD_STARS) &
                                   .data$CLINVAR_GOLD_STARS == 1),
         .clinvar_no_cancer_pheno = (!is.na(.data$CLINVAR_PHENOTYPE_CANCER) &
-                                      .data$CLINVAR_PHENOTYPE_CANCER == 0),
-
+                                      .data$CLINVAR_PHENOTYPE_CANCER == 0)
+      ) |>
+      dplyr::mutate(
         ## -- which flags are active at the chosen trust level --
-        .override_novel = .clinvar_novel,
-        .override_conflicted = .clinvar_conflicted,
+        .override_novel = .data$.clinvar_novel,
+        .override_conflicted = .data$.clinvar_conflicted,
         .override_stars = if (clinvar_trust_level >= 2) {
-          .clinvar_zero_stars | .clinvar_single_star
+          .data$.clinvar_zero_stars | .data$.clinvar_single_star
         } else if (clinvar_trust_level >= 1) {
-          .clinvar_zero_stars
+          .data$.clinvar_zero_stars
         } else {
           FALSE
         },
         .override_phenotype = if (clinvar_trust_level >= 3) {
-          .clinvar_no_cancer_pheno
+          .data$.clinvar_no_cancer_pheno
         } else {
           FALSE
         },
@@ -319,11 +319,11 @@ assign_classification_authority <-
 
         ## -- should CPSR take authority for this record? --
         .cpsr_overrides = (
-          .override_novel |
-            .override_conflicted |
-            .override_stars |
-            .override_phenotype |
-            .override_always
+          .data$.override_novel |
+            .data$.override_conflicted |
+            .data$.override_stars |
+            .data$.override_phenotype |
+            .data$.override_always
         )
       )
 
@@ -333,22 +333,22 @@ assign_classification_authority <-
       dplyr::mutate(
         ASSERTION_RATIONALE = {
           reasons <- character(0)
-          if (.clinvar_novel)
+          if (.data$.clinvar_novel)
             reasons <- c(reasons, "Novel variant (absent from ClinVar)")
-          if (.clinvar_conflicted)
+          if (.data$.clinvar_conflicted)
             reasons <- c(reasons, "Conflicting ClinVar interpretations")
-          if (!.clinvar_novel & !.clinvar_conflicted) {
-            if (.cpsr_overrides) {
+          if (!.data$.clinvar_novel & !.data$.clinvar_conflicted) {
+            if (.data$.cpsr_overrides) {
               star_label <- paste0(
                 "ClinVar review status: ",
                 .data$CLINVAR_GOLD_STARS,
                 ifelse(.data$CLINVAR_GOLD_STARS == 1,
                        " gold star", " gold stars"))
               reasons <- c(reasons, star_label)
-              if (.override_phenotype)
+              if (.data$.override_phenotype)
                 reasons <- c(reasons,
                              "No cancer-related ClinVar phenotype(s)")
-              if (.override_always & length(reasons) == 1)
+              if (.data$.override_always & length(reasons) == 1)
                 reasons <- c(reasons,
                              "CPSR override (trust level 4)")
             } else {
@@ -366,8 +366,8 @@ assign_classification_authority <-
     var_calls <- var_calls |>
       dplyr::mutate(
         ASSERTION_AUTHORITY = dplyr::case_when(
-          .cpsr_overrides & !is.na(.data$CPSR_CLASSIFICATION) ~ "CPSR",
-          !.clinvar_novel & !.cpsr_overrides ~ "ClinVar",
+          .data$.cpsr_overrides & !is.na(.data$CPSR_CLASSIFICATION) ~ "CPSR",
+          !.data$.clinvar_novel & !.data$.cpsr_overrides ~ "ClinVar",
           TRUE ~ NA_character_
         ),
         CLASSIFICATION = dplyr::case_when(
@@ -409,7 +409,7 @@ assign_classification_authority <-
     var_calls <- var_calls |>
       dplyr::select(-dplyr::starts_with(".clinvar_"),
                     -dplyr::starts_with(".override_"),
-                    -.cpsr_overrides) |>
+                    -dplyr::all_of(".cpsr_overrides")) |>
       dplyr::mutate(CLASSIFICATION = dplyr::if_else(
         .data$CLASSIFICATION != "Benign" &
           .data$CLASSIFICATION != "Likely Benign" &
@@ -805,7 +805,7 @@ assign_BP7_evidence <- function(var_calls = NULL){
 
     var_calls <- var_calls |>
       tidyr::separate(
-        MAXENTSCAN,
+        "MAXENTSCAN",
         c("tmp_MES","MES_STRATUM","MES_TIER"),
         sep = "\\|", remove = FALSE
       ) |>
@@ -919,7 +919,7 @@ assign_PVS1_evidence <- function(
 
     var_calls <- var_calls |>
       tidyr::separate(
-        MAXENTSCAN,
+        "MAXENTSCAN",
         c("tmp_MES","MES_STRATUM","MES_TIER"),
         sep = "\\|", remove = FALSE
       ) |>

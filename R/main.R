@@ -625,7 +625,7 @@ write_cpsr_output <- function(report,
     )
 
     if (file.exists(quarto_input_pdf)) {
-      ## Temporary directory — same pattern as HTML rendering
+      ## Temporary directory - same pattern as HTML rendering
       tmp_quarto_dir1 <- file.path(
         output_dir,
         paste0("quarto_", stringi::stri_rand_strings(1, 15))
@@ -687,7 +687,7 @@ write_cpsr_output <- function(report,
       pcgrr::log4r_warn(
         paste0(
           "PDF template not found at: ", quarto_input_pdf,
-          " — skipping PDF generation"
+          " - skipping PDF generation"
         )
       )
     }
