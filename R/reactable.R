@@ -1,4 +1,4 @@
-# ── Cell renderer factories ──────────────────────────────────────────────────
+# Cell renderer factories
 
 #' Cell renderer factory for classification column
 #' Returns a function that renders classification values as
@@ -29,7 +29,7 @@ rt_cell_classification <- function(color_palette) {
 }
 
 #' Cell renderer factory for classification rank column
-#' Maps a numeric rank (1=Benign … 5=Pathogenic) to a labelled
+#' Maps a numeric rank (1=Benign ... 5=Pathogenic) to a labelled
 #' colored pill, enabling correct sort order via JavaScript.
 #'
 #' @param color_palette CPSR color palette object
@@ -119,7 +119,7 @@ rt_cell_bm_significance <- function(color_palette) {
   }
 }
 
-# ─────────────────────────────────────────────────────────────────────────────
+# ---------------------------------------------------------------------------
 
 #' Prepare unified variant dataset for single-table display
 #'
@@ -162,7 +162,7 @@ prepare_unified_all_variants <- function(
       !all(required_cols %in% colnames(all_variants))) {
     return(
       data.frame(matrix(ncol = length(required_cols), nrow = 0)) |>
-        setNames(required_cols)
+        stats::setNames(required_cols)
     )
   }
 
@@ -170,7 +170,7 @@ prepare_unified_all_variants <- function(
     dplyr::mutate(
       ACMG_CODE = dplyr::if_else(
         is.na(.data$ACMG_CODE) | .data$ACMG_CODE == "",
-        "—",
+        "\u2014",
         .data$ACMG_CODE
       )
     ) |>
@@ -185,7 +185,7 @@ prepare_unified_all_variants <- function(
           .data$HGVSc_RefSeq,
           .data$CLINVAR_PHENOTYPE,
           pcgrr::strip_html(.data$CLINVAR),
-          GENOMIC_CHANGE,
+          .data$GENOMIC_CHANGE,
           .data$ACMG_CODE,
           sep = " "
         ),
@@ -196,20 +196,20 @@ prepare_unified_all_variants <- function(
 
   # Split by source and arrange by quality metrics
   clinvar_data <- all_variants |>
-    dplyr::filter(ASSERTION_AUTHORITY == "ClinVar") |>
+    dplyr::filter(.data$ASSERTION_AUTHORITY == "ClinVar") |>
     dplyr::arrange(
-      dplyr::desc(CLASSIFICATION),
-      dplyr::desc(CLINVAR_GOLD_STARS),
-      SYMBOL
+      dplyr::desc(.data$CLASSIFICATION),
+      dplyr::desc(.data$CLINVAR_GOLD_STARS),
+      .data$SYMBOL
     ) |>
     utils::head(max_rows)
 
   cpsr_data <- all_variants |>
-    dplyr::filter(ASSERTION_AUTHORITY == "CPSR") |>
+    dplyr::filter(.data$ASSERTION_AUTHORITY == "CPSR") |>
     dplyr::arrange(
-      dplyr::desc(CLASSIFICATION),
-      dplyr::desc(CPSR_PATHOGENICITY_SCORE),
-      SYMBOL
+      dplyr::desc(.data$CLASSIFICATION),
+      dplyr::desc(.data$CPSR_PATHOGENICITY_SCORE),
+      .data$SYMBOL
     ) |>
     utils::head(max_rows)
 
@@ -220,15 +220,15 @@ prepare_unified_all_variants <- function(
       cpsr_data) |>
     dplyr::arrange(
       dplyr::desc(.data$CLASSIFICATION),
-      SYMBOL
+      .data$SYMBOL
     ) |>
     dplyr::mutate(
       VARKEY_CLASSIFICATION = paste(
-        SYMBOL,
-        GENOMIC_CHANGE,
-        ALTERATION,
-        ASSERTION_AUTHORITY, sep = "|"),
-      .after = SYMBOL
+        .data$SYMBOL,
+        .data$GENOMIC_CHANGE,
+        .data$ALTERATION,
+        .data$ASSERTION_AUTHORITY, sep = "|"),
+      .after = "SYMBOL"
     ) |>
     dplyr::mutate(
       dplyr::across(
@@ -799,7 +799,7 @@ prep_biomarker_tbl <- function(
       biomarker_source_support <-
         vars |>
         dplyr::group_by(
-          VAR_ID, ENTREZGENE
+          .data$VAR_ID, .data$ENTREZGENE
         ) |>
         dplyr::summarise(
           BM_SOURCES = paste(
@@ -815,9 +815,9 @@ prep_biomarker_tbl <- function(
         dplyr::group_by(.data$VAR_ID, .data$ENTREZGENE) |>
         dplyr::summarise(
           SEARCH_INDEX = stringr::str_squish(paste(
-            c(unique(na.omit(.data$BM_EVIDENCE_DESCRIPTION)),
-              unique(na.omit(.data$BM_CANCER_TYPE)),
-              unique(na.omit(.data$BM_THERAPEUTIC_CONTEXT))),
+            c(unique(stats::na.omit(.data$BM_EVIDENCE_DESCRIPTION)),
+              unique(stats::na.omit(.data$BM_CANCER_TYPE)),
+              unique(stats::na.omit(.data$BM_THERAPEUTIC_CONTEXT))),
             collapse = " "
           )),
           .groups = "drop"

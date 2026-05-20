@@ -3,7 +3,7 @@
 \name{rt_cell_classification_rank}
 \alias{rt_cell_classification_rank}
 \title{Cell renderer factory for classification rank column
-Maps a numeric rank (1=Benign … 5=Pathogenic) to a labelled
+Maps a numeric rank (1=Benign ... 5=Pathogenic) to a labelled
 colored pill, enabling correct sort order via JavaScript.}
 \usage{
 rt_cell_classification_rank(color_palette)
@@ -16,6 +16,6 @@ A function(value) returning an HTML span
 }
 \description{
 Cell renderer factory for classification rank column
-Maps a numeric rank (1=Benign … 5=Pathogenic) to a labelled
+Maps a numeric rank (1=Benign ... 5=Pathogenic) to a labelled
 colored pill, enabling correct sort order via JavaScript.
 }
