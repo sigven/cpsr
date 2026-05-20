@@ -1068,7 +1068,7 @@ render_actble_bm_table <- function(
               ),
               BM_EVIDENCE_LEVEL = reactable::colDef(
                 name = "Evidence level",
-                cell = pcgrr::render_evidence_level_cell(),
+                cell = pcgrr::render_evidence_level_cell(color_palette),
                 align = "center",
                 minWidth = 100
               ),
