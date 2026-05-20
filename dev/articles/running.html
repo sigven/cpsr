@@ -11,8 +11,8 @@
 <link rel="icon" sizes="any" href="../favicon.ico">
 <link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Running">
 <meta name="robots" content="noindex">
@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">CPSR</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.2.5.9005</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.2.5.9006</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -305,43 +305,58 @@ custom panel, using the following command line options:</p>
 <div class="section level3">
 <h3 id="acmgamp-variant-classification">ACMG/AMP variant classification<a class="anchor" aria-label="anchor" href="#acmgamp-variant-classification"></a>
 </h3>
-<p>The ACMG/AMP classification criteria rely heavily upon variant
-population frequencies from <a href="https://gnomad.broadinstitute.org/" class="external-link">gnomAD</a>. The user can
-specify the preferred population when it comes to variant allele
-frequencies used by CPSR:</p>
+<p>There is an option to set an upper allele frequency limit (gnomAD
+global population) for novel variants to be included in the report — a
+means to exclude the potentially large number of common, benign variants
+in the input VCF:</p>
 <ul>
-<li><code>--pop_gnomad &lt;pop_code&gt;</code></li>
+<li><code>--max_af_gnomad &lt;maf_threshold&gt;</code></li>
 </ul>
 <hr>
-<p>There is also an option to set an upper minor allele frequency limit
-(gnomAD - global population) for variants to be included in the report.
-This is basically a means to exclude the potentially large number of
-common and benign variants that can be found in the input VCF:</p>
+<p>CPSR first computes its own ACMG/AMP rule-based classification for
+all coding variants, then checks whether an existing ClinVar record
+should override that result. The degree to which ClinVar takes
+precedence is controlled by:</p>
 <ul>
-<li><code>--maf_upper_threshold &lt;maf_threshold&gt;</code></li>
+<li><code>--clinvar_trust_level &lt;0|1|2|3|4&gt;</code></li>
 </ul>
+<table class="table">
+<colgroup>
+<col width="38%">
+<col width="61%">
+</colgroup>
+<thead><tr class="header">
+<th>Level</th>
+<th>Behaviour</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><strong>0</strong></td>
+<td>ClinVar trusted — CPSR only overrides conflicted ClinVar records
+(default)</td>
+</tr>
+<tr class="even">
+<td><strong>1</strong></td>
+<td>Override zero gold star ClinVar records</td>
+</tr>
+<tr class="odd">
+<td><strong>2</strong></td>
+<td>Override zero- and single gold star ClinVar records</td>
+</tr>
+<tr class="even">
+<td><strong>3</strong></td>
+<td>Override low-star and non-cancer-phenotype ClinVar records</td>
+</tr>
+<tr class="odd">
+<td><strong>4</strong></td>
+<td>CPSR always classifies (ClinVar records never take precedence)</td>
+</tr>
+</tbody>
+</table>
 <hr>
-<p>By default, CPSR provides two types of variant classifications:</p>
-<ol style="list-style-type: decimal">
-<li>Existing variant classifications - as provided by ClinVar</li>
-<li>CPSR-derived classifications of novel variants (not found in
-ClinVar)</li>
-</ol>
-<p>The user may opt to show CPSR’s classification of the variants which
-are already attributed with classifications in ClinVar (i.e. set
-<em>1.</em>):</p>
-<ul>
-<li><code>--classify_all</code></li>
-</ul>
-<p>In the final classification, note that CPSR’s classification will not
-overrule the classification reported by ClinVar, which takes precedence
-for any variant with a record there.</p>
-<hr>
-<p>By default, CPSR do not report variants in the input sample that are
-found in cancer predisposition genes, yet <em>not</em> associated with
-diseases or syndromes that are cancer relevant. The user may choose to
-show all reported ClinVar variants in cancer predisposition genes
-through a dedicated option:</p>
+<p>By default, CPSR does not report variants in cancer predisposition
+genes that are associated only with non-cancer phenotypes in ClinVar. To
+include these, use:</p>
 <ul>
 <li><code>--clinvar_report_noncancer</code></li>
 </ul>
@@ -368,7 +383,7 @@ studies (GWAS)</a>:</p>
 <p>A cancer predisposition report is generated by running the
 <strong>cpsr</strong> command, which takes the following arguments and
 options:</p>
-<pre class="text"><code>usage: cpsr -h [options] 
+<pre class="text"><code>usage: cpsr -h [options]
     --input_vcf &lt;INPUT_VCF&gt;
     --vep_dir &lt;VEP_DIR&gt;
     --refdata_dir &lt;REFDATA_DIR&gt;
@@ -380,10 +395,10 @@ Cancer Predisposition Sequencing Reporter - report of clinically significant can
 
 Required arguments:
   --input_vcf INPUT_VCF
-                        VCF input file with germline query variants (SNVs/InDels).
-  --vep_dir VEP_DIR     Directory of VEP cache, e.g.  $HOME/.vep
+                        VCF input file with small germline DNA variants (SNVs/InDels).
+  --vep_dir VEP_DIR     Directory of VEP cache, e.g. $HOME/.vep
   --refdata_dir REFDATA_DIR
-                        Directory that contains the PCGR/CPSR reference data, e.g. ~/pcgr-data-1.4.1.9019
+                        Directory that contains the PCGR/CPSR reference data, e.g. ~/pcgr-data-2.2.0
   --output_dir OUTPUT_DIR
                         Output directory
   --genome_assembly {grch37,grch38}
@@ -395,7 +410,7 @@ Panel options:
   --panel_id VIRTUAL_PANEL_ID
                         Comma-separated string with identifier(s) of predefined virtual cancer predisposition gene panels,
                         choose any combination of the following identifiers (GEP = Genomics England PanelApp):
-                        0 = CPSR exploratory cancer predisposition panel (PanelApp genes / TCGA's germline study / Cancer Gene Census / Other )
+                        0 = CPSR exploratory cancer predisposition panel (PanelApp genes / TCGA's germline study / Cancer Gene Census / Other)
                         1 = Adult solid tumours cancer susceptibility (GEP)
                         2 = Adult solid tumours for rare disease (GEP)
                         3 = Bladder cancer pertinent cancer susceptibility (GEP)
@@ -414,11 +429,11 @@ Panel options:
                         16 = Haematological malignancies cancer susceptibility (GEP)
                         17 = Haematological malignancies for rare disease (GEP)
                         18 = Head and neck cancer pertinent cancer susceptibility (GEP)
-                        19 = Inherited MMR deficiency (Lynch Syndrome) - GEP
+                        19 = Inherited MMR deficiency (Lynch syndrome) (GEP)
                         20 = Inherited non-medullary thyroid cancer (GEP)
                         21 = Inherited ovarian cancer (without breast cancer) (GEP)
                         22 = Inherited pancreatic cancer (GEP)
-                        23 = Inherited polyposis and early onset colorectal cancer (GEP)
+                        23 = Inherited polyposis (GEP)
                         24 = Inherited predisposition to acute myeloid leukaemia (AML) (GEP)
                         25 = Inherited susceptibility to acute lymphoblastoid leukaemia (ALL) (GEP)
                         26 = Inherited predisposition to GIST (GEP)
@@ -442,7 +457,7 @@ Panel options:
                         44 = DNA repair genes pertinent cancer susceptibility (GEP)
   --custom_list CUSTOM_LIST
                         Provide custom list of genes from virtual panel 0 (single-column .txt/.tsv file with Ensembl gene identifiers),
-                         alternative to predefined panels provided with --panel_id)
+                        alternative to predefined panels provided with --panel_id
   --custom_list_name CUSTOM_LIST_NAME
                         Set name for custom made panel/list (single word - no whitespace), will be displayed in the report
   --diagnostic_grade_only
@@ -451,25 +466,34 @@ Panel options:
 Variant classification options:
   --secondary_findings  Include variants found in ACMG-recommended list for secondary findings (v3.2), default: False
   --pgx_findings        Report overlap with variants associated with chemotherapy toxicity (PgX findings, CPIC), default: False
-  --gwas_findings       Report overlap with low to moderate cancer risk variants (tag SNPs) identified from genome-wide association studies, default: False
-  --pop_gnomad {afr,amr,eas,sas,asj,nfe,fin,global}
-                        Population source in gnomAD (non-cancer subset) used for variant frequency assessment (ACMG classification), default: nfe
-  --maf_upper_threshold MAF_UPPER_THRESHOLD
-                        Upper MAF limit (gnomAD global population frequency) for variants to be included in the report, default: 0.9
-  --classify_all        Provide CPSR variant classifications (TIER 1-5) also for variants with existing ClinVar classifications in output TSV, default: False
+  --gwas_findings       Report overlap with low to moderate cancer risk variants (tag SNPs) identified from genome-wide
+                        association studies, default: False
+  --max_af_gnomad MAX_AF_GNOMAD
+                        Ignore novel variants with a gnomAD maximum allele frequency (AF) across populations greater than
+                        this value, default: 0.9
+  --clinvar_trust_level {0,1,2,3,4}
+                        Level of trust assigned to ClinVar records relative to CPSR's own ACMG/AMP classification:
+                        0 = ClinVar trusted (override conflicted records only) (default)
+                        1 = Override zero gold star ClinVar records
+                        2 = Override zero- and single gold star ClinVar records
+                        3 = Override low-star and non-cancer-phenotype ClinVar records
+                        4 = CPSR always classifies (ClinVar records never take precedence)
   --clinvar_report_noncancer
-                        Report also ClinVar-classified variants attributed to phenotypes/conditions NOT directly related to tumor development, default: False
+                        Report also ClinVar-classified variants attributed to phenotypes/conditions NOT directly related
+                        to tumor development, default: False
 
 VEP options:
   --vep_n_forks VEP_N_FORKS
                         Number of forks (option '--fork' in VEP), default: 4
   --vep_buffer_size VEP_BUFFER_SIZE
-                        Variant buffer size (variants read into memory simultaneously, option '--buffer_size' in VEP) 
+                        Variant buffer size (variants read into memory simultaneously, option '--buffer_size' in VEP)
                         - set lower to reduce memory usage, default: 500
-  --vep_gencode_basic   Consider basic GENCODE transcript set only with Variant Effect Predictor (VEP) (option '--gencode_basic' in VEP).
+  --vep_gencode_basic   Consider basic GENCODE transcript set only with Variant Effect Predictor (VEP)
+                        (option '--gencode_basic' in VEP).
   --vep_pick_order VEP_PICK_ORDER
                         Comma-separated string of ordered transcript properties for primary variant pick
-                         ( option '--pick_order' in VEP), default: mane_select,mane_plus_clinical,canonical,biotype,ccds,rank,tsl,appris,length
+                        (option '--pick_order' in VEP),
+                        default: mane_select,mane_plus_clinical,canonical,biotype,ccds,rank,tsl,appris,length
   --vep_no_intergenic   Skip intergenic variants during processing (option '--no_intergenic' in VEP), default: False
 
 vcfanno options:
@@ -477,17 +501,20 @@ vcfanno options:
                         Number of vcfanno processes (option '-p' in vcfanno), default: 4
 
 Other options:
+  --input_sv_vcf INPUT_SV_VCF
+                        VCF input file with structural germline DNA variants (SVs) - optional
   --force_overwrite     By default, the script will fail with an error if any output file already exists.
-                         You can force the overwrite of existing result files by using this flag, default: False
+                        You can force the overwrite of existing result files by using this flag, default: False
   --version             show program's version number and exit
-  --no_reporting        Run functional variant annotation on VCF through VEP/vcfanno, omit classification/report generation (STEP 4), default: False
-  --no_html             Do not generate HTML report (default: False)
+  --no_reporting        Run functional variant annotation on VCF through VEP/vcfanno, omit classification/report
+                        generation (STEP 4), default: False
+  --no_html             Do not generate HTML report, default: False
   --retained_info_tags RETAINED_INFO_TAGS
                         Comma-separated string of VCF INFO tags from query VCF that should be kept in CPSR output TSV
   --ignore_noncoding    Ignore non-coding (i.e. non protein-altering) variants in report, default: False
   --debug               Print full commands to log
   --pcgrr_conda PCGRR_CONDA
-                        pcgrr conda env name (default: pcgrr)</code></pre>
+                        pcgrr conda env name, default: pcgrr</code></pre>
 </div>
 <div class="section level2">
 <h2 id="example-run">Example run<a class="anchor" aria-label="anchor" href="#example-run"></a>
@@ -511,8 +538,8 @@ performed through the following command:</p>
 <span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>     <span class="at">--sample_id</span> example <span class="dt">\</span></span>
 <span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>     <span class="at">--secondary_findings</span> <span class="dt">\</span></span>
 <span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>     <span class="at">--pgx_findings</span> <span class="dt">\</span></span>
-<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>     <span class="at">--classify_all</span> <span class="dt">\</span></span>
-<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>     <span class="at">--maf_upper_threshold</span> 0.2 <span class="dt">\</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>     <span class="at">--clinvar_trust_level</span> 1 <span class="dt">\</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>     <span class="at">--max_af_gnomad</span> 0.2 <span class="dt">\</span></span>
 <span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>     <span class="at">--force_overwrite</span></span></code></pre></div>
 <p>Note that the example command refers to the PCGR data bundle
 directory (<em>refdata_dir</em>), which contains the data necessary for
@@ -558,9 +585,9 @@ found)</li>
 <strong>example.cpsr.grch37.html</strong> - Interactive HTML report
 with clinically relevant variants in cancer predisposition genes</li>
 <li>
-<strong>example.cpsr.grch37.snvs_indels.classification.tsv.gz</strong>
-- TSV file with key annotations of germline SNVs/InDels classified
-according to clinical significance</li>
+<strong>example.cpsr.grch37.classification.tsv.gz</strong> - TSV
+file with key annotations of germline SNVs/InDels classified according
+to clinical significance</li>
 </ol>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

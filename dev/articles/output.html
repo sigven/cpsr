@@ -11,8 +11,8 @@
 <link rel="icon" sizes="any" href="../favicon.ico">
 <link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Output files">
 <meta name="robots" content="noindex">
@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">CPSR</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.2.5.9005</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.2.5.9006</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -118,12 +118,12 @@ genes that constitute the virtual gene panel in the report</li>
 <li>
 <strong>Variant classification</strong>
 <ul>
-<li>For all coding variants in the selected cancer predisposition
-geneset, interactive variant tables are shown for each level of clinical
-significance (<strong>ClinVar</strong> and <strong>non-ClinVar
-(Other)</strong> variants combined):
+<li>For all coding and non-coding variants in the selected cancer
+predisposition geneset, interactive variant tables are shown, with
+variants highlighted by their clinical significance:
 <ul>
-<li>Pathogenic</li>
+<li>Pathogenic
+<ul>
 <li>Likely Pathogenic</li>
 <li>Variants of Uncertain Significance (VUS)</li>
 <li>Likely Benign</li>
@@ -132,12 +132,13 @@ significance (<strong>ClinVar</strong> and <strong>non-ClinVar
 </li>
 </ul>
 </li>
+</ul>
+</li>
 <li>
 <strong>Genomic biomarkers</strong>
 <ul>
 <li>Reported clinical evidence items from <a href="https://civicdb.org" class="external-link">CIViC</a> that match with variants in the
-query set are reported in four distinct tabs (Predictive / Prognostic /
-Diagnostic / Predisposing)</li>
+query set are reported</li>
 <li>Pharmacogenetic findings (DPYD, TPMT, NUDT15)</li>
 </ul>
 </li>
@@ -728,7 +729,7 @@ resource</td>
 <tr class="odd">
 <td><code>TSG_SUPPORT</code></td>
 <td>Underlying evidence for gene being a tumor suppressor. Format:
-<code>CGC_TIER&lt;1/2&gt;&amp;NCG&amp;CancerMine:num_citations"</code>
+<code>NCG&amp;CancerMine:num_citations"</code>
 </td>
 </tr>
 <tr class="even">
@@ -739,111 +740,99 @@ Cancer Genes (NCG) &amp; the CancerMine text-mining resource</td>
 <tr class="odd">
 <td><code>ONCOGENE_SUPPORT</code></td>
 <td>Underlying evidence for gene being an oncogene. Format:
-<code>CGC_TIER&lt;1/2&gt;&amp;NCG&amp;CancerMine:num_citations"</code>
+<code>NCG&amp;CancerMine:num_citations"</code>
 </td>
 </tr>
 <tr class="even">
 <td><code>CPG_SOURCE</code></td>
 <td>Cancer predisposition gene source (panel <em>0</em>:
-<code>TCGA</code>, <code>CGC</code>, <code>PANEL_APP</code>,
-<code>OTHER</code>)</td>
+<code>TCGA_PANCAN_2018</code>, <code>CANVAR_UK</code>,
+<code>PANEL_APP</code>, <code>CURATED_OTHER</code>)</td>
 </tr>
 <tr class="odd">
-<td><code>CGC_GERMLINE</code></td>
-<td>Member of Cancer Gene Census - germline set</td>
-</tr>
-<tr class="even">
-<td><code>CGC_SOMATIC</code></td>
-<td>Member of Cancer Gene Census - somatic set</td>
-</tr>
-<tr class="odd">
-<td><code>CGC_TIER</code></td>
-<td>Cancer Gene Census tier (1/2)</td>
-</tr>
-<tr class="even">
 <td><code>NCG_DRIVER</code></td>
 <td>Cancer driver gene prediction by Network of Cancer Genes (NCG)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>INTOGEN_DRIVER</code></td>
 <td>Indicates whether gene is predicted as cancer driver from IntOGen’s
 cancer driver prediction algorithm</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>PROB_EXAC_LOF_INTOLERANT</code></td>
 <td>
 <code>dbNSFP_gene</code>: the probability of being loss-of-function
 intolerant (intolerant of both heterozygous and homozygous lof variants)
 based on ExAC r0.3 data</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>PROB_EXAC_LOF_INTOLERANT_HOM</code></td>
 <td>
 <code>dbNSFP_gene</code>: the probability of being intolerant of
 homozygous, but not heterozygous lof variants based on ExAC r0.3
 data</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>PROB_EXAC_LOF_TOLERANT_NULL</code></td>
 <td>
 <code>dbNSFP_gene</code>: the probability of being tolerant of both
 heterozygous and homozygous lof variants based on ExAC r0.3 data</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>PROB_EXAC_NONTCGA_LOF_INTOLERANT</code></td>
 <td>
 <code>dbNSFP_gene</code>: the probability of being loss-of-function
 intolerant (intolerant of both heterozygous and homozygous lof variants)
 based on ExAC r0.3 nonTCGA subset</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>PROB_EXAC_NONTCGA_LOF_INTOLERANT_HOM</code></td>
 <td>
 <code>dbNSFP_gene</code>: the probability of being intolerant of
 homozygous, but not heterozygous lof variants based on ExAC r0.3 nonTCGA
 subset</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>PROB_EXAC_NONTCGA_LOF_TOLERANT_NULL</code></td>
 <td>
 <code>dbNSFP_gene</code>: the probability of being tolerant of both
 heterozygous and homozygous lof variants based on ExAC r0.3 nonTCGA
 subset</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>PROB_GNOMAD_LOF_INTOLERANT</code></td>
 <td>
 <code>dbNSFP_gene</code>: the probability of being loss-of-function
 intolerant (intolerant of both heterozygous and homozygous lof variants
 based on gnomAD 2.1 data</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>PROB_GNOMAD_LOF_INTOLERANT_HOM</code></td>
 <td>
 <code>dbNSFP_gene</code>: the probability of being intolerant of
 homozygous, but not heterozygous lof variants based on gnomAD 2.1
 data</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>PROB_GNOMAD_LOF_TOLERANT_NULL</code></td>
 <td>
 <code>dbNSFP_gene</code>: the probability of being tolerant of both
 heterozygous and homozygous lof variants based on gnomAD 2.1 data</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>PROB_HAPLOINSUFFICIENCY</code></td>
 <td>
 <code>dbNSFP_gene</code>: Estimated probability of
 haploinsufficiency of the gene (from <a href="http://dx.doi.org/10.1371/journal.pgen.1001154" class="external-link uri">http://dx.doi.org/10.1371/journal.pgen.1001154</a>)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>ESSENTIAL_GENE_CRISPR</code></td>
 <td>
 <code>dbNSFP_gene</code>: Essential (<code>E</code>) or
 Non-essential phenotype-changing (<code>N</code>) based on large scale
 CRISPR experiments (from <a href="http://dx.doi.org/10.1126/science.aac7041" class="external-link uri">http://dx.doi.org/10.1126/science.aac7041</a>)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>ESSENTIAL_GENE_CRISPR2</code></td>
 <td>
 <code>dbNSFP_gene</code>: Essential (<code>E</code>),
@@ -1368,36 +1357,42 @@ state-of-origin</td>
 <td>Clean clinical significance on a five-level scheme - ClinVar</td>
 </tr>
 <tr class="odd">
+<td><code>CLINVAR_CONTRIB_CLNS_GERMLINE</code></td>
+<td>Contributing variant classifications from submissions - germline
+state-of-origin <a href="http://www.ncbi.nlm.nih.gov/clinvar" class="external-link">ClinVar</a>
+</td>
+</tr>
+<tr class="even">
 <td><code>CLINVAR_CLNSIG_SOMATIC</code></td>
 <td>Clinical significance for variant in <a href="http://www.ncbi.nlm.nih.gov/clinvar" class="external-link">ClinVar</a> - somatic
 state-of-origin</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>CLINVAR_MEDGEN_CUI</code></td>
 <td>Associated <a href="https://www.ncbi.nlm.nih.gov/medgen/" class="external-link">MedGen</a>
 concept identifiers (<em>CUIs</em>) - germline state-of-origin</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>CLINVAR_MEDGEN_CUI_SOMATIC</code></td>
 <td>Associated <a href="https://www.ncbi.nlm.nih.gov/medgen/" class="external-link">MedGen</a>
 concept identifiers (<em>CUIs</em>) - somatic state-of-origin</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>CLINVAR_MOLECULAR_EFFECT</code></td>
 <td>Variant effect according to ClinVar annotation</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>CLINVAR_VARIANT_ORIGIN</code></td>
 <td>Origin of variant (somatic, germline, de novo etc.) for variant in
 <a href="http://www.ncbi.nlm.nih.gov/clinvar" class="external-link">ClinVar</a>
 </td>
 </tr>
-<tr class="even">
-<td><code>CLINVAR_REVIEW_STATUS_STARS</code></td>
+<tr class="odd">
+<td><code>CLINVAR_GOLD_STARS</code></td>
 <td>Rating of the <a href="http://www.ncbi.nlm.nih.gov/clinvar" class="external-link">ClinVar</a> variant (0-4
 stars) with respect to level of review</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>GWAS_HIT</code></td>
 <td>variant associated with cancer phenotype from genome-wide
 association study (NHGRI-EBI GWAS catalog)</td>
@@ -1521,357 +1516,375 @@ e.g. <code>1:g.152382569A&gt;G</code>. Format:
 <td>Sequencing depth at variant site (‘DP’)</td>
 </tr>
 <tr class="odd">
-<td>7. <code>CPSR_CLASSIFICATION_SOURCE</code>
+<td>7. <code>ASSERTION_AUTHORITY</code>
 </td>
-<td>ClinVar or CPSR_ACMG (the latter meaning variant not recorded in
-ClinVar, classified by CPSR)</td>
+<td>Authority responsible for variant classification -
+<code>ClinVar</code> (ClinVar record meets the configured trust level)
+or <code>CPSR</code> (classified by CPSR’s ACMG/AMP rule-based
+algorithm)</td>
 </tr>
 <tr class="even">
-<td>8. <code>VARIANT_CLASS</code>
+<td>8. <code>ASSERTION_RATIONALE</code>
+</td>
+<td>Human-readable explanation of why the given assertion authority was
+chosen, e.g. <em>“Novel variant (absent from ClinVar)”</em>,
+<em>“Conflicting ClinVar interpretations”</em>, <em>“ClinVar review
+status: 2 gold stars”</em>, or <em>“No cancer-related ClinVar
+phenotype(s)”</em>
+</td>
+</tr>
+<tr class="odd">
+<td>9. <code>VARIANT_CLASS</code>
 </td>
 <td>Variant type, e.g. SNV/insertion/deletion</td>
 </tr>
-<tr class="odd">
-<td>9. <code>CODING_STATUS</code>
+<tr class="even">
+<td>10. <code>CODING_STATUS</code>
 </td>
 <td>coding/noncoding (wrt. protein alteration and canonical splice site
 disruption)</td>
 </tr>
-<tr class="even">
-<td>10. <code>SYMBOL</code>
+<tr class="odd">
+<td>11. <code>SYMBOL</code>
 </td>
 <td>Gene symbol</td>
 </tr>
-<tr class="odd">
-<td>11. <code>GENENAME</code>
+<tr class="even">
+<td>12. <code>GENENAME</code>
 </td>
 <td>Gene description</td>
 </tr>
-<tr class="even">
-<td>12. <code>CCDS</code>
+<tr class="odd">
+<td>13. <code>CCDS</code>
 </td>
 <td>CCDS identifier</td>
 </tr>
-<tr class="odd">
-<td>13. <code>ENTREZGENE</code>
+<tr class="even">
+<td>14. <code>ENTREZGENE</code>
 </td>
 <td>Entrez gene identifier</td>
 </tr>
-<tr class="even">
-<td>14. <code>UNIPROT_ID</code>
+<tr class="odd">
+<td>15. <code>UNIPROT_ID</code>
 </td>
 <td>UniProt protein identifier</td>
 </tr>
-<tr class="odd">
-<td>15. <code>ENSEMBL_GENE_ID</code>
+<tr class="even">
+<td>16. <code>ENSEMBL_GENE_ID</code>
 </td>
 <td>Ensembl gene identifier</td>
 </tr>
-<tr class="even">
-<td>16. <code>ENSEMBL_TRANSCRIPT_ID</code>
+<tr class="odd">
+<td>17. <code>ENSEMBL_TRANSCRIPT_ID</code>
 </td>
 <td>Ensembl transcript identifier</td>
 </tr>
-<tr class="odd">
-<td>17. <code>REFSEQ_TRANSCRIPT_ID</code>
+<tr class="even">
+<td>18. <code>REFSEQ_TRANSCRIPT_ID</code>
 </td>
 <td>RefSeq mRNA identifier</td>
 </tr>
-<tr class="even">
-<td>18. <code>ONCOGENE</code>
+<tr class="odd">
+<td>19. <code>MANE_SELECT</code>
 </td>
-<td>Gene is predicted as an oncogene according to Network of Cancer
-Genes (NCG)/Cancer Gene Census (CGC) and CancerMine</td>
+<td>Indicating if the transcript is the MANE Select for the gene
+(VEP)</td>
+</tr>
+<tr class="even">
+<td>20. <code>MANE_SELECT2</code>
+</td>
+<td>MANE Select transcript identifier provided through BioMart</td>
 </tr>
 <tr class="odd">
-<td>19. <code>TUMOR_SUPPRESSOR</code>
+<td>21. <code>ONCOGENE</code>
 </td>
-<td>Gene is predicted as a tumor suppressor gene according to Network of
-Cancer Genes (NCG)/Cancer Gene Census (CGC) and CancerMine</td>
+<td>Gene is predicted as an oncogene according to Network of Cancer
+Genes (NCG) and/or CancerMine</td>
 </tr>
 <tr class="even">
-<td>20. <code>CPG_MOD</code>
+<td>22. <code>TUMOR_SUPPRESSOR</code>
+</td>
+<td>Gene is predicted as a tumor suppressor gene according to Network of
+Cancer Genes (NCG) and/or CancerMine</td>
+</tr>
+<tr class="odd">
+<td>23. <code>CPG_MOD</code>
 </td>
 <td>Gene - cancer predisposition mechanism of disease (e.g. LoF)</td>
 </tr>
-<tr class="odd">
-<td>21. <code>CPG_MOI</code>
+<tr class="even">
+<td>24. <code>CPG_MOI</code>
 </td>
 <td>Gene - cancer predisposition mode of inheritance</td>
 </tr>
-<tr class="even">
-<td>22. <code>CONSEQUENCE</code>
+<tr class="odd">
+<td>25. <code>CONSEQUENCE</code>
 </td>
 <td>Variant consequence</td>
 </tr>
-<tr class="odd">
-<td>23. <code>ALTERATION</code>
+<tr class="even">
+<td>26. <code>ALTERATION</code>
 </td>
 <td>Molecular alteration (HGVSp or HGVSc pending on consequence)</td>
 </tr>
-<tr class="even">
-<td>24. <code>PROTEIN_CHANGE</code>
+<tr class="odd">
+<td>27. <code>PROTEIN_CHANGE</code>
 </td>
 <td>Protein change - one letter abbreviation (HGVSp)</td>
 </tr>
-<tr class="odd">
-<td>25. <code>PFAM_DOMAIN</code>
+<tr class="even">
+<td>28. <code>PFAM_DOMAIN</code>
 </td>
 <td>Protein domain (Pfam identifier)</td>
 </tr>
-<tr class="even">
-<td>26. <code>PFAM_DOMAIN_NAME</code>
+<tr class="odd">
+<td>29. <code>PFAM_DOMAIN_NAME</code>
 </td>
 <td>Protein domain name (Pfam)</td>
 </tr>
-<tr class="odd">
-<td>27. <code>HGVSp</code>
+<tr class="even">
+<td>30. <code>HGVSp</code>
 </td>
 <td>The HGVS protein sequence name</td>
 </tr>
-<tr class="even">
-<td>28. <code>GRANTHAM_DISTANCE</code>
+<tr class="odd">
+<td>31. <code>GRANTHAM_DISTANCE</code>
 </td>
 <td>Grantham distance for amino acid change (Grantham score)</td>
 </tr>
-<tr class="odd">
-<td>29. <code>HGVSc</code>
+<tr class="even">
+<td>33. <code>HGVSc</code>
 </td>
 <td>The HGVS coding sequence name</td>
 </tr>
-<tr class="even">
-<td>30. <code>HGVSc_RefSeq</code>
+<tr class="odd">
+<td>34. <code>HGVSc_RefSeq</code>
 </td>
 <td>The HGVS coding sequence name (RefSeq - MANE Select)</td>
 </tr>
-<tr class="odd">
-<td>31. <code>CDS_CHANGE</code>
+<tr class="even">
+<td>35. <code>CDS_CHANGE</code>
 </td>
 <td>Coding, transcript-specific sequence annotation</td>
 </tr>
-<tr class="even">
-<td>32. <code>LAST_EXON</code>
+<tr class="odd">
+<td>36. <code>LAST_EXON</code>
 </td>
 <td>Last exon in gene</td>
 </tr>
+<tr class="even">
+<td>37. <code>LAST_INTRON</code>
+</td>
+<td>Last intron in gene</td>
+</tr>
 <tr class="odd">
-<td>33. <code>EXON</code>
+<td>38. <code>EXON</code>
 </td>
 <td>Exon of variant/total number of exons in transcript (from VEP)</td>
 </tr>
 <tr class="even">
-<td>34. <code>EXON_AFFECTED</code>
+<td>39. <code>EXON_AFFECTED</code>
 </td>
 <td>Transcript exon of variant (from VEP)</td>
 </tr>
 <tr class="odd">
-<td>35. <code>EXON_POSITION</code>
+<td>40. <code>EXON_POSITION</code>
 </td>
 <td>Relative position of exon variant to nearest intron/exon junction
 (NearestExonJB plugin)</td>
 </tr>
 <tr class="even">
-<td>36. <code>INTRON_POSITION</code>
+<td>41. <code>INTRON_POSITION</code>
 </td>
 <td>Relative position of intron variant to nearest intron/exon junction
 (NearestExonJB plugin)</td>
 </tr>
 <tr class="odd">
-<td>37. <code>VEP_ALL_CSQ</code>
+<td>42. <code>VEP_ALL_CSQ</code>
 </td>
 <td>All VEP transcript block consequences</td>
 </tr>
 <tr class="even">
-<td>38. <code>CANCER_PHENOTYPE</code>
-</td>
-<td>For variants with a ClinVar classification, indication of
-cancer-associated disease/phenotype (1) or not (0)</td>
-</tr>
-<tr class="odd">
-<td>39. <code>MUTATION_HOTSPOT</code>
+<td>43. <code>MUTATION_HOTSPOT</code>
 </td>
 <td>Cancer mutation hotspot (cancerhotspots.org)</td>
 </tr>
-<tr class="even">
-<td>40. <code>RMSK_HIT</code>
+<tr class="odd">
+<td>44. <code>RMSK_HIT</code>
 </td>
 <td>RepeatMasker hit</td>
 </tr>
-<tr class="odd">
-<td>41. <code>EFFECT_PREDICTIONS</code>
+<tr class="even">
+<td>45. <code>EFFECT_PREDICTIONS</code>
 </td>
 <td>Functional effect predictions from multiple algorithms (dbNSFP)</td>
 </tr>
-<tr class="even">
-<td>42. <code>SPLICE_EFFECT</code>
+<tr class="odd">
+<td>46. <code>SPLICE_EFFECT</code>
 </td>
 <td>Splice effect annotations from MutSpliceDB and MaxEntScan (see
 details above)</td>
 </tr>
-<tr class="odd">
-<td>43. <code>LOSS_OF_FUNCTION</code>
+<tr class="even">
+<td>47. <code>LOSS_OF_FUNCTION</code>
 </td>
 <td>Loss-of-function variant</td>
 </tr>
-<tr class="even">
-<td>44. <code>LOF_FILTER</code>
+<tr class="odd">
+<td>48. <code>LOF_FILTER</code>
 </td>
 <td>Loss-of-function filter</td>
 </tr>
-<tr class="odd">
-<td>45. <code>NULL_VARIANT</code>
+<tr class="even">
+<td>49. <code>NULL_VARIANT</code>
 </td>
 <td>Frameshift or stop-gain variant</td>
 </tr>
-<tr class="even">
-<td>46. <code>DBMTS</code>
+<tr class="odd">
+<td>50. <code>DBMTS</code>
 </td>
-<td>variant with potential effect on microRNA target sites (dbMTS).
+<td>Variant with potential effect on microRNA target sites (dbMTS).
 Format:
 <code>&lt;ensembl_transcript_id&gt;|&lt;microrna_identifier&gt;|&lt;target_prediction_algorithms&gt;|&lt;gain_loss_consensus&gt;</code>.
 <em>Target prediction algorithms</em> indicate support by different
 algorithms (separated by ‘&amp;’), <code>TS</code> = TargetScan,
 <code>M</code> = miRanda, <code>R</code> = RNAhybrid.
-<em>Gain_loss_consensus</em> indicate whether the variant was predicted
+<em>Gain_loss_consensus</em> indicates whether the variant was predicted
 to disrupt a binding site (<code>L</code> = Loss), or create a new
-target site (<code>G</code> = gain) by the different algorithms</td>
+target site (<code>G</code> = Gain)</td>
 </tr>
-<tr class="odd">
-<td>47. <code>REGULATORY_ANNOTATION</code>
+<tr class="even">
+<td>51. <code>REGULATORY_ANNOTATION</code>
 </td>
 <td>Overlap of variant with regulatory elements (VEP)</td>
 </tr>
-<tr class="even">
-<td>48. <code>TF_BINDING_SITE_VARIANT</code>
+<tr class="odd">
+<td>52. <code>TF_BINDING_SITE_VARIANT</code>
 </td>
 <td>Indicates whether a variant overlaps a critical/non-critical
-position of a transcription factor binding site (TFBS) - as provided by
-VEP’s–regulatory option (‘Overlap: non-critical motif position’ or
-‘Overlap: critical motif position’)</td>
+position of a transcription factor binding site (TFBS)</td>
 </tr>
-<tr class="odd">
-<td>49. <code>TF_BINDING_SITE_VARIANT_INFO</code>
+<tr class="even">
+<td>53. <code>TF_BINDING_SITE_VARIANT_INFO</code>
 </td>
 <td>Comma-separated list of transcription factor binding sites affected
 by variant. Format per factor:
 <code>&lt;TRANSCRIPTION_FACTOR&gt;|&lt;MOTIF_NAME&gt;|&lt;MOTIF_POS&gt;|&lt;MOTIF_SCORE_CHANGE&gt;|&lt;HIGH_INF_POS&gt;</code>.
 <em>HIGH_INF_POS</em> indicates whether the variant overlapped a
-critical motif position (<code>Y</code>), or non-critical motif position
+critical motif position (<code>Y</code>) or non-critical motif position
 (<code>N</code>)</td>
 </tr>
-<tr class="even">
-<td>50. <code>GERP_SCORE</code>
+<tr class="odd">
+<td>54. <code>GERP_SCORE</code>
 </td>
 <td>Genomic conservation score (GERP)</td>
 </tr>
-<tr class="odd">
-<td>51. <code>DBSNP_RSID</code>
+<tr class="even">
+<td>55. <code>DBSNP_RSID</code>
 </td>
 <td>dbSNP identifier (rsid)</td>
 </tr>
-<tr class="even">
-<td>52. <code>CLINVAR_CLASSIFICATION</code>
-</td>
-<td>clinical significance of ClinVar-recorded variant</td>
-</tr>
 <tr class="odd">
-<td>53. <code>CLINVAR_MSID</code>
+<td>56. <code>CLINVAR_CLASSIFICATION</code>
+</td>
+<td>Clinical significance of ClinVar-recorded variant (five-level
+scheme)</td>
+</tr>
+<tr class="even">
+<td>57. <code>CLINVAR_MSID</code>
 </td>
 <td>Measureset identifier of ClinVar variant</td>
 </tr>
-<tr class="even">
-<td>54. <code>CLINVAR_VARIANT_ORIGIN</code>
+<tr class="odd">
+<td>58. <code>CLINVAR_VARIANT_ORIGIN</code>
 </td>
 <td>Variant origin (somatic/germline) of ClinVar variant</td>
 </tr>
-<tr class="odd">
-<td>55. <code>CLINVAR_CONFLICTED</code>
-</td>
-<td>Indicator of conflicting interpretations</td>
-</tr>
 <tr class="even">
-<td>56. <code>CLINVAR_PHENOTYPE</code>
+<td>59. <code>CLINVAR_CONFLICTED</code>
+</td>
+<td>Indicator of conflicting interpretations in ClinVar</td>
+</tr>
+<tr class="odd">
+<td>60. <code>CLINVAR_PHENOTYPE</code>
 </td>
 <td>Associated phenotype(s) for ClinVar variant</td>
 </tr>
-<tr class="odd">
-<td>57. <code>CLINVAR_REVIEW_STATUS_STARS</code>
+<tr class="even">
+<td>61. <code>CLINVAR_PHENOTYPE_CANCER</code>
 </td>
-<td>Review confidence - number of gold stars</td>
+<td>For variants with a ClinVar classification, indication of
+cancer-associated disease/phenotype (1) or not (0)</td>
+</tr>
+<tr class="odd">
+<td>62. <code>CLINVAR_GOLD_STARS</code>
+</td>
+<td>Review confidence rating of the ClinVar variant (0–4 gold
+stars)</td>
 </tr>
 <tr class="even">
-<td>58. <code>N_INSILICO_CALLED</code>
+<td>63. <code>N_INSILICO_CALLED</code>
 </td>
 <td>Number of algorithms with effect prediction (damaging/tolerated)
 from dbNSFP</td>
 </tr>
 <tr class="odd">
-<td>59. <code>N_INSILICO_DAMAGING</code>
+<td>64. <code>N_INSILICO_DAMAGING</code>
 </td>
 <td>Number of algorithms with damaging prediction from dbNSFP</td>
 </tr>
 <tr class="even">
-<td>60. <code>N_INSILICO_TOLERATED</code>
+<td>65. <code>N_INSILICO_TOLERATED</code>
 </td>
 <td>Number of algorithms with tolerated prediction from dbNSFP</td>
 </tr>
 <tr class="odd">
-<td>61. <code>N_INSILICO_SPLICING_NEUTRAL</code>
+<td>66. <code>N_INSILICO_SPLICING_NEUTRAL</code>
 </td>
 <td>Number of algorithms with splicing neutral prediction from
 dbscSNV</td>
 </tr>
 <tr class="even">
-<td>62. <code>N_INSILICO_SPLICING_AFFECTED</code>
+<td>67. <code>N_INSILICO_SPLICING_AFFECTED</code>
 </td>
 <td>Number of algorithms with splicing affected prediction from
 dbscSNV</td>
 </tr>
 <tr class="odd">
-<td>63. <code>gnomADe_AF</code>
+<td>68. <code>gnomADe_AF</code>
 </td>
-<td>Global MAF in gnomAD (exome samples)</td>
+<td>Global allele frequency in gnomAD controls (exome set, v4.1)</td>
 </tr>
 <tr class="even">
-<td>64. <code>gnomADg_AF</code>
+<td>69. <code>gnomADg_AF</code>
 </td>
-<td>Global MAF in gnomAD (genome samples)</td>
+<td>Global allele frequency in gnomAD controls (genome set, v4.1)</td>
 </tr>
 <tr class="odd">
-<td>65. <code>FINAL_CLASSIFICATION</code>
+<td>70. <code>CLASSIFICATION</code>
 </td>
-<td>Final variant classification, using either
-<code>CLINVAR_CLASSIFICATION</code> if variant is ClinVar-classified, or
-<code>CPSR_CLASSIFICATION</code> for novel variants. <em>Note</em>:
-ClinVar-classified</td>
+<td>Final variant classification (P/LP/VUS/LB/B), reflecting the
+applicable assertion authority: <code>CLINVAR_CLASSIFICATION</code> if
+the ClinVar record meets the configured trust level, otherwise
+<code>CPSR_CLASSIFICATION</code>
+</td>
 </tr>
 <tr class="even">
-<td>variants annotated with <em>Drug Response</em> or <em>Risk
-Factor</em> clinical significance are provided a <code>VUS</code> final
-classification</td>
-<td></td>
+<td>71. <code>CPSR_CLASSIFICATION</code>
+</td>
+<td>Variant clinical significance by CPSR’s ACMG/AMP rule-based
+algorithm (P/LP/VUS/LB/B)</td>
 </tr>
 <tr class="odd">
-<td>66. <code>CPSR_CLASSIFICATION</code>
-</td>
-<td>Variant clinical significance by CPSR’s classification algorithm
-(P/LP/VUS/LB/B)</td>
-</tr>
-<tr class="even">
-<td>67. <code>CPSR_PATHOGENICITY_SCORE</code>
+<td>72. <code>CPSR_PATHOGENICITY_SCORE</code>
 </td>
 <td>Aggregated pathogenicity score by CPSR’s algorithm</td>
 </tr>
-<tr class="odd">
-<td>68. <code>CPSR_CLASSIFICATION_CODE</code>
-</td>
-<td>Combination of CPSR classification codes assigned to the variant
-(ACMG)</td>
-</tr>
 <tr class="even">
-<td>69. <code>&lt;CUSTOM_POPULATION_GNOMAD</code>&gt;</td>
-<td>Population specific MAF in gnomAD control (non-cancer, population
-configured by user)</td>
+<td>73. <code>ACMG_CODE</code>
+</td>
+<td>Combination of ACMG/AMP evidence codes assigned to the variant by
+CPSR</td>
 </tr>
 </tbody>
 </table>
@@ -1908,7 +1921,7 @@ The file has the following naming convention:</p>
 </h3>
 <p>The TSV biomarker evidence output, the interactive HTML report
 (section <em>Genomic biomarkers</em>), and the Excel workbook (sheet
-<em>BIOMARKER_EVIDENCE</em>), contains information on matches between
+<em>BIOMARKER_EVIDENCE</em>), contain information on matches between
 potential pathogenic/likely pathogenic sample variants and reported
 biomarkers, the latter referring to clinical evidence items that relate
 genomic genomic aberrations to prognosis, diagnosis or
@@ -1965,7 +1978,7 @@ from CIViC</td>
 <td>Rating of biomarker - from CIViC</td>
 </tr>
 <tr class="even">
-<td>8. <code>BM_MOLECULAR_PROFILE_NAME</code>
+<td>8. <code>BM_MOLECULAR_PROFILE</code>
 </td>
 <td>Associated name of molecular profile - i.e. “BRCA mutation” - from
 CIViC</td>

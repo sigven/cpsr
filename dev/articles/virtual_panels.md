@@ -12,19 +12,25 @@ gene panels (0 - 44)**:
 
   - A list of 151 genes that were curated and established within TCGA’s
     pan-cancer study ([Huang et al., *Cell*,
-    2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052))
-  - A list of 114 protein-coding genes that has been manually curated in
-    COSMIC’s [Cancer Gene Census
-    v101](https://cancer.sanger.ac.uk/census),
+    2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052)).
+  - A list of 112 protein-coding genes that has been curated in the
+    [CanVar-UK](https://canvaruk.org/) resource on cancer predisposition
+    genes
   - Genes from all [Genomics England
     PanelApp](https://panelapp.genomicsengland.co.uk/) panels for
     inherited cancers and tumor syndromes, as well as DNA repair genes
     (detailed below)
   - Additional genes deemed relevant for cancer predisposition
     (i.e. contributed by CPSR users etc.)
+  - **IMPORTANT**: Note that mutations in many of the genes in panel 0
+    are not directly linked to risk of tumor development, but are rather
+    associated with other genetic diseases. There is however evidence
+    from the literature that these diseases may carry secondary,
+    context-dependent cancer risks (e.g. *ABCB11*, *COL7A1*, *HNF1A*,
+    *PAH*)
 
   The combination of the above sources resulted in a non-redundant set
-  of **n = 574** genes of relevance for cancer predisposition (see
+  of **n = 556** genes of relevance for cancer predisposition (see
   complete details [below](#panel-0))
 
   Data with respect to mechanisms of inheritance (*MoI* - autosomal
@@ -98,4 +104,4 @@ gene panels (0 - 44)**:
 
 [Download the complete set of CPSR superpanel genes, grch37/grch38
 versions
-(xlsx)](https://sigven.github.io/cpsr/cpsr_superpanel_2025_03.xlsx)
+(xlsx)](https://sigven.github.io/cpsr/cpsr_superpanel_2026_04.xlsx)

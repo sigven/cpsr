@@ -1,9 +1,10 @@
-# Function that appends mechanism-of-inheritance (MOI) and mechanism of disease (MOD) annotations to cancer predisposition genes (cpg's), as well as estimated fractions of truncation vs. non-truncating variants etc per predisposition gene (from ClinVar)
+# Function that appends mechanism-of-inheritance (MOI) and mechanism of disease (MOD) annotations wrt cancer predisposition genes (cpg's), as well as estimated fractions of truncation vs. non-truncating variants etc per predisposition gene (from ClinVar), and pathogenic AF ranges based on gnomAD data, to the cpg_calls data frame.
 
 Function that appends mechanism-of-inheritance (MOI) and mechanism of
-disease (MOD) annotations to cancer predisposition genes (cpg's), as
+disease (MOD) annotations wrt cancer predisposition genes (cpg's), as
 well as estimated fractions of truncation vs. non-truncating variants
-etc per predisposition gene (from ClinVar)
+etc per predisposition gene (from ClinVar), and pathogenic AF ranges
+based on gnomAD data, to the cpg_calls data frame.
 
 ## Usage
 

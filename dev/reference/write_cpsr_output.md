@@ -17,4 +17,4 @@ write_cpsr_output(report, output_format = "html")
 
 - output_format:
 
-  file format of output (html//tsv/xlsx etc)
+  file format of output (html//tsv/xlsx/pdf)

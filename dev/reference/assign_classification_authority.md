@@ -6,7 +6,7 @@ variants
 ## Usage
 
 ``` r
-combine_novel_and_preclassified(var_calls, conf = NULL)
+assign_classification_authority(var_calls, conf = NULL)
 ```
 
 ## Arguments

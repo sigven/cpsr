@@ -1,21 +1,96 @@
 # Changelog
 
-## dev
+## v2.3.0
 
-- Date: 2025-03-XX
+- Date: **2026-05-20**
 
-- major refactor of GitHub Actions workflow
+- Major data updates
+
+  - ClinVar (2026-05)
+  - dbNSFP (v5.3)
+  - CIViC (2026-03-23)
+  - GENCODE v49 (VEP v115)
+  - Complete revision and much simplified implementation for ACMG/AMP
+    variant classification, still point-based, but more coherent to
+    criteria outlined in [ClinGen’s Criteria Specification
+    Registry](https://cspec.genome.network/cspec/ui/svi/), considering
+    e.g. 
+    - gene-specific allele frequency thresholds for different criteria
+      (BA1/BS1/PM2/PM1/PM4)
+    - Not relying on allele frequencies from one specified
+      subpopulation, but rather considering all frequencies across
+      gnomAD subpopulations (groupmax approach, as recommended by
+      ClinGen SVI working group)
+    - PM2 supporting not given weight in accumulating pathogenicity
+      score due to limited evidence for pathogenicity by mere rarity
+    - refined handling of PVS1 criterion for loss-of-function (LOF)
+      variants according to PVS1 decision tree
+    - revised MaxEntScan (MES) thresholds for LOF variants in the
+      neighbourhood of canonical splice donor/acceptor sites.
+  - Displayed all virtual panel genes in HTML report in alphabetic
+    order, ignoring confidence levels (PanelApp genes)
+  - Added new column *ACMG_CODE* in TSV output files, indicating which
+    ACMG criteria that were met for each variant (‘\|’-separated list)
+  - Renamed column *CPSR_CLASSIFICATION_SOURCE* → *ASSERTION_AUTHORITY*
+    in TSV output to better reflect its role (values: `ClinVar` or
+    `CPSR`)
+  - Renamed column *CANCER_PHENOTYPE* to *CLINVAR_PHENOTYPE_CANCER* in
+    TSV output, to clarify that this annotation is based on ClinVar
+    phenotype associations
+  - Added new column *ASSERTION_RATIONALE* in TSV output, providing a
+    human-readable explanation for why a given assertion authority was
+    chosen (e.g. *“Novel variant (absent from ClinVar)”*, *“ClinVar
+    review status: 2 gold stars”*, *“Conflicting ClinVar
+    interpretations”*)
+
+- Simplified population allele frequency arguments for variant
+  classification:
+
+  - Removed `--pop_gnomad` (previously required to select a single
+    gnomAD subpopulation, e.g. `nfe`) and `--maf_upper_threshold`
+    (global MAF filter)
+  - Replaced by a single argument `--max_af_gnomad`, which applies an
+    upper frequency threshold across all gnomAD subpopulations rather
+    than one selected population — consistent with the ClinGen SVI
+    groupmax approach already used internally for BA1/BS1/PM2 criteria
+
+- New argument `--clinvar_trust_level` (integer, 0–4) replacing
+  `--classify_all`, giving fine-grained control over the degree to which
+  existing ClinVar classifications override CPSR’s own ACMG/AMP result:
+
+  - **0**: ClinVar fully trusted; CPSR only overrides conflicted records
+    (default)
+  - **1**: CPSR overrides zero gold star ClinVar records
+  - **2**: CPSR overrides zero- and single gold star ClinVar records
+  - **3**: CPSR overrides low-star and non-cancer-phenotype ClinVar
+    records
+  - **4**: CPSR always classifies, ClinVar records never take precedence
+
+- Interactive HTML report tables migrated from *DT*
+  ([`DT::datatable`](https://rdrr.io/pkg/DT/man/datatable.html)) to
+  *reactable*
+  ([`reactable::reactable`](https://glin.github.io/reactable/reference/reactable.html)):
+
+  - All classification, secondary findings, pharmacogenomics, biomarker,
+    and GWAS variant tables now use reactable
+  - Tables feature a collapsible detail row per variant with full
+    annotation context, reducing visual clutter in the main view
+  - Dedicated hidden search index column aggregates nested evidence text
+    fields (biomarker tables) for full-text search across all evidence
+    items
+
+- Infrastructure: major refactor of GitHub Actions workflow
 
   - moving to gitflow development mode, with `main` branch for stable
     releases, and `dev` branch for development
   - switch to rattler-build from conda mambabuild
     - also requires moving to the required rattler format for the conda
       recipe
-  - switch to conda-incubator/setup-miniconda from
-    mamba-org/setup-micromamba
+  - switch to conda-incubator/setup-miniconda (from
+    mamba-org/setup-micromamba)
   - pkgdown’s auto development mode allows us to keep a dev website with
-    documentation for the latest development version of pcgrr, which is
-    now available at <https://sigven.github.io/pcgr/dev/> (previously
+    documentation for the latest development version of cpsr, which is
+    now available at <https://sigven.github.io/cpsr/dev/> (previously
     only stable versions were available on the website)
 
 ## v2.2.5

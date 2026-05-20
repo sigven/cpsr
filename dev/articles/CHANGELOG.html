@@ -11,8 +11,8 @@
 <link rel="icon" sizes="any" href="../favicon.ico">
 <link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Changelog">
 <meta name="robots" content="noindex">
@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">CPSR</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.2.5.9005</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.2.5.9006</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,12 +82,105 @@
     
     
 <div class="section level2">
-<h2 id="dev">dev<a class="anchor" aria-label="anchor" href="#dev"></a>
+<h2 id="v2-3-0">v2.3.0<a class="anchor" aria-label="anchor" href="#v2-3-0"></a>
 </h2>
 <ul>
-<li><p>Date: 2025-03-XX</p></li>
+<li><p>Date: <strong>2026-05-20</strong></p></li>
 <li>
-<p>major refactor of GitHub Actions workflow</p>
+<p>Major data updates</p>
+<ul>
+<li>ClinVar (2026-05)</li>
+<li>dbNSFP (v5.3)</li>
+<li>CIViC (2026-03-23)</li>
+<li>GENCODE v49 (VEP v115)</li>
+<li>Complete revision and much simplified implementation for ACMG/AMP
+variant classification, still point-based, but more coherent to criteria
+outlined in <a href="https://cspec.genome.network/cspec/ui/svi/" class="external-link">ClinGen’s Criteria
+Specification Registry</a>, considering e.g. 
+<ul>
+<li>gene-specific allele frequency thresholds for different criteria
+(BA1/BS1/PM2/PM1/PM4)</li>
+<li>Not relying on allele frequencies from one specified subpopulation,
+but rather considering all frequencies across gnomAD subpopulations
+(groupmax approach, as recommended by ClinGen SVI working group)</li>
+<li>PM2 supporting not given weight in accumulating pathogenicity score
+due to limited evidence for pathogenicity by mere rarity</li>
+<li>refined handling of PVS1 criterion for loss-of-function (LOF)
+variants according to PVS1 decision tree</li>
+<li>revised MaxEntScan (MES) thresholds for LOF variants in the
+neighbourhood of canonical splice donor/acceptor sites.</li>
+</ul>
+</li>
+<li>Displayed all virtual panel genes in HTML report in alphabetic
+order, ignoring confidence levels (PanelApp genes)</li>
+<li>Added new column <em>ACMG_CODE</em> in TSV output files, indicating
+which ACMG criteria that were met for each variant (‘|’-separated
+list)</li>
+<li>Renamed column <em>CPSR_CLASSIFICATION_SOURCE</em> →
+<em>ASSERTION_AUTHORITY</em> in TSV output to better reflect its role
+(values: <code>ClinVar</code> or <code>CPSR</code>)</li>
+<li>Renamed column <em>CANCER_PHENOTYPE</em> to
+<em>CLINVAR_PHENOTYPE_CANCER</em> in TSV output, to clarify that this
+annotation is based on ClinVar phenotype associations</li>
+<li>Added new column <em>ASSERTION_RATIONALE</em> in TSV output,
+providing a human-readable explanation for why a given assertion
+authority was chosen (e.g. <em>“Novel variant (absent from
+ClinVar)”</em>, <em>“ClinVar review status: 2 gold stars”</em>,
+<em>“Conflicting ClinVar interpretations”</em>)</li>
+</ul>
+</li>
+<li>
+<p>Simplified population allele frequency arguments for variant
+classification:</p>
+<ul>
+<li>Removed <code>--pop_gnomad</code> (previously required to select a
+single gnomAD subpopulation, e.g. <code>nfe</code>) and
+<code>--maf_upper_threshold</code> (global MAF filter)</li>
+<li>Replaced by a single argument <code>--max_af_gnomad</code>, which
+applies an upper frequency threshold across all gnomAD subpopulations
+rather than one selected population — consistent with the ClinGen SVI
+groupmax approach already used internally for BA1/BS1/PM2 criteria</li>
+</ul>
+</li>
+<li>
+<p>New argument <code>--clinvar_trust_level</code> (integer, 0–4)
+replacing <code>--classify_all</code>, giving fine-grained control over
+the degree to which existing ClinVar classifications override CPSR’s own
+ACMG/AMP result:</p>
+<ul>
+<li>
+<strong>0</strong>: ClinVar fully trusted; CPSR only overrides
+conflicted records (default)</li>
+<li>
+<strong>1</strong>: CPSR overrides zero gold star ClinVar
+records</li>
+<li>
+<strong>2</strong>: CPSR overrides zero- and single gold star
+ClinVar records</li>
+<li>
+<strong>3</strong>: CPSR overrides low-star and non-cancer-phenotype
+ClinVar records</li>
+<li>
+<strong>4</strong>: CPSR always classifies, ClinVar records never
+take precedence</li>
+</ul>
+</li>
+<li>
+<p>Interactive HTML report tables migrated from <em>DT</em>
+(<code><a href="https://rdrr.io/pkg/DT/man/datatable.html" class="external-link">DT::datatable</a></code>) to <em>reactable</em>
+(<code><a href="https://glin.github.io/reactable/reference/reactable.html" class="external-link">reactable::reactable</a></code>):</p>
+<ul>
+<li>All classification, secondary findings, pharmacogenomics, biomarker,
+and GWAS variant tables now use reactable</li>
+<li>Tables feature a collapsible detail row per variant with full
+annotation context, reducing visual clutter in the main view</li>
+<li>Dedicated hidden search index column aggregates nested evidence text
+fields (biomarker tables) for full-text search across all evidence
+items</li>
+</ul>
+</li>
+<li>
+<p>Infrastructure: major refactor of GitHub Actions workflow</p>
 <ul>
 <li>moving to gitflow development mode, with <code>main</code> branch
 for stable releases, and <code>dev</code> branch for development</li>
@@ -97,11 +190,11 @@ for stable releases, and <code>dev</code> branch for development</li>
 recipe</li>
 </ul>
 </li>
-<li>switch to conda-incubator/setup-miniconda from
-mamba-org/setup-micromamba</li>
+<li>switch to conda-incubator/setup-miniconda (from
+mamba-org/setup-micromamba)</li>
 <li>pkgdown’s auto development mode allows us to keep a dev website with
-documentation for the latest development version of pcgrr, which is now
-available at <a href="https://sigven.github.io/pcgr/dev/" class="external-link uri">https://sigven.github.io/pcgr/dev/</a> (previously only
+documentation for the latest development version of cpsr, which is now
+available at <a href="https://sigven.github.io/cpsr/dev/" class="uri">https://sigven.github.io/cpsr/dev/</a> (previously only
 stable versions were available on the website)</li>
 </ul>
 </li>

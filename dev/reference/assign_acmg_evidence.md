@@ -6,7 +6,7 @@ guidelines
 ## Usage
 
 ``` r
-assign_pathogenicity_evidence(var_calls, settings, ref_data)
+assign_acmg_evidence(var_calls, settings, ref_data)
 ```
 
 ## Arguments

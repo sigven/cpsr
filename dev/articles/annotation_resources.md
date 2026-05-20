@@ -2,15 +2,15 @@
 
 ### Basic variant consequence annotation
 
-- [VEP v113](http://www.ensembl.org/info/docs/tools/vep/index.md) -
+- [VEP v115](http://www.ensembl.org/info/docs/tools/vep/index.md) -
   Variant Effect Predictor ([GENCODE
-  v47](https://www.gencodegenes.org/human/) as gene reference database
+  v49](https://www.gencodegenes.org/human/) as gene reference database
   (v19 for grch37))
 
 ### *Insilico* predictions of effect of coding variants
 
 - [dBNSFP](https://sites.google.com/site/jpopgen/dbNSFP) - database of
-  non-synonymous functional predictions (v5.0, January 2025)
+  non-synonymous functional predictions (v5.3, October 2025)
 
 ### Variant frequency databases
 
@@ -20,14 +20,14 @@
 - [dbSNP](http://www.ncbi.nlm.nih.gov/SNP/) - database of short genetic
   variants (build 156)
 - [Cancer Hotspots](http://cancerhotspots.org) - a resource for
-  statistically significant mutations in cancer (v2, 2017)
+  statistically significant mutations in cancer (v2/v3, 2017/2026)
 
 ### Variant databases of clinical utility
 
 - [ClinVar](http://www.ncbi.nlm.nih.gov/clinvar/) - database of
-  clinically related variants (March 2025)
+  clinically related variants (May 2026)
 - [CIViC](https://civicdb.org) - clinical interpretations of variants in
-  cancer (March 13th 2025)
+  cancer (March 2026)
 
 ### Protein domains/functional features
 
@@ -39,16 +39,15 @@
 ### Cancer gene knowledge bases
 
 - [CancerMine](http://bionlp.bcgsc.ca/cancermine/) - Literature-mined
-  database of tumor suppressor genes/proto-oncogenes (v50, March 2023)
+  database of tumor suppressor genes/proto-oncogenes (v51, August 2025)
 - [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk) -
-  cancer phenotype panels as of February 2025
-- [Cancer Gene
-  Census](https://www.sanger.ac.uk/data/cancer-gene-census/) - genes
-  implicated with cancer susceptibility (v101)
+  cancer phenotype panels as of April 2026
+- [CanVar UK](https://canvaruk.org/) - genes implicated with cancer
+  susceptibility (v2.2)
 
 ### Phenotype ontologies
 
-- [UMLS/MedGen](https://www.ncbi.nlm.nih.gov/medgen/) - January 2025
-- [Disease Ontology](https://disease-ontology.org/) - February 2025
+- [UMLS/MedGen](https://www.ncbi.nlm.nih.gov/medgen/) - March 2026
+- [Disease Ontology](https://disease-ontology.org/) - February 2026
 - [Experimental Factor Ontology](https://github.com/EBISPOT/efo) -
-  v3.75.0
+  v3.88.0

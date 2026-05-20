@@ -6,7 +6,7 @@ to cancer-related conditions according to ClinVar
 ## Usage
 
 ``` r
-check_variant2cancer_phenotype(cpg_calls, ref_data)
+is_clinvar_cancer_phenotype(cpg_calls, ref_data)
 ```
 
 ## Arguments
