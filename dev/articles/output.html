@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">CPSR</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.2.5.9007</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.2.5.9008</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -930,72 +930,68 @@ Neutral, <code>D</code> = Damaging</td>
 <td>predicted effect from M-CAP (dbNSFP)</td>
 </tr>
 <tr class="even">
-<td><code>DBNSFP_ALOFT</code></td>
-<td>predicted effect from ALoFT (dbNSFP)</td>
-</tr>
-<tr class="odd">
 <td><code>DBNSFP_MUTPRED</code></td>
 <td>score from MUTPRED (dbNSFP)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>DBNSFP_CLINPRED</code></td>
 <td>predicted effect from ClinPred (dbNSFP)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>DBNSFP_FATHMM</code></td>
 <td>predicted effect from FATHMM-XF (dbNSFP)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>DBNSFP_PRIMATEAI</code></td>
 <td>predicted effect from PRIMATEAI (dbNSFP)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>DBNSFP_DEOGEN2</code></td>
 <td>predicted effect from DEOGEN2 (dbNSFP)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>DBNSFP_PHACTBOOST</code></td>
 <td>predicted effect from PHACTboost (dbNSFP)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>DBNSFP_ALPHA_MISSENSE</code></td>
 <td>predicted effect from AlphaMissense (dbNSFP)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>DBNSFP_MUTFORMER</code></td>
 <td>predicted effect from MutFormer (dbNSFP)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>DBNSFP_ESM1B</code></td>
 <td>predicted effect from ESM1b (dbNSFP)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>DBNSFP_GERP</code></td>
 <td>evolutionary constraint measure from GERP (dbNSFP)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>DBNSFP_CADD</code></td>
 <td>Combined Annotation Dependent Depletion (CADD) score (dbNSFP)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>DBNSFP_VEST4</code></td>
 <td>VEST4 score (dbNSFP)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>DBNSFP_FATHMM_XF</code></td>
 <td>predicted effect from FATHMM-XF (dbNSFP)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>DBNSFP_META_RNN</code></td>
 <td>predicted effect from ensemble prediction (deep learning -
 dbNSFP)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>DBNSFP_SPLICE_SITE_RF</code></td>
 <td>predicted effect of splice site disruption, using random forest
 (dbscSNV)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>DBNSFP_SPLICE_SITE_ADA</code></td>
 <td>predicted effect of splice site disruption, using boosting
 (dbscSNV)</td>
@@ -1428,7 +1424,7 @@ association study (NHGRI-EBI GWAS catalog)</td>
 <div class="section level3">
 <h3 id="excel-workbook---xlsx">Excel workbook - XLSX<a class="anchor" aria-label="anchor" href="#excel-workbook---xlsx"></a>
 </h3>
-<p>We provide an Excel workbook with <strong>four</strong> sheets that
+<p>We provide an Excel workbook with <strong>five</strong> sheets that
 lists main findings and annotations of the predisposition analysis. The
 file has the following naming convention:</p>
 <ul>
@@ -1653,95 +1649,118 @@ Cancer Genes (NCG) and/or CancerMine</td>
 <td>Grantham distance for amino acid change (Grantham score)</td>
 </tr>
 <tr class="even">
-<td>33. <code>HGVSc</code>
+<td>32. <code>HGVSc</code>
 </td>
 <td>The HGVS coding sequence name</td>
 </tr>
 <tr class="odd">
-<td>34. <code>HGVSc_RefSeq</code>
+<td>33. <code>HGVSc_RefSeq</code>
 </td>
 <td>The HGVS coding sequence name (RefSeq - MANE Select)</td>
 </tr>
 <tr class="even">
-<td>35. <code>CDS_CHANGE</code>
+<td>34. <code>CDS_CHANGE</code>
 </td>
 <td>Coding, transcript-specific sequence annotation</td>
 </tr>
 <tr class="odd">
-<td>36. <code>LAST_EXON</code>
+<td>35. <code>LAST_EXON</code>
 </td>
 <td>Last exon in gene</td>
 </tr>
 <tr class="even">
-<td>37. <code>LAST_INTRON</code>
+<td>36. <code>LAST_INTRON</code>
 </td>
 <td>Last intron in gene</td>
 </tr>
 <tr class="odd">
-<td>38. <code>EXON</code>
+<td>37. <code>EXON</code>
 </td>
 <td>Exon of variant/total number of exons in transcript (from VEP)</td>
 </tr>
 <tr class="even">
-<td>39. <code>EXON_AFFECTED</code>
+<td>38. <code>EXON_AFFECTED</code>
 </td>
 <td>Transcript exon of variant (from VEP)</td>
 </tr>
 <tr class="odd">
-<td>40. <code>EXON_POSITION</code>
+<td>39. <code>EXON_POSITION</code>
 </td>
 <td>Relative position of exon variant to nearest intron/exon junction
 (NearestExonJB plugin)</td>
 </tr>
 <tr class="even">
-<td>41. <code>INTRON_POSITION</code>
+<td>40. <code>INTRON_POSITION</code>
 </td>
 <td>Relative position of intron variant to nearest intron/exon junction
 (NearestExonJB plugin)</td>
 </tr>
 <tr class="odd">
-<td>42. <code>VEP_ALL_CSQ</code>
+<td>41. <code>NMD</code>
 </td>
-<td>All VEP transcript block consequences</td>
+<td>Nonsense-mediated decay prediction for the variant</td>
 </tr>
 <tr class="even">
-<td>43. <code>MUTATION_HOTSPOT</code>
+<td>42. <code>EXON_INTRON_JUNCTION_SPAN</code>
+</td>
+<td>Indicates whether the variant spans an exon-intron junction
+boundary</td>
+</tr>
+<tr class="odd">
+<td>43. <code>EXONIC_STATUS</code>
+</td>
+<td>Indicates if variant consequence type is ‘exonic’ or
+‘nonexonic’</td>
+</tr>
+<tr class="even">
+<td>44. <code>PROTEIN_RELATIVE_POSITION</code>
+</td>
+<td>Relative position of the affected amino acid within the protein
+(ratio of protein position to total protein length)</td>
+</tr>
+<tr class="odd">
+<td>45. <code>MUTATION_HOTSPOT</code>
 </td>
 <td>Cancer mutation hotspot (cancerhotspots.org)</td>
 </tr>
-<tr class="odd">
-<td>44. <code>RMSK_HIT</code>
+<tr class="even">
+<td>46. <code>RMSK_HIT</code>
 </td>
 <td>RepeatMasker hit</td>
 </tr>
-<tr class="even">
-<td>45. <code>EFFECT_PREDICTIONS</code>
+<tr class="odd">
+<td>47. <code>EFFECT_PREDICTIONS</code>
 </td>
 <td>Functional effect predictions from multiple algorithms (dbNSFP)</td>
 </tr>
+<tr class="even">
+<td>48. <code>MAXENTSCAN</code>
+</td>
+<td>MaxEntScan splice site scores and effect predictions</td>
+</tr>
 <tr class="odd">
-<td>46. <code>SPLICE_EFFECT</code>
+<td>49. <code>SPLICE_EFFECT</code>
 </td>
 <td>Splice effect annotations from MutSpliceDB and MaxEntScan (see
 details above)</td>
 </tr>
 <tr class="even">
-<td>47. <code>LOSS_OF_FUNCTION</code>
+<td>50. <code>LOSS_OF_FUNCTION</code>
 </td>
 <td>Loss-of-function variant</td>
 </tr>
 <tr class="odd">
-<td>48. <code>LOF_FILTER</code>
+<td>51. <code>LOF_FILTER</code>
 </td>
 <td>Loss-of-function filter</td>
 </tr>
 <tr class="even">
-<td>49. <code>NULL_VARIANT</code>
+<td>52. <code>NULL_VARIANT</code>
 </td>
 <td>Frameshift or stop-gain variant</td>
 </tr>
 <tr class="odd">
-<td>50. <code>DBMTS</code>
+<td>53. <code>DBMTS</code>
 </td>
 <td>Variant with potential effect on microRNA target sites (dbMTS).
 Format:
@@ -1754,18 +1773,18 @@ to disrupt a binding site (<code>L</code> = Loss), or create a new
 target site (<code>G</code> = Gain)</td>
 </tr>
 <tr class="even">
-<td>51. <code>REGULATORY_ANNOTATION</code>
+<td>54. <code>REGULATORY_ANNOTATION</code>
 </td>
 <td>Overlap of variant with regulatory elements (VEP)</td>
 </tr>
 <tr class="odd">
-<td>52. <code>TF_BINDING_SITE_VARIANT</code>
+<td>55. <code>TF_BINDING_SITE_VARIANT</code>
 </td>
 <td>Indicates whether a variant overlaps a critical/non-critical
 position of a transcription factor binding site (TFBS)</td>
 </tr>
 <tr class="even">
-<td>53. <code>TF_BINDING_SITE_VARIANT_INFO</code>
+<td>56. <code>TF_BINDING_SITE_VARIANT_INFO</code>
 </td>
 <td>Comma-separated list of transcription factor binding sites affected
 by variant. Format per factor:
@@ -1775,93 +1794,98 @@ critical motif position (<code>Y</code>) or non-critical motif position
 (<code>N</code>)</td>
 </tr>
 <tr class="odd">
-<td>54. <code>GERP_SCORE</code>
+<td>57. <code>VEP_ALL_CSQ</code>
+</td>
+<td>All VEP transcript block consequences</td>
+</tr>
+<tr class="even">
+<td>58. <code>GERP_SCORE</code>
 </td>
 <td>Genomic conservation score (GERP)</td>
 </tr>
-<tr class="even">
-<td>55. <code>DBSNP_RSID</code>
+<tr class="odd">
+<td>59. <code>DBSNP_RSID</code>
 </td>
 <td>dbSNP identifier (rsid)</td>
 </tr>
-<tr class="odd">
-<td>56. <code>CLINVAR_CLASSIFICATION</code>
+<tr class="even">
+<td>60. <code>CLINVAR_CLASSIFICATION</code>
 </td>
 <td>Clinical significance of ClinVar-recorded variant (five-level
 scheme)</td>
 </tr>
-<tr class="even">
-<td>57. <code>CLINVAR_MSID</code>
+<tr class="odd">
+<td>61. <code>CLINVAR_MSID</code>
 </td>
 <td>Measureset identifier of ClinVar variant</td>
 </tr>
-<tr class="odd">
-<td>58. <code>CLINVAR_VARIANT_ORIGIN</code>
+<tr class="even">
+<td>62. <code>CLINVAR_VARIANT_ORIGIN</code>
 </td>
 <td>Variant origin (somatic/germline) of ClinVar variant</td>
 </tr>
-<tr class="even">
-<td>59. <code>CLINVAR_CONFLICTED</code>
+<tr class="odd">
+<td>63. <code>CLINVAR_CONFLICTED</code>
 </td>
 <td>Indicator of conflicting interpretations in ClinVar</td>
 </tr>
-<tr class="odd">
-<td>60. <code>CLINVAR_PHENOTYPE</code>
+<tr class="even">
+<td>64. <code>CLINVAR_PHENOTYPE</code>
 </td>
 <td>Associated phenotype(s) for ClinVar variant</td>
 </tr>
-<tr class="even">
-<td>61. <code>CLINVAR_PHENOTYPE_CANCER</code>
+<tr class="odd">
+<td>65. <code>CLINVAR_PHENOTYPE_CANCER</code>
 </td>
 <td>For variants with a ClinVar classification, indication of
 cancer-associated disease/phenotype (1) or not (0)</td>
 </tr>
-<tr class="odd">
-<td>62. <code>CLINVAR_GOLD_STARS</code>
+<tr class="even">
+<td>66. <code>CLINVAR_GOLD_STARS</code>
 </td>
 <td>Review confidence rating of the ClinVar variant (0–4 gold
 stars)</td>
 </tr>
-<tr class="even">
-<td>63. <code>N_INSILICO_CALLED</code>
+<tr class="odd">
+<td>67. <code>N_INSILICO_CALLED</code>
 </td>
 <td>Number of algorithms with effect prediction (damaging/tolerated)
 from dbNSFP</td>
 </tr>
-<tr class="odd">
-<td>64. <code>N_INSILICO_DAMAGING</code>
+<tr class="even">
+<td>68. <code>N_INSILICO_DAMAGING</code>
 </td>
 <td>Number of algorithms with damaging prediction from dbNSFP</td>
 </tr>
-<tr class="even">
-<td>65. <code>N_INSILICO_TOLERATED</code>
+<tr class="odd">
+<td>69. <code>N_INSILICO_TOLERATED</code>
 </td>
 <td>Number of algorithms with tolerated prediction from dbNSFP</td>
 </tr>
-<tr class="odd">
-<td>66. <code>N_INSILICO_SPLICING_NEUTRAL</code>
+<tr class="even">
+<td>70. <code>N_INSILICO_SPLICING_NEUTRAL</code>
 </td>
 <td>Number of algorithms with splicing neutral prediction from
 dbscSNV</td>
 </tr>
-<tr class="even">
-<td>67. <code>N_INSILICO_SPLICING_AFFECTED</code>
+<tr class="odd">
+<td>71. <code>N_INSILICO_SPLICING_AFFECTED</code>
 </td>
 <td>Number of algorithms with splicing affected prediction from
 dbscSNV</td>
 </tr>
-<tr class="odd">
-<td>68. <code>gnomADe_AF</code>
+<tr class="even">
+<td>72. <code>gnomADe_AF</code>
 </td>
 <td>Global allele frequency in gnomAD controls (exome set, v4.1)</td>
 </tr>
-<tr class="even">
-<td>69. <code>gnomADg_AF</code>
+<tr class="odd">
+<td>73. <code>gnomADg_AF</code>
 </td>
 <td>Global allele frequency in gnomAD controls (genome set, v4.1)</td>
 </tr>
-<tr class="odd">
-<td>70. <code>CLASSIFICATION</code>
+<tr class="even">
+<td>74. <code>CLASSIFICATION</code>
 </td>
 <td>Final variant classification (P/LP/VUS/LB/B), reflecting the
 applicable assertion authority: <code>CLINVAR_CLASSIFICATION</code> if
@@ -1869,19 +1893,19 @@ the ClinVar record meets the configured trust level, otherwise
 <code>CPSR_CLASSIFICATION</code>
 </td>
 </tr>
-<tr class="even">
-<td>71. <code>CPSR_CLASSIFICATION</code>
+<tr class="odd">
+<td>75. <code>CPSR_CLASSIFICATION</code>
 </td>
 <td>Variant clinical significance by CPSR’s ACMG/AMP rule-based
 algorithm (P/LP/VUS/LB/B)</td>
 </tr>
-<tr class="odd">
-<td>72. <code>CPSR_PATHOGENICITY_SCORE</code>
+<tr class="even">
+<td>76. <code>CPSR_PATHOGENICITY_SCORE</code>
 </td>
 <td>Aggregated pathogenicity score by CPSR’s algorithm</td>
 </tr>
-<tr class="even">
-<td>73. <code>ACMG_CODE</code>
+<tr class="odd">
+<td>77. <code>ACMG_CODE</code>
 </td>
 <td>Combination of ACMG/AMP evidence codes assigned to the variant by
 CPSR</td>
@@ -1902,6 +1926,211 @@ convention:</p>
 <ul>
 <li><code>&lt;sample_id&gt;.cpsr.&lt;genome_assembly&gt;.biomarker_evidence.tsv.gz</code></li>
 </ul>
+<p>The following variables are included in the biomarker evidence TSV
+file:</p>
+<table class="table">
+<colgroup>
+<col width="43%">
+<col width="56%">
+</colgroup>
+<thead><tr class="header">
+<th>Variable</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>1. <code>SAMPLE_ID</code>
+</td>
+<td>Sample identifier</td>
+</tr>
+<tr class="even">
+<td>2. <code>GENOMIC_CHANGE</code>
+</td>
+<td>Identifier for variant at the genome (VCF) level,
+e.g. <code>1:g.152382569A&gt;G</code>
+</td>
+</tr>
+<tr class="odd">
+<td>3. <code>GENOTYPE</code>
+</td>
+<td>Variant genotype (het/hom_ref/hom_alt)</td>
+</tr>
+<tr class="even">
+<td>4. <code>DP_CONTROL</code>
+</td>
+<td>Sequencing depth at variant site (‘DP’)</td>
+</tr>
+<tr class="odd">
+<td>5. <code>GENOME_VERSION</code>
+</td>
+<td>Assembly version, e.g. grch37/grch38</td>
+</tr>
+<tr class="even">
+<td>6. <code>VARIANT_CLASS</code>
+</td>
+<td>Variant type, e.g. SNV/insertion/deletion</td>
+</tr>
+<tr class="odd">
+<td>7. <code>SYMBOL</code>
+</td>
+<td>Gene symbol</td>
+</tr>
+<tr class="even">
+<td>8. <code>GENENAME</code>
+</td>
+<td>Gene description</td>
+</tr>
+<tr class="odd">
+<td>9. <code>CONSEQUENCE</code>
+</td>
+<td>Variant consequence</td>
+</tr>
+<tr class="even">
+<td>10. <code>PROTEIN_CHANGE</code>
+</td>
+<td>Protein change - one letter abbreviation (HGVSp)</td>
+</tr>
+<tr class="odd">
+<td>11. <code>ASSERTION_AUTHORITY</code>
+</td>
+<td>Authority responsible for variant classification -
+<code>ClinVar</code> or <code>CPSR</code>
+</td>
+</tr>
+<tr class="even">
+<td>12. <code>ASSERTION_RATIONALE</code>
+</td>
+<td>Human-readable explanation of why the given assertion authority was
+chosen</td>
+</tr>
+<tr class="odd">
+<td>13. <code>CLASSIFICATION</code>
+</td>
+<td>Final variant classification (P/LP/VUS/LB/B)</td>
+</tr>
+<tr class="even">
+<td>14. <code>CPSR_CLASSIFICATION</code>
+</td>
+<td>Variant clinical significance by CPSR’s ACMG/AMP rule-based
+algorithm (P/LP/VUS/LB/B)</td>
+</tr>
+<tr class="odd">
+<td>15. <code>CPSR_PATHOGENICITY_SCORE</code>
+</td>
+<td>Aggregated pathogenicity score by CPSR’s algorithm</td>
+</tr>
+<tr class="even">
+<td>16. <code>ACMG_CODE</code>
+</td>
+<td>Combination of ACMG/AMP evidence codes assigned to the variant by
+CPSR</td>
+</tr>
+<tr class="odd">
+<td>17. <code>CLINVAR_CLASSIFICATION</code>
+</td>
+<td>Clinical significance of ClinVar-recorded variant (five-level
+scheme)</td>
+</tr>
+<tr class="even">
+<td>18. <code>BM_CANCER_TYPE</code>
+</td>
+<td>Annotated cancer type for biomarker - from CIViC</td>
+</tr>
+<tr class="odd">
+<td>19. <code>BM_DISEASE_ONTOLOGY_ID</code>
+</td>
+<td>Disease ontology id for cancer type - from CIViC</td>
+</tr>
+<tr class="even">
+<td>20. <code>BM_PRIMARY_SITE</code>
+</td>
+<td>Primary tumor type of cancer type - mapped with <a href="https://github.com/sigven/phenOncoX" class="external-link">phenOncoX</a>
+</td>
+</tr>
+<tr class="odd">
+<td>21. <code>BM_CLINICAL_SIGNIFICANCE</code>
+</td>
+<td>Clinical significance of biomarker (drug sensitivity, drug
+resistance, poor outcome etc.) - from CIViC</td>
+</tr>
+<tr class="even">
+<td>22. <code>BM_THERAPEUTIC_CONTEXT</code>
+</td>
+<td>Cancer drugs associated with biomarker (for biomarkers related to
+drug sensitivity/resistance) - from CIViC</td>
+</tr>
+<tr class="odd">
+<td>23. <code>BM_CITATION</code>
+</td>
+<td>Reference/source for biomarker - i.e. publication or guidelines -
+from CIViC</td>
+</tr>
+<tr class="even">
+<td>24. <code>BM_RATING</code>
+</td>
+<td>Rating of biomarker - from CIViC</td>
+</tr>
+<tr class="odd">
+<td>25. <code>BM_MOLECULAR_PROFILE</code>
+</td>
+<td>Associated name of molecular profile - i.e. “BRCA mutation” - from
+CIViC</td>
+</tr>
+<tr class="even">
+<td>26. <code>BM_EVIDENCE_TYPE</code>
+</td>
+<td>Biomarker type - <em>Predictive</em>, <em>Diagnostic</em>,
+<em>Prognostic</em>, <em>Predisposing</em> - from CIViC</td>
+</tr>
+<tr class="odd">
+<td>27. <code>BM_EVIDENCE_LEVEL</code>
+</td>
+<td>Strength of evidence for the given biomarker - <em>A</em> to
+<em>D</em> - from CIViC</td>
+</tr>
+<tr class="even">
+<td>28. <code>BM_EVIDENCE_DIRECTION</code>
+</td>
+<td>Direction of biomarker evidence, i.e. <em>Supports</em> or <em>Does
+Not Support</em> - from CIViC</td>
+</tr>
+<tr class="odd">
+<td>29. <code>BM_EVIDENCE_DESCRIPTION</code>
+</td>
+<td>Description of biomarker - from CIViC</td>
+</tr>
+<tr class="even">
+<td>30. <code>BM_SOURCE_DB</code>
+</td>
+<td>Biomarker source database - CIViC</td>
+</tr>
+<tr class="odd">
+<td>31. <code>BM_EVIDENCE_ID</code>
+</td>
+<td>Evidence identifier - from CIViC</td>
+</tr>
+<tr class="even">
+<td>32. <code>BM_VARIANT_ORIGIN</code>
+</td>
+<td>Origin of biomarker variant - <em>germline</em>
+</td>
+</tr>
+<tr class="odd">
+<td>33. <code>BM_MATCH</code>
+</td>
+<td>Match between sample variant and biomarker -
+<em>by_genomic_coord</em>, <em>by_hgvsp_principal</em>,
+<em>by_gene_mut_lof</em> etc.</td>
+</tr>
+<tr class="even">
+<td>34. <code>BM_RESOLUTION</code>
+</td>
+<td>Highest resolution of mapping between sample variant and biomarker -
+<em>genomic</em>, <em>hgvsp</em>, <em>codon</em>, <em>gene</em>
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="section level4">
 <h4 id="pharmacogenetic-findings">
@@ -1913,6 +2142,195 @@ The file has the following naming convention:</p>
 <ul>
 <li><code>&lt;sample_id&gt;.cpsr.&lt;genome_assembly&gt;.pgx_findings.tsv.gz</code></li>
 </ul>
+<p>The following variables are included in the pharmacogenetic findings
+TSV file:</p>
+<table class="table">
+<colgroup>
+<col width="43%">
+<col width="56%">
+</colgroup>
+<thead><tr class="header">
+<th>Variable</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>1. <code>SAMPLE_ID</code>
+</td>
+<td>Sample identifier</td>
+</tr>
+<tr class="even">
+<td>2. <code>GENOMIC_CHANGE</code>
+</td>
+<td>Identifier for variant at the genome (VCF) level,
+e.g. <code>1:g.152382569A&gt;G</code>
+</td>
+</tr>
+<tr class="odd">
+<td>3. <code>GENOTYPE</code>
+</td>
+<td>Variant genotype (het/hom_ref/hom_alt)</td>
+</tr>
+<tr class="even">
+<td>4. <code>DP_CONTROL</code>
+</td>
+<td>Sequencing depth at variant site (‘DP’)</td>
+</tr>
+<tr class="odd">
+<td>5. <code>GENOME_VERSION</code>
+</td>
+<td>Assembly version, e.g. grch37/grch38</td>
+</tr>
+<tr class="even">
+<td>6. <code>VARIANT_CLASS</code>
+</td>
+<td>Variant type, e.g. SNV/insertion/deletion</td>
+</tr>
+<tr class="odd">
+<td>7. <code>SYMBOL</code>
+</td>
+<td>Gene symbol</td>
+</tr>
+<tr class="even">
+<td>8. <code>GENENAME</code>
+</td>
+<td>Gene description</td>
+</tr>
+<tr class="odd">
+<td>9. <code>CONSEQUENCE</code>
+</td>
+<td>Variant consequence</td>
+</tr>
+<tr class="even">
+<td>10. <code>PROTEIN_CHANGE</code>
+</td>
+<td>Protein change - one letter abbreviation (HGVSp)</td>
+</tr>
+<tr class="odd">
+<td>11. <code>CLINVAR_CLASSIFICATION</code>
+</td>
+<td>Clinical significance of ClinVar-recorded variant (five-level
+scheme)</td>
+</tr>
+<tr class="even">
+<td>12. <code>CLINVAR_MSID</code>
+</td>
+<td>Measureset identifier of ClinVar variant</td>
+</tr>
+<tr class="odd">
+<td>13. <code>CLINVAR_VARIANT_ORIGIN</code>
+</td>
+<td>Variant origin (somatic/germline) of ClinVar variant</td>
+</tr>
+<tr class="even">
+<td>14. <code>CLINVAR_CONFLICTED</code>
+</td>
+<td>Indicator of conflicting interpretations in ClinVar</td>
+</tr>
+<tr class="odd">
+<td>15. <code>CLINVAR_PHENOTYPE</code>
+</td>
+<td>Associated phenotype(s) for ClinVar variant</td>
+</tr>
+<tr class="even">
+<td>16. <code>CLINVAR_GOLD_STARS</code>
+</td>
+<td>Review confidence rating of the ClinVar variant (0–4 gold
+stars)</td>
+</tr>
+<tr class="odd">
+<td>17. <code>ENSEMBL_GENE_ID</code>
+</td>
+<td>Ensembl gene identifier</td>
+</tr>
+<tr class="even">
+<td>18. <code>ENSEMBL_TRANSCRIPT_ID</code>
+</td>
+<td>Ensembl transcript identifier</td>
+</tr>
+<tr class="odd">
+<td>19. <code>REFSEQ_TRANSCRIPT_ID</code>
+</td>
+<td>RefSeq mRNA identifier</td>
+</tr>
+<tr class="even">
+<td>20. <code>PFAM_DOMAIN_NAME</code>
+</td>
+<td>Protein domain name (Pfam)</td>
+</tr>
+<tr class="odd">
+<td>21. <code>HGVSp</code>
+</td>
+<td>The HGVS protein sequence name</td>
+</tr>
+<tr class="even">
+<td>22. <code>HGVSc</code>
+</td>
+<td>The HGVS coding sequence name</td>
+</tr>
+<tr class="odd">
+<td>23. <code>HGVSc_RefSeq</code>
+</td>
+<td>The HGVS coding sequence name (RefSeq - MANE Select)</td>
+</tr>
+<tr class="even">
+<td>24. <code>CDS_CHANGE</code>
+</td>
+<td>Coding, transcript-specific sequence annotation</td>
+</tr>
+<tr class="odd">
+<td>25. <code>CODING_STATUS</code>
+</td>
+<td>coding/noncoding (wrt. protein alteration and canonical splice site
+disruption)</td>
+</tr>
+<tr class="even">
+<td>26. <code>MUTATION_HOTSPOT</code>
+</td>
+<td>Cancer mutation hotspot (cancerhotspots.org)</td>
+</tr>
+<tr class="odd">
+<td>27. <code>EFFECT_PREDICTIONS</code>
+</td>
+<td>Functional effect predictions from multiple algorithms (dbNSFP)</td>
+</tr>
+<tr class="even">
+<td>28. <code>SPLICE_EFFECT</code>
+</td>
+<td>Splice effect annotations from MutSpliceDB and MaxEntScan</td>
+</tr>
+<tr class="odd">
+<td>29. <code>LOSS_OF_FUNCTION</code>
+</td>
+<td>Loss-of-function variant</td>
+</tr>
+<tr class="even">
+<td>30. <code>LOF_FILTER</code>
+</td>
+<td>Loss-of-function filter</td>
+</tr>
+<tr class="odd">
+<td>31. <code>NULL_VARIANT</code>
+</td>
+<td>Frameshift or stop-gain variant</td>
+</tr>
+<tr class="even">
+<td>32. <code>DBSNP_RSID</code>
+</td>
+<td>dbSNP identifier (rsid)</td>
+</tr>
+<tr class="odd">
+<td>33. <code>gnomADe_AF</code>
+</td>
+<td>Global allele frequency in gnomAD controls (exome set, v4.1)</td>
+</tr>
+<tr class="even">
+<td>34. <code>gnomADg_AF</code>
+</td>
+<td>Global allele frequency in gnomAD controls (genome set, v4.1)</td>
+</tr>
+</tbody>
+</table>
 <p><br><br></p>
 </div>
 </div>

@@ -200,7 +200,7 @@ Required arguments:
                         VCF input file with small germline DNA variants (SNVs/InDels).
   --vep_dir VEP_DIR     Directory of VEP cache, e.g. $HOME/.vep
   --refdata_dir REFDATA_DIR
-                        Directory that contains the PCGR/CPSR reference data, e.g. ~/pcgr-data-2.2.0
+                        Directory that contains the PCGR/CPSR reference data, e.g. ~/pcgr-data-2.3.0
   --output_dir OUTPUT_DIR
                         Output directory
   --genome_assembly {grch37,grch38}
@@ -266,7 +266,7 @@ Panel options:
                         For panel_id's 1-44 (Genomics England PanelApp) - consider genes with a GREEN status only, default: False
 
 Variant classification options:
-  --secondary_findings  Include variants found in ACMG-recommended list for secondary findings (v3.2), default: False
+  --secondary_findings  Include variants found in ACMG-recommended list for secondary findings (v3.3), default: False
   --pgx_findings        Report overlap with variants associated with chemotherapy toxicity (PgX findings, CPIC), default: False
   --gwas_findings       Report overlap with low to moderate cancer risk variants (tag SNPs) identified from genome-wide
                         association studies, default: False
@@ -303,8 +303,6 @@ vcfanno options:
                         Number of vcfanno processes (option '-p' in vcfanno), default: 4
 
 Other options:
-  --input_sv_vcf INPUT_SV_VCF
-                        VCF input file with structural germline DNA variants (SVs) - optional
   --force_overwrite     By default, the script will fail with an error if any output file already exists.
                         You can force the overwrite of existing result files by using this flag, default: False
   --version             show program's version number and exit
@@ -335,10 +333,10 @@ the virtual gene panel, can be performed through the following command:
 $ (base) conda activate pcgr
 $ (pcgr)
 cpsr \
-     --input_vcf ~/cpsr-2.2.0/inst/examples/example.vcf.gz \
+     --input_vcf ~/cpsr-2.3.0/inst/examples/example.vcf.gz \
      --vep_dir ~/.vep \
      --refdata_dir ~/pcgr_ref_data \
-     --output_dir ~/cpsr-2.2.0/ \
+     --output_dir ~/cpsr-2.3.0/ \
      --genome_assembly grch37 \
      --panel_id 1 \
      --sample_id example \
@@ -377,3 +375,9 @@ folder:
 7.  **example.cpsr.grch37.classification.tsv.gz** - TSV file with key
     annotations of germline SNVs/InDels classified according to clinical
     significance
+8.  **example.cpsr.grch37.secondary_findings.tsv.gz** - TSV file with
+    key annotations of variants found in ACMG-recommended list for
+    secondary findings (v3.3)
+9.  **example.cpsr.grch37.pgx_findings.tsv.gz** - TSV file with key
+    annotations of variants associated with chemotherapy toxicity (PgX
+    findings, CPIC)
