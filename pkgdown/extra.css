@@ -1,9 +1,9 @@
-/* CPSR feature carousel */
 
 .navbar .nav-text,
 .navbar .nav-text[class*="text-"] {
   color: #FFFFFF !important;
 }
+/* CPSR feature carousel */
 
 #cpsrCarousel { border: 1px solid #ccc; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,.12); }
 #cpsrCarousel .carousel-item { background: #fff; }

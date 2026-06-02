@@ -119,7 +119,6 @@ rt_cell_bm_significance <- function(color_palette) {
   }
 }
 
-# ---------------------------------------------------------------------------
 
 #' Prepare unified variant dataset for single-table display
 #'
@@ -448,7 +447,7 @@ create_unified_variant_reactable <- function(
     ),
     gnomADg_AF = reactable::colDef(
       name = "gnomADg AF",
-      minWidth = 120,
+      minWidth = 100,
       sticky = "left",
       cell = function(value) {
         if (is.na(value)) return("-")
@@ -458,7 +457,7 @@ create_unified_variant_reactable <- function(
     ),
     CONSEQUENCE = reactable::colDef(
       name = "Consequence",
-      minWidth = 120
+      minWidth = 140
     ),
     ALTERATION = reactable::colDef(
       name = "Alteration",

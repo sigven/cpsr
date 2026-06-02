@@ -13,6 +13,7 @@ The *Cancer Predisposition Sequencing Reporter (CPSR)* is a computational workfl
 The CPSR workflow is integrated with the framework that underlies the [Personal Cancer Genome Reporter - PCGR](https://github.com/sigven/pcgr). While *PCGR* is intended for reporting and analysis of somatic variants detected in a tumor, *CPSR* is intended for reporting and ranking of germline variants in protein-coding genes that are implicated in cancer predisposition and inherited cancer syndromes.
 
 Snapshots of sections in the [quarto](https://quarto.org)-based cancer predisposition genome report (artificial sample, with more findings than usual) are shown below:
+<br>
 
 ![](pkgdown/assets/img/cpsr_report_views.png)
 
