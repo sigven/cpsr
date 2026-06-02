@@ -17,9 +17,29 @@ implications in cancer, as well as optional detection of variants related to adv
 
 The CPSR workflow is integrated with the framework that underlies [Personal Cancer Genome Reporter - PCGR ](https://github.com/sigven/pcgr). While *PCGR* is intended for reporting and analysis of somatic variants detected in a tumor, *CPSR* is intended for reporting and ranking of germline variants in protein-coding genes that are implicated in cancer predisposition and inherited cancer syndromes.
 
-Snapshots of sections in the [quarto](https://quarto.org)-based cancer predisposition genome report (artificial sample, with more findings than usual):
+Four snapshots of sections in the [quarto](https://quarto.org)-based cancer predisposition genome report (artificial sample, with more findings than usual):
 
-![CPSR views](img/cpsr_sc.png)
+<br>
+
+<div id="cpsrCarousel" class="carousel slide" data-bs-interval="false">
+<div class="carousel-inner">
+<div class="carousel-item active"><img src="img/cpsr_panel_summary.png" class="d-block w-100" alt="Virtual gene panel &amp; summary of findings"></div>
+<div class="carousel-item"><img src="img/cpsr_variant_classification.png" class="d-block w-100" alt="Variant classification"></div>
+<div class="carousel-item"><img src="img/cpsr_biomarkers.png" class="d-block w-100" alt="Genomic biomarkers"></div>
+<div class="carousel-item"><img src="img/cpsr_pgx_secondary.png" class="d-block w-100" alt="Pharmacogenetic &amp; secondary findings"></div>
+</div>
+<div class="carousel-indicators">
+<button type="button" data-bs-target="#cpsrCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Virtual gene panel"></button>
+<button type="button" data-bs-target="#cpsrCarousel" data-bs-slide-to="1" aria-label="Variant classification"></button>
+<button type="button" data-bs-target="#cpsrCarousel" data-bs-slide-to="2" aria-label="Genomic biomarkers"></button>
+<button type="button" data-bs-target="#cpsrCarousel" data-bs-slide-to="3" aria-label="Secondary findings"></button>
+</div>
+</div>
+<script>
+document.getElementById('cpsrCarousel').querySelector('.carousel-inner').addEventListener('click', function() {
+bootstrap.Carousel.getOrCreateInstance(document.getElementById('cpsrCarousel')).next();
+});
+</script>
 
 <br>
 

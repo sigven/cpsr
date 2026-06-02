@@ -14,7 +14,7 @@ The CPSR workflow is integrated with the framework that underlies the [Personal 
 
 Snapshots of sections in the [quarto](https://quarto.org)-based cancer predisposition genome report (artificial sample, with more findings than usual) are shown below:
 
-![CPSR views](pkgdown/assets/img/cpsr_sc.png)
+![CPSR views](pkgdown/assets/img/cpsr_views2.png)
 
 ## News
 
