@@ -3,19 +3,9 @@ title: "Variant classification"
 output: rmarkdown::html_document
 ---
 
-All coding variants in the set of genes subject to screening are classified according to a *standard, five-level pathogenicity scheme* (coined **CPSR_CLASSIFICATION**). The scheme has the same five levels as those employed by ClinVar, i.e.
-
-* pathogenic (**P**)
-* likely pathogenic (**LP**)
-* variant of uncertain significance (**VUS**)
-* likely benign (**LB**)
-* benign (**B**)
-
-By default, the presence of a non-conflicting ClinVar classification (**CLINVAR_CLASSIFICATION**) for a given variant will have precedence over the CPSR classification, i.e. if a variant has a ClinVar classification it will be reported as such in the CPSR report. However, users can choose the CPSR classification for all variants regardless of existing classifications (see [CPSR settings](settings.md#variant-classification-settings) for more information).
-
-The classification performed by CPSR is rule-based, implementing most of the ACMG criteria related to *variant effect* and *population frequency*, which have been outlined in [SherLoc](https://www.invitae.com/en/variant-classification/) ([Nykamp et al., Genetics in Medicine, 2017](https://www.ncbi.nlm.nih.gov/pubmed/28492532)), and also some in [CharGer](https://github.com/ding-lab/CharGer). Information on cancer predisposition genes (mode of inheritance, loss-of-funcion mechanism etc.) is largely harvested from [Maxwell et al., Am J Hum Genet, 2016](https://www.ncbi.nlm.nih.gov/pubmed/27153395).
-
-The ACMG/AMP criteria listed below form the basis for the tier assigned to the **CPSR_CLASSIFICATION** variable. Specifically, the **score** in parenthesis indicates how much each evidence item contributes to either of the two pathogenicity poles (positive values indicate pathogenic support, negative values indicate benign support). Evidence score along each pole ('B' and 'P') are aggregated, and if there is conflicting or little evidence it will be classified as a VUS. This classification scheme has been adopted by the one outlined in [SherLoc](https://www.ncbi.nlm.nih.gov/pubmed/28492532).
+```{r synopsis, echo=FALSE, results='asis'}
+cat(cpsr::variant_classification_synopsis_doc_note(quarto = FALSE))
+```
 
 ```{r, echo=FALSE, results='asis'}
 
@@ -38,9 +28,21 @@ while(i <= NROW(cpsr::acmg$evidence_codes)){
 
 ```
 
-<br>
-As of May 2026, based on a calibration against ClinVar-classified variants (minimum two review status stars) in n = 105 core cancer predisposition genes, the clinical significance (**CPSR_CLASSIFICATION**) is determined based on the following ranges of pathogenicity scores:
+## Calibration of classification thresholds
 
-<br>
+```{r thresholds_intro, echo=FALSE, results='asis'}
+cat(cpsr::classification_thresholds_intro_doc_note())
+```
 
-![cpsr classification](../img/cpsr_classification.png)
+```{r classification_plot, echo=FALSE}
+knitr::include_graphics("../man/figures/CPSR_classification_score_thresholds.png")
+```
+
+The following thresholds are currently used to assign classifications based on
+pathogenicity scores:
+
+`r knitr::kable(cpsr::acmg[['score2tier']])`
+
+```{r thresholds_outro, echo=FALSE, results='asis'}
+cat(cpsr::classification_thresholds_outro_doc_note())
+```

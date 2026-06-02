@@ -1,6 +1,6 @@
 ## Documentation
 
-This report is intended for interpretation of inherited DNA variants implicated with cancer susceptibility and inherited cancer syndromes. The set of classified variants are limited to those overlapping a user-defined set of known cancer predisposition target genes (i.e. _virtual panel_).
+`r cpsr::cpsr_intro_doc_note()`
 
 <br>
 
@@ -93,16 +93,7 @@ for(i in 1:NROW(ref_datasets)){
 
 ::: {.callout-note title="Synopsis" collapse="true"}
 
-Variants in the cancer predisposition gene set are classified through two complementary assertion authorities:
-
-- <b style="color:#e65100;">CPSR</b> — All coding variants are classified *de novo* by CPSR according to a <i>five-level pathogenicity scheme</i> (*CPSR_CLASSIFICATION*): pathogenic / likely pathogenic / VUS / likely benign / benign. The classification is rule-based, implementing a key subset of published **ACMG/AMP criteria**. Gene-level attributes relevant to pathogenicity assessment — including mode of inheritance and mechanism of disease (loss-of-function vs. gain-of-function) — are sourced from [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk/), [Maxwell et al., Am J Hum Genet, 2016](https://www.ncbi.nlm.nih.gov/pubmed/27153395), and [Huang et al., Cell, 2018](https://www.ncbi.nlm.nih.gov/pubmed/29625052). Importantly, note that some ACMG/AMP criteria have been accommodated with gene-specific recommendations:
-     * BA1/BS1/PM2 allele-specific thresholds (as specified in by [ClinGen VCEPs](https://cspec.genome.network/cspec/ui/svi/) for key cancer-predisposing genes, i.e. BRCA1/2, MMR genes, PALB2, APC, ATM, PTEN, TP53).
-     * PM4 - exceptions for TP53 and ATM
-     * PM1 - regional considerations for matching against TP53 and PTEN, and exceptions for PALB2, ATM, APC, MMR genes and BRCA1/2
-
-- <b style="color:#0277bd;">ClinVar</b> — For variants with an existing record in [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/), the ClinVar interpretation may override the CPSR-computed classification as the final reported verdict. Whether this override applies depends on the *clinvar_trust_level* setting: at higher trust levels, only classifications backed by expert panel review or multiple submitters with no conflicts are accepted; at lower trust levels, a broader set of ClinVar submissions is considered sufficient to override CPSR. If a variant's ClinVar record does not meet the configured trust threshold, the CPSR rule-based classification is retained as the final call.
-
-The ACMG/AMP criteria listed in @nte-table-criteria form the basis for the *CPSR_CLASSIFICATION* variable. The <i>score</i> column indicates how much each evidence item contributes to either of the two pathogenicity poles (positive values indicate pathogenic support, negative values indicate benign support). Scores along each pole ('B' and 'P') are aggregated and represented through the *CPSR_PATHOGENICITY_SCORE* variable. See @nte-threshold-calibration on how CPSR establishes optimal thresholds for converting pathogenicity scores to categorical classification levels.
+`r cpsr::variant_classification_synopsis_doc_note(quarto = TRUE)`
 
 :::
 
@@ -155,22 +146,20 @@ DT::datatable(data,
 
 ::: {.callout-note title="Use of gnomAD in variant classification - ACMG/AMP" collapse="true" #nte-gnomad}
 
-CPSR is primarily using the non-cancer subset of gnomAD (v3.1.2) for variant allele frequency estimates in its classification procedure. In the cases where there are _no reported variation/allele frequencies_ in the non-cancer subset (gnomAD v3.1.2), CPSR considers frequencies in the general and more comprehensive gnomAD dataset (v4.1.0) as _a safeguard_, specifically for the application of the __PM2__, __BA1__ and __BS1__ criteria.
+`r cpsr::gnomad_germline_doc_note()`
 
 :::
 
 ::: {.callout-note title="Calibration of classification thresholds - ACMG/AMP" collapse="true" #nte-threshold-calibration}
 
-How does CPSR assign a standard classification label (<i>P, LP, VUS, LB, B</i>) from the aggregated variant pathogenicity score (<i>CPSR_PATHOGENICITY_SCORE</i>)?
-
-Optimal thresholds for conversion of pathogenicity scores to categorical variant classification were calibrated through high-quality ClinVar-classified variants (__minimum two gold stars__ with respect to review status) in a core set of cancer predisposition genes (see plot below). 
+`r cpsr::classification_thresholds_intro_doc_note()`
 
 ```{r classification_plot}
 #| echo: false
 #| eval: true
 
-classification_calibration_plot_fname_path <- 
-  system.file("extdata", "CPSR_classification_score_thresholds.png", 
+classification_calibration_plot_fname_path <-
+  system.file("extdata", "CPSR_classification_score_thresholds.png",
               package = "cpsr")
 ```
 
@@ -186,10 +175,7 @@ The following thresholds are currently used to assign classifications based on p
 
 <br>
 
-Although the final CPSR pathogenicity score per variant is derived from a summation of matching evidence scores/weights, certain weights are downgraded in particular contexts. Specifically, the weight provided by supportive computational predictions (e.g. __PP3__, __BP4__) will not count towards the final pathogenicity score if no other weight is provided by other criteria.
-Also, if a variant has only a single (non-strong, i.e. moderate/supporting) pathogenic evidence criterion matching, yet reaching CPSR's likely pathogenic score threshold, it will be downgraded to a VUS in order to avoid overclassification based on limited evidence (in line with ACMG/AMP guidelines).
-
-Note that the score thresholds above may be subject to change in future CPSR releases, as we continue to refine and optimize our classification algorithm based on emerging evidence and user feedback.
+`r cpsr::classification_thresholds_outro_doc_note()`
 
 <br>
 
