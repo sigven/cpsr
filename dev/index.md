@@ -40,13 +40,19 @@ is intended for reporting and ranking of germline variants in
 protein-coding genes that are implicated in cancer predisposition and
 inherited cancer syndromes.
 
-Snapshots of sections in the [quarto](https://quarto.org)-based cancer
-predisposition genome report (artificial sample, with more findings than
-usual):
+Four snapshots of sections in the [quarto](https://quarto.org)-based
+cancer predisposition genome report (artificial sample, with more
+findings than usual):
 
-![CPSR views](img/cpsr_sc.png)
+  
 
-CPSR views
+![Virtual gene panel & summary of findings](img/cpsr_panel_summary.png)
+
+![Variant classification](img/cpsr_variant_classification.png)
+
+![Genomic biomarkers](img/cpsr_biomarkers.png)
+
+![Pharmacogenetic & secondary findings](img/cpsr_pgx_secondary.png)
 
   
 

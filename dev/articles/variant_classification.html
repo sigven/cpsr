@@ -14,7 +14,8 @@
 <link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Variant classification">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
+<meta property="og:title" content="Variant classification">
 <meta name="robots" content="noindex">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-FYKTRC4655"></script><script>
    window.dataLayer = window.dataLayer || [];
@@ -32,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">CPSR</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.2.5.9008</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.2.5.9009</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,41 +82,52 @@
 
     
     
-<p>All coding variants in the set of genes subject to screening are
-classified according to a <em>standard, five-level pathogenicity
-scheme</em> (coined <strong>CPSR_CLASSIFICATION</strong>). The scheme
-has the same five levels as those employed by ClinVar, i.e.</p>
+<p>Variants in the cancer predisposition gene set are classified through
+two complementary assertion authorities:</p>
 <ul>
-<li>pathogenic (<strong>P</strong>)</li>
-<li>likely pathogenic (<strong>LP</strong>)</li>
-<li>variant of uncertain significance (<strong>VUS</strong>)</li>
-<li>likely benign (<strong>LB</strong>)</li>
-<li>benign (<strong>B</strong>)</li>
+<li>
+<b style="color:#e65100;">CPSR</b> — All coding variants are
+classified <em>de novo</em> by CPSR according to a <i>five-level
+pathogenicity scheme</i> (<em>CPSR_CLASSIFICATION</em>): pathogenic /
+likely pathogenic / VUS / likely benign / benign. The classification is
+rule-based, implementing a key subset of published <strong>ACMG/AMP
+criteria</strong>. Gene-level attributes relevant to pathogenicity
+assessment — including mode of inheritance and mechanism of disease
+(loss-of-function vs. gain-of-function) — are sourced from <a href="https://panelapp.genomicsengland.co.uk/" class="external-link">Genomics England
+PanelApp</a>, <a href="https://www.ncbi.nlm.nih.gov/pubmed/27153395" class="external-link">Maxwell et al., Am J
+Hum Genet, 2016</a>, and <a href="https://www.ncbi.nlm.nih.gov/pubmed/29625052" class="external-link">Huang et al., Cell,
+2018</a>. Importantly, note that some ACMG/AMP criteria have been
+accommodated with gene-specific recommendations:
+<ul>
+<li>BA1/BS1/PM2 allele-specific thresholds (as specified by <a href="https://cspec.genome.network/cspec/ui/svi/" class="external-link">ClinGen VCEPs</a> for
+key cancer-predisposing genes, i.e. BRCA1/2, MMR genes, PALB2, APC, ATM,
+PTEN, TP53).</li>
+<li>PM4 - exceptions for TP53 and ATM</li>
+<li>PM1 - regional considerations for matching against TP53 and PTEN,
+and exceptions for PALB2, ATM, APC, MMR genes and BRCA1/2</li>
 </ul>
-<p>By default, the presence of a non-conflicting ClinVar classification
-(<strong>CLINVAR_CLASSIFICATION</strong>) for a given variant will have
-precedence over the CPSR classification, i.e. if a variant has a ClinVar
-classification it will be reported as such in the CPSR report. However,
-users can choose the CPSR classification for all variants regardless of
-existing classifications (see <a href="settings.html#variant-classification-settings">CPSR settings</a> for
-more information).</p>
-<p>The classification performed by CPSR is rule-based, implementing most
-of the ACMG criteria related to <em>variant effect</em> and
-<em>population frequency</em>, which have been outlined in <a href="https://www.invitae.com/en/variant-classification/" class="external-link">SherLoc</a>
-(<a href="https://www.ncbi.nlm.nih.gov/pubmed/28492532" class="external-link">Nykamp et al.,
-Genetics in Medicine, 2017</a>), and also some in <a href="https://github.com/ding-lab/CharGer" class="external-link">CharGer</a>. Information on
-cancer predisposition genes (mode of inheritance, loss-of-funcion
-mechanism etc.) is largely harvested from <a href="https://www.ncbi.nlm.nih.gov/pubmed/27153395" class="external-link">Maxwell et al., Am J
-Hum Genet, 2016</a>.</p>
-<p>The ACMG/AMP criteria listed below form the basis for the tier
-assigned to the <strong>CPSR_CLASSIFICATION</strong> variable.
-Specifically, the <strong>score</strong> in parenthesis indicates how
-much each evidence item contributes to either of the two pathogenicity
-poles (positive values indicate pathogenic support, negative values
-indicate benign support). Evidence score along each pole (‘B’ and ‘P’)
-are aggregated, and if there is conflicting or little evidence it will
-be classified as a VUS. This classification scheme has been adopted by
-the one outlined in <a href="https://www.ncbi.nlm.nih.gov/pubmed/28492532" class="external-link">SherLoc</a>.</p>
+</li>
+<li>
+<b style="color:#0277bd;">ClinVar</b> — For variants with an
+existing record in <a href="https://www.ncbi.nlm.nih.gov/clinvar/" class="external-link">ClinVar</a>, the ClinVar
+interpretation may override the CPSR-computed classification as the
+final reported verdict. Whether this override applies depends on the
+<em>clinvar_trust_level</em> setting: at higher trust levels, only
+classifications backed by expert panel review or multiple submitters
+with no conflicts are accepted; at lower trust levels, a broader set of
+ClinVar submissions is considered sufficient to override CPSR. If a
+variant’s ClinVar record does not meet the configured trust threshold,
+the CPSR rule-based classification is retained as the final call.</li>
+</ul>
+<p>The ACMG/AMP criteria listed in the criteria table below form the
+basis for the <em>CPSR_CLASSIFICATION</em> variable. The <i>score</i>
+column indicates how much each evidence item contributes to either of
+the two pathogenicity poles (positive values indicate pathogenic
+support, negative values indicate benign support). Scores along each
+pole (‘B’ and ‘P’) are aggregated and represented through the
+<em>CPSR_PATHOGENICITY_SCORE</em> variable. See the calibration section
+below on how CPSR establishes optimal thresholds for converting
+pathogenicity scores to categorical classification levels.</p>
 <table class="table">
 <colgroup>
 <col width="35%">
@@ -222,14 +234,63 @@ disease mechanism.</td>
 </tr>
 </tbody>
 </table>
-<p><br> As of September 2025, based on a calibration against
-ClinVar-classified variants (minimum two review status stars) in n = 105
-core cancer predisposition genes, the clinical significance
-(<strong>CPSR_CLASSIFICATION</strong>) is determined based on the
-following ranges of pathogenicity scores:</p>
-<p><br></p>
-<div class="float">
-<img src="../img/cpsr_classification.png" alt="cpsr classification"><div class="figcaption">cpsr classification</div>
+<div class="section level2">
+<h2 id="calibration-of-classification-thresholds">Calibration of classification thresholds<a class="anchor" aria-label="anchor" href="#calibration-of-classification-thresholds"></a>
+</h2>
+<p>How does CPSR assign a standard classification label (<i>P, LP, VUS,
+LB, B</i>) from the aggregated variant pathogenicity score
+(<i>CPSR_PATHOGENICITY_SCORE</i>)?</p>
+<p>Optimal thresholds for conversion of pathogenicity scores to
+categorical variant classification were calibrated through high-quality
+ClinVar-classified variants (<strong>minimum two gold stars</strong>
+with respect to review status) in a core set of cancer predisposition
+genes (see plot below).</p>
+<p><img src="../reference/figures/CPSR_classification_score_thresholds.png" class="r-plt" alt="" width="2200"></p>
+<p>The following thresholds are currently used to assign classifications
+based on pathogenicity scores:</p>
+<table class="table">
+<thead><tr class="header">
+<th align="left">CPSR_CLASSIFICATION</th>
+<th align="left">CPSR_PATHOGENICITY_SCORE</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Pathogenic</td>
+<td align="left"><b>[4, ]</b></td>
+</tr>
+<tr class="even">
+<td align="left">Likely Pathogenic</td>
+<td align="left"><b>[2, 3]</b></td>
+</tr>
+<tr class="odd">
+<td align="left">VUS</td>
+<td align="left"><b>[0, 1]</b></td>
+</tr>
+<tr class="even">
+<td align="left">Likely Benign</td>
+<td align="left"><b>[-3, -1]</b></td>
+</tr>
+<tr class="odd">
+<td align="left">Benign</td>
+<td align="left"><b>[, -4]</b></td>
+</tr>
+</tbody>
+</table>
+<p>Although the final CPSR pathogenicity score per variant is derived
+from a summation of matching evidence scores/weights, certain weights
+are downgraded in particular contexts. Specifically, the weight provided
+by supportive computational predictions (e.g. <strong>PP3</strong>,
+<strong>BP4</strong>) will not count towards the final pathogenicity
+score if no other weight is provided by other criteria. Also, if a
+variant has only a single (non-strong, i.e. moderate/supporting)
+pathogenic evidence criterion matching, yet reaching CPSR’s likely
+pathogenic score threshold, it will be downgraded to a VUS in order to
+avoid overclassification based on limited evidence (in line with
+ACMG/AMP guidelines).</p>
+<p>Note that the score thresholds above may be subject to change in
+future CPSR releases, as we continue to refine and optimize our
+classification algorithm based on emerging evidence and user
+feedback.</p>
 </div>
   </main>
 </div>

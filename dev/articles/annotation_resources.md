@@ -27,12 +27,12 @@
 - [ClinVar](http://www.ncbi.nlm.nih.gov/clinvar/) - database of
   clinically related variants (May 2026)
 - [CIViC](https://civicdb.org) - clinical interpretations of variants in
-  cancer (March 2026)
+  cancer (May 2026)
 
 ### Protein domains/functional features
 
 - [UniProt/SwissProt KnowledgeBase](http://www.uniprot.org) - resource
-  on protein sequence and functional information (2025_01)
+  on protein sequence and functional information (2026_01)
 - [Pfam](http://pfam.xfam.org) - database of protein families and
   domains (v37.0)
 
@@ -41,7 +41,7 @@
 - [CancerMine](http://bionlp.bcgsc.ca/cancermine/) - Literature-mined
   database of tumor suppressor genes/proto-oncogenes (v51, August 2025)
 - [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk) -
-  cancer phenotype panels as of April 2026
+  cancer phenotype panels as of May 2026
 - [CanVar UK](https://canvaruk.org/) - genes implicated with cancer
   susceptibility (v2.2)
 

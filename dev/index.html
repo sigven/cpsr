@@ -14,7 +14,8 @@
 <link href="deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Cancer Predisposition Sequencing Reporter (CPSR)">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
+<meta property="og:title" content="Cancer Predisposition Sequencing Reporter (CPSR)">
 <meta name="description" content="CPSR is a computational workflow that interprets germline variants identified from next-generation sequencing in the context of cancer predisposition. The workflow is integrated with the framework that underlies the Personal Cancer Genome Reporter (PCGR - https://github.com/sigven/pcgr). While PCGR is intended for reporting and analysis of somatic variants detected in a tumor, CPSR is intended for reporting and ranking of germline variants in protein-coding genes that are implicated in cancer predisposition and inherited cancer syndromes.">
 <meta property="og:description" content="CPSR is a computational workflow that interprets germline variants identified from next-generation sequencing in the context of cancer predisposition. The workflow is integrated with the framework that underlies the Personal Cancer Genome Reporter (PCGR - https://github.com/sigven/pcgr). While PCGR is intended for reporting and analysis of somatic variants detected in a tumor, CPSR is intended for reporting and ranking of germline variants in protein-coding genes that are implicated in cancer predisposition and inherited cancer syndromes.">
 <meta property="og:image" content="https://sigven.github.io/cpsr/logo.png">
@@ -35,7 +36,7 @@
 
     <a class="navbar-brand me-2" href="index.html">CPSR</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.2.5.9008</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.2.5.9009</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,11 +92,39 @@
 <strong>Interactive HTML output report</strong> with detailed variant information, gene annotations, and external links to relevant databases</li>
 </ol>
 <p>The CPSR workflow is integrated with the framework that underlies <a href="https://github.com/sigven/pcgr" class="external-link">Personal Cancer Genome Reporter - PCGR</a>. While <em>PCGR</em> is intended for reporting and analysis of somatic variants detected in a tumor, <em>CPSR</em> is intended for reporting and ranking of germline variants in protein-coding genes that are implicated in cancer predisposition and inherited cancer syndromes.</p>
-<p>Snapshots of sections in the <a href="https://quarto.org" class="external-link">quarto</a>-based cancer predisposition genome report (artificial sample, with more findings than usual):</p>
-<div class="float">
-<img src="img/cpsr_sc.png" alt="CPSR views"><div class="figcaption">CPSR views</div>
-</div>
+<p>Four snapshots of sections in the <a href="https://quarto.org" class="external-link">quarto</a>-based cancer predisposition genome report (artificial sample, with more findings than usual):</p>
 <p><br></p>
+<div id="cpsrCarousel" class="carousel slide" data-bs-interval="false">
+<div class="carousel-inner">
+<div class="carousel-item active">
+<img src="img/cpsr_panel_summary.png" class="d-block w-100" alt="Virtual gene panel &amp; summary of findings">
+</div>
+<div class="carousel-item">
+<img src="img/cpsr_variant_classification.png" class="d-block w-100" alt="Variant classification">
+</div>
+<div class="carousel-item">
+<img src="img/cpsr_biomarkers.png" class="d-block w-100" alt="Genomic biomarkers">
+</div>
+<div class="carousel-item">
+<img src="img/cpsr_pgx_secondary.png" class="d-block w-100" alt="Pharmacogenetic &amp; secondary findings">
+</div>
+</div>
+<div class="carousel-indicators">
+<button type="button" data-bs-target="#cpsrCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Virtual gene panel">
+</button>
+<button type="button" data-bs-target="#cpsrCarousel" data-bs-slide-to="1" aria-label="Variant classification">
+</button>
+<button type="button" data-bs-target="#cpsrCarousel" data-bs-slide-to="2" aria-label="Genomic biomarkers">
+</button>
+<button type="button" data-bs-target="#cpsrCarousel" data-bs-slide-to="3" aria-label="Secondary findings">
+</button>
+</div>
+</div>
+<script>
+document.getElementById('cpsrCarousel').querySelector('.carousel-inner').addEventListener('click', function() {
+bootstrap.Carousel.getOrCreateInstance(document.getElementById('cpsrCarousel')).next();
+});
+</script><p><br></p>
 <div class="section level3">
 <h3 id="news">News<a class="anchor" aria-label="anchor" href="#news"></a>
 </h3>

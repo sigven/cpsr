@@ -31,8 +31,11 @@
 <url><loc>https://sigven.github.io/cpsr/dev/reference/assign_acmg_evidence.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/assign_classification_authority.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/bs_icon2.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/dev/reference/classification_thresholds_intro_doc_note.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/dev/reference/classification_thresholds_outro_doc_note.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/col_format_output.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/color_palette.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/dev/reference/cpsr_intro_doc_note.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/create_clinvar_reactable.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/create_unified_variant_filters.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/create_unified_variant_reactable.html</loc></url>
@@ -44,6 +47,7 @@
 <url><loc>https://sigven.github.io/cpsr/dev/reference/generate_cpsr_report.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/get_insilico_prediction_statistics.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/get_max_rows_pr_datatable.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/dev/reference/gnomad_germline_doc_note.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/index.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/insilico_path_predictors.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/is_clinvar_cancer_phenotype.html</loc></url>
@@ -64,6 +68,7 @@
 <url><loc>https://sigven.github.io/cpsr/dev/reference/rt_cell_classification_rank.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/rt_cell_genotype.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/tidyeval.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/dev/reference/variant_classification_synopsis_doc_note.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/write_cpsr_output.html</loc></url>
 </urlset>
 

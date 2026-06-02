@@ -53,10 +53,18 @@
   variants
 - [`bs_icon2()`](https://sigven.github.io/cpsr/dev/reference/bs_icon2.md)
   : Use Bootstrap icons (as inline SVG)
+- [`classification_thresholds_intro_doc_note()`](https://sigven.github.io/cpsr/dev/reference/classification_thresholds_intro_doc_note.md)
+  : Get documentation string for classification threshold calibration
+  (intro)
+- [`classification_thresholds_outro_doc_note()`](https://sigven.github.io/cpsr/dev/reference/classification_thresholds_outro_doc_note.md)
+  : Get documentation string for classification threshold calibration
+  (outro)
 - [`col_format_output`](https://sigven.github.io/cpsr/dev/reference/col_format_output.md)
   : Format of CPSR output data frames (HTML, TSV)
 - [`color_palette`](https://sigven.github.io/cpsr/dev/reference/color_palette.md)
   : CPSR color palette
+- [`cpsr_intro_doc_note()`](https://sigven.github.io/cpsr/dev/reference/cpsr_intro_doc_note.md)
+  : Get documentation string for the CPSR report introduction
 - [`create_clinvar_reactable()`](https://sigven.github.io/cpsr/dev/reference/create_clinvar_reactable.md)
   : Create a ClinVar variant reactable with expandable detail rows
 - [`create_unified_variant_filters()`](https://sigven.github.io/cpsr/dev/reference/create_unified_variant_filters.md)
@@ -84,6 +92,9 @@
 - [`get_max_rows_pr_datatable()`](https://sigven.github.io/cpsr/dev/reference/get_max_rows_pr_datatable.md)
   : Function that gets the maximum number of rows across different tier
   data frames in CPSR report
+- [`gnomad_germline_doc_note()`](https://sigven.github.io/cpsr/dev/reference/gnomad_germline_doc_note.md)
+  : Get documentation string for gnomAD usage in germline variant
+  classification
 - [`insilico_path_predictors`](https://sigven.github.io/cpsr/dev/reference/insilico_path_predictors.md)
   : Insilico protein impact prediction methods
 - [`is_clinvar_cancer_phenotype()`](https://sigven.github.io/cpsr/dev/reference/is_clinvar_cancer_phenotype.md)
@@ -139,6 +150,8 @@
   : Cell renderer factory for genotype column Returns a function that
   renders genotype values as colored pills based on the provided color
   palette.
+- [`variant_classification_synopsis_doc_note()`](https://sigven.github.io/cpsr/dev/reference/variant_classification_synopsis_doc_note.md)
+  : Get documentation string for variant classification synopsis
 - [`write_cpsr_output()`](https://sigven.github.io/cpsr/dev/reference/write_cpsr_output.md)
   : Function that writes contents of CPSR report object to various
   output formats (quarto HTML reports, TSV, XLSX workbooks etc)

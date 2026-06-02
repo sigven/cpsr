@@ -1,0 +1,13 @@
+
+.navbar .nav-text,
+.navbar .nav-text[class*="text-"] {
+  color: #FFFFFF !important;
+}
+/* CPSR feature carousel */
+
+#cpsrCarousel { border: 1px solid #ccc; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,.12); }
+#cpsrCarousel .carousel-item { background: #fff; }
+#cpsrCarousel .carousel-item img { width: 100%; height: auto; display: block; cursor: pointer; }
+#cpsrCarousel .carousel-indicators { position: static; margin: .5rem 0 .6rem; }
+#cpsrCarousel .carousel-indicators [data-bs-target] { width: 11px; height: 11px; border-radius: 50%; border: 0; background: #666; opacity: .4; }
+#cpsrCarousel .carousel-indicators .active { opacity: 1; background: #222; }
