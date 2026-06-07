@@ -1,6 +1,6 @@
 <br>
 
-## Cancer Predisposition Sequencing Reporter <a href="https://sigven.github.io/cpsr/"><img src="man/figures/logo.png" align="right" height="106" width="90" alt="cpsr logo" /></a>
+# Cancer Predisposition Sequencing Reporter <a href="https://sigven.github.io/cpsr/"><img src="man/figures/logo.png" align="right" height="106" width="90" alt="cpsr logo" /></a>
 
 <br><br>
 

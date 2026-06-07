@@ -286,6 +286,15 @@ write_cpsr_output <- function(report,
       )
     )
 
+  fnames[["tsv_secondary_findings"]] <-
+    file.path(
+      output_dir,
+      paste0(
+        sample_fname_pattern,
+        ".secondary_findings.tsv.gz"
+      )
+    )
+
 
   fnames[["xlsx"]] <-
     file.path(
@@ -465,6 +474,28 @@ write_cpsr_output <- function(report,
       readr::write_tsv(
         pgx_tsv,
         file = fnames[["tsv_pgx"]],
+        col_names = T,
+        quote = "none",
+        na = "."
+      )
+    }
+
+    if (NROW(report[["content"]]$snv_indel$callset$variant$sf) > 0) {
+      sf_tsv <- report[["content"]]$snv_indel$callset$variant$sf |>
+        dplyr::select(
+          dplyr::any_of(
+            cpsr::col_format_output[["xlsx_secondary"]]
+          ))
+      pcgrr::log4r_info("------")
+      pcgrr::log4r_info(
+        paste0(
+          "Generating tab-separated values file (.tsv.gz) ",
+          "with secondary findings"
+        )
+      )
+      readr::write_tsv(
+        sf_tsv,
+        file = fnames[["tsv_secondary_findings"]],
         col_names = T,
         quote = "none",
         na = "."

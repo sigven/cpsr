@@ -675,8 +675,8 @@ usethis::use_data(curated_transcripts, overwrite = T)
 #   ref_data <- pcgrr::load_reference_data(
 #     pcgr_db_assembly_dir =
 #       file.path(
-#         "/Users/sigven/project_data/data/data__pcgrdb/dev/pcgrdb",
-#         "20260426/data",
+#         "/Users/sigven/project_data/data/data__pcgrdb/bundle_output",
+#         "20260604/data",
 #         build),
 #     genome_assembly = build
 #   )
@@ -783,7 +783,7 @@ usethis::use_data(curated_transcripts, overwrite = T)
 #
 # openxlsx2::wb_save(
 #   wb = workbook,
-#   "pkgdown/assets/cpsr_superpanel_2026_04.xlsx",
+#   "pkgdown/assets/cpsr_superpanel_2026_06.xlsx",
 #   overwrite = TRUE)
 #
 # #
