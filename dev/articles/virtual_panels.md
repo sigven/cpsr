@@ -5,7 +5,7 @@
 The cancer predisposition report can show variants found in a number of
 well-known cancer predisposition genes, and the specific set of genes
 can be customized by the user by choosing any of the following **virtual
-gene panels (0 - 44)**:
+gene panels (0 - 43)**:
 
 - **Panel 0** is a non-conservative, research-based *superpanel*
   assembled through multiple sources on cancer predisposition genes:
@@ -30,7 +30,7 @@ gene panels (0 - 44)**:
     *PAH*)
 
   The combination of the above sources resulted in a non-redundant set
-  of **n = 556** genes of relevance for cancer predisposition (see
+  of **n = 555** genes of relevance for cancer predisposition (see
   complete details [below](#panel-0))
 
   Data with respect to mechanisms of inheritance (*MoI* - autosomal
@@ -49,7 +49,7 @@ gene panels (0 - 44)**:
   literature support to sigven AT ifi.uio.no, so we can include them in
   Panel 0.
 
-- **Panels 1 - 44** are panels for inherited cancers and tumor syndromes
+- **Panels 1 - 43** are panels for inherited cancers and tumor syndromes
   assembled within the [Genomics England
   PanelApp](https://panelapp.genomicsengland.co.uk/):
 
@@ -92,16 +92,15 @@ gene panels (0 - 44)**:
 | 35 | [Parathyroid Cancer](https://panelapp.genomicsengland.co.uk/panels/86/) |
 | 36 | [Prostate cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/17/) |
 | 37 | [Renal cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/154/) |
-| 38 | [Rhabdoid tumour predisposition](https://panelapp.genomicsengland.co.uk/panels/600/) |
-| 39 | [Sarcoma cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/217/) |
-| 40 | [Sarcoma susceptibility](https://panelapp.genomicsengland.co.uk/panels/734/) |
-| 41 | [Thyroid cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/421/) |
-| 42 | [Tumor predisposition - childhood onset](https://panelapp.genomicsengland.co.uk/panels/243/) |
-| 43 | [Upper gastrointestinal cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/273/) |
-| 44 | [DNA repair genes pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/256/) |
+| 38 | [Sarcoma cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/217/) |
+| 39 | [Sarcoma susceptibility](https://panelapp.genomicsengland.co.uk/panels/734/) |
+| 40 | [Thyroid cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/421/) |
+| 41 | [Tumor predisposition - childhood onset](https://panelapp.genomicsengland.co.uk/panels/243/) |
+| 42 | [Upper gastrointestinal cancer pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/273/) |
+| 43 | [DNA repair genes pertinent cancer susceptibility](https://panelapp.genomicsengland.co.uk/panels/256/) |
 
 ## Panel 0
 
 [Download the complete set of CPSR superpanel genes, grch37/grch38
 versions
-(xlsx)](https://sigven.github.io/cpsr/cpsr_superpanel_2026_04.xlsx)
+(xlsx)](https://sigven.github.io/cpsr/cpsr_superpanel_2026_06.xlsx)

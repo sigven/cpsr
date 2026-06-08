@@ -25,9 +25,9 @@
 ### Variant databases of clinical utility
 
 - [ClinVar](http://www.ncbi.nlm.nih.gov/clinvar/) - database of
-  clinically related variants (May 2026)
+  clinically related variants (June 2026)
 - [CIViC](https://civicdb.org) - clinical interpretations of variants in
-  cancer (May 2026)
+  cancer (June 6th 2026)
 
 ### Protein domains/functional features
 
@@ -38,7 +38,7 @@
 
 ### Cancer gene knowledge bases
 
-- [CancerMine](http://bionlp.bcgsc.ca/cancermine/) - Literature-mined
+- [CancerMine](https://zenodo.org/records/16849846) - Literature-mined
   database of tumor suppressor genes/proto-oncogenes (v51, August 2025)
 - [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk) -
   cancer phenotype panels as of May 2026
@@ -47,7 +47,7 @@
 
 ### Phenotype ontologies
 
-- [UMLS/MedGen](https://www.ncbi.nlm.nih.gov/medgen/) - March 2026
-- [Disease Ontology](https://disease-ontology.org/) - February 2026
+- [UMLS/MedGen](https://www.ncbi.nlm.nih.gov/medgen/) - May 2026
+- [Disease Ontology](https://disease-ontology.org/) - May 30th 2026
 - [Experimental Factor Ontology](https://github.com/EBISPOT/efo) -
-  v3.88.0
+  v3.90.0

@@ -1,6 +1,6 @@
-  
+# Cancer Predisposition Sequencing Reporter
 
-## Cancer Predisposition Sequencing Reporter [![cpsr logo](reference/figures/logo.png)](https://sigven.github.io/cpsr/)
+  
 
   
   

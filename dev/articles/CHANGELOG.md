@@ -2,13 +2,13 @@
 
 ## v2.3.0
 
-- Date: **2026-05-20**
+- Date: **2026-06-10**
 
 - Major data updates
 
-  - ClinVar (2026-05)
+  - ClinVar (2026-06)
   - dbNSFP (v5.3)
-  - CIViC (2026-03-23)
+  - CIViC (2026-06-06)
   - GENCODE v49 (VEP v115)
   - Complete revision and much simplified implementation for ACMG/AMP
     variant classification, still point-based, but more coherent to

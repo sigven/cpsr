@@ -101,19 +101,17 @@ from the following list of panel identifiers:
   susceptibility](https://panelapp.genomicsengland.co.uk/panels/17/)
 - **37**: [Renal cancer pertinent cancer
   susceptibility](https://panelapp.genomicsengland.co.uk/panels/154/)
-- **38**: [Rhabdoid tumour
-  predisposition](https://panelapp.genomicsengland.co.uk/panels/600/)
-- **39**: [Sarcoma cancer
+- **38**: [Sarcoma cancer
   susceptibility](https://panelapp.genomicsengland.co.uk/panels/217/)
-- **40**: [Sarcoma
+- **39**: [Sarcoma
   susceptibility](https://panelapp.genomicsengland.co.uk/panels/734/)
-- **41**: [Thyroid cancer pertinent cancer
+- **40**: [Thyroid cancer pertinent cancer
   susceptibility](https://panelapp.genomicsengland.co.uk/panels/421/)
-- **42**: [Tumour predisposition - childhood
+- **41**: [Tumour predisposition - childhood
   onset](https://panelapp.genomicsengland.co.uk/panels/243/)
-- **43**: [Upper gastrointestinal cancer pertinent cancer
+- **42**: [Upper gastrointestinal cancer pertinent cancer
   susceptibility](https://panelapp.genomicsengland.co.uk/panels/273/)
-- **44**: [DNA repair genes pertinent cancer
+- **43**: [DNA repair genes pertinent cancer
   susceptibility](https://panelapp.genomicsengland.co.uk/panels/256/)
 
   
@@ -250,20 +248,19 @@ Panel options:
                         35 = Parathyroid Cancer (GEP)
                         36 = Prostate cancer pertinent cancer susceptibility (GEP)
                         37 = Renal cancer pertinent cancer susceptibility (GEP)
-                        38 = Rhabdoid tumour predisposition (GEP)
-                        39 = Sarcoma cancer susceptibility (GEP)
-                        40 = Sarcoma susceptibility (GEP)
-                        41 = Thyroid cancer pertinent cancer susceptibility (GEP)
-                        42 = Tumour predisposition - childhood onset (GEP)
-                        43 = Upper gastrointestinal cancer pertinent cancer susceptibility (GEP)
-                        44 = DNA repair genes pertinent cancer susceptibility (GEP)
+                        38 = Sarcoma cancer susceptibility (GEP)
+                        39 = Sarcoma susceptibility (GEP)
+                        40 = Thyroid cancer pertinent cancer susceptibility (GEP)
+                        41 = Tumour predisposition - childhood onset (GEP)
+                        42 = Upper gastrointestinal cancer pertinent cancer susceptibility (GEP)
+                        43 = DNA repair genes pertinent cancer susceptibility (GEP)
   --custom_list CUSTOM_LIST
                         Provide custom list of genes from virtual panel 0 (single-column .txt/.tsv file with Ensembl gene identifiers),
                         alternative to predefined panels provided with --panel_id
   --custom_list_name CUSTOM_LIST_NAME
                         Set name for custom made panel/list (single word - no whitespace), will be displayed in the report
   --diagnostic_grade_only
-                        For panel_id's 1-44 (Genomics England PanelApp) - consider genes with a GREEN status only, default: False
+                        For panel_id's 1-43 (Genomics England PanelApp) - consider genes with a GREEN status only, default: False
 
 Variant classification options:
   --secondary_findings  Include variants found in ACMG-recommended list for secondary findings (v3.3), default: False
