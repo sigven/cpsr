@@ -23,7 +23,7 @@ output: rmarkdown::html_document
   * [Pfam](http://pfam.xfam.org) - database of protein families and domains (v37.0)
 
 ### Cancer gene knowledge bases
-  * [CancerMine](http://bionlp.bcgsc.ca/cancermine/) - Literature-mined database of tumor suppressor genes/proto-oncogenes (v51, August 2025)
+  * [CancerMine](https://zenodo.org/records/16849846) - Literature-mined database of tumor suppressor genes/proto-oncogenes (v51, August 2025)
   * [Genomics England PanelApp](https://panelapp.genomicsengland.co.uk) - cancer phenotype panels as of May 2026
   * [CanVar UK](https://canvaruk.org/) - genes implicated with cancer susceptibility (v2.2)
 
