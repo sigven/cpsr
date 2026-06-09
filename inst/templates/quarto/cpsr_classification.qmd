@@ -4,6 +4,23 @@ This section displays all variant classifications, considering both ClinVar and 
 
 <br>
 
+::: {.callout-note title="Assertion authority — colour legend" collapse="true"}
+
+Each variant row is marked with a coloured vertical bar on the left side of the
+_Alteration_ column, indicating which authority determined the final reported
+classification:
+
+<span style='display:inline-block; border-left:6px solid #0277bd; padding-left:8px; color:#0277bd; font-weight:bold;'>ClinVar</span>
+&nbsp;— classification is sourced from an existing ClinVar record that meets the
+configured *clinvar_trust_level* threshold
+
+<span style='display:inline-block; border-left:6px solid #e65100; padding-left:8px; color:#e65100; font-weight:bold;'>CPSR</span>
+&nbsp;— classification was assigned *de novo* by the CPSR rule-based ACMG/AMP
+scoring engine (either no ClinVar record exists, or the existing record does not
+meet the trust threshold).
+
+:::
+
 ```{r setup_classification_unified}
 #| echo: false
 #| output: false
