@@ -44,6 +44,17 @@ output: rmarkdown::html_document
   - All classification, secondary findings, pharmacogenomics, biomarker, and GWAS variant tables now use reactable
   - Tables feature a collapsible detail row per variant with full annotation context, reducing visual clutter in the main view
   - Dedicated hidden search index column aggregates nested evidence text fields (biomarker tables) for full-text search across all evidence items
+- **Excel workbook — SETTINGS and DATA_VERSIONS sheets**
+  - Two new sheets are prepended to the Excel workbook output (`.xlsx`), before
+    `VIRTUAL_PANEL`:
+    - `SETTINGS` — key run parameters in a three-column `SECTION / PARAMETER / VALUE`
+      layout, covering: CPSR/PCGR versions, genome assembly, sample ID, variant
+      classification settings (gnomAD MAF threshold, ClinVar trust level, secondary
+      findings, pharmacogenomics findings, GWAS hits, noncoding filter), and VEP
+      settings (transcript set, pick order)
+    - `DATA_VERSIONS` — one row per reference dataset used in the run, with columns
+      `DATABASE / VERSION / DESCRIPTION / URL / LICENSE`; mirrors the "Dataset versions"
+      callout in the HTML Documentation section
 
 - Infrastructure: major refactor of GitHub Actions workflow
   - moving to gitflow development mode, with `main` branch for stable releases, and `dev` branch for development

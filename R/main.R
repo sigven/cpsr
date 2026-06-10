@@ -234,6 +234,65 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
   return(cps_report)
 }
 
+#' Build the SETTINGS sheet for the CPSR Excel workbook
+#'
+#' Returns a data frame with columns SECTION / PARAMETER / VALUE covering
+#' the key CPSR run settings, mirroring the HTML report Settings section.
+#'
+#' @param report CPSR report object
+#' @return data.frame
+#'
+get_cpsr_settings_sheet <- function(report = NULL) {
+
+  conf <- report$settings$conf
+  s    <- report$settings
+
+  rows <- list(
+    data.frame(SECTION = "General", PARAMETER = "CPSR version",
+               VALUE = as.character(s$software$cpsr_version)),
+    data.frame(SECTION = "General", PARAMETER = "PCGR version",
+               VALUE = as.character(s$software$pcgr_version)),
+    data.frame(SECTION = "General", PARAMETER = "Genome assembly",
+               VALUE = as.character(s$genome_assembly)),
+    data.frame(SECTION = "General", PARAMETER = "Sample ID",
+               VALUE = as.character(s$sample_id)),
+    data.frame(SECTION = "Variant classification",
+               PARAMETER = "Max gnomAD MAF (non-ClinVar variants)",
+               VALUE = as.character(
+                 conf$variant_classification$max_af_gnomad)),
+    data.frame(SECTION = "Variant classification",
+               PARAMETER = "ClinVar trust level",
+               VALUE = as.character(
+                 conf$variant_classification$clinvar_trust_level)),
+    data.frame(SECTION = "Variant classification",
+               PARAMETER = "Include secondary findings",
+               VALUE = as.character(as.logical(
+                 conf$variant_classification$secondary_findings))),
+    data.frame(SECTION = "Variant classification",
+               PARAMETER = "Include pharmacogenomics findings",
+               VALUE = as.character(as.logical(
+                 conf$variant_classification$pgx_findings))),
+    data.frame(SECTION = "Variant classification",
+               PARAMETER = "Include GWAS hits",
+               VALUE = as.character(as.logical(
+                 conf$variant_classification$gwas_findings))),
+    data.frame(SECTION = "Variant classification",
+               PARAMETER = "Ignore non-protein-coding variants",
+               VALUE = as.character(!as.logical(
+                 conf$other$show_noncoding))),
+    data.frame(SECTION = "VEP",
+               PARAMETER = "Transcript set",
+               VALUE = if (isTRUE(as.logical(conf$vep$vep_gencode_basic)))
+                 "GENCODE basic" else "GENCODE all"),
+    data.frame(SECTION = "VEP",
+               PARAMETER = "Transcript pick order",
+               VALUE = stringr::str_replace_all(
+                 conf$vep$vep_pick_order, ",", ", "))
+  )
+
+  dplyr::bind_rows(rows)
+}
+
 #' Function that writes contents of CPSR report object to various output formats
 #' (quarto HTML reports, TSV, XLSX workbooks etc)
 #'
@@ -512,7 +571,31 @@ write_cpsr_output <- function(report,
         "variant findings"
       )
     )
+    cpsr_settings  <- get_cpsr_settings_sheet(report)
+    cpsr_versions  <- pcgrr::get_data_versions_sheet(
+      report, wflow_pattern = "cpsr", tool_label = "CPSR")
+
     workbook <- openxlsx2::wb_workbook() |>
+      openxlsx2::wb_add_worksheet(sheet = "SETTINGS") |>
+      openxlsx2::wb_add_data_table(
+        sheet = "SETTINGS",
+        x = cpsr_settings,
+        start_row = 1, start_col = 1,
+        col_names = TRUE, na.strings = "",
+        table_style = "TableStyleMedium15") |>
+      openxlsx2::wb_set_col_widths(
+        sheet = "SETTINGS",
+        cols = 1:ncol(cpsr_settings), widths = "auto") |>
+      openxlsx2::wb_add_worksheet(sheet = "DATA_VERSIONS") |>
+      openxlsx2::wb_add_data_table(
+        sheet = "DATA_VERSIONS",
+        x = cpsr_versions,
+        start_row = 1, start_col = 1,
+        col_names = TRUE, na.strings = "",
+        table_style = "TableStyleMedium16") |>
+      openxlsx2::wb_set_col_widths(
+        sheet = "DATA_VERSIONS",
+        cols = 1:ncol(cpsr_versions), widths = "auto") |>
       openxlsx2::wb_add_worksheet(sheet = "VIRTUAL_PANEL") |>
       openxlsx2::wb_add_data_table(
         sheet = "VIRTUAL_PANEL",

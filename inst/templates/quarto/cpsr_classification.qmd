@@ -1,4 +1,4 @@
-## Variant Classification
+## Variant classification
 
 This section displays all variant classifications, considering both ClinVar and CPSR as the assertion authorities. Use the filters below to explore variants by gene, clinical significance, consequence, and other attributes. Click any row to expand and view detailed annotations, evidence, and classification rationale.
 
