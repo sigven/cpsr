@@ -278,11 +278,13 @@ This command will produce the following output files in the _output_ folder:
   3. __example.cpsr.grch37.conf.yaml__ - CPSR configuration file - output from pre-reporting annotation (Python) workflow
   4. __example.cpsr.grch37.pass.tsv.gz__ - Compressed TSV file (generated with [vcf2tsvpy](https://github.com/sigven/vcf2tsvpy)) of VCF content with various annotations appended by CPSR
   5. __example.cpsr.grch37.xlsx__ - An Excel workbook that contains
-      * _i)_ information on virtual gene panel interrogated for variants
-      * _ii)_ classification of clinical significance for variants overlapping with cancer predisposition genes
-      * _iii)_ secondary findings (if any found)
-      * _iv)_ match of variants with existing biomarkers (if any found)
-      * _v)_ overlap with pharmacogenomic variants (if any found)
+      * _i)_ information on the settings/configurations of the CPSR analysis run
+      * _ii)_ information on the datasets used for annotation and classification of variants
+      * _iii)_ information on virtual gene panel interrogated for variants
+      * _iv)_ classification of clinical significance for variants overlapping with cancer predisposition genes
+      * _v)_ secondary findings (if any found)
+      * _vi)_ match of variants with existing biomarkers (if any found)
+      * _vii)_ overlap with pharmacogenomic variants (if any found)
      
   6. __example.cpsr.grch37.html__ - Interactive HTML report with clinically relevant variants in cancer predisposition genes
   7. __example.cpsr.grch37.classification.tsv.gz__ - TSV file with key annotations of germline SNVs/InDels classified according to clinical significance

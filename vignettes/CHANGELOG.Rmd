@@ -5,7 +5,7 @@ output: rmarkdown::html_document
 
 ## v2.3.0
 
-- Date: **2026-06-10**
+- Date: **2026-06-12**
 
 - Major data updates
   - ClinVar (2026-06)
@@ -44,7 +44,7 @@ output: rmarkdown::html_document
   - All classification, secondary findings, pharmacogenomics, biomarker, and GWAS variant tables now use reactable
   - Tables feature a collapsible detail row per variant with full annotation context, reducing visual clutter in the main view
   - Dedicated hidden search index column aggregates nested evidence text fields (biomarker tables) for full-text search across all evidence items
-- **Excel workbook — SETTINGS and DATA_VERSIONS sheets**
+- Excel workbook — SETTINGS and DATA_VERSIONS sheets
   - Two new sheets are prepended to the Excel workbook output (`.xlsx`), before
     `VIRTUAL_PANEL`:
     - `SETTINGS` — key run parameters in a three-column `SECTION / PARAMETER / VALUE`
