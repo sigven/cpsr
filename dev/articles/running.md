@@ -361,12 +361,16 @@ folder:
     with [vcf2tsvpy](https://github.com/sigven/vcf2tsvpy)) of VCF
     content with various annotations appended by CPSR
 5.  **example.cpsr.grch37.xlsx** - An Excel workbook that contains
-    - *i)* information on virtual gene panel interrogated for variants
-    - *ii)* classification of clinical significance for variants
+    - *i)* information on the settings/configurations of the CPSR
+      analysis run
+    - *ii)* information on the datasets used for annotation and
+      classification of variants
+    - *iii)* information on virtual gene panel interrogated for variants
+    - *iv)* classification of clinical significance for variants
       overlapping with cancer predisposition genes
-    - *iii)* secondary findings (if any found)
-    - *iv)* match of variants with existing biomarkers (if any found)
-    - *v)* overlap with pharmacogenomic variants (if any found)
+    - *v)* secondary findings (if any found)
+    - *vi)* match of variants with existing biomarkers (if any found)
+    - *vii)* overlap with pharmacogenomic variants (if any found)
 6.  **example.cpsr.grch37.html** - Interactive HTML report with
     clinically relevant variants in cancer predisposition genes
 7.  **example.cpsr.grch37.classification.tsv.gz** - TSV file with key

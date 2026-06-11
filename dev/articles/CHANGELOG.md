@@ -2,7 +2,7 @@
 
 ## v2.3.0
 
-- Date: **2026-06-10**
+- Date: **2026-06-12**
 
 - Major data updates
 
@@ -78,6 +78,21 @@
   - Dedicated hidden search index column aggregates nested evidence text
     fields (biomarker tables) for full-text search across all evidence
     items
+
+- Excel workbook — SETTINGS and DATA_VERSIONS sheets
+
+  - Two new sheets are prepended to the Excel workbook output (`.xlsx`),
+    before `VIRTUAL_PANEL`:
+    - `SETTINGS` — key run parameters in a three-column
+      `SECTION / PARAMETER / VALUE` layout, covering: CPSR/PCGR
+      versions, genome assembly, sample ID, variant classification
+      settings (gnomAD MAF threshold, ClinVar trust level, secondary
+      findings, pharmacogenomics findings, GWAS hits, noncoding filter),
+      and VEP settings (transcript set, pick order)
+    - `DATA_VERSIONS` — one row per reference dataset used in the run,
+      with columns `DATABASE / VERSION / DESCRIPTION / URL / LICENSE`;
+      mirrors the “Dataset versions” callout in the HTML Documentation
+      section
 
 - Infrastructure: major refactor of GitHub Actions workflow
 

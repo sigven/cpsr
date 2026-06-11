@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">CPSR</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.2.5.9010</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.2.5.9011</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,7 +86,7 @@
 <h2 id="v2-3-0">v2.3.0<a class="anchor" aria-label="anchor" href="#v2-3-0"></a>
 </h2>
 <ul>
-<li><p>Date: <strong>2026-06-10</strong></p></li>
+<li><p>Date: <strong>2026-06-12</strong></p></li>
 <li>
 <p>Major data updates</p>
 <ul>
@@ -178,6 +178,28 @@ annotation context, reducing visual clutter in the main view</li>
 <li>Dedicated hidden search index column aggregates nested evidence text
 fields (biomarker tables) for full-text search across all evidence
 items</li>
+</ul>
+</li>
+<li>
+<p>Excel workbook — SETTINGS and DATA_VERSIONS sheets</p>
+<ul>
+<li>Two new sheets are prepended to the Excel workbook output
+(<code>.xlsx</code>), before <code>VIRTUAL_PANEL</code>:
+<ul>
+<li>
+<code>SETTINGS</code> — key run parameters in a three-column
+<code>SECTION / PARAMETER / VALUE</code> layout, covering: CPSR/PCGR
+versions, genome assembly, sample ID, variant classification settings
+(gnomAD MAF threshold, ClinVar trust level, secondary findings,
+pharmacogenomics findings, GWAS hits, noncoding filter), and VEP
+settings (transcript set, pick order)</li>
+<li>
+<code>DATA_VERSIONS</code> — one row per reference dataset used in
+the run, with columns
+<code>DATABASE / VERSION / DESCRIPTION / URL / LICENSE</code>; mirrors
+the “Dataset versions” callout in the HTML Documentation section</li>
+</ul>
+</li>
 </ul>
 </li>
 <li>

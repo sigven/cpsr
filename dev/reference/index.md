@@ -86,6 +86,8 @@
   threshold in gnomAD
 - [`generate_cpsr_report()`](https://sigven.github.io/cpsr/dev/reference/generate_cpsr_report.md)
   : Function that generates variant predisposition report - CPSR
+- [`get_cpsr_settings_sheet()`](https://sigven.github.io/cpsr/dev/reference/get_cpsr_settings_sheet.md)
+  : Build the SETTINGS sheet for the CPSR Excel workbook
 - [`get_insilico_prediction_statistics()`](https://sigven.github.io/cpsr/dev/reference/get_insilico_prediction_statistics.md)
   : Function that counts insilico predictions of variant effects (i.e.
   damaging/tolerated) from dbNSFP
