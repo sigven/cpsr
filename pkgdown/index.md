@@ -82,7 +82,7 @@ bootstrap.Carousel.getOrCreateInstance(document.getElementById('cpsrCarousel')).
 
 ### Example report
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17117326.svg)](https://doi.org/10.5281/zenodo.17117326)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20795508.svg)](https://doi.org/10.5281/zenodo.20795508)
 
 ### Getting started
 

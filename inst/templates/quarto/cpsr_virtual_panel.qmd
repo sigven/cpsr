@@ -39,9 +39,9 @@ tiles_html <- cpsr::plot_virtual_panels(
   gene_df = cps_report[["settings"]][["conf"]][["gene_panel"]][["panel_genes"]])
 ```
 
-<div align="center">
+::: {style="text-align: center;"}
 `r tiles_html`
-</div>
+:::
 
 <br>
 

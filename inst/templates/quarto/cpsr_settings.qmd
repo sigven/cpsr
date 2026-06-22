@@ -14,7 +14,6 @@ if (as.logical(cps_report[["settings"]][["conf"]][["vep"]][["vep_gencode_basic"]
 }
 ```
 
-* Sample name &nbsp;:&nbsp; <span style="background-color:#007a74; font-size:1.2em; color:white"><b>&nbsp;&nbsp;`r cps_report[['settings']][['sample_id']]`&nbsp;&nbsp;</b></span>
 <br>
 
 ::: {.callout-note collapse="true"}
@@ -32,7 +31,7 @@ The report is generated with _[cpsr](https://github.com/sigven/cpsr)_ version `r
 * Ignore non-protein-coding variants: __`r !as.logical(cps_report[['settings']][['conf']][['other']][['show_noncoding']])`__
 * ClinVar trust level: __`r cps_report[['settings']][['conf']][['variant_classification']][['clinvar_trust_level']]`__ — _`r cps_report[['settings']][['conf']][['variant_classification']][['clinvar_trust_level_desc']]`_
 * Include [secondary findings](https://www.ncbi.nlm.nih.gov/clinvar/docs/acmg/): __`r as.logical(cps_report[['settings']][['conf']][['variant_classification']][['secondary_findings']])`__
-* Include [cancer-related pharmacogenomics findings](https://www.ncbi.nlm.nih.gov/clinvar/docs/acmg/): __`r as.logical(cps_report[['settings']][['conf']][['variant_classification']][['pgx_findings']])`__
+* Include [cancer-related pharmacogenomics findings](https://www.clinpgx.org/cpic/pairs): __`r as.logical(cps_report[['settings']][['conf']][['variant_classification']][['pgx_findings']])`__
 
 :::
 
