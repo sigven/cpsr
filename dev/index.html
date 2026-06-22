@@ -36,7 +36,7 @@
 
     <a class="navbar-brand me-2" href="index.html">CPSR</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.2.5.9011</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.2.5.9012</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,13 +82,13 @@
 <p>The <em>Cancer Predisposition Sequencing Reporter (CPSR)</em> is a computational workflow that <strong>interprets DNA sequence variants</strong> identified from next-generation sequencing <strong>in the context of cancer predisposition</strong>.</p>
 <p><em>CPSR</em> accepts a query file with <em>germline</em> variant calls (SNVs/InDels) from a single sample (i.e. cancer patient), encoded in the <a href="https://samtools.github.io/hts-specs/VCFv4.2.pdf" class="external-link">VCF format</a>. Through comprehensive gene and variant annotation procedures, CPSR offers the following functionalities to the user:</p>
 <ol style="list-style-type: decimal">
-<li>Flexible <strong>selection of cancer predisposition genes</strong> that restricts variant classification and reporting - through the use of virtual gene panels</li>
+<li>Flexible <strong>selection of cancer predisposition genes</strong> subject to analysis and reporting - through the use of virtual gene panels</li>
 <li>
-<strong>Variant classification</strong> (<em>Pathogenic</em> to <em>Benign</em>) through a dedicated and well-performing implementation of <a href="https://pubmed.ncbi.nlm.nih.gov/25741868/" class="external-link">ACMG/AMP guidelines</a>
+<strong>Variant classification</strong> (<em>Pathogenic</em> to <em>Benign</em>) through a dedicated implementation of <a href="https://pubmed.ncbi.nlm.nih.gov/25741868/" class="external-link">ACMG/AMP guidelines</a>
 </li>
 <li>
-<strong>Detection of biomarkers</strong> - variants with prognostic, diagnostic, or drug sensitivity/resistance implications in cancer, as well as optional detection of variants related to adverse events/toxicity for common chemotherapies<br>
-</li>
+<strong>Detection of germline biomarkers</strong> - for prognosis, diagnosis, or drug sensitivity/resistance in cancer</li>
+<li>Optional detection and reporting of variants related to adverse events/toxicity for common cancer chemotherapies</li>
 <li>Optional reporting of <strong>secondary/incidental findings</strong> (<a href="https://pubmed.ncbi.nlm.nih.gov/37347242/" class="external-link">ACMG recommendations</a>)</li>
 <li>
 <strong>Interactive HTML output report</strong> with detailed variant information, gene annotations, and external links to relevant databases</li>
@@ -195,7 +195,7 @@ bootstrap.Carousel.getOrCreateInstance(document.getElementById('cpsrCarousel')).
 <div class="section level3">
 <h3 id="example-report">Example report<a class="anchor" aria-label="anchor" href="#example-report"></a>
 </h3>
-<p><a href="https://doi.org/10.5281/zenodo.17117326" class="external-link"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.17117326.svg" alt="DOI"></a></p>
+<p><a href="https://doi.org/10.5281/zenodo.20795508" class="external-link"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.20795508.svg" alt="DOI"></a></p>
 </div>
 <div class="section level3">
 <h3 id="getting-started">Getting started<a class="anchor" aria-label="anchor" href="#getting-started"></a>

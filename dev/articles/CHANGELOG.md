@@ -2,14 +2,17 @@
 
 ## v2.3.0
 
-- Date: **2026-06-12**
+- Date: **2026-06-22**
 
 - Major data updates
 
   - ClinVar (2026-06)
   - dbNSFP (v5.3)
-  - CIViC (2026-06-06)
+  - CIViC (2026-06-20)
   - GENCODE v49 (VEP v115)
+
+- Variant classification updates
+
   - Complete revision and much simplified implementation for ACMG/AMP
     variant classification, still point-based, but more coherent to
     criteria outlined in [ClinGen’s Criteria Specification
@@ -27,10 +30,10 @@
       variants according to PVS1 decision tree
     - revised MaxEntScan (MES) thresholds for LOF variants in the
       neighbourhood of canonical splice donor/acceptor sites.
-  - Displayed all virtual panel genes in HTML report in alphabetic
-    order, ignoring confidence levels (PanelApp genes)
-  - Added new column *ACMG_CODE* in TSV output files, indicating which
-    ACMG criteria that were met for each variant (‘\|’-separated list)
+  - All virtual panel genes in HTML report display in alphabetic order,
+    ignoring confidence levels (PanelApp genes)
+  - New column *ACMG_CODE* in TSV output files, indicating which ACMG
+    criteria that were met for each variant (‘\|’-separated list)
   - Renamed column *CPSR_CLASSIFICATION_SOURCE* → *ASSERTION_AUTHORITY*
     in TSV output to better reflect its role (values: `ClinVar` or
     `CPSR`)
@@ -42,29 +45,27 @@
     chosen (e.g. *“Novel variant (absent from ClinVar)”*, *“ClinVar
     review status: 2 gold stars”*, *“Conflicting ClinVar
     interpretations”*)
-
-- Simplified population allele frequency arguments for variant
-  classification:
-
-  - Removed `--pop_gnomad` (previously required to select a single
-    gnomAD subpopulation, e.g. `nfe`) and `--maf_upper_threshold`
-    (global MAF filter)
-  - Replaced by a single argument `--max_af_gnomad`, which applies an
-    upper frequency threshold across all gnomAD subpopulations rather
-    than one selected population — consistent with the ClinGen SVI
-    groupmax approach already used internally for BA1/BS1/PM2 criteria
-
-- New argument `--clinvar_trust_level` (integer, 0–4) replacing
-  `--classify_all`, giving fine-grained control over the degree to which
-  existing ClinVar classifications override CPSR’s own ACMG/AMP result:
-
-  - **0**: ClinVar fully trusted; CPSR only overrides conflicted records
-    (default)
-  - **1**: CPSR overrides zero gold star ClinVar records
-  - **2**: CPSR overrides zero- and single gold star ClinVar records
-  - **3**: CPSR overrides low-star and non-cancer-phenotype ClinVar
-    records
-  - **4**: CPSR always classifies, ClinVar records never take precedence
+  - Simplified population allele frequency arguments for variant
+    classification:
+    - Removed `--pop_gnomad` (previously required to select a single
+      gnomAD subpopulation, e.g. `nfe`) and `--maf_upper_threshold`
+      (global MAF filter)
+    - Replaced by a single argument `--max_af_gnomad`, which applies an
+      upper frequency threshold across all gnomAD subpopulations rather
+      than one selected population — consistent with the ClinGen SVI
+      groupmax approach already used internally for BA1/BS1/PM2 criteria
+  - New argument `--clinvar_trust_level` (integer, 0–4) replacing
+    `--classify_all`, giving fine-grained control over the degree to
+    which existing ClinVar classifications override CPSR’s own ACMG/AMP
+    result:
+    - **0**: ClinVar fully trusted; CPSR only overrides conflicted
+      records (default)
+    - **1**: CPSR overrides zero gold star ClinVar records
+    - **2**: CPSR overrides zero- and single gold star ClinVar records
+    - **3**: CPSR overrides low-star and non-cancer-phenotype ClinVar
+      records
+    - **4**: CPSR always classifies, ClinVar records never take
+      precedence
 
 - Interactive HTML report tables migrated from *DT*
   ([`DT::datatable`](https://rdrr.io/pkg/DT/man/datatable.html)) to
@@ -73,11 +74,13 @@
 
   - All classification, secondary findings, pharmacogenomics, biomarker,
     and GWAS variant tables now use reactable
-  - Tables feature a collapsible detail row per variant with full
-    annotation context, reducing visual clutter in the main view
-  - Dedicated hidden search index column aggregates nested evidence text
-    fields (biomarker tables) for full-text search across all evidence
-    items
+
+- Tables feature a collapsible detail row per variant with full
+  annotation context, reducing visual clutter in the main view
+
+- Dedicated hidden search index column aggregates nested evidence text
+  fields (HTML biomarker tables) for full-text search across all
+  evidence items
 
 - Excel workbook — SETTINGS and DATA_VERSIONS sheets
 

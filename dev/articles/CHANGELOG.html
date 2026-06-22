@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">CPSR</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.2.5.9011</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.2.5.9012</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,14 +86,19 @@
 <h2 id="v2-3-0">v2.3.0<a class="anchor" aria-label="anchor" href="#v2-3-0"></a>
 </h2>
 <ul>
-<li><p>Date: <strong>2026-06-12</strong></p></li>
+<li><p>Date: <strong>2026-06-22</strong></p></li>
 <li>
 <p>Major data updates</p>
 <ul>
 <li>ClinVar (2026-06)</li>
 <li>dbNSFP (v5.3)</li>
-<li>CIViC (2026-06-06)</li>
+<li>CIViC (2026-06-20)</li>
 <li>GENCODE v49 (VEP v115)</li>
+</ul>
+</li>
+<li>
+<p>Variant classification updates</p>
+<ul>
 <li>Complete revision and much simplified implementation for ACMG/AMP
 variant classification, still point-based, but more coherent to criteria
 outlined in <a href="https://cspec.genome.network/cspec/ui/svi/" class="external-link">ClinGen’s Criteria
@@ -112,11 +117,10 @@ variants according to PVS1 decision tree</li>
 neighbourhood of canonical splice donor/acceptor sites.</li>
 </ul>
 </li>
-<li>Displayed all virtual panel genes in HTML report in alphabetic
-order, ignoring confidence levels (PanelApp genes)</li>
-<li>Added new column <em>ACMG_CODE</em> in TSV output files, indicating
-which ACMG criteria that were met for each variant (‘|’-separated
-list)</li>
+<li>All virtual panel genes in HTML report display in alphabetic order,
+ignoring confidence levels (PanelApp genes)</li>
+<li>New column <em>ACMG_CODE</em> in TSV output files, indicating which
+ACMG criteria that were met for each variant (‘|’-separated list)</li>
 <li>Renamed column <em>CPSR_CLASSIFICATION_SOURCE</em> →
 <em>ASSERTION_AUTHORITY</em> in TSV output to better reflect its role
 (values: <code>ClinVar</code> or <code>CPSR</code>)</li>
@@ -128,11 +132,8 @@ providing a human-readable explanation for why a given assertion
 authority was chosen (e.g. <em>“Novel variant (absent from
 ClinVar)”</em>, <em>“ClinVar review status: 2 gold stars”</em>,
 <em>“Conflicting ClinVar interpretations”</em>)</li>
-</ul>
-</li>
-<li>
-<p>Simplified population allele frequency arguments for variant
-classification:</p>
+<li>Simplified population allele frequency arguments for variant
+classification:
 <ul>
 <li>Removed <code>--pop_gnomad</code> (previously required to select a
 single gnomAD subpopulation, e.g. <code>nfe</code>) and
@@ -143,11 +144,10 @@ rather than one selected population — consistent with the ClinGen SVI
 groupmax approach already used internally for BA1/BS1/PM2 criteria</li>
 </ul>
 </li>
-<li>
-<p>New argument <code>--clinvar_trust_level</code> (integer, 0–4)
+<li>New argument <code>--clinvar_trust_level</code> (integer, 0–4)
 replacing <code>--classify_all</code>, giving fine-grained control over
 the degree to which existing ClinVar classifications override CPSR’s own
-ACMG/AMP result:</p>
+ACMG/AMP result:
 <ul>
 <li>
 <strong>0</strong>: ClinVar fully trusted; CPSR only overrides
@@ -166,6 +166,8 @@ ClinVar records</li>
 take precedence</li>
 </ul>
 </li>
+</ul>
+</li>
 <li>
 <p>Interactive HTML report tables migrated from <em>DT</em>
 (<code><a href="https://rdrr.io/pkg/DT/man/datatable.html" class="external-link">DT::datatable</a></code>) to <em>reactable</em>
@@ -173,13 +175,13 @@ take precedence</li>
 <ul>
 <li>All classification, secondary findings, pharmacogenomics, biomarker,
 and GWAS variant tables now use reactable</li>
-<li>Tables feature a collapsible detail row per variant with full
-annotation context, reducing visual clutter in the main view</li>
-<li>Dedicated hidden search index column aggregates nested evidence text
-fields (biomarker tables) for full-text search across all evidence
-items</li>
 </ul>
 </li>
+<li><p>Tables feature a collapsible detail row per variant with full
+annotation context, reducing visual clutter in the main view</p></li>
+<li><p>Dedicated hidden search index column aggregates nested evidence
+text fields (HTML biomarker tables) for full-text search across all
+evidence items</p></li>
 <li>
 <p>Excel workbook — SETTINGS and DATA_VERSIONS sheets</p>
 <ul>

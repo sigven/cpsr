@@ -27,7 +27,7 @@
 - [ClinVar](http://www.ncbi.nlm.nih.gov/clinvar/) - database of
   clinically related variants (June 2026)
 - [CIViC](https://civicdb.org) - clinical interpretations of variants in
-  cancer (June 6th 2026)
+  cancer (June 20th 2026)
 
 ### Protein domains/functional features
 

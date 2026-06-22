@@ -16,19 +16,18 @@ format](https://samtools.github.io/hts-specs/VCFv4.2.pdf). Through
 comprehensive gene and variant annotation procedures, CPSR offers the
 following functionalities to the user:
 
-1.  Flexible **selection of cancer predisposition genes** that restricts
-    variant classification and reporting - through the use of virtual
-    gene panels
+1.  Flexible **selection of cancer predisposition genes** subject to
+    analysis and reporting - through the use of virtual gene panels
 2.  **Variant classification** (*Pathogenic* to *Benign*) through a
-    dedicated and well-performing implementation of [ACMG/AMP
+    dedicated implementation of [ACMG/AMP
     guidelines](https://pubmed.ncbi.nlm.nih.gov/25741868/)
-3.  **Detection of biomarkers** - variants with prognostic, diagnostic,
-    or drug sensitivity/resistance implications in cancer, as well as
-    optional detection of variants related to adverse events/toxicity
-    for common chemotherapies  
-4.  Optional reporting of **secondary/incidental findings** ([ACMG
+3.  **Detection of germline biomarkers** - for prognosis, diagnosis, or
+    drug sensitivity/resistance in cancer
+4.  Optional detection and reporting of variants related to adverse
+    events/toxicity for common cancer chemotherapies
+5.  Optional reporting of **secondary/incidental findings** ([ACMG
     recommendations](https://pubmed.ncbi.nlm.nih.gov/37347242/))
-5.  **Interactive HTML output report** with detailed variant
+6.  **Interactive HTML output report** with detailed variant
     information, gene annotations, and external links to relevant
     databases
 
@@ -91,7 +90,7 @@ findings than usual):
 
 ### Example report
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17117326.svg)](https://doi.org/10.5281/zenodo.17117326)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20795508.svg)](https://doi.org/10.5281/zenodo.20795508)
 
 ### Getting started
 
