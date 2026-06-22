@@ -7,15 +7,16 @@ The *Cancer Predisposition Sequencing Reporter (CPSR)* is a computational workfl
 1)  Flexible **selection of cancer predisposition genes** subject to analysis and reporting - through the use of virtual gene panels
 2)  **Variant classification** (*Pathogenic* to *Benign*) through a dedicated implementation of [ACMG/AMP guidelines](https://pubmed.ncbi.nlm.nih.gov/25741868/)
 3)  **Detection of germline biomarkers** - for prognosis, diagnosis, or drug sensitivity/resistance in cancer
-4)  Reporting of **secondary/incidental findings** ([ACMG recommendations](https://pubmed.ncbi.nlm.nih.gov/37347242/))
-5)  **Interactive HTML output report** with detailed variant information, gene annotations, and external links to relevant databases
+4)  Optional detection and reporting of variants related to adverse events/toxicity for common cancer chemotherapies
+5)  Optional reporting of **secondary/incidental findings** ([ACMG recommendations](https://pubmed.ncbi.nlm.nih.gov/37347242/))
+6)  **Interactive HTML output report** with detailed variant information, gene annotations, and external links to relevant databases
 
 The CPSR workflow is integrated with the framework that underlies the [Personal Cancer Genome Reporter - PCGR](https://github.com/sigven/pcgr). While *PCGR* is intended for reporting and analysis of somatic variants detected in a tumor, *CPSR* is intended for reporting and ranking of germline variants in protein-coding genes that are implicated in cancer predisposition and inherited cancer syndromes.
 
 Snapshots of sections in the [quarto](https://quarto.org)-based cancer predisposition genome report (artificial sample, with more findings than usual) are shown below:
 <br>
 
-![](pkgdown/assets/img/cpsr_report_views.png)
+[![](pkgdown/assets/img/cpsr_report_views.png)](https://raw.githubusercontent.com/sigven/cpsr/main/pkgdown/assets/img/cpsr_report_views.png)
 
 ## News
 

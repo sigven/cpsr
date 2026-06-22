@@ -8,12 +8,12 @@ The *Cancer Predisposition Sequencing Reporter (CPSR)* is a computational workfl
 
 *CPSR* accepts a query file with _germline_ variant calls (SNVs/InDels) from a single sample (i.e. cancer patient), encoded in the [VCF format ](https://samtools.github.io/hts-specs/VCFv4.2.pdf). Through comprehensive gene and variant annotation procedures, CPSR offers the following functionalities to the user:
 
-1) Flexible **selection of cancer predisposition genes** that restricts variant classification and reporting - through the use of virtual gene panels
-2) **Variant classification** (*Pathogenic* to _Benign_) through a dedicated and well-performing implementation of [ACMG/AMP guidelines](https://pubmed.ncbi.nlm.nih.gov/25741868/)
-3) **Detection of biomarkers** - variants with prognostic, diagnostic, or drug sensitivity/resistance 
-implications in cancer, as well as optional detection of variants related to adverse events/toxicity for common chemotherapies  
-4) Optional reporting of **secondary/incidental findings** ([ACMG recommendations](https://pubmed.ncbi.nlm.nih.gov/37347242/))
-5) **Interactive HTML output report** with detailed variant information, gene annotations, and external links to relevant databases
+1)  Flexible **selection of cancer predisposition genes** subject to analysis and reporting - through the use of virtual gene panels
+2)  **Variant classification** (*Pathogenic* to *Benign*) through a dedicated implementation of [ACMG/AMP guidelines](https://pubmed.ncbi.nlm.nih.gov/25741868/)
+3)  **Detection of germline biomarkers** - for prognosis, diagnosis, or drug sensitivity/resistance in cancer
+4)  Optional detection and reporting of variants related to adverse events/toxicity for common cancer chemotherapies
+5)  Optional reporting of **secondary/incidental findings** ([ACMG recommendations](https://pubmed.ncbi.nlm.nih.gov/37347242/))
+6)  **Interactive HTML output report** with detailed variant information, gene annotations, and external links to relevant databases
 
 The CPSR workflow is integrated with the framework that underlies [Personal Cancer Genome Reporter - PCGR ](https://github.com/sigven/pcgr). While *PCGR* is intended for reporting and analysis of somatic variants detected in a tumor, *CPSR* is intended for reporting and ranking of germline variants in protein-coding genes that are implicated in cancer predisposition and inherited cancer syndromes.
 
