@@ -35,7 +35,7 @@ plot_summary_statistics <- function(variants_tsv, plot_type = "ClinVar") {
                 factor(
                   .data$level,
                   levels =
-                    pcgrr::color_palette[["pathogenicity"]][["levels"]]
+                    cpsr::color_palette[["pathogenicity"]][["levels"]]
                 )
             ) |>
             dplyr::arrange(.data$level) |>
@@ -54,7 +54,7 @@ plot_summary_statistics <- function(variants_tsv, plot_type = "ClinVar") {
             dplyr::mutate(
               level = factor(
                 .data$level,
-                levels = pcgrr::color_palette[["pathogenicity"]][["levels"]]
+                levels = cpsr::color_palette[["pathogenicity"]][["levels"]]
               )
             ) |>
             dplyr::arrange(.data$level) |>
@@ -72,8 +72,8 @@ plot_summary_statistics <- function(variants_tsv, plot_type = "ClinVar") {
           color = "white", family = "Helvetica", size = 6
         ) +
         ggplot2::scale_fill_manual(
-          values = pcgrr::color_palette[["pathogenicity"]][["values"]],
-          labels = pcgrr::color_palette[["pathogenicity"]][["levels"]],
+          values = cpsr::color_palette[["pathogenicity"]][["values"]],
+          labels = cpsr::color_palette[["pathogenicity"]][["levels"]],
           drop = F
         ) +
         ggplot2::theme_void() +
@@ -107,8 +107,9 @@ plot_virtual_panels <- function(gene_df) {
 
   i <- 1
   gene_df <- gene_df |>
-    dplyr::arrange(
-      dplyr::desc(.data$CONFIDENCE_LEVEL), .data$SYMBOL) |>
+    dplyr::arrange(.data$SYMBOL) |>
+    #dplyr::arrange(
+    #  dplyr::desc(.data$CONFIDENCE_LEVEL), .data$SYMBOL) |>
     dplyr::filter(.data$PRIMARY_TARGET == TRUE)
 
   if(length(unique(gene_df$CONFIDENCE_LEVEL)) == 1){
@@ -149,16 +150,20 @@ plot_virtual_panels <- function(gene_df) {
 
     gene_url <- paste0("https://www.ncbi.nlm.nih.gov/gene/", entrezgene)
     if (!is.na(panel_id)) {
-      gene_url <- paste0("https://panelapp.genomicsengland.co.uk/panels/",
-                         panel_id, "/", symbol)
+      gene_url <- paste0(
+        "https://panelapp.genomicsengland.co.uk/panels/",
+        panel_id, "/", symbol)
     }
 
-    entry_string <- paste0("  <div class=\"", css_class, "\"><a href=\"",
-                           gene_url, "\" target=\"_blank\" title=\"",
-                           symbol, "\">", symbol, "</a></div>")
-    html_string <- paste0(html_string, entry_string)
+    entry_string <- paste0(
+      "  <div class=\"", css_class, "\"><a href=\"",
+      gene_url, "\" target=\"_blank\" title=\"",
+      symbol, "\">", symbol, "</a></div>")
+    html_string <- paste0(
+      html_string, entry_string)
     if (i %% 9 == 0) {
-      html_string <- paste0(html_string, "</div>  <div id=\"container\">")
+      html_string <- paste0(
+        html_string, "</div>  <div id=\"container\">")
     }
     i <- i + 1
   }

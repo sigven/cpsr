@@ -1,0 +1,33 @@
+# Secondary Findings (ACMG)
+
+```{r sf_pdf_setup}
+#| echo: false
+#| eval: true
+
+variants_sf <- 
+  cps_report$content$snv_indel$callset$variant_display$sf
+n_sf <- NROW(variants_sf)
+```
+
+```{r sf_table}
+#| echo: false
+#| eval: !expr n_sf > 0
+
+variants_sf |>
+  dplyr::select(
+    SYMBOL, CONSEQUENCE, ALTERATION, GENOTYPE,
+    CLINVAR_CLASSIFICATION
+  ) |>
+  tinytable::tt() |>
+  tinytable::style_tt(
+    i = 0, background = "black", 
+    color = "white", bold = TRUE) |>
+  tinytable::theme_tt("tabular")
+```
+
+```{r sf_none_msg}
+#| echo: false
+#| output: asis
+#| eval: !expr n_sf == 0
+cat("*No reportable secondary findings identified.*")
+```

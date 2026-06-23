@@ -25,6 +25,7 @@ load_germline_snv_indel <- function(
     cols = pcgrr::data_coltype_defs$snv_indel_germline_raw,
     ref_data = ref_data,
     vartype = "snv_indel",
+    settings = settings,
     primary_site = "Any",
     retained_info_tags =
       conf[['other']]$retained_vcf_info_tags,
@@ -32,39 +33,43 @@ load_germline_snv_indel <- function(
 
   primary_targets <-
     conf[['gene_panel']][['panel_genes']] |>
-    dplyr::filter(.data$PRIMARY_TARGET == T) |>
+    dplyr::filter(.data$PRIMARY_TARGET == TRUE) |>
     dplyr::mutate(
       ENTREZGENE = as.character(.data$ENTREZGENE)) |>
     dplyr::select(
-      c("ENTREZGENE", "PRIMARY_TARGET")
+      c("ENTREZGENE",
+        "PRIMARY_TARGET")
     )
 
   if(NROW(callset[['variant']]) > 0){
     callset[['variant']] <- callset[['variant']] |>
-      cpsr::append_cpg_properties(ref_data = ref_data) |>
+      pcgrr::append_protein_domains(
+        ref_data = ref_data) |>
+      cpsr::append_cpg_properties(
+        ref_data = ref_data) |>
       cpsr::get_insilico_prediction_statistics() |>
       pcgrr::append_tfbs_annotation() |>
+      pcgrr::popmax_af_gnomad() |>
+      pcgrr::append_alteration_name() |>
       pcgrr::append_gwas_citation_phenotype(
        ref_data = ref_data) |>
-      cpsr::assign_pathogenicity_evidence(
+      cpsr::assign_acmg_evidence(
         ref_data = ref_data,
         settings = settings) |>
-      cpsr::assign_classification() |>
-      cpsr::check_variant2cancer_phenotype(
+      cpsr::assign_acmg_consensus() |>
+      cpsr::is_clinvar_cancer_phenotype(
         ref_data = ref_data
       ) |>
-      cpsr::combine_novel_and_preclassified(
+      cpsr::assign_classification_authority(
         conf = conf
       )
 
 
     population_tags <- unique(
-      c("gnomADe_AF",
-        "gnomADg_AF",
-        conf$variant_classification$vcftag_gnomad_AF)
-    )
+      c("gnomADg_AF",
+        "gnomADe_AF"))
 
-    ## set missing population frequences to zero
+    ## set missing population frequencies to zero
     for (tag in population_tags) {
       if (tag %in% colnames(callset[['variant']])) {
         if (nrow(callset[['variant']][is.na(
@@ -80,16 +85,22 @@ load_germline_snv_indel <- function(
 
   ## Only consider biomarker evidence for variants found
   ## in primary targets (virtual gene panel)
-  if(!is.null(callset$biomarker_evidence)){
-    if(NROW(callset$biomarker_evidence$items) > 0){
-      callset$biomarker_evidence$items <-
-        callset$biomarker_evidence$items |>
+  if(!is.null(callset$bm_evidence)){
+    if(NROW(callset$bm_evidence$eitems) > 0){
+      callset$bm_evidence$eitems <-
+        callset$bm_evidence$eitems |>
         dplyr::semi_join(
-          primary_targets, by = "ENTREZGENE")
+          primary_targets,
+          by = "ENTREZGENE")
 
-      if(NROW(callset$biomarker_evidence$items) > 0){
-        callset$biomarker_evidence$items <-
-          callset$biomarker_evidence$items |>
+      if(NROW(callset$bm_evidence$eitems) > 0){
+
+        ## Note: this will not have any effect on the
+        ## number of rows, considering that each row has
+        ## a unique evidence ID that is not collapsed here
+        ##
+        callset$bm_evidence$eitems <-
+          callset$bm_evidence$eitems |>
           dplyr::group_by(
             dplyr::across(-c("BM_PRIMARY_SITE"))
           ) |>
@@ -100,28 +111,28 @@ load_germline_snv_indel <- function(
           )
 
         key_cols <- c("VARIANT_CLASS","ENTREZGENE","VAR_ID")
-        if(all(key_cols %in% colnames(callset$variant)) == TRUE &
-           all(key_cols %in%
-               colnames(callset$biomarker_evidence$items) == TRUE)){
+        if(isTRUE(all(key_cols %in% colnames(callset$variant))) &
+           isTRUE(all(key_cols %in%
+               colnames(callset$bm_evidence$eitems)))){
 
-          callset$biomarker_evidence$items <-
-            callset$biomarker_evidence$items |>
+          callset$bm_evidence$eitems <-
+            callset$bm_evidence$eitems |>
             dplyr::left_join(
               callset$variant,
               by = key_cols
             )
 
-          if("FINAL_CLASSIFICATION" %in%
-             colnames(callset$biomarker_evidence$items) &
-             "CPSR_CLASSIFICATION_SOURCE" %in%
+          if("CLASSIFICATION" %in%
+             colnames(callset$bm_evidence$eitems) &
+             "ASSERTION_AUTHORITY" %in%
              colnames(callset$variant)){
 
-            callset$biomarker_evidence$items <-
-              callset$biomarker_evidence$items |>
+            callset$bm_evidence$eitems <-
+              callset$bm_evidence$eitems |>
               dplyr::filter(
-                .data$CPSR_CLASSIFICATION_SOURCE == "ClinVar" &
-                (.data$FINAL_CLASSIFICATION == "Pathogenic" |
-                  .data$FINAL_CLASSIFICATION == "Likely_Pathogenic"))
+                #.data$ASSERTION_AUTHORITY == "ClinVar" &
+                (.data$CLASSIFICATION == "Pathogenic" |
+                  .data$CLASSIFICATION == "Likely Pathogenic"))
           }
 
         }
@@ -132,29 +143,45 @@ load_germline_snv_indel <- function(
 
   cpsr_callset <- list()
   cpsr_callset[['variant']] <- list()
-  cpsr_callset[['variant']][['all']] <- callset$variant |>
-    dplyr::left_join(primary_targets, by = "ENTREZGENE") |>
-    dplyr::mutate(PRIMARY_TARGET = dplyr::if_else(
-      is.na(.data$PRIMARY_TARGET),
-      FALSE,
-      as.logical(.data$PRIMARY_TARGET)
-    ))
+  cpsr_callset[['variant']][['all']] <-
+    callset$variant |>
+    dplyr::left_join(
+      primary_targets, by = "ENTREZGENE") |>
+    dplyr::mutate(
+      PRIMARY_TARGET = dplyr::if_else(
+        is.na(.data$PRIMARY_TARGET),
+        FALSE,
+        as.logical(.data$PRIMARY_TARGET)
+      ))
   ## Make variant set for tier reporting (virtual panel genes only)
-  cpsr_callset[['variant']][['cpg_non_sf']] <- callset$variant |>
-    dplyr::semi_join(primary_targets, by = "ENTREZGENE")
+  cpsr_callset[['variant']][['cpg_non_sf']] <-
+    callset$variant |>
+    dplyr::semi_join(
+      primary_targets,
+      by = "ENTREZGENE")
+
+  pcgrr::log4r_info(
+    glue::glue(
+      "Total number of variants in target cancer ",
+      "predisposition genes: {NROW(cpsr_callset$variant$cpg_non_sf)}"
+    )
+  )
+
   cpsr_callset[['variant']][['sf']] <- data.frame()
   cpsr_callset[['variant']][['gwas']] <- data.frame()
   cpsr_callset[['variant']][['pgx']] <- data.frame()
   cpsr_callset[['retained_info_tags']] <-
     callset$retained_info_tags
-  cpsr_callset[['biomarker_evidence']] <-
-    callset$biomarker_evidence
+  cpsr_callset[['bm_evidence']] <-
+    callset$bm_evidence
 
   ## Fetch secondary findings (ACMG recommendations)
-  if (as.logical(
-    conf$variant_classification$secondary_findings) == TRUE) {
-    if(as.logical(
-      conf$sample_properties$gt_detected) == F){
+  if (isTRUE(
+    as.logical(
+      conf$variant_classification$secondary_findings))) {
+    if(isFALSE(
+      as.logical(
+        conf$sample_properties$gt_detected))){
       pcgrr::log4r_warn(paste0(
         "Assessment of secondary variant findings (ACMG SF v3.2) ",
         "NOT possible - variant genotype information unavailable"
@@ -170,10 +197,12 @@ load_germline_snv_indel <- function(
   }
 
   ## Fetch chemotherapeutic toxicity variants (DPYD - CPIC)
-  if (as.logical(
-    conf$variant_classification$pgx_findings) == TRUE) {
-    if(as.logical(
-      conf$sample_properties$gt_detected) == F){
+  if (isTRUE(
+    as.logical(
+      conf$variant_classification$pgx_findings))) {
+    if(isFALSE(
+      as.logical(
+        conf$sample_properties$gt_detected))){
       pcgrr::log4r_warn(paste0(
         "Assessment of pharmacogenetic variants (Chemotherapy toxicity) ",
         "NOT possible - variant genotype information unavailable"
@@ -189,8 +218,9 @@ load_germline_snv_indel <- function(
   }
 
   ## Fetch variants that overlap with GWAS tag SNPs
-  if (as.logical(
-    conf$variant_classification$gwas_findings) == TRUE &
+  if (isTRUE(
+    as.logical(
+      conf$variant_classification$gwas_findings)) &
     NROW(cpsr_callset$variant$all) > 0) {
     cpsr_callset[['variant']][['gwas']] <-
       cpsr_callset[['variant']][['all']] |>

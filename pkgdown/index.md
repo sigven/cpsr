@@ -1,6 +1,6 @@
 <br>
 
-## Cancer Predisposition Sequencing Reporter <a href="https://sigven.github.io/cpsr/"><img src="man/figures/logo.png" align="right" height="106" width="90"/></a>
+# Cancer Predisposition Sequencing Reporter <a href="https://sigven.github.io/cpsr/"><img src="man/figures/logo.png" align="right" height="106" width="90" alt="cpsr logo" /></a>
 
 <br><br>
 
@@ -8,22 +8,45 @@ The *Cancer Predisposition Sequencing Reporter (CPSR)* is a computational workfl
 
 *CPSR* accepts a query file with _germline_ variant calls (SNVs/InDels) from a single sample (i.e. cancer patient), encoded in the [VCF format ](https://samtools.github.io/hts-specs/VCFv4.2.pdf). Through comprehensive gene and variant annotation procedures, CPSR offers the following functionalities to the user:
 
-1) Flexible **selection of cancer predisposition genes** that restricts variant classification and reporting - through the use of virtual gene panels
-2) **Variant classification** (*Pathogenic* to _Benign_) through a dedicated and well-performing implementation of [ACMG/AMP guidelines](https://pubmed.ncbi.nlm.nih.gov/25741868/)
-3) **Detection of biomarkers** - variants with prognostic, diagnostic, or drug sensitivity/resistance 
-implications in cancer, as well as optional detection of variants related to adverse events/toxicity for common chemotherapies  
-4) Optional reporting of **secondary/incidental findings** ([ACMG recommendations](https://pubmed.ncbi.nlm.nih.gov/37347242/))
-5) **Interactive HTML output report** with detailed variant information, gene annotations, and external links to relevant databases
+1)  Flexible **selection of cancer predisposition genes** subject to analysis and reporting - through the use of virtual gene panels
+2)  **Variant classification** (*Pathogenic* to *Benign*) through a dedicated implementation of [ACMG/AMP guidelines](https://pubmed.ncbi.nlm.nih.gov/25741868/)
+3)  **Detection of germline biomarkers** - for prognosis, diagnosis, or drug sensitivity/resistance in cancer
+4)  Optional detection and reporting of variants related to adverse events/toxicity for common cancer chemotherapies
+5)  Optional reporting of **secondary/incidental findings** ([ACMG recommendations](https://pubmed.ncbi.nlm.nih.gov/37347242/))
+6)  **Interactive HTML output report** with detailed variant information, gene annotations, and external links to relevant databases
 
 The CPSR workflow is integrated with the framework that underlies [Personal Cancer Genome Reporter - PCGR ](https://github.com/sigven/pcgr). While *PCGR* is intended for reporting and analysis of somatic variants detected in a tumor, *CPSR* is intended for reporting and ranking of germline variants in protein-coding genes that are implicated in cancer predisposition and inherited cancer syndromes.
 
-Snapshots of sections in the [quarto](https://quarto.org)-based cancer predisposition genome report (artificial sample, with more findings than usual):
+Four snapshots of sections in the [quarto](https://quarto.org)-based cancer predisposition genome report (artificial sample, with more findings than usual):
 
-![](img/cpsr_sc.png)
+<br>
+
+<div id="cpsrCarousel" class="carousel slide" data-bs-interval="false">
+<div class="carousel-inner">
+<div class="carousel-item active"><img src="img/cpsr_panel_summary.png" class="d-block w-100" alt="Virtual gene panel &amp; summary of findings"></div>
+<div class="carousel-item"><img src="img/cpsr_variant_classification.png" class="d-block w-100" alt="Variant classification"></div>
+<div class="carousel-item"><img src="img/cpsr_biomarkers.png" class="d-block w-100" alt="Genomic biomarkers"></div>
+<div class="carousel-item"><img src="img/cpsr_pgx_secondary.png" class="d-block w-100" alt="Pharmacogenetic &amp; secondary findings"></div>
+</div>
+<div class="carousel-indicators">
+<button type="button" data-bs-target="#cpsrCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Virtual gene panel"></button>
+<button type="button" data-bs-target="#cpsrCarousel" data-bs-slide-to="1" aria-label="Variant classification"></button>
+<button type="button" data-bs-target="#cpsrCarousel" data-bs-slide-to="2" aria-label="Genomic biomarkers"></button>
+<button type="button" data-bs-target="#cpsrCarousel" data-bs-slide-to="3" aria-label="Secondary findings"></button>
+</div>
+</div>
+<script>
+document.getElementById('cpsrCarousel').querySelector('.carousel-inner').addEventListener('click', function() {
+bootstrap.Carousel.getOrCreateInstance(document.getElementById('cpsrCarousel')).next();
+});
+</script>
 
 <br>
 
 ### News
+
+*  *June 23rd 2026*: **2.3.0 release**
+    -  [CHANGELOG](https://sigven.github.io/cpsr/articles/CHANGELOG.html)
 
 *  *September 17th 2025*: **2.2.5 release**
     -  patch - safeguard against missing data in gnomAD non-cancer variant data
@@ -62,7 +85,7 @@ Snapshots of sections in the [quarto](https://quarto.org)-based cancer predispos
 
 ### Example report
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17117326.svg)](https://doi.org/10.5281/zenodo.17117326)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20795508.svg)](https://doi.org/10.5281/zenodo.20795508)
 
 ### Getting started
 

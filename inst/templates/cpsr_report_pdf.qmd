@@ -1,0 +1,185 @@
+---
+format:
+  typst:
+    include-before-body: typst/_preamble.typ
+    toc: false
+    toc-depth: 2
+    toc-title: "Contents"
+    papersize: a4
+    margin:
+      top: 2.2cm
+      bottom: 2.2cm
+      left: 1.5cm
+      right: 1.5cm
+    section-numbering: ""
+---
+
+```{r global_options}
+#| include: false
+#| eval: true
+
+knitr::opts_chunk$set(
+  echo = FALSE, 
+  warning = FALSE, 
+  error = FALSE, 
+  eval = TRUE)
+options(scipen = 999)
+cps_report <- readRDS(file = "<CPSR_REPORT_OBJECT.rds>")
+no_content <- isFALSE(
+  as.logical(cps_report$content$snv_indel$eval))
+```
+
+```{r cover_page}
+#| output: asis
+#| echo: false
+#| eval: true
+
+# ---------------------------------------------------------------------------
+# Resolve KPI values and colors (mirrors logic in cpsr_summary.qmd)
+# ---------------------------------------------------------------------------
+color_none <- cpsr::color_palette[["none"]]
+
+n_path_clinvar <- 0L
+n_path_cpsr    <- 0L
+n_vus          <- 0L
+n_benign       <- 0L
+
+path_genes_str   <- "None"
+sf_genes_str     <- "Not determined"
+bm_pgx_genes_str <- "None"
+
+col_path       <- color_none
+col_vus        <- color_none
+col_benign     <- color_none
+col_path_genes <- color_none
+col_sf         <- color_none
+col_bm_pgx     <- color_none
+
+variants_cpg <- 
+  cps_report$content$snv_indel$callset$variant_display$cpg_non_sf
+
+if (NROW(variants_cpg) > 0) {
+  n_path_clinvar <- sum(
+    variants_cpg$ASSERTION_AUTHORITY == "ClinVar" &
+      variants_cpg$CLASSIFICATION %in% 
+      c("Pathogenic", "Likely Pathogenic"),
+    na.rm = TRUE
+  )
+  n_path_cpsr <- sum(
+    variants_cpg$ASSERTION_AUTHORITY == "CPSR" &
+      variants_cpg$CLASSIFICATION %in% 
+      c("Pathogenic", "Likely Pathogenic"),
+    na.rm = TRUE
+  )
+  n_vus    <- sum(variants_cpg$CLASSIFICATION == "VUS", na.rm = TRUE)
+  n_benign <- sum(
+    variants_cpg$CLASSIFICATION %in% c("Benign", "Likely Benign"),
+    na.rm = TRUE
+  )
+
+  path_genes <- cps_report$content$snv_indel$callset$variant$cpg_non_sf |>
+    dplyr::filter(
+      CLASSIFICATION %in% c("Pathogenic", "Likely Pathogenic")) |>
+    dplyr::distinct(SYMBOL) |>
+    utils::head(3)
+
+  if (NROW(path_genes) > 0) {
+    path_genes_str <- if (NROW(path_genes) == 3) "> 2" else
+      paste(path_genes$SYMBOL, collapse = " / ")
+    col_path_genes <- 
+      cpsr::color_palette$pathogenicity$values[5]
+  }
+}
+
+if ((n_path_clinvar + n_path_cpsr) > 0)
+  col_path <- cpsr::color_palette$pathogenicity$values[5]
+if (n_vus > 0)
+  col_vus <- cpsr::color_palette$pathogenicity$values[3]
+if (n_benign > 0)
+  col_benign <- cpsr::color_palette$pathogenicity$values[1]
+
+# Secondary findings
+sf_enabled <- isTRUE(
+  as.logical(
+    cps_report$settings$conf$variant_classification$secondary_findings)
+)
+if (sf_enabled) {
+  sf_genes_str <- "None"
+  sf_genes <- cps_report$content$snv_indel$callset$variant$sf |>
+    dplyr::distinct(SYMBOL) |>
+    utils::head(3)
+  if (NROW(sf_genes) > 0) {
+    sf_genes_str <- if (NROW(sf_genes) == 3) "> 2" else
+      paste(sf_genes$SYMBOL, collapse = " / ")
+    col_sf <- cpsr::color_palette$pathogenicity$values[5]
+  }
+}
+
+# Biomarkers + PGx
+bm_genes  <- cps_report$content$snv_indel$callset$variant$biomarker |>
+  dplyr::distinct(SYMBOL) |> utils::head(3)
+pgx_genes <- cps_report$content$snv_indel$callset$variant$pgx |>
+  dplyr::distinct(SYMBOL) |> utils::head(3)
+bm_pgx_genes <- dplyr::bind_rows(bm_genes, pgx_genes) |>
+  dplyr::distinct(SYMBOL) |> utils::head(3)
+if (NROW(bm_pgx_genes) > 0) {
+  bm_pgx_genes_str <- if (NROW(bm_pgx_genes) == 3) "> 2" else
+    paste(bm_pgx_genes$SYMBOL, collapse = " / ")
+  col_bm_pgx <- cpsr::color_palette[["report"]]
+}
+
+# Panel description
+gene_panel_desc <- cps_report$settings$conf$gene_panel$description
+if (!is.null(cps_report$settings$conf$gene_panel$description_trait) &&
+    cps_report$settings$conf$gene_panel$panel_id != "-1" &&
+    cps_report$settings$conf$gene_panel$panel_id != "0") {
+  gene_panel_desc <- paste0(
+    gene_panel_desc, ": ",
+    cps_report$settings$conf$gene_panel$description_trait
+  )
+}
+
+# Emit raw Typst call — values are resolved in R before Typst sees them
+cat(glue::glue(
+  '```{{=typst}}',
+  '#cpsr-cover(',
+  '  sample_id:       "{cps_report$settings$sample_id}",',
+  '  genome_assembly: "{cps_report$settings$genome_assembly}",',
+  '  gene_panel:      "{gene_panel_desc}",',
+  '  cpsr_version:    "{cps_report$settings$software$cpsr_version}",',
+  '  genes_path:      "{path_genes_str}",',
+  '  genes_bm_pgx:    "{bm_pgx_genes_str}",',
+  '  genes_sf:        "{sf_genes_str}",',
+  '  n_path:          "N = {n_path_clinvar + n_path_cpsr}",',
+  '  n_vus:           "N = {n_vus}",',
+  '  n_benign:        "N = {n_benign}",',
+  '  col_genes_path:  "{col_path_genes}",',
+  '  col_bm_pgx:      "{col_bm_pgx}",',
+  '  col_sf:          "{col_sf}",',
+  '  col_path:        "{col_path}",',
+  '  col_vus:         "{col_vus}",',
+  '  col_benign:      "{col_benign}",',
+  ')',
+  '```',
+  .sep = "\n"
+))
+```
+
+```{r classification_cpsr_pdf}
+#| child: 'quarto/pdf/cpsr_classification_pdf.qmd'
+#| eval: !expr isFALSE(no_content)
+```
+
+```{r secondary_findings_pdf}
+#| child: 'quarto/pdf/cpsr_secondary_findings_pdf.qmd'
+#| eval: !expr isTRUE(sf_enabled) && isFALSE(no_content)
+```
+
+```{r settings_pdf}
+#| child: 'quarto/pdf/cpsr_settings_pdf.qmd'
+#| eval: true
+```
+
+---
+
+*This report was generated with [CPSR](https://github.com/sigven/cpsr) v`r cps_report$settings$software$cpsr_version` on `r strftime(Sys.time(), format = "%B %d, %Y")`. For research use only.*

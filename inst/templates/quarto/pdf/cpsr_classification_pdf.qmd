@@ -1,0 +1,68 @@
+# Variant Classification
+
+```{r classification_pdf_setup}
+#| echo: false
+#| eval: true
+
+# Prepare a flat data frame of all classified variants for PDF output.
+# Unlike the HTML report, this uses tinytable rather than reactable,
+# and is limited to P/LP/VUS to keep the PDF focused.
+# TODO: implement create_variant_table_pdf() in R/tables_pdf.R
+
+variants_pdf <- cps_report$content$snv_indel$callset$variant_display$cpg_non_sf
+
+n_path_lpath <- sum(
+  variants_pdf$CLASSIFICATION %in% c("Pathogenic", "Likely Pathogenic"),
+  na.rm = TRUE
+)
+n_vus_pdf <- sum(variants_pdf$CLASSIFICATION == "VUS", na.rm = TRUE)
+```
+
+## Pathogenic and Likely Pathogenic variants
+
+```{r path_lpath_table}
+#| echo: false
+#| eval: !expr n_path_lpath > 0
+
+# Placeholder: replace body with create_variant_table_pdf() call
+# once R/tables_pdf.R is implemented.
+variants_pdf |>
+  dplyr::filter(
+    CLASSIFICATION %in% c("Pathogenic", "Likely Pathogenic")) |>
+  dplyr::select(
+    SYMBOL, CONSEQUENCE, ALTERATION, GENOTYPE,
+    CLASSIFICATION, ASSERTION_AUTHORITY
+  ) |>
+  tinytable::tt() |>
+  tinytable::theme_tt("tabular")
+```
+
+```{r path_none_msg}
+#| echo: false
+#| output: asis
+#| eval: !expr n_path_lpath == 0
+cat("*No pathogenic or likely pathogenic variants identified.*")
+```
+
+## Variants of Uncertain Significance
+
+```{r vus_table}
+#| echo: false
+#| eval: !expr n_vus_pdf > 0
+
+variants_pdf |>
+  dplyr::filter(CLASSIFICATION == "VUS") |>
+  dplyr::select(
+   SYMBOL, CONSEQUENCE, ALTERATION, GENOTYPE,
+    CLASSIFICATION, ASSERTION_AUTHORITY
+  ) |>
+  tinytable::tt() |>
+  tinytable::theme_tt("tabular")
+```
+
+```{r vus_none_msg}
+#| echo: false
+#| output: asis
+#| eval: !expr n_vus_pdf == 0
+cat("*No variants of uncertain significance identified.*")
+```

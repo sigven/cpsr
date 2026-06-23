@@ -1,4 +1,6 @@
 url: https://sigven.github.io/cpsr/
+development:
+  mode: auto
 title: CPSR
 toc:
   depth: 3

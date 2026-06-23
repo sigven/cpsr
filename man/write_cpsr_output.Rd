@@ -11,7 +11,7 @@ write_cpsr_output(report, output_format = "html")
 \item{report}{List object with all report data (CPSR), settings etc.}
 
 \item{output_format}{file format of output
-(html//tsv/xlsx etc)}
+(html//tsv/xlsx/pdf)}
 }
 \description{
 Function that writes contents of CPSR report object to various output formats

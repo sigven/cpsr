@@ -17,7 +17,7 @@ sf_genotypes_unavailable <- !(as.logical(
 ```
 
 ```{r sf_gt_unavailable}
-#| eval: !expr sf_genotypes_unavailable
+#| eval: !expr sf_genotypes_unavailable == TRUE
 #| output: asis
 #| echo: false
 
@@ -29,43 +29,16 @@ cat("::: {.callout-warning}\n## Warning - genotype data missing\n\n*Secondary fi
 *  For the sample in question, a total of __N = `r tot_sf_variants`__ variants in [genes recommended for secondary findings reporting (ACMG `r acmg_version`)](`r acmg_url`) 
 are registered with a <i>Pathogenic/Likely pathogenic</i> clinical significance in ClinVar.
 
-<br>
-
 ```{r sf_cancer}
 #| eval: !expr tot_sf_variants > 0
-#| output: asis
 #| echo: false
 
 htmltools::br()
-htmltools::br()
 
-DT::datatable(
-  cps_report[["content"]][["snv_indel"]]$callset$variant_display$sf,
-  escape = F, extensions = c("Buttons", "Responsive"),
-  options = list(
-    pageLength = 6,
-    buttons = c("csv", "excel"),
-    dom = "Bfrtip",
-    initComplete = DT::JS(
-      "function(settings, json) {",
-      paste0(
-        "$(this.api().table().header()).css({'background-color':'",
-        cpsr::color_palette[['report']],
-        "', 'color': '#fff'});"),
-      "}"
-    )
-  )) |>
-  DT::formatStyle(
-    color = "white",
-    "GENOTYPE",
-    "GENOTYPE",
-    backgroundColor = 
-      DT::styleEqual(
-        cpsr::color_palette[['genotypes']][['levels']],
-        cpsr::color_palette[['genotypes']][['values']]
-      )
-  )
+cpsr::create_clinvar_reactable(
+  data = cps_report[["content"]][["snv_indel"]]$callset$variant_display$sf,
+  color_palette = cpsr::color_palette
+)
 
-htmltools::br()
 htmltools::br()
 ```
