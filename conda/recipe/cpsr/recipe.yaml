@@ -1,6 +1,6 @@
 context:
   name: r-cpsr
-  version: 2.2.5.9012 # bump
+  version: 2.3.0 # bump
 
 package:
   name: ${{ name|lower }}
