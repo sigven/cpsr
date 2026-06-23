@@ -1,0 +1,34 @@
+# Installation
+
+CPSR is distributed alongside the [Personal Cancer Genome Reporter
+(PCGR)](https://github.com/sigven/pcgr), so please follow the [PCGR
+installation
+steps](https://sigven.github.io/pcgr/articles/installation.html) to
+install CPSR, either through
+
+- [Docker](https://sigven.github.io/pcgr/articles/installation.html#b--docker),
+  or
+- [Apptainer/Singularity](https://sigven.github.io/pcgr/articles/installation.html#c--singularityapptainer),
+  or
+- [Conda](https://sigven.github.io/pcgr/articles/installation.html#a--conda).
+
+If using Linux, we recommend Conda as the simplest framework to install
+PCGR and CPSR.
+
+Assuming you have installed the `pcgr` and `pcgrr` conda envs as
+described in the above links at
+e.g. `/home/user/projects/cpsr_proj1/conda/env/`, you can load the
+`pcgr` environment and check that CPSR is installed with the following:
+
+``` text
+(base) $ cd /home/user/projects/cpsr_proj1
+(base) $ conda activate ./conda/env/pcgr
+(/home/user/projects/cpsr_proj1/conda/env/pcgr) $ which cpsr
+/home/user/projects/cpsr_proj1/conda/env/pcgr/bin/cpsr
+
+(/home/user/projects/cpsr_proj1/conda/env/pcgr/bin/cpsr) $ cpsr -h
+[...]
+```
+
+You should now be all set up to run CPSR! Continue on to [an example
+run](https://sigven.github.io/cpsr/articles/running.html#example-run).

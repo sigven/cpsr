@@ -1,0 +1,504 @@
+# Changelog
+
+## v2.3.0
+
+- Date: **2026-06-22**
+
+- Major data updates
+
+  - ClinVar (2026-06)
+  - dbNSFP (v5.3)
+  - CIViC (2026-06-20)
+  - GENCODE v49 (VEP v115)
+
+- Variant classification updates
+
+  - Complete revision and much simplified implementation for ACMG/AMP
+    variant classification, still point-based, but more coherent to
+    criteria outlined in [ClinGen’s Criteria Specification
+    Registry](https://cspec.genome.network/cspec/ui/svi/), considering
+    e.g. 
+    - gene-specific allele frequency thresholds for different criteria
+      (BA1/BS1/PM2/PM1/PM4)
+    - Not relying on allele frequencies from one specified
+      subpopulation, but rather considering all frequencies across
+      gnomAD subpopulations (groupmax approach, as recommended by
+      ClinGen SVI working group)
+    - PM2 supporting not given weight in accumulating pathogenicity
+      score due to limited evidence for pathogenicity by mere rarity
+    - refined handling of PVS1 criterion for loss-of-function (LOF)
+      variants according to PVS1 decision tree
+    - revised MaxEntScan (MES) thresholds for LOF variants in the
+      neighbourhood of canonical splice donor/acceptor sites.
+  - All virtual panel genes in HTML report display in alphabetic order,
+    ignoring confidence levels (PanelApp genes)
+  - New column *ACMG_CODE* in TSV output files, indicating which ACMG
+    criteria that were met for each variant (‘\|’-separated list)
+  - Renamed column *CPSR_CLASSIFICATION_SOURCE* → *ASSERTION_AUTHORITY*
+    in TSV output to better reflect its role (values: `ClinVar` or
+    `CPSR`)
+  - Renamed column *CANCER_PHENOTYPE* to *CLINVAR_PHENOTYPE_CANCER* in
+    TSV output, to clarify that this annotation is based on ClinVar
+    phenotype associations
+  - Added new column *ASSERTION_RATIONALE* in TSV output, providing a
+    human-readable explanation for why a given assertion authority was
+    chosen (e.g. *“Novel variant (absent from ClinVar)”*, *“ClinVar
+    review status: 2 gold stars”*, *“Conflicting ClinVar
+    interpretations”*)
+  - Simplified population allele frequency arguments for variant
+    classification:
+    - Removed `--pop_gnomad` (previously required to select a single
+      gnomAD subpopulation, e.g. `nfe`) and `--maf_upper_threshold`
+      (global MAF filter)
+    - Replaced by a single argument `--max_af_gnomad`, which applies an
+      upper frequency threshold across all gnomAD subpopulations rather
+      than one selected population — consistent with the ClinGen SVI
+      groupmax approach already used internally for BA1/BS1/PM2 criteria
+  - New argument `--clinvar_trust_level` (integer, 0–4) replacing
+    `--classify_all`, giving fine-grained control over the degree to
+    which existing ClinVar classifications override CPSR’s own ACMG/AMP
+    result:
+    - **0**: ClinVar fully trusted; CPSR only overrides conflicted
+      records (default)
+    - **1**: CPSR overrides zero gold star ClinVar records
+    - **2**: CPSR overrides zero- and single gold star ClinVar records
+    - **3**: CPSR overrides low-star and non-cancer-phenotype ClinVar
+      records
+    - **4**: CPSR always classifies, ClinVar records never take
+      precedence
+
+- Interactive HTML report tables migrated from *DT*
+  ([`DT::datatable`](https://rdrr.io/pkg/DT/man/datatable.html)) to
+  *reactable*
+  ([`reactable::reactable`](https://glin.github.io/reactable/reference/reactable.html)):
+
+  - All classification, secondary findings, pharmacogenomics, biomarker,
+    and GWAS variant tables now use reactable
+
+- Tables feature a collapsible detail row per variant with full
+  annotation context, reducing visual clutter in the main view
+
+- Dedicated hidden search index column aggregates nested evidence text
+  fields (HTML biomarker tables) for full-text search across all
+  evidence items
+
+- Excel workbook — SETTINGS and DATA_VERSIONS sheets
+
+  - Two new sheets are prepended to the Excel workbook output (`.xlsx`),
+    before `VIRTUAL_PANEL`:
+    - `SETTINGS` — key run parameters in a three-column
+      `SECTION / PARAMETER / VALUE` layout, covering: CPSR/PCGR
+      versions, genome assembly, sample ID, variant classification
+      settings (gnomAD MAF threshold, ClinVar trust level, secondary
+      findings, pharmacogenomics findings, GWAS hits, noncoding filter),
+      and VEP settings (transcript set, pick order)
+    - `DATA_VERSIONS` — one row per reference dataset used in the run,
+      with columns `DATABASE / VERSION / DESCRIPTION / URL / LICENSE`;
+      mirrors the “Dataset versions” callout in the HTML Documentation
+      section
+
+- Infrastructure: major refactor of GitHub Actions workflow
+
+  - moving to gitflow development mode, with `main` branch for stable
+    releases, and `dev` branch for development
+  - switch to rattler-build from conda mambabuild
+    - also requires moving to the required rattler format for the conda
+      recipe
+  - switch to conda-incubator/setup-miniconda (from
+    mamba-org/setup-micromamba)
+  - pkgdown’s auto development mode allows us to keep a dev website with
+    documentation for the latest development version of cpsr, which is
+    now available at <https://sigven.github.io/cpsr/dev/> (previously
+    only stable versions were available on the website)
+
+## v2.2.5
+
+- Date: **2025-09-17**
+- Patch to safeguard missing gnomAD frequencies in the non-cancer
+  subset, using the general/global gnomAD frequencies as a fallback -
+  improved assignment of ACMG criteria BA1/BS1/PM2
+  - Supplement gnomAD exome AFs with genome-based AF’s when running in
+    VEP, i.e. adding the `--af_gnomadg` by default
+  - Added interactive filtering for global gnomAD frequencies in HTML
+    datatables
+  - Added `gnomADg_AF` (global gnomAD MAF) column in TSV output files
+
+## v2.2.4
+
+- Date: **2025-09-08**
+- Patch to avoid duplicate matches of PVS1 criteria
+
+## v2.2.1
+
+- Date: **2025-03-23**
+- Patch to fix bug with non-standard ClinVar significance levels (Drug
+  Response, Risk Factor)
+
+## v2.2.0
+
+- Date: **2025-03-22**
+- Major data updates
+  - ClinVar (2025-03)
+  - dbNSFP (v5.0)
+  - CIViC (2025-03-13)
+  - GENCODE v47 (VEP v113)
+  - PanelApp (2025-02)
+  - UniProt KB (2025-01)
+  - Cancer Gene Census (v101)
+- Added more cancer susceptibility genes to panel zero (ATG12, BIK,
+  CHD1L, CMTR2, CPAP, HAVCR2, LLGL2, MYO3A, MYO5B, PAH, TTC7A)
+- Added a pharmacogenetic findings option (`--pgx_findings`), which will
+  include pharmacogenetic findings in the HTML report (within the
+  `Genomic biomarkers` section)
+  - For now, this is implemented very simple, not considering star
+    alleles, but merely focusing on pathogenic variants or drug-response
+    related variants in DPYD, TPMT, and NUDT15
+- Two new TSV output files:
+  `<sample_id>.cpsr.<genome_assembly>.pgx_findings.tsv.gz` and
+  `<sample_id>.cpsr.<genome_assembly>.biomarker_evidence.tsv.gz`
+- Cleaned the display of virtual panel genes in Excel output, added
+  `PHARMACOGENETIC_FINDINGS` sheet
+- Multiple cosmetic changes to HTML report - e.g. collapsed call-out
+  blocks
+- Improved the variant classification algorithm
+  - addition of new criterion: disruption of essential nucleotides
+    (ACMG_PM6)
+  - improved matching against pathogenic/benign codons (ClinVar)
+
+## v2.1.2
+
+- Date: **2024-10-21**
+
+- Fixed [bug in pick of VEP consequence
+  block](https://github.com/sigven/cpsr/issues/64)
+
+## v2.1.1
+
+- Date: **2024-10-11**
+
+- Cosmetic fixes in HTML report
+
+## v2.1.0
+
+- Date: **2024-09-29**
+- Major data updates
+  - ClinVar (2024-09)
+  - dbNSFP (v4.8)
+  - CIViC (2024-09-18)
+- Adjusted thresholds for CPSR variant classification based on
+  calibration against ClinVar (Sept 2024 release)
+- Added link to chosen virtual panel in HTML report
+- Created new column `ALTERATION` in variant tables of HTML report, a
+  joint annotation of `HGVSp` and `HGVSc`
+
+## v2.0.3
+
+- Date: **2024-08-01**
+- Fixed [bug](https://github.com/sigven/cpsr/issues/61) for properly
+  copying in quarto templates
+
+## v2.0.1
+
+- Date: **2024-07-07**
+- Fixed bug for chrM variants in input - not properly annotated by VEP,
+  and not correctly processed in `pcgrr`. Any mitochondrial variants
+  found in input VCF are now removed during VCF pre-processing.
+
+## v2.0.0
+
+- Date: **2024-06-26**
+- Data updates
+  - ClinVar
+  - GWAS catalog
+  - CIViC
+  - GENCODE
+  - Cancer Gene Census
+  - PanelApp
+  - Disease Ontology/EFO
+  - UniProt KB
+
+##### Added/changed
+
+- New report generation framework - [quarto](https://quarto.org)
+  - multiple options related to Rmarkdown output are now deprecated
+- Re-organized data bundle structure
+  - Users need to download an assembly-specific VEP cache separately
+    from PCGR/CPSR, and provide its path to the new required argument
+    `--vep_dir` in the `cpsr` command
+- Re-engineered data bundle generation pipeline
+- Improved data bundle documentation
+  - An HTML report with an overview of the contents of the data bundle
+    is shipped with the reference data itself, also available [here
+    (grch38)](https://rpubs.com/sigven/pcgr_refdata).
+- Cleaned up code base for reporting and classification
+- A multi-sheet Excel workbook output with variant classifications and
+  biomarker findings are provided, suitable e.g. for aggregation of
+  results across samples
+- Singularity/Apptainer support
+- argument name changes to `cpsr`:
+  - `--pcgr_dir` is now named `--refdata_dir`
+  - `--clinvar_ignore_noncancer` is now named
+    `--clinvar_report_noncancer`, meaning that variants found in
+    ClinVar, yet attributed to *non-cancer related* phenotypes, are now
+    excluded from reporting by default)
+  - `--vep_gencode_all` is now named `--vep_gencode_basic`, meaning that
+    the gene variant annotation is now using *all* GENCODE transcripts
+    by default, not only the *basic* set)
+  - `--preserved_info_tags` is now named `--retained_info_tags`
+  - `--basic` is now named `--no_reporting`
+- LOFTEE plugin in VEP removed as loss-of-function variant classifier
+  (due to low level of maintenance, and outdated dependency
+  requirements). For now, a simplified LoF-annotation is used as a
+  replacement, looking primarily at CSQ types (`stop_gained`,
+  `frameshift_variant`, `splice_acceptor_variant`,
+  `splice_donor_variant`). Furthermore, frameshift/stop-gain variants
+  that are found within the last 5% of the coding sequence length are
+  deemed non-LOF, as are splice donor variants not disrupting the
+  canonical site (GC\>GT). An even more advanced LoF-annotation is
+  planned for a future release.
+- Biomarkers are matched much more comprehensively than in previous
+  versions, matching at the genomic level, codon, exon, amino acid and
+  gene level (both principal and non-principal transcript matches)
+- Some bugs in the retrieval of secondary variant findings have been
+  fixed
+
+##### Removed
+
+- Options for configuring Rmarkdown output, i.e. `--report_theme`,
+  `report_nonfloating_toc`, `report_table_display` argument in the
+  `cpsr` command is deprecated
+- `--gwas_p_value`
+- `--no_vcf_validate` - VCF validation is simplified, not relying on the
+  strict *vcf-validator*
+
+#### 
+
+## v1.0.1
+
+- Date: **2022-11-11**
+
+##### Added
+
+- Logo
+
+## v1.0.0
+
+- Date: **2022-02-25**
+
+- Data updates
+
+  - ClinVar
+  - GWAS catalog
+  - CIViC
+  - CancerMine
+  - KEGG
+  - Disease Ontology/EFO
+  - Open Targets Platform,
+  - UniProt KB
+  - GENCODE
+
+- Improved detection of secondary variant findings
+
+- CPSR is now implemented as a dedicated R package, depending also on
+  the [pcgrr](https://github.com/sigven/pcgr/tree/master/pcgrr) R
+  package. Running the complete CPSR workflow relies upon installation
+  of [PCGR](https://github.com/sigven/pcgr).
+
+## v0.6.2
+
+- Date: **2021-06-30**
+
+- Data updates: ClinVar, PanelApp, GWAS catalog, CIViC, CancerMine,
+  dbNSFP, KEGG, Disease Ontology/EFO, Open Targets Platform, UniProt KB,
+  GENCODE
+
+- Software upgrades: R v4.1, Bioconductor v3.13, VEP (104) ++
+
+- Improved GWAS track for cancer phenotypes
+
+##### Changed
+
+- TOML-based configuration for CPSR is abandoned, all options to CPSR
+  are now configured through the command-line parameters
+
+##### Added
+
+- Command-line options
+
+  - Previously set in TOML file
+    - `--pop_gnomad`
+    - `--report_theme`
+    - `--preserved_info_tags` (previously `custom_tags` (TOML))
+    - `--custom_list_name`
+    - `--gwas_p_value`
+    - `--vcfanno_n_proc` (previously `n_vcfanno_proc (TOML)`)
+    - `--vep_n_forks` (previously `n_vep_forks (TOML)`)
+    - `--vep_pick_order`
+    - `--vep_no_intergenic` (previously `vep_skip_intergenic (TOML)`)
+  - New options
+    - `--report_nonfloating_toc` (**NEW**) - add the TOC at the top of
+      the HTML report, not floating at the left of the document
+    - `--report_table_display` (**NEW**) - choose level of
+      comprehensiveness in interactive data tables (full versus light
+      (default))
+
+- Improved support for noncoding variant interpretation, primarily in
+  the context of variants of uncertain significance (VUS). Annotations
+  will show variants that disrupt/create microRNA target sites (dbMTS),
+  and variants that overlap transcription factor binding sites (critical
+  and non-critical positions). Genomic conservation scores (GERP) are
+  also provided.
+
+- Approx. 100 protein-coding genes have been appended to the [CPSR
+  superpanel (panel
+  0)](https://sigven.github.io/cpsr/articles/superpanel.md)
+
+##### Fixed
+
+- Code typo ([issue \#33](https://github.com/sigven/cpsr/issues/33))
+
+##### Removed
+
+- Command-line Options
+  - `--conf` - configuration file
+
+## v0.6.1
+
+- Date: **2020-11-30**
+
+##### Added
+
+- Increased number of genes in panel 0: All genes in 42 virtual panels
+  related to cancer conditions in Genomics England PanelApp now also
+  contributes toward panel 0
+- Added option in main script (`--clinvar_ignore_noncancer`) that will
+  exclude any query variants (from HTML report and TSV/JSON output) that
+  have been reported and classified for non-cancer related conditions
+  only (in ClinVar)
+  - this to exclude variants associated with non-cancer related
+    phenotypes
+- For the variant biomarker table, the resolution of the reported
+  biomarker mapping is highlighted with designated background colors for
+  the gene (exact/codon - black vs. exon/gene - orange)
+
+##### Fixed
+
+- Bug in GWAS hits retrieval, [Issue
+  \#30](https://github.com/sigven/cpsr/issues/18)
+- Custom VCF tags (as specified by user in configuration file) not shown
+  in output TSV files
+
+##### Changed
+
+- Removed DisGeNET annotations from output (associations from Open
+  Targets Platform serve same purpose)
+- Renamed report section **Genomic Biomarkers** to **Variant
+  Biomarkers**
+- Option `--incidental_findings` changed back to
+  `--secondary_findings` - recommended term to use according to ACMG
+- Removed *MOD (mechanism-of-disease)* from TSV output file
+
+## v0.6.0rc
+
+- Date: **2020-09-24**
+
+- Data updates: ClinVar, GWAS catalog, GENCODE, CIViC, CancerMine,
+  UniProt KB, dbNSFP, Pfam, KEGG, Open Targets Platform, Genomics
+  England PanelApp
+
+- Software updates: VEP 101
+
+##### Fixed
+
+- Duplicated entries in incidental findings
+
+##### Changed
+
+- All arguments to `cpsr.py` are now non-positional
+- Arguments to `cpsr.py` are divided into two groups: *required* and
+  *optional*
+- `secondary_findings` is now coined `incidental_findings`
+- Option ***gwas:gwas_hits*** in CPSR configuration file is now optional
+  argument `--gwas_findings` in `cpsr.py`
+- Option ***classification:clinvar_cpsr*** in CPSR configuration file is
+  now optional argument `--classify_all` in `cpsr.py`
+- Option ***maf_imits:maf_gnomad*** in CPSR configuration file is now
+  optional argument `--maf_upper_threshold` in `cpsr.py`
+- Option ***secondary_findings:show_sf*** in CPSR configuration file is
+  now optional argument `--incidental_findings` in `cpsr.py`
+- Virtual panels is now displayed through HTML (previously static ggplot
+  plot)
+- **Settings** section of report is now divived into three:
+  - Sample metadata
+  - Report configuration
+  - Virtual panel
+- Classifications of genes as tumor suppressors/oncogenes are now based
+  on a combination of CancerMine citation count and presence in Network
+  of Cancer Genes
+
+##### Added
+
+- Missing ACMG/AMP criterion for classification of silent and intronic
+  variants outside of splice regions (*ACMG_BP7*)
+- Missing ACMG/AMP criterion for classification of variants in promoter
+  and untranslated regions (*ACMG_BP3*)
+- Possibility to create custom virtual panel - any combination of genes
+  from panel 0 provided as a single-column text file with argument
+  `--custom_list`
+- Ensured that non-empty datatables pr. tier (**ClinVar** and
+  **Non-ClinVar**) are set as the active tab
+- Improved documentation of variant classification in the **References**
+  section
+- DOIs available for all references
+
+## v0.5.2
+
+- Date: **2019-11-18**
+
+##### Changed
+
+- Definition of pathogenic range (wrt to variant frequency) takes into
+  account population- and position-specific allele numbers - no longer
+  defined only by allele counts (i.e. *AC*) but by *AC* and *AN*
+- Moved virtual panel identifier from positional argument to optional
+  argument (`--panel_id`) in `cpsr.py`
+
+##### Added
+
+- Ability to analyze custom panels, provided through option
+  `--custom_panel`. Needs to be defined as BED file with four columns,
+  i.e. chromosome, start, stop, genesymbol
+
+## v0.5.1
+
+- Date: **2019-10-14**
+
+##### Fixed
+
+- Bug in `cpsr_validate_input.py`, [GitHub
+  Issue](https://github.com/sigven/cpsr/issues/18)
+- Bug when there are zero variants with a ‘PASS’ status in VCF -
+  omitting report generation
+
+## v0.5.0
+
+- Date: **2019-09-23**
+
+##### Fixed
+
+- Bug in implementation of ACMG/AMP criteria; genes without a known
+  loss-of-function mechanism were handled inappropriately
+- Bug in assignment of heterozygous/homozygous states (input VCF)
+- Bug in implementation of ACMG_PS1 - Same amino acid change as
+  previously pathogenic variant
+- Improved consequence prioritisation for variants with transcript
+  consequences in multiple, distinct cancer predisposition genes
+- Upper MAF threshold (as given by user) only applied for unclassified
+  (i.e. non-ClinVar variants)
+- Handling of non-coding variants (synonymous, upstream_variants) in the
+  report, no longer excluded
+
+##### Added
+
+- Section on *genomic biomarkers*; indicating which variants in the
+  query VCF that overlaps with existing germline biomarkers (CIViC)
