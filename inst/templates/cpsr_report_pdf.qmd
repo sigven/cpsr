@@ -24,8 +24,7 @@ knitr::opts_chunk$set(
   error = FALSE, 
   eval = TRUE)
 options(scipen = 999)
-cps_report <- readRDS(file = "test.rds")
-#cps_report <- readRDS(file = "<CPSR_REPORT_OBJECT.rds>")
+cps_report <- readRDS(file = "<CPSR_REPORT_OBJECT.rds>")
 no_content <- isFALSE(
   as.logical(cps_report$content$snv_indel$eval))
 ```
