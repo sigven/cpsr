@@ -24,11 +24,12 @@ The report is structured in multiple sections, described briefly below:
   3. __Variant classification__
      * For all coding and non-coding variants in the selected cancer predisposition geneset, 
        interactive variant tables are shown, with variants highlighted by their clinical significance:
-         * Pathogenic
-	       * Likely Pathogenic
-	       * Variants of Uncertain Significance (VUS)
-	       * Likely Benign
-	       * Benign
+       
+         - Pathogenic
+         - Likely Pathogenic
+         - Variants of Uncertain Significance (VUS)
+         - Likely Benign
+         - Benign
 
   4. __Genomic biomarkers__
      * Reported clinical evidence items from [CIViC](https://civicdb.org) that match with variants in the query set are reported
