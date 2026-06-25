@@ -20,6 +20,15 @@ Snapshots of sections in the [quarto](https://quarto.org)-based cancer predispos
 
 ## News
 
+*  *June 23rd 2026*: **2.3.0 release**
+    -  Simplified and refined ACMG/AMP variant classification procedure
+         - gene-specific thresholds
+         - improved PVS1 criteria handling
+    -  Simplified reactable HTML table output
+    -  Improved handling of gnomAD non-cancer variant data
+    -  Improved flexibility in classification assertion authorities (ClinVar vs. CPSR)
+    -  [CHANGELOG](https://sigven.github.io/cpsr/articles/CHANGELOG.html)
+
 *  *September 17th 2025*: **2.2.5 release**
     -  patch - safeguard against missing data in gnomAD non-cancer variant data
        using global gnomAD MAF's as fallback
