@@ -86,6 +86,16 @@ If you use CPSR, please cite the following publication:
 
 Sigve Nakken, Vladislav Saveliev, Oliver Hofmann, Pål Møller, Ola Myklebost, and Eivind Hovig. **Cancer Predisposition Sequencing Reporter (CPSR): a flexible variant report engine for high-throughput germline screening in cancer** (2021). *Int J Cancer*. [doi:[10.1002/ijc.33749](doi:%5B10.1002/ijc.33749)](https://doi.org/10.1002/ijc.33749)
 
+
+## Contributing
+
+Contributions are welcome — bug reports, documentation improvements, feature
+suggestions, and code. See [CONTRIBUTING.md](CONTRIBUTING.md) for how to report
+issues and submit pull requests (note that all PRs should target the `dev`
+branch).
+
+This project follows a [Code of Conduct](CODE_OF_CONDUCT.md).
+
 ## Contact
 
 [sigven\@ifi.uio.no](mailto:sigven@ifi.uio.no)
