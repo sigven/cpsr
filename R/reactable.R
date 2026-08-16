@@ -400,6 +400,13 @@ create_variant_table_theme <- function(
 #' @param shared_data Crosstalk SharedData object with unified variants
 #' @param primary_cols Character vector of primary column names to display
 #' @param color_palette CPSR color_palette object
+#' @param flag_low_depth Logical. If TRUE, flag variants with a control-sample
+#' sequencing depth (DP_CONTROL) below \code{dp_threshold} with a marker on the
+#' genotype cell. Should only be set to TRUE when \code{DP_CONTROL} carries
+#' real depth values for at least some variants (i.e. not the "-1" sentinel
+#' used when CPSR is run without a matched control sample).
+#' @param dp_threshold Integer. Depth threshold below which a variant is
+#' considered low-depth. Default: 10.
 #'
 #' @return reactable widget
 #'
@@ -414,7 +421,9 @@ create_unified_variant_reactable <- function(
         "ALTERATION",
         "CLASSIFICATION",
         "GENOTYPE"),
-    color_palette = NULL) {
+    color_palette = NULL,
+    flag_low_depth = FALSE,
+    dp_threshold = 10) {
 
   assertthat::assert_that(
     !is.null(shared_data), msg = "data is NULL")
@@ -496,7 +505,30 @@ create_unified_variant_reactable <- function(
       name = "Genotype",
       minWidth = 90,
       align = "center",
-      cell = rt_cell_genotype(color_palette)
+      cell = function(value, index) {
+        if (is.na(value)) return("-")
+        gidx <- match(value, color_palette$genotypes$levels)
+        style <- if (!is.na(gidx)) {
+          list(
+            background = color_palette$genotypes$bgcolor_values[gidx],
+            color      = color_palette$genotypes$color_values[gidx],
+            padding = "4px 8px", borderRadius = "3px",
+            fontWeight = "bold", display = "inline-block",
+            fontSize = "0.92em"
+          )
+        } else {
+          list()
+        }
+        if (isTRUE(flag_low_depth)) {
+          dp <- shared_data$origData()[index, "DP_CONTROL"]
+          if (!is.na(dp) && dp >= 0 && dp < dp_threshold) {
+            style$borderLeft <- "4px solid #E69F00"
+            style$paddingLeft <- "6px"
+          }
+        }
+        if (length(style) == 0) return(value)
+        htmltools::span(style = style, value)
+      }
     )
   )
 

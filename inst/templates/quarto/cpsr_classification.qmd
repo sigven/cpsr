@@ -64,8 +64,31 @@ if (n_cpg_non_sf > 0) {
     unified_variants |> dplyr::filter(.data$CODING_STATUS == "noncoding"),
     key = ~VARKEY_CLASSIFICATION
   )
+
+  ## DP_CONTROL is set to -1 when CPSR is run without a matched control
+  ## sample (i.e. depth is unknown for all variants in that case) - only
+  ## flag variants as low-depth when a real (non-sentinel) depth value is
+  ## present for at least one variant
+  dp_threshold <- 10
+  has_control_depth <- "DP_CONTROL" %in% colnames(unified_variants) &&
+    any(unified_variants$DP_CONTROL >= 0, na.rm = TRUE)
 }
 
+```
+
+```{r low_depth_legend}
+#| echo: false
+#| output: asis
+#| eval: !expr n_cpg_non_sf > 0
+
+if (has_control_depth) {
+  cat(paste0(
+    "\n::: {.callout-note title='Low sequencing depth' collapse='true'}\n\n",
+    "Variants with a low control-sample sequencing depth (< ", dp_threshold,
+    "X) are flagged with an orange marker on the genotype - interpret their ",
+    "classification with caution.\n\n:::\n"
+  ))
+}
 ```
 
 ```{r no_variants_classification}
@@ -113,7 +136,9 @@ cpsr::create_unified_variant_reactable(
       "GENOTYPE",
       "VARKEY_CLASSIFICATION",
       "ASSERTION_AUTHORITY"),
-  color_palette = cpsr::color_palette
+  color_palette = cpsr::color_palette,
+  flag_low_depth = has_control_depth,
+  dp_threshold = dp_threshold
 )
 ```
 
@@ -147,7 +172,9 @@ cpsr::create_unified_variant_reactable(
       "GENOTYPE",
       "VARKEY_CLASSIFICATION",
       "ASSERTION_AUTHORITY"),
-  color_palette = cpsr::color_palette
+  color_palette = cpsr::color_palette,
+  flag_low_depth = has_control_depth,
+  dp_threshold = dp_threshold
 )
 
 ```
