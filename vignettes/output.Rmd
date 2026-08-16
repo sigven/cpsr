@@ -192,9 +192,8 @@ is generated with the following naming convention:
 | `MUTATION_HOTSPOT_MATCH` | Type of hotspot match (by_hgvsp_principal, by_hgvsc_principal, by_hgvsp_nonprincipal, by_hgvsc_nonprincipal, by_codon_principal, by_codon_nonprincipal) |
 | `MUTATION_HOTSPOT_CANCERTYPE` | hotspot-associated cancer types (from cancerhotspots.org) |
 | `PFAM_DOMAIN` | Pfam domain identifier (from VEP) |
-| `SPLICE_EFFECT` | Effect of splicing, from MutSpliceDB and/or MaxEntScan. Format: <ENTREZGENE>|<SYMBOL>|<REFSEQ_TRANSCRIPT_ID>|<HGVSc>|<EFFECT><AFFECTED_EXONS>|<SOURCE> (MutSpliceDB), 
-MES|<SCORE_DIFF>|SCORE_REF>|<SCORE_ALT>|EFFECT (MaxEntScan). |
-| `EFFECT_PREDICTIONS` | Insilico predictions variant effect on protein function and pre-mRNA splicing from [database of non-synonymous functional predictions - dbNSFP v5.0](https://www.dbnsfp.org/). Predicted effects are provided by different sources/algorithms (separated by `&`), `T` = Tolerated, `N` = Neutral, `D` = Damaging |
+| `SPLICE_EFFECT` | Effect of splicing, from MutSpliceDB and/or MaxEntScan, combined into a single comma-separated string. MutSpliceDB component format: `<ENTREZGENE>|<SYMBOL>|<REFSEQ_TRANSCRIPT_ID>|<HGVSc>|<EFFECT>|<AFFECTED_EXONS>|<SOURCE>`. MaxEntScan component format: `MaxEntScan|<stratum>|<evidence_tier>` (see `MAXENTSCAN` below for details) |
+| `EFFECT_PREDICTIONS` | Insilico predictions variant effect on protein function and pre-mRNA splicing from [database of non-synonymous functional predictions - dbNSFP](https://www.dbnsfp.org/). Predicted effects are provided by different sources/algorithms (separated by `&`), `T` = Tolerated, `N` = Neutral, `D` = Damaging |
 | `DBNSFP_BAYESDEL_ADDAF` | predicted effect from BayesDel (dbNSFP) |
 | `DBNSFP_LIST_S2` | predicted effect from LIST-S2 (dbNSFP) |
 | `DBNSFP_SIFT` | predicted effect from SIFT (dbNSFP) |
@@ -396,7 +395,7 @@ The following variables are included in the tiered TSV file (VCF tags in the que
 | 45. `MUTATION_HOTSPOT` | Cancer mutation hotspot (cancerhotspots.org) |
 | 46. `RMSK_HIT` | RepeatMasker hit |
 | 47. `EFFECT_PREDICTIONS` | Functional effect predictions from multiple algorithms (dbNSFP) |
-| 48. `MAXENTSCAN` | MaxEntScan splice site scores and effect predictions |
+| 48. `MAXENTSCAN` | MaxEntScan splice site impact summary for canonical (±1/±2 bp) and non-canonical (donor +3 to +6, acceptor -3 to -20) splice positions. Format: `MaxEntScan|<stratum>|<evidence_tier>`. `<stratum>` identifies the splice-site position category (e.g. `Donor_+5`, `Acceptor_PPT_Close`, `Canonical_Site`). `<evidence_tier>` reflects predicted impact strength, from strongest to weakest: `Strong` > `Moderate` > `Supporting` > `No_Call` > `Uninformative` (`.` for canonical sites, which are always high-confidence). Only variants with a `Strong` tier at non-canonical positions are additionally flagged as loss-of-function |
 | 49. `SPLICE_EFFECT` | Splice effect annotations from MutSpliceDB and MaxEntScan (see details above) |
 | 50. `LOSS_OF_FUNCTION` | Loss-of-function variant |
 | 51. `LOF_FILTER` | Loss-of-function filter |
