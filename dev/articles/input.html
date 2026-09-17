@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">CPSR</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.2.5.9012</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.3.0.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -102,6 +102,15 @@ VCF FILTER column</li>
 cancer predisposition genes (<strong>hom/het</strong>), the VCF file
 needs to contain the sample-specific genotype data (i.e. a FORMAT field
 + sample-specific genotype field pr. VCF record)</li>
+<li>If the sample-specific FORMAT field contains a read depth annotation
+(<code>DP</code>), CPSR will capture this as the sequencing depth of
+each variant. Variants with a low depth (&lt; 10X) are automatically
+flagged with a visual marker in the variant classification tables of the
+report, since a low-confidence genotype call also undermines the
+reliability of the variant’s clinical classification. This flag is a
+safety net, not a substitute for good input data - we still
+<strong>strongly encourage</strong> users to ensure sufficient depth of
+coverage among the variants submitted for CPSR analysis</li>
 </ul>
 <p><strong>IMPORTANT NOTE </strong>: CPSR generates a number of VCF INFO
 annotation tags that is appended to the query VCF. We will therefore
@@ -120,7 +129,7 @@ query VCF file that coincide with those produced by CPSR.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

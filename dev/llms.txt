@@ -57,6 +57,8 @@ findings than usual):
 
 ### News
 
+- *June 23rd 2026*: **2.3.0 release**
+  - [CHANGELOG](https://sigven.github.io/cpsr/articles/CHANGELOG.html)
 - *September 17th 2025*: **2.2.5 release**
   - patch - safeguard against missing data in gnomAD non-cancer variant
     data

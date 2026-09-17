@@ -2,9 +2,9 @@
 
 ### Basic variant consequence annotation
 
-- [VEP v115](http://www.ensembl.org/info/docs/tools/vep/index.md) -
+- [VEP v116](http://www.ensembl.org/info/docs/tools/vep/index.md) -
   Variant Effect Predictor ([GENCODE
-  v49](https://www.gencodegenes.org/human/) as gene reference database
+  v50](https://www.gencodegenes.org/human/) as gene reference database
   (v19 for grch37))
 
 ### *Insilico* predictions of effect of coding variants
@@ -25,14 +25,14 @@
 ### Variant databases of clinical utility
 
 - [ClinVar](http://www.ncbi.nlm.nih.gov/clinvar/) - database of
-  clinically related variants (June 2026)
+  clinically related variants (September 2026)
 - [CIViC](https://civicdb.org) - clinical interpretations of variants in
-  cancer (June 20th 2026)
+  cancer (September 15th 2026)
 
 ### Protein domains/functional features
 
 - [UniProt/SwissProt KnowledgeBase](http://www.uniprot.org) - resource
-  on protein sequence and functional information (2026_01)
+  on protein sequence and functional information (2026_03)
 - [Pfam](http://pfam.xfam.org) - database of protein families and
   domains (v37.0)
 
@@ -47,7 +47,7 @@
 
 ### Phenotype ontologies
 
-- [UMLS/MedGen](https://www.ncbi.nlm.nih.gov/medgen/) - May 2026
-- [Disease Ontology](https://disease-ontology.org/) - May 30th 2026
+- [UMLS/MedGen](https://www.ncbi.nlm.nih.gov/medgen/) - August 2026
+- [Disease Ontology](https://disease-ontology.org/) - 2026-08-31
 - [Experimental Factor Ontology](https://github.com/EBISPOT/efo) -
-  v3.90.0
+  v3.93.0
