@@ -15,7 +15,7 @@ All other columns accessible via nested details."><meta property="og:image" cont
 
     <a class="navbar-brand me-2" href="../index.html">CPSR</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.3.0.9002</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.3.0.9003</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,7 +60,9 @@ All other columns accessible via nested details.</p>
 <span>  shared_data <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  primary_cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"SYMBOL"</span>, <span class="st">"gnomADg_AF"</span>, <span class="st">"CONSEQUENCE"</span>, <span class="st">"ALTERATION"</span>, <span class="st">"CLASSIFICATION"</span>,</span>
 <span>    <span class="st">"GENOTYPE"</span><span class="op">)</span>,</span>
-<span>  color_palette <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  color_palette <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  flag_low_depth <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  dp_threshold <span class="op">=</span> <span class="fl">10</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -78,6 +80,19 @@ All other columns accessible via nested details.</p>
 
 <dt id="arg-color-palette">color_palette<a class="anchor" aria-label="anchor" href="#arg-color-palette"></a></dt>
 <dd><p>CPSR color_palette object</p></dd>
+
+
+<dt id="arg-flag-low-depth">flag_low_depth<a class="anchor" aria-label="anchor" href="#arg-flag-low-depth"></a></dt>
+<dd><p>Logical. If TRUE, flag variants with a control-sample
+sequencing depth (DP_CONTROL) below <code>dp_threshold</code> with a marker on the
+genotype cell. Should only be set to TRUE when <code>DP_CONTROL</code> carries
+real depth values for at least some variants (i.e. not the "-1" sentinel
+used when CPSR is run without a matched control sample).</p></dd>
+
+
+<dt id="arg-dp-threshold">dp_threshold<a class="anchor" aria-label="anchor" href="#arg-dp-threshold"></a></dt>
+<dd><p>Integer. Depth threshold below which a variant is
+considered low-depth. Default: 10.</p></dd>
 
 </dl></div>
     <div class="section level2">
