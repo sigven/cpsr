@@ -50,5 +50,7 @@ export(rt_cell_classification_rank)
 export(rt_cell_genotype)
 export(variant_classification_synopsis_doc_note)
 export(write_cpsr_output)
-importFrom(rlang,":=")
-importFrom(rlang,.data)
+importFrom(rlang,
+  ":=",
+  .data
+)

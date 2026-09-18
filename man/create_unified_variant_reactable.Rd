@@ -8,7 +8,9 @@ create_unified_variant_reactable(
   shared_data = NULL,
   primary_cols = c("SYMBOL", "gnomADg_AF", "CONSEQUENCE", "ALTERATION", "CLASSIFICATION",
     "GENOTYPE"),
-  color_palette = NULL
+  color_palette = NULL,
+  flag_low_depth = FALSE,
+  dp_threshold = 10
 )
 }
 \arguments{
@@ -17,6 +19,15 @@ create_unified_variant_reactable(
 \item{primary_cols}{Character vector of primary column names to display}
 
 \item{color_palette}{CPSR color_palette object}
+
+\item{flag_low_depth}{Logical. If TRUE, flag variants with a control-sample
+sequencing depth (DP_CONTROL) below \code{dp_threshold} with a marker on the
+genotype cell. Should only be set to TRUE when \code{DP_CONTROL} carries
+real depth values for at least some variants (i.e. not the "-1" sentinel
+used when CPSR is run without a matched control sample).}
+
+\item{dp_threshold}{Integer. Depth threshold below which a variant is
+considered low-depth. Default: 10.}
 }
 \value{
 reactable widget
