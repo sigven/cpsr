@@ -18,6 +18,21 @@ Snapshots of sections in the [quarto](https://quarto.org)-based cancer predispos
 
 [![](pkgdown/assets/img/cpsr_report_views.png)](https://raw.githubusercontent.com/sigven/cpsr/main/pkgdown/assets/img/cpsr_report_views.png)
 
+<br><br>
+
+<hr>
+
+<table>
+<tr>
+<td valign="middle" style="padding:16px">
+<b>CPSR originates from</b> the <a href="https://ous-research.no/tumorbiology/">Department of Tumor Biology</a>, <a href="https://radium.no">Institute for Cancer Research</a>, Oslo University Hospital, Norway.
+</td>
+<td align="center" valign="middle" width="240" style="padding:16px">
+<a href="https://ous-research.no/tumorbiology/"><img src="pkgdown/assets/img/ous_logo.png" width="200" alt="Oslo University Hospital"/></a>
+</td>
+</tr>
+</table>
+
 ## News
 
 *  *June 23rd 2026*: **2.3.0 release**
