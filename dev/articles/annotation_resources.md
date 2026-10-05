@@ -25,9 +25,9 @@
 ### Variant databases of clinical utility
 
 - [ClinVar](http://www.ncbi.nlm.nih.gov/clinvar/) - database of
-  clinically related variants (September 2026)
+  clinically related variants (October 2026)
 - [CIViC](https://civicdb.org) - clinical interpretations of variants in
-  cancer (September 15th 2026)
+  cancer (October 5th 2026)
 
 ### Protein domains/functional features
 
@@ -50,4 +50,4 @@
 - [UMLS/MedGen](https://www.ncbi.nlm.nih.gov/medgen/) - August 2026
 - [Disease Ontology](https://disease-ontology.org/) - 2026-08-31
 - [Experimental Factor Ontology](https://github.com/EBISPOT/efo) -
-  v3.93.0
+  v3.94.0

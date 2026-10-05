@@ -1,5 +1,17 @@
 # Changelog
 
+## v2.3.3
+
+- Date: **2026-10-XX**
+
+- Data bundle **20261005**
+
+  - ClinVar (2026-10)
+  - GENCODE v50 (VEP v116.2); GENCODE v19 remains the gene reference for
+    grch37
+  - CIViC (2026-10-05)
+  - NCI Thesaurus (26.09d)
+
 ## v2.3.0
 
 - Date: **2026-06-22**
