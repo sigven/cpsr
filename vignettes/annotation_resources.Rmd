@@ -20,7 +20,7 @@ output: rmarkdown::html_document
 
 ### Protein domains/functional features
   * [UniProt/SwissProt KnowledgeBase](http://www.uniprot.org) - resource on protein sequence and functional information (2026_03)
-  * [Pfam](http://pfam.xfam.org) - database of protein families and domains (v37.0)
+  * [Pfam](http://pfam.xfam.org) - database of protein families and domains (v38.2, 2026-01)
 
 ### Cancer gene knowledge bases
   * [CancerMine](https://zenodo.org/records/16849846) - Literature-mined database of tumor suppressor genes/proto-oncogenes (v51, August 2025)
