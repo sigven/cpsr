@@ -1,0 +1,156 @@
+```{=typst}
+#pagebreak(weak: true)
+```
+
+# Appendix: Documentation
+
+```{=typst}
+// appendix: smaller text than the report sections, subsections in frames
+#set text(size: 8.5pt)
+#show table: set text(size: 7.5pt)
+#let cpsr-doc-box(body) = block(
+  width: 100%, breakable: true, inset: (x: 10pt, top: 8pt, bottom: 9pt),
+  radius: 3pt, stroke: 0.6pt + luma(200), fill: luma(250),
+  above: 0.9em, below: 0.9em, body)
+```
+
+`r cpsr:::doc_note_pdf(cpsr::cpsr_intro_doc_note())`
+
+The documentation is also available in the HTML report, and at the [CPSR documentation website](https://sigven.github.io/cpsr).
+
+## Variant classification
+
+```{=typst}
+#cpsr-doc-box[
+```
+
+### Synopsis
+
+`r cpsr:::doc_note_pdf(cpsr::variant_classification_synopsis_doc_note(quarto = FALSE, trust_level = cps_report$settings$conf$variant_classification$clinvar_trust_level))`
+
+```{=typst}
+]
+```
+
+```{=typst}
+#cpsr-doc-box[
+```
+
+### Variant loss-of-function annotation
+
+`r cpsr:::doc_note_pdf(pcgrr::lof_doc_note())`
+
+```{=typst}
+]
+```
+
+```{=typst}
+#cpsr-doc-box[
+```
+
+### Implemented evidence criteria
+
+Evidence criteria used for variant classification in CPSR (pole *P*: pathogenic support, *B*: benign support; *score*: contribution to the pathogenicity score).
+
+```{r acmg_evidence_pdf}
+#| echo: false
+#| eval: true
+
+acmg_criteria_pdf <- cpsr::acmg[["evidence_codes"]] |>
+  dplyr::arrange(.data$pathogenicity_pole, dplyr::desc(abs(.data$path_score))) |>
+  dplyr::select(
+    `Evidence code` = "cpsr_evidence_code",
+    Pole = "pathogenicity_pole",
+    Category = "category_long",
+    Description = "description",
+    Score = "path_score") |>
+  dplyr::mutate(dplyr::across(dplyr::everything(), as.character))
+
+acmg_criteria_pdf |>
+  tinytable::tt(width = c(1.5, 0.5, 1.7, 5.2, 0.6)) |>
+  tinytable::format_tt(escape = TRUE) |>
+  cpsr:::style_tt_header_pdf() |>
+  ## evidence codes colored by pole (as in the HTML report)
+  tinytable::style_tt(
+    i = which(acmg_criteria_pdf$Pole == "P"), j = 1,
+    background = "#9E0142", color = "white", bold = TRUE) |>
+  tinytable::style_tt(
+    i = which(acmg_criteria_pdf$Pole == "B"), j = 1,
+    background = "#077009", color = "white", bold = TRUE)
+```
+
+```{=typst}
+]
+```
+
+```{=typst}
+#cpsr-doc-box[
+```
+
+### Use of gnomAD in variant classification
+
+`r cpsr:::doc_note_pdf(cpsr::gnomad_germline_doc_note())`
+
+```{=typst}
+]
+```
+
+```{=typst}
+#cpsr-doc-box[
+```
+
+### Calibration of classification thresholds
+
+`r cpsr:::doc_note_pdf(cpsr::classification_thresholds_intro_doc_note())`
+
+```{r classification_plot_pdf}
+#| echo: false
+#| eval: true
+
+## Typst reads images from the render directory only
+threshold_plot_pdf <- "cpsr_classification_score_thresholds.png"
+invisible(file.copy(
+  system.file("extdata", "CPSR_classification_score_thresholds.png",
+              package = "cpsr"),
+  threshold_plot_pdf, overwrite = TRUE))
+```
+
+![](cpsr_classification_score_thresholds.png){width=100%}
+
+The following thresholds are currently used to assign classifications based on pathogenicity scores:
+
+```{r score2tier_pdf}
+#| echo: false
+#| eval: true
+
+cpsr::acmg[["score2tier"]] |>
+  dplyr::mutate(
+    CPSR_PATHOGENICITY_SCORE = stringr::str_replace_all(
+      .data$CPSR_PATHOGENICITY_SCORE, "</?b>", ""),
+    ## classifications as colored pills (as in the HTML report)
+    CPSR_CLASSIFICATION = cpsr:::classification_pill_pdf(
+      .data$CPSR_CLASSIFICATION)) |>
+  dplyr::rename(
+    `Classification` = "CPSR_CLASSIFICATION",
+    `Pathogenicity score` = "CPSR_PATHOGENICITY_SCORE") |>
+  tinytable::tt(width = c(0.5, 0.5)) |>
+  tinytable::format_tt(j = 2, escape = TRUE) |>
+  cpsr:::style_tt_header_pdf()
+```
+
+`r cpsr:::doc_note_pdf(cpsr::classification_thresholds_outro_doc_note())`
+
+```{=typst}
+]
+```
+
+```{r pgx_doc_heading_pdf}
+#| echo: false
+pgx_doc_heading <- "##"
+pgx_doc_callouts <- FALSE
+```
+
+```{r documentation_pgx_pdf}
+#| child: 'quarto/cpsr_pgx_documentation.qmd'
+#| eval: !expr isTRUE(as.logical(cps_report$settings$conf$variant_classification$pgx_findings)) && identical(cps_report$content$snv_indel$pgx_method, "cpic")
+```

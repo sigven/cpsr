@@ -1,4 +1,8 @@
-# Secondary Findings (ACMG)
+```{=typst}
+#pagebreak(weak: true)
+```
+
+# Secondary Findings
 
 ```{r sf_pdf_setup}
 #| echo: false
@@ -7,6 +11,23 @@
 variants_sf <- 
   cps_report$content$snv_indel$callset$variant_display$sf
 n_sf <- NROW(variants_sf)
+acmg_sf_version <- cps_report$settings$reference_data$source_metadata |>
+  dplyr::filter(.data$source_abbreviation == "acmg_sf") |>
+  dplyr::pull("source_version")
+```
+
+```{r sf_pdf_intro}
+#| echo: false
+#| output: asis
+cat(
+  "_Secondary findings_ are pathogenic/likely pathogenic variants (ClinVar) ",
+  "in genes that are not necessarily related to cancer predisposition, but ",
+  "where the American College of Medical Genetics and Genomics (ACMG) ",
+  "recommends reporting of findings from clinical exome and genome ",
+  "sequencing",
+  if (length(acmg_sf_version) == 1 && !is.na(acmg_sf_version))
+    paste0(" (ACMG SF ", acmg_sf_version, ")"),
+  ", as they are considered medically actionable.\n\n", sep = "")
 ```
 
 ```{r sf_table}
@@ -14,20 +35,15 @@ n_sf <- NROW(variants_sf)
 #| eval: !expr n_sf > 0
 
 variants_sf |>
-  dplyr::select(
-    SYMBOL, CONSEQUENCE, ALTERATION, GENOTYPE,
-    CLINVAR_CLASSIFICATION
-  ) |>
-  tinytable::tt() |>
-  tinytable::style_tt(
-    i = 0, background = "black", 
-    color = "white", bold = TRUE) |>
-  tinytable::theme_tt("tabular")
+  cpsr:::variant_table_pdf(
+    classification_col = "CLINVAR_CLASSIFICATION", source_col = NULL)
 ```
 
 ```{r sf_none_msg}
 #| echo: false
 #| output: asis
 #| eval: !expr n_sf == 0
-cat("*No reportable secondary findings identified.*")
+cat(cpsr:::no_findings_pdf(paste0(
+  "No pathogenic or likely pathogenic variants (ClinVar) were found in the ",
+  "genes recommended by ACMG for reporting of secondary findings.")))
 ```

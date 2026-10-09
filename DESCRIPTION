@@ -53,7 +53,9 @@ Suggests:
     BSgenome.Hsapiens.UCSC.hg19,
     BSgenome.Hsapiens.UCSC.hg38,
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat,
+    tinytable
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

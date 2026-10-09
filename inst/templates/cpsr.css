@@ -23,13 +23,11 @@ h2, #TOC>ul>li {
   margin-top: 0px;
 }
 
+/* rows of gene tiles (virtual panel): tiles flow and wrap as one group -
+   a fixed-height row of 9 tiles made tiles that did not fit the page width
+   overlap (and hide) the tiles of the next row */
 #container {
-    /*border: 2px dashed #444;*/
-    height: 30px;
-    margin: 7px;
-
-    /* just for demo */
-    min-width: 750px;
+    display: contents;
 }
 
 .red, .amber, .exploratory, .green, .nolist, .custom, .app_combo {
@@ -40,7 +38,12 @@ h2, #TOC>ul>li {
     margin-top: 8px;
     padding: 5px;
     color: white;
-    display: inline-block;
+    /* gene symbol centered (vertically and horizontally) in the tile */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: top;
+    line-height: 1.2;
     text-align: center;
 
     /*display: inline;*/

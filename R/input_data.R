@@ -170,6 +170,9 @@ load_germline_snv_indel <- function(
   cpsr_callset[['variant']][['sf']] <- data.frame()
   cpsr_callset[['variant']][['gwas']] <- data.frame()
   cpsr_callset[['variant']][['pgx']] <- data.frame()
+  cpsr_callset[['pgx']] <- list(
+    phenotype = data.frame(),
+    recommendation = data.frame())
   cpsr_callset[['retained_info_tags']] <-
     callset$retained_info_tags
   cpsr_callset[['bm_evidence']] <-
@@ -196,7 +199,7 @@ load_germline_snv_indel <- function(
     }
   }
 
-  ## Fetch chemotherapeutic toxicity variants (DPYD - CPIC)
+  ## Fetch chemotherapeutic toxicity variants (DPYD/TPMT/NUDT15/G6PD - CPIC)
   if (isTRUE(
     as.logical(
       conf$variant_classification$pgx_findings))) {
@@ -204,15 +207,39 @@ load_germline_snv_indel <- function(
       as.logical(
         conf$sample_properties$gt_detected))){
       pcgrr::log4r_warn(paste0(
-        "Assessment of pharmacogenetic variants (Chemotherapy toxicity) ",
+        "Assessment of pharmacogenomic variants (Chemotherapy toxicity) ",
         "NOT possible - variant genotype information unavailable"
       ))
     }else{
       if(NROW(cpsr_callset$variant$all) > 0){
         cpsr_callset[['variant']][['pgx']] <-
           cpsr::retrieve_pgx_calls(
-            cpsr_callset[['variant']][['all']]
+            cpsr_callset[['variant']][['all']],
+            ref_data = ref_data
           )
+
+        ## CPIC phenotypes (genes with altered function alleles) and
+        ## prescribing recommendations for cancer-relevant drugs
+        cpsr_callset[['pgx']][['phenotype']] <-
+          cpsr::assign_pgx_phenotypes(
+            cpsr_callset[['variant']][['all']],
+            ref_data = ref_data,
+            sex = if (is.null(conf$sample_properties$sex)) "UNKNOWN" else
+              as.character(conf$sample_properties$sex)
+          )
+        cpsr_callset[['pgx']][['recommendation']] <-
+          cpsr::assign_pgx_recommendations(
+            cpsr_callset[['pgx']][['phenotype']],
+            ref_data = ref_data
+          )
+        if (NROW(cpsr_callset[['pgx']][['phenotype']]) > 0) {
+          pcgrr::log4r_info(paste0(
+            "Pharmacogenomic phenotypes (CPIC): ",
+            paste(cpsr_callset[['pgx']][['phenotype']]$SYMBOL, ": ",
+                  cpsr_callset[['pgx']][['phenotype']]$PGX_PHENOTYPE,
+                  sep = "", collapse = ", ")
+          ))
+        }
       }
     }
   }

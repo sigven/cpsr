@@ -1,0 +1,67 @@
+```{r pgx_doc_setup}
+#| echo: false
+#| eval: true
+#| output: asis
+
+## heading level: tab in the HTML report (###), section of the appendix
+## in the PDF report (##, set by cpsr_documentation_pdf.qmd)
+if (!exists("pgx_doc_heading")) pgx_doc_heading <- "###"
+## subsections: collapsible callouts (HTML), framed subsections (PDF -
+## Typst callouts can not break across pages; cpsr-doc-box is defined in
+## cpsr_documentation_pdf.qmd)
+if (!exists("pgx_doc_callouts")) pgx_doc_callouts <- TRUE
+pgx_doc_open <- function(title) {
+  if (pgx_doc_callouts) {
+    paste0('::: {.callout-note title="', title, '" collapse="true"}')
+  } else {
+    paste0("```{=typst}\n#cpsr-doc-box[\n```\n\n### ", title, "\n")
+  }
+}
+pgx_doc_close <- function() {
+  if (pgx_doc_callouts) ":::" else "```{=typst}\n]\n```"
+}
+cat("\n", pgx_doc_heading, " Pharmacogenomic findings\n\n", sep = "")
+
+pgx_doc_sex <- if (is.null(cps_report$settings$conf$sample_properties$sex))
+  "UNKNOWN" else cps_report$settings$conf$sample_properties$sex
+pgx_doc_release <- ""
+if ("CPIC_RELEASE" %in% colnames(cps_report$content$snv_indel$pgx_recommendation) &&
+    NROW(cps_report$content$snv_indel$pgx_recommendation) > 0) {
+  pgx_doc_release <- paste0(
+    " (release ", cps_report$content$snv_indel$pgx_recommendation$CPIC_RELEASE[1], ")")
+}
+```
+
+CPSR reports germline variants that alter the response to, or toxicity of, drugs used in cancer treatment and supportive care. The analysis is based on allele definitions, phenotypes and prescribing recommendations from the [Clinical Pharmacogenetics Implementation Consortium (CPIC)](https://cpicpgx.org)`r pgx_doc_release`.
+
+`r pgx_doc_open("Scope - genes and drugs")`
+
+* __Genes__: [DPYD](https://cpicpgx.org/guidelines/guideline-for-fluoropyrimidines-and-dpyd/), [TPMT](https://cpicpgx.org/guidelines/guideline-for-thiopurines-and-tpmt/) and [NUDT15](https://cpicpgx.org/guidelines/guideline-for-thiopurines-and-tpmt/) (drug metabolism), and [G6PD](https://cpicpgx.org/guidelines/cpic-guideline-for-g6pd/) (risk of hemolysis)
+* __Drugs__: anticancer drugs (ATC classes L01/L02), e.g. fluoropyrimidines (5-fluorouracil, capecitabine) and thiopurines (mercaptopurine, thioguanine), and drugs used in supportive care (e.g. rasburicase), with CPIC gene-drug pairs of evidence level A or B
+* Other pharmacogenes with CPIC guidelines for anticancer drugs (e.g. CYP2D6 - tamoxifen, UGT1A1 - irinotecan) are not covered, as their alleles (gene deletions/duplications, repeat variants) cannot be reliably determined from a VCF of short variants
+
+`r pgx_doc_close()`
+
+`r pgx_doc_open("Analysis steps")`
+
+1. __Variant matching__ - variants in the input VCF are matched (genomic position and alleles) to the variants that define the CPIC alleles of each gene. CPIC allele definitions are provided on GRCh38; they are normalized to VCF representation (left-aligned, with padding bases) and lifted over to GRCh37 in the PCGR data bundle.
+2. __Allele assignment__ - a CPIC allele is assigned when all of its defining variants that can be assessed from a VCF are present. Alleles whose defining variants are all contained within another detected allele are merged (e.g. TPMT \*3B and \*3C are reported as \*3A when both variants are found).
+3. __Diplotype__ - each gene is present in two copies (one per chromosome), and the diplotype is the pair of CPIC alleles on the two copies. Heterozygous variants are placed on one copy, with the other copy carrying the reference allele (e.g. TPMT \*1/\*3C); homozygous variants are placed on both copies (e.g. \*3C/\*3C).
+4. __Phenotype__ - the diplotype is translated into a CPIC phenotype (e.g. _Intermediate Metabolizer_), from the function of the two alleles. For DPYD, the phenotype follows from the _activity score_: the sum of the activity values of the two alleles (normal function: 1, decreased function: 0.5, no function: 0).
+5. __Prescribing recommendations__ - CPIC recommendations are retrieved per drug for the phenotype(s) of the sample. For drugs with recommendations based on multiple genes (thiopurines: TPMT and NUDT15), genes without detected altered function alleles are assumed to be normal metabolizers.
+
+Only genes with detected alleles of altered function are reported.
+
+`r pgx_doc_close()`
+
+`r pgx_doc_open("Assumptions and limitations")`
+
+* __Reference genotype at positions without a called variant__ - CPIC allele positions without a variant in the input VCF are assumed to be homozygous for the reference allele. This is not confirmed from the input VCF - the position may not have been sequenced or genotyped (e.g. outside the targeted regions, or low coverage). The absence of findings in a gene therefore does not confirm a normal function genotype.
+* __Phase is not assessed__ - when several heterozygous variants are found in a gene, CPSR assumes they are on different gene copies (in trans), unless they together define a single CPIC allele (e.g. TPMT \*3A). The assumed configuration is stated in the notes for the gene.
+* __Partially detected alleles__ - alleles defined by multiple variants (e.g. DPYD HapB3) are not assigned when only some of their defining variants are found, and the phenotype is reported as _Not determined_.
+* __Variants that cannot be assessed__ - some CPIC allele-defining variants (e.g. repeat variants) cannot be represented reliably in a VCF; alleles are assigned from the remaining defining variants.
+* __G6PD is X-linked__ - G6PD genotypes are interpreted as hemizygous in males (one copy) and diploid in females (two copies), based on the sample sex provided to CPSR (`--sex`, here: _`r pgx_doc_sex`_). The G6PD phenotype is not determined when the sample sex is unknown.
+* __More altered function alleles than gene copies__ - if more altered function alleles are found in a gene than can be placed on two copies, the phenotype is reported as _Not determined_.
+* __Rare/novel variants__ - only variants that define CPIC alleles are considered; other (rare or novel) variants in the genes are not taken into account in the phenotype, but can be found among the classified variants if the genes are part of the virtual gene panel.
+
+`r pgx_doc_close()`

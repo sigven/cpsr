@@ -29,6 +29,8 @@ assertion authorities:
   the configured trust threshold, the CPSR rule-based classification is retained as the
   final call.
 
+{trust_levels}
+
 The ACMG/AMP criteria listed in {criteria_ref} form the basis for the
 *CPSR_CLASSIFICATION* variable. The <i>score</i> column indicates how much each evidence
 item contributes to either of the two pathogenicity poles (positive values indicate

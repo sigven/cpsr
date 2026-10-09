@@ -268,7 +268,7 @@ assign_classification_authority <-
       "0" = "ClinVar trusted (override conflicted records only)",
       "1" = "Override zero-star ClinVar records",
       "2" = "Override zero- and single-star ClinVar records",
-      "3" = "Override low-star and non-cancer-phenotype records",
+      "3" = "Override zero- and single-star ClinVar records, and records with non-cancer phenotypes",
       "4" = "CPSR always classifies"
     )
 
@@ -1095,14 +1095,14 @@ assign_PVS1_evidence <- function(
           "tmp_MES",
           "MES_STRATUM",
           "MES_TIER",
-          "HGVSC_LOCAL"
-          #"PVS1_RELEVANT_TRANSCRIPT",
-          #"PVS1_LOF_GENE"
-          #"PVS1_PURELY_INTRONIC",
-          #"PVS1_SPLICE_CONSEQUENCE",
-          #"PVS1_INFRAME_CONSEQUENCE",
-          #"PVS1_HGVSC_CANONICAL_SITE",
-          #"PVS1_SPLICE_HIGH_IMPACT"
+          "HGVSC_LOCAL",
+          "PVS1_RELEVANT_TRANSCRIPT",
+          "PVS1_LOF_GENE",
+          "PVS1_PURELY_INTRONIC",
+          "PVS1_SPLICE_CONSEQUENCE",
+          "PVS1_INFRAME_CONSEQUENCE",
+          "PVS1_HGVSC_CANONICAL_SITE",
+          "PVS1_SPLICE_HIGH_IMPACT"
         ))
       )
 

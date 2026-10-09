@@ -176,7 +176,7 @@ retrieve_secondary_calls <- function(calls) {
       (.data$SYMBOL == "HFE" &
         (!is.na(.data$PROTEIN_CHANGE) &
           stringr::str_detect(.data$PROTEIN_CHANGE, "Cys282Tyr")) &
-        .data$GENOTYPE == "homozygous"))
+        .data$GENOTYPE == "hom_alt"))
 
   ## AR genes
   min_two_variants_required <-
@@ -212,102 +212,6 @@ retrieve_secondary_calls <- function(calls) {
   }
 
   return(secondary_calls)
-}
-
-#' Function that retrieves variants in genes recommended for secondary
-#' findings
-#'
-#' @param calls data frame with all calls found
-#'
-#' @export
-retrieve_pgx_calls <- function(calls) {
-  assertable::assert_colnames(
-    calls,
-    colnames = c(
-      "CPG_SOURCE",
-      "CLASSIFICATION",
-      "ASSERTION_AUTHORITY",
-      "PRIMARY_TARGET",
-      "GENOTYPE",
-      "SYMBOL",
-      "GENOMIC_CHANGE",
-      "LOSS_OF_FUNCTION",
-      "PROTEIN_CHANGE",
-      "CLINVAR_PHENOTYPE",
-      "CLINVAR_GOLD_STARS",
-      "CLINVAR_NUM_SUBMITTERS"
-    ),
-    only_colnames = F, quiet = T
-  )
-
-  pgx_calls <- calls |>
-    ## do not consider pharmacogenomics-related variants if
-    ## genotypes have not been retrieved properly
-    dplyr::filter(
-      !is.na(.data$GENOTYPE) &
-        !is.na(.data$SYMBOL) &
-        !is.na(.data$CPG_SOURCE) &
-        stringr::str_detect(.data$CPG_SOURCE, "CPIC_PGX_ONCOLOGY") &
-        .data$PRIMARY_TARGET == FALSE &
-        !is.na(.data$ASSERTION_AUTHORITY) &
-        .data$ASSERTION_AUTHORITY == "ClinVar" &
-        !is.na(.data$CLASSIFICATION) &
-        stringr::str_detect(
-          tolower(
-            .data$CLASSIFICATION), "drug|pathogenic"
-        )
-    ) |>
-    dplyr::filter(
-      .data$GENOTYPE != "undefined"
-    )
-
-
-  if (NROW(pgx_calls) == 0) {
-    return(pgx_calls)
-  }else{
-    pgx_calls <- pgx_calls |>
-      dplyr::arrange(
-        dplyr::desc(.data$CLINVAR_GOLD_STARS),
-        dplyr::desc(.data$CLINVAR_NUM_SUBMITTERS))
-
-    clinvar_phenotypes <- pgx_calls |>
-      dplyr::select(c("GENOMIC_CHANGE",
-                      "CLINVAR_PHENOTYPE")) |>
-      tidyr::separate_rows(
-        .data$CLINVAR_PHENOTYPE, sep = "; ") |>
-      dplyr::filter(
-        stringr::str_detect(
-          .data$CLINVAR_PHENOTYPE,
-          "^(Fluorouracil|Dihydropyrimidine|Thiopurine)") |
-          stringr::str_detect(
-            .data$CLINVAR_PHENOTYPE,
-            "^$"
-          )
-      ) |>
-      dplyr::distinct() |>
-      dplyr::group_by(
-        .data$GENOMIC_CHANGE
-      ) |>
-      dplyr::summarise(
-        CLINVAR_PHENOTYPE = paste(
-          sort(unique(.data$CLINVAR_PHENOTYPE)),
-          collapse = "; "),
-        .groups = "drop"
-      )
-
-    pgx_calls <- pgx_calls |>
-      dplyr::select(-c("CLINVAR_PHENOTYPE")) |>
-      dplyr::left_join(
-        clinvar_phenotypes,
-        by = "GENOMIC_CHANGE"
-      ) |>
-      dplyr::filter(!is.na(.data$CLINVAR_PHENOTYPE)) |>
-      dplyr::distinct()
-
-
-  }
-
-  return(pgx_calls)
 }
 
 #' Function that retrieves variants in cancer predisposition genes linked

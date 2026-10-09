@@ -57,6 +57,21 @@ rt_cell_classification_rank <- function(color_palette) {
   }
 }
 
+#' Display label of a CPSR genotype code
+#'
+#' @param genotype genotype code(s) ('het', 'hom_alt', 'hom_ref',
+#' 'undefined')
+#'
+#' @return readable genotype(s), e.g. 'heterozygous', 'homozygous'
+#' @keywords internal
+genotype_label <- function(genotype) {
+  dplyr::case_when(
+    genotype == "het" ~ "heterozygous",
+    genotype == "hom_alt" ~ "homozygous",
+    genotype == "hom_ref" ~ "homozygous (ref)",
+    TRUE ~ as.character(genotype))
+}
+
 #' Cell renderer factory for genotype column
 #' Returns a function that renders genotype values as colored
 #' pills based on the provided color palette.
@@ -71,6 +86,7 @@ rt_cell_genotype <- function(color_palette) {
     if (is.na(value)) return("-")
     idx <- match(value, color_palette$genotypes$levels)
     if (is.na(idx)) return(value)
+    value <- genotype_label(value)
     htmltools::span(
       style = list(
         background = color_palette$genotypes$bgcolor_values[idx],
@@ -503,7 +519,7 @@ create_unified_variant_reactable <- function(
     ),
     GENOTYPE = reactable::colDef(
       name = "Genotype",
-      minWidth = 90,
+      minWidth = 120,
       align = "center",
       cell = function(value, index) {
         if (is.na(value)) return("-")
@@ -527,7 +543,7 @@ create_unified_variant_reactable <- function(
           }
         }
         if (length(style) == 0) return(value)
-        htmltools::span(style = style, value)
+        htmltools::span(style = style, genotype_label(value))
       }
     )
   )
@@ -621,15 +637,33 @@ create_clinvar_reactable <- function(
     ),
     GENOTYPE = reactable::colDef(
       name = "Genotype",
-      minWidth = 90,
+      minWidth = 120,
       align = "center",
       cell = rt_cell_genotype(color_palette)
     ),
     CONSEQUENCE = reactable::colDef(
       name = "Consequence",
       minWidth = 130
+    ),
+    PGX_ALLELE = reactable::colDef(
+      name = "CPIC allele",
+      minWidth = 180
+    ),
+    PGX_ALLELE_FUNCTION = reactable::colDef(
+      name = "Allele function",
+      minWidth = 140
+    ),
+    PGX_ACTIVITY_VALUE = reactable::colDef(
+      name = "Activity value",
+      minWidth = 90,
+      align = "center"
     )
   )
+  col_defs <- col_defs[names(col_defs) %in% colnames(data)]
+  ## defined columns that are not primary are shown in row details
+  for (col in setdiff(names(col_defs), primary_cols)) {
+    col_defs[[col]]$show <- FALSE
+  }
 
   for (col in colnames(data)) {
     if (!col %in% names(col_defs)) {
@@ -1028,7 +1062,7 @@ render_actble_bm_table <- function(
       ),
       GENOTYPE = reactable::colDef(
         name = "Genotype",
-        minWidth = 90,
+        minWidth = 120,
         align = "center",
         cell = rt_cell_genotype(color_palette)
       ),
@@ -1135,3 +1169,336 @@ render_actble_bm_table <- function(
 }
 
 
+
+#' Impact level of a CPIC phenotype (for color coding)
+#'
+#' @param phenotype CPIC phenotype, e.g. 'Poor Metabolizer'. Multi-gene
+#' phenotypes ('TPMT: Normal Metabolizer; NUDT15: Poor Metabolizer') are
+#' assigned the highest impact level among the genes
+#'
+#' @return integer, 1 (normal) to 5 (highest impact), or 0 when the
+#' phenotype is indeterminate/not determined
+#' @keywords internal
+pgx_phenotype_level <- function(phenotype) {
+  vapply(phenotype, function(p) {
+    if (is.na(p) || p == "") return(0L)
+    parts <- trimws(sub("^[A-Z0-9]+:", "", trimws(strsplit(p, ";")[[1]])))
+    parts <- trimws(sub("\\(activity score.*\\)$", "", parts))
+    levels <- vapply(parts, function(x) {
+      x <- tolower(x)
+      if (grepl("cnsha", x)) return(5L)
+      if (grepl("^poor|^deficient", x)) return(4L)
+      if (grepl("^intermediate|^variable", x)) return(3L)
+      if (grepl("^possible intermediate", x)) return(2L)
+      if (grepl("^normal", x)) return(1L)
+      0L
+    }, integer(1))
+    max(levels)
+  }, integer(1), USE.NAMES = FALSE)
+}
+
+#' Color of a CPIC phenotype - blues, darker = more impact (HTML and PDF)
+#'
+#' @param phenotype CPIC phenotype(s)
+#'
+#' @return hex color(s); grey for indeterminate/not determined
+#' @keywords internal
+pgx_phenotype_color <- function(phenotype) {
+  pgx_phenotype_colors <- c(
+    "#9e9e9e",  # indeterminate / not determined
+    "#6baed6",  # normal
+    "#4292c6",  # possible intermediate
+    "#2171b5",  # intermediate / variable
+    "#08519c",  # poor / deficient
+    "#08306b")  # deficient with CNSHA
+  pgx_phenotype_colors[pgx_phenotype_level(phenotype) + 1]
+}
+
+#' Cell renderer for CPIC phenotypes - blue badge, darker = more impact
+#'
+#' @keywords internal
+rt_cell_pgx_phenotype <- function(value) {
+  if (is.na(value) || value == "") return("-")
+  htmltools::span(
+    style = list(
+      background = pgx_phenotype_color(value), color = "#ffffff",
+      padding = "3px 8px", borderRadius = "3px", fontWeight = "bold",
+      display = "inline-block", fontSize = "0.92em", lineHeight = "1.4"),
+    value)
+}
+
+#' Cell renderer for the detected variants of a gene ('; '-separated),
+#' one variant per line (aligned with rt_cell_pgx_genotype)
+#'
+#' @keywords internal
+rt_cell_pgx_variants <- function(value) {
+  if (is.na(value) || value == "") return("-")
+  htmltools::div(unname(lapply(strsplit(value, "; ")[[1]], function(v)
+    htmltools::div(style = list(padding = "3px 0", lineHeight = "1.4"), v))))
+}
+
+#' Cell renderer factory for the genotypes of the detected variants of a
+#' gene ('; '-separated: heterozygous, homozygous, hemizygous) - pills
+#' styled as the genotypes of the variant classification table
+#'
+#' @param color_palette CPSR color palette object
+#' @keywords internal
+rt_cell_pgx_genotype <- function(color_palette) {
+  function(value) {
+    if (is.na(value) || value == "") return("-")
+    pills <- lapply(strsplit(value, "; ")[[1]], function(gt) {
+      level <- dplyr::case_when(
+        gt == "heterozygous" ~ "het",
+        gt %in% c("homozygous", "hemizygous") ~ "hom_alt",
+        TRUE ~ "undefined")
+      idx <- match(level, color_palette$genotypes$levels)
+      htmltools::div(
+        style = list(padding = "1px 0"),
+        htmltools::span(
+          style = list(
+            background = color_palette$genotypes$bgcolor_values[idx],
+            color = color_palette$genotypes$color_values[idx],
+            padding = "2px 8px", borderRadius = "3px",
+            fontWeight = "bold", display = "inline-block",
+            fontSize = "0.92em", lineHeight = "1.4"),
+          gt))
+    })
+    htmltools::div(unname(pills))
+  }
+}
+
+#' Convert an HTML link string ("<a href='...'>text</a>") into an
+#' htmltools tag (raw HTML is not rendered in reactable row details)
+#'
+#' @keywords internal
+html_link_to_tag <- function(value) {
+  if (is.na(value) || !grepl("<a ", value, fixed = TRUE)) return(value)
+  links <- stringr::str_match_all(
+    value, "<a [^>]*href=['\"]([^'\"]+)['\"][^>]*>([^<]*)</a>")[[1]]
+  if (NROW(links) == 0) return(value)
+  tags <- lapply(seq_len(NROW(links)), function(i)
+    htmltools::tags$a(href = links[i, 2], target = "_blank", links[i, 3]))
+  ## multiple links separated by ', '
+  unname(unlist(lapply(seq_along(tags), function(i)
+    if (i == 1) list(tags[[i]]) else list(", ", tags[[i]])),
+    recursive = FALSE))
+}
+
+#' Function that creates a reactable of CPIC pharmacogenomic phenotypes
+#' or prescribing recommendations, for display in the germline report
+#'
+#' The phenotype table has one row per gene (detected variants, CPIC
+#' diplotype, phenotype); each row can be expanded to show the
+#' variant-level details (CPIC allele/function, consequence, ClinVar,
+#' gnomAD) and the CPIC consultation text. The recommendation table has one
+#' row per drug and phenotype; each row can be expanded to show the
+#' implications, CPIC comments and guideline. Phenotypes are shown as
+#' blue badges, darker for higher impact.
+#'
+#' @param data data frame with gene phenotypes (assign_pgx_phenotypes)
+#' or drug recommendations (assign_pgx_recommendations)
+#' @param type 'phenotype' or 'recommendation'
+#' @param color_palette CPSR color_palette object
+#' @param variants data frame with pharmacogenomic variants (display
+#' version of retrieve_pgx_calls output), used for row details of the
+#' phenotype table
+#'
+#' @export
+create_pgx_reactable <- function(
+    data = NULL,
+    type = "phenotype",
+    color_palette = NULL,
+    variants = NULL) {
+
+  assertthat::assert_that(!is.null(data), msg = "data is NULL")
+  assertthat::assert_that(type %in% c("phenotype", "recommendation"))
+  assertthat::assert_that(!is.null(color_palette), msg = "color_palette is NULL")
+
+  if (type == "phenotype") {
+    col_defs <- list(
+      SYMBOL = reactable::colDef(
+        name = "Gene", minWidth = 70, sticky = "left",
+        style = list(fontWeight = "bold")),
+      PGX_VARIANTS = reactable::colDef(
+        name = "Alteration", minWidth = 110, html = FALSE,
+        cell = rt_cell_pgx_variants),
+      PGX_DIPLOTYPE = reactable::colDef(
+        name = "Diplotype", minWidth = 150),
+      PGX_GENOTYPES = reactable::colDef(
+        name = "Genotype", minWidth = 115, html = FALSE,
+        cell = rt_cell_pgx_genotype(color_palette)),
+      PGX_PHENOTYPE = reactable::colDef(
+        name = "Phenotype", minWidth = 150, html = FALSE,
+        cell = rt_cell_pgx_phenotype),
+      PGX_ACTIVITY_SCORE = reactable::colDef(
+        name = "Activity score", minWidth = 95, align = "center",
+        cell = function(value) {
+          if (is.na(value) || value %in% c("n/a", "")) "-" else value
+        }),
+      ## interpretation notes are shown in the row details (keeps the
+      ## table within the page width)
+      PGX_PHENOTYPE_NOTE = reactable::colDef(show = FALSE)
+    )
+    details <- pgx_phenotype_row_details(data, variants)
+  } else {
+    data <- data |>
+      dplyr::mutate(
+        DRUG_NAME = dplyr::if_else(
+          !is.na(.data$GUIDELINE_URL),
+          paste0("<a href='", .data$GUIDELINE_URL, "' target='_blank'>",
+                 .data$DRUG_NAME, "</a>"),
+          .data$DRUG_NAME),
+        PHENOTYPE_DISPLAY = dplyr::coalesce(
+          format_pgx_phenotype(.data$PHENOTYPE, .data$ACTIVITY_SCORE),
+          stringr::str_replace_all(.data$LOOKUP_KEY, c(":" = ": ", ";" = "; "))),
+        RECOMMENDATION = dplyr::coalesce(
+          .data$RECOMMENDATION,
+          paste0("<i>", .data$PGX_NOTE, "</i>")),
+        GENES = stringr::str_replace_all(.data$GENES, "\\|", ", "),
+        IMPLICATIONS = format_pgx_gene_text(.data$IMPLICATIONS))
+    col_defs <- list(
+      DRUG_NAME = reactable::colDef(
+        name = "Drug", minWidth = 100, sticky = "left", html = TRUE,
+        style = list(fontWeight = "bold")),
+      PHENOTYPE_DISPLAY = reactable::colDef(
+        name = "Phenotype", minWidth = 170, html = FALSE,
+        cell = rt_cell_pgx_phenotype),
+      RECOMMENDATION = reactable::colDef(
+        name = "CPIC recommendation", minWidth = 225),
+      CLASSIFICATION = reactable::colDef(
+        name = "Strength", minWidth = 105, align = "center",
+        cell = function(value) {
+          if (is.na(value) || value %in% c("", ".")) "-" else value
+        })
+    )
+    details <- pgx_recommendation_row_details(data)
+  }
+
+  col_defs <- col_defs[names(col_defs) %in% colnames(data)]
+  table_data <- dplyr::select(data, dplyr::all_of(names(col_defs)))
+
+  reactable::reactable(
+    table_data,
+    columns = col_defs,
+    defaultColDef = reactable::colDef(html = TRUE),
+    ## details rendered from R (htmltools tags) - must not inherit
+    ## html = TRUE from defaultColDef (shown as '[object Object]')
+    details = reactable::colDef(details = details, html = FALSE, width = 45),
+    searchable = FALSE,
+    highlight = TRUE,
+    striped = TRUE,
+    compact = TRUE,
+    wrap = TRUE,
+    defaultPageSize = 10,
+    theme = create_variant_table_theme(
+      color_palette = color_palette,
+      header_color = "#2c313c")
+  )
+}
+
+#' Row details (variant level) for the CPIC phenotype table
+#'
+#' @param phenotypes data frame with gene phenotypes
+#' @param variants data frame with pharmacogenomic variants
+#'
+#' @return function(index) for reactable details
+#' @keywords internal
+pgx_phenotype_row_details <- function(phenotypes, variants = NULL) {
+
+  ## genotype and activity (score) are shown in the main row
+  detail_fields <- c(
+    "ALTERATION" = "Alteration",
+    "PGX_ALLELE" = "CPIC allele(s)",
+    "PGX_ALLELE_FUNCTION" = "CPIC allele function",
+    "CONSEQUENCE" = "Consequence",
+    "CLINVAR_CLASSIFICATION" = "ClinVar",
+    "DBSNP_RSID" = "dbSNP",
+    "gnomADe_AF" = "gnomAD AF (exomes)",
+    "gnomADg_AF" = "gnomAD AF (genomes)")
+
+  function(index) {
+    gene <- phenotypes$SYMBOL[index]
+    blocks <- list()
+    if (NROW(variants) > 0 && "SYMBOL" %in% colnames(variants)) {
+      gene_vars <- variants[variants$SYMBOL == gene, , drop = FALSE]
+      fields <- detail_fields[names(detail_fields) %in% colnames(gene_vars)]
+      ## alteration only needed to tell multiple variants apart
+      if (NROW(gene_vars) == 1) {
+        fields <- fields[names(fields) != "ALTERATION"]
+      }
+      if (NROW(gene_vars) > 0 && length(fields) > 0) {
+        ## unnamed lists - named arguments become HTML attributes
+        header <- htmltools::tags$tr(unname(lapply(fields, function(f)
+          htmltools::tags$th(
+            f, style = "text-align:left; padding:3px 12px 3px 0;"))))
+        rows <- unname(lapply(seq_len(NROW(gene_vars)), function(i) {
+          htmltools::tags$tr(unname(lapply(names(fields), function(f) {
+            ## single value - gene_vars may be a tibble (gene_vars[i, f]
+            ## would then be a 1x1 tibble)
+            value <- as.character(gene_vars[[f]][i])
+            htmltools::tags$td(
+              if (is.na(value) || value == "") "-" else html_link_to_tag(value),
+              style = "padding:3px 12px 3px 0; vertical-align:top;")
+          })))
+        }))
+        blocks[[length(blocks) + 1]] <- htmltools::tags$table(
+          style = "font-size:0.92em; margin-bottom:8px;",
+          htmltools::tags$thead(header), htmltools::tags$tbody(rows))
+      }
+    }
+    if ("PGX_PHENOTYPE_NOTE" %in% colnames(phenotypes) &&
+        !is.na(phenotypes$PGX_PHENOTYPE_NOTE[index])) {
+      blocks[[length(blocks) + 1]] <- htmltools::div(
+        style = "font-size:0.92em; margin-bottom:8px;",
+        htmltools::tags$b("Note: "),
+        htmltools::tags$i(phenotypes$PGX_PHENOTYPE_NOTE[index]))
+    }
+    if ("CONSULTATION_TEXT" %in% colnames(phenotypes) &&
+        !is.na(phenotypes$CONSULTATION_TEXT[index])) {
+      blocks[[length(blocks) + 1]] <- htmltools::div(
+        style = "font-size:0.92em; color:#444;",
+        htmltools::tags$b("CPIC consultation text: "),
+        phenotypes$CONSULTATION_TEXT[index])
+    }
+    if (length(blocks) == 0) return(NULL)
+    htmltools::div(style = "padding:10px 16px;", blocks)
+  }
+}
+
+#' Row details for the CPIC prescribing recommendation table
+#'
+#' @param recommendations data frame with drug recommendations
+#'
+#' @return function(index) for reactable details
+#' @keywords internal
+pgx_recommendation_row_details <- function(recommendations) {
+
+  detail_fields <- c(
+    "IMPLICATIONS" = "Implications",
+    "COMMENTS" = "CPIC comments",
+    "PGX_NOTE" = "Note",
+    "CPIC_LEVEL" = "CPIC level (gene-drug pair)",
+    "GUIDELINE_NAME" = "CPIC guideline")
+
+  function(index) {
+    items <- list()
+    for (f in names(detail_fields)) {
+      if (!f %in% colnames(recommendations)) next
+      value <- recommendations[[f]][index]
+      if (is.na(value) || value %in% c("", "n/a")) next
+      if (f == "GUIDELINE_NAME" && "GUIDELINE_URL" %in% colnames(recommendations) &&
+          !is.na(recommendations$GUIDELINE_URL[index])) {
+        value <- htmltools::tags$a(
+          href = recommendations$GUIDELINE_URL[index], target = "_blank", value)
+      }
+      if (f == "CPIC_LEVEL") {
+        value <- stringr::str_replace_all(value, c(":" = ": ", ";" = "; "))
+      }
+      items[[length(items) + 1]] <- htmltools::div(
+        style = "margin-bottom:6px;",
+        htmltools::tags$b(paste0(detail_fields[[f]], ": ")), value)
+    }
+    if (length(items) == 0) return(NULL)
+    htmltools::div(style = "padding:10px 16px; font-size:0.92em;", items)
+  }
+}

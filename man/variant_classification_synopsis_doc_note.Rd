@@ -4,7 +4,7 @@
 \alias{variant_classification_synopsis_doc_note}
 \title{Get documentation string for variant classification synopsis}
 \usage{
-variant_classification_synopsis_doc_note(quarto = TRUE)
+variant_classification_synopsis_doc_note(quarto = TRUE, trust_level = NULL)
 }
 \arguments{
 \item{quarto}{Logical; if TRUE, use Quarto cross-reference syntax for

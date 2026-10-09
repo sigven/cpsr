@@ -1,0 +1,158 @@
+```{=typst}
+#pagebreak(weak: true)
+```
+
+# Pharmacogenomic Findings
+
+```{r pgx_pdf_setup}
+#| echo: false
+#| eval: true
+
+pgx_phenotypes_pdf <- cps_report$content$snv_indel$pgx_phenotype
+pgx_recommendations_pdf <- cps_report$content$snv_indel$pgx_recommendation
+n_pgx_phenotypes <- NROW(pgx_phenotypes_pdf)
+n_pgx_recommendations <- NROW(pgx_recommendations_pdf)
+pgx_gt_unavailable <- isFALSE(as.logical(
+  cps_report$settings$conf$sample_properties$gt_detected))
+```
+
+```{r pgx_pdf_gt_unavailable}
+#| echo: false
+#| output: asis
+#| eval: !expr isTRUE(pgx_gt_unavailable)
+cat(cpsr:::no_findings_pdf(paste0(
+  "Pharmacogenomic variants were not assessed - genotype information (GT) ",
+  "is not available in the input VCF."), title = "Not assessed"))
+```
+
+```{r pgx_pdf_intro}
+#| echo: false
+#| output: asis
+#| eval: !expr isFALSE(pgx_gt_unavailable)
+cat(
+  "CPIC phenotypes are inferred for genes with detected altered function ",
+  "alleles (DPYD, TPMT, NUDT15, G6PD). Each gene is present in two copies; ",
+  "the *diplotype* is the pair of CPIC alleles on the two copies (e.g. TPMT ",
+  "\\*1/\\*3C - one reference copy and one copy with \\*3C), and determines ",
+  "the phenotype.\n\n",
+  "*Assumptions*: CPIC allele positions without a called variant are assumed ",
+  "to be homozygous reference (not confirmed from the input VCF). Phase is not ",
+  "assessed - the assumed configuration of multiple variants in a gene is ",
+  "stated in the notes. G6PD (X-linked) genotypes are interpreted as ",
+  "hemizygous in males and diploid in females (sample sex: ",
+  (if (is.null(cps_report$settings$conf$sample_properties$sex)) "UNKNOWN" else cps_report$settings$conf$sample_properties$sex), ").\n\n",
+  sep = "")
+```
+
+```{r pgx_phenotype_heading}
+#| echo: false
+#| output: asis
+#| eval: !expr n_pgx_phenotypes > 0
+cat("## Phenotypes\n\n")
+```
+
+```{r pgx_phenotype_table}
+#| echo: false
+#| eval: !expr n_pgx_phenotypes > 0
+
+pgx_phenotypes_pdf |>
+  dplyr::select(
+    Gene = "SYMBOL",
+    Alteration = "PGX_VARIANTS",
+    Diplotype = "PGX_DIPLOTYPE",
+    Genotype = "PGX_GENOTYPES",
+    Phenotype = "PGX_PHENOTYPE",
+    `Activity score` = "PGX_ACTIVITY_SCORE",
+    Note = "PGX_PHENOTYPE_NOTE"
+  ) |>
+  dplyr::mutate(dplyr::across(dplyr::everything(),
+                              ~ dplyr::coalesce(as.character(.x), ""))) |>
+  dplyr::mutate(`Activity score` = dplyr::if_else(
+    .data$`Activity score` == "n/a", "", .data$`Activity score`)) |>
+  ## genotype and phenotype as colored pills (as in the HTML report) - raw
+  ## Typst markup, not escaped
+  dplyr::mutate(
+    Genotype = cpsr:::pgx_genotype_pill_pdf(.data$Genotype),
+    Phenotype = cpsr:::pgx_phenotype_pill_pdf(.data$Phenotype)) |>
+  tinytable::tt(width = c(0.7, 1.4, 1.8, 1.5, 1.5, 0.8, 2.1)) |>
+  tinytable::format_tt(j = c(1:3, 6:7), escape = TRUE) |>
+  cpsr:::style_tt_header_pdf() |>
+  tinytable::style_tt(j = 1, bold = TRUE)
+```
+
+```{r pgx_phenotype_none_msg}
+#| echo: false
+#| output: asis
+#| eval: !expr n_pgx_phenotypes == 0 && isFALSE(pgx_gt_unavailable)
+cat(cpsr:::no_findings_pdf(paste0(
+  "No CPIC alleles of altered function were found in DPYD, TPMT, NUDT15 or ",
+  "G6PD - no CPIC phenotypes or prescribing recommendations are reported. ",
+  "Note that this does not confirm normal function genotypes (positions ",
+  "may not be covered by the input VCF).")))
+```
+
+```{r pgx_recommendation_heading}
+#| echo: false
+#| output: asis
+#| eval: !expr n_pgx_phenotypes > 0
+cat("## Prescribing recommendations\n\n")
+```
+
+```{r pgx_recommendation_source}
+#| echo: false
+#| output: asis
+#| eval: !expr n_pgx_recommendations > 0
+cat(
+  "Recommendations from CPIC guidelines (https://cpicpgx.org",
+  if ("CPIC_RELEASE" %in% colnames(pgx_recommendations_pdf))
+    paste0(", release ", pgx_recommendations_pdf$CPIC_RELEASE[1]),
+  "). For multi-gene recommendations (thiopurines), genes without detected ",
+  "altered function alleles are assumed to be normal metabolizers. ",
+  "*Strength*: CPIC rating of the recommendation - *Strong* (high quality ",
+  "evidence, desirable effects clearly outweigh undesirable effects), ",
+  "*Moderate* (close or uncertain balance of effects), *Optional* (small ",
+  "effects or weak evidence; up to the prescriber) or *No recommendation* ",
+  "(insufficient evidence).\n\n",
+  sep = "")
+```
+
+```{r pgx_recommendation_table}
+#| echo: false
+#| eval: !expr n_pgx_recommendations > 0
+
+pgx_recommendations_pdf |>
+  dplyr::mutate(
+    RECOMMENDATION = dplyr::coalesce(.data$RECOMMENDATION, .data$PGX_NOTE),
+    PGX_NOTE = dplyr::if_else(
+      is.na(.data$LOOKUP_KEY), NA_character_, .data$PGX_NOTE),
+    LOOKUP_KEY = dplyr::if_else(
+      is.na(.data$LOOKUP_KEY), NA_character_,
+      dplyr::coalesce(
+        cpsr:::format_pgx_phenotype(.data$PHENOTYPE, .data$ACTIVITY_SCORE),
+        stringr::str_replace_all(.data$LOOKUP_KEY, c(":" = ": ", ";" = "; "))))) |>
+  dplyr::select(
+    Drug = "DRUG_NAME",
+    Phenotype = "LOOKUP_KEY",
+    `CPIC recommendation` = "RECOMMENDATION",
+    Strength = "CLASSIFICATION",
+    Note = "PGX_NOTE"
+  ) |>
+  dplyr::mutate(dplyr::across(dplyr::everything(),
+                              ~ dplyr::coalesce(as.character(.x), ""))) |>
+  dplyr::mutate(
+    Strength = dplyr::if_else(.data$Strength == ".", "", .data$Strength),
+    ## phenotype as colored pill (as in the HTML report) - raw Typst markup
+    Phenotype = cpsr:::pgx_phenotype_pill_pdf(.data$Phenotype)) |>
+  tinytable::tt(width = c(1.4, 1.8, 3.8, 1.0, 1.6)) |>
+  tinytable::format_tt(j = c(1, 3:5), escape = TRUE) |>
+  cpsr:::style_tt_header_pdf() |>
+  tinytable::style_tt(j = 1, bold = TRUE)
+```
+
+```{r pgx_recommendation_none_msg}
+#| echo: false
+#| output: asis
+#| eval: !expr n_pgx_recommendations == 0 && n_pgx_phenotypes > 0
+cat(cpsr:::no_findings_pdf(
+  "No CPIC prescribing recommendations are available for the detected phenotypes."))
+```

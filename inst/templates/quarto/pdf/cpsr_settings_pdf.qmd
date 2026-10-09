@@ -1,4 +1,8 @@
-# Methods and Settings
+```{=typst}
+#pagebreak(weak: true)
+```
+
+# Analysis configuration & data sources
 
 ```{r settings_pdf_text}
 #| echo: false
@@ -17,14 +21,152 @@ gencode_label <- paste0(
 This report was generated with _CPSR_ v`r cps_report$settings$software$cpsr_version`
 (backed by _PCGR_ v`r cps_report$settings$software$pcgr_version`).
 
-| Setting | Value |
-|---|---|
-| Genome assembly | `r cps_report$settings$genome_assembly` |
-| Max gnomAD MAF (non-ClinVar variants) | `r cps_report$settings$conf$variant_classification$max_af_gnomad` |
-| ClinVar trust level | `r cps_report$settings$conf$variant_classification$clinvar_trust_level` |
-| Secondary findings (ACMG) | `r as.logical(cps_report$settings$conf$variant_classification$secondary_findings)` |
-| Pharmacogenomic findings | `r as.logical(cps_report$settings$conf$variant_classification$pgx_findings)` |
-| VEP transcript set | `r gencode_label` |
-| VEP regulatory annotation | `r as.logical(cps_report$settings$conf$vep$vep_regulatory)` |
+```{r settings_pdf_table}
+#| echo: false
+#| eval: true
 
-: Run configuration {tbl-colwidths="[45,55]"}
+conf <- cps_report$settings$conf
+data.frame(
+  Setting = c(
+    "Genome assembly",
+    "Max gnomAD MAF (non-ClinVar variants)",
+    "ClinVar trust level",
+    "Secondary findings (ACMG)",
+    "Pharmacogenomic findings",
+    "Sample sex",
+    "Non-protein-coding variants included",
+    "VEP transcript set",
+    "VEP transcript pick order",
+    "VEP regulatory annotation"),
+  Value = c(
+    cps_report$settings$genome_assembly,
+    conf$variant_classification$max_af_gnomad,
+    conf$variant_classification$clinvar_trust_level,
+    as.logical(conf$variant_classification$secondary_findings),
+    as.logical(conf$variant_classification$pgx_findings),
+    if (is.null(conf$sample_properties$sex)) "UNKNOWN" else
+      conf$sample_properties$sex,
+    as.logical(conf$other$show_noncoding),
+    gencode_label,
+    stringr::str_replace_all(conf$vep$vep_pick_order, ",", ", "),
+    as.logical(conf$vep$vep_regulatory))) |>
+  dplyr::mutate(Value = as.character(.data$Value)) |>
+  tinytable::tt(width = c(0.45, 0.55)) |>
+  tinytable::format_tt(escape = TRUE) |>
+  cpsr:::style_tt_header_pdf()
+```
+
+## Virtual gene panel
+
+```{r virtual_panel_pdf}
+#| echo: false
+#| output: asis
+#| eval: true
+
+## genes of the virtual panel (as shown in the HTML report): variants are
+## classified and reported for these genes only
+vp_conf <- cps_report$settings$conf$gene_panel
+vp_genes <- vp_conf$panel_genes
+if ("PRIMARY_TARGET" %in% colnames(vp_genes)) {
+  vp_genes <- vp_genes[vp_genes$PRIMARY_TARGET %in% TRUE, , drop = FALSE]
+}
+vp_genes <- vp_genes |>
+  dplyr::distinct(.data$SYMBOL, .keep_all = TRUE) |>
+  dplyr::arrange(.data$SYMBOL)
+vp_desc <- vp_conf$description
+if (!is.null(vp_conf$description_trait) &&
+    !any(vp_conf$panel_id %in% c("-1", "0"))) {
+  vp_desc <- paste0(vp_desc, ": ", vp_conf$description_trait)
+}
+## tiles as in the HTML report (teal: genes from a combination of panels)
+vp_tiles <- vapply(seq_len(NROW(vp_genes)), function(i) {
+  fill <- if (isTRUE(vp_genes$CONFIDENCE_LEVEL[i] == 5)) "#007a74" else "#2c313c"
+  paste0('box(width: 100%, fill: rgb("', fill, '"), radius: 2pt, ',
+         'inset: (y: 3.5pt), align(center, text(fill: white, size: 7pt, ',
+         'weight: "bold")[', vp_genes$SYMBOL[i], ']))')
+}, character(1))
+
+cat(
+  "The *virtual gene panel* defines the genes for which variants are ",
+  "classified and reported (it does not reflect which genes were ",
+  "sequenced). Panel: **", cpsr:::doc_note_pdf(vp_desc), "** - **",
+  NROW(vp_genes), "** genes",
+  if (isTRUE(as.logical(vp_conf$diagnostic_grade_only)))
+    " (diagnostic-grade genes only)",
+  ".\n\n",
+  "```{=typst}\n#block(width: 100%, inset: 8pt, radius: 3pt, ",
+  "stroke: 0.6pt + luma(200), fill: luma(250))[\n",
+  "#grid(columns: 10, gutter: 3pt,\n",
+  paste(vp_tiles, collapse = ",\n"),
+  ")\n]\n```\n\n",
+  sep = "")
+```
+
+## Data sources and versions
+
+```{r data_versions_pdf}
+#| echo: false
+#| output: asis
+#| eval: true
+
+## datasets as listed in the HTML report (Documentation - Dataset
+## versions), in two columns with a smaller font
+ref_datasets <- cps_report$settings$reference_data$source_metadata
+if ("wflow" %in% colnames(ref_datasets)) {
+  ref_datasets <- ref_datasets[
+    stringr::str_detect(ref_datasets$wflow, "cpsr"), , drop = FALSE]
+}
+ref_datasets <- ref_datasets[
+  ref_datasets$source_abbreviation != "oncokb" &
+    !(ref_datasets$source_abbreviation == "dbnsfp" &
+        ref_datasets$source_type %in% "gene"), , drop = FALSE]
+
+## markdown special characters in free text
+md_escape <- function(x) {
+  stringr::str_replace_all(x, "([\\\\`*_\\[\\]<>#@$])", "\\\\\\1")
+}
+entries <- vapply(seq_len(NROW(ref_datasets)), function(i) {
+  d <- ref_datasets[i, ]
+  url <- d$source_url
+  ## outdated ACMG URL (as in the HTML report)
+  if (d$source_abbreviation == "acmg_sf") {
+    url <- "https://pubmed.ncbi.nlm.nih.gov/37347242/"
+  }
+  name <- if (!is.na(url)) paste0("[", md_escape(d$source), "](", url, ")") else
+    md_escape(d$source)
+  version <- if (!is.na(d$source_version))
+    paste0(" (**", md_escape(d$source_version), "**)") else ""
+  license <- if (is.na(d$source_license)) "" else {
+    ## licenses that require agreements for commercial use in bold
+    lic <- md_escape(d$source_license)
+    if (d$source_abbreviation %in% c("cgc", "gepa", "dbnsfp"))
+      lic <- paste0("**", lic, "**")
+    if (!is.na(d$source_license_url))
+      lic <- paste0("[", lic, "](", d$source_license_url, ")")
+    paste0(" - ", lic)
+  }
+  paste0("- **", name, "**", version, " - ",
+         md_escape(d$source_description), license)
+}, character(1))
+
+## two balanced columns (split by text length)
+cum_len <- cumsum(nchar(entries))
+n_left <- max(1, which.min(abs(cum_len - cum_len[length(cum_len)] / 2)))
+col_left <- entries[seq_len(n_left)]
+col_right <- entries[-seq_len(n_left)]
+
+cat(
+  "PCGR data bundle version: **",
+  cps_report$settings$reference_data$version, "**. ",
+  "Resources with licenses in bold require specific licensing agreements ",
+  "for commercial (non-research) use.\n\n",
+  "```{=typst}\n#block[\n#set text(size: 7pt, hyphenate: false)\n",
+  "#set par(leading: 0.45em, justify: false)\n",
+  "#set list(spacing: 0.45em)\n",
+  "#grid(columns: (1fr, 1fr), column-gutter: 1.4em)[\n```\n\n",
+  paste(col_left, collapse = "\n"),
+  "\n\n```{=typst}\n][\n```\n\n",
+  paste(col_right, collapse = "\n"),
+  "\n\n```{=typst}\n]\n]\n```\n\n",
+  sep = "")
+```

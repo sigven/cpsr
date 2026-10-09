@@ -93,7 +93,7 @@ for(i in 1:NROW(ref_datasets)){
 
 ::: {.callout-note title="Synopsis" collapse="true"}
 
-`r cpsr::variant_classification_synopsis_doc_note(quarto = TRUE)`
+`r cpsr::variant_classification_synopsis_doc_note(quarto = TRUE, trust_level = cps_report$settings$conf$variant_classification$clinvar_trust_level)`
 
 :::
 
@@ -180,6 +180,11 @@ The following thresholds are currently used to assign classifications based on p
 <br>
 
 :::
+
+```{r documentation_pgx}
+#| child: 'quarto/cpsr_pgx_documentation.qmd'
+#| eval: !expr isTRUE(as.logical(cps_report$settings$conf$variant_classification$pgx_findings)) && identical(cps_report$content$snv_indel$pgx_method, "cpic")
+```
 
 :::
 

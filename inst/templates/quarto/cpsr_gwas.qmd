@@ -29,7 +29,7 @@ variants_gwas_cancer <-
 crosstalk::bscols(
   list(
     crosstalk::filter_select("CONSEQUENCE", "Consequence", variants_gwas_cancer, ~CONSEQUENCE),
-    crosstalk::filter_checkbox("GENOTYPE", "Genotype", variants_gwas_cancer, ~GENOTYPE),
+    crosstalk::filter_checkbox("GENOTYPE", "Genotype", variants_gwas_cancer, ~cpsr:::genotype_label(GENOTYPE)),
     crosstalk::filter_select("SYMBOL", "Gene", variants_gwas_cancer, ~SYMBOL),
     crosstalk::filter_select("GWAS_PHENOTYPE", "GWAS phenotype", variants_gwas_cancer, ~GWAS_PHENOTYPE)
   ),

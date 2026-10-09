@@ -7,8 +7,8 @@ format:
     toc-title: "Contents"
     papersize: a4
     margin:
-      top: 2.2cm
-      bottom: 2.2cm
+      top: 1.9cm
+      bottom: 2.7cm
       left: 1.5cm
       right: 1.5cm
     section-numbering: ""
@@ -24,6 +24,9 @@ knitr::opts_chunk$set(
   error = FALSE, 
   eval = TRUE)
 options(scipen = 999)
+## tables may break across pages (tinytable sets non-breakable figures by
+## default)
+options(tinytable_typst_multipage = TRUE)
 cps_report <- readRDS(file = "<CPSR_REPORT_OBJECT.rds>")
 no_content <- isFALSE(
   as.logical(cps_report$content$snv_indel$eval))
@@ -47,6 +50,18 @@ n_benign       <- 0L
 path_genes_str   <- "None"
 sf_genes_str     <- "Not determined"
 bm_pgx_genes_str <- "None"
+path_genes_sub   <- ""
+sf_genes_sub     <- ""
+bm_pgx_genes_sub <- ""
+
+## Gene symbols (alphabetical) as the box value ("A · B", "A · B +k")
+fmt_genes_symbols <- function(df, max_show = 2) {
+  g <- sort(unique(df$SYMBOL))
+  n <- length(g)
+  val <- paste(utils::head(g, max_show), collapse = " \u00b7 ")
+  if (n > max_show) val <- paste0(val, " +", n - max_show)
+  list(value = val, sub = "")
+}
 
 col_path       <- color_none
 col_vus        <- color_none
@@ -80,12 +95,11 @@ if (NROW(variants_cpg) > 0) {
   path_genes <- cps_report$content$snv_indel$callset$variant$cpg_non_sf |>
     dplyr::filter(
       CLASSIFICATION %in% c("Pathogenic", "Likely Pathogenic")) |>
-    dplyr::distinct(SYMBOL) |>
-    utils::head(3)
+    dplyr::distinct(SYMBOL)
 
   if (NROW(path_genes) > 0) {
-    path_genes_str <- if (NROW(path_genes) == 3) "> 2" else
-      paste(path_genes$SYMBOL, collapse = " / ")
+    path_genes_str <- fmt_genes_symbols(path_genes)$value
+    path_genes_sub <- fmt_genes_symbols(path_genes)$sub
     col_path_genes <- 
       cpsr::color_palette$pathogenicity$values[5]
   }
@@ -106,25 +120,24 @@ sf_enabled <- isTRUE(
 if (sf_enabled) {
   sf_genes_str <- "None"
   sf_genes <- cps_report$content$snv_indel$callset$variant$sf |>
-    dplyr::distinct(SYMBOL) |>
-    utils::head(3)
+    dplyr::distinct(SYMBOL)
   if (NROW(sf_genes) > 0) {
-    sf_genes_str <- if (NROW(sf_genes) == 3) "> 2" else
-      paste(sf_genes$SYMBOL, collapse = " / ")
+    sf_genes_str <- fmt_genes_symbols(sf_genes)$value
+    sf_genes_sub <- fmt_genes_symbols(sf_genes)$sub
     col_sf <- cpsr::color_palette$pathogenicity$values[5]
   }
 }
 
 # Biomarkers + PGx
 bm_genes  <- cps_report$content$snv_indel$callset$variant$biomarker |>
-  dplyr::distinct(SYMBOL) |> utils::head(3)
+  dplyr::distinct(SYMBOL)
 pgx_genes <- cps_report$content$snv_indel$callset$variant$pgx |>
-  dplyr::distinct(SYMBOL) |> utils::head(3)
+  dplyr::distinct(SYMBOL)
 bm_pgx_genes <- dplyr::bind_rows(bm_genes, pgx_genes) |>
-  dplyr::distinct(SYMBOL) |> utils::head(3)
+  dplyr::distinct(SYMBOL)
 if (NROW(bm_pgx_genes) > 0) {
-  bm_pgx_genes_str <- if (NROW(bm_pgx_genes) == 3) "> 2" else
-    paste(bm_pgx_genes$SYMBOL, collapse = " / ")
+  bm_pgx_genes_str <- fmt_genes_symbols(bm_pgx_genes)$value
+  bm_pgx_genes_sub <- fmt_genes_symbols(bm_pgx_genes)$sub
   col_bm_pgx <- cpsr::color_palette[["report"]]
 }
 
@@ -148,8 +161,11 @@ cat(glue::glue(
   '  gene_panel:      "{gene_panel_desc}",',
   '  cpsr_version:    "{cps_report$settings$software$cpsr_version}",',
   '  genes_path:      "{path_genes_str}",',
+  '  genes_path_sub:  "{path_genes_sub}",',
   '  genes_bm_pgx:    "{bm_pgx_genes_str}",',
+  '  genes_bm_pgx_sub: "{bm_pgx_genes_sub}",',
   '  genes_sf:        "{sf_genes_str}",',
+  '  genes_sf_sub:    "{sf_genes_sub}",',
   '  n_path:          "N = {n_path_clinvar + n_path_cpsr}",',
   '  n_vus:           "N = {n_vus}",',
   '  n_benign:        "N = {n_benign}",',
@@ -175,11 +191,24 @@ cat(glue::glue(
 #| eval: !expr isTRUE(sf_enabled) && isFALSE(no_content)
 ```
 
+```{r biomarkers_pdf}
+#| child: 'quarto/pdf/cpsr_biomarkers_pdf.qmd'
+#| eval: !expr isFALSE(no_content)
+```
+
+```{r pgx_pdf}
+#| child: 'quarto/pdf/cpsr_pgx_pdf.qmd'
+#| eval: !expr isTRUE(as.logical(cps_report$settings$conf$variant_classification$pgx_findings)) && identical(cps_report$content$snv_indel$pgx_method, "cpic") && isFALSE(no_content)
+```
+
 ```{r settings_pdf}
 #| child: 'quarto/pdf/cpsr_settings_pdf.qmd'
 #| eval: true
 ```
 
----
+*This report was generated with [CPSR](https://github.com/sigven/cpsr) v`r cps_report$settings$software$cpsr_version` on `r strftime(Sys.time(), format = "%B %d, %Y")`. For research use only. Documentation: [sigven.github.io/cpsr](https://sigven.github.io/cpsr) - source code: [github.com/sigven/cpsr](https://github.com/sigven/cpsr).*
 
-*This report was generated with [CPSR](https://github.com/sigven/cpsr) v`r cps_report$settings$software$cpsr_version` on `r strftime(Sys.time(), format = "%B %d, %Y")`. For research use only.*
+```{r documentation_pdf}
+#| child: 'quarto/pdf/cpsr_documentation_pdf.qmd'
+#| eval: true
+```

@@ -1,5 +1,5 @@
 
-###  Pharmacogenetic findings
+###  Pharmacogenomic findings
 
 ```{r prepare_pgx_data}
 #| output: asis
@@ -9,6 +9,11 @@ tot_pgx_variants <- NROW(
   cps_report[["content"]][["snv_indel"]]$callset$variant_display$pgx)
 pgx_genotypes_unavailable <- !(as.logical(
   cps_report$settings$conf$sample_properties$gt_detected))
+pgx_method_cpic <- identical(
+  cps_report[["content"]][["snv_indel"]]$pgx_method, "cpic")
+pgx_phenotypes <- cps_report[["content"]][["snv_indel"]]$pgx_phenotype
+pgx_recommendations <-
+  cps_report[["content"]][["snv_indel"]]$pgx_recommendation
 
 ```
 
@@ -17,15 +22,88 @@ pgx_genotypes_unavailable <- !(as.logical(
 #| output: asis
 #| echo: false
 
-cat("::: {.callout-warning}\n## Warning - genotype data missing\n\n*Pharmacogenetic variants not assessed due to lacking genotype information among sample variants*. CPSR was unable to pull this data from the input VCF (<i>'GT'</i> FORMAT tag not present within sample genotype information)\n\n:::")
+cat("::: {.callout-warning}\n## Warning - genotype data missing\n\n*Pharmacogenomic variants not assessed due to lacking genotype information among sample variants*. CPSR was unable to pull this data from the input VCF (<i>'GT'</i> FORMAT tag not present within sample genotype information)\n\n:::")
 
 ```
 
-*  For the sample in question, a total of __N = `r tot_pgx_variants`__ variants were detected in a selected group of genes ([DPYD](https://platform.opentargets.org/target/ENSG00000188641), [TPMT](https://platform.opentargets.org/target/ENSG00000137364), [NUDT15](https://platform.opentargets.org/target/ENSG00000136159)) that may have implications for drug dosing/adverse events/toxicity effects from commonly used chemotherapies.
-   * Only variants designated with a _Pathogenic_, _Likely pathogenic_, or _drug response_ clinical significance in ClinVar are considered here
+```{r pgx_intro}
+#| output: asis
+#| echo: false
 
-```{r pgx_cancer}
-#| eval: !expr tot_pgx_variants > 0
+pgx_sex <- if (is.null(cps_report$settings$conf$sample_properties$sex)) "UNKNOWN" else
+  cps_report$settings$conf$sample_properties$sex
+pgx_gene_links <- paste0(
+  "[DPYD](https://platform.opentargets.org/target/ENSG00000188641), ",
+  "[TPMT](https://platform.opentargets.org/target/ENSG00000137364), ",
+  "[NUDT15](https://platform.opentargets.org/target/ENSG00000136159) and ",
+  "[G6PD](https://platform.opentargets.org/target/ENSG00000160211)")
+
+if (pgx_method_cpic) {
+  cat(
+    "* Pharmacogenomic variants were assessed in ", pgx_gene_links,
+    ", genes that impact toxicity of commonly used chemotherapies (fluoropyrimidines, ",
+    "thiopurines) and supportive care (rasburicase), using allele definitions, ",
+    "phenotypes and prescribing recommendations from [CPIC](https://cpicpgx.org). ",
+    "For the sample in question, CPIC alleles of altered function were detected in __N = ",
+    NROW(pgx_phenotypes), "__ gene(s).\n",
+    "* Assumptions (e.g. reference genotype at positions without a called ",
+    "variant, phase) and details of the analysis are described in the ",
+    "[Documentation](#documentation) section (tab _Pharmacogenomic findings_)\n",
+    sep = "")
+} else {
+  cat(
+    "* For the sample in question, a total of __N = ", tot_pgx_variants,
+    "__ variants were detected in a selected group of genes (", pgx_gene_links,
+    ") that may have implications for drug dosing/adverse events/toxicity effects ",
+    "from commonly used chemotherapies.\n",
+    "   * Only variants designated with a _Pathogenic_, _Likely pathogenic_, or ",
+    "_drug response_ clinical significance in ClinVar are considered here\n",
+    sep = "")
+}
+```
+
+```{r pgx_how_to_read}
+#| eval: !expr pgx_method_cpic == TRUE && NROW(pgx_phenotypes) > 0
+#| output: asis
+#| echo: false
+
+cat(
+  "\n::: {.callout-note title='How to read the tables' collapse='true'}\n\n",
+  "Each gene is present in two copies (one per chromosome). CPIC names the ",
+  "version of the gene on each copy an _allele_ - either the reference ",
+  "version (e.g. TPMT \\*1, DPYD _Reference_) or a version defined by one or ",
+  "more variants (e.g. TPMT \\*3C, DPYD c.1905+1G>A (\\*2A)).\n\n",
+  "**Genotypes and phenotypes** - one row per gene:\n\n",
+  "* _Alteration_ - variant(s) detected in the gene\n",
+  "* _Diplotype_ - the pair of CPIC alleles on the two gene copies, e.g. ",
+  "TPMT \\*1/\\*3C (one reference copy, one copy with \\*3C)\n",
+  "* _Genotype_ - zygosity of each detected variant (heterozygous: one copy; ",
+  "homozygous: both copies; hemizygous: single X chromosome in males)\n",
+  "* _Phenotype_ - the CPIC phenotype that follows from the diplotype, ",
+  "colored by impact (darker blue: larger expected effect on drug ",
+  "metabolism/toxicity; grey: not determined)\n",
+  "* _Activity score_ (DPYD) - the sum of the activity of the two alleles ",
+  "(normal function: 1, decreased function: 0.5, no function: 0), from 0 to 2\n",
+  "* Expand a row (&#9654;) for the CPIC allele and allele function of each ",
+  "variant, variant annotations, notes on the interpretation (e.g. phase, ",
+  "partially detected alleles), and the CPIC consultation text\n\n",
+  "**Prescribing recommendations** - one row per drug and phenotype:\n\n",
+  "* _Phenotype_ - the phenotype(s) the recommendation applies to\n",
+  "* _CPIC recommendation_ - the prescribing recommendation from the CPIC ",
+  "guideline (the drug name links to the guideline)\n",
+  "* _Strength_ - CPIC rating of the recommendation: _Strong_ (high quality ",
+  "evidence, desirable effects clearly outweigh undesirable effects), ",
+  "_Moderate_ (close or uncertain balance of effects), _Optional_ (small ",
+  "effects or weak evidence; up to the prescriber), or _No recommendation_ ",
+  "(insufficient evidence)\n",
+  "* Expand a row (&#9654;) for the implications of the phenotype, CPIC ",
+  "comments and the CPIC level of the gene-drug pair\n",
+  ":::\n\n",
+  sep = "")
+```
+
+```{r pgx_variants_clinvar}
+#| eval: !expr pgx_method_cpic == FALSE && tot_pgx_variants > 0
 #| echo: false
 
 htmltools::br()
@@ -36,4 +114,76 @@ cpsr::create_clinvar_reactable(
 )
 
 htmltools::br()
+```
+
+```{r pgx_no_phenotypes}
+#| eval: !expr pgx_method_cpic == TRUE && NROW(pgx_phenotypes) == 0 && pgx_genotypes_unavailable == FALSE
+#| output: asis
+#| echo: false
+
+## distinct from the introduction: callout box
+cat(
+  "\n::: {.callout-tip title='No pharmacogenomic findings'}\n\n",
+  "No CPIC alleles of altered function were found in DPYD, TPMT, NUDT15 ",
+  "or G6PD - no CPIC phenotypes or prescribing recommendations are ",
+  "reported.\n\n",
+  "Note that this does not confirm normal function genotypes (positions ",
+  "may not be covered by the input VCF).\n\n:::\n\n", sep = "")
+```
+
+```{r pgx_phenotype_heading}
+#| eval: !expr pgx_method_cpic == TRUE && NROW(pgx_phenotypes) > 0
+#| output: asis
+#| echo: false
+
+cat("\n#### Genotypes and phenotypes\n\n")
+```
+
+```{r pgx_phenotype_table}
+#| eval: !expr pgx_method_cpic == TRUE && NROW(pgx_phenotypes) > 0
+#| echo: false
+
+cpsr::create_pgx_reactable(
+  data = pgx_phenotypes,
+  type = "phenotype",
+  color_palette = cpsr::color_palette,
+  variants = cps_report[["content"]][["snv_indel"]]$callset$variant_display$pgx)
+```
+
+```{r pgx_recommendation_heading}
+#| eval: !expr pgx_method_cpic == TRUE && NROW(pgx_recommendations) > 0
+#| output: asis
+#| echo: false
+
+cat(
+  "\n#### Prescribing recommendations\n\n",
+  "* Recommendations from [CPIC](https://cpicpgx.org) guidelines",
+  if ("CPIC_RELEASE" %in% colnames(pgx_recommendations))
+    paste0(" (release ", pgx_recommendations$CPIC_RELEASE[1], ")"),
+  ", per drug and phenotype. For multi-gene recommendations (thiopurines), ",
+  "genes without detected altered function alleles are assumed to be normal ",
+  "metabolizers\n",
+    sep = "")
+```
+
+```{r pgx_recommendation_table}
+#| eval: !expr pgx_method_cpic == TRUE && NROW(pgx_recommendations) > 0
+#| echo: false
+
+cpsr::create_pgx_reactable(
+  data = pgx_recommendations,
+  type = "recommendation",
+  color_palette = cpsr::color_palette)
+```
+
+```{r pgx_no_recommendations}
+#| eval: !expr pgx_method_cpic == TRUE && NROW(pgx_phenotypes) > 0 && NROW(pgx_recommendations) == 0
+#| output: asis
+#| echo: false
+
+cat(
+  "\n#### Prescribing recommendations\n\n",
+  "::: {.callout-tip title='No prescribing recommendations'}\n\n",
+  "No CPIC prescribing recommendations are available for the detected ",
+  "phenotypes.\n\n:::\n\n", sep = "")
 ```
