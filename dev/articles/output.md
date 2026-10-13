@@ -32,7 +32,7 @@ The report is structured in multiple sections, described briefly below:
 4.  **Genomic biomarkers**
     - Reported clinical evidence items from [CIViC](https://civicdb.org)
       that match with variants in the query set are reported
-    - Pharmacogenetic findings (DPYD, TPMT, NUDT15)
+    - Pharmacogenomic findings (DPYD, TPMT, NUDT15)
 5.  **Secondary findings**
     - Pathogenic variants in the [ACMG-recommended list of genes for
       report of secondary/incidental
@@ -340,7 +340,7 @@ three sheets will only be present if any data is found):
   annotations
 - *BIOMARKER_EVIDENCE* - matches of variants with genomic biomarkers
 - *SECONDARY_FINDINGS* - secondary findings (ACMG recommendations)
-- *PHARMACOGENETIC_FINDINGS* - drug toxicity findings (DPYD, TPMT,
+- *PHARMACOGENOMIC_FINDINGS* - drug toxicity findings (DPYD, TPMT,
   NUDT15)
 
   
@@ -493,7 +493,7 @@ The following variables are included in the biomarker evidence TSV file:
 | 33\. `BM_MATCH` | Match between sample variant and biomarker - *by_genomic_coord*, *by_hgvsp_principal*, *by_gene_mut_lof* etc. |
 | 34\. `BM_RESOLUTION` | Highest resolution of mapping between sample variant and biomarker - *genomic*, *hgvsp*, *codon*, *gene* |
 
-#### *Pharmacogenetic findings*
+#### *Pharmacogenomic findings*
 
 We provide a compressed tab-separated values file with variants
 implicated with drug toxicity/dosage effects of cancer chemotherapies.
@@ -501,7 +501,7 @@ The file has the following naming convention:
 
 - `<sample_id>.cpsr.<genome_assembly>.pgx_findings.tsv.gz`
 
-The following variables are included in the pharmacogenetic findings TSV
+The following variables are included in the pharmacogenomic findings TSV
 file:
 
 | Variable | Description |

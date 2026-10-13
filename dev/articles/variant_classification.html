@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">CPSR</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.3.0.9004</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.3.0.9005</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -119,6 +119,47 @@ ClinVar submissions is considered sufficient to override CPSR. If a
 variant’s ClinVar record does not meet the configured trust threshold,
 the CPSR rule-based classification is retained as the final call.</li>
 </ul>
+<p>The <em>clinvar_trust_level</em> setting
+(<code>--clinvar_trust_level</code>) determines for which ClinVar
+records the CPSR classification takes precedence. At all levels,
+variants absent from ClinVar are classified by CPSR.</p>
+<table class="table">
+<colgroup>
+<col width="16%">
+<col width="83%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">Trust level</th>
+<th align="left">CPSR classification takes precedence over</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>0</strong></td>
+<td align="left">Conflicting ClinVar interpretations only - ClinVar is
+trusted otherwise (default)</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>1</strong></td>
+<td align="left">As level 0, and ClinVar records with zero gold stars
+(no assertion criteria provided)</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>2</strong></td>
+<td align="left">As level 1, and ClinVar records with one gold star
+(e.g. criteria provided, single submitter)</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>3</strong></td>
+<td align="left">As level 2, and ClinVar records with non-cancer
+phenotypes only (regardless of review status)</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>4</strong></td>
+<td align="left">All ClinVar records - CPSR always classifies, ClinVar
+never takes precedence</td>
+</tr>
+</tbody>
+</table>
 <p>The ACMG/AMP criteria listed in the criteria table below form the
 basis for the <em>CPSR_CLASSIFICATION</em> variable. The <i>score</i>
 column indicates how much each evidence item contributes to either of

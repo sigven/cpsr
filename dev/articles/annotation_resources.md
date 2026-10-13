@@ -34,7 +34,7 @@
 - [UniProt/SwissProt KnowledgeBase](http://www.uniprot.org) - resource
   on protein sequence and functional information (2026_03)
 - [Pfam](http://pfam.xfam.org) - database of protein families and
-  domains (v37.0)
+  domains (v38.2, 2026-01)
 
 ### Cancer gene knowledge bases
 

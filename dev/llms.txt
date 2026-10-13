@@ -180,6 +180,12 @@ findings than usual):
 - [`assign_classification_authority()`](https://sigven.github.io/cpsr/dev/reference/assign_classification_authority.md)
   : Function that combines classifications of novel and pre-classified
   variants
+- [`assign_pgx_phenotypes()`](https://sigven.github.io/cpsr/dev/reference/assign_pgx_phenotypes.md)
+  : Infer CPIC phenotypes for pharmacogenes with detected variant
+  alleles
+- [`assign_pgx_recommendations()`](https://sigven.github.io/cpsr/dev/reference/assign_pgx_recommendations.md)
+  : Map inferred pharmacogene phenotypes to CPIC prescribing
+  recommendations
 - [`bs_icon2()`](https://sigven.github.io/cpsr/dev/reference/bs_icon2.md)
   : Use Bootstrap icons (as inline SVG)
 - [`classification_thresholds_intro_doc_note()`](https://sigven.github.io/cpsr/dev/reference/classification_thresholds_intro_doc_note.md)
@@ -188,6 +194,8 @@ findings than usual):
 - [`classification_thresholds_outro_doc_note()`](https://sigven.github.io/cpsr/dev/reference/classification_thresholds_outro_doc_note.md)
   : Get documentation string for classification threshold calibration
   (outro)
+- [`clinvar_trust_levels_doc_note()`](https://sigven.github.io/cpsr/dev/reference/clinvar_trust_levels_doc_note.md)
+  : Get documentation string for the ClinVar trust levels
 - [`col_format_output`](https://sigven.github.io/cpsr/dev/reference/col_format_output.md)
   : Format of CPSR output data frames (HTML, TSV)
 - [`color_palette`](https://sigven.github.io/cpsr/dev/reference/color_palette.md)
@@ -196,6 +204,9 @@ findings than usual):
   : Get documentation string for the CPSR report introduction
 - [`create_clinvar_reactable()`](https://sigven.github.io/cpsr/dev/reference/create_clinvar_reactable.md)
   : Create a ClinVar variant reactable with expandable detail rows
+- [`create_pgx_reactable()`](https://sigven.github.io/cpsr/dev/reference/create_pgx_reactable.md)
+  : Function that creates a reactable of CPIC pharmacogenomic phenotypes
+  or prescribing recommendations, for display in the germline report
 - [`create_unified_variant_filters()`](https://sigven.github.io/cpsr/dev/reference/create_unified_variant_filters.md)
   : Create crosstalk-linked unified filters for all variants
 - [`create_unified_variant_reactable()`](https://sigven.github.io/cpsr/dev/reference/create_unified_variant_reactable.md)
@@ -235,6 +246,8 @@ findings than usual):
   : Function that checks if a variant is a purely intronic deletion
   (i.e. deletion of intronic sequence that does not extend into exonic
   sequence at either end)
+- [`key_findings_doc_note()`](https://sigven.github.io/cpsr/dev/reference/key_findings_doc_note.md)
+  : Get documentation string for the key findings summary
 - [`known_path_benign_sites()`](https://sigven.github.io/cpsr/dev/reference/known_path_benign_sites.md)
   : Function that extracts known benign peptide changes from ClinVar
   (\>= 2 gold stars), as well as known pathogenic nucleotide and codon
@@ -259,9 +272,11 @@ findings than usual):
   : Build biomarker reactable with category-aware styling
 - [`report_color`](https://sigven.github.io/cpsr/dev/reference/report_color.md)
   : CPSR report color
+- [`report_highlights()`](https://sigven.github.io/cpsr/dev/reference/report_highlights.md)
+  : Key findings of a CPSR report (highlights) as markdown
 - [`retrieve_pgx_calls()`](https://sigven.github.io/cpsr/dev/reference/retrieve_pgx_calls.md)
-  : Function that retrieves variants in genes recommended for secondary
-  findings
+  : Function that retrieves pharmacogenomic variants, i.e. variants that
+  define CPIC alleles (DPYD, TPMT, NUDT15, G6PD) with altered function
 - [`retrieve_secondary_calls()`](https://sigven.github.io/cpsr/dev/reference/retrieve_secondary_calls.md)
   : Function that retrieves variants in genes recommended for secondary
   findings
