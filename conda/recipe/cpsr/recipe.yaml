@@ -30,6 +30,7 @@ requirements:
     - r-pcgrr
     - conda-forge::r-quarto
     - conda-forge::quarto
+    - r-tinytable
     - conda-forge::r-reactable
     - conda-forge::r-readr
     - conda-forge::r-rlang
@@ -52,6 +53,7 @@ requirements:
     - r-pcgrr
     - conda-forge::r-quarto
     - conda-forge::quarto
+    - r-tinytable
     - conda-forge::r-reactable
     - conda-forge::r-readr
     - conda-forge::r-rlang
