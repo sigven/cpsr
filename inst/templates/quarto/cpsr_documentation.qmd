@@ -89,6 +89,14 @@ for(i in 1:NROW(ref_datasets)){
 
 :::
 
+### Key findings summary
+
+::: {.callout-note title="Key findings summary" collapse="true"}
+
+`r cpsr::key_findings_doc_note()`
+
+:::
+
 ### Variant classification
 
 ::: {.callout-note title="Synopsis" collapse="true"}

@@ -157,33 +157,6 @@
   text(fill: white, size: 8pt, weight: "bold", label),
 )
 
-// KPI summary box used on the cover page: title, count, optional gene list
-#let cpsr-kpi-box(title, value, sub: none, color: cpsr-neutral) = rect(
-  fill: color,
-  radius: 3pt,
-  inset: (x: 10pt, y: 9pt),
-  width: 100%,
-  height: 2.3cm,
-)[
-  #set text(fill: white)
-  // value (count or gene symbols) scaled down to fit the box width
-  #layout(size => {
-    let fs = 17pt
-    let w = measure(text(size: fs, weight: "bold", value)).width
-    if w > size.width { fs = calc.max(10pt, fs * (size.width / w)) }
-    let items = (
-      text(size: 8pt)[#title],
-      v(12pt),
-      text(size: fs, weight: "bold", value),
-    )
-    if sub != none and sub != "" {
-      items.push(v(5pt))
-      items.push(text(size: 8pt, sub))
-    }
-    stack(dir: ttb, ..items)
-  })
-]
-
 // Metadata label+value pair (used inside the cover page info grid)
 #let cpsr-meta(label, value) = (
   text(weight: "bold", size: 8.5pt, fill: cpsr-muted)[#upper(label)],
@@ -194,32 +167,17 @@
   size: 12pt, weight: "bold", fill: cpsr-teal-dark)[#body]
 
 // ---------------------------------------------------------------------------
-// Cover + executive summary page
+// Cover page (sample metadata), followed by key findings and contents
 // Called at the very top of cpsr_report_pdf.qmd via a raw Typst block emitted
-// from R so that all values are resolved at render time.
+// from R (cpsr:::pdf_cover_typst) so that all values are resolved at render
+// time.
 // ---------------------------------------------------------------------------
 #let cpsr-cover(
   sample_id:        "—",
   genome_assembly:  "—",
   gene_panel:       "—",
+  sex_age:          "—",
   cpsr_version:     "—",
-  // KPI values (strings, pre-formatted by R) and gene lists shown beneath
-  genes_path:       "None",
-  genes_path_sub:   "",
-  genes_bm_pgx:     "None",
-  genes_bm_pgx_sub: "",
-  genes_sf:         "Not determined",
-  genes_sf_sub:     "",
-  n_path:           "N = 0",
-  n_vus:            "N = 0",
-  n_benign:         "N = 0",
-  // KPI box colors (hex strings, resolved by R from color_palette)
-  col_genes_path:   "#8B8989",
-  col_bm_pgx:       "#8B8989",
-  col_sf:           "#8B8989",
-  col_path:         "#8B8989",
-  col_vus:          "#8B8989",
-  col_benign:       "#8B8989",
 ) = {
 
   cpsr-sample.update(sample_id)
@@ -270,40 +228,75 @@
     column-gutter: 1.4em,
     row-gutter: 0.6em,
     ..cpsr-meta("Genome assembly", genome_assembly),
+    ..cpsr-meta("Sex / age", sex_age),
     ..cpsr-meta("Virtual gene panel", gene_panel),
   )
 
   v(0.5cm)
   line(length: 100%, stroke: 0.5pt + cpsr-rule)
-  v(0.5cm)
-
-  // --- Summary of findings: 3 columns x 2 rows ---
-  cpsr-cover-heading[Summary of findings]
   v(0.4cm)
-  grid(
-    columns: (1fr, 1fr, 1fr),
-    column-gutter: 7pt,
-    row-gutter: 7pt,
-    cpsr-kpi-box("Genes with pathogenic variants",     genes_path,
-      sub: genes_path_sub,   color: rgb(col_genes_path)),
-    cpsr-kpi-box("Genes with biomarkers / PGx",        genes_bm_pgx,
-      sub: genes_bm_pgx_sub, color: rgb(col_bm_pgx)),
-    cpsr-kpi-box("Genes with secondary findings",      genes_sf,
-      sub: genes_sf_sub,     color: rgb(col_sf)),
-    cpsr-kpi-box("Pathogenic / Likely pathogenic",     n_path,   color: rgb(col_path)),
-    cpsr-kpi-box("Variants of uncertain significance", n_vus,    color: rgb(col_vus)),
-    cpsr-kpi-box("Benign / Likely benign",             n_benign, color: rgb(col_benign)),
-  )
+}
 
-  v(0.9cm)
+// Key findings on the cover: a framed panel with a colored title band, a
+// tinted lead section (most important findings) and a white list of
+// supporting findings. Content from cpsr::report_highlights(); the R code
+// emits #cpsr-highlights[ #cpsr-hl-lead[..markdown..] #cpsr-hl-support[..markdown..] ]
+// Pathogenicity label (e.g. Pathogenic) as a colored pill - white bold text
+// on the pathogenicity color, as in the Clinical significance column
+#let cpsr-hl-pill(label, fill) = box(
+  fill: rgb(fill), radius: 3pt, inset: (x: 6pt, y: 2.5pt), baseline: 1.5pt,
+  text(fill: white, weight: "bold", size: 0.92em)[#label],
+)
+#let cpsr-hl-marker = (
+  text(fill: cpsr-teal, size: 8pt, weight: "bold")[#sym.bullet],
+  text(fill: cpsr-teal, weight: "bold")[–],
+)
+#let cpsr-highlights(body) = block(
+  width: 100%, breakable: false, clip: true, radius: 5pt,
+  stroke: 1pt + cpsr-teal, fill: white,
+)[
+  #set block(spacing: 0pt)
+  #block(width: 100%, fill: cpsr-teal, inset: (x: 14pt, y: 8pt))[
+    #set text(fill: white)
+    #grid(
+      columns: (auto, 1fr), column-gutter: 8pt, align: horizon,
+      polygon.regular(vertices: 6, size: 11pt, fill: white),
+      text(size: 10.5pt, weight: "bold", tracking: 0.14em)[#upper[Key findings]],
+    )
+  ]
+  #body
+]
+#let cpsr-hl-lead(body) = block(
+  width: 100%, inset: (x: 14pt, y: 12pt), fill: cpsr-teal.lighten(90%),
+)[
+  #set text(size: 10.5pt)
+  #set par(justify: false, leading: 0.62em)
+  #set block(spacing: 0.8em)
+  #set list(spacing: 0.65em, marker: cpsr-hl-marker)
+  #show strong: set text(fill: cpsr-teal-dark)
+  #body
+]
+#let cpsr-hl-support(body) = block(
+  width: 100%, inset: (x: 14pt, y: 11pt),
+  stroke: (top: 0.75pt + cpsr-rule),
+)[
+  #set text(size: 9.5pt)
+  #set par(justify: false, leading: 0.6em)
+  #set block(spacing: 0.8em)
+  #set list(spacing: 0.7em, marker: cpsr-hl-marker)
+  #show strong: set text(fill: cpsr-teal-dark)
+  #body
+]
 
-  // --- Contents (level-1 headings, page numbers resolved by Typst) ---
+// Contents (level-1 headings, page numbers resolved by Typst) and end of
+// the cover page
+#let cpsr-cover-end() = {
+  v(0.6cm)
   cpsr-cover-heading[Contents]
   v(0.2cm)
   {
     set text(size: 10pt)
     outline(title: none, depth: 1, indent: 0pt)
   }
-
   pagebreak()
 }

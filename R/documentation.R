@@ -123,3 +123,16 @@ gnomad_germline_doc_note <- function() {
 
   return(glue::glue(template))
 }
+
+
+#' Get documentation string for the key findings summary
+#'
+#' @return A documentation string
+#' @export
+key_findings_doc_note <- function() {
+
+  doc_md_file <- system.file(
+    "templates", "doc_notes_md", "key_findings.md", package = "cpsr")
+  paste0(readLines(doc_md_file, warn = FALSE), collapse = "\n")
+
+}

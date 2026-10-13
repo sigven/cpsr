@@ -1,0 +1,22 @@
+```{r key_findings}
+#| output: asis
+#| echo: false
+#| eval: true
+
+## templated text (cpsr::report_highlights()), see Documentation
+## styled as a panel, mirroring the PDF report (kf-* classes, see cpsr.css)
+hl <- cpsr::report_highlights(cps_report, pill = "html")
+cat(paste0("\n::: {.kf-panel style=\"--kf-color: ",
+           cpsr::color_palette[["report"]], "\"}\n\n"))
+cat("\n<div class=\"kf-title\"><span class=\"kf-title-text\">Key findings</span></div>\n\n")
+cat("::: {.kf-lead}\n\n")
+cat(hl$lead, sep = "\n\n")
+cat("\n\n:::\n\n")
+if (nzchar(hl$supporting)) {
+  cat("::: {.kf-support}\n\n")
+  cat(hl$supporting, "\n\n")
+  cat(":::\n\n")
+}
+cat(":::\n\n")
+```
+

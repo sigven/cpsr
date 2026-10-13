@@ -3,11 +3,11 @@ title: "Changelog"
 output: rmarkdown::html_document
 ---
 
-## v2.3.3
+## v2.4.0
 
 - Date: **2026-10-XX**
 
-- Data bundle **20261005**
+- Data bundle **20261013**
   - ClinVar (2026-10)
   - GENCODE v50 (VEP v116.2); GENCODE v19 remains the gene reference for grch37
   - CIViC (2026-10-05)
@@ -32,34 +32,14 @@ output: rmarkdown::html_document
      * `FEMALE`: G6PD genotypes interpreted as diploid (e.g. heterozygous carriers of deficient alleles - phenotype *Variable*)
      * `UNKNOWN`: no G6PD phenotype or rasburicase recommendation is reported
   - Sample sex is listed in the SETTINGS sheet of the Excel workbook
+  - New argument `--age` - age of the subject (whole years) at the time of testing; `--sex` and `--age` are listed in the *Subject options* group (previously *Sample options*) of the command-line interface. The age is shown with sex on the PDF cover page and in the PDF settings, and listed in the SETTINGS sheet of the Excel workbook (*Subject age at testing (years)*; *Sample sex* renamed to *Subject sex*)
   - Report layout: pharmacogenomic findings are presented per gene (alteration(s), CPIC diplotype, e.g. TPMT \*1/\*3C, genotype, phenotype and activity score), with variant-level details (CPIC allele and allele function, consequence, ClinVar, dbSNP, gnomAD) available per gene, followed by the prescribing recommendations. Assumptions (positions without called variants assumed homozygous reference, phase not assessed) are stated once for the section
-
 - PDF report
-  - New argument `--pdf` - generate a PDF report (Quarto/Typst) in addition to the HTML report, including a section on pharmacogenomic findings (CPIC phenotypes and prescribing recommendations)
-  - PDF report sections (variant classification, secondary findings, genomic biomarkers, pharmacogenomic findings) start on separate pages; new section on genomic biomarkers (summary of CIViC/CGI evidence of levels A/B per variant, evidence type and clinical significance)
-  - PDF report tables: column names as in the HTML report (e.g. *Gene*, *Alteration*, *Clinical significance*), clinical significance colored by pathogenicity, black table headers with white column separators, and *Analysis configuration & data sources* on a separate page
-  - PDF report tables use a smaller font (8.5pt)
-  - PDF report: data sources and versions (as listed in the HTML report) at the end of *Analysis configuration & data sources*, in two columns
-  - PDF report: *Methods and Settings* renamed to *Analysis configuration & data sources*; appendix in a smaller font, with framed subsections
-  - *Pharmacogenetic* renamed to *pharmacogenomic* throughout (HTML/PDF reports, documentation); Excel sheets renamed to *PHARMACOGENOMIC_PHENOTYPES*, *PHARMACOGENOMIC_RECOMMENDATIONS* (and *PHARMACOGENOMIC_FINDINGS* for ClinVar-based findings)
-  - Pharmacogenomic findings (HTML): absence of findings (no CPIC alleles of altered function, no prescribing recommendations) shown in a distinct callout
-  - PDF report: section titles without ACMG/CPIC; short introductions to the variant classification and secondary findings sections; genomic biomarkers - focused introduction, cancer types before therapies, clinical significance shown as colored pills, as in the HTML report (also for the variant classification and secondary findings tables, where genotypes are shown as pills too, and alterations classified by ClinVar link to the ClinVar record); analysis configuration includes inclusion of non-protein-coding variants and the VEP transcript pick order; front page title *Cancer sequencing predisposition report*
-  - PDF report: at most 20 variants of uncertain significance are listed (highest CPSR pathogenicity score first), with a note on the total number and the complete list in the Excel output
-  - ClinVar trust levels (`--clinvar_trust_level`) documented in the HTML and PDF reports (variant classification synopsis, below the assertion authorities), with the level used for the report marked; level 3 described precisely (zero- and single gold star ClinVar records, and records with non-cancer phenotypes)
-  - PDF report front page: the boxes for genes with pathogenic variants, biomarkers/PGx and secondary findings show the gene symbols (alphabetical; max. two, then '+k') instead of a gene count
-  - PDF report front page: the sample ID is scaled to fit on a single line (sample IDs of up to 40 characters overflowed or wrapped, pushing the report title out of the header band)
-  - PDF report: sections without findings (variant classification, secondary findings, biomarkers, pharmacogenomic findings) show a clearly marked *No findings* message; the genes of the virtual gene panel are listed under *Analysis configuration & data sources*; the front page refers to the *virtual gene panel*
-  - PDF report: appendix with the documentation of the HTML report (variant classification - synopsis, loss-of-function annotation, ACMG/AMP evidence criteria, gnomAD, classification thresholds; pharmacogenomic findings), links to the CPSR documentation website and GitHub repository in the page footer, tables may break across pages
-  - Pharmacogenomic recommendations (HTML): *Gene(s)* column removed (the genes are part of the phenotype)
-  - Documentation section (HTML): new tab *Pharmacogenomic findings*, describing the scope (genes, drugs), analysis steps (variant matching, allele assignment, diplotype, phenotype, recommendations), and assumptions/limitations of the CPIC-based analysis; the pharmacogenomic findings section refers to it rather than listing the assumptions
-  - Pharmacogenomic findings (HTML): collapsible guide to the tables (*How to read the tables*), explaining each column, including the CPIC recommendation *Strength* (Strong/Moderate/Optional/No recommendation); interpretation notes moved to the row details, so the tables fit the page width
-  - Genotypes are shown as *heterozygous*/*homozygous* (rather than *het*/*hom_alt*) in all HTML and PDF report tables; output files (Excel, TSV) keep the genotype codes
+  - A PDF report (Quarto/Typst) is now generated by default in addition to the HTML report (opt out with the new argument `--no_pdf`), including a section on pharmacogenomic findings (CPIC phenotypes and prescribing recommendations)
 
-- Bug fixes
-  - Secondary findings: HFE p.Cys282Tyr homozygotes were never reported, due to a mismatch in genotype labels (`homozygous` vs. `hom_alt`)
-  - PDF report: tables failed to render with recent versions of *tinytable* (removed `tabular` theme); special characters in table cells (e.g. `_` and `*` in HGVS notation) are now escaped for Typst. *tinytable* added to package Suggests
-  - HTML report, virtual gene panel: when the page was too narrow for nine gene tiles per row, tiles wrapped underneath the next row, hiding genes (e.g. BRCA1/BRCA2); tiles now wrap properly, and gene symbols are centered in the tiles
-  - Report rendering with a non-UTF-8 locale (e.g. no `LANG` set in the conda environment): non-ASCII characters (dashes, quotes) were shown as escape codes (e.g. `<U+2019>`); reports are now rendered with a UTF-8 locale
+- Key findings summary
+  - The summary of findings (value boxes in the HTML report, KPI boxes on the PDF cover page) is replaced by a templated *Key findings* text, shared by the HTML report (top of report) and the PDF report (cover page), in line with PCGR: pathogenic/likely pathogenic variants and VUS first, followed by supporting findings (variant classification overview, secondary findings, genomic biomarkers with evidence levels A/B, CPIC pharmacogenomic phenotypes, GWAS hits)
+  - The rules for content and ordering are described in the documentation section of the reports (*Key findings summary*)
 
 ## v2.3.0
 

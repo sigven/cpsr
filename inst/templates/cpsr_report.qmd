@@ -50,9 +50,10 @@ logo_fname_path <-
 
 ```
 
-<a href="https://sigven.github.io/cpsr">
-  <img src="`r logo_fname_path`" title="" alt="" align="right" width="80"/>
-</a>
+```{r key_findings_cpsr}
+#| child: 'quarto/cpsr_key_findings.qmd'
+#| eval: true
+```
 
 ```{r settings_cpsr}
 #| child: 'quarto/cpsr_settings.qmd'

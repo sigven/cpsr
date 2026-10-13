@@ -218,3 +218,58 @@ pgx_genotype_pill_pdf <- function(genotypes) {
           collapse = " #linebreak() ")
   }, character(1), USE.NAMES = FALSE)
 }
+
+#' Escape a value for a Typst string literal ("...")
+#'
+#' @param x character
+#' @keywords internal
+typst_str <- function(x) {
+  x <- dplyr::coalesce(as.character(x), "")
+  stringr::str_replace_all(x, '(["\\\\])', "\\\\\\1")
+}
+
+#' Cover page of the PDF report: sample metadata (cpsr-cover(), defined in
+#' typst/_preamble.typ) and key findings (report_highlights()), followed by
+#' the table of contents
+#'
+#' @param report CPSR report object
+#'
+#' @return raw Typst blocks around markdown (character), to be printed with
+#' cat() in a chunk with output 'asis'
+#' @keywords internal
+pdf_cover_typst <- function(report) {
+  conf <- report$settings$conf
+
+  ## virtual panel description
+  gene_panel_desc <- conf$gene_panel$description
+  if (!is.null(conf$gene_panel$description_trait) &&
+      !conf$gene_panel$panel_id %in% c("-1", "0")) {
+    gene_panel_desc <- paste0(
+      gene_panel_desc, ": ", conf$gene_panel$description_trait)
+  }
+  ## sex and age of the subject (age at testing: see Documentation)
+  sp <- conf$sample_properties
+  subject_sex <- if (is.null(sp$sex)) "UNKNOWN" else as.character(sp$sex)
+  subject_age <- if (is.null(sp$age) || identical(sp$age, "NA")) "N/A" else
+    paste(sp$age, "years")
+
+  v <- c(
+    sample_id = report$settings$sample_id,
+    genome_assembly = report$settings$genome_assembly,
+    gene_panel = gene_panel_desc,
+    sex_age = paste0(subject_sex, " / ", subject_age),
+    cpsr_version = report$settings$software$cpsr_version)
+  args <- paste0("  ", names(v), ': "', typst_str(v), '",', collapse = "\n")
+
+  ## key findings (markdown, see report_highlights()) in a framed box
+  hl <- report_highlights(report, pill = TRUE)
+  paste0(
+    "```{=typst}\n#cpsr-cover(\n", args, "\n)\n",
+    "#cpsr-highlights[\n#cpsr-hl-lead[\n```\n\n",
+    hl$lead, "\n\n",
+    "```{=typst}\n]\n",
+    if (nzchar(hl$supporting)) paste0(
+      "#cpsr-hl-support[\n```\n\n", hl$supporting, "\n\n",
+      "```{=typst}\n]\n"),
+    "]\n#cpsr-cover-end()\n```\n")
+}

@@ -195,10 +195,11 @@ Panel options:
   --diagnostic_grade_only
                         For panel_id's 1-43 (Genomics England PanelApp) - consider genes with a GREEN status only, default: False
 
-Sample options:
+Subject options:
   --sex {FEMALE,MALE,UNKNOWN}
                         Sex of sample - used for interpretation of X-linked pharmacogenomic findings (G6PD),
                         i.e. hemizygous (MALE) vs. diploid (FEMALE) genotypes (default: UNKNOWN)
+  --age AGE             Age of the subject (whole years) at the time of testing (default: None)
 
 Variant classification options:
   --secondary_findings  Include variants found in ACMG-recommended list for secondary findings (v3.3), default: False
@@ -245,7 +246,7 @@ Other options:
   --no_reporting        Run functional variant annotation on VCF through VEP/vcfanno, omit classification/report
                         generation (STEP 4), default: False
   --no_html             Do not generate HTML report, default: False
-  --pdf                 Generate a PDF report (Quarto/Typst) in addition to the HTML report, default: False
+  --no_pdf              Do not generate PDF report (Quarto/Typst), default: False
   --retained_info_tags RETAINED_INFO_TAGS
                         Comma-separated string of VCF INFO tags from query VCF that should be kept in CPSR output TSV
   --ignore_noncoding    Ignore non-coding (i.e. non protein-altering) variants in report, default: False

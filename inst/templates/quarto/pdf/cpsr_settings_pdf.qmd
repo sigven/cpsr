@@ -33,7 +33,8 @@ data.frame(
     "ClinVar trust level",
     "Secondary findings (ACMG)",
     "Pharmacogenomic findings",
-    "Sample sex",
+    "Subject sex",
+    "Age at testing (years)",
     "Non-protein-coding variants included",
     "VEP transcript set",
     "VEP transcript pick order",
@@ -46,6 +47,9 @@ data.frame(
     as.logical(conf$variant_classification$pgx_findings),
     if (is.null(conf$sample_properties$sex)) "UNKNOWN" else
       conf$sample_properties$sex,
+    if (is.null(conf$sample_properties$age) ||
+        identical(conf$sample_properties$age, "NA")) "N/A" else
+      as.character(conf$sample_properties$age),
     as.logical(conf$other$show_noncoding),
     gencode_label,
     stringr::str_replace_all(conf$vep$vep_pick_order, ",", ", "),
