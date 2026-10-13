@@ -12,9 +12,9 @@ bm_pdf <- cps_report$content$snv_indel$callset$variant_display$biomarker
 n_bm_items <- NROW(bm_pdf)
 n_bm_variants <- if (n_bm_items > 0) length(unique(bm_pdf$VAR_ID)) else 0
 
-## focused summary - evidence levels A/B, one row per variant, evidence
-## type and clinical significance (therapies and cancer types collapsed;
-## highest evidence level)
+## focused summary - evidence levels A/B, one row per variant, clinical
+## significance and evidence source (therapies and cancer types collapsed;
+## highest evidence level); ordered by evidence type (predictive first)
 bm_summary_pdf <- data.frame()
 n_bm_other_levels <- 0
 if (n_bm_items > 0) {
@@ -22,11 +22,20 @@ if (n_bm_items > 0) {
     dplyr::filter(substr(.data$BM_EVIDENCE_LEVEL, 1, 1) %in% c("A", "B"))
   n_bm_other_levels <- n_bm_items - NROW(bm_levels_ab)
   if (NROW(bm_levels_ab) > 0) {
+    ## variant identifier in the evidence source (CIViC variant id), for
+    ## links to the source entry
+    bm_raw <- cps_report$content$snv_indel$callset$variant$biomarker
+    bm_levels_ab$BM_VARIANT_ID <- if (all(c(
+      "BM_SOURCE_DB", "BM_EVIDENCE_ID", "BM_VARIANT_ID") %in% colnames(bm_raw)))
+      as.character(bm_raw$BM_VARIANT_ID)[match(
+        paste(bm_levels_ab$BM_SOURCE_DB, bm_levels_ab$BM_EVIDENCE_ID),
+        paste(bm_raw$BM_SOURCE_DB, bm_raw$BM_EVIDENCE_ID))] else NA_character_
     bm_summary_pdf <- bm_levels_ab |>
       dplyr::mutate(
         EVIDENCE_TYPE_ORDER = match(
           .data$BM_EVIDENCE_TYPE,
           c("Predictive", "Prognostic", "Diagnostic", "Predisposing")),
+        LEVEL = substr(.data$BM_EVIDENCE_LEVEL, 1, 1),
         VARIANT = stringr::str_replace(
           .data$SAMPLE_ALTERATION, paste0("^", .data$SYMBOL, " - "), ""),
         MATCH = dplyr::case_when(
@@ -38,10 +47,14 @@ if (n_bm_items > 0) {
           dplyr::coalesce(.data$BM_THERAPEUTIC_CONTEXT, ""), ",", " + ")) |>
       dplyr::group_by(
         .data$EVIDENCE_TYPE_ORDER, .data$SYMBOL, .data$VARIANT,
-        .data$BM_EVIDENCE_TYPE, .data$BM_CLINICAL_SIGNIFICANCE,
-        .data$MATCH) |>
+        .data$BM_CLINICAL_SIGNIFICANCE, .data$MATCH, .data$BM_SOURCE_DB) |>
       dplyr::summarise(
-        LEVEL = min(substr(.data$BM_EVIDENCE_LEVEL, 1, 1)),
+        ## source entry: the variant with the highest evidence level (then
+        ## the most evidence items)
+        ENTRY_ID = names(sort(table(
+          .data$BM_VARIANT_ID[.data$LEVEL == min(.data$LEVEL)]),
+          decreasing = TRUE))[1] %||% NA_character_,
+        LEVEL = min(.data$LEVEL),
         THERAPIES = paste(sort(unique(.data$THERAPY[.data$THERAPY != ""])),
                           collapse = ", "),
         CANCER_TYPES = paste(sort(unique(.data$BM_CANCER_TYPE)),
@@ -64,7 +77,9 @@ cat(
   "aggregated and organized according to their strength (levels A/B) and clinical ",
   "significance. *Match* indicates whether the ",
   "evidence applies directly to the variant, or to a gene-level matching property ",
-  "such as loss-of-function variants in the gene.\n\n", sep = "")
+  "such as loss-of-function variants in the gene. Alterations are linked to ",
+  "the corresponding entry of the evidence source (*Source*; CIViC variant, ",
+  "or the CGI biomarker catalogue).\n\n", sep = "")
 ```
 
 ```{r bm_pdf_table}
@@ -72,26 +87,40 @@ cat(
 #| eval: !expr NROW(bm_summary_pdf) > 0
 
 bm_summary_pdf |>
+  dplyr::mutate(
+    ENSEMBL_GENE_ID = cpsr:::gene_ensembl_id_pdf(cps_report, .data$SYMBOL),
+    ENTRY_URL = cpsr:::bm_entry_url_pdf(.data$BM_SOURCE_DB, .data$ENTRY_ID)) |>
+  dplyr::mutate(dplyr::across(
+    c("SYMBOL", "VARIANT", "BM_CLINICAL_SIGNIFICANCE", "LEVEL", "CANCER_TYPES",
+      "THERAPIES", "MATCH"), ~ dplyr::coalesce(as.character(.x), ""))) |>
+  ## raw Typst markup (not escaped): gene as Open Targets link, alteration as
+  ## link to the source entry (CIViC/CGI), clinical significance as colored
+  ## pill and source as logo (as in the HTML report)
+  dplyr::mutate(
+    Gene = cpsr:::gene_link_pdf(.data$SYMBOL, .data$ENSEMBL_GENE_ID),
+    Alteration = cpsr:::link_pdf(.data$VARIANT, .data$ENTRY_URL),
+    `Clinical significance` = cpsr:::bm_significance_pill_pdf(
+      .data$BM_CLINICAL_SIGNIFICANCE),
+    Source = cpsr:::bm_source_logo_pdf(.data$BM_SOURCE_DB)) |>
   dplyr::select(
-    Gene = "SYMBOL",
-    Alteration = "VARIANT",
-    `Evidence type` = "BM_EVIDENCE_TYPE",
-    `Clinical significance` = "BM_CLINICAL_SIGNIFICANCE",
+    "Gene", "Alteration", "Clinical significance",
     Level = "LEVEL",
     `Cancer type(s)` = "CANCER_TYPES",
-    `Therapies` = "THERAPIES",
-    Match = "MATCH"
-  ) |>
-  dplyr::mutate(dplyr::across(dplyr::everything(),
-                              ~ dplyr::coalesce(as.character(.x), ""))) |>
-  ## clinical significance as colored pills (as in the HTML report) - raw
-  ## Typst markup, not escaped
-  dplyr::mutate(`Clinical significance` = cpsr:::bm_significance_pill_pdf(
-    .data$`Clinical significance`)) |>
-  tinytable::tt(width = c(0.7, 1.0, 1.1, 1.9, 0.55, 1.85, 2.15, 0.75)) |>
-  tinytable::format_tt(j = c(1:3, 5:8), escape = TRUE) |>
+    Therapies = "THERAPIES",
+    Match = "MATCH",
+    "Source") |>
+  tinytable::tt(width = c(0.7, 1.05, 1.9, 0.55, 2.05, 2.3, 0.8, 0.75)) |>
+  tinytable::format_tt(j = 4:7, escape = TRUE) |>
   cpsr:::style_tt_header_pdf() |>
   tinytable::style_tt(j = 1, bold = TRUE)
+```
+
+```{r bm_pdf_legend}
+#| echo: false
+#| output: asis
+#| eval: !expr NROW(bm_summary_pdf) > 0
+cat(cpsr:::bm_source_legend_pdf(
+  intersect(c("civic", "cgi"), bm_summary_pdf$BM_SOURCE_DB)))
 ```
 
 ```{r bm_pdf_no_ab}

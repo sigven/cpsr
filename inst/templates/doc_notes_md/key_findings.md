@@ -14,7 +14,8 @@ Within a list, variants are ordered alphabetically by gene symbol, then by alter
 
 - __Variant classification__: number of variants, and of affected genes among the evaluated cancer
   predisposition genes, by classification (pathogenic/likely pathogenic, variants of uncertain
-  significance (VUS), benign/likely benign)
+  significance (VUS), benign/likely benign); in the PDF report, only protein-coding VUS are counted
+  (the number of non-coding VUS is indicated)
 - __Secondary findings__ (if assessed): pathogenic/likely pathogenic variants in the ACMG secondary
   findings genes
 - __Genomic biomarkers__: variants with biomarker evidence of level A or B (validated or clinical

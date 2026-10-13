@@ -70,11 +70,14 @@ variant_labels_hl <- function(d) {
 #' (white bold text on pathogenicity color, as in the Clinical significance
 #' column): TRUE gives raw Typst (PDF report), "html" gives an HTML span
 #' (HTML report), FALSE (default) gives bold text
+#' @param vus_coding_only count protein-coding VUS only (PDF report - more
+#' condensed; non-coding VUS are noted separately)
 #'
 #' @return list with 'lead' (markdown on pathogenic/likely pathogenic
 #' variants) and 'supporting' (markdown bullet list, "" if none)
 #' @export
-report_highlights <- function(report, max_show = 5, pill = FALSE) {
+report_highlights <- function(report, max_show = 5, pill = FALSE,
+                              vus_coding_only = FALSE) {
   snv <- report$content$snv_indel
   conf <- report$settings$conf
   vc <- conf$variant_classification
@@ -133,10 +136,20 @@ report_highlights <- function(report, max_show = 5, pill = FALSE) {
     n_panel <- NROW(dplyr::distinct(dplyr::filter(
       conf$gene_panel$panel_genes, .data$PRIMARY_TARGET == TRUE),
       .data$ENTREZGENE))
+    ## VUS - optionally protein-coding only (non-coding VUS noted separately)
+    is_vus <- cls == "VUS"
+    vus_coding <- if ("CODING_STATUS" %in% colnames(cpg))
+      cpg$CODING_STATUS %in% "coding" else rep(TRUE, length(cls))
+    n_vus_noncoding <- if (vus_coding_only) sum(is_vus & !vus_coding) else 0
+    vus_label <- paste0(
+      if (vus_coding_only) "protein-coding " else "",
+      "variants of uncertain significance (VUS",
+      if (n_vus_noncoding > 0)
+        paste0("; +", n_vus_noncoding, " non-coding, not listed"), ")")
     n_cls <- c(
       "pathogenic/likely pathogenic" =
         sum(cls %in% c("Pathogenic", "Likely Pathogenic")),
-      "variants of uncertain significance (VUS)" = sum(cls == "VUS"),
+      stats::setNames(sum(is_vus) - n_vus_noncoding, vus_label),
       "benign/likely benign" = sum(cls %in% c("Benign", "Likely Benign")))
     supporting <- c(supporting, paste0(
       "**Variant classification:** ", length(cls), " variant(s) in ",

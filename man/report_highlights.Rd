@@ -4,23 +4,30 @@
 \alias{report_highlights}
 \title{Key findings of a CPSR report (highlights) as markdown}
 \usage{
-report_highlights(report, max_show = 5)
+report_highlights(report, max_show = 5, pill = FALSE, vus_coding_only = FALSE)
 }
 \arguments{
 \item{report}{CPSR report object}
 
 \item{max_show}{maximum number of items listed per finding}
+
+\item{pill}{label 'Pathogenic' / 'Likely Pathogenic' as colored pills
+(white bold text on pathogenicity color, as in the Clinical significance
+column): TRUE gives raw Typst (PDF report), "html" gives an HTML span
+(HTML report), FALSE (default) gives bold text}
+
+\item{vus_coding_only}{count protein-coding VUS only (PDF report - more
+condensed; non-coding VUS are noted separately)}
 }
 \value{
-list with 'lead' (markdown paragraphs on pathogenic/likely
-pathogenic variants and VUS) and 'supporting' (markdown bullet list, ""
-if none)
+list with 'lead' (markdown on pathogenic/likely pathogenic
+variants) and 'supporting' (markdown bullet list, "" if none)
 }
 \description{
 The most critical findings come first: pathogenic and likely pathogenic
-variants in the cancer predisposition genes of the virtual panel, then
-variants of uncertain significance (VUS). These are followed by supporting
-findings, each included only when assessed: an overview of variant
-classifications, secondary findings (ACMG SF), genomic biomarkers
-(evidence levels A/B), pharmacogenomic phenotypes (CPIC), and GWAS hits.
+variants in the cancer predisposition genes of the virtual panel. These are
+followed by supporting findings, each included only when assessed: an
+overview of variant classifications (including VUS), secondary findings
+(ACMG SF), genomic biomarkers (evidence levels A/B), and pharmacogenomic
+phenotypes (CPIC).
 }

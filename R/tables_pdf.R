@@ -95,17 +95,19 @@ variant_table_pdf <- function(variants,
       dplyr::across(dplyr::everything(),
                     ~ dplyr::coalesce(as.character(.x), "")))
   ## raw Typst markup (not escaped): clinical significance and genotype as
-  ## colored pills (as in the HTML report), alteration as ClinVar link
+  ## colored pills (as in the HTML report), gene as Open Targets link,
+  ## alteration as ClinVar link
   tbl[["Clinical significance"]] <-
     classification_pill_pdf(tbl[["Clinical significance"]])
   tbl[["Genotype"]] <- pgx_genotype_pill_pdf(tbl[["Genotype"]])
+  tbl[["Gene"]] <- gene_link_pdf(tbl[["Gene"]], variants[["ENSEMBL_GENE_ID"]])
   tbl[["Alteration"]] <- link_pdf(
     tbl[["Alteration"]],
     ifelse(clinvar_authority & !is.na(clinvar_id),
            paste0("https://www.ncbi.nlm.nih.gov/clinvar/variation/",
                   clinvar_id, "/"), NA_character_))
   j_raw <- which(colnames(tbl) %in%
-                   c("Clinical significance", "Genotype", "Alteration"))
+                   c("Gene", "Clinical significance", "Genotype", "Alteration"))
   ## full page width, as the other tables of the PDF report
   widths <- c(0.8, 1.6, 1.3, 1.1, 1.4, 1.2)[seq_len(ncol(tbl))]
   tinytable::tt(tbl, width = widths) |>
@@ -135,6 +137,97 @@ link_pdf <- function(label, url) {
   esc <- typst_escape(label)
   ifelse(is.na(url) | is.na(label) | label == "", esc,
          paste0('#link("', url, '")[', esc, ']'))
+}
+
+#' Gene symbols as links to the Open Targets Platform target page (by
+#' Ensembl gene id) in a PDF report table cell (raw Typst markup; the column
+#' must not be escaped by format_tt()). Symbols without a valid Ensembl gene
+#' id are shown as plain (escaped) text.
+#'
+#' @param symbol gene symbol(s)
+#' @param ensembl_gene_id Ensembl gene id(s) (e.g. ENSG00000139618)
+#'
+#' @return character vector with Typst markup
+#' @keywords internal
+gene_link_pdf <- function(symbol, ensembl_gene_id = NULL) {
+  symbol <- dplyr::coalesce(as.character(symbol), "")
+  if (is.null(ensembl_gene_id)) {
+    ensembl_gene_id <- rep(NA_character_, length(symbol))
+  }
+  id <- stringr::str_extract(as.character(ensembl_gene_id), "ENSG[0-9]+")
+  link_pdf(symbol, ifelse(
+    is.na(id), NA_character_,
+    paste0("https://platform.opentargets.org/target/", id)))
+}
+
+#' Ensembl gene ids of gene symbols, looked up among the variants of the
+#' report (all variant sets) and the genes of the virtual panel
+#'
+#' @param report CPSR report object
+#' @param symbol gene symbol(s)
+#'
+#' @return Ensembl gene id per symbol (NA if not found)
+#' @keywords internal
+gene_ensembl_id_pdf <- function(report, symbol) {
+  sets <- c(report$content$snv_indel$callset$variant,
+            list(report$settings$conf$gene_panel$panel_genes))
+  ids <- dplyr::bind_rows(lapply(sets, function(d) {
+    if (NROW(d) == 0 || !all(c("SYMBOL", "ENSEMBL_GENE_ID") %in% colnames(d)))
+      return(NULL)
+    data.frame(SYMBOL = as.character(d$SYMBOL),
+               ENSEMBL_GENE_ID = as.character(d$ENSEMBL_GENE_ID))
+  }))
+  ids <- ids[grepl("^ENSG[0-9]+", ids$ENSEMBL_GENE_ID), , drop = FALSE]
+  ids$ENSEMBL_GENE_ID[match(as.character(symbol), ids$SYMBOL)]
+}
+
+#' Biomarker evidence sources (CIViC, CGI) as logos (Typst markup) - images
+#' copied with the templates to the rendering directory (typst/logo_*.png);
+#' unknown sources as plain text
+#'
+#' @param sources source identifiers (e.g. 'civic', 'cgi')
+#' @param height logo height (Typst length)
+#' @keywords internal
+bm_source_logo_pdf <- function(sources, height = "1.4em") {
+  ids <- tolower(dplyr::coalesce(as.character(sources), ""))
+  ifelse(
+    ids %in% c("civic", "cgi"),
+    paste0('#box(baseline: 20%, image("typst/logo_', ids, '.png", height: ',
+           height, '))'),
+    typst_escape(dplyr::coalesce(as.character(sources), "")))
+}
+
+#' Legend of the biomarker evidence source logos (raw Typst block)
+#'
+#' @param sources source identifiers shown in the legend
+#' @keywords internal
+bm_source_legend_pdf <- function(sources = c("civic", "cgi")) {
+  names <- c(civic = "CIViC", cgi = "CGI")
+  items <- paste0(bm_source_logo_pdf(sources, height = "1.2em"), " ",
+                  names[tolower(sources)])
+  paste0("\n```{=typst}\n#block(above: 0.4em, below: 0.8em)[",
+         "#set text(size: 8.5pt, fill: cpsr-muted)\n",
+         "Evidence sources: ", paste(items, collapse = " #h(0.8em) "),
+         "]\n```\n\n")
+}
+
+#' URL of the biomarker entry in the evidence source: the CIViC variant page
+#' (by CIViC variant id), or the CGI biomarker catalogue (no pages for
+#' individual CGI biomarkers)
+#'
+#' @param source_db evidence source ('civic' or 'cgi')
+#' @param variant_id variant identifier in the source (CIViC variant id)
+#'
+#' @return URL per entry (NA if not available)
+#' @keywords internal
+bm_entry_url_pdf <- function(source_db, variant_id) {
+  civic_id <- stringr::str_extract(as.character(variant_id), "^[0-9]+$")
+  dplyr::case_when(
+    source_db %in% "civic" & !is.na(civic_id) ~
+      paste0("https://civicdb.org/variants/", civic_id, "/summary"),
+    source_db %in% "cgi" ~
+      "https://www.cancergenomeinterpreter.org/2021/biomarkers",
+    .default = NA_character_)
 }
 
 #' Convert the HTML elements of a documentation note (markdown with inline
@@ -262,7 +355,7 @@ pdf_cover_typst <- function(report) {
   args <- paste0("  ", names(v), ': "', typst_str(v), '",', collapse = "\n")
 
   ## key findings (markdown, see report_highlights()) in a framed box
-  hl <- report_highlights(report, pill = TRUE)
+  hl <- report_highlights(report, pill = TRUE, vus_coding_only = TRUE)
   paste0(
     "```{=typst}\n#cpsr-cover(\n", args, "\n)\n",
     "#cpsr-highlights[\n#cpsr-hl-lead[\n```\n\n",

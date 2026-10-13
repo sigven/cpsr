@@ -18,7 +18,14 @@ n_path_lpath <- sum(
   variants_pdf$CLASSIFICATION %in% c("Pathogenic", "Likely Pathogenic"),
   na.rm = TRUE
 )
-n_vus_pdf <- sum(variants_pdf$CLASSIFICATION == "VUS", na.rm = TRUE)
+## VUS: protein-coding variants only in the PDF report (all VUS are listed
+## in the HTML report and the Excel/TSV output)
+vus_all_pdf <- variants_pdf[variants_pdf$CLASSIFICATION %in% "VUS", ,
+                            drop = FALSE]
+vus_coding <- if ("CODING_STATUS" %in% colnames(vus_all_pdf))
+  vus_all_pdf$CODING_STATUS %in% "coding" else rep(TRUE, NROW(vus_all_pdf))
+n_vus_pdf <- sum(vus_coding)
+n_vus_noncoding_pdf <- NROW(vus_all_pdf) - n_vus_pdf
 ## maximum number of VUS listed in the PDF report
 max_vus_pdf <- 20
 panel_genes_pdf <- cps_report$settings$conf$gene_panel$panel_genes
@@ -34,8 +41,9 @@ cat(
   "Listed below are germline variants in the sample that were ",
   "found in the specified virtual panel of cancer predisposition genes (**n = ",
   n_panel_genes_pdf, "**, see *Analysis configuration & data sources*). ",
-  "Pathogenic and likely pathogenic variants are shown as well as variants ",
-  "of uncertain significance (VUS).\n\nVariants are classified using two ",
+  "Pathogenic and likely pathogenic variants are shown, as well as ",
+  "protein-coding variants of uncertain significance (VUS) - non-coding VUS ",
+  "are listed in the HTML report and the Excel output only.\n\nVariants are classified using two ",
   "assertion authorities, *ClinVar* and *CPSR*'s internal ACMG/AMP variant ",
   "classification routine; ",
   "with the one taking precedence being dictated by the user-defined *ClinVar trust level*. ",
@@ -63,15 +71,14 @@ cat(cpsr:::no_findings_pdf(paste0(
   n_panel_genes_pdf, " genes of the virtual gene panel (see Analysis configuration & data sources).")))
 ```
 
-## Variants of Uncertain Significance
+## Variants of Uncertain Significance (protein-coding)
 
 ```{r vus_table}
 #| echo: false
 #| eval: !expr n_vus_pdf > 0
 
-## at most 20 VUS - highest CPSR pathogenicity score first
-vus_pdf <- variants_pdf |>
-  dplyr::filter(CLASSIFICATION == "VUS") |>
+## protein-coding VUS, at most 20 - highest CPSR pathogenicity score first
+vus_pdf <- vus_all_pdf[vus_coding, , drop = FALSE] |>
   dplyr::arrange(dplyr::desc(.data$CPSR_PATHOGENICITY_SCORE), .data$SYMBOL)
 vus_pdf |>
   utils::head(max_vus_pdf) |>
@@ -83,9 +90,10 @@ vus_pdf |>
 #| output: asis
 #| eval: !expr n_vus_pdf > max_vus_pdf
 cat(
-  "\n*Showing ", max_vus_pdf, " of ", n_vus_pdf, " variants of uncertain ",
-  "significance (highest CPSR pathogenicity score first) - the complete list ",
-  "is available in the Excel output.*\n\n", sep = "")
+  "\n*Showing ", max_vus_pdf, " of ", n_vus_pdf, " protein-coding variants ",
+  "of uncertain significance (highest CPSR pathogenicity score first) - the ",
+  "complete list is available in the HTML report and the Excel output.*\n\n",
+  sep = "")
 ```
 
 ```{r vus_none_msg}
@@ -93,6 +101,16 @@ cat(
 #| output: asis
 #| eval: !expr n_vus_pdf == 0
 cat(cpsr:::no_findings_pdf(paste0(
-  "No variants of uncertain significance were found in the ",
+  "No protein-coding variants of uncertain significance were found in the ",
   n_panel_genes_pdf, " genes of the virtual gene panel.")))
+```
+
+```{r vus_noncoding_msg}
+#| echo: false
+#| output: asis
+#| eval: !expr n_vus_noncoding_pdf > 0
+cat(
+  "\n*", n_vus_noncoding_pdf, " non-coding variant(s) of uncertain ",
+  "significance not shown - listed in the HTML report and the Excel ",
+  "output.*\n\n", sep = "")
 ```
