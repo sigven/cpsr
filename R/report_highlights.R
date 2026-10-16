@@ -72,12 +72,15 @@ variant_labels_hl <- function(d) {
 #' (HTML report), FALSE (default) gives bold text
 #' @param vus_coding_only count protein-coding VUS only (PDF report - more
 #' condensed; non-coding VUS are noted separately)
+#' @param links finding titles as links to the corresponding report sections
+#' (PDF report - section labels as in the quarto/pdf templates, e.g.
+#' 'cpsr-plp-variants'); only for sections that are included in the report
 #'
 #' @return list with 'lead' (markdown on pathogenic/likely pathogenic
 #' variants) and 'supporting' (markdown bullet list, "" if none)
 #' @export
 report_highlights <- function(report, max_show = 5, pill = FALSE,
-                              vus_coding_only = FALSE) {
+                              vus_coding_only = FALSE, links = FALSE) {
   snv <- report$content$snv_indel
   conf <- report$settings$conf
   vc <- conf$variant_classification
@@ -85,6 +88,12 @@ report_highlights <- function(report, max_show = 5, pill = FALSE,
   cpg <- snv$callset$variant_display$cpg_non_sf
   cls <- if (NROW(cpg) > 0 && "CLASSIFICATION" %in% colnames(cpg))
     as.character(cpg$CLASSIFICATION) else character()
+  ## markdown link to a section of the PDF report (labelled heading) - the
+  ## result sections are only included in reports with variant content
+  sec_link <- function(text, id) {
+    if (isTRUE(links) && has_content) paste0("[", text, "](#", id, ")") else
+      text
+  }
 
   ## --- Lead: pathogenic/likely pathogenic variants ---
   lead <- c()
@@ -113,7 +122,8 @@ report_highlights <- function(report, max_show = 5, pill = FALSE,
     auth_txt <- paste0(auth_lbl[names(auth)[auth > 0]], ": **n = ",
                        auth[auth > 0], "**", collapse = ", ")
     lead <- c(lead, paste0(
-      "**Pathogenic / likely pathogenic variants** in cancer predisposition ",
+      sec_link("**Pathogenic / likely pathogenic variants**",
+               "cpsr-plp-variants"), " in cancer predisposition ",
       "genes: **n = ", NROW(plp), "**",
       if (nzchar(auth_txt)) paste0(" - ", auth_txt), "\n\n",
       paste(c(class_item("Pathogenic"), class_item("Likely Pathogenic")),
@@ -152,7 +162,8 @@ report_highlights <- function(report, max_show = 5, pill = FALSE,
       stats::setNames(sum(is_vus) - n_vus_noncoding, vus_label),
       "benign/likely benign" = sum(cls %in% c("Benign", "Likely Benign")))
     supporting <- c(supporting, paste0(
-      "**Variant classification:** ", length(cls), " variant(s) in ",
+      sec_link("**Variant classification:**", "cpsr-variant-classification"),
+      " ", length(cls), " variant(s) in ",
       length(unique(cpg$SYMBOL)), " of **n = ", n_panel,
       "** evaluated cancer predisposition genes, ",
       paste0("**n = ", n_cls, "** ", names(n_cls), collapse = ", ")))
@@ -162,7 +173,8 @@ report_highlights <- function(report, max_show = 5, pill = FALSE,
   if (isTRUE(as.logical(vc$secondary_findings))) {
     sf <- snv$callset$variant_display$sf
     supporting <- c(supporting, paste0(
-      "**Secondary findings (ACMG SF):** ",
+      sec_link("**Secondary findings (ACMG SF):**", "cpsr-secondary-findings"),
+      " ",
       if (NROW(sf) > 0 && "SYMBOL" %in% colnames(sf))
         fmt_list_hl(variant_labels_hl(sf), max_show) else
           "none identified"))
@@ -188,7 +200,8 @@ report_highlights <- function(report, max_show = 5, pill = FALSE,
           .groups = "drop") |>
         dplyr::arrange(.data$SYMBOL, .data$VARIANT)
       supporting <- c(supporting, paste0(
-        "**Genomic biomarkers** (evidence levels A/B): ",
+        sec_link("**Genomic biomarkers**", "cpsr-biomarkers"),
+        " (evidence levels A/B): ",
         fmt_list_hl(paste0(
           "**", md_escape_hl(bm_var$SYMBOL), "** ",
           md_escape_hl(bm_var$VARIANT),
@@ -196,7 +209,8 @@ report_highlights <- function(report, max_show = 5, pill = FALSE,
           max_show)))
     } else {
       supporting <- c(supporting, paste0(
-        "**Genomic biomarkers:** ", length(unique(bm$VAR_ID)),
+        sec_link("**Genomic biomarkers:**", "cpsr-biomarkers"), " ",
+        length(unique(bm$VAR_ID)),
         " variant(s) with lower-level evidence only (levels C-E)"))
     }
   }
@@ -236,8 +250,10 @@ report_highlights <- function(report, max_show = 5, pill = FALSE,
           max_show)) else
             "no variants related to toxicity of chemotherapy"
     }
+    pgx_title <- paste0("**Pharmacogenomics", if (cpic) " (CPIC)", ":**")
     supporting <- c(supporting, paste0(
-      "**Pharmacogenomics", if (cpic) " (CPIC)", ":** ", pgx_txt))
+      if (cpic) sec_link(pgx_title, "cpsr-pgx") else pgx_title, " ",
+      pgx_txt))
   }
 
   list(

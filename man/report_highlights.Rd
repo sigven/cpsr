@@ -4,7 +4,13 @@
 \alias{report_highlights}
 \title{Key findings of a CPSR report (highlights) as markdown}
 \usage{
-report_highlights(report, max_show = 5, pill = FALSE, vus_coding_only = FALSE)
+report_highlights(
+  report,
+  max_show = 5,
+  pill = FALSE,
+  vus_coding_only = FALSE,
+  links = FALSE
+)
 }
 \arguments{
 \item{report}{CPSR report object}
@@ -18,6 +24,10 @@ column): TRUE gives raw Typst (PDF report), "html" gives an HTML span
 
 \item{vus_coding_only}{count protein-coding VUS only (PDF report - more
 condensed; non-coding VUS are noted separately)}
+
+\item{links}{finding titles as links to the corresponding report sections
+(PDF report - section labels as in the quarto/pdf templates, e.g.
+'cpsr-plp-variants'); only for sections that are included in the report}
 }
 \value{
 list with 'lead' (markdown on pathogenic/likely pathogenic

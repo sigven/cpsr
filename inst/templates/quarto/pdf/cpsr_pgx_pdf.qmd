@@ -2,7 +2,7 @@
 #pagebreak(weak: true)
 ```
 
-# Pharmacogenomic Findings
+# Pharmacogenomic Findings {#cpsr-pgx}
 
 ```{r pgx_pdf_setup}
 #| echo: false

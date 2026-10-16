@@ -2,7 +2,7 @@
 #pagebreak(weak: true)
 ```
 
-# Variant Classification
+# Variant Classification {#cpsr-variant-classification}
 
 ```{r classification_pdf_setup}
 #| echo: false
@@ -50,7 +50,7 @@ cat(
   "Benign/Likely Benign variants are not shown.\n\n", sep = "")
 ```
 
-## Pathogenic and Likely Pathogenic variants
+## Pathogenic and Likely Pathogenic variants {#cpsr-plp-variants}
 
 ```{r path_lpath_table}
 #| echo: false

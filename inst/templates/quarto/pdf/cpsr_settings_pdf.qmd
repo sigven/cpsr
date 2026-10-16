@@ -34,7 +34,7 @@ data.frame(
     "Secondary findings (ACMG)",
     "Pharmacogenomic findings",
     "Subject sex",
-    "Age at testing (years)",
+    "Subject age (years, at testing)",
     "Non-protein-coding variants included",
     "VEP transcript set",
     "VEP transcript pick order",
@@ -60,7 +60,7 @@ data.frame(
   cpsr:::style_tt_header_pdf()
 ```
 
-## Virtual gene panel
+## Virtual gene panel {#cpsr-virtual-panel}
 
 ```{r virtual_panel_pdf}
 #| echo: false

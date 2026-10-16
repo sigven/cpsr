@@ -2,7 +2,7 @@
 #pagebreak(weak: true)
 ```
 
-# Secondary Findings
+# Secondary Findings {#cpsr-secondary-findings}
 
 ```{r sf_pdf_setup}
 #| echo: false

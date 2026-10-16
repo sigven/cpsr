@@ -229,7 +229,8 @@
     row-gutter: 0.6em,
     ..cpsr-meta("Genome assembly", genome_assembly),
     ..cpsr-meta("Sex / age", sex_age),
-    ..cpsr-meta("Virtual gene panel", gene_panel),
+    // linked to the panel genes (Analysis configuration & data sources)
+    ..cpsr-meta("Virtual gene panel", link(<cpsr-virtual-panel>, gene_panel)),
   )
 
   v(0.5cm)

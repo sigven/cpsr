@@ -2,7 +2,7 @@
 #pagebreak(weak: true)
 ```
 
-# Genomic Biomarkers
+# Genomic Biomarkers {#cpsr-biomarkers}
 
 ```{r bm_pdf_setup}
 #| echo: false
