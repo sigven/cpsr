@@ -10,7 +10,13 @@ pharmacogenomic phenotypes (CPIC).
 ## Usage
 
 ``` r
-report_highlights(report, max_show = 5, pill = FALSE, vus_coding_only = FALSE)
+report_highlights(
+  report,
+  max_show = 5,
+  pill = FALSE,
+  vus_coding_only = FALSE,
+  links = FALSE
+)
 ```
 
 ## Arguments
@@ -34,6 +40,13 @@ report_highlights(report, max_show = 5, pill = FALSE, vus_coding_only = FALSE)
 
   count protein-coding VUS only (PDF report - more condensed; non-coding
   VUS are noted separately)
+
+- links:
+
+  finding titles as links to the corresponding report sections (PDF
+  report - section labels as in the quarto/pdf templates, e.g.
+  'cpsr-plp-variants'); only for sections that are included in the
+  report
 
 ## Value
 
