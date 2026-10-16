@@ -17,4 +17,4 @@ pgx_phenotype_pill_pdf(phenotypes)
 
 ## Value
 
-character vector with Typst markup (see pill_pdf)
+character vector with Typst markup (see pcgrr::pdf_pill())

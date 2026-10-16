@@ -36,8 +36,6 @@
 <url><loc>https://sigven.github.io/cpsr/dev/reference/assign_pgx_recommendations.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/bm_entry_url_pdf.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/bm_significance_pill_pdf.html</loc></url>
-<url><loc>https://sigven.github.io/cpsr/dev/reference/bm_source_legend_pdf.html</loc></url>
-<url><loc>https://sigven.github.io/cpsr/dev/reference/bm_source_logo_pdf.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/bs_icon2.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/canonical_pgx_key.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/classification_pill_pdf.html</loc></url>
@@ -53,6 +51,7 @@
 <url><loc>https://sigven.github.io/cpsr/dev/reference/create_unified_variant_reactable.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/create_variant_table_theme.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/curated_transcripts.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/dev/reference/doc_citations_pdf.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/doc_note_pdf.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/exclude_vars_by_maf.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/exclude_vars_non_cancer.html</loc></url>
@@ -61,7 +60,6 @@
 <url><loc>https://sigven.github.io/cpsr/dev/reference/format_pgx_gene_text.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/format_pgx_phenotype.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/gene_ensembl_id_pdf.html</loc></url>
-<url><loc>https://sigven.github.io/cpsr/dev/reference/gene_link_pdf.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/generate_cpsr_report.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/genotype_label.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/get_cpsr_settings_sheet.html</loc></url>
@@ -76,12 +74,10 @@
 <url><loc>https://sigven.github.io/cpsr/dev/reference/is_purely_intronic_deletion.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/key_findings_doc_note.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/known_path_benign_sites.html</loc></url>
-<url><loc>https://sigven.github.io/cpsr/dev/reference/link_pdf.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/load_germline_snv_indel.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/match_pgx_alleles.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/md_escape_hl.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/min_distance_to_pathogenic.html</loc></url>
-<url><loc>https://sigven.github.io/cpsr/dev/reference/no_findings_pdf.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/pdf_cover_typst.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/pgx_genotype_pill_pdf.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/pgx_phenotype_color.html</loc></url>
@@ -89,7 +85,6 @@
 <url><loc>https://sigven.github.io/cpsr/dev/reference/pgx_phenotype_pill_pdf.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/pgx_phenotype_row_details.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/pgx_recommendation_row_details.html</loc></url>
-<url><loc>https://sigven.github.io/cpsr/dev/reference/pill_pdf.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/plot_summary_statistics.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/plot_virtual_panels.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/prep_biomarker_tbl.html</loc></url>
@@ -110,8 +105,6 @@
 <url><loc>https://sigven.github.io/cpsr/dev/reference/strip_html_hl.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/style_tt_header_pdf.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/tidyeval.html</loc></url>
-<url><loc>https://sigven.github.io/cpsr/dev/reference/typst_escape.html</loc></url>
-<url><loc>https://sigven.github.io/cpsr/dev/reference/typst_str.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/variant_classification_synopsis_doc_note.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/variant_labels_hl.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/variant_table_pdf.html</loc></url>

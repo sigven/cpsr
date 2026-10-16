@@ -1,7 +1,7 @@
-# Genotypes of the detected variants of a gene ('; '-separated: heterozygous, homozygous, hemizygous) as colored pills in a PDF report table, one per line - colors as in the HTML report
+# Genotypes of the detected variants of a gene ('; '-separated: Heterozygous, Homozygous, Hemizygous) as colored pills in a PDF report table, one per line - colors as in the HTML report
 
 Genotypes of the detected variants of a gene ('; '-separated:
-heterozygous, homozygous, hemizygous) as colored pills in a PDF report
+Heterozygous, Homozygous, Hemizygous) as colored pills in a PDF report
 table, one per line - colors as in the HTML report
 
 ## Usage
@@ -18,4 +18,4 @@ pgx_genotype_pill_pdf(genotypes)
 
 ## Value
 
-character vector with Typst markup (see pill_pdf)
+character vector with Typst markup (see pcgrr::pdf_pill())

@@ -1,7 +1,7 @@
-# Cell renderer factory for the genotypes of the detected variants of a gene ('; '-separated: heterozygous, homozygous, hemizygous) - pills styled as the genotypes of the variant classification table
+# Cell renderer factory for the genotypes of the detected variants of a gene ('; '-separated: Heterozygous, Homozygous, Hemizygous) - pills styled as the genotypes of the variant classification table
 
 Cell renderer factory for the genotypes of the detected variants of a
-gene ('; '-separated: heterozygous, homozygous, hemizygous) - pills
+gene ('; '-separated: Heterozygous, Homozygous, Hemizygous) - pills
 styled as the genotypes of the variant classification table
 
 ## Usage

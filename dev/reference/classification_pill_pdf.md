@@ -18,5 +18,5 @@ classification_pill_pdf(classifications)
 
 ## Value
 
-character vector with Typst markup (see pill_pdf); unknown categories in
-grey
+character vector with Typst markup (see pcgrr::pdf_pill()); unknown
+categories in grey

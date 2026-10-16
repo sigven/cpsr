@@ -17,5 +17,6 @@ doc_note_pdf(x)
 
 ## Value
 
-documentation note with **/ *as markdown emphasis, and line breaks (  
-) removed***
+documentation note with **/ *as markdown emphasis, line breaks (  
+) removed, and literature links/mentions as citations of the report
+bibliography (see doc_citations_pdf)***

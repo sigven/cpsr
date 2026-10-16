@@ -1,7 +1,7 @@
 # Style the header row of a PDF report table
 
-Dark teal header with white, bold text, white separator lines between
-the header columns, and light zebra striping of the body rows
+pcgrr::pdf_style_table() with the CPSR colors: dark teal header with
+white, bold text, and light zebra striping of the body rows
 
 ## Usage
 

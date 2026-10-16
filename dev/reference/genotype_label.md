@@ -16,4 +16,4 @@ genotype_label(genotype)
 
 ## Value
 
-readable genotype(s), e.g. 'heterozygous', 'homozygous'
+readable genotype(s), e.g. 'Heterozygous', 'Homozygous'
