@@ -224,8 +224,8 @@ load_germline_snv_indel <- function(
           cpsr::assign_pgx_phenotypes(
             cpsr_callset[['variant']][['all']],
             ref_data = ref_data,
-            sex = if (is.null(conf$sample_properties$sex)) "UNKNOWN" else
-              as.character(conf$sample_properties$sex)
+            sex = if (is.null(conf$subject_properties$sex)) "UNKNOWN" else
+              as.character(conf$subject_properties$sex)
           )
         cpsr_callset[['pgx']][['recommendation']] <-
           cpsr::assign_pgx_recommendations(

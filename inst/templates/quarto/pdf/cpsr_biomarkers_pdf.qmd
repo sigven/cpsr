@@ -71,8 +71,9 @@ if (n_bm_items > 0) {
 #| eval: !expr NROW(bm_summary_pdf) > 0
 cat(
   "The table below shows therapeutic, prognostic, diagnostic and ",
-  "predisposing evidence items (from [CIViC](https://civicdb.org) and ",
-  "[CGI](https://www.cancergenomeinterpreter.org)) that are linked to pathogenic/ ",
+  "predisposing evidence items (from [CIViC](https://civicdb.org) ",
+  "[@Griffith2017-do] and [CGI](https://www.cancergenomeinterpreter.org) ",
+  "[@Dienstmann2015-od]) that are linked to pathogenic/ ",
   "likely pathogenic germline variants found in the sample. Evidence has been ",
   "aggregated and organized according to their strength (levels A/B) and clinical ",
   "significance. *Match* indicates whether the ",
@@ -97,11 +98,12 @@ bm_summary_pdf |>
   ## link to the source entry (CIViC/CGI), clinical significance as colored
   ## pill and source as logo (as in the HTML report)
   dplyr::mutate(
-    Gene = cpsr:::gene_link_pdf(.data$SYMBOL, .data$ENSEMBL_GENE_ID),
-    Alteration = cpsr:::link_pdf(.data$VARIANT, .data$ENTRY_URL),
+    Gene = pcgrr::pdf_gene_link(.data$SYMBOL, .data$ENSEMBL_GENE_ID),
+    Alteration = pcgrr::pdf_link(.data$VARIANT, .data$ENTRY_URL),
     `Clinical significance` = cpsr:::bm_significance_pill_pdf(
       .data$BM_CLINICAL_SIGNIFICANCE),
-    Source = cpsr:::bm_source_logo_pdf(.data$BM_SOURCE_DB)) |>
+    Source = pcgrr::pdf_logo(
+      .data$BM_SOURCE_DB, "1.4em", sources = c("civic", "cgi"))) |>
   dplyr::select(
     "Gene", "Alteration", "Clinical significance",
     Level = "LEVEL",
@@ -119,15 +121,17 @@ bm_summary_pdf |>
 #| echo: false
 #| output: asis
 #| eval: !expr NROW(bm_summary_pdf) > 0
-cat(cpsr:::bm_source_legend_pdf(
-  intersect(c("civic", "cgi"), bm_summary_pdf$BM_SOURCE_DB)))
+cat(pcgrr::pdf_legend(
+  "bm_sources",
+  sources = intersect(c("civic", "cgi"), bm_summary_pdf$BM_SOURCE_DB),
+  muted = "cpsr-muted"))
 ```
 
 ```{r bm_pdf_no_ab}
 #| echo: false
 #| output: asis
 #| eval: !expr n_bm_items > 0 && NROW(bm_summary_pdf) == 0
-cat(cpsr:::no_findings_pdf(paste0(
+cat(pcgrr::pdf_note(kind = "empty", paste0(
   "No clinical evidence of levels A (validated) or B (clinical) was found ",
   "for the Pathogenic/Likely Pathogenic variants.")))
 ```
@@ -136,7 +140,7 @@ cat(cpsr:::no_findings_pdf(paste0(
 #| echo: false
 #| output: asis
 #| eval: !expr n_bm_items == 0
-cat(cpsr:::no_findings_pdf(paste0(
+cat(pcgrr::pdf_note(kind = "empty", paste0(
   "No germline Pathogenic/Likely Pathogenic variants matching clinical biomarker evidence ",
   "(CIViC, CGI) were found.")))
 ```

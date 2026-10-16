@@ -12,6 +12,15 @@ format:
       left: 1.5cm
       right: 1.5cm
     section-numbering: ""
+    citeproc: true
+bibliography: cpsr_bibliography.bib
+## all references of the HTML report (also when not cited in the PDF text)
+nocite: |
+  @Nakken2021-mb, @Huang2018-ah, @Richards2015-kj,
+  @Maxwell2016-mr, @Amendola2016-pu, @Griffith2017-do,
+  @Martin2019-nq, @Dienstmann2015-od
+csl: bioinformatics.csl
+link-citations: true
 ---
 
 ```{r global_options}

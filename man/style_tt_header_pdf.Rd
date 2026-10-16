@@ -13,7 +13,7 @@ style_tt_header_pdf(tt)
 styled tinytable object
 }
 \description{
-Dark teal header with white, bold text, white separator lines between
-the header columns, and light zebra striping of the body rows
+pcgrr::pdf_style_table() with the CPSR colors: dark teal header with
+white, bold text, and light zebra striping of the body rows
 }
 \keyword{internal}

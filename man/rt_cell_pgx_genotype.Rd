@@ -3,7 +3,7 @@
 \name{rt_cell_pgx_genotype}
 \alias{rt_cell_pgx_genotype}
 \title{Cell renderer factory for the genotypes of the detected variants of a
-gene ('; '-separated: heterozygous, homozygous, hemizygous) - pills
+gene ('; '-separated: Heterozygous, Homozygous, Hemizygous) - pills
 styled as the genotypes of the variant classification table}
 \usage{
 rt_cell_pgx_genotype(color_palette)
@@ -13,7 +13,7 @@ rt_cell_pgx_genotype(color_palette)
 }
 \description{
 Cell renderer factory for the genotypes of the detected variants of a
-gene ('; '-separated: heterozygous, homozygous, hemizygous) - pills
+gene ('; '-separated: Heterozygous, Homozygous, Hemizygous) - pills
 styled as the genotypes of the variant classification table
 }
 \keyword{internal}

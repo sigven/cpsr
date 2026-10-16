@@ -22,8 +22,8 @@ pgx_doc_close <- function() {
 }
 cat("\n", pgx_doc_heading, " Pharmacogenomic findings\n\n", sep = "")
 
-pgx_doc_sex <- if (is.null(cps_report$settings$conf$sample_properties$sex))
-  "UNKNOWN" else cps_report$settings$conf$sample_properties$sex
+pgx_doc_sex <- if (is.null(cps_report$settings$conf$subject_properties$sex))
+  "UNKNOWN" else cps_report$settings$conf$subject_properties$sex
 pgx_doc_release <- ""
 if ("CPIC_RELEASE" %in% colnames(cps_report$content$snv_indel$pgx_recommendation) &&
     NROW(cps_report$content$snv_indel$pgx_recommendation) > 0) {

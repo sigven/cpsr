@@ -45,7 +45,7 @@ cat(
   "protein-coding variants of uncertain significance (VUS) - non-coding VUS ",
   "are listed in the HTML report and the Excel output only.\n\nVariants are classified using two ",
   "assertion authorities, *ClinVar* and *CPSR*'s internal ACMG/AMP variant ",
-  "classification routine; ",
+  "classification routine [@Richards2015-kj; @Nakken2021-mb]; ",
   "with the one taking precedence being dictated by the user-defined *ClinVar trust level*. ",
   "Benign/Likely Benign variants are not shown.\n\n", sep = "")
 ```
@@ -66,7 +66,7 @@ variants_pdf |>
 #| echo: false
 #| output: asis
 #| eval: !expr n_path_lpath == 0
-cat(cpsr:::no_findings_pdf(paste0(
+cat(pcgrr::pdf_note(kind = "empty", paste0(
   "No pathogenic or likely pathogenic variants were found in the ",
   n_panel_genes_pdf, " genes of the virtual gene panel (see Analysis configuration & data sources).")))
 ```
@@ -100,7 +100,7 @@ cat(
 #| echo: false
 #| output: asis
 #| eval: !expr n_vus_pdf == 0
-cat(cpsr:::no_findings_pdf(paste0(
+cat(pcgrr::pdf_note(kind = "empty", paste0(
   "No protein-coding variants of uncertain significance were found in the ",
   n_panel_genes_pdf, " genes of the virtual gene panel.")))
 ```

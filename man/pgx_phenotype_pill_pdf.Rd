@@ -11,7 +11,7 @@ pgx_phenotype_pill_pdf(phenotypes)
 \item{phenotypes}{CPIC phenotype per table row}
 }
 \value{
-character vector with Typst markup (see pill_pdf)
+character vector with Typst markup (see pcgrr::pdf_pill())
 }
 \description{
 CPIC phenotypes as colored pills in a PDF report table - blues, darker

@@ -161,7 +161,7 @@ test_that("8. DPYD *2A heterozygous / homozygous", {
   expect_equal(het$PGX_ACTIVITY_SCORE, "1.0")
   expect_equal(het$PGX_DIPLOTYPE, "Reference/c.1905+1G>A (*2A)")
   expect_equal(het$PGX_VARIANTS, "c.1905+1G>A")
-  expect_equal(het$PGX_GENOTYPES, "heterozygous")
+  expect_equal(het$PGX_GENOTYPES, "Heterozygous")
   expect_true(is.na(het$PGX_PHENOTYPE_NOTE))
 
   hom <- phenotype_of(make_calls(dpyd_2a = "hom_alt"), "DPYD")
@@ -174,7 +174,7 @@ test_that("8b. variant labels use HGVSc from sample annotation", {
   calls$HGVSc <- "ENST00000309983.5:c.719A>G"
   ph <- phenotype_of(calls, "TPMT")
   expect_equal(ph$PGX_VARIANTS, "c.719A>G")
-  expect_equal(ph$PGX_GENOTYPES, "heterozygous")
+  expect_equal(ph$PGX_GENOTYPES, "Heterozygous")
   expect_equal(ph$PGX_DIPLOTYPE, "*1/*3C")
 })
 
@@ -185,7 +185,7 @@ test_that("9. two different DPYD alleles are assumed in trans", {
   expect_match(ph$PGX_PHENOTYPE_NOTE, "different gene copies \\(in trans\\)")
   expect_equal(ph$PGX_DIPLOTYPE, "c.1905+1G>A (*2A)/c.2846A>T")
   expect_equal(ph$PGX_VARIANTS, "c.1905+1G>A; c.2846A>T")
-  expect_equal(ph$PGX_GENOTYPES, "heterozygous; heterozygous")
+  expect_equal(ph$PGX_GENOTYPES, "Heterozygous; Heterozygous")
 })
 
 test_that("10. DPYD HapB3 - partial vs. complete", {
@@ -211,7 +211,7 @@ test_that("12. TPMT *3C homozygous", {
   ph <- phenotype_of(make_calls(tpmt_c719 = "hom_alt"), "TPMT")
   expect_equal(ph$PGX_PHENOTYPE, "Poor Metabolizer")
   expect_equal(ph$PGX_DIPLOTYPE, "*3C/*3C")
-  expect_equal(ph$PGX_GENOTYPES, "homozygous")
+  expect_equal(ph$PGX_GENOTYPES, "Homozygous")
 })
 
 test_that("13. TPMT c.460G>A + c.719A>G collapse into *3A, with phase note", {
@@ -236,7 +236,7 @@ test_that("15. G6PD class II allele depends on sex", {
   expect_equal(male_het$PGX_PHENOTYPE, "Deficient")
   expect_match(male_het$PGX_PHENOTYPE_NOTE, "male sample")
 
-  expect_equal(male_hap$PGX_GENOTYPES, "hemizygous")
+  expect_equal(male_hap$PGX_GENOTYPES, "Hemizygous")
 
   female_het <- phenotype_of(make_calls(g6pd_andalus = "het"), "G6PD", "FEMALE")
   expect_equal(female_het$PGX_PHENOTYPE, "Variable")

@@ -30,8 +30,8 @@ cat("::: {.callout-warning}\n## Warning - genotype data missing\n\n*Pharmacogeno
 #| output: asis
 #| echo: false
 
-pgx_sex <- if (is.null(cps_report$settings$conf$sample_properties$sex)) "UNKNOWN" else
-  cps_report$settings$conf$sample_properties$sex
+pgx_sex <- if (is.null(cps_report$settings$conf$subject_properties$sex)) "UNKNOWN" else
+  cps_report$settings$conf$subject_properties$sex
 pgx_gene_links <- paste0(
   "[DPYD](https://platform.opentargets.org/target/ENSG00000188641), ",
   "[TPMT](https://platform.opentargets.org/target/ENSG00000137364), ",

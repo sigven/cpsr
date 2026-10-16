@@ -11,7 +11,7 @@ genotype_label(genotype)
 'undefined')}
 }
 \value{
-readable genotype(s), e.g. 'heterozygous', 'homozygous'
+readable genotype(s), e.g. 'Heterozygous', 'Homozygous'
 }
 \description{
 Display label of a CPSR genotype code

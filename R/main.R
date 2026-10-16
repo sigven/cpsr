@@ -266,12 +266,12 @@ get_cpsr_settings_sheet <- function(report = NULL) {
     data.frame(SECTION = "General", PARAMETER = "Sample ID",
                VALUE = as.character(s$sample_id)),
     data.frame(SECTION = "General", PARAMETER = "Subject sex",
-               VALUE = if (is.null(conf$sample_properties$sex)) "UNKNOWN" else
-                 as.character(conf$sample_properties$sex)),
+               VALUE = if (is.null(conf$subject_properties$sex)) "UNKNOWN" else
+                 as.character(conf$subject_properties$sex)),
     data.frame(SECTION = "General", PARAMETER = "Subject age at testing (years)",
-               VALUE = if (is.null(conf$sample_properties$age) ||
-                           identical(conf$sample_properties$age, "NA")) "NA" else
-                 as.character(conf$sample_properties$age)),
+               VALUE = if (is.null(conf$subject_properties$age) ||
+                           identical(conf$subject_properties$age, "NA")) "NA" else
+                 as.character(conf$subject_properties$age)),
     data.frame(SECTION = "Variant classification",
                PARAMETER = "Max gnomAD MAF (non-ClinVar variants)",
                VALUE = as.character(

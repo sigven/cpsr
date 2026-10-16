@@ -62,13 +62,13 @@ rt_cell_classification_rank <- function(color_palette) {
 #' @param genotype genotype code(s) ('het', 'hom_alt', 'hom_ref',
 #' 'undefined')
 #'
-#' @return readable genotype(s), e.g. 'heterozygous', 'homozygous'
+#' @return readable genotype(s), e.g. 'Heterozygous', 'Homozygous'
 #' @keywords internal
 genotype_label <- function(genotype) {
   dplyr::case_when(
-    genotype == "het" ~ "heterozygous",
-    genotype == "hom_alt" ~ "homozygous",
-    genotype == "hom_ref" ~ "homozygous (ref)",
+    genotype == "het" ~ "Heterozygous",
+    genotype == "hom_alt" ~ "Homozygous",
+    genotype == "hom_ref" ~ "Homozygous (ref)",
     TRUE ~ as.character(genotype))
 }
 
@@ -1238,7 +1238,7 @@ rt_cell_pgx_variants <- function(value) {
 }
 
 #' Cell renderer factory for the genotypes of the detected variants of a
-#' gene ('; '-separated: heterozygous, homozygous, hemizygous) - pills
+#' gene ('; '-separated: Heterozygous, Homozygous, Hemizygous) - pills
 #' styled as the genotypes of the variant classification table
 #'
 #' @param color_palette CPSR color palette object
@@ -1248,8 +1248,8 @@ rt_cell_pgx_genotype <- function(color_palette) {
     if (is.na(value) || value == "") return("-")
     pills <- lapply(strsplit(value, "; ")[[1]], function(gt) {
       level <- dplyr::case_when(
-        gt == "heterozygous" ~ "het",
-        gt %in% c("homozygous", "hemizygous") ~ "hom_alt",
+        gt == "Heterozygous" ~ "het",
+        gt %in% c("Homozygous", "Hemizygous") ~ "hom_alt",
         TRUE ~ "undefined")
       idx <- match(level, color_palette$genotypes$levels)
       htmltools::div(

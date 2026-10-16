@@ -12,8 +12,8 @@ classification_pill_pdf(classifications)
 'Likely Pathogenic', 'VUS')}
 }
 \value{
-character vector with Typst markup (see pill_pdf); unknown
-categories in grey
+character vector with Typst markup (see pcgrr::pdf_pill());
+unknown categories in grey
 }
 \description{
 Variant classification as colored pills in a PDF report table -

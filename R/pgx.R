@@ -279,14 +279,14 @@ infer_pgx_gene_phenotype <- function(gene_hits, gene_phenotypes,
   if (is.na(reference_allele)) reference_allele <- "Reference"
 
   ## detected variants (e.g. 'c.719A>G') and their genotypes (same order,
-  ## e.g. 'heterozygous'), separated by '; '
+  ## e.g. 'Heterozygous'), separated by '; '
   variant_genotypes <- gene_hits |>
     dplyr::distinct(.data$PGX_VAR_ID, .data$VARIANT_LABEL, .data$GENOTYPE) |>
     dplyr::mutate(
       GT = dplyr::case_when(
-        hemizygous ~ "hemizygous",
-        .data$GENOTYPE == "hom_alt" ~ "homozygous",
-        .data$GENOTYPE == "het" ~ "heterozygous",
+        hemizygous ~ "Hemizygous",
+        .data$GENOTYPE == "hom_alt" ~ "Homozygous",
+        .data$GENOTYPE == "het" ~ "Heterozygous",
         TRUE ~ .data$GENOTYPE)) |>
     dplyr::distinct(.data$VARIANT_LABEL, .data$GT) |>
     dplyr::arrange(.data$VARIANT_LABEL)

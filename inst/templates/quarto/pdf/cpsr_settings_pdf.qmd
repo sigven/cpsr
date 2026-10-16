@@ -45,11 +45,11 @@ data.frame(
     conf$variant_classification$clinvar_trust_level,
     as.logical(conf$variant_classification$secondary_findings),
     as.logical(conf$variant_classification$pgx_findings),
-    if (is.null(conf$sample_properties$sex)) "UNKNOWN" else
-      conf$sample_properties$sex,
-    if (is.null(conf$sample_properties$age) ||
-        identical(conf$sample_properties$age, "NA")) "N/A" else
-      as.character(conf$sample_properties$age),
+    if (is.null(conf$subject_properties$sex)) "UNKNOWN" else
+      conf$subject_properties$sex,
+    if (is.null(conf$subject_properties$age) ||
+        identical(conf$subject_properties$age, "NA")) "N/A" else
+      as.character(conf$subject_properties$age),
     as.logical(conf$other$show_noncoding),
     gencode_label,
     stringr::str_replace_all(conf$vep$vep_pick_order, ",", ", "),
@@ -93,7 +93,11 @@ vp_tiles <- vapply(seq_len(NROW(vp_genes)), function(i) {
 cat(
   "The *virtual gene panel* defines the genes for which variants are ",
   "classified and reported (it does not reflect which genes were ",
-  "sequenced). Panel: **", cpsr:::doc_note_pdf(vp_desc), "** - **",
+  "sequenced). Panel: **", cpsr:::doc_note_pdf(vp_desc), "**",
+  ## panels from Genomics England PanelApp (not the CPSR exploratory panel,
+  ## id 0, or custom gene lists, id -1)
+  if (!any(vp_conf$panel_id %in% c("-1", "0"))) " [@Martin2019-nq]",
+  " - **",
   NROW(vp_genes), "** genes",
   if (isTRUE(as.logical(vp_conf$diagnostic_grade_only)))
     " (diagnostic-grade genes only)",
@@ -149,7 +153,18 @@ entries <- vapply(seq_len(NROW(ref_datasets)), function(i) {
       lic <- paste0("[", lic, "](", d$source_license_url, ")")
     paste0(" - ", lic)
   }
-  paste0("- **", name, "**", version, " - ",
+  ## literature reference of the resource (report bibliography)
+  cite <- c(gepa = "Martin2019-nq", maxwell2016 = "Maxwell2016-mr",
+            tcga_pancan_2018 = "Huang2018-ah", civic = "Griffith2017-do",
+            cgi = "Dienstmann2015-od")[d$source_abbreviation]
+  if (!is.na(cite) && grepl("et al\\.", d$source)) {
+    ## publications as data source (e.g. 'Maxwell et al., ...'): narrative
+    ## citation instead of the name
+    name <- paste0("@", cite)
+    cite <- NA
+  }
+  cite <- if (is.na(cite)) "" else paste0(" [@", cite, "]")
+  paste0("- **", name, "**", version, cite, " - ",
          md_escape(d$source_description), license)
 }, character(1))
 

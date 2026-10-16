@@ -43,7 +43,7 @@ variants_sf |>
 #| echo: false
 #| output: asis
 #| eval: !expr n_sf == 0
-cat(cpsr:::no_findings_pdf(paste0(
+cat(pcgrr::pdf_note(kind = "empty", paste0(
   "No pathogenic or likely pathogenic variants (ClinVar) were found in the ",
   "genes recommended by ACMG for reporting of secondary findings.")))
 ```

@@ -11,8 +11,9 @@ doc_note_pdf(x)
 \item{x}{documentation note (character)}
 }
 \value{
-documentation note with \if{html}{\out{<b>}}/\if{html}{\out{<i>}} as markdown emphasis, and line
-breaks (\if{html}{\out{<br>}}) removed
+documentation note with \if{html}{\out{<b>}}/\if{html}{\out{<i>}} as markdown emphasis, line
+breaks (\if{html}{\out{<br>}}) removed, and literature links/mentions as citations of the
+report bibliography (see doc_citations_pdf)
 }
 \description{
 Convert the HTML elements of a documentation note (markdown with inline

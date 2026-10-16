@@ -3,7 +3,7 @@
 \name{pgx_genotype_pill_pdf}
 \alias{pgx_genotype_pill_pdf}
 \title{Genotypes of the detected variants of a gene ('; '-separated:
-heterozygous, homozygous, hemizygous) as colored pills in a PDF report
+Heterozygous, Homozygous, Hemizygous) as colored pills in a PDF report
 table, one per line - colors as in the HTML report}
 \usage{
 pgx_genotype_pill_pdf(genotypes)
@@ -12,11 +12,11 @@ pgx_genotype_pill_pdf(genotypes)
 \item{genotypes}{genotypes per table row}
 }
 \value{
-character vector with Typst markup (see pill_pdf)
+character vector with Typst markup (see pcgrr::pdf_pill())
 }
 \description{
 Genotypes of the detected variants of a gene ('; '-separated:
-heterozygous, homozygous, hemizygous) as colored pills in a PDF report
+Heterozygous, Homozygous, Hemizygous) as colored pills in a PDF report
 table, one per line - colors as in the HTML report
 }
 \keyword{internal}
