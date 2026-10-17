@@ -7,12 +7,13 @@ output: rmarkdown::html_document
 
 - Date: **2026-10-XX**
 
-- Data bundle **20261013**
+- Data bundle **20261017**
   - ClinVar (2026-10)
-  - GENCODE v50 (VEP v116.2); GENCODE v19 remains the gene reference for grch37
+  - GENCODE v50 (VEP v116.3); GENCODE v19 remains the gene reference for grch37
   - CIViC (2026-10-05)
   - NCI Thesaurus (26.09d)
-  - Pfam 38.2
+  - Pfam 38.2 (2026_01)
+  - dbNSFP v5.4 (August 2026)
   - CPIC (2026-08-03) - allele definitions/function, genotype-to-phenotype mappings and prescribing recommendations
 
 - Pharmacogenomics
