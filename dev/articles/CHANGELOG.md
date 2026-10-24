@@ -4,7 +4,7 @@
 
 - Date: **2026-10-XX**
 
-- Data bundle **20261017**
+- Data bundle **20261022**
 
   - ClinVar (2026-10)
   - GENCODE v50 (VEP v116.3); GENCODE v19 remains the gene reference for
