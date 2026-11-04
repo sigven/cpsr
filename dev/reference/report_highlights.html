@@ -23,7 +23,7 @@ phenotypes (CPIC)."><meta property="og:image" content="https://sigven.github.io/
 
     <a class="navbar-brand me-2" href="../index.html">CPSR</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.3.2.9011</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.3.2.9012</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,6 +73,7 @@ phenotypes (CPIC).</p>
 <span>  max_show <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>  pill <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  vus_coding_only <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  benign_not_shown <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  links <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -99,6 +100,11 @@ column): TRUE gives raw Typst (PDF report), "html" gives an HTML span
 <dt id="arg-vus-coding-only">vus_coding_only<a class="anchor" aria-label="anchor" href="#arg-vus-coding-only"></a></dt>
 <dd><p>count protein-coding VUS only (PDF report - more
 condensed; non-coding VUS are noted separately)</p></dd>
+
+
+<dt id="arg-benign-not-shown">benign_not_shown<a class="anchor" aria-label="anchor" href="#arg-benign-not-shown"></a></dt>
+<dd><p>indicate that benign/likely benign variants are
+counted but not shown in the report (PDF report)</p></dd>
 
 
 <dt id="arg-links">links<a class="anchor" aria-label="anchor" href="#arg-links"></a></dt>

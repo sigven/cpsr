@@ -43,6 +43,7 @@
 <url><loc>https://sigven.github.io/cpsr/dev/reference/classification_thresholds_intro_doc_note.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/classification_thresholds_outro_doc_note.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/clinvar_cancer_only.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/dev/reference/clinvar_submission_summary.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/clinvar_trust_levels_doc_note.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/clinvar_uninformative_traits_regex.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/col_format_output.html</loc></url>
@@ -81,6 +82,8 @@
 <url><loc>https://sigven.github.io/cpsr/dev/reference/match_pgx_alleles.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/md_escape_hl.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/min_distance_to_pathogenic.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/dev/reference/panel_display_name.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/dev/reference/panel_short_names.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/pdf_cover_typst.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/pgx_genotype_pill_pdf.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/pgx_phenotype_color.html</loc></url>
@@ -108,6 +111,7 @@
 <url><loc>https://sigven.github.io/cpsr/dev/reference/strip_html_hl.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/style_tt_header_pdf.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/tidyeval.html</loc></url>
+<url><loc>https://sigven.github.io/cpsr/dev/reference/truncate_label.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/variant_classification_synopsis_doc_note.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/variant_labels_hl.html</loc></url>
 <url><loc>https://sigven.github.io/cpsr/dev/reference/variant_table_pdf.html</loc></url>

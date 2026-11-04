@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">CPSR</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.3.2.9011</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.3.2.9012</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -117,7 +117,12 @@ classifications backed by expert panel review or multiple submitters
 with no conflicts are accepted; at lower trust levels, a broader set of
 ClinVar submissions is considered sufficient to override CPSR. If a
 variant’s ClinVar record does not meet the configured trust threshold,
-the CPSR rule-based classification is retained as the final call.</li>
+the CPSR rule-based classification is retained as the final call.
+Variants with conflicting germline classifications in ClinVar are always
+classified by CPSR (at any trust level). The reason for a CPSR
+classification is given by <em>ASSERTION_BASIS</em>: <em>Novel</em>
+(absent from ClinVar), <em>ClinVar conflicting</em>, or <em>ClinVar
+below trust level</em>.</li>
 </ul>
 <p>The <em>clinvar_trust_level</em> setting
 (<code>--clinvar_trust_level</code>) determines for which ClinVar

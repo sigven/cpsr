@@ -15,6 +15,7 @@ report_highlights(
   max_show = 5,
   pill = FALSE,
   vus_coding_only = FALSE,
+  benign_not_shown = FALSE,
   links = FALSE
 )
 ```
@@ -40,6 +41,11 @@ report_highlights(
 
   count protein-coding VUS only (PDF report - more condensed; non-coding
   VUS are noted separately)
+
+- benign_not_shown:
+
+  indicate that benign/likely benign variants are counted but not shown
+  in the report (PDF report)
 
 - links:
 

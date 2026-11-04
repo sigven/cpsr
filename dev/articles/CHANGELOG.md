@@ -85,6 +85,25 @@
     including a section on pharmacogenomic findings (CPIC phenotypes and
     prescribing recommendations)
 
+- Assertion authority - basis of CPSR classifications
+
+  - New column *ASSERTION_BASIS* (TSV/Excel output, HTML report row
+    details), giving the reason for the assertion authority: `ClinVar`,
+    or - for CPSR-classified variants - `Novel` (absent from ClinVar),
+    `ClinVar conflicting` (conflicting germline classifications in
+    ClinVar, always classified by CPSR regardless of
+    `--clinvar_trust_level`) or `ClinVar below trust level`
+  - HTML report: CPSR-classified variants with a conflicting ClinVar
+    record are marked with a *ClinVar: conflicting* tag below the
+    alteration (tooltip with ClinVar submissions per classification,
+    e.g. LP×3, VUS×1); new filter *Assertion basis*; the number of
+    CPSR-asserted variants is broken down by basis
+  - PDF report: the *Assertion authority* column shows the basis of CPSR
+    classifications, e.g. *CPSR (ClinVar conflicting)*, *CPSR (novel)*
+  - *CLINVAR_CONTRIB_CLNS_GERMLINE* (ClinVar germline submissions per
+    classification) is included in the TSV output, and shown as
+    *CLINVAR_SUBMISSIONS* (e.g. LP×3, VUS×1) in the HTML report
+
 - ClinVar phenotypes (cancer vs. non-cancer)
 
   - **Changed default**: variants attributed to non-cancer phenotypes in
@@ -121,6 +140,12 @@
     evidence levels A/B, CPIC pharmacogenomic phenotypes, GWAS hits)
   - The rules for content and ordering are described in the
     documentation section of the reports (*Key findings summary*)
+
+- HTML report header: the sample/panel cards at the top have a fixed
+  height, and the virtual gene panel is shown with a short display name
+  (max. 42 characters, e.g. *Breast cancer susceptibility* for *Breast
+  cancer pertinent cancer susceptibility (GEP)*); the full panel name is
+  shown on hover and in the *Virtual gene panel* section
 
 ## v2.3.0
 

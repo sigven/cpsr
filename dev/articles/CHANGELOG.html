@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">CPSR</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.3.2.9011</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.3.2.9012</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -191,6 +191,33 @@ to the HTML report (opt out with the new argument
 </ul>
 </li>
 <li>
+<p>Assertion authority - basis of CPSR classifications</p>
+<ul>
+<li>New column <em>ASSERTION_BASIS</em> (TSV/Excel output, HTML report
+row details), giving the reason for the assertion authority:
+<code>ClinVar</code>, or - for CPSR-classified variants -
+<code>Novel</code> (absent from ClinVar),
+<code>ClinVar conflicting</code> (conflicting germline classifications
+in ClinVar, always classified by CPSR regardless of
+<code>--clinvar_trust_level</code>) or
+<code>ClinVar below trust level</code>
+</li>
+<li>HTML report: CPSR-classified variants with a conflicting ClinVar
+record are marked with a <em>ClinVar: conflicting</em> tag below the
+alteration (tooltip with ClinVar submissions per classification,
+e.g. LP×3, VUS×1); new filter <em>Assertion basis</em>; the number of
+CPSR-asserted variants is broken down by basis</li>
+<li>PDF report: the <em>Assertion authority</em> column shows the basis
+of CPSR classifications, e.g. <em>CPSR (ClinVar conflicting)</em>,
+<em>CPSR (novel)</em>
+</li>
+<li>
+<em>CLINVAR_CONTRIB_CLNS_GERMLINE</em> (ClinVar germline submissions
+per classification) is included in the TSV output, and shown as
+<em>CLINVAR_SUBMISSIONS</em> (e.g. LP×3, VUS×1) in the HTML report</li>
+</ul>
+</li>
+<li>
 <p>ClinVar phenotypes (cancer vs. non-cancer)</p>
 <ul>
 <li>
@@ -237,6 +264,12 @@ documentation section of the reports (<em>Key findings
 summary</em>)</li>
 </ul>
 </li>
+<li><p>HTML report header: the sample/panel cards at the top have a
+fixed height, and the virtual gene panel is shown with a short display
+name (max. 42 characters, e.g. <em>Breast cancer susceptibility</em> for
+<em>Breast cancer pertinent cancer susceptibility (GEP)</em>); the full
+panel name is shown on hover and in the <em>Virtual gene panel</em>
+section</p></li>
 </ul>
 </div>
 <div class="section level2">
