@@ -416,8 +416,23 @@ h2, #TOC>ul>li {
   letter-spacing: 0.03em;
 }
 
-/* Top sample cards: smaller main text */
+/* Top sample cards: smaller main text, compact height */
 .bslib-value-box .value-box-value {
   font-size: 1.35rem !important;
   line-height: 1.2;
+}
+.cpsr-sample-card,
+.cpsr-sample-card .value-box-grid,
+.cpsr-sample-card .value-box-area {
+  min-height: 0 !important;
+  height: auto !important;
+}
+.cpsr-sample-card .value-box-area {
+  padding: 0.55rem 1rem !important;
+  gap: 0.1rem;
+  justify-content: center;
+}
+.cpsr-sample-card .value-box-title,
+.cpsr-sample-card .value-box-value {
+  margin: 0 !important;
 }

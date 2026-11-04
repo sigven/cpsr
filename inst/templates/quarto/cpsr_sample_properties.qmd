@@ -25,15 +25,16 @@ panel_n_genes <-
 panel_name <- cpsr:::panel_display_name(conf, max_chars = 42)
 panel_label <- htmltools::span(title = panel_name$full, panel_name$short)
 
-## cards of fixed height (same look in every report); the panel name
-## (max. 42 characters) fits in two lines of the wider middle card
+## compact cards (padding set in cpsr.css, class cpsr-sample-card): the cards in
+## the row share the height of the tallest one, so a panel name wrapping over
+## two lines in the wider middle card does not break the layout
 sample_tile <- function(title, value) {
   bslib::value_box(
     title = title,
     value = value,
     showcase = NULL,
-    height = "140px",
     fill = FALSE,
+    class = "cpsr-sample-card",
     theme = bslib::value_box_theme(
       bg = cpsr::color_palette[["report"]], fg = "#fff")
   )

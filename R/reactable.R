@@ -365,13 +365,15 @@ create_unified_variant_filters <- function(
         shared_data,
         ~ASSERTION_AUTHORITY
       ),
-      crosstalk::filter_select(
-        "ASSERTION_BASIS",
-        "Assertion basis",
-        shared_data,
-        ~ASSERTION_BASIS
-      )
+      ## non-coding only: fifth filter goes in the left column (3 + 2)
+      if(coding_status == "noncoding"){
+        crosstalk::filter_select(
+          "TF_BINDING_SITE_VARIANT",
+          "TF binding site alteration",
+          shared_data, ~TF_BINDING_SITE_VARIANT)
+      }
     ),
+    ## 2 x 2 layout: classification/criteria on top, authority/basis below
     list(
       crosstalk::filter_select(
         "ACMG_CODE",
@@ -379,12 +381,12 @@ create_unified_variant_filters <- function(
         shared_data,
         ~ACMG_CODE
       ),
-      if(coding_status == "noncoding"){
-        crosstalk::filter_select(
-          "TF_BINDING_SITE_VARIANT",
-          "TF binding site alteration",
-          shared_data, ~TF_BINDING_SITE_VARIANT)
-      }
+      crosstalk::filter_select(
+        "ASSERTION_BASIS",
+        "Assertion basis",
+        shared_data,
+        ~ASSERTION_BASIS
+      )
     #)
       # if(cps_report$settings$conf$sample_properties$dp_detected == 1) {
       #   crosstalk::filter_slider(
