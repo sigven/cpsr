@@ -9,6 +9,7 @@ report_highlights(
   max_show = 5,
   pill = FALSE,
   vus_coding_only = FALSE,
+  benign_not_shown = FALSE,
   links = FALSE
 )
 }
@@ -24,6 +25,9 @@ column): TRUE gives raw Typst (PDF report), "html" gives an HTML span
 
 \item{vus_coding_only}{count protein-coding VUS only (PDF report - more
 condensed; non-coding VUS are noted separately)}
+
+\item{benign_not_shown}{indicate that benign/likely benign variants are
+counted but not shown in the report (PDF report)}
 
 \item{links}{finding titles as links to the corresponding report sections
 (PDF report - section labels as in the quarto/pdf templates, e.g.

@@ -16,6 +16,11 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
     report_mode = "CPSR"
   )
 
+  ## CPSR version: the installed cpsr R package (the configuration
+  ## from the pcgr Python workflow lists the PCGR version)
+  cps_report[["settings"]][["software"]][["cpsr_version"]] <-
+    as.character(utils::packageVersion("cpsr"))
+
   settings <- cps_report[["settings"]]
   conf <- cps_report[["settings"]][["conf"]]
   ref_data <- cps_report[["ref_data"]]

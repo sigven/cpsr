@@ -72,6 +72,8 @@ variant_labels_hl <- function(d) {
 #' (HTML report), FALSE (default) gives bold text
 #' @param vus_coding_only count protein-coding VUS only (PDF report - more
 #' condensed; non-coding VUS are noted separately)
+#' @param benign_not_shown indicate that benign/likely benign variants are
+#' counted but not shown in the report (PDF report)
 #' @param links finding titles as links to the corresponding report sections
 #' (PDF report - section labels as in the quarto/pdf templates, e.g.
 #' 'cpsr-plp-variants'); only for sections that are included in the report
@@ -80,7 +82,8 @@ variant_labels_hl <- function(d) {
 #' variants) and 'supporting' (markdown bullet list, "" if none)
 #' @export
 report_highlights <- function(report, max_show = 5, pill = FALSE,
-                              vus_coding_only = FALSE, links = FALSE) {
+                              vus_coding_only = FALSE,
+                              benign_not_shown = FALSE, links = FALSE) {
   snv <- report$content$snv_indel
   conf <- report$settings$conf
   vc <- conf$variant_classification
@@ -156,11 +159,15 @@ report_highlights <- function(report, max_show = 5, pill = FALSE,
       "variants of uncertain significance (VUS",
       if (n_vus_noncoding > 0)
         paste0("; +", n_vus_noncoding, " non-coding, not listed"), ")")
+    benign_label <- paste0(
+      "benign/likely benign",
+      if (isTRUE(benign_not_shown)) " (not shown)" else "")
     n_cls <- c(
       "pathogenic/likely pathogenic" =
         sum(cls %in% c("Pathogenic", "Likely Pathogenic")),
       stats::setNames(sum(is_vus) - n_vus_noncoding, vus_label),
-      "benign/likely benign" = sum(cls %in% c("Benign", "Likely Benign")))
+      stats::setNames(
+        sum(cls %in% c("Benign", "Likely Benign")), benign_label))
     supporting <- c(supporting, paste0(
       sec_link("**Variant classification:**", "cpsr-variant-classification"),
       " ", length(cls), " variant(s) in ",

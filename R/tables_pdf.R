@@ -247,7 +247,7 @@ pdf_cover_typst <- function(report) {
 
   ## key findings (markdown, see report_highlights()) in a framed box
   hl <- report_highlights(report, pill = TRUE, vus_coding_only = TRUE,
-                          links = TRUE)
+                          benign_not_shown = TRUE, links = TRUE)
   paste0(
     "```{=typst}\n#cpsr-cover(\n", args, "\n)\n",
     "#cpsr-highlights[\n#cpsr-hl-lead[\n```\n\n",
