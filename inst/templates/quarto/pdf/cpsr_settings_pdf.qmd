@@ -31,6 +31,7 @@ data.frame(
     "Genome assembly",
     "Max gnomAD MAF (non-ClinVar variants)",
     "ClinVar trust level",
+    "Exclude non-cancer ClinVar variants",
     "Secondary findings (ACMG)",
     "Pharmacogenomic findings",
     "Subject sex",
@@ -43,6 +44,7 @@ data.frame(
     cps_report$settings$genome_assembly,
     conf$variant_classification$max_af_gnomad,
     conf$variant_classification$clinvar_trust_level,
+    cpsr:::clinvar_cancer_only(conf),
     as.logical(conf$variant_classification$secondary_findings),
     as.logical(conf$variant_classification$pgx_findings),
     if (is.null(conf$subject_properties$sex)) "UNKNOWN" else

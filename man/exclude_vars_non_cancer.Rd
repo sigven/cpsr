@@ -2,8 +2,8 @@
 % Please edit documentation in R/classification.R
 \name{exclude_vars_non_cancer}
 \alias{exclude_vars_non_cancer}
-\title{Function that ignores/exclude variants attributed to non-cancer
-related phenotypes in ClinVar}
+\title{Function that excludes variants attributed to non-cancer related
+phenotypes in ClinVar (option --clinvar_cancer_only)}
 \usage{
 exclude_vars_non_cancer(var_calls = NULL, conf = NULL)
 }
@@ -13,6 +13,8 @@ exclude_vars_non_cancer(var_calls = NULL, conf = NULL)
 \item{conf}{CPSR configuration object with run settings}
 }
 \description{
-Function that ignores/exclude variants attributed to non-cancer
-related phenotypes in ClinVar
+Only variants with a ClinVar record where all informative traits are
+non-cancer related (CLINVAR_PHENOTYPE_CANCER == 0) are excluded. Variants
+with cancer-related traits (1), uninformative/unmapped traits only (NA),
+or no ClinVar record are retained.
 }

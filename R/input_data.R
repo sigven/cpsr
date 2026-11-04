@@ -58,7 +58,8 @@ load_germline_snv_indel <- function(
         settings = settings) |>
       cpsr::assign_acmg_consensus() |>
       cpsr::is_clinvar_cancer_phenotype(
-        ref_data = ref_data
+        ref_data = ref_data,
+        primary_target_entrez = primary_targets$ENTREZGENE
       ) |>
       cpsr::assign_classification_authority(
         conf = conf

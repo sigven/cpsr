@@ -1,6 +1,6 @@
 ---
 title: "<SAMPLE_NAME>"
-subtitle: " - _functional interpretation of cancer-predisposing DNA variants by CPSR_"
+subtitle: " - _functional interpretation of cancer-predisposing DNA variants by CPSR_ <ASSAY_BUILD_BADGES>"
 date: '`r strftime(Sys.time(), format = "%B %d, %Y")`'
 bibliography: cpsr_bibliography.bib
 title-block-banner: "#007a74"
@@ -50,6 +50,11 @@ logo_fname_path <-
 
 ```
 
+```{r sample_properties_cpsr}
+#| child: 'quarto/cpsr_sample_properties.qmd'
+#| eval: true
+```
+
 ```{r key_findings_cpsr}
 #| child: 'quarto/cpsr_key_findings.qmd'
 #| eval: true
@@ -63,11 +68,6 @@ logo_fname_path <-
 
 ```{r panel_cpsr}
 #| child: 'quarto/cpsr_virtual_panel.qmd'
-#| eval: true
-```
-
-```{r summary_cpsr}
-#| child: 'quarto/cpsr_summary.qmd'
 #| eval: true
 ```
 

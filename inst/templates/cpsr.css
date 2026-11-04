@@ -373,3 +373,51 @@ h2, #TOC>ul>li {
   border-radius: 3px;
   white-space: nowrap;
 }
+
+/* Variant statistics cards (top of Variant classification) */
+.cpsr-stat-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 1em 0 1.2em 0;
+  font-family: inherit;
+}
+.cpsr-stat {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  border: 1px solid #d6d6d6;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-family: inherit;
+  font-weight: 400;
+}
+.cpsr-stat-n {
+  font-size: 1.6em;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--kf-color, #007a74);
+}
+.cpsr-stat-label { color: inherit; font-size: 1em; }
+
+/* Genome assembly badge in the report banner (next to the subtitle) */
+.cpsr-assay-badge {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 500;
+  font-style: normal;
+  padding: 2px 9px;
+  border-radius: 999px;
+  margin-left: 8px;
+  vertical-align: middle;
+  background: rgba(255,255,255,0.18);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.38);
+  letter-spacing: 0.03em;
+}
+
+/* Top sample cards: smaller main text */
+.bslib-value-box .value-box-value {
+  font-size: 1.35rem !important;
+  line-height: 1.2;
+}

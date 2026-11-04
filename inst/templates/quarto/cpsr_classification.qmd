@@ -2,7 +2,25 @@
 
 This section displays all variant classifications, considering both ClinVar and CPSR as the assertion authorities. Use the filters below to explore variants by gene, clinical significance, consequence, and other attributes. Click any row to expand and view detailed annotations, evidence, and classification rationale.
 
-<br>
+```{r variant_statistics}
+#| output: asis
+#| echo: false
+#| eval: true
+
+## variant statistics (previously a separate section), shown as stat cards
+v_stat <- cps_report$content$snv_indel[["v_stat_cpg_non_sf"]]
+stat_card <- function(n, label) {
+  paste0("<div class=\"cpsr-stat\"><span class=\"cpsr-stat-n\">", n,
+         "</span><span class=\"cpsr-stat-label\">", label, "</span></div>")
+}
+cat(paste0(
+  "<div class=\"cpsr-stat-row\">",
+  stat_card(v_stat[["n"]], "variants in total"),
+  stat_card(v_stat[["n_snv"]], "SNVs"),
+  stat_card(v_stat[["n_indel"]], "InDels"),
+  stat_card(v_stat[["n_coding"]], "protein-coding variants"),
+  "</div>\n"))
+```
 
 ::: {.callout-note title="Assertion authority — colour legend" collapse="true"}
 

@@ -438,7 +438,8 @@ assign_classification_authority <-
       dplyr::arrange(
         dplyr::desc(
           .data$CLASSIFICATION),
-        dplyr::desc(.data$CLINVAR_PHENOTYPE_CANCER),
+        dplyr::desc(dplyr::coalesce(
+          as.numeric(.data$CLINVAR_PHENOTYPE_CANCER), 0.5)),
         dplyr::desc(.data$CPSR_PATHOGENICITY_SCORE))
 
     var_calls$ACMG_DOC <-
@@ -2234,7 +2235,8 @@ exclude_vars_by_maf <- function(
         dplyr::arrange(
           dplyr::desc(
             .data$CLASSIFICATION),
-          dplyr::desc(.data$CLINVAR_PHENOTYPE_CANCER),
+          dplyr::desc(dplyr::coalesce(
+            as.numeric(.data$CLINVAR_PHENOTYPE_CANCER), 0.5)),
           dplyr::desc(.data$CPSR_PATHOGENICITY_SCORE))
   }
 
@@ -2288,8 +2290,13 @@ exclude_vars_noncoding <- function(
 
 }
 
-#' Function that ignores/exclude variants attributed to non-cancer
-#' related phenotypes in ClinVar
+#' Function that excludes variants attributed to non-cancer related
+#' phenotypes in ClinVar (option --clinvar_cancer_only)
+#'
+#' Only variants with a ClinVar record where all informative traits are
+#' non-cancer related (CLINVAR_PHENOTYPE_CANCER == 0) are excluded. Variants
+#' with cancer-related traits (1), uninformative/unmapped traits only (NA),
+#' or no ClinVar record are retained.
 #'
 #' @param var_calls variants in cancer predisposition genes
 #' @param conf CPSR configuration object with run settings
@@ -2299,7 +2306,7 @@ exclude_vars_non_cancer <- function(
     var_calls = NULL,
     conf = NULL){
 
-  if (conf$variant_classification$clinvar_report_noncancer == 0 &
+  if (clinvar_cancer_only(conf) &
       "VAR_ID" %in% colnames(
         var_calls) &
       "CLINVAR_MSID" %in% colnames(
@@ -2324,7 +2331,8 @@ exclude_vars_non_cancer <- function(
     pcgrr::log4r_info(
       paste0(
         "ClinVar variants related to non-cancer conditions excluded",
-        " from report: N = ", NROW(non_cancer_calls_to_exclude)
+        " from report (--clinvar_cancer_only): N = ",
+        NROW(non_cancer_calls_to_exclude)
       )
     )
 
@@ -2346,4 +2354,17 @@ exclude_vars_non_cancer <- function(
 
   return(var_calls)
 
+}
+
+#' Whether ClinVar variants attributed to non-cancer phenotypes only
+#' should be excluded (option --clinvar_cancer_only)
+#'
+#' @param conf CPSR configuration object with run settings
+#'
+#' @return logical; FALSE if the setting is absent
+#'
+#' @keywords internal
+clinvar_cancer_only <- function(conf = NULL) {
+  val <- conf[["variant_classification"]][["clinvar_cancer_only"]]
+  !is.null(val) && length(val) == 1 && isTRUE(as.logical(as.integer(val)))
 }

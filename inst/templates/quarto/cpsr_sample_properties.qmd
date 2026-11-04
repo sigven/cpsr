@@ -1,0 +1,45 @@
+```{r sample_properties}
+#| output: asis
+#| echo: false
+#| eval: true
+
+## sample/subject properties at the top of the report (as in the PDF front page)
+conf <- cps_report[["settings"]][["conf"]]
+subject_sex <-
+  if (is.null(conf$subject_properties$sex)) "UNKNOWN" else
+    as.character(conf$subject_properties$sex)
+subject_age <-
+  if (is.null(conf$subject_properties$age) ||
+      identical(conf$subject_properties$age, "NA")) "N/A" else
+    as.character(conf$subject_properties$age)
+
+panel_n_genes <-
+  conf[["gene_panel"]][["panel_genes"]] |>
+  dplyr::filter(PRIMARY_TARGET == T) |>
+  dplyr::select(ENTREZGENE) |>
+  dplyr::distinct() |>
+  NROW()
+
+## short panel label (full panel name is given in the virtual panel callout)
+panel_id <- as.character(conf[["gene_panel"]][["panel_id"]])
+panel_label <- if (panel_id == "-1") "Custom" else paste0("Panel ", panel_id)
+
+sample_tile <- function(title, value) {
+  bslib::value_box(
+    title = title,
+    value = value,
+    showcase = NULL,
+    theme = bslib::value_box_theme(
+      bg = cpsr::color_palette[["report"]], fg = "#fff")
+  )
+}
+
+bslib::layout_column_wrap(
+  width = 1/3,
+  height = 90,
+  sample_tile("Sex / age at sampling",
+              paste0(subject_sex, " / ", subject_age)),
+  sample_tile("Virtual gene panel", panel_label),
+  sample_tile("Genes in panel", paste0("n = ", panel_n_genes))
+)
+```

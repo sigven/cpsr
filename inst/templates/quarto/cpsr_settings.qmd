@@ -1,5 +1,3 @@
-## Settings
-
 ```{r on_off_settings}
 #| echo: false
 #| eval: true
@@ -13,8 +11,6 @@ if (as.logical(cps_report[["settings"]][["conf"]][["vep"]][["vep_gencode_basic"]
   transcript_set_gencode <- paste0("GENCODE - all transcripts (v", gencode_metadata$source_version, ")")
 }
 ```
-
-<br>
 
 ::: {.callout-note collapse="true"}
 
@@ -30,6 +26,7 @@ The report is generated with _[cpsr](https://github.com/sigven/cpsr)_ version `r
 * Maximum MAF threshold (gnomAD) for non-ClinVar-classified variants:  __`r cps_report[['settings']][['conf']][['variant_classification']][['max_af_gnomad']]`__
 * Ignore non-protein-coding variants: __`r !as.logical(cps_report[['settings']][['conf']][['other']][['show_noncoding']])`__
 * ClinVar trust level: __`r cps_report[['settings']][['conf']][['variant_classification']][['clinvar_trust_level']]`__ — _`r cps_report[['settings']][['conf']][['variant_classification']][['clinvar_trust_level_desc']]`_
+* Exclude ClinVar variants attributed only to non-cancer phenotypes: __`r cpsr:::clinvar_cancer_only(cps_report[['settings']][['conf']])`__
 * Include [secondary findings](https://www.ncbi.nlm.nih.gov/clinvar/docs/acmg/): __`r as.logical(cps_report[['settings']][['conf']][['variant_classification']][['secondary_findings']])`__
 * Include [cancer-related pharmacogenomics findings](https://www.clinpgx.org/cpic/pairs): __`r as.logical(cps_report[['settings']][['conf']][['variant_classification']][['pgx_findings']])`__
 

@@ -104,8 +104,9 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
   }
 
 
-  ## Exclude variants related to non-cancer conditions (if option set by user)
-  if (conf$variant_classification$clinvar_report_noncancer == 0) {
+  ## Exclude variants related to non-cancer conditions only
+  ## (if --clinvar_cancer_only is set by user)
+  if (clinvar_cancer_only(conf)) {
     cps_report$content$snv_indel[["callset"]]$variant$cpg_non_sf <-
       cps_report$content$snv_indel[["callset"]]$variant$cpg_non_sf |>
       cpsr::exclude_vars_non_cancer(
@@ -281,6 +282,9 @@ get_cpsr_settings_sheet <- function(report = NULL) {
                VALUE = as.character(
                  conf$variant_classification$clinvar_trust_level)),
     data.frame(SECTION = "Variant classification",
+               PARAMETER = "Exclude ClinVar variants attributed only to non-cancer phenotypes",
+               VALUE = as.character(clinvar_cancer_only(conf))),
+    data.frame(SECTION = "Variant classification",
                PARAMETER = "Include secondary findings",
                VALUE = as.character(as.logical(
                  conf$variant_classification$secondary_findings))),
@@ -431,6 +435,16 @@ write_cpsr_output <- function(report,
         report$ref_data <- NULL
         saveRDS(report, file = rds_report_path)
 
+        ## Genome assembly badge shown next to the report subtitle
+        genome_assembly_display <- dplyr::case_when(
+          tolower(settings$genome_assembly) == "grch38" ~ "GRCh38",
+          tolower(settings$genome_assembly) == "grch37" ~ "GRCh37",
+          .default = settings$genome_assembly
+        )
+        assembly_badge <- paste0(
+          "<span class='cpsr-assay-badge'>",
+          genome_assembly_display, "</span>")
+
         ## Substitute rds object in main quarto template with path to sample rds
         readLines(quarto_main_template) |>
           stringr::str_replace(
@@ -440,6 +454,10 @@ write_cpsr_output <- function(report,
           stringr::str_replace(
             pattern = "<SAMPLE_NAME>",
             replacement = sample_name
+          ) |>
+          stringr::str_replace(
+            pattern = "<ASSAY_BUILD_BADGES>",
+            replacement = assembly_badge
           ) |>
           writeLines(con = quarto_main_template_sample)
 

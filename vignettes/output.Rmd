@@ -412,7 +412,7 @@ The following variables are included in the tiered TSV file (VCF tags in the que
 | 62. `CLINVAR_VARIANT_ORIGIN` | Variant origin (somatic/germline) of ClinVar variant |
 | 63. `CLINVAR_CONFLICTED` | Indicator of conflicting interpretations in ClinVar |
 | 64. `CLINVAR_PHENOTYPE` | Associated phenotype(s) for ClinVar variant |
-| 65. `CLINVAR_PHENOTYPE_CANCER` | For variants with a ClinVar classification, indication of cancer-associated disease/phenotype (1) or not (0) |
+| 65. `CLINVAR_PHENOTYPE_CANCER` | For variants with a ClinVar classification, indication of cancer-associated disease/phenotype (1), non-cancer disease/phenotype only (0), or unspecified phenotype, e.g. _not provided_ (NA) |
 | 66. `CLINVAR_GOLD_STARS` | Review confidence rating of the ClinVar variant (0–4 gold stars) |
 | 67. `N_INSILICO_CALLED` | Number of algorithms with effect prediction (damaging/tolerated) from dbNSFP |
 | 68. `N_INSILICO_DAMAGING` | Number of algorithms with damaging prediction from dbNSFP |
