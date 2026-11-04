@@ -370,6 +370,15 @@ assign_classification_authority <-
           !.data$.clinvar_novel & !.data$.cpsr_overrides ~ "ClinVar",
           TRUE ~ NA_character_
         ),
+        ## Why the assertion authority was chosen (short category):
+        ## ClinVar / Novel / ClinVar conflicting / ClinVar below trust level
+        ASSERTION_BASIS = dplyr::case_when(
+          is.na(.data$ASSERTION_AUTHORITY) ~ NA_character_,
+          .data$ASSERTION_AUTHORITY == "ClinVar" ~ "ClinVar",
+          .data$.clinvar_novel ~ "Novel",
+          .data$.clinvar_conflicted ~ "ClinVar conflicting",
+          TRUE ~ "ClinVar below trust level"
+        ),
         CLASSIFICATION = dplyr::case_when(
           .data$ASSERTION_AUTHORITY == "ClinVar" ~
             as.character(.data$CLINVAR_CLASSIFICATION),

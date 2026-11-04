@@ -181,6 +181,22 @@ prepare_unified_all_variants <- function(
     )
   }
 
+  ## basis of the assertion authority (older report objects lack it)
+  if (!"ASSERTION_BASIS" %in% colnames(all_variants)) {
+    all_variants$ASSERTION_BASIS <- dplyr::if_else(
+      all_variants$ASSERTION_AUTHORITY == "ClinVar", "ClinVar", NA_character_)
+  }
+  ## ClinVar germline submissions (e.g. 'LP×3, VUS×1'), replacing the raw
+  ## 'Likely_pathogenic:3,Uncertain_significance:1' annotation
+  if ("CLINVAR_CONTRIB_CLNS_GERMLINE" %in% colnames(all_variants)) {
+    all_variants <- all_variants |>
+      dplyr::mutate(
+        CLINVAR_SUBMISSIONS = clinvar_submission_summary(
+          .data$CLINVAR_CONTRIB_CLNS_GERMLINE),
+        .after = "CLINVAR_CONTRIB_CLNS_GERMLINE") |>
+      dplyr::select(-c("CLINVAR_CONTRIB_CLNS_GERMLINE"))
+  }
+
   all_variants <- all_variants |>
     dplyr::mutate(
       ACMG_CODE = dplyr::if_else(
@@ -275,6 +291,40 @@ prepare_unified_all_variants <- function(
 }
 
 
+#' Summarise ClinVar germline submissions per classification
+#'
+#' Converts ClinVar contributing classifications (e.g.
+#' 'Likely_pathogenic:3,Uncertain_significance:1') into a short label
+#' ('LP×3, VUS×1').
+#'
+#' @param x character vector with ClinVar contributing classifications
+#'
+#' @return character vector (NA where no submissions are available)
+#' @keywords internal
+clinvar_submission_summary <- function(x) {
+  abbrev <- c(
+    "pathogenic" = "P",
+    "likely pathogenic" = "LP",
+    "pathogenic/likely pathogenic" = "P/LP",
+    "uncertain significance" = "VUS",
+    "likely benign" = "LB",
+    "benign" = "B",
+    "benign/likely benign" = "B/LB")
+  vapply(as.character(x), function(v) {
+    if (is.na(v) || !nzchar(v) || v == ".") return(NA_character_)
+    items <- stringr::str_trim(strsplit(v, "[,&|]")[[1]])
+    items <- items[nzchar(items)]
+    lbl <- vapply(items, function(it) {
+      cls <- tolower(stringr::str_replace_all(
+        stringr::str_replace(it, ":[0-9]+$", ""), "_", " "))
+      n <- stringr::str_match(it, ":([0-9]+)$")[, 2]
+      cls_lbl <- if (cls %in% names(abbrev)) abbrev[[cls]] else cls
+      if (is.na(n)) cls_lbl else paste0(cls_lbl, "×", n)
+    }, character(1))
+    paste(lbl, collapse = ", ")
+  }, character(1), USE.NAMES = FALSE)
+}
+
 #' Create crosstalk-linked unified filters for all variants
 #'
 #' Shared filters across ClinVar and CPSR variants that control the single table.
@@ -314,6 +364,12 @@ create_unified_variant_filters <- function(
         "Assertion authority",
         shared_data,
         ~ASSERTION_AUTHORITY
+      ),
+      crosstalk::filter_select(
+        "ASSERTION_BASIS",
+        "Assertion basis",
+        shared_data,
+        ~ASSERTION_BASIS
       )
     ),
     list(
@@ -398,7 +454,10 @@ create_variant_table_theme <- function(
       borderBottom = "1px solid #f0f0f0"
     ),
     stripedColor = "#fafafa",
-    highlightColor = "#f0f7ff",
+    ## same as reactable's hover color for rows of tables with sticky
+    ## columns (all tables with expandable rows), so that all tables
+    ## have the same hover color
+    highlightColor = "#f2f2f2",
     borderColor = "#e0e0e0",
     searchInputStyle = list(
       borderColor = color_palette$report,
@@ -498,6 +557,36 @@ create_unified_variant_reactable <- function(
           "#e65100"  # Orange for CPSR
         }
 
+        ## CPSR classification due to conflicting ClinVar record: small tag
+        ## below the alteration, submissions per classification as tooltip
+        conflict_tag <- NULL
+        basis <- if ("ASSERTION_BASIS" %in% colnames(shared_data$origData()))
+          shared_data$origData()[index, "ASSERTION_BASIS"] else NA
+        if (identical(as.character(basis), "ClinVar conflicting")) {
+          subm <- if ("CLINVAR_SUBMISSIONS" %in%
+                      colnames(shared_data$origData()))
+            shared_data$origData()[index, "CLINVAR_SUBMISSIONS"] else NA
+          tooltip <- paste0(
+            "Conflicting ClinVar germline classifications",
+            if (!is.na(subm)) paste0(" (", subm, ")") else "",
+            " - classified by CPSR")
+          conflict_tag <- htmltools::span(
+            title = tooltip,
+            style = list(
+              display = "inline-block",
+              marginTop = "3px",
+              fontSize = "0.78em",
+              color = "#e65100",
+              border = "1px solid #e65100",
+              borderRadius = "3px",
+              padding = "0px 4px",
+              whiteSpace = "nowrap",
+              cursor = "help"
+            ),
+            "ClinVar: conflicting"
+          )
+        }
+
         htmltools::span(
           style = list(
             fontSize = "0.98em",
@@ -505,7 +594,9 @@ create_unified_variant_reactable <- function(
             paddingLeft = "8px",
             display = "inline-block"
           ),
-          value
+          value,
+          if (!is.null(conflict_tag)) htmltools::tags$br(),
+          conflict_tag
         )
       }
     ),

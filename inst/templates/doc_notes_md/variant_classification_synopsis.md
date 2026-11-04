@@ -27,7 +27,10 @@ assertion authorities:
   conflicts are accepted; at lower trust levels, a broader set of ClinVar submissions is
   considered sufficient to override CPSR. If a variant's ClinVar record does not meet
   the configured trust threshold, the CPSR rule-based classification is retained as the
-  final call.
+  final call. Variants with conflicting germline classifications in ClinVar are always
+  classified by CPSR (at any trust level). The reason for a CPSR classification is given by
+  *ASSERTION_BASIS*: *Novel* (absent from ClinVar), *ClinVar conflicting*, or *ClinVar below
+  trust level*.
 
 {trust_levels}
 

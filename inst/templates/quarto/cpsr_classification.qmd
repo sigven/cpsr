@@ -34,8 +34,19 @@ configured *clinvar_trust_level* threshold
 
 <span style='display:inline-block; border-left:6px solid #e65100; padding-left:8px; color:#e65100; font-weight:bold;'>CPSR</span>
 &nbsp;— classification was assigned *de novo* by the CPSR rule-based ACMG/AMP
-scoring engine (either no ClinVar record exists, or the existing record does not
-meet the trust threshold).
+scoring engine. The reason is given by the *Assertion basis* (available as a
+filter, and in the row details):
+
+* _Novel_ — no ClinVar record exists
+* _ClinVar conflicting_ — the ClinVar record has conflicting germline
+  classifications (always classified by CPSR, regardless of
+  *clinvar_trust_level*); such variants are marked with a
+  <span style='display:inline-block; font-size:0.78em; color:#e65100; border:1px solid #e65100; border-radius:3px; padding:0px 4px;'>ClinVar: conflicting</span>
+  tag below the alteration (hover to see the ClinVar submissions per
+  classification, e.g. LP×3, VUS×1)
+* _ClinVar below trust level_ — the ClinVar record does not meet the
+  configured *clinvar_trust_level* threshold (review status, non-cancer
+  phenotype, or trust level 4)
 
 :::
 
@@ -58,6 +69,17 @@ if (n_cpg_non_sf > 0) {
   # Count summary
   n_clinvar_total <- sum(unified_variants$ASSERTION_AUTHORITY == "ClinVar")
   n_cpsr_total <- sum(unified_variants$ASSERTION_AUTHORITY == "CPSR")
+  ## CPSR-asserted variants by basis (novel / conflicting / below trust level)
+  cpsr_basis <- unified_variants$ASSERTION_BASIS[
+    unified_variants$ASSERTION_AUTHORITY == "CPSR"]
+  n_basis <- c(
+    "novel" = sum(cpsr_basis %in% "Novel"),
+    "ClinVar conflicting" = sum(cpsr_basis %in% "ClinVar conflicting"),
+    "ClinVar below trust level" =
+      sum(cpsr_basis %in% "ClinVar below trust level"))
+  n_basis <- n_basis[n_basis > 0]
+  cpsr_basis_text <- if (length(n_basis) > 0)
+    paste0(" (", paste(n_basis, names(n_basis), collapse = ", "), ")") else ""
 
   summary_text <- htmltools::HTML(paste0(
     "<strong>Total variants: ", nrow(unified_variants), "</strong>",
@@ -68,7 +90,7 @@ if (n_cpg_non_sf > 0) {
     " </span>&nbsp;&nbsp; ",
     "<span style='display:inline-block; border-left:6px solid #e65100;",
     " padding-left:6px; color:#e65100; font-weight:bold;'>CPSR-asserted",
-    ": ", n_cpsr_total," </span>"
+    ": ", n_cpsr_total, cpsr_basis_text, " </span>"
   ))
 
   # Create shared crosstalk data

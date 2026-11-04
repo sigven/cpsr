@@ -20,23 +20,28 @@ panel_n_genes <-
   dplyr::distinct() |>
   NROW()
 
-## short panel label (full panel name is given in the virtual panel callout)
-panel_id <- as.character(conf[["gene_panel"]][["panel_id"]])
-panel_label <- if (panel_id == "-1") "Custom" else paste0("Panel ", panel_id)
+## name of the virtual panel: short display name (max. 42 characters),
+## full name shown on hover
+panel_name <- cpsr:::panel_display_name(conf, max_chars = 42)
+panel_label <- htmltools::span(title = panel_name$full, panel_name$short)
 
+## cards of fixed height (same look in every report); the panel name
+## (max. 42 characters) fits in two lines of the wider middle card
 sample_tile <- function(title, value) {
   bslib::value_box(
     title = title,
     value = value,
     showcase = NULL,
+    height = "140px",
+    fill = FALSE,
     theme = bslib::value_box_theme(
       bg = cpsr::color_palette[["report"]], fg = "#fff")
   )
 }
 
-bslib::layout_column_wrap(
-  width = 1/3,
-  height = 90,
+bslib::layout_columns(
+  col_widths = c(3, 6, 3),
+  fill = FALSE,
   sample_tile("Sex / age at sampling",
               paste0(subject_sex, " / ", subject_age)),
   sample_tile("Virtual gene panel", panel_label),

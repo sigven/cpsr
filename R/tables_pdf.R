@@ -66,6 +66,20 @@ variant_table_pdf <- function(variants,
       Genotype = genotype_label(.data$Genotype),
       dplyr::across(dplyr::everything(),
                     ~ dplyr::coalesce(as.character(.x), "")))
+  ## assertion authority with its basis for CPSR-asserted variants, e.g.
+  ## 'CPSR (ClinVar conflicting)', 'CPSR (novel)'
+  if (!is.null(source_col) && "ASSERTION_BASIS" %in% colnames(variants)) {
+    basis <- as.character(variants[["ASSERTION_BASIS"]])
+    basis_lbl <- dplyr::case_when(
+      basis == "Novel" ~ "novel",
+      basis == "ClinVar conflicting" ~ "ClinVar conflicting",
+      basis == "ClinVar below trust level" ~ "below trust level",
+      TRUE ~ NA_character_)
+    tbl[["Assertion authority"]] <- ifelse(
+      tbl[["Assertion authority"]] == "CPSR" & !is.na(basis_lbl),
+      paste0("CPSR (", basis_lbl, ")"),
+      tbl[["Assertion authority"]])
+  }
   ## raw Typst markup (not escaped): clinical significance and genotype as
   ## colored pills (as in the HTML report), gene as Open Targets link,
   ## alteration as ClinVar link
@@ -81,7 +95,7 @@ variant_table_pdf <- function(variants,
   j_raw <- which(colnames(tbl) %in%
                    c("Gene", "Clinical significance", "Genotype", "Alteration"))
   ## full page width, as the other tables of the PDF report
-  widths <- c(0.8, 1.6, 1.3, 1.1, 1.4, 1.2)[seq_len(ncol(tbl))]
+  widths <- c(0.8, 1.5, 1.3, 1.1, 1.3, 1.4)[seq_len(ncol(tbl))]
   tinytable::tt(tbl, width = widths) |>
     tinytable::format_tt(j = setdiff(seq_len(ncol(tbl)), j_raw),
                          escape = TRUE) |>

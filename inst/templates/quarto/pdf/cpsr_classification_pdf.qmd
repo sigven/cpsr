@@ -47,6 +47,10 @@ cat(
   "assertion authorities, *ClinVar* and *CPSR*'s internal ACMG/AMP variant ",
   "classification routine [@Richards2015-kj; @Nakken2021-mb]; ",
   "with the one taking precedence being dictated by the user-defined *ClinVar trust level*. ",
+  "For variants classified by CPSR, the *Assertion authority* column indicates why: ",
+  "*novel* (no ClinVar record), *ClinVar conflicting* (conflicting germline ",
+  "classifications in ClinVar, always classified by CPSR), or *below trust level* ",
+  "(ClinVar record not meeting the *ClinVar trust level*). ",
   "Benign/Likely Benign variants are not shown.\n\n", sep = "")
 ```
 
