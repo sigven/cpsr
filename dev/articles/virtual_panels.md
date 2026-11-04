@@ -1,6 +1,6 @@
 # Virtual gene panels
 
-  
+\
 
 The cancer predisposition report can show variants found in a number of
 well-known cancer predisposition genes, and the specific set of genes

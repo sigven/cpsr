@@ -56,8 +56,8 @@ The report is structured in multiple sections, described briefly below:
     - Supporting scientific literature - knowledge resources, guideline
       references etc.
 
-  
-  
+\
+\
 
 ### Variant call format - VCF
 
@@ -74,7 +74,7 @@ following naming convention:
     description of all annotations/tags present in the VCF INFO column
     after processing with the CPSR annotation pipeline:
 
-  
+\
 
 ##### *VEP consequence annotations*
 
@@ -148,7 +148,7 @@ following naming convention:
 | `BIOMARKER_MATCH` | Variant matches with germline biomarker evidence in CIViC/CGI. Format: `<db_source>|<db_variant_id>|<db_evidence_id>:<tumor_site>:<clinical_significance>:<evidence_level>:<evidence_type><germline_somatic>|<matching_type>`. Multiple evidence items are separated by ‘&’. Example: civic\|174\|EID445:Colon/Rectum:Sensitivity/Response:D:Predictive:Germline&EID446:Colon/Rectum:Sensitivity/Response:D:Predictive:Germline\|by_gene_mut. Matching type can be any of `by_genomic_coord`, `by_hgvsp_principal`, `by_hgvsc_principal`, `by_hgvsp_nonprincipal`, `by_hgvsc_nonprincipal`, `by_codon_principal`, `by_exon_mut_principal`, `by_gene_mut_lof`, `by_gene_mut` |
 | `REGULATORY_ANNOTATION` | Comma-separated list of all variant annotations of `Feature_type`, `RegulatoryFeature`, and `MotifFeature`. Format (separated by a `|`): `<Consequence>`, `<Feature_type>`, `<Feature>`, `<BIOTYPE>`, `<MOTIF_NAME>`, `<MOTIF_POS>`, `<HIGH_INF_POS>`, `<MOTIF_SCORE_CHANGE>`, `<TRANSCRIPTION_FACTORS>` |
 
-  
+\
 
 ##### *Gene information*
 
@@ -189,7 +189,7 @@ following naming convention:
 | `ESSENTIAL_GENE_CRISPR` | `dbNSFP_gene`: Essential (`E`) or Non-essential phenotype-changing (`N`) based on large scale CRISPR experiments (from <http://dx.doi.org/10.1126/science.aac7041>) |
 | `ESSENTIAL_GENE_CRISPR2` | `dbNSFP_gene`: Essential (`E`), context-Specific essential (`S`), or Non-essential phenotype-changing (`N`) based on large scale CRISPR experiments (from <http://dx.doi.org/10.1016/j.cell.2015.11.015>) |
 
-  
+\
 
 ##### *Variant effect and protein-coding information*
 
@@ -226,7 +226,7 @@ following naming convention:
 | `DBNSFP_SPLICE_SITE_RF` | predicted effect of splice site disruption, using random forest (dbscSNV) |
 | `DBNSFP_SPLICE_SITE_ADA` | predicted effect of splice site disruption, using boosting (dbscSNV) |
 
-  
+\
 
 ##### *Variant allele frequencies/annotations in germline databases*
 
@@ -289,7 +289,7 @@ following naming convention:
 | `gnomADe_non_cancer_NHOMALT` | Count of homozygous individuals in samples in the non-cancer subset ([gnomAD 2.1.1](http://gnomad.broadinstitute.org)) |
 | `DBSNP_RSID` | [dbSNP](http://www.ncbi.nlm.nih.gov/SNP/) reference ID, as provided by VEP |
 
-  
+\
 
 ##### *Clinical associations*
 
@@ -312,7 +312,7 @@ following naming convention:
 | `CLINVAR_GOLD_STARS` | Rating of the [ClinVar](http://www.ncbi.nlm.nih.gov/clinvar) variant (0-4 stars) with respect to level of review |
 | `GWAS_HIT` | variant associated with cancer phenotype from genome-wide association study (NHGRI-EBI GWAS catalog) |
 
-  
+\
 
 ##### *Variant/genotype information*
 
@@ -321,8 +321,8 @@ following naming convention:
 | `GENOTYPE`   | Variant genotype (*het*/*hom_ref*/*hom_alt*) |
 | `DP_CONTROL` | Sequencing depth at variant site (‘DP’)      |
 
-  
-  
+\
+\
 
 ### Excel workbook - XLSX
 
@@ -343,8 +343,8 @@ three sheets will only be present if any data is found):
 - *PHARMACOGENOMIC_FINDINGS* - drug toxicity findings (DPYD, TPMT,
   NUDT15)
 
-  
-  
+\
+\
 
 ### Tab-separated values - TSV
 
@@ -428,7 +428,7 @@ the query VCF potentially retained by the user will be appended):
 | 62\. `CLINVAR_VARIANT_ORIGIN` | Variant origin (somatic/germline) of ClinVar variant |
 | 63\. `CLINVAR_CONFLICTED` | Indicator of conflicting interpretations in ClinVar |
 | 64\. `CLINVAR_PHENOTYPE` | Associated phenotype(s) for ClinVar variant |
-| 65\. `CLINVAR_PHENOTYPE_CANCER` | For variants with a ClinVar classification, indication of cancer-associated disease/phenotype (1) or not (0) |
+| 65\. `CLINVAR_PHENOTYPE_CANCER` | For variants with a ClinVar classification, indication of cancer-associated disease/phenotype (1), non-cancer disease/phenotype only (0), or unspecified phenotype, e.g. *not provided* (NA) |
 | 66\. `CLINVAR_GOLD_STARS` | Review confidence rating of the ClinVar variant (0–4 gold stars) |
 | 67\. `N_INSILICO_CALLED` | Number of algorithms with effect prediction (damaging/tolerated) from dbNSFP |
 | 68\. `N_INSILICO_DAMAGING` | Number of algorithms with damaging prediction from dbNSFP |
@@ -541,8 +541,8 @@ file:
 | 33\. `gnomADe_AF` | Global allele frequency in gnomAD controls (exome set, v4.1) |
 | 34\. `gnomADg_AF` | Global allele frequency in gnomAD controls (genome set, v4.1) |
 
-  
-  
+\
+\
 
 ### Biomarker annotations
 

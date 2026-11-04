@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">CPSR</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.3.2.9010</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.3.2.9011</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -352,12 +352,19 @@ records with non-cancer phenotypes (regardless of review status)</td>
 </tbody>
 </table>
 <hr>
-<p>By default, CPSR does not report variants in cancer predisposition
-genes that are associated only with non-cancer phenotypes in ClinVar. To
-include these, use:</p>
+<p>By default, CPSR reports all variants in the virtual panel genes,
+also those that are attributed to non-cancer phenotypes in ClinVar. To
+exclude ClinVar variants attributed <em>only</em> to non-cancer
+phenotypes, use:</p>
 <ul>
-<li><code>--clinvar_report_noncancer</code></li>
+<li><code>--clinvar_cancer_only</code></li>
 </ul>
+<p>Variants whose ClinVar phenotypes are unspecified (e.g. <em>not
+provided</em>) are retained also with this option. Note that the
+distinction between cancer and non-cancer phenotypes is based on ClinVar
+trait names (as well as gene-named conditions such as
+<em>ERCC6L2-related disorder</em>, which are considered cancer-related
+for the virtual panel genes), and is not exhaustive.</p>
 <p><br></p>
 </div>
 <div class="section level3">
@@ -488,9 +495,9 @@ Variant classification options:
                         3 = Override zero- and single gold star ClinVar records, and ClinVar records with
                             non-cancer phenotypes
                         4 = CPSR always classifies (ClinVar records never take precedence)
-  --clinvar_report_noncancer
-                        Report also ClinVar-classified variants attributed to phenotypes/conditions NOT directly related
-                        to tumor development, default: False
+  --clinvar_cancer_only
+                        Exclude ClinVar-classified variants attributed only to phenotypes/conditions NOT related to cancer
+                        (variants with unspecified ClinVar phenotypes, e.g. 'not provided', are retained), default: False
 
 VEP options:
   --vep_n_forks VEP_N_FORKS

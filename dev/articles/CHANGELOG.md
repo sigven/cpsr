@@ -2,7 +2,7 @@
 
 ## v2.4.0
 
-- Date: **2026-10-XX**
+- Date: **2026-11-XX**
 
 - Data bundle **20261022**
 
@@ -84,6 +84,31 @@
     to the HTML report (opt out with the new argument `--no_pdf`),
     including a section on pharmacogenomic findings (CPIC phenotypes and
     prescribing recommendations)
+
+- ClinVar phenotypes (cancer vs. non-cancer)
+
+  - **Changed default**: variants attributed to non-cancer phenotypes in
+    ClinVar are now reported by default, since all virtual panel genes
+    are considered cancer-relevant. The new argument
+    `--clinvar_cancer_only` excludes ClinVar variants attributed *only*
+    to non-cancer phenotypes. `--clinvar_report_noncancer` is deprecated
+    (no effect, prints a warning)
+  - *CLINVAR_PHENOTYPE_CANCER* now has three states: cancer-related (1),
+    non-cancer only (0), and unspecified (NA). Variants with
+    uninformative ClinVar traits only (e.g. *not provided*, *not
+    specified*), or with UMLS concepts that cannot be mapped, are no
+    longer considered non-cancer, and are thus never excluded
+    (`--clinvar_cancer_only`) or overridden by CPSR
+    (`--clinvar_trust_level 3`)
+  - All ClinVar trait names of a variant are now evaluated (previously,
+    trait names were ignored for variants with UMLS concepts), and
+    gene-named conditions for virtual panel genes (e.g. *ERCC6L2-related
+    disorder*) are considered cancer-related
+  - Extended the regular expression for cancer-related phenotypes with
+    bone marrow failure/myeloid predisposition terms (e.g. *bone marrow
+    failure*, *pancytopenia*, *neutropenia*, *aplastic anemia*), and
+    fixed a typo that missed *Beckwith-Wiedemann syndrome*. The regular
+    expression is moved from *pcgrr* to *cpsr*
 
 - Key findings summary
 

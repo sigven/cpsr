@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">CPSR</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.3.2.9010</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.3.2.9011</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,7 +86,7 @@
 <h2 id="v2-4-0">v2.4.0<a class="anchor" aria-label="anchor" href="#v2-4-0"></a>
 </h2>
 <ul>
-<li><p>Date: <strong>2026-10-XX</strong></p></li>
+<li><p>Date: <strong>2026-11-XX</strong></p></li>
 <li>
 <p>Data bundle <strong>20261022</strong></p>
 <ul>
@@ -188,6 +188,38 @@ assessed) are stated once for the section</li>
 to the HTML report (opt out with the new argument
 <code>--no_pdf</code>), including a section on pharmacogenomic findings
 (CPIC phenotypes and prescribing recommendations)</li>
+</ul>
+</li>
+<li>
+<p>ClinVar phenotypes (cancer vs. non-cancer)</p>
+<ul>
+<li>
+<strong>Changed default</strong>: variants attributed to non-cancer
+phenotypes in ClinVar are now reported by default, since all virtual
+panel genes are considered cancer-relevant. The new argument
+<code>--clinvar_cancer_only</code> excludes ClinVar variants attributed
+<em>only</em> to non-cancer phenotypes.
+<code>--clinvar_report_noncancer</code> is deprecated (no effect, prints
+a warning)</li>
+<li>
+<em>CLINVAR_PHENOTYPE_CANCER</em> now has three states:
+cancer-related (1), non-cancer only (0), and unspecified (NA). Variants
+with uninformative ClinVar traits only (e.g. <em>not provided</em>,
+<em>not specified</em>), or with UMLS concepts that cannot be mapped,
+are no longer considered non-cancer, and are thus never excluded
+(<code>--clinvar_cancer_only</code>) or overridden by CPSR
+(<code>--clinvar_trust_level 3</code>)</li>
+<li>All ClinVar trait names of a variant are now evaluated (previously,
+trait names were ignored for variants with UMLS concepts), and
+gene-named conditions for virtual panel genes (e.g. <em>ERCC6L2-related
+disorder</em>) are considered cancer-related</li>
+<li>Extended the regular expression for cancer-related phenotypes with
+bone marrow failure/myeloid predisposition terms (e.g. <em>bone marrow
+failure</em>, <em>pancytopenia</em>, <em>neutropenia</em>, <em>aplastic
+anemia</em>), and fixed a typo that missed <em>Beckwith-Wiedemann
+syndrome</em>. The regular expression is moved from <em>pcgrr</em> to
+<em>cpsr</em>
+</li>
 </ul>
 </li>
 <li>

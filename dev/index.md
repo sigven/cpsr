@@ -1,9 +1,9 @@
 # Cancer Predisposition Sequencing Reporter
 
-  
+\
 
-  
-  
+\
+\
 
 The *Cancer Predisposition Sequencing Reporter (CPSR)* is a
 computational workflow that **interprets DNA sequence variants**
@@ -43,7 +43,7 @@ Four snapshots of sections in the [quarto](https://quarto.org)-based
 cancer predisposition genome report (artificial sample, with more
 findings than usual):
 
-  
+\
 
 ![Virtual gene panel & summary of findings](img/cpsr_panel_summary.png)
 
@@ -53,8 +53,8 @@ findings than usual):
 
 ![Pharmacogenetic & secondary findings](img/cpsr_pgx_secondary.png)
 
-  
-  
+\
+\
 
 ------------------------------------------------------------------------
 

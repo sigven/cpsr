@@ -1,6 +1,6 @@
 # Running
 
-  
+\
 
 The CPSR software comes with a range of options to configure the report
 and analysis.
@@ -114,7 +114,7 @@ from the following list of panel identifiers:
 - **43**: [DNA repair genes pertinent cancer
   susceptibility](https://panelapp.genomicsengland.co.uk/panels/256/)
 
-  
+\
 
 #### Custom-made virtual gene panels
 
@@ -157,13 +157,21 @@ controlled by:
 
 ------------------------------------------------------------------------
 
-By default, CPSR does not report variants in cancer predisposition genes
-that are associated only with non-cancer phenotypes in ClinVar. To
-include these, use:
+By default, CPSR reports all variants in the virtual panel genes, also
+those that are attributed to non-cancer phenotypes in ClinVar. To
+exclude ClinVar variants attributed *only* to non-cancer phenotypes,
+use:
 
-- `--clinvar_report_noncancer`
+- `--clinvar_cancer_only`
 
-  
+Variants whose ClinVar phenotypes are unspecified (e.g. *not provided*)
+are retained also with this option. Note that the distinction between
+cancer and non-cancer phenotypes is based on ClinVar trait names (as
+well as gene-named conditions such as *ERCC6L2-related disorder*, which
+are considered cancer-related for the virtual panel genes), and is not
+exhaustive.
+
+\
 
 ### Optional report contents
 
@@ -290,9 +298,9 @@ Variant classification options:
                         3 = Override zero- and single gold star ClinVar records, and ClinVar records with
                             non-cancer phenotypes
                         4 = CPSR always classifies (ClinVar records never take precedence)
-  --clinvar_report_noncancer
-                        Report also ClinVar-classified variants attributed to phenotypes/conditions NOT directly related
-                        to tumor development, default: False
+  --clinvar_cancer_only
+                        Exclude ClinVar-classified variants attributed only to phenotypes/conditions NOT related to cancer
+                        (variants with unspecified ClinVar phenotypes, e.g. 'not provided', are retained), default: False
 
 VEP options:
   --vep_n_forks VEP_N_FORKS

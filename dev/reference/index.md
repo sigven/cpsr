@@ -90,8 +90,8 @@
   : Function that filters novel (non-ClinVar) variants based on a MAF
   threshold in gnomAD
 - [`exclude_vars_non_cancer()`](https://sigven.github.io/cpsr/dev/reference/exclude_vars_non_cancer.md)
-  : Function that ignores/exclude variants attributed to non-cancer
-  related phenotypes in ClinVar
+  : Function that excludes variants attributed to non-cancer related
+  phenotypes in ClinVar (option –clinvar_cancer_only)
 - [`exclude_vars_noncoding()`](https://sigven.github.io/cpsr/dev/reference/exclude_vars_noncoding.md)
   : Function that filters novel (non-ClinVar) variants based on a MAF
   threshold in gnomAD
@@ -111,8 +111,8 @@
 - [`insilico_path_predictors`](https://sigven.github.io/cpsr/dev/reference/insilico_path_predictors.md)
   : Insilico protein impact prediction methods
 - [`is_clinvar_cancer_phenotype()`](https://sigven.github.io/cpsr/dev/reference/is_clinvar_cancer_phenotype.md)
-  : Function that retrieves variants in cancer predisposition genes
-  linked to cancer-related conditions according to ClinVar
+  : Function that determines whether variants in cancer predisposition
+  genes are linked to cancer-related conditions according to ClinVar
 - [`is_purely_intronic_deletion()`](https://sigven.github.io/cpsr/dev/reference/is_purely_intronic_deletion.md)
   : Function that checks if a variant is a purely intronic deletion
   (i.e. deletion of intronic sequence that does not extend into exonic
