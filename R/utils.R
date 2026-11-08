@@ -230,7 +230,7 @@ cancer_phenotypes_regex <-
          "|leiomyom|muir-|nijmegen|neoplasia|trichoepithelioma|brooke|turcot",
          "|exostos|lynch|drash|wilm|perlman|fibrofolliculomas|hippel|hamartom",
          "|bloom|werner|peutz|tuberous|angiomyolipoma",
-         "|dihydropyrimidine dehydrogenase deficiency",
+         "|thymoma|dihydropyrimidine dehydrogenase deficiency",
          "|lymphoproliferative|stat3|teratoma|thrombocytop|tp63|weaver",
          "|pheochromo|gorlin|telangiectasia|hemangiom|osteochondro|response",
          "|polg-related|ras-associated|dyskeratosis",

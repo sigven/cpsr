@@ -56,7 +56,7 @@ variant_classification_synopsis_doc_note <- function(
 #' @export
 clinvar_trust_levels_doc_note <- function(trust_level = NULL) {
   levels <- c(
-    "0" = "Conflicting ClinVar interpretations only - ClinVar is trusted otherwise (default)",
+    "0" = "Conflicting ClinVar interpretations and records without a ClinVar classification only - ClinVar is trusted otherwise (default)",
     "1" = "As level 0, and ClinVar records with zero gold stars (no assertion criteria provided)",
     "2" = "As level 1, and ClinVar records with one gold star (e.g. criteria provided, single submitter)",
     "3" = "As level 2, and ClinVar records with non-cancer phenotypes only (regardless of review status)",

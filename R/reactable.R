@@ -559,19 +559,27 @@ create_unified_variant_reactable <- function(
           "#e65100"  # Orange for CPSR
         }
 
-        ## CPSR classification due to conflicting ClinVar record: small tag
-        ## below the alteration, submissions per classification as tooltip
+        ## CPSR classification due to a conflicting or unclassified ClinVar
+        ## record: small tag below the alteration, with explanatory tooltip
+        ## (for conflicting records: submissions per classification)
         conflict_tag <- NULL
         basis <- if ("ASSERTION_BASIS" %in% colnames(shared_data$origData()))
-          shared_data$origData()[index, "ASSERTION_BASIS"] else NA
-        if (identical(as.character(basis), "ClinVar conflicting")) {
-          subm <- if ("CLINVAR_SUBMISSIONS" %in%
-                      colnames(shared_data$origData()))
-            shared_data$origData()[index, "CLINVAR_SUBMISSIONS"] else NA
-          tooltip <- paste0(
-            "Conflicting ClinVar germline classifications",
-            if (!is.na(subm)) paste0(" (", subm, ")") else "",
-            " - classified by CPSR")
+          as.character(
+            shared_data$origData()[index, "ASSERTION_BASIS"]) else NA_character_
+        if (basis %in% c("ClinVar conflicting", "ClinVar no classification")) {
+          if (basis == "ClinVar conflicting") {
+            subm <- if ("CLINVAR_SUBMISSIONS" %in%
+                        colnames(shared_data$origData()))
+              shared_data$origData()[index, "CLINVAR_SUBMISSIONS"] else NA
+            tooltip <- paste0(
+              "Conflicting ClinVar germline classifications",
+              if (!is.na(subm)) paste0(" (", subm, ")") else "",
+              " - classified by CPSR")
+            tag_label <- "ClinVar: conflicting"
+          } else {
+            tooltip <- "No classification available in ClinVar - classified by CPSR"
+            tag_label <- "ClinVar: no classification"
+          }
           conflict_tag <- htmltools::span(
             title = tooltip,
             style = list(
@@ -585,7 +593,7 @@ create_unified_variant_reactable <- function(
               whiteSpace = "nowrap",
               cursor = "help"
             ),
-            "ClinVar: conflicting"
+            tag_label
           )
         }
 

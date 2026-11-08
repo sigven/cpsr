@@ -73,6 +73,7 @@ variant_table_pdf <- function(variants,
     basis_lbl <- dplyr::case_when(
       basis == "Novel" ~ "novel",
       basis == "ClinVar conflicting" ~ "ClinVar conflicting",
+      basis == "ClinVar no classification" ~ "ClinVar no classification",
       basis == "ClinVar below trust level" ~ "below trust level",
       TRUE ~ NA_character_)
     tbl[["Assertion authority"]] <- ifelse(

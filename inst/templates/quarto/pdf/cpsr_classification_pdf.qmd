@@ -49,7 +49,8 @@ cat(
   "with the one taking precedence being dictated by the user-defined *ClinVar trust level*. ",
   "For variants classified by CPSR, the *Assertion authority* column indicates why: ",
   "*novel* (no ClinVar record), *ClinVar conflicting* (conflicting germline ",
-  "classifications in ClinVar, always classified by CPSR), or *below trust level* ",
+  "classifications in ClinVar, always classified by CPSR), *ClinVar no classification* ",
+  "(ClinVar record without a classification, always classified by CPSR), or *below trust level* ",
   "(ClinVar record not meeting the *ClinVar trust level*). ",
   "Benign/Likely Benign variants are not shown.\n\n", sep = "")
 ```

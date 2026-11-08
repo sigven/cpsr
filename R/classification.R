@@ -265,7 +265,7 @@ assign_classification_authority <-
     )
 
     trust_level_desc <- c(
-      "0" = "ClinVar trusted (override conflicted records only)",
+      "0" = "ClinVar trusted (override conflicted and unclassified records only)",
       "1" = "Override zero-star ClinVar records",
       "2" = "Override zero- and single-star ClinVar records",
       "3" = "Override zero- and single-star ClinVar records, and records with non-cancer phenotypes",
@@ -290,8 +290,9 @@ assign_classification_authority <-
         .clinvar_novel = is.na(.data$CLINVAR_CLASSIFICATION),
         .clinvar_conflicted = (!is.na(.data$CLINVAR_CONFLICTED) &
                                  .data$CLINVAR_CONFLICTED == TRUE) |
-          (!is.na(.data$CLINVAR_CLASSIFICATION) &
-             .data$CLINVAR_CLASSIFICATION == "CCP Unknown"),
+          .data$CLINVAR_CLASSIFICATION %in% "Conflicting Classification",
+        .clinvar_no_classification =
+          .data$CLINVAR_CLASSIFICATION %in% "No Classification",
         .clinvar_zero_stars = (!is.na(.data$CLINVAR_GOLD_STARS) &
                                  .data$CLINVAR_GOLD_STARS == 0),
         .clinvar_single_star = (!is.na(.data$CLINVAR_GOLD_STARS) &
@@ -303,6 +304,7 @@ assign_classification_authority <-
         ## -- which flags are active at the chosen trust level --
         .override_novel = .data$.clinvar_novel,
         .override_conflicted = .data$.clinvar_conflicted,
+        .override_no_classification = .data$.clinvar_no_classification,
         .override_stars = if (clinvar_trust_level >= 2) {
           .data$.clinvar_zero_stars | .data$.clinvar_single_star
         } else if (clinvar_trust_level >= 1) {
@@ -321,6 +323,7 @@ assign_classification_authority <-
         .cpsr_overrides = (
           .data$.override_novel |
             .data$.override_conflicted |
+            .data$.override_no_classification |
             .data$.override_stars |
             .data$.override_phenotype |
             .data$.override_always
@@ -337,7 +340,10 @@ assign_classification_authority <-
             reasons <- c(reasons, "Novel variant (absent from ClinVar)")
           if (.data$.clinvar_conflicted)
             reasons <- c(reasons, "Conflicting ClinVar interpretations")
-          if (!.data$.clinvar_novel & !.data$.clinvar_conflicted) {
+          else if (.data$.clinvar_no_classification)
+            reasons <- c(reasons, "No classification available in ClinVar")
+          if (!.data$.clinvar_novel & !.data$.clinvar_conflicted &
+              !.data$.clinvar_no_classification) {
             if (.data$.cpsr_overrides) {
               star_label <- paste0(
                 "ClinVar review status: ",
@@ -371,12 +377,14 @@ assign_classification_authority <-
           TRUE ~ NA_character_
         ),
         ## Why the assertion authority was chosen (short category):
-        ## ClinVar / Novel / ClinVar conflicting / ClinVar below trust level
+        ## ClinVar / Novel / ClinVar conflicting / ClinVar no classification /
+        ## ClinVar below trust level
         ASSERTION_BASIS = dplyr::case_when(
           is.na(.data$ASSERTION_AUTHORITY) ~ NA_character_,
           .data$ASSERTION_AUTHORITY == "ClinVar" ~ "ClinVar",
           .data$.clinvar_novel ~ "Novel",
           .data$.clinvar_conflicted ~ "ClinVar conflicting",
+          .data$.clinvar_no_classification ~ "ClinVar no classification",
           TRUE ~ "ClinVar below trust level"
         ),
         CLASSIFICATION = dplyr::case_when(
