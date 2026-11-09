@@ -1,9 +1,9 @@
 # Cancer Predisposition Sequencing Reporter
 
-  
+\
 
-  
-  
+\
+\
 
 The *Cancer Predisposition Sequencing Reporter (CPSR)* is a
 computational workflow that **interprets DNA sequence variants**
@@ -23,13 +23,16 @@ following functionalities to the user:
     guidelines](https://pubmed.ncbi.nlm.nih.gov/25741868/)
 3.  **Detection of germline biomarkers** - for prognosis, diagnosis, or
     drug sensitivity/resistance in cancer
-4.  Optional detection and reporting of variants related to adverse
-    events/toxicity for common cancer chemotherapies
+4.  Optional reporting of **pharmacogenomic findings**
+    ([CPIC](https://cpicpgx.org)) - altered function alleles in DPYD,
+    TPMT, NUDT15 and G6PD, with inferred phenotypes and prescribing
+    recommendations for cancer-relevant drugs (fluoropyrimidines,
+    thiopurines, rasburicase)
 5.  Optional reporting of **secondary/incidental findings** ([ACMG
-    recommendations](https://pubmed.ncbi.nlm.nih.gov/37347242/))
-6.  **Interactive HTML output report** with detailed variant
-    information, gene annotations, and external links to relevant
-    databases
+    recommendations](https://pubmed.ncbi.nlm.nih.gov/40568962/))
+6.  **Interactive HTML report** with detailed variant information, gene
+    annotations, and external links to relevant databases, along with a
+    **PDF report** and an Excel workbook
 
 The CPSR workflow is integrated with the framework that underlies
 [Personal Cancer Genome Reporter -
@@ -43,20 +46,29 @@ Four snapshots of sections in the [quarto](https://quarto.org)-based
 cancer predisposition genome report (artificial sample, with more
 findings than usual):
 
-  
+\
 
-![Virtual gene panel & summary of findings](img/cpsr_panel_summary.png)
+![Report overview with key findings](img/cpsr_panel_summary.png)
 
 ![Variant classification](img/cpsr_variant_classification.png)
 
 ![Genomic biomarkers](img/cpsr_biomarkers.png)
 
-![Pharmacogenetic & secondary findings](img/cpsr_pgx_secondary.png)
+![Pharmacogenomic & secondary findings](img/cpsr_pgx_secondary.png)
 
-  
+\
+\
+
+------------------------------------------------------------------------
+
+|  |  |
+|----|:--:|
+| **CPSR originates from** the [Department of Tumor Biology](https://ous-research.no/tumorbiology/), [Institute for Cancer Research](https://radium.no), Oslo University Hospital, Norway. | [![Oslo University Hospital](img/ous_logo.png)](https://ous-research.no/tumorbiology/) |
 
 ### News
 
+- *November 10th 2026*: **2.4.0 release**
+  - [CHANGELOG](https://sigven.github.io/cpsr/articles/CHANGELOG.html)
 - *June 23rd 2026*: **2.3.0 release**
   - [CHANGELOG](https://sigven.github.io/cpsr/articles/CHANGELOG.html)
 - *September 17th 2025*: **2.2.5 release**
@@ -92,7 +104,7 @@ findings than usual):
 
 ### Example report
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20795508.svg)](https://doi.org/10.5281/zenodo.20795508)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4050912.svg)](https://doi.org/10.5281/zenodo.4050912)
 
 ### Getting started
 
@@ -173,6 +185,12 @@ findings than usual):
 - [`assign_classification_authority()`](https://sigven.github.io/cpsr/reference/assign_classification_authority.md)
   : Function that combines classifications of novel and pre-classified
   variants
+- [`assign_pgx_phenotypes()`](https://sigven.github.io/cpsr/reference/assign_pgx_phenotypes.md)
+  : Infer CPIC phenotypes for pharmacogenes with detected variant
+  alleles
+- [`assign_pgx_recommendations()`](https://sigven.github.io/cpsr/reference/assign_pgx_recommendations.md)
+  : Map inferred pharmacogene phenotypes to CPIC prescribing
+  recommendations
 - [`bs_icon2()`](https://sigven.github.io/cpsr/reference/bs_icon2.md) :
   Use Bootstrap icons (as inline SVG)
 - [`classification_thresholds_intro_doc_note()`](https://sigven.github.io/cpsr/reference/classification_thresholds_intro_doc_note.md)
@@ -181,6 +199,8 @@ findings than usual):
 - [`classification_thresholds_outro_doc_note()`](https://sigven.github.io/cpsr/reference/classification_thresholds_outro_doc_note.md)
   : Get documentation string for classification threshold calibration
   (outro)
+- [`clinvar_trust_levels_doc_note()`](https://sigven.github.io/cpsr/reference/clinvar_trust_levels_doc_note.md)
+  : Get documentation string for the ClinVar trust levels
 - [`col_format_output`](https://sigven.github.io/cpsr/reference/col_format_output.md)
   : Format of CPSR output data frames (HTML, TSV)
 - [`color_palette`](https://sigven.github.io/cpsr/reference/color_palette.md)
@@ -189,6 +209,9 @@ findings than usual):
   : Get documentation string for the CPSR report introduction
 - [`create_clinvar_reactable()`](https://sigven.github.io/cpsr/reference/create_clinvar_reactable.md)
   : Create a ClinVar variant reactable with expandable detail rows
+- [`create_pgx_reactable()`](https://sigven.github.io/cpsr/reference/create_pgx_reactable.md)
+  : Function that creates a reactable of CPIC pharmacogenomic phenotypes
+  or prescribing recommendations, for display in the germline report
 - [`create_unified_variant_filters()`](https://sigven.github.io/cpsr/reference/create_unified_variant_filters.md)
   : Create crosstalk-linked unified filters for all variants
 - [`create_unified_variant_reactable()`](https://sigven.github.io/cpsr/reference/create_unified_variant_reactable.md)
@@ -201,8 +224,8 @@ findings than usual):
   : Function that filters novel (non-ClinVar) variants based on a MAF
   threshold in gnomAD
 - [`exclude_vars_non_cancer()`](https://sigven.github.io/cpsr/reference/exclude_vars_non_cancer.md)
-  : Function that ignores/exclude variants attributed to non-cancer
-  related phenotypes in ClinVar
+  : Function that excludes variants attributed to non-cancer related
+  phenotypes in ClinVar (option –clinvar_cancer_only)
 - [`exclude_vars_noncoding()`](https://sigven.github.io/cpsr/reference/exclude_vars_noncoding.md)
   : Function that filters novel (non-ClinVar) variants based on a MAF
   threshold in gnomAD
@@ -222,12 +245,14 @@ findings than usual):
 - [`insilico_path_predictors`](https://sigven.github.io/cpsr/reference/insilico_path_predictors.md)
   : Insilico protein impact prediction methods
 - [`is_clinvar_cancer_phenotype()`](https://sigven.github.io/cpsr/reference/is_clinvar_cancer_phenotype.md)
-  : Function that retrieves variants in cancer predisposition genes
-  linked to cancer-related conditions according to ClinVar
+  : Function that determines whether variants in cancer predisposition
+  genes are linked to cancer-related conditions according to ClinVar
 - [`is_purely_intronic_deletion()`](https://sigven.github.io/cpsr/reference/is_purely_intronic_deletion.md)
   : Function that checks if a variant is a purely intronic deletion
   (i.e. deletion of intronic sequence that does not extend into exonic
   sequence at either end)
+- [`key_findings_doc_note()`](https://sigven.github.io/cpsr/reference/key_findings_doc_note.md)
+  : Get documentation string for the key findings summary
 - [`known_path_benign_sites()`](https://sigven.github.io/cpsr/reference/known_path_benign_sites.md)
   : Function that extracts known benign peptide changes from ClinVar
   (\>= 2 gold stars), as well as known pathogenic nucleotide and codon
@@ -252,9 +277,11 @@ findings than usual):
   : Build biomarker reactable with category-aware styling
 - [`report_color`](https://sigven.github.io/cpsr/reference/report_color.md)
   : CPSR report color
+- [`report_highlights()`](https://sigven.github.io/cpsr/reference/report_highlights.md)
+  : Key findings of a CPSR report (highlights) as markdown
 - [`retrieve_pgx_calls()`](https://sigven.github.io/cpsr/reference/retrieve_pgx_calls.md)
-  : Function that retrieves variants in genes recommended for secondary
-  findings
+  : Function that retrieves pharmacogenomic variants, i.e. variants that
+  define CPIC alleles (DPYD, TPMT, NUDT15, G6PD) with altered function
 - [`retrieve_secondary_calls()`](https://sigven.github.io/cpsr/reference/retrieve_secondary_calls.md)
   : Function that retrieves variants in genes recommended for secondary
   findings

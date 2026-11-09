@@ -34,6 +34,24 @@ two complementary assertion authorities:
   of ClinVar submissions is considered sufficient to override CPSR. If a
   variant’s ClinVar record does not meet the configured trust threshold,
   the CPSR rule-based classification is retained as the final call.
+  Variants with conflicting germline classifications in ClinVar, or with
+  a ClinVar record lacking a classification, are always classified by
+  CPSR (at any trust level). The reason for a CPSR classification is
+  given by *ASSERTION_BASIS*: *Novel* (absent from ClinVar), *ClinVar
+  conflicting*, *ClinVar no classification*, or *ClinVar below trust
+  level*.
+
+The *clinvar_trust_level* setting (`--clinvar_trust_level`) determines
+for which ClinVar records the CPSR classification takes precedence. At
+all levels, variants absent from ClinVar are classified by CPSR.
+
+| Trust level | CPSR classification takes precedence over |
+|:---|:---|
+| **0** | Conflicting ClinVar interpretations and records without a ClinVar classification only - ClinVar is trusted otherwise (default) |
+| **1** | As level 0, and ClinVar records with zero gold stars (no assertion criteria provided) |
+| **2** | As level 1, and ClinVar records with one gold star (e.g. criteria provided, single submitter) |
+| **3** | As level 2, and ClinVar records with non-cancer phenotypes only (regardless of review status) |
+| **4** | All ClinVar records - CPSR always classifies, ClinVar never takes precedence |
 
 The ACMG/AMP criteria listed in the criteria table below form the basis
 for the *CPSR_CLASSIFICATION* variable. The *score* column indicates how

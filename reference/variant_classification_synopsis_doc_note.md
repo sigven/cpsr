@@ -5,7 +5,7 @@ Get documentation string for variant classification synopsis
 ## Usage
 
 ``` r
-variant_classification_synopsis_doc_note(quarto = TRUE)
+variant_classification_synopsis_doc_note(quarto = TRUE, trust_level = NULL)
 ```
 
 ## Arguments

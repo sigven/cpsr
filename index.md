@@ -1,9 +1,9 @@
 # Cancer Predisposition Sequencing Reporter
 
-  
+\
 
-  
-  
+\
+\
 
 The *Cancer Predisposition Sequencing Reporter (CPSR)* is a
 computational workflow that **interprets DNA sequence variants**
@@ -23,13 +23,16 @@ following functionalities to the user:
     guidelines](https://pubmed.ncbi.nlm.nih.gov/25741868/)
 3.  **Detection of germline biomarkers** - for prognosis, diagnosis, or
     drug sensitivity/resistance in cancer
-4.  Optional detection and reporting of variants related to adverse
-    events/toxicity for common cancer chemotherapies
+4.  Optional reporting of **pharmacogenomic findings**
+    ([CPIC](https://cpicpgx.org)) - altered function alleles in DPYD,
+    TPMT, NUDT15 and G6PD, with inferred phenotypes and prescribing
+    recommendations for cancer-relevant drugs (fluoropyrimidines,
+    thiopurines, rasburicase)
 5.  Optional reporting of **secondary/incidental findings** ([ACMG
-    recommendations](https://pubmed.ncbi.nlm.nih.gov/37347242/))
-6.  **Interactive HTML output report** with detailed variant
-    information, gene annotations, and external links to relevant
-    databases
+    recommendations](https://pubmed.ncbi.nlm.nih.gov/40568962/))
+6.  **Interactive HTML report** with detailed variant information, gene
+    annotations, and external links to relevant databases, along with a
+    **PDF report** and an Excel workbook
 
 The CPSR workflow is integrated with the framework that underlies
 [Personal Cancer Genome Reporter -
@@ -43,20 +46,29 @@ Four snapshots of sections in the [quarto](https://quarto.org)-based
 cancer predisposition genome report (artificial sample, with more
 findings than usual):
 
-  
+\
 
-![Virtual gene panel & summary of findings](img/cpsr_panel_summary.png)
+![Report overview with key findings](img/cpsr_panel_summary.png)
 
 ![Variant classification](img/cpsr_variant_classification.png)
 
 ![Genomic biomarkers](img/cpsr_biomarkers.png)
 
-![Pharmacogenetic & secondary findings](img/cpsr_pgx_secondary.png)
+![Pharmacogenomic & secondary findings](img/cpsr_pgx_secondary.png)
 
-  
+\
+\
+
+------------------------------------------------------------------------
+
+|  |  |
+|----|:--:|
+| **CPSR originates from** the [Department of Tumor Biology](https://ous-research.no/tumorbiology/), [Institute for Cancer Research](https://radium.no), Oslo University Hospital, Norway. | [![Oslo University Hospital](img/ous_logo.png)](https://ous-research.no/tumorbiology/) |
 
 ### News
 
+- *November 10th 2026*: **2.4.0 release**
+  - [CHANGELOG](https://sigven.github.io/cpsr/articles/CHANGELOG.html)
 - *June 23rd 2026*: **2.3.0 release**
   - [CHANGELOG](https://sigven.github.io/cpsr/articles/CHANGELOG.html)
 - *September 17th 2025*: **2.2.5 release**
@@ -92,7 +104,7 @@ findings than usual):
 
 ### Example report
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20795508.svg)](https://doi.org/10.5281/zenodo.20795508)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4050912.svg)](https://doi.org/10.5281/zenodo.4050912)
 
 ### Getting started
 

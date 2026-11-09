@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">CPSR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,6 +81,201 @@
 
     
     
+<div class="section level2">
+<h2 id="v2-4-0">v2.4.0<a class="anchor" aria-label="anchor" href="#v2-4-0"></a>
+</h2>
+<ul>
+<li><p>Date: <strong>2026-11-10</strong></p></li>
+<li>
+<p>Data bundle <strong>20261106</strong></p>
+<ul>
+<li>ClinVar (2026-11)</li>
+<li>GENCODE v50 (VEP v116.3); GENCODE v19 remains the gene reference for
+grch37</li>
+<li>CIViC (2026-11-05)</li>
+<li>Pfam 38.2 (2026_01)</li>
+<li>dbNSFP v5.4 (August 2026)</li>
+<li>CancerMine (v52, October 2026)</li>
+<li>UniProt/SwissProt KnowledgeBase (2026_04)</li>
+<li>CPIC (2026-08-03) - allele definitions/function,
+genotype-to-phenotype mappings and prescribing recommendations</li>
+</ul>
+</li>
+<li>
+<p>Pharmacogenomics</p>
+<ul>
+<li>Pharmacogenomic variants (<code>--pgx_findings</code>) are now
+identified from <a href="https://cpicpgx.org" class="external-link">CPIC</a> allele
+definitions (matched on chromosome/position/alleles), rather than
+ClinVar classifications (<em>drug response</em>/<em>pathogenic</em>) -
+data bundles without CPIC data fall back to the ClinVar-based approach
+<ul>
+<li>Only variants defining CPIC alleles with altered function are
+reported</li>
+<li>Alleles defined by multiple variants (e.g. TPMT *3A, DPYD HapB3) are
+marked as <em>partial</em> when not all defining variants are found in
+the sample</li>
+<li>New columns in TSV/Excel output (pharmacogenomic findings):
+<em>PGX_ALLELE</em>, <em>PGX_ALLELE_COMPLETE</em>,
+<em>PGX_ALLELE_FUNCTION</em>, <em>PGX_ACTIVITY_VALUE</em>
+</li>
+</ul>
+</li>
+<li>CPIC phenotypes (e.g. DPYD <em>Intermediate Metabolizer</em>,
+activity score 1.0) are inferred for genes with detected altered
+function alleles, and mapped to CPIC prescribing recommendations for
+cancer-relevant drugs (fluoropyrimidines, thiopurines, rasburicase):
+<ul>
+<li>The absence of variants in the input VCF does not confirm a normal
+function genotype - genes without detected altered function alleles are
+not assigned a phenotype</li>
+<li>Unless detected, a second allele is assumed to be of normal function
+(reference), and two different alleles are assumed to be in trans</li>
+<li>The phenotype is <em>Not determined</em> when detected variants only
+partially define an allele, or when more altered function alleles are
+found than expected</li>
+<li>For multi-gene recommendations (thiopurines - TPMT and NUDT15),
+genes without detected altered function alleles are assumed to be normal
+metabolizers</li>
+</ul>
+</li>
+<li>New report sections with CPIC phenotypes and prescribing
+recommendations, in the HTML report, PDF report, and Excel workbook
+(sheets <em>PHARMACOGENOMIC_PHENOTYPES</em> and
+<em>PHARMACOGENOMIC_RECOMMENDATIONS</em>)</li>
+<li>
+<strong>G6PD</strong> added to the pharmacogenes assessed with
+<code>--pgx_findings</code> (CPIC guideline for rasburicase)</li>
+<li>New argument <code>--sex</code> (<code>FEMALE</code>,
+<code>MALE</code> or <code>UNKNOWN</code>; default:
+<code>UNKNOWN</code>) - sex of the sample, used for interpretation of
+X-linked pharmacogenomic findings:
+<ul>
+<li>
+<code>MALE</code>: G6PD genotypes interpreted as hemizygous (single
+allele), heterozygous chrX calls in G6PD are flagged in the report</li>
+<li>
+<code>FEMALE</code>: G6PD genotypes interpreted as diploid
+(e.g. heterozygous carriers of deficient alleles - phenotype
+<em>Variable</em>)</li>
+<li>
+<code>UNKNOWN</code>: no G6PD phenotype or rasburicase
+recommendation is reported</li>
+</ul>
+</li>
+<li>Sample sex is listed in the SETTINGS sheet of the Excel
+workbook</li>
+<li>New argument <code>--age</code> - age of the subject (whole years)
+at the time of testing; <code>--sex</code> and <code>--age</code> are
+listed in the <em>Subject options</em> group (previously <em>Sample
+options</em>) of the command-line interface. The age is shown with sex
+on the PDF cover page and in the PDF settings, and listed in the
+SETTINGS sheet of the Excel workbook (<em>Subject age at testing
+(years)</em>; <em>Sample sex</em> renamed to <em>Subject sex</em>)</li>
+<li>Report layout: pharmacogenomic findings are presented per gene
+(alteration(s), CPIC diplotype, e.g. TPMT *1/*3C, genotype, phenotype
+and activity score), with variant-level details (CPIC allele and allele
+function, consequence, ClinVar, dbSNP, gnomAD) available per gene,
+followed by the prescribing recommendations. Assumptions (positions
+without called variants assumed homozygous reference, phase not
+assessed) are stated once for the section</li>
+</ul>
+</li>
+<li>
+<p>PDF report</p>
+<ul>
+<li>A PDF report (Quarto/Typst) is now generated by default in addition
+to the HTML report (opt out with the new argument
+<code>--no_pdf</code>), including a section on pharmacogenomic findings
+(CPIC phenotypes and prescribing recommendations)</li>
+</ul>
+</li>
+<li>
+<p>Assertion authority - basis of CPSR classifications</p>
+<ul>
+<li>New column <em>ASSERTION_BASIS</em> (TSV/Excel output, HTML report
+row details), giving the reason for the assertion authority:
+<code>ClinVar</code>, or - for CPSR-classified variants -
+<code>Novel</code> (absent from ClinVar),
+<code>ClinVar conflicting</code> (conflicting germline classifications
+in ClinVar, always classified by CPSR regardless of
+<code>--clinvar_trust_level</code>),
+<code>ClinVar no classification</code> (ClinVar record without a
+classification, likewise always classified by CPSR) or
+<code>ClinVar below trust level</code>
+</li>
+<li>HTML report: CPSR-classified variants with a conflicting ClinVar
+record are marked with a <em>ClinVar: conflicting</em> tag below the
+alteration (tooltip with ClinVar submissions per classification,
+e.g. LP×3, VUS×1), and those with an unclassified ClinVar record with a
+<em>ClinVar: no classification</em> tag; new filter <em>Assertion
+basis</em>; the number of CPSR-asserted variants is broken down by
+basis</li>
+<li>PDF report: the <em>Assertion authority</em> column shows the basis
+of CPSR classifications, e.g. <em>CPSR (ClinVar conflicting)</em>,
+<em>CPSR (novel)</em>
+</li>
+<li>
+<em>CLINVAR_CONTRIB_CLNS_GERMLINE</em> (ClinVar germline submissions
+per classification) is included in the TSV output, and shown as
+<em>CLINVAR_SUBMISSIONS</em> (e.g. LP×3, VUS×1) in the HTML report</li>
+</ul>
+</li>
+<li>
+<p>ClinVar phenotypes (cancer vs. non-cancer)</p>
+<ul>
+<li>
+<strong>Changed default</strong>: variants attributed to non-cancer
+phenotypes in ClinVar are now reported by default, since all virtual
+panel genes are considered cancer-relevant. The new argument
+<code>--clinvar_cancer_only</code> excludes ClinVar variants attributed
+<em>only</em> to non-cancer phenotypes.
+<code>--clinvar_report_noncancer</code> is deprecated (no effect, prints
+a warning)</li>
+<li>
+<em>CLINVAR_PHENOTYPE_CANCER</em> now has three states:
+cancer-related (1), non-cancer only (0), and unspecified (NA). Variants
+with uninformative ClinVar traits only (e.g. <em>not provided</em>,
+<em>not specified</em>), or with UMLS concepts that cannot be mapped,
+are no longer considered non-cancer, and are thus never excluded
+(<code>--clinvar_cancer_only</code>) or overridden by CPSR
+(<code>--clinvar_trust_level 3</code>)</li>
+<li>All ClinVar trait names of a variant are now evaluated (previously,
+trait names were ignored for variants with UMLS concepts), and
+gene-named conditions for virtual panel genes (e.g. <em>ERCC6L2-related
+disorder</em>) are considered cancer-related</li>
+<li>Extended the regular expression for cancer-related phenotypes with
+bone marrow failure/myeloid predisposition terms (e.g. <em>bone marrow
+failure</em>, <em>pancytopenia</em>, <em>neutropenia</em>, <em>aplastic
+anemia</em>), and fixed a typo that missed <em>Beckwith-Wiedemann
+syndrome</em>. The regular expression is moved from <em>pcgrr</em> to
+<em>cpsr</em>
+</li>
+</ul>
+</li>
+<li>
+<p>Key findings summary</p>
+<ul>
+<li>The summary of findings (value boxes in the HTML report, KPI boxes
+on the PDF cover page) is replaced by a templated <em>Key findings</em>
+text, shared by the HTML report (top of report) and the PDF report
+(cover page), in line with PCGR: pathogenic/likely pathogenic variants
+and VUS first, followed by supporting findings (variant classification
+overview, secondary findings, genomic biomarkers with evidence levels
+A/B, CPIC pharmacogenomic phenotypes, GWAS hits)</li>
+<li>The rules for content and ordering are described in the
+documentation section of the reports (<em>Key findings
+summary</em>)</li>
+</ul>
+</li>
+<li><p>HTML report header: the sample/panel cards at the top have a
+fixed height, and the virtual gene panel is shown with a short display
+name (max. 42 characters, e.g. <em>Breast cancer susceptibility</em> for
+<em>Breast cancer pertinent cancer susceptibility (GEP)</em>); the full
+panel name is shown on hover and in the <em>Virtual gene panel</em>
+section</p></li>
+</ul>
+</div>
 <div class="section level2">
 <h2 id="v2-3-0">v2.3.0<a class="anchor" aria-label="anchor" href="#v2-3-0"></a>
 </h2>
@@ -841,7 +1036,7 @@ the query VCF that overlaps with existing germline biomarkers
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

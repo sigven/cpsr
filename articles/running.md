@@ -1,6 +1,6 @@
 # Running
 
-  
+\
 
 The CPSR software comes with a range of options to configure the report
 and analysis.
@@ -114,7 +114,7 @@ from the following list of panel identifiers:
 - **43**: [DNA repair genes pertinent cancer
   susceptibility](https://panelapp.genomicsengland.co.uk/panels/256/)
 
-  
+\
 
 #### Custom-made virtual gene panels
 
@@ -152,18 +152,26 @@ controlled by:
 | **0** | ClinVar trusted — CPSR only overrides conflicted ClinVar records (default) |
 | **1** | Override zero gold star ClinVar records |
 | **2** | Override zero- and single gold star ClinVar records |
-| **3** | Override low-star and non-cancer-phenotype ClinVar records |
+| **3** | Override zero- and single gold star ClinVar records, and ClinVar records with non-cancer phenotypes (regardless of review status) |
 | **4** | CPSR always classifies (ClinVar records never take precedence) |
 
 ------------------------------------------------------------------------
 
-By default, CPSR does not report variants in cancer predisposition genes
-that are associated only with non-cancer phenotypes in ClinVar. To
-include these, use:
+By default, CPSR reports all variants in the virtual panel genes, also
+those that are attributed to non-cancer phenotypes in ClinVar. To
+exclude ClinVar variants attributed *only* to non-cancer phenotypes,
+use:
 
-- `--clinvar_report_noncancer`
+- `--clinvar_cancer_only`
 
-  
+Variants whose ClinVar phenotypes are unspecified (e.g. *not provided*)
+are retained also with this option. Note that the distinction between
+cancer and non-cancer phenotypes is based on ClinVar trait names (as
+well as gene-named conditions such as *ERCC6L2-related disorder*, which
+are considered cancer-related for the virtual panel genes), and is not
+exhaustive.
+
+\
 
 ### Optional report contents
 
@@ -176,6 +184,12 @@ association studies (GWAS)](https://www.ebi.ac.uk/gwas/):
 - `--pgx_findings`
 - `--secondary_findings`
 - `--gwas_findings`
+
+Pharmacogenomic findings (`--pgx_findings`) include G6PD, which is
+X-linked. Provide the sex of the sample with `--sex` (`MALE` or
+`FEMALE`) to have G6PD genotypes interpreted as hemizygous or diploid -
+with the default (`UNKNOWN`), no G6PD phenotype or rasburicase
+recommendation is reported.
 
 ## All options
 
@@ -262,6 +276,12 @@ Panel options:
   --diagnostic_grade_only
                         For panel_id's 1-43 (Genomics England PanelApp) - consider genes with a GREEN status only, default: False
 
+Subject options:
+  --sex {FEMALE,MALE,UNKNOWN}
+                        Sex of sample - used for interpretation of X-linked pharmacogenomic findings (G6PD),
+                        i.e. hemizygous (MALE) vs. diploid (FEMALE) genotypes (default: UNKNOWN)
+  --age AGE             Age of the subject (whole years) at the time of testing (default: None)
+
 Variant classification options:
   --secondary_findings  Include variants found in ACMG-recommended list for secondary findings (v3.3), default: False
   --pgx_findings        Report overlap with variants associated with chemotherapy toxicity (PgX findings, CPIC), default: False
@@ -275,11 +295,12 @@ Variant classification options:
                         0 = ClinVar trusted (override conflicted records only) (default)
                         1 = Override zero gold star ClinVar records
                         2 = Override zero- and single gold star ClinVar records
-                        3 = Override low-star and non-cancer-phenotype ClinVar records
+                        3 = Override zero- and single gold star ClinVar records, and ClinVar records with
+                            non-cancer phenotypes
                         4 = CPSR always classifies (ClinVar records never take precedence)
-  --clinvar_report_noncancer
-                        Report also ClinVar-classified variants attributed to phenotypes/conditions NOT directly related
-                        to tumor development, default: False
+  --clinvar_cancer_only
+                        Exclude ClinVar-classified variants attributed only to phenotypes/conditions NOT related to cancer
+                        (variants with unspecified ClinVar phenotypes, e.g. 'not provided', are retained), default: False
 
 VEP options:
   --vep_n_forks VEP_N_FORKS
@@ -306,6 +327,7 @@ Other options:
   --no_reporting        Run functional variant annotation on VCF through VEP/vcfanno, omit classification/report
                         generation (STEP 4), default: False
   --no_html             Do not generate HTML report, default: False
+  --no_pdf              Do not generate PDF report (Quarto/Typst), default: False
   --retained_info_tags RETAINED_INFO_TAGS
                         Comma-separated string of VCF INFO tags from query VCF that should be kept in CPSR output TSV
   --ignore_noncoding    Ignore non-coding (i.e. non protein-altering) variants in report, default: False

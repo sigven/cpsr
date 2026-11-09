@@ -18,6 +18,15 @@ single-sample **VCF file** (\>= v4.2) with germline calls (SNVs/InDels)
   cancer predisposition genes (**hom/het**), the VCF file needs to
   contain the sample-specific genotype data (i.e. a FORMAT field +
   sample-specific genotype field pr. VCF record)
+- If the sample-specific FORMAT field contains a read depth annotation
+  (`DP`), CPSR will capture this as the sequencing depth of each
+  variant. Variants with a low depth (\< 10X) are automatically flagged
+  with a visual marker in the variant classification tables of the
+  report, since a low-confidence genotype call also undermines the
+  reliability of the variant’s clinical classification. This flag is a
+  safety net, not a substitute for good input data - we still **strongly
+  encourage** users to ensure sufficient depth of coverage among the
+  variants submitted for CPSR analysis
 
 **IMPORTANT NOTE** : CPSR generates a number of VCF INFO annotation tags
 that is appended to the query VCF. We will therefore encourage the users
