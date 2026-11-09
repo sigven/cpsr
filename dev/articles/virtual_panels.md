@@ -103,4 +103,4 @@ gene panels (0 - 43)**:
 
 [Download the complete set of CPSR superpanel genes, grch37/grch38
 versions
-(xlsx)](https://sigven.github.io/cpsr/cpsr_superpanel_2026_06.xlsx)
+(xlsx)](https://sigven.github.io/cpsr/cpsr_superpanel_2026_11.xlsx)

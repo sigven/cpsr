@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">CPSR</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.3.2.9012</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.3.2.9013</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -88,15 +88,16 @@
 <ul>
 <li><p>Date: <strong>2026-11-XX</strong></p></li>
 <li>
-<p>Data bundle <strong>20261022</strong></p>
+<p>Data bundle <strong>20261106</strong></p>
 <ul>
-<li>ClinVar (2026-10)</li>
+<li>ClinVar (2026-11)</li>
 <li>GENCODE v50 (VEP v116.3); GENCODE v19 remains the gene reference for
 grch37</li>
-<li>CIViC (2026-10-05)</li>
-<li>NCI Thesaurus (26.09d)</li>
+<li>CIViC (2026-11-05)</li>
 <li>Pfam 38.2 (2026_01)</li>
 <li>dbNSFP v5.4 (August 2026)</li>
+<li>CancerMine (v52, October 2026)</li>
+<li>UniProt/SwissProt KnowledgeBase (2026_04)</li>
 <li>CPIC (2026-08-03) - allele definitions/function,
 genotype-to-phenotype mappings and prescribing recommendations</li>
 </ul>
@@ -199,14 +200,18 @@ row details), giving the reason for the assertion authority:
 <code>Novel</code> (absent from ClinVar),
 <code>ClinVar conflicting</code> (conflicting germline classifications
 in ClinVar, always classified by CPSR regardless of
-<code>--clinvar_trust_level</code>) or
+<code>--clinvar_trust_level</code>),
+<code>ClinVar no classification</code> (ClinVar record without a
+classification, likewise always classified by CPSR) or
 <code>ClinVar below trust level</code>
 </li>
 <li>HTML report: CPSR-classified variants with a conflicting ClinVar
 record are marked with a <em>ClinVar: conflicting</em> tag below the
 alteration (tooltip with ClinVar submissions per classification,
-e.g. LP×3, VUS×1); new filter <em>Assertion basis</em>; the number of
-CPSR-asserted variants is broken down by basis</li>
+e.g. LP×3, VUS×1), and those with an unclassified ClinVar record with a
+<em>ClinVar: no classification</em> tag; new filter <em>Assertion
+basis</em>; the number of CPSR-asserted variants is broken down by
+basis</li>
 <li>PDF report: the <em>Assertion authority</em> column shows the basis
 of CPSR classifications, e.g. <em>CPSR (ClinVar conflicting)</em>,
 <em>CPSR (novel)</em>

@@ -45,13 +45,13 @@ findings than usual):
 
 \
 
-![Virtual gene panel & summary of findings](img/cpsr_panel_summary.png)
+![Report overview with key findings](img/cpsr_panel_summary.png)
 
 ![Variant classification](img/cpsr_variant_classification.png)
 
 ![Genomic biomarkers](img/cpsr_biomarkers.png)
 
-![Pharmacogenetic & secondary findings](img/cpsr_pgx_secondary.png)
+![Pharmacogenomic & secondary findings](img/cpsr_pgx_secondary.png)
 
 \
 \
@@ -99,7 +99,7 @@ findings than usual):
 
 ### Example report
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20795508.svg)](https://doi.org/10.5281/zenodo.20795508)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4050912.svg)](https://doi.org/10.5281/zenodo.4050912)
 
 ### Getting started
 

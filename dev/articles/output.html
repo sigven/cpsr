@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">CPSR</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.3.2.9012</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.3.2.9013</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -1525,6 +1525,8 @@ classification used), or the reason for a CPSR classification:
 <code>Novel</code> (absent from ClinVar),
 <code>ClinVar conflicting</code> (conflicting germline classifications
 in ClinVar - always classified by CPSR),
+<code>ClinVar no classification</code> (ClinVar record without a
+classification - always classified by CPSR),
 <code>ClinVar below trust level</code> (ClinVar record not meeting the
 configured <em>clinvar_trust_level</em>)</td>
 </tr>
@@ -1533,9 +1535,9 @@ configured <em>clinvar_trust_level</em>)</td>
 </td>
 <td>Human-readable explanation of why the given assertion authority was
 chosen, e.g. <em>“Novel variant (absent from ClinVar)”</em>,
-<em>“Conflicting ClinVar interpretations”</em>, <em>“ClinVar review
-status: 2 gold stars”</em>, or <em>“No cancer-related ClinVar
-phenotype(s)”</em>
+<em>“Conflicting ClinVar interpretations”</em>, <em>“No classification
+available in ClinVar”</em>, <em>“ClinVar review status: 2 gold
+stars”</em>, or <em>“No cancer-related ClinVar phenotype(s)”</em>
 </td>
 </tr>
 <tr class="even">
@@ -2034,6 +2036,8 @@ classification used), or the reason for a CPSR classification:
 <code>Novel</code> (absent from ClinVar),
 <code>ClinVar conflicting</code> (conflicting germline classifications
 in ClinVar - always classified by CPSR),
+<code>ClinVar no classification</code> (ClinVar record without a
+classification - always classified by CPSR),
 <code>ClinVar below trust level</code> (ClinVar record not meeting the
 configured <em>clinvar_trust_level</em>)</td>
 </tr>

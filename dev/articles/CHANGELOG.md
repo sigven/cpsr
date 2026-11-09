@@ -4,15 +4,16 @@
 
 - Date: **2026-11-XX**
 
-- Data bundle **20261022**
+- Data bundle **20261106**
 
-  - ClinVar (2026-10)
+  - ClinVar (2026-11)
   - GENCODE v50 (VEP v116.3); GENCODE v19 remains the gene reference for
     grch37
-  - CIViC (2026-10-05)
-  - NCI Thesaurus (26.09d)
+  - CIViC (2026-11-05)
   - Pfam 38.2 (2026_01)
   - dbNSFP v5.4 (August 2026)
+  - CancerMine (v52, October 2026)
+  - UniProt/SwissProt KnowledgeBase (2026_04)
   - CPIC (2026-08-03) - allele definitions/function,
     genotype-to-phenotype mappings and prescribing recommendations
 
@@ -92,12 +93,15 @@
     or - for CPSR-classified variants - `Novel` (absent from ClinVar),
     `ClinVar conflicting` (conflicting germline classifications in
     ClinVar, always classified by CPSR regardless of
-    `--clinvar_trust_level`) or `ClinVar below trust level`
+    `--clinvar_trust_level`), `ClinVar no classification` (ClinVar
+    record without a classification, likewise always classified by CPSR)
+    or `ClinVar below trust level`
   - HTML report: CPSR-classified variants with a conflicting ClinVar
     record are marked with a *ClinVar: conflicting* tag below the
     alteration (tooltip with ClinVar submissions per classification,
-    e.g. LP×3, VUS×1); new filter *Assertion basis*; the number of
-    CPSR-asserted variants is broken down by basis
+    e.g. LP×3, VUS×1), and those with an unclassified ClinVar record
+    with a *ClinVar: no classification* tag; new filter *Assertion
+    basis*; the number of CPSR-asserted variants is broken down by basis
   - PDF report: the *Assertion authority* column shows the basis of CPSR
     classifications, e.g. *CPSR (ClinVar conflicting)*, *CPSR (novel)*
   - *CLINVAR_CONTRIB_CLNS_GERMLINE* (ClinVar germline submissions per

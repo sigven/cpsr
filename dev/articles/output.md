@@ -371,8 +371,8 @@ the query VCF potentially retained by the user will be appended):
 | 5\. `GENOTYPE` | Variant genotype (het/hom_ref/hom_alt) |
 | 6\. `DP_CONTROL` | Sequencing depth at variant site (‘DP’) |
 | 7\. `ASSERTION_AUTHORITY` | Authority responsible for variant classification - `ClinVar` (ClinVar record meets the configured trust level) or `CPSR` (classified by CPSR’s ACMG/AMP rule-based algorithm) |
-| 8\. `ASSERTION_BASIS` | Basis of the assertion authority - `ClinVar` (ClinVar classification used), or the reason for a CPSR classification: `Novel` (absent from ClinVar), `ClinVar conflicting` (conflicting germline classifications in ClinVar - always classified by CPSR), `ClinVar below trust level` (ClinVar record not meeting the configured *clinvar_trust_level*) |
-| 9\. `ASSERTION_RATIONALE` | Human-readable explanation of why the given assertion authority was chosen, e.g. *“Novel variant (absent from ClinVar)”*, *“Conflicting ClinVar interpretations”*, *“ClinVar review status: 2 gold stars”*, or *“No cancer-related ClinVar phenotype(s)”* |
+| 8\. `ASSERTION_BASIS` | Basis of the assertion authority - `ClinVar` (ClinVar classification used), or the reason for a CPSR classification: `Novel` (absent from ClinVar), `ClinVar conflicting` (conflicting germline classifications in ClinVar - always classified by CPSR), `ClinVar no classification` (ClinVar record without a classification - always classified by CPSR), `ClinVar below trust level` (ClinVar record not meeting the configured *clinvar_trust_level*) |
+| 9\. `ASSERTION_RATIONALE` | Human-readable explanation of why the given assertion authority was chosen, e.g. *“Novel variant (absent from ClinVar)”*, *“Conflicting ClinVar interpretations”*, *“No classification available in ClinVar”*, *“ClinVar review status: 2 gold stars”*, or *“No cancer-related ClinVar phenotype(s)”* |
 | 10\. `VARIANT_CLASS` | Variant type, e.g. SNV/insertion/deletion |
 | 11\. `CODING_STATUS` | coding/noncoding (wrt. protein alteration and canonical splice site disruption) |
 | 12\. `SYMBOL` | Gene symbol |
@@ -471,7 +471,7 @@ The following variables are included in the biomarker evidence TSV file:
 | 9\. `CONSEQUENCE` | Variant consequence |
 | 10\. `PROTEIN_CHANGE` | Protein change - one letter abbreviation (HGVSp) |
 | 11\. `ASSERTION_AUTHORITY` | Authority responsible for variant classification - `ClinVar` or `CPSR` |
-| 12\. `ASSERTION_BASIS` | Basis of the assertion authority - `ClinVar` (ClinVar classification used), or the reason for a CPSR classification: `Novel` (absent from ClinVar), `ClinVar conflicting` (conflicting germline classifications in ClinVar - always classified by CPSR), `ClinVar below trust level` (ClinVar record not meeting the configured *clinvar_trust_level*) |
+| 12\. `ASSERTION_BASIS` | Basis of the assertion authority - `ClinVar` (ClinVar classification used), or the reason for a CPSR classification: `Novel` (absent from ClinVar), `ClinVar conflicting` (conflicting germline classifications in ClinVar - always classified by CPSR), `ClinVar no classification` (ClinVar record without a classification - always classified by CPSR), `ClinVar below trust level` (ClinVar record not meeting the configured *clinvar_trust_level*) |
 | 13\. `ASSERTION_RATIONALE` | Human-readable explanation of why the given assertion authority was chosen |
 | 14\. `CLASSIFICATION` | Final variant classification (P/LP/VUS/LB/B) |
 | 15\. `CPSR_CLASSIFICATION` | Variant clinical significance by CPSR’s ACMG/AMP rule-based algorithm (P/LP/VUS/LB/B) |
