@@ -67,7 +67,11 @@ OPTIONAL_SUFFIXES = [
     "secondary_findings.tsv.gz",
 ]
 BINARY_SUFFIXES = ("vcf.gz.tbi", "xlsx", "pdf")
-LOCAL_PATH_RE = re.compile(r"/Users/[^/\s]+|/home/[^/\s]+|[A-Za-z]:\\Users\\")
+# A home directory path, but not '/home/...' inside a URL such as
+# https://www.ncbi.nlm.nih.gov/home/about/
+LOCAL_PATH_RE = re.compile(
+    r"(?<![\w.\-])(?:/Users/[^/\s]+|/home/[^/\s]+)|[A-Za-z]:\\Users\\"
+)
 RELEASE_VERSION_RE = re.compile(r"^\d+\.\d+\.\d+$")
 
 DESCRIPTION_TEMPLATE = (

@@ -11,9 +11,9 @@ The *Cancer Predisposition Sequencing Reporter (CPSR)* is a computational workfl
 1)  Flexible **selection of cancer predisposition genes** subject to analysis and reporting - through the use of virtual gene panels
 2)  **Variant classification** (*Pathogenic* to *Benign*) through a dedicated implementation of [ACMG/AMP guidelines](https://pubmed.ncbi.nlm.nih.gov/25741868/)
 3)  **Detection of germline biomarkers** - for prognosis, diagnosis, or drug sensitivity/resistance in cancer
-4)  Optional detection and reporting of variants related to adverse events/toxicity for common cancer chemotherapies
-5)  Optional reporting of **secondary/incidental findings** ([ACMG recommendations](https://pubmed.ncbi.nlm.nih.gov/37347242/))
-6)  **Interactive HTML output report** with detailed variant information, gene annotations, and external links to relevant databases
+4)  Optional reporting of **pharmacogenomic findings** ([CPIC](https://cpicpgx.org)) - altered function alleles in DPYD, TPMT, NUDT15 and G6PD, with inferred phenotypes and prescribing recommendations for cancer-relevant drugs (fluoropyrimidines, thiopurines, rasburicase)
+5)  Optional reporting of **secondary/incidental findings** ([ACMG recommendations](https://pubmed.ncbi.nlm.nih.gov/40568962/))
+6)  **Interactive HTML report** with detailed variant information, gene annotations, and external links to relevant databases, along with a **PDF report** and an Excel workbook
 
 The CPSR workflow is integrated with the framework that underlies [Personal Cancer Genome Reporter - PCGR ](https://github.com/sigven/pcgr). While *PCGR* is intended for reporting and analysis of somatic variants detected in a tumor, *CPSR* is intended for reporting and ranking of germline variants in protein-coding genes that are implicated in cancer predisposition and inherited cancer syndromes.
 
@@ -58,6 +58,9 @@ bootstrap.Carousel.getOrCreateInstance(document.getElementById('cpsrCarousel')).
 
 ### News
 
+*  *November 10th 2026*: **2.4.0 release**
+    -  [CHANGELOG](https://sigven.github.io/cpsr/articles/CHANGELOG.html)
+    
 *  *June 23rd 2026*: **2.3.0 release**
     -  [CHANGELOG](https://sigven.github.io/cpsr/articles/CHANGELOG.html)
 

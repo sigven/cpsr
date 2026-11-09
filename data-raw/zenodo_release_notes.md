@@ -21,8 +21,10 @@ Replace `2.4.0` with the version being released.
 1. Bump to the release version. The script checks `DESCRIPTION`.
 
 2. Build the example report (`WES-T001-COAD-ART-GL-1`) with the release code.
-   The script refuses a report whose `.xlsx` doesn't record this version. A
-   Docker run should avoid `/Users/...` paths in the output (not yet tried).
+   The script refuses a report whose `.xlsx` doesn't record this version. An
+   Apptainer/Docker run avoids `/Users/...` paths in the reports, but the test
+   input VCF carries a `##liftOverChainFile=/Users/...` header that ends up in
+   the output VCF; remove it from the input, or pass `--allow-local-paths`.
 
 3. Run the local checks:
 

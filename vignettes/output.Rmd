@@ -18,8 +18,8 @@ The report is structured in multiple sections, described briefly below:
      * Lists key configurations provided by user, including the list of genes
 	   that constitute the virtual gene panel in the report
 	   
-  2. __Summary of findings__
-     * Summarizes the main findings in the sample through value boxes
+  2. __Key findings__
+     * Summarizes the main findings in the sample through a templated text: pathogenic/likely pathogenic variants first, followed by supporting findings (variant classification overview, secondary findings, genomic biomarkers, pharmacogenomics). The rules for content and ordering are described in the documentation section of the report
 
   3. __Variant classification__
      * For all coding and non-coding variants in the selected cancer predisposition geneset, 
@@ -33,7 +33,7 @@ The report is structured in multiple sections, described briefly below:
 
   4. __Genomic biomarkers__
      * Reported clinical evidence items from [CIViC](https://civicdb.org) that match with variants in the query set are reported
-     * Pharmacogenomic findings (DPYD, TPMT, NUDT15)
+     * Pharmacogenomic findings (DPYD, TPMT, NUDT15, G6PD), with CPIC phenotypes and prescribing recommendations
 		  
   5. __Secondary findings__
      * Pathogenic variants in the [ACMG-recommended list of genes for report of secondary/incidental findings](https://www.ncbi.nlm.nih.gov/clinvar/docs/acmg/)
@@ -52,6 +52,38 @@ The report is structured in multiple sections, described briefly below:
   
   8. __References__
 	    * Supporting scientific literature - knowledge resources, guideline references etc.
+
+<br><br>
+
+### PDF report
+
+A focused PDF report (generated with [quarto](https://quarto.org/) and Typst) is provided by default in addition to the HTML report, and can be turned off with `--no_pdf`. It has the following naming convention:
+
+- `<sample_id>.cpsr.<genome_assembly>.pdf`
+
+The report is structured in multiple sections, described briefly below:
+
+  1. __Cover page__
+     * Sample details and the *Key findings* summary, shared with the HTML report
+
+  2. __Variant classification__
+     * Pathogenic and likely pathogenic variants, and protein-coding variants of uncertain significance (VUS, at most 20)
+     * Non-coding VUS are listed in the HTML report and the Excel output only, and benign/likely benign variants are not shown
+
+  3. __Secondary findings__
+     * Included when secondary findings are assessed (`--secondary_findings`)
+
+  4. __Genomic biomarkers__
+     * Focused summary of biomarker evidence of level A or B
+
+  5. __Pharmacogenomic findings__
+     * CPIC phenotypes and prescribing recommendations, included when pharmacogenomic findings are assessed (`--pgx_findings`)
+
+  6. __Analysis configuration & data sources__
+     * Settings, the virtual gene panel, and versions of the data sources
+
+  7. __Appendix__
+     * Documentation of the *Key findings* summary and variant classification, references, and a medical disclaimer
 
 <br><br>
 
@@ -319,18 +351,22 @@ is generated with the following naming convention:
 
 ### Excel workbook - XLSX
 
-We provide an Excel workbook with **five** sheets that lists main findings and annotations of the predisposition analysis. The file has the following naming convention:
+We provide an Excel workbook that lists main findings and annotations of the predisposition analysis. The file has the following naming convention:
 
 - `<sample_id>.cpsr.<genome_assembly>.xlsx`
 
-The Excel workbook is populated with the following sheets (the last three sheets will only
+The Excel workbook is populated with the following sheets (all sheets except the first three will only
 be present if any data is found):
 
- - *VIRTUAL_PANEL* - details on the the chosen virtual gene panel 
+ - *SETTINGS* - settings used for the analysis
+ - *DATA_VERSIONS* - versions of the annotation resources
+ - *VIRTUAL_PANEL* - details on the chosen virtual gene panel
  - *CLASSIFICATION* - variant classifications and corresponding gene annotations
- - *BIOMARKER_EVIDENCE* - matches of variants with genomic biomarkers
  - *SECONDARY_FINDINGS* - secondary findings (ACMG recommendations)
- - *PHARMACOGENOMIC_FINDINGS* - drug toxicity findings (DPYD, TPMT, NUDT15)
+ - *BIOMARKER_EVIDENCE* - matches of variants with genomic biomarkers
+ - *PHARMACOGENOMIC_FINDINGS* - drug toxicity findings (DPYD, TPMT, NUDT15, G6PD)
+ - *PHARMACOGENOMIC_PHENOTYPES* - CPIC phenotypes for genes with detected altered function alleles
+ - *PHARMACOGENOMIC_RECOMMENDATIONS* - CPIC prescribing recommendations
 
 <br><br>
 
