@@ -82,7 +82,7 @@ Snapshots of sections in the [quarto](https://quarto.org)-based cancer predispos
 
 ## Example report
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20795508.svg)](https://doi.org/10.5281/zenodo.20795508)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4050912.svg)](https://doi.org/10.5281/zenodo.4050912)
 
 
 ## Getting started
