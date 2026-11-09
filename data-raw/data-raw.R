@@ -12,6 +12,7 @@ insilico_path_predictors <-
     "DBNSFP_MUTFORMER",
     "DBNSFP_MUTATIONASSESSOR",
     "DBNSFP_MUTATIONTASTER",
+    "DBNSFP_MUTPRED2",
     "DBNSFP_PHACTBOOST",
     "DBNSFP_PRIMATEAI",
     "DBNSFP_PROVEAN",
@@ -693,7 +694,7 @@ for(build in c('grch37','grch38')){
     pcgr_db_assembly_dir =
       file.path(
         "/Users/sigven/project_data/data/data__pcgrdb/bundle_output",
-        "20261007/data",
+        "20261106/data",
         build),
     genome_assembly = build
   )
@@ -736,7 +737,7 @@ for(build in c('grch37','grch38')){
   panel_zero[[build]] <- dplyr::bind_rows(set1, set2) |>
     dplyr::mutate(
       PANEL_NAME = "CPSR superpanel of cancer predisposition genes",
-      PANEL_VERSION = "v2026_05") |>
+      PANEL_VERSION = "v2026_11") |>
     dplyr::rename(
       TUMOR_SUPPRESSOR = TSG,
       TUMOR_SUPPRESSOR_SUPPORT = TSG_SUPPORT
@@ -800,7 +801,7 @@ workbook <- openxlsx2::wb_workbook() |>
 
 openxlsx2::wb_save(
   wb = workbook,
-  "pkgdown/assets/cpsr_superpanel_2026_10.xlsx",
+  "pkgdown/assets/cpsr_superpanel_2026_11.xlsx",
   overwrite = TRUE)
 
 #
@@ -814,7 +815,7 @@ panel_zero_display <- panel_zero$grch38 |>
       "CPG_PHENOTYPES",
       "CPG_MOI",
       "CPG_MOD",
-      "CPG_SOURCE",
+      "CPG_SOURCE"
     )
   ) |>
   dplyr::mutate(
