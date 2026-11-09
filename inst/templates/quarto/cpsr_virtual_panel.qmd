@@ -1,8 +1,3 @@
-<br>
-
-### Virtual gene panel
-
-
 ```{r prepare_panel_url}
 #| echo: false
 #| results: asis
@@ -23,14 +18,10 @@ if(cps_report[['settings']][['conf']][['gene_panel']][['panel_id']] != "-1" &
                        "</a>")
 }
 
+
+panel_title <- gsub("<[^>]+>", "", panel_link)
 ```
 
-
-Sample variants that are subject for variant classification are limited to the ones found within the tile of cancer predisposition genes shown below. 
-
-   *  __`r panel_link`__
-      * Diagnostic-grade genes only (applicable to Genomics England panels): __`r as.logical(cps_report[['settings']][['conf']][['gene_panel']][['diagnostic_grade_only']])`__
-   
 ```{r gene_selection}
 #| echo: false
 #| eval: true
@@ -39,16 +30,21 @@ tiles_html <- cpsr::plot_virtual_panels(
   gene_df = cps_report[["settings"]][["conf"]][["gene_panel"]][["panel_genes"]])
 ```
 
+::: {.callout-note collapse="true"}
+
+## Virtual gene panel: `r panel_title` (n = `r panel_n_genes`)
+
+Sample variants that are subject for variant classification are limited to the ones found within the tile of cancer predisposition genes shown below.
+
+*  __`r panel_link`__
+   * Diagnostic-grade genes only (applicable to Genomics England panels): __`r as.logical(cps_report[['settings']][['conf']][['gene_panel']][['diagnostic_grade_only']])`__
+
 ::: {style="text-align: center;"}
 `r tiles_html`
 :::
 
 <br>
 
-::: {.callout-note collapse="true"}
-## Note - input data and virtual panel
+_Note_: For the sample in question, _`r cps_report$settings$sample_id`_, CPSR **does not** perform any interrogation of _which genes that were subject to sequencing_. The input VCF may thus originate from WGS, WES, or even targeted gene panel assays. Specifically, CPSR considers the user-defined __virtual gene panel__ to restrict the set of input variants that are subject to annotation and classification (i.e. listed within the _Variant classification_ section below). In this manner, the tool has a distinct focus on variants in genes implicated with cancer susceptibility.
 
-For the sample in question, _`r cps_report$settings$sample_id`_, CPSR **does not** perform any interrogation of _which genes that were subject to sequencing_. The input VCF may thus originate from WGS, WES, or even targeted gene panel assays. Specifically, CPSR considers the user-defined __virtual gene panel__ to restrict the set of input variants that are subject to annotation and classification (i.e. listed within the _Variant classification_ section below). In this manner, the tool has a distinct focus on variants in genes implicated with cancer susceptibility.
 :::
-
-<br>

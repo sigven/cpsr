@@ -265,10 +265,10 @@ assign_classification_authority <-
     )
 
     trust_level_desc <- c(
-      "0" = "ClinVar trusted (override conflicted records only)",
+      "0" = "ClinVar trusted (override conflicted and unclassified records only)",
       "1" = "Override zero-star ClinVar records",
       "2" = "Override zero- and single-star ClinVar records",
-      "3" = "Override low-star and non-cancer-phenotype records",
+      "3" = "Override zero- and single-star ClinVar records, and records with non-cancer phenotypes",
       "4" = "CPSR always classifies"
     )
 
@@ -290,8 +290,9 @@ assign_classification_authority <-
         .clinvar_novel = is.na(.data$CLINVAR_CLASSIFICATION),
         .clinvar_conflicted = (!is.na(.data$CLINVAR_CONFLICTED) &
                                  .data$CLINVAR_CONFLICTED == TRUE) |
-          (!is.na(.data$CLINVAR_CLASSIFICATION) &
-             .data$CLINVAR_CLASSIFICATION == "CCP Unknown"),
+          .data$CLINVAR_CLASSIFICATION %in% "Conflicting Classification",
+        .clinvar_no_classification =
+          .data$CLINVAR_CLASSIFICATION %in% "No Classification",
         .clinvar_zero_stars = (!is.na(.data$CLINVAR_GOLD_STARS) &
                                  .data$CLINVAR_GOLD_STARS == 0),
         .clinvar_single_star = (!is.na(.data$CLINVAR_GOLD_STARS) &
@@ -303,6 +304,7 @@ assign_classification_authority <-
         ## -- which flags are active at the chosen trust level --
         .override_novel = .data$.clinvar_novel,
         .override_conflicted = .data$.clinvar_conflicted,
+        .override_no_classification = .data$.clinvar_no_classification,
         .override_stars = if (clinvar_trust_level >= 2) {
           .data$.clinvar_zero_stars | .data$.clinvar_single_star
         } else if (clinvar_trust_level >= 1) {
@@ -321,6 +323,7 @@ assign_classification_authority <-
         .cpsr_overrides = (
           .data$.override_novel |
             .data$.override_conflicted |
+            .data$.override_no_classification |
             .data$.override_stars |
             .data$.override_phenotype |
             .data$.override_always
@@ -337,7 +340,10 @@ assign_classification_authority <-
             reasons <- c(reasons, "Novel variant (absent from ClinVar)")
           if (.data$.clinvar_conflicted)
             reasons <- c(reasons, "Conflicting ClinVar interpretations")
-          if (!.data$.clinvar_novel & !.data$.clinvar_conflicted) {
+          else if (.data$.clinvar_no_classification)
+            reasons <- c(reasons, "No classification available in ClinVar")
+          if (!.data$.clinvar_novel & !.data$.clinvar_conflicted &
+              !.data$.clinvar_no_classification) {
             if (.data$.cpsr_overrides) {
               star_label <- paste0(
                 "ClinVar review status: ",
@@ -369,6 +375,17 @@ assign_classification_authority <-
           .data$.cpsr_overrides & !is.na(.data$CPSR_CLASSIFICATION) ~ "CPSR",
           !.data$.clinvar_novel & !.data$.cpsr_overrides ~ "ClinVar",
           TRUE ~ NA_character_
+        ),
+        ## Why the assertion authority was chosen (short category):
+        ## ClinVar / Novel / ClinVar conflicting / ClinVar no classification /
+        ## ClinVar below trust level
+        ASSERTION_BASIS = dplyr::case_when(
+          is.na(.data$ASSERTION_AUTHORITY) ~ NA_character_,
+          .data$ASSERTION_AUTHORITY == "ClinVar" ~ "ClinVar",
+          .data$.clinvar_novel ~ "Novel",
+          .data$.clinvar_conflicted ~ "ClinVar conflicting",
+          .data$.clinvar_no_classification ~ "ClinVar no classification",
+          TRUE ~ "ClinVar below trust level"
         ),
         CLASSIFICATION = dplyr::case_when(
           .data$ASSERTION_AUTHORITY == "ClinVar" ~
@@ -438,7 +455,8 @@ assign_classification_authority <-
       dplyr::arrange(
         dplyr::desc(
           .data$CLASSIFICATION),
-        dplyr::desc(.data$CLINVAR_PHENOTYPE_CANCER),
+        dplyr::desc(dplyr::coalesce(
+          as.numeric(.data$CLINVAR_PHENOTYPE_CANCER), 0.5)),
         dplyr::desc(.data$CPSR_PATHOGENICITY_SCORE))
 
     var_calls$ACMG_DOC <-
@@ -1095,14 +1113,14 @@ assign_PVS1_evidence <- function(
           "tmp_MES",
           "MES_STRATUM",
           "MES_TIER",
-          "HGVSC_LOCAL"
-          #"PVS1_RELEVANT_TRANSCRIPT",
-          #"PVS1_LOF_GENE"
-          #"PVS1_PURELY_INTRONIC",
-          #"PVS1_SPLICE_CONSEQUENCE",
-          #"PVS1_INFRAME_CONSEQUENCE",
-          #"PVS1_HGVSC_CANONICAL_SITE",
-          #"PVS1_SPLICE_HIGH_IMPACT"
+          "HGVSC_LOCAL",
+          "PVS1_RELEVANT_TRANSCRIPT",
+          "PVS1_LOF_GENE",
+          "PVS1_PURELY_INTRONIC",
+          "PVS1_SPLICE_CONSEQUENCE",
+          "PVS1_INFRAME_CONSEQUENCE",
+          "PVS1_HGVSC_CANONICAL_SITE",
+          "PVS1_SPLICE_HIGH_IMPACT"
         ))
       )
 
@@ -2234,7 +2252,8 @@ exclude_vars_by_maf <- function(
         dplyr::arrange(
           dplyr::desc(
             .data$CLASSIFICATION),
-          dplyr::desc(.data$CLINVAR_PHENOTYPE_CANCER),
+          dplyr::desc(dplyr::coalesce(
+            as.numeric(.data$CLINVAR_PHENOTYPE_CANCER), 0.5)),
           dplyr::desc(.data$CPSR_PATHOGENICITY_SCORE))
   }
 
@@ -2288,8 +2307,13 @@ exclude_vars_noncoding <- function(
 
 }
 
-#' Function that ignores/exclude variants attributed to non-cancer
-#' related phenotypes in ClinVar
+#' Function that excludes variants attributed to non-cancer related
+#' phenotypes in ClinVar (option --clinvar_cancer_only)
+#'
+#' Only variants with a ClinVar record where all informative traits are
+#' non-cancer related (CLINVAR_PHENOTYPE_CANCER == 0) are excluded. Variants
+#' with cancer-related traits (1), uninformative/unmapped traits only (NA),
+#' or no ClinVar record are retained.
 #'
 #' @param var_calls variants in cancer predisposition genes
 #' @param conf CPSR configuration object with run settings
@@ -2299,7 +2323,7 @@ exclude_vars_non_cancer <- function(
     var_calls = NULL,
     conf = NULL){
 
-  if (conf$variant_classification$clinvar_report_noncancer == 0 &
+  if (clinvar_cancer_only(conf) &
       "VAR_ID" %in% colnames(
         var_calls) &
       "CLINVAR_MSID" %in% colnames(
@@ -2324,7 +2348,8 @@ exclude_vars_non_cancer <- function(
     pcgrr::log4r_info(
       paste0(
         "ClinVar variants related to non-cancer conditions excluded",
-        " from report: N = ", NROW(non_cancer_calls_to_exclude)
+        " from report (--clinvar_cancer_only): N = ",
+        NROW(non_cancer_calls_to_exclude)
       )
     )
 
@@ -2346,4 +2371,17 @@ exclude_vars_non_cancer <- function(
 
   return(var_calls)
 
+}
+
+#' Whether ClinVar variants attributed to non-cancer phenotypes only
+#' should be excluded (option --clinvar_cancer_only)
+#'
+#' @param conf CPSR configuration object with run settings
+#'
+#' @return logical; FALSE if the setting is absent
+#'
+#' @keywords internal
+clinvar_cancer_only <- function(conf = NULL) {
+  val <- conf[["variant_classification"]][["clinvar_cancer_only"]]
+  !is.null(val) && length(val) == 1 && isTRUE(as.logical(as.integer(val)))
 }

@@ -176,7 +176,7 @@ retrieve_secondary_calls <- function(calls) {
       (.data$SYMBOL == "HFE" &
         (!is.na(.data$PROTEIN_CHANGE) &
           stringr::str_detect(.data$PROTEIN_CHANGE, "Cys282Tyr")) &
-        .data$GENOTYPE == "homozygous"))
+        .data$GENOTYPE == "hom_alt"))
 
   ## AR genes
   min_two_variants_required <-
@@ -214,245 +214,205 @@ retrieve_secondary_calls <- function(calls) {
   return(secondary_calls)
 }
 
-#' Function that retrieves variants in genes recommended for secondary
-#' findings
+#' Regular expression matching cancer-related ClinVar trait names
 #'
-#' @param calls data frame with all calls found
+#' Applied (case-insensitive, to lower-cased trait names) when determining
+#' whether a ClinVar record is attributed to a cancer-related phenotype.
+#' Moved from pcgrr (\code{pcgrr::cancer_phenotypes_regex}), where it was
+#' used by CPSR only.
 #'
-#' @export
-retrieve_pgx_calls <- function(calls) {
-  assertable::assert_colnames(
-    calls,
-    colnames = c(
-      "CPG_SOURCE",
-      "CLASSIFICATION",
-      "ASSERTION_AUTHORITY",
-      "PRIMARY_TARGET",
-      "GENOTYPE",
-      "SYMBOL",
-      "GENOMIC_CHANGE",
-      "LOSS_OF_FUNCTION",
-      "PROTEIN_CHANGE",
-      "CLINVAR_PHENOTYPE",
-      "CLINVAR_GOLD_STARS",
-      "CLINVAR_NUM_SUBMITTERS"
-    ),
-    only_colnames = F, quiet = T
-  )
+#' @keywords internal
+cancer_phenotypes_regex <-
+  paste0("(cancer|carcinoma|tumor|neoplasm|gangliom|lymphom|leukem|meningiom",
+         "|blastoma|melanom|chordom|adenoma|sarcom|mesotheli|ependymom|glioma",
+         "|neurofibro|keratoacan|nevus|brca|polyposis|myelodysplastic|cowden",
+         "|gardner|noonan|fanconi|carney|bullosa|schwanno|li-fraumeni|xeroderma",
+         "|leiomyom|muir-|nijmegen|neoplasia|trichoepithelioma|brooke|turcot",
+         "|exostos|lynch|drash|wilm|perlman|fibrofolliculomas|hippel|hamartom",
+         "|bloom|werner|peutz|tuberous|angiomyolipoma",
+         "|thymoma|dihydropyrimidine dehydrogenase deficiency",
+         "|lymphoproliferative|stat3|teratoma|thrombocytop|tp63|weaver",
+         "|pheochromo|gorlin|telangiectasia|hemangiom|osteochondro|response",
+         "|polg-related|ras-associated|dyskeratosis",
+         ## bone marrow failure / myeloid predisposition
+         "|bone marrow failure|marrow hypocellularity|cytopenia|aplastic anemia",
+         "|neutropenia|telomere biology|myeloid",
+         ## Nijmegen breakage syndrome (OMIM name)
+         "|microcephaly, normal intelligence and immunodeficiency",
+         "|tyrosine kinase inhibitor|fluorouracil|methotrexate|capecitabine",
+         "|imatinib|erlotinib|gefitinib|sunitinib|vemurafenib|crizotinib|cetuximab",
+         "|dabrafenib|osimertinib|afatinib|neratinib|lapatinib|ponatinib|regorafenib",
+         "|vandetanib|bosutinib|axitinib|cabozantinib|brigatinib|ripretinib|lenvatinib",
+         "|midostaurin|duvelisib|copanlisib|alpelisib|larotrectinib|entrectinib",
+         "|programmed death ligand|adp-ribose|doxorubicin|cisplatin|carboplatin",
+         "|familial adenomatous polyposis|hereditary breast and ovarian cancer",
+         "|hereditary nonpolyposis colorectal cancer|multiple endocrine neoplasia",
+         "|waardenburg|beckwith|birt-hogg|diamond|frasier",
+         "|infantile myofibromatosis|proteus|rothmund|russel)")
 
-  pgx_calls <- calls |>
-    ## do not consider pharmacogenomics-related variants if
-    ## genotypes have not been retrieved properly
-    dplyr::filter(
-      !is.na(.data$GENOTYPE) &
-        !is.na(.data$SYMBOL) &
-        !is.na(.data$CPG_SOURCE) &
-        stringr::str_detect(.data$CPG_SOURCE, "CPIC_PGX_ONCOLOGY") &
-        .data$PRIMARY_TARGET == FALSE &
-        !is.na(.data$ASSERTION_AUTHORITY) &
-        .data$ASSERTION_AUTHORITY == "ClinVar" &
-        !is.na(.data$CLASSIFICATION) &
-        stringr::str_detect(
-          tolower(
-            .data$CLASSIFICATION), "drug|pathogenic"
-        )
-    ) |>
-    dplyr::filter(
-      .data$GENOTYPE != "undefined"
-    )
+#' Regular expression matching uninformative ClinVar trait names
+#'
+#' Trait names that carry no information about the phenotype (e.g.
+#' 'not provided'). Records with only such traits are given an unknown
+#' (NA) cancer phenotype status, rather than a non-cancer status.
+#'
+#' @keywords internal
+clinvar_uninformative_traits_regex <-
+  paste0("^(not provided|not specified|none provided|",
+         "inborn genetic diseases|see cases)$")
 
-
-  if (NROW(pgx_calls) == 0) {
-    return(pgx_calls)
-  }else{
-    pgx_calls <- pgx_calls |>
-      dplyr::arrange(
-        dplyr::desc(.data$CLINVAR_GOLD_STARS),
-        dplyr::desc(.data$CLINVAR_NUM_SUBMITTERS))
-
-    clinvar_phenotypes <- pgx_calls |>
-      dplyr::select(c("GENOMIC_CHANGE",
-                      "CLINVAR_PHENOTYPE")) |>
-      tidyr::separate_rows(
-        .data$CLINVAR_PHENOTYPE, sep = "; ") |>
-      dplyr::filter(
-        stringr::str_detect(
-          .data$CLINVAR_PHENOTYPE,
-          "^(Fluorouracil|Dihydropyrimidine|Thiopurine)") |
-          stringr::str_detect(
-            .data$CLINVAR_PHENOTYPE,
-            "^$"
-          )
-      ) |>
-      dplyr::distinct() |>
-      dplyr::group_by(
-        .data$GENOMIC_CHANGE
-      ) |>
-      dplyr::summarise(
-        CLINVAR_PHENOTYPE = paste(
-          sort(unique(.data$CLINVAR_PHENOTYPE)),
-          collapse = "; "),
-        .groups = "drop"
-      )
-
-    pgx_calls <- pgx_calls |>
-      dplyr::select(-c("CLINVAR_PHENOTYPE")) |>
-      dplyr::left_join(
-        clinvar_phenotypes,
-        by = "GENOMIC_CHANGE"
-      ) |>
-      dplyr::filter(!is.na(.data$CLINVAR_PHENOTYPE)) |>
-      dplyr::distinct()
-
-
-  }
-
-  return(pgx_calls)
-}
-
-#' Function that retrieves variants in cancer predisposition genes linked
-#' to cancer-related conditions according to ClinVar
+#' Function that determines whether variants in cancer predisposition genes
+#' are linked to cancer-related conditions according to ClinVar
+#'
+#' Each ClinVar trait of a variant (trait names in \emph{CLINVAR_TRAITS},
+#' and UMLS concept names of \emph{CLINVAR_UMLS_CUI}) is given one of three
+#' states: cancer-related (1), not cancer-related (0) or unknown (NA).
+#' A trait is cancer-related if it matches the cancer phenotype regex, maps
+#' to an OncoTree concept, or is a '<GENE>-related disorder' for a primary
+#' target gene of the virtual panel. A trait is unknown if it is
+#' uninformative (e.g. 'not provided') or if a UMLS concept cannot be mapped
+#' to a name. The variant-level state in \emph{CLINVAR_PHENOTYPE_CANCER} is
+#' 1 if any trait is cancer-related, otherwise 0 if any trait is not
+#' cancer-related, otherwise NA (also NA for variants not found in ClinVar).
 #'
 #' @param cpg_calls data frame with variants in predisposition_genes
 #' @param ref_data object with PCGR/CPSR reference data
+#' @param primary_target_entrez character vector with Entrez gene
+#' identifiers of the primary targets (virtual panel genes); used to
+#' recognize gene-named conditions ('<GENE>-related disorder') as
+#' cancer-related
 #'
 #' @export
-is_clinvar_cancer_phenotype <- function(cpg_calls, ref_data) {
-  oncotree <- ref_data[["phenotype"]][["oncotree"]]
+is_clinvar_cancer_phenotype <- function(
+    cpg_calls,
+    ref_data,
+    primary_target_entrez = NULL) {
+
+  cpg_calls$CLINVAR_PHENOTYPE <- NULL
+  cpg_calls$CLINVAR_PHENOTYPE_CANCER <- NULL
+
+  if (NROW(cpg_calls) == 0 ||
+      !all(c("VAR_ID", "CLINVAR_MSID", "CLINVAR_UMLS_CUI",
+             "CLINVAR_TRAITS") %in% colnames(cpg_calls))) {
+    cpg_calls$CLINVAR_PHENOTYPE <- rep(NA_character_, NROW(cpg_calls))
+    cpg_calls$CLINVAR_PHENOTYPE_CANCER <- rep(NA_integer_, NROW(cpg_calls))
+    return(cpg_calls)
+  }
+
+  oncotree_cuis <- unique(ref_data[["phenotype"]][["oncotree"]]$CUI)
   umls_map <- ref_data[["phenotype"]][["umls"]] |>
     dplyr::filter(.data$MAIN_TERM == TRUE) |>
-    dplyr::mutate(CUI_NAME_LC = tolower(.data$CUI_NAME)) |>
-    dplyr::select(-c("SOURCE")) |>
-    dplyr::distinct()
+    dplyr::select(c("CUI", "CUI_NAME")) |>
+    dplyr::distinct(.data$CUI, .keep_all = TRUE)
 
-  if (nrow(cpg_calls) > 0 &
-    "CLINVAR_UMLS_CUI" %in% colnames(cpg_calls) &
-    "CLINVAR_TRAITS" %in% colnames(cpg_calls) &
-    "VAR_ID" %in% colnames(cpg_calls)) {
-    oncotree <- oncotree |>
-      dplyr::select("CUI") |>
-      dplyr::mutate(CLINVAR_PHENOTYPE_CANCER = 1) |>
-      dplyr::distinct()
-
-    n_clinvar_with_cui <- cpg_calls |>
-      dplyr::filter(!is.na(.data$CLINVAR_UMLS_CUI)) |>
-      NROW()
-
-    n_clinvar_with_trait_only <-
-      cpg_calls |>
-      dplyr::filter(
-        is.na(.data$CLINVAR_UMLS_CUI) &
-          !is.na(.data$CLINVAR_TRAITS)
-      ) |>
-      NROW()
-
-    cpg_calls_traits <- data.frame()
-    cpg_calls_trait_only <- data.frame()
-
-    ## Handle variants with traits but no CUIs separately
-    if(n_clinvar_with_trait_only > 0){
-      cpg_calls_trait_only <-
-        cpg_calls |>
-        dplyr::filter(
-          is.na(.data$CLINVAR_UMLS_CUI) &
-            !is.na(.data$CLINVAR_TRAITS)
-        ) |>
-        dplyr::select(c("VAR_ID", "CLINVAR_TRAITS")) |>
-        dplyr::mutate(CLINVAR_PHENOTYPE_CANCER = dplyr::if_else(
-          stringr::str_detect(
-            tolower(.data$CLINVAR_TRAITS),
-            pcgrr::cancer_phenotypes_regex),
-          as.integer(1),
-          as.integer(0)
-        )) |>
-        dplyr::group_by(.data$VAR_ID) |>
-        dplyr::summarise(
-          CLINVAR_PHENOTYPE = paste(
-            unique(.data$CLINVAR_TRAITS),
-            collapse = "; "
-          ),
-          CLINVAR_PHENOTYPE_CANCER = max(
-            .data$CLINVAR_PHENOTYPE_CANCER, na.rm = TRUE),
-          .groups = "drop"
-        )
-    }
-
-    ## Handle variants with CUIs
-    if (n_clinvar_with_cui > 0) {
-      cpg_calls_traits <- as.data.frame(
-        tidyr::separate_rows(
-          cpg_calls, "CLINVAR_UMLS_CUI", sep = ",") |>
-          dplyr::select(c("VAR_ID", "CLINVAR_UMLS_CUI")) |>
-          dplyr::left_join(
-            umls_map,
-            by = c("CLINVAR_UMLS_CUI" = "CUI"),
-            relationship = "many-to-many"
-          ) |>
-          dplyr::distinct() |>
-          dplyr::filter(!is.na(.data$CUI_NAME)) |>
-          dplyr::left_join(
-            oncotree,
-            by = c("CLINVAR_UMLS_CUI" = "CUI"),
-            relationship = "many-to-many"
-          ) |>
-          dplyr::mutate(
-            CLINVAR_PHENOTYPE_CANCER = dplyr::if_else(
-              is.na(.data$CLINVAR_PHENOTYPE_CANCER),
-              as.integer(0),
-              as.integer(.data$CLINVAR_PHENOTYPE_CANCER)
-            )
-          ) |>
-          dplyr::mutate(
-            CLINVAR_PHENOTYPE_CANCER =
-              dplyr::if_else(
-                !is.na(.data$CUI_NAME) &
-                  stringr::str_detect(
-                    tolower(.data$CUI_NAME),
-                    pcgrr::cancer_phenotypes_regex
-                  ),
-                as.integer(1),
-                as.integer(.data$CLINVAR_PHENOTYPE_CANCER)
-              )
-          ) |>
-          dplyr::group_by(.data$VAR_ID) |>
-          dplyr::summarise(
-            CLINVAR_PHENOTYPE = paste(
-              unique(.data$CUI_NAME),
-              collapse = "; "
-            ),
-            CLINVAR_PHENOTYPE_CANCER = max(
-              .data$CLINVAR_PHENOTYPE_CANCER, na.rm = TRUE),
-            .groups = "drop"
-          )
-      )
-    }
-
-    if(NROW(cpg_calls_trait_only) > 0 | NROW(cpg_calls_traits) > 0){
-      cpg_calls_traits <- dplyr::bind_rows(
-        cpg_calls_traits,
-        cpg_calls_trait_only) |>
-        dplyr::mutate(
-          CLINVAR_PHENOTYPE_CANCER = dplyr::if_else(
-            is.na(.data$CLINVAR_PHENOTYPE_CANCER),
-            as.integer(0),
-            as.integer(.data$CLINVAR_PHENOTYPE_CANCER)
-          )
-        )
-
-      cpg_calls <- cpg_calls |>
-        dplyr::left_join(
-          cpg_calls_traits, by = "VAR_ID") |>
-        dplyr::mutate(
-          CLINVAR_PHENOTYPE_CANCER = dplyr::if_else(
-            is.na(.data$CLINVAR_PHENOTYPE_CANCER),
-            as.integer(0),
-            as.integer(.data$CLINVAR_PHENOTYPE_CANCER)
-          )
-        )
-    } else {
-      cpg_calls$CLINVAR_PHENOTYPE <- NA
-      cpg_calls$CLINVAR_PHENOTYPE_CANCER <- NA
-    }
+  na_if_empty <- function(x) {
+    x <- as.character(x)
+    dplyr::if_else(is.na(x) | x %in% c("", "."), NA_character_, x)
   }
+
+  clinvar_calls <- cpg_calls |>
+    dplyr::mutate(
+      .msid = na_if_empty(.data$CLINVAR_MSID),
+      .traits = na_if_empty(.data$CLINVAR_TRAITS),
+      .cuis = na_if_empty(.data$CLINVAR_UMLS_CUI)) |>
+    dplyr::filter(!is.na(.data$.msid) &
+                    (!is.na(.data$.traits) | !is.na(.data$.cuis)))
+
+  if (NROW(clinvar_calls) == 0) {
+    cpg_calls$CLINVAR_PHENOTYPE <- rep(NA_character_, NROW(cpg_calls))
+    cpg_calls$CLINVAR_PHENOTYPE_CANCER <- rep(NA_integer_, NROW(cpg_calls))
+    return(cpg_calls)
+  }
+
+  gene_cols <- intersect(c("SYMBOL", "ENTREZGENE"), colnames(clinvar_calls))
+  var_genes <- clinvar_calls |>
+    dplyr::select(dplyr::all_of(c("VAR_ID", gene_cols))) |>
+    dplyr::distinct(.data$VAR_ID, .keep_all = TRUE)
+
+  ## Trait names as provided by ClinVar (semicolon-separated)
+  traits_by_name <- clinvar_calls |>
+    dplyr::filter(!is.na(.data$.traits)) |>
+    dplyr::select(c("VAR_ID", "TRAIT" = ".traits")) |>
+    tidyr::separate_rows("TRAIT", sep = ";") |>
+    dplyr::mutate(TRAIT = stringr::str_trim(.data$TRAIT),
+                  CUI = NA_character_,
+                  SOURCE = "trait")
+
+  ## UMLS concepts (comma-separated), mapped to concept names
+  traits_by_cui <- clinvar_calls |>
+    dplyr::filter(!is.na(.data$.cuis)) |>
+    dplyr::select(c("VAR_ID", "CUI" = ".cuis")) |>
+    tidyr::separate_rows("CUI", sep = ",") |>
+    dplyr::mutate(CUI = stringr::str_trim(.data$CUI)) |>
+    dplyr::left_join(umls_map, by = "CUI") |>
+    dplyr::rename(TRAIT = "CUI_NAME") |>
+    dplyr::mutate(SOURCE = "cui")
+
+  traits <- dplyr::bind_rows(traits_by_name, traits_by_cui) |>
+    dplyr::filter(!(is.na(.data$TRAIT) & is.na(.data$CUI)) &
+                    (is.na(.data$TRAIT) | .data$TRAIT != "")) |>
+    dplyr::distinct() |>
+    dplyr::left_join(var_genes, by = "VAR_ID")
+
+  trait_lc <- tolower(traits$TRAIT)
+
+  ## '<GENE>-related disorder(s)' for a primary target gene
+  gene_named <- rep(FALSE, NROW(traits))
+  if ("SYMBOL" %in% colnames(traits) && !is.null(primary_target_entrez) &&
+      "ENTREZGENE" %in% colnames(traits)) {
+    is_target <- as.character(traits$ENTREZGENE) %in%
+      as.character(primary_target_entrez)
+    symbol_lc <- tolower(dplyr::coalesce(as.character(traits$SYMBOL), ""))
+    trait_or_empty <- dplyr::coalesce(trait_lc, "")
+    gene_named <- is_target & nchar(symbol_lc) > 0 &
+      (startsWith(trait_or_empty, paste0(symbol_lc, "-related")) |
+         startsWith(trait_or_empty, paste0(symbol_lc, " related")))
+  }
+
+  traits$TRAIT_CANCER <- dplyr::case_when(
+    !is.na(traits$CUI) & traits$CUI %in% oncotree_cuis ~ 1L,
+    is.na(trait_lc) ~ NA_integer_,
+    stringr::str_detect(trait_lc, clinvar_uninformative_traits_regex) ~
+      NA_integer_,
+    stringr::str_detect(trait_lc, cancer_phenotypes_regex) ~ 1L,
+    gene_named ~ 1L,
+    TRUE ~ 0L
+  )
+
+  ## Variant-level state: 1 if any trait is cancer-related, 0 if any
+  ## (informative) trait is not cancer-related, NA otherwise
+  phenotype_state <- traits |>
+    dplyr::group_by(.data$VAR_ID) |>
+    dplyr::summarise(
+      CLINVAR_PHENOTYPE_CANCER = dplyr::case_when(
+        any(.data$TRAIT_CANCER == 1L, na.rm = TRUE) ~ 1L,
+        any(.data$TRAIT_CANCER == 0L, na.rm = TRUE) ~ 0L,
+        TRUE ~ NA_integer_),
+      ## ClinVar trait names, falling back to UMLS concept names
+      CLINVAR_PHENOTYPE = {
+        nm <- unique(.data$TRAIT[.data$SOURCE == "trait" &
+                                   !is.na(.data$TRAIT)])
+        if (length(nm) == 0) {
+          nm <- unique(.data$TRAIT[!is.na(.data$TRAIT)])
+        }
+        if (length(nm) == 0) NA_character_ else paste(nm, collapse = "; ")
+      },
+      .groups = "drop"
+    )
+
+  cpg_calls <- cpg_calls |>
+    dplyr::left_join(phenotype_state, by = "VAR_ID")
+
+  pcgrr::log4r_info(
+    paste0(
+      "ClinVar phenotype status of variants - cancer-related: N = ",
+      sum(phenotype_state$CLINVAR_PHENOTYPE_CANCER %in% 1L),
+      ", not cancer-related: N = ",
+      sum(phenotype_state$CLINVAR_PHENOTYPE_CANCER %in% 0L),
+      ", unspecified: N = ",
+      sum(is.na(phenotype_state$CLINVAR_PHENOTYPE_CANCER))
+    )
+  )
+
   return(cpg_calls)
 }

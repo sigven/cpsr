@@ -1,0 +1,51 @@
+```{r sample_properties}
+#| output: asis
+#| echo: false
+#| eval: true
+
+## sample/subject properties at the top of the report (as in the PDF front page)
+conf <- cps_report[["settings"]][["conf"]]
+subject_sex <-
+  if (is.null(conf$subject_properties$sex)) "UNKNOWN" else
+    as.character(conf$subject_properties$sex)
+subject_age <-
+  if (is.null(conf$subject_properties$age) ||
+      identical(conf$subject_properties$age, "NA")) "N/A" else
+    as.character(conf$subject_properties$age)
+
+panel_n_genes <-
+  conf[["gene_panel"]][["panel_genes"]] |>
+  dplyr::filter(PRIMARY_TARGET == T) |>
+  dplyr::select(ENTREZGENE) |>
+  dplyr::distinct() |>
+  NROW()
+
+## name of the virtual panel: short display name (max. 42 characters),
+## full name shown on hover
+panel_name <- cpsr:::panel_display_name(conf, max_chars = 42)
+panel_label <- htmltools::span(title = panel_name$full, panel_name$short)
+
+## compact cards (padding set in cpsr.css, class cpsr-sample-card): the cards in
+## the row share the height of the tallest one, so a panel name wrapping over
+## two lines in the wider middle card does not break the layout
+sample_tile <- function(title, value) {
+  bslib::value_box(
+    title = title,
+    value = value,
+    showcase = NULL,
+    fill = FALSE,
+    class = "cpsr-sample-card",
+    theme = bslib::value_box_theme(
+      bg = cpsr::color_palette[["report"]], fg = "#fff")
+  )
+}
+
+bslib::layout_columns(
+  col_widths = c(3, 6, 3),
+  fill = FALSE,
+  sample_tile("Sex / age at sampling",
+              paste0(subject_sex, " / ", subject_age)),
+  sample_tile("Virtual gene panel", panel_label),
+  sample_tile("Genes in panel", paste0("n = ", panel_n_genes))
+)
+```

@@ -1,7 +1,7 @@
 Package: cpsr
 Type: Package
 Title: Cancer Predisposition Sequencing Reporter (CPSR)
-Version: 2.3.0
+Version: 2.3.2.9013
 Authors@R:
     c(person(given = "Sigve",
              family = "Nakken",
@@ -53,9 +53,11 @@ Suggests:
     BSgenome.Hsapiens.UCSC.hg19,
     BSgenome.Hsapiens.UCSC.hg38,
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat,
+    tinytable
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
-Config/roxygen2/version: 8.0.0
+Config/roxygen2/version: 8.1.1

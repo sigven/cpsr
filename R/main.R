@@ -16,6 +16,11 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
     report_mode = "CPSR"
   )
 
+  ## CPSR version: the installed cpsr R package (the configuration
+  ## from the pcgr Python workflow lists the PCGR version)
+  cps_report[["settings"]][["software"]][["cpsr_version"]] <-
+    as.character(utils::packageVersion("cpsr"))
+
   settings <- cps_report[["settings"]]
   conf <- cps_report[["settings"]][["conf"]]
   ref_data <- cps_report[["ref_data"]]
@@ -31,6 +36,15 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
     cps_report$content$snv_indel[["callset"]]$variant[[cat]] <-
       callset_cpsr[["variant"]][[cat]]
   }
+
+  ## pharmacogenomic findings: CPIC allele definitions (current data
+  ## bundles) or ClinVar classifications (legacy data bundles)
+  cps_report$content$snv_indel$pgx_method <-
+    if (NROW(ref_data[['variant']][['pgx_allele']]) > 0) "cpic" else "clinvar"
+  cps_report$content$snv_indel$pgx_phenotype <-
+    callset_cpsr[["pgx"]][["phenotype"]]
+  cps_report$content$snv_indel$pgx_recommendation <-
+    callset_cpsr[["pgx"]][["recommendation"]]
 
   cps_report$content$snv_indel[["callset"]]$retained_info_tags <-
     callset_cpsr[["retained_info_tags"]]
@@ -95,8 +109,9 @@ generate_cpsr_report <- function(yaml_fname = NULL) {
   }
 
 
-  ## Exclude variants related to non-cancer conditions (if option set by user)
-  if (conf$variant_classification$clinvar_report_noncancer == 0) {
+  ## Exclude variants related to non-cancer conditions only
+  ## (if --clinvar_cancer_only is set by user)
+  if (clinvar_cancer_only(conf)) {
     cps_report$content$snv_indel[["callset"]]$variant$cpg_non_sf <-
       cps_report$content$snv_indel[["callset"]]$variant$cpg_non_sf |>
       cpsr::exclude_vars_non_cancer(
@@ -256,6 +271,13 @@ get_cpsr_settings_sheet <- function(report = NULL) {
                VALUE = as.character(s$genome_assembly)),
     data.frame(SECTION = "General", PARAMETER = "Sample ID",
                VALUE = as.character(s$sample_id)),
+    data.frame(SECTION = "General", PARAMETER = "Subject sex",
+               VALUE = if (is.null(conf$subject_properties$sex)) "UNKNOWN" else
+                 as.character(conf$subject_properties$sex)),
+    data.frame(SECTION = "General", PARAMETER = "Subject age at testing (years)",
+               VALUE = if (is.null(conf$subject_properties$age) ||
+                           identical(conf$subject_properties$age, "NA")) "NA" else
+                 as.character(conf$subject_properties$age)),
     data.frame(SECTION = "Variant classification",
                PARAMETER = "Max gnomAD MAF (non-ClinVar variants)",
                VALUE = as.character(
@@ -264,6 +286,9 @@ get_cpsr_settings_sheet <- function(report = NULL) {
                PARAMETER = "ClinVar trust level",
                VALUE = as.character(
                  conf$variant_classification$clinvar_trust_level)),
+    data.frame(SECTION = "Variant classification",
+               PARAMETER = "Exclude ClinVar variants attributed only to non-cancer phenotypes",
+               VALUE = as.character(clinvar_cancer_only(conf))),
     data.frame(SECTION = "Variant classification",
                PARAMETER = "Include secondary findings",
                VALUE = as.character(as.logical(
@@ -415,6 +440,16 @@ write_cpsr_output <- function(report,
         report$ref_data <- NULL
         saveRDS(report, file = rds_report_path)
 
+        ## Genome assembly badge shown next to the report subtitle
+        genome_assembly_display <- dplyr::case_when(
+          tolower(settings$genome_assembly) == "grch38" ~ "GRCh38",
+          tolower(settings$genome_assembly) == "grch37" ~ "GRCh37",
+          .default = settings$genome_assembly
+        )
+        assembly_badge <- paste0(
+          "<span class='cpsr-assay-badge'>",
+          genome_assembly_display, "</span>")
+
         ## Substitute rds object in main quarto template with path to sample rds
         readLines(quarto_main_template) |>
           stringr::str_replace(
@@ -424,6 +459,10 @@ write_cpsr_output <- function(report,
           stringr::str_replace(
             pattern = "<SAMPLE_NAME>",
             replacement = sample_name
+          ) |>
+          stringr::str_replace(
+            pattern = "<ASSAY_BUILD_BADGES>",
+            replacement = assembly_badge
           ) |>
           writeLines(con = quarto_main_template_sample)
 
@@ -436,11 +475,12 @@ write_cpsr_output <- function(report,
           )
         )
 
-        quarto::quarto_render(
-          input = quarto_main_template_sample,
-          execute_dir = tmp_quarto_dir,
-          quiet = !report$settings$conf$debug
-        )
+        with_utf8_locale(
+          quarto::quarto_render(
+            input = quarto_main_template_sample,
+            execute_dir = tmp_quarto_dir,
+            quiet = !report$settings$conf$debug
+          ))
 
         ## Copy output HTML report from temporary rendering directory
         ## to designated HTML file in output directory
@@ -703,9 +743,9 @@ write_cpsr_output <- function(report,
 
     if (NROW(report$content$snv_indel$callset$variant$pgx) > 0) {
       workbook <- workbook |>
-        openxlsx2::wb_add_worksheet(sheet = "PHARMACOGENETIC_FINDINGS") |>
+        openxlsx2::wb_add_worksheet(sheet = "PHARMACOGENOMIC_FINDINGS") |>
         openxlsx2::wb_add_data_table(
-          sheet = "PHARMACOGENETIC_FINDINGS",
+          sheet = "PHARMACOGENOMIC_FINDINGS",
           x = dplyr::select(
             report$content$snv_indel$callset$variant$pgx,
             dplyr::any_of(
@@ -719,10 +759,32 @@ write_cpsr_output <- function(report,
           table_style = "TableStyleMedium19"
         ) |>
         openxlsx2::wb_set_col_widths(
-          sheet = "PHARMACOGENETIC_FINDINGS",
+          sheet = "PHARMACOGENOMIC_FINDINGS",
           cols = 1:length(cpsr::col_format_output[["xlsx_pgx"]]),
           widths = "auto"
         )
+    }
+
+    ## CPIC phenotypes and prescribing recommendations
+    pgx_sheets <- list(
+      PHARMACOGENOMIC_PHENOTYPES =
+        report$content$snv_indel$pgx_phenotype,
+      PHARMACOGENOMIC_RECOMMENDATIONS =
+        report$content$snv_indel$pgx_recommendation)
+    for (sheet_name in names(pgx_sheets)) {
+      if (NROW(pgx_sheets[[sheet_name]]) > 0) {
+        workbook <- workbook |>
+          openxlsx2::wb_add_worksheet(sheet = sheet_name) |>
+          openxlsx2::wb_add_data_table(
+            sheet = sheet_name,
+            x = pgx_sheets[[sheet_name]],
+            start_row = 1,
+            start_col = 1,
+            col_names = TRUE,
+            na.strings = "",
+            table_style = "TableStyleMedium19"
+          )
+      }
     }
 
 
@@ -773,17 +835,48 @@ write_cpsr_output <- function(report,
         )
       )
 
-      quarto::quarto_render(
-        input = quarto_main_template_pdf_sample,
-        output_format = "typst",
-        execute_dir = tmp_quarto_dir,
-        quiet = !report$settings$conf$debug
-      )
+      ## Fonts for Typst: Source Sans Pro (shipped with rmarkdown) and
+      ## fonts of the conda environment, in addition to system fonts
+      font_paths <- c(
+        system.file("rmd", "h", "bootstrap", "css", "fonts",
+                    package = "rmarkdown"),
+        file.path(Sys.getenv("CONDA_PREFIX"), "fonts"),
+        Sys.getenv("TYPST_FONT_PATHS"))
+      font_paths <- font_paths[nzchar(font_paths) & dir.exists(font_paths)]
+      typst_font_paths_orig <- Sys.getenv("TYPST_FONT_PATHS", unset = NA)
+      Sys.setenv(TYPST_FONT_PATHS = paste(unique(font_paths), collapse = ":"))
+
+      ## PDF report is generated by default - a rendering failure is
+      ## reported, but does not stop the analysis (other outputs are
+      ## already written)
+      render_ok <- tryCatch({
+        with_utf8_locale(
+          quarto::quarto_render(
+            input = quarto_main_template_pdf_sample,
+            output_format = "typst",
+            execute_dir = tmp_quarto_dir,
+            quiet = !report$settings$conf$debug
+          ))
+        TRUE
+      }, error = function(e) {
+        pcgrr::log4r_warn(paste0(
+          "PDF report generation failed - skipping PDF output (",
+          sub("^! ", "", strsplit(conditionMessage(e), "\n")[[1]][1]),
+          "). Re-run with '--debug' for details, ",
+          "or use '--no_pdf' to skip PDF generation"))
+        FALSE
+      })
+
+      if (is.na(typst_font_paths_orig)) {
+        Sys.unsetenv("TYPST_FONT_PATHS")
+      } else {
+        Sys.setenv(TYPST_FONT_PATHS = typst_font_paths_orig)
+      }
 
       ## Move rendered PDF to the designated output path
-      if (file.exists(quarto_pdf)) {
+      if (render_ok && file.exists(quarto_pdf)) {
         file.copy(quarto_pdf, fnames[["pdf"]], overwrite = TRUE)
-      } else {
+      } else if (render_ok) {
         pcgrr::log4r_warn(
           paste0(
             "PDF rendering appeared to complete but output file was not found: ",
@@ -806,4 +899,34 @@ write_cpsr_output <- function(report,
       )
     }
   }
+}
+
+#' Evaluate an expression (report rendering) with a UTF-8 locale
+#'
+#' Quarto/knitr run R in a subprocess that inherits the locale; with a
+#' non-UTF-8 locale (e.g. 'C', as in a conda environment without LANG set),
+#' non-ASCII characters of the report text (e.g. dashes, quotes) are written
+#' as escape codes ('<U+2019>'). If the current locale is not UTF-8, LC_ALL
+#' is temporarily set to an available UTF-8 locale.
+#'
+#' @param expr expression to evaluate
+#' @keywords internal
+with_utf8_locale <- function(expr) {
+  if (isTRUE(l10n_info()[["UTF-8"]])) {
+    return(expr)
+  }
+  lc_all_orig <- Sys.getenv("LC_ALL", unset = NA)
+  lc_ctype_orig <- Sys.getlocale("LC_CTYPE")
+  for (loc in c("C.UTF-8", "en_US.UTF-8", "C.utf8", "en_US.utf8")) {
+    if (nzchar(suppressWarnings(Sys.setlocale("LC_CTYPE", loc)))) {
+      Sys.setenv(LC_ALL = loc)
+      break
+    }
+  }
+  on.exit({
+    suppressWarnings(Sys.setlocale("LC_CTYPE", lc_ctype_orig))
+    if (is.na(lc_all_orig)) Sys.unsetenv("LC_ALL") else
+      Sys.setenv(LC_ALL = lc_all_orig)
+  }, add = TRUE)
+  expr
 }

@@ -11,9 +11,9 @@ The *Cancer Predisposition Sequencing Reporter (CPSR)* is a computational workfl
 1)  Flexible **selection of cancer predisposition genes** subject to analysis and reporting - through the use of virtual gene panels
 2)  **Variant classification** (*Pathogenic* to *Benign*) through a dedicated implementation of [ACMG/AMP guidelines](https://pubmed.ncbi.nlm.nih.gov/25741868/)
 3)  **Detection of germline biomarkers** - for prognosis, diagnosis, or drug sensitivity/resistance in cancer
-4)  Optional detection and reporting of variants related to adverse events/toxicity for common cancer chemotherapies
-5)  Optional reporting of **secondary/incidental findings** ([ACMG recommendations](https://pubmed.ncbi.nlm.nih.gov/37347242/))
-6)  **Interactive HTML output report** with detailed variant information, gene annotations, and external links to relevant databases
+4)  Optional reporting of **pharmacogenomic findings** ([CPIC](https://cpicpgx.org)) - altered function alleles in DPYD, TPMT, NUDT15 and G6PD, with inferred phenotypes and prescribing recommendations for cancer-relevant drugs (fluoropyrimidines, thiopurines, rasburicase)
+5)  Optional reporting of **secondary/incidental findings** ([ACMG recommendations](https://pubmed.ncbi.nlm.nih.gov/40568962/))
+6)  **Interactive HTML report** with detailed variant information, gene annotations, and external links to relevant databases, along with a **PDF report** and an Excel workbook
 
 The CPSR workflow is integrated with the framework that underlies [Personal Cancer Genome Reporter - PCGR ](https://github.com/sigven/pcgr). While *PCGR* is intended for reporting and analysis of somatic variants detected in a tumor, *CPSR* is intended for reporting and ranking of germline variants in protein-coding genes that are implicated in cancer predisposition and inherited cancer syndromes.
 
@@ -23,16 +23,16 @@ Four snapshots of sections in the [quarto](https://quarto.org)-based cancer pred
 
 <div id="cpsrCarousel" class="carousel slide" data-bs-interval="false">
 <div class="carousel-inner">
-<div class="carousel-item active"><img src="img/cpsr_panel_summary.png" class="d-block w-100" alt="Virtual gene panel &amp; summary of findings"></div>
+<div class="carousel-item active"><img src="img/cpsr_panel_summary.png" class="d-block w-100" alt="Report overview with key findings"></div>
 <div class="carousel-item"><img src="img/cpsr_variant_classification.png" class="d-block w-100" alt="Variant classification"></div>
 <div class="carousel-item"><img src="img/cpsr_biomarkers.png" class="d-block w-100" alt="Genomic biomarkers"></div>
-<div class="carousel-item"><img src="img/cpsr_pgx_secondary.png" class="d-block w-100" alt="Pharmacogenetic &amp; secondary findings"></div>
+<div class="carousel-item"><img src="img/cpsr_pgx_secondary.png" class="d-block w-100" alt="Pharmacogenomic &amp; secondary findings"></div>
 </div>
 <div class="carousel-indicators">
-<button type="button" data-bs-target="#cpsrCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Virtual gene panel"></button>
+<button type="button" data-bs-target="#cpsrCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Report overview"></button>
 <button type="button" data-bs-target="#cpsrCarousel" data-bs-slide-to="1" aria-label="Variant classification"></button>
 <button type="button" data-bs-target="#cpsrCarousel" data-bs-slide-to="2" aria-label="Genomic biomarkers"></button>
-<button type="button" data-bs-target="#cpsrCarousel" data-bs-slide-to="3" aria-label="Secondary findings"></button>
+<button type="button" data-bs-target="#cpsrCarousel" data-bs-slide-to="3" aria-label="Pharmacogenomic and secondary findings"></button>
 </div>
 </div>
 <script>
@@ -41,10 +41,26 @@ bootstrap.Carousel.getOrCreateInstance(document.getElementById('cpsrCarousel')).
 });
 </script>
 
-<br>
+<br><br>
+
+<hr>
+
+<table>
+<tr>
+<td valign="middle" style="padding:16px">
+<b>CPSR originates from</b> the <a href="https://ous-research.no/tumorbiology/">Department of Tumor Biology</a>, <a href="https://radium.no">Institute for Cancer Research</a>, Oslo University Hospital, Norway.
+</td>
+<td align="center" valign="middle" width="240" style="padding:16px">
+<a href="https://ous-research.no/tumorbiology/"><img src="img/ous_logo.png" width="200" alt="Oslo University Hospital"/></a>
+</td>
+</tr>
+</table>
 
 ### News
 
+*  *November 10th 2026*: **2.4.0 release**
+    -  [CHANGELOG](https://sigven.github.io/cpsr/articles/CHANGELOG.html)
+    
 *  *June 23rd 2026*: **2.3.0 release**
     -  [CHANGELOG](https://sigven.github.io/cpsr/articles/CHANGELOG.html)
 
@@ -85,7 +101,7 @@ bootstrap.Carousel.getOrCreateInstance(document.getElementById('cpsrCarousel')).
 
 ### Example report
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20795508.svg)](https://doi.org/10.5281/zenodo.20795508)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4050912.svg)](https://doi.org/10.5281/zenodo.4050912)
 
 ### Getting started
 
