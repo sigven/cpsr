@@ -23,16 +23,16 @@ Four snapshots of sections in the [quarto](https://quarto.org)-based cancer pred
 
 <div id="cpsrCarousel" class="carousel slide" data-bs-interval="false">
 <div class="carousel-inner">
-<div class="carousel-item active"><img src="img/cpsr_panel_summary.png" class="d-block w-100" alt="Virtual gene panel &amp; summary of findings"></div>
+<div class="carousel-item active"><img src="img/cpsr_panel_summary.png" class="d-block w-100" alt="Report overview with key findings"></div>
 <div class="carousel-item"><img src="img/cpsr_variant_classification.png" class="d-block w-100" alt="Variant classification"></div>
 <div class="carousel-item"><img src="img/cpsr_biomarkers.png" class="d-block w-100" alt="Genomic biomarkers"></div>
-<div class="carousel-item"><img src="img/cpsr_pgx_secondary.png" class="d-block w-100" alt="Pharmacogenetic &amp; secondary findings"></div>
+<div class="carousel-item"><img src="img/cpsr_pgx_secondary.png" class="d-block w-100" alt="Pharmacogenomic &amp; secondary findings"></div>
 </div>
 <div class="carousel-indicators">
-<button type="button" data-bs-target="#cpsrCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Virtual gene panel"></button>
+<button type="button" data-bs-target="#cpsrCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Report overview"></button>
 <button type="button" data-bs-target="#cpsrCarousel" data-bs-slide-to="1" aria-label="Variant classification"></button>
 <button type="button" data-bs-target="#cpsrCarousel" data-bs-slide-to="2" aria-label="Genomic biomarkers"></button>
-<button type="button" data-bs-target="#cpsrCarousel" data-bs-slide-to="3" aria-label="Secondary findings"></button>
+<button type="button" data-bs-target="#cpsrCarousel" data-bs-slide-to="3" aria-label="Pharmacogenomic and secondary findings"></button>
 </div>
 </div>
 <script>
